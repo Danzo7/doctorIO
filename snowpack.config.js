@@ -11,7 +11,7 @@ module.exports = {
     //'@snowpack/plugin-sass',
     '@snowpack/plugin-postcss',
     [
-      '@dzbrackets/plugin-sass-compiler',
+      'snowpack-sass-compiler',
       { includePaths: ['src/assets/styles'] },
     ],
     //  ['@snowpack/plugin-sass', { includePaths: ['src/assets/styles'] }],
