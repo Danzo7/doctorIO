@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
-import './App.css';
-
+import './App.scss';
+import QueueItem from './components/QueueItem';
 interface AppProps {}
 
 function App({}: AppProps) {
@@ -17,11 +17,13 @@ function App({}: AppProps) {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <QueueItem />
+
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <p>
-          Page has been open for <code>{count}</code> seconds.
+          Page has been dont sopen for <code>{count}</code> seconds.
         </p>
         <p>
           <a

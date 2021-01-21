@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+.app-sidebar{
+    border-radius: 1.5vw;
+    flex-grow: 6;
+    order:2;
+    /* Auto Layout */
+    
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6vh;
+    padding: 3vh 1.5vw;    
+    background: #2C3964;
+    }
+
+.sidebar-widget{
+    /* Auto Layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 3vh 1.5vw 2vh 1.5vw;
+    border: 0.1vw solid #3C4B7E;
+    border-radius: 3vh;
+    width: 100%;
+    flex-grow: 1;
+    gap: 3vh;
+    height: 50%;
+}
+    
+    
+.sidebar-widget >.title {
+    font-size: 2.2vh;
+    letter-spacing: 0.15px;
+    color: #FFFFFF;
+}
+.appointment-queue{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 0.5vw;
+    flex-wrap: wrap;
+    overflow: auto;
+    padding-bottom: 1vh;
+}
+
+.queue-item{
+    /* Auto Layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: #344175;
+    border-radius: 1vw;
+    align-items: center;
+    overflow: hidden;
+    height: 30vh;
+}
+
+
+.client-name{
+   
+    font-weight: 600;
+    font-size: 1vw;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.15px;
+    color: #FFFFFF;
+    transform: rotate(-90deg);
+    flex-grow: 1;
+    
+}
+.index-section {
+    height: 5vh;
+    background: #5144FF;
+    width: 100%;
+    border-radius: 50% 50% 0 0;
+    display: flex;
+    justify-content: center;
+}
+.index-section >span{
+    font-family: Sarabun;
+font-style: normal;
+font-weight: 800;
+font-size: 1vw;
+line-height: 24px;
+/* identical to box height, or 150% */
+
+display: flex;
+align-items: center;
+letter-spacing: 0.15px;
+color: #FFFFFF;
+}
+

@@ -57,3 +57,9 @@ declare module '*.png' {
 }
 
 /* CUSTOM: ADD YOUR OWN HERE */
+declare module 'pixrem';
+declare module 'postcss-opacity';
+declare module 'postcss-will-change';
+declare module 'postcss-vmin';
+declare module 'postcss-pseudoelements';
+declare module 'postcss-color-rgba-fallback';

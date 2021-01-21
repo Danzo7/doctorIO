@@ -1,0 +1,46 @@
+@import 'colors';
+.queue-item {
+  /* Auto Layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: $secondarycolor;
+  border-radius: 1vw;
+  align-items: center;
+  overflow: hidden;
+  height: 30vh;
+
+  .client-name {
+    font-weight: 600;
+    font-size: 1vw;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.15px;
+    color: #ffffff;
+    transform: rotate(-90deg);
+    flex-grow: 1;
+  }
+
+  .index-section {
+    height: 5vh;
+    background: $hotpurple;
+    width: 100%;
+    border-radius: 50% 50% 0 0;
+    display: flex;
+    justify-content: center;
+    > span {
+      font-family: Sarabun;
+      font-style: normal;
+      font-weight: 800;
+      font-size: 1vw;
+      line-height: 24px;
+      /* identical to box height, or 150% */
+
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.15px;
+      color: white;
+    }
+  }
+}

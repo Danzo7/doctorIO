@@ -1,18 +1,18 @@
 {
-  "include": ["src", "types"],
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "node",
     "jsx": "preserve",
-    "baseUrl": "./",
+    "baseUrl": ".",
     /* paths - If you configure Snowpack import aliases, add them here. */
     "paths": {
       /* "source: skypack" type declarations are installed to ".snowpack/types" */
-      "*": [".snowpack/types/*"]
+      //  "*": ["@types/*"]
     },
+
     /* noEmit - Snowpack builds (emits) files, not tsc. */
-    "noEmit": true,
+    "noEmit": true, //typeScript will not emit our js file (we dont want that)
     /* Additional Options */
     "strict": true,
     "skipLibCheck": true,
@@ -20,5 +20,8 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "importsNotUsedAsValues": "error"
-  }
+  },
+  "include": ["src", "@types"],
+  "exclude": ["node_modules"]
+  //"types": ["@types"]
 }
