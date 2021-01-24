@@ -8,13 +8,9 @@ module.exports = {
     '@snowpack/plugin-react-refresh',
     '@snowpack/plugin-dotenv',
     '@snowpack/plugin-typescript',
-    //'@snowpack/plugin-sass',
     '@snowpack/plugin-postcss',
-    [
-      'snowpack-sass-compiler',
-      { includePaths: ['src/assets/styles'] },
-    ],
-    //  ['@snowpack/plugin-sass', { includePaths: ['src/assets/styles'] }],
+    ['snowpack-sass-compiler', { includePaths: ['src/assets/styles'] }],
+      //['@snowpack/plugin-sass', { includePaths: ['src/assets/styles'] }],
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
