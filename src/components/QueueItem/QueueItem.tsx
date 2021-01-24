@@ -3,7 +3,6 @@ import './style/index.scss';
 
 interface QueueItem {}
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function QueueItem({}: QueueItem) {
   // const [count, setCount] = useState(0);
   // useEffect(func, [count, setCount]);
