@@ -10,7 +10,7 @@ module.exports = {
     '@snowpack/plugin-typescript',
     '@snowpack/plugin-postcss',
     ['snowpack-sass-compiler', { includePaths: ['src/assets/styles'] }],
-      //['@snowpack/plugin-sass', { includePaths: ['src/assets/styles'] }],
+    //['@snowpack/plugin-sass', { compilerOptions: {loadPath:['src/assets/styles']}}],
   ],
   routes: [
     /* Enable an SPA Fallback in development: */

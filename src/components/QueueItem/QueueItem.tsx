@@ -1,17 +1,17 @@
 import React from 'react';
 import './style/index.scss';
 
-interface QueueItem {}
+interface QueueItem {
+  name: string;
+  position: number;
+}
 
-function QueueItem({}: QueueItem) {
-  // const [count, setCount] = useState(0);
-  // useEffect(func, [count, setCount]);
-  // Return the App component.
+function QueueItem({ name, position }: QueueItem) {
   return (
     <div className="queue-item">
-      <div className="client-name">John Doe</div>
+      <div className="client-name">{name}</div>
       <div className="index-section">
-        <span className="text">1</span>
+        <span className="text">{position}</span>
       </div>
     </div>
   );

@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.scss';
-import QueueItem from './components/QueueItem';
+import AppMenu from './components/AppMenu';
 interface AppProps {}
 
 function App({}: AppProps) {
-  // Create the count state.
-  const [count, setCount] = useState(0);
-  if (true) useState(5);
-  // Create the counter (+1 every second).
-  useEffect(() => {
-    const timer = setTimeout(() => setCount(count + 1), 1000);
-    return () => clearTimeout(timer);
-  }, [count, setCount]);
-  // Return the App component.
-  return <div className="App"></div>;
+  return (
+    <div className="appContainer">
+      <AppMenu />
+    </div>
+  );
 }
 
 export default App;
