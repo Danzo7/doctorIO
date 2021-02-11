@@ -12,6 +12,10 @@ module.exports = {
     ['snowpack-sass-compiler', { includePaths: ['src/assets/styles'] }],
     //['@snowpack/plugin-sass', { compilerOptions: {loadPath:['src/assets/styles']}}],
   ],
+
+  alias: {
+    '@data': './src/data',
+  },
   routes: [
     /* Enable an SPA Fallback in development: */
     // {"match": "routes", "src": ".*", "dest": "/index.html"},
