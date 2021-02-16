@@ -7,9 +7,12 @@
     "baseUrl": "./",
     /* paths - If you configure Snowpack import aliases, add them here. */
     "paths": {
-      "@data/*": ["./src/data/*"]
+      "@data/*": ["./src/data/*"],
+      "@components/*": ["./src/components/components/*"],
+      "@containers/*": ["./src/components/containers/*"],
+      "@assets/*": ["./src/assets/*"],
+      "toSvg/*": ["./src/assets/svg/*"]
     },
-
     /* noEmit - Snowpack builds (emits) files, not tsc. */
     "noEmit": true, //typeScript will not emit our js file (we dont want that)
     /* Additional Options */

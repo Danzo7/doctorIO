@@ -1,0 +1,12 @@
+.AppSidebar {
+  border-radius: 1.5vw;
+  flex-grow: 6;
+  order: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6vh;
+  padding: 3vh 1.5vw;
+  background: #2c3964;
+  min-width: 20%;
+}

@@ -1,0 +1,29 @@
+.AppMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5vh;
+  justify-content: start;
+  flex-grow: 1;
+  order: 0;
+  padding: 1vh 0 5vh 0;
+  height: 100%;
+  background: #2c3964;
+  border-radius: 10vh;
+  max-width: 5%;
+}
+.AppLogo {
+  flex-grow: 5;
+  div {
+    flex-direction: column;
+    transition: 0.2s;
+    flex-shrink: 0;
+    width: 4vw;
+    height: 4vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #01b9ca;
+    border-radius: 50%;
+  }
+}

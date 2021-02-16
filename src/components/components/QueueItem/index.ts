@@ -1,3 +1,2 @@
-
 import QueueItem from './QueueItem';
-export default QueueItem;    
+export default QueueItem;
