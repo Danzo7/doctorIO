@@ -8,10 +8,18 @@ module.exports = {
     '@snowpack/plugin-react-refresh',
     '@snowpack/plugin-dotenv',
     '@snowpack/plugin-typescript',
-    'snowpack-svgr-plugin',
+    [
+      'snowpack-svgr-plugin',
+      {
+        include: './src/assets/svg/render',
+      },
+    ],
 
     // '@snowpack/plugin-postcss',
-    ['snowpack-sass-compiler', { includePaths: ['src/assets/styles'] }],
+    [
+      'snowpack-sass-compiler',
+      { includePaths: ['src/assets/styles'], useAlias: true, aliasPrefix: '@' },
+    ],
     /* [
       '@snowpack/plugin-sass',
       { compilerOptions: { loadPath: ['src/assets/styles'] } },
@@ -32,7 +40,7 @@ module.exports = {
   ],
   optimize: {
     /* Example: Bundle your final build: */
-    bundle: true,
+    //bundle: true,
   },
   packageOptions: {
     /* ... */

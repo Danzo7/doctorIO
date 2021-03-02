@@ -3,7 +3,6 @@ import MenuOption from './MenuOption';
 import './style/index.scss';
 import menuI from '@data/menuSvgs';
 import LinkyIcon from '@components/LinkyIcon';
-import Draggable from 'react-draggable';
 interface AppMenu {}
 
 function AppMenu({}: AppMenu) {

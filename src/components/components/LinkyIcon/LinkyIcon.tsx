@@ -22,7 +22,7 @@ function LinkyIcon({
   Src,
   link = '',
   alt,
-  width = '3.5vh',
+  width = '50%',
   cssMod,
   viewBox,
   stroke,
