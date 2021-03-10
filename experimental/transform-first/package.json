@@ -1,0 +1,27 @@
+{
+  "author": {
+    "name": "danzo7"
+  },
+  "bugs": {
+    "url": "https://github.com/Danzo7/snowpack-svgr-plugin/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@svgr/core": "^5.4.0"
+  },
+  "deprecated": false,
+  "description": "A simple snowpack plugin to transform SVG files to HTML SVG using react",
+  "devDependencies": {},
+  "homepage": "https://github.com/Danzo7/snowpack-svgr-plugin",
+  "keywords": [],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "transform-first",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {},
+  "version": "0.0.1"
+}
