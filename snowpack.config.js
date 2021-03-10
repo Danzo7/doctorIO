@@ -18,7 +18,14 @@ module.exports = {
     //'@snowpack/plugin-postcss',
     [
       'snowpack-sass-compiler',
-      { includePaths: ['src/assets/styles'], useAlias: true, aliasPrefix: '@' },
+      {
+        useAlias: true,
+        aliasPrefix: '@',
+        compilerOptions: {
+          outputStyle: 'compressed',
+          includePaths: ['src/assets/styles'],
+        },
+      },
     ],
     /* [
       '@snowpack/plugin-sass',
