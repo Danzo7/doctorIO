@@ -28,7 +28,6 @@ function LinkyIcon({
   stroke,
   svgClassName,
 }: LinkyIcon) {
-  console.log(Src);
   return (
     <div className="LinkyIcon">
       {(Src.prototype && (

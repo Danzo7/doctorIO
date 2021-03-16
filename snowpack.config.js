@@ -8,14 +8,15 @@ module.exports = {
     '@snowpack/plugin-react-refresh',
     '@snowpack/plugin-dotenv',
     '@snowpack/plugin-typescript',
+
     [
       'snowpack-svgr-plugin',
       {
         include: './src/assets/svg/render',
       },
     ],
-
-    //'@snowpack/plugin-postcss',
+    'transform-first',
+    // '@snowpack/plugin-postcss',
     [
       'snowpack-sass-compiler',
       {

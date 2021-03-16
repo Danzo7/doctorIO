@@ -3,6 +3,8 @@ import './App.scss';
 import AppMenu from '@containers/AppMenu';
 import AppContent from '@containers/AppContent';
 import AppSidebar from '@containers/AppSidebar';
+import { createLogger } from './redux-logger';
+console.log(createLogger);
 
 interface AppProps {}
 

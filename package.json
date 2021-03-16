@@ -9,6 +9,7 @@
     "fixDev": "snowpack dev --polyfill-node",
     "snowpack": "snowpack prepare",
     "start-ver": "snowpack dev --verbose",
+    "reload-cache": "snowpack dev --reload",
     "realtimeServer": "http-server ./build",
     "exampleServer": "http-server ./example"
   },
@@ -17,7 +18,8 @@
     "@emotion/react": "^11.1.5",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-draggable": "^4.4.3"
+    "react-draggable": "^4.4.3",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.13.0",
@@ -34,6 +36,7 @@
     "@types/mocha": "^8.2.1",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
+    "@types/redux-logger": "^3.0.8",
     "@types/sass": "^1.16.0",
     "@types/snowpack-env": "^2.3.2",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
@@ -68,7 +71,7 @@
     "postcss-vmin": "^3.0.0",
     "postcss-will-change": "^4.0.1",
     "prettier": "^2.2.1",
-    "snowpack": "^3.0.13",
+    "snowpack": "^3.1.0-pre.12",
     "snowpack-sass-compiler": "^1.0.6",
     "snowpack-svgr-plugin": "^1.0.3",
     "typescript": "^4.2.3"

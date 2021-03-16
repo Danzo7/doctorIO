@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const babel = require('@babel/core');
 const svgr = require('@svgr/core').default;
-
 module.exports = function ({ root, mount }, { include, exclude }) {
   function includes(file, folder) {
     return file.includes(folder);
