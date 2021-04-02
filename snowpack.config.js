@@ -15,16 +15,13 @@ module.exports = {
         include: './src/assets/svg/render',
       },
     ],
-    'transform-first',
-    // '@snowpack/plugin-postcss',
+    //'@snowpack/plugin-postcss',
     [
       'snowpack-sass-compiler',
       {
         useAlias: true,
-        aliasPrefix: '@',
         compilerOptions: {
-          outputStyle: 'compressed',
-          includePaths: ['src/assets/styles'],
+          includePaths: ['src/assets/styles', 'node-module/bootstrap'],
         },
       },
     ],
@@ -41,6 +38,7 @@ module.exports = {
     toSvg: './src/assets/svg',
     '@assets': './src/assets',
     '@styles': './src/assets/styles',
+    bootstrap: './node_modules/bootstrap',
   },
   routes: [
     /* Enable an SPA Fallback in development: */
