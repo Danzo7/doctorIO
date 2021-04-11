@@ -1,4 +1,4 @@
-[
+[{name:"react",variants:["componentName"],template:[
   [
     '{{componentName}}.tsx',
     `
@@ -19,10 +19,8 @@
   ],
   [
     'index.ts',
-    `
-    import {{componentName}} from './{{componentName}}';
-    export default {{componentName}};    
-    `,
+    `import {{componentName}} from './{{componentName}}';
+    export default {{componentName}};`,
   ],
   [
     'index.scss',
@@ -30,4 +28,5 @@
     
   }`,
   ],
-];
+]
+}];
