@@ -20,6 +20,7 @@ module.exports = {
       'snowpack-sass-compiler',
       {
         useAlias: true,
+        alias:"~",
         compilerOptions: {
           includePaths: ['src/assets/styles', 'node-module/bootstrap'],
         },
@@ -37,7 +38,7 @@ module.exports = {
     '@containers': './src/components/containers',
     toSvg: './src/assets/svg',
     '@assets': './src/assets',
-    '@styles': './src/assets/styles',
+    '~styles': './src/assets/styles',
     bootstrap: './node_modules/bootstrap',
   },
   routes: [
