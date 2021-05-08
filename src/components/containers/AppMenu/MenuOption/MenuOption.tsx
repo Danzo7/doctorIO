@@ -22,7 +22,7 @@ function MenuOption({ items }: MenuOption) {
       {items.map(
         ({ name, svg }) =>
           name !== 'logo' && (
-            <li
+            <li key={name}
               onClick={(e) => setCurrentPge(name)}
               className={`menuItem ${
                 currentPage === name ? ' isActive' : 'menuItem'
