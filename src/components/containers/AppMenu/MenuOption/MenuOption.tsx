@@ -6,10 +6,7 @@ interface MenuOption {
   items: {
     name: string;
     svg:
-      | React.ForwardRefRenderFunction<
-          SVGSVGElement,
-          React.SVGAttributes<SVGSVGElement>
-        >
+      | React.FunctionComponent<React.SVGProps<SVGSVGElement>>
       | string;
   }[];
 }

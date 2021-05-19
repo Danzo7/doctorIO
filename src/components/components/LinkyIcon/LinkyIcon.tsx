@@ -2,10 +2,7 @@ import React from 'react';
 import './index.scss';
 import { css, CSSInterpolation } from '@emotion/css';
 type Svg =
-  | React.ForwardRefRenderFunction<
-      SVGSVGElement,
-      React.SVGAttributes<SVGSVGElement>
-    >
+  | React.FunctionComponent<React.SVGProps<SVGSVGElement>>
   | any;
 interface LinkyIcon {
   Src: string | Svg;

@@ -1,11 +1,11 @@
-import clinic from 'toSvg/render/clinic.svgr.svg';
-import database from 'toSvg/render/database.svgr.svg';
-import history from 'toSvg/render/history.svgr.svg';
-import home from 'toSvg/render/home.svgr.svg';
-import logo from 'toSvg/render/logo.svgr.svg';
-import messages from 'toSvg/render/messages.svgr.svg';
-import settings from 'toSvg/settings.svg';
-import stats from 'toSvg/render/stats.svgr.svg';
+import {ReactComponent as clinic} from 'toSvg/render/clinic.svgr.svg';
+import { ReactComponent as database } from 'toSvg/render/database.svgr.svg';
+import {ReactComponent as history} from 'toSvg/render/history.svgr.svg';
+import {ReactComponent as home} from 'toSvg/render/home.svgr.svg';
+import {ReactComponent as logo} from 'toSvg/render/logo.svgr.svg';
+import {ReactComponent as messages} from 'toSvg/render/messages.svgr.svg';
+import {ReactComponent as settings} from 'toSvg/render/settings.svgr.svg';
+import {ReactComponent as stats} from 'toSvg/render/stats.svgr.svg';
 export default {
   home,
   messages,

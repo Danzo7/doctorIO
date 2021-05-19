@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "target": "esnext",
+    "target": "es5",
     "moduleResolution": "node",
     "jsx": "preserve",
     "baseUrl": "./",
-    /* paths - If you configure Snowpack import aliases, add them here. */
     "paths": {
       "@data/*": ["./src/data/*"],
       "@components/*": ["./src/components/components/*"],
@@ -13,9 +12,7 @@
       "@assets/*": ["./src/assets/*"],
       "toSvg/*": ["./src/assets/svg/*"]
     },
-    /* noEmit - Snowpack builds (emits) files, not tsc. */
-    "noEmit": true, //typeScript will not emit our js file (we dont want that)
-    /* Additional Options */
+    "noEmit": false, 
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
