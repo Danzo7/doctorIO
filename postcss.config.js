@@ -8,8 +8,8 @@ const will_change = require('postcss-will-change');
 const cssnano = require('cssnano');
 
 module.exports = {
-  //syntax: 'postcss-scss',
-  /* plugins: [
+  syntax: 'postcss-scss',
+   plugins: [
     will_change,
     autoprefixer,
     color_rgba_fallback,
@@ -18,5 +18,5 @@ module.exports = {
     vmin,
     pixrem,
     cssnano,
-  ],*/
+  ],
 };

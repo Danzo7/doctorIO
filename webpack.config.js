@@ -1,9 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
 const tsconfig = require("./tsconfig.json");
+const envConf=require('dotenv').config().parsed
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const aliasResolver = (alias) => {
+console.log(envConf);
+const aliasResolver = (alias,callback) => {
   resAlias={};
   Object.entries(alias).forEach(en => { 
     resAlias[en[0].replace("/*","")] = path.resolve(__dirname, en[1][0].replace("/*",""))
@@ -17,14 +19,13 @@ const snToVt = (alias) => {
 module.exports = ({mode})=>{
 const config={
   mode: mode,
-  watch: mode==="development",
   entry: ['./src/index.tsx'],
   output: {
     path: `${__dirname}/build`,
     publicPath: '/',
-    filename: 'app.min.js',
+    filename: 'index.js',
   },
-  devtool: 'inline-source-map',
+  devtool:mode==="production"?"source-map":'eval-source-map',
   module: {
     rules: [
       {
@@ -73,7 +74,7 @@ const config={
   devServer: {
     contentBase: path.resolve(__dirname, 'public'),
     liveReload: true,
-    port: 1234,
+    port: envConf?.PORT_NUMBER||4000,
     hot: true,
     historyApiFallback: true,
     writeToDisk: true,
@@ -82,7 +83,6 @@ const config={
       // asset: true
      },
   target: mode === "development" ? "web" : "browserslist",
-
 }
 console.log(JSON.stringify(config));
 

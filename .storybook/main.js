@@ -1,29 +1,31 @@
-const path = require('path');
 
-const snToVt = (alias) => {
-  Object.entries(alias).forEach(en => { alias[en[0]] = path.resolve(__dirname, en[1]) });
-  return alias;
-}
+const path = require("path");
+const webpackConfig=require("../webpack.config")({mode:"development"})
+console.log(webpackConfig.resolve.alias);
+
 module.exports = {
   webpackFinal: async (config) => {
-    return {
-      ...config,
-      resolve: {
-        ...config.resolve,
-        alias: {
-          ...config.resolve?.alias,
-          ...snToVt({
-            '@data': './src/data',
-            '@components': './src/components/components',
-            '@containers': './src/components/containers',
-            toSvg: './src/assets/svg',
-            '@assets': './src/assets',
-            'styles': './src/assets/styles',
-            bootstrap: './node_modules/bootstrap',
-          })
-        },
+    console.log(config);
+
+
+    
+    config.module.rules=[
+      {
+        test: /\.svg$/,
+       // type: 'asset/inline',
+        use: ['@svgr/webpack',"url-loader"]
       },
+
+      ...config.module.rules,
+    
+   //   ...webpackConfig.module.rules
+    ];
+
+    config.resolve.alias ={
+      ...webpackConfig.resolve.alias,
+      ...config.resolve.alias
     };
+    return config;
   },
   "stories": [
     "../src/**/*.stories.mdx",
@@ -32,7 +34,11 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    '@storybook/preset-scss'
-  ]
+    '@storybook/preset-scss',
+    'storybook-dark-mode'
+   // "@storybook/addon-postcss"
+  ],
+  "core": {
+    "builder": "webpack5"
+  }
 }
-

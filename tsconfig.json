@@ -3,7 +3,7 @@
     "module": "esnext",
     "target": "es5",
     "moduleResolution": "node",
-    "jsx": "preserve",
+    "jsx": "react",
     "baseUrl": "./",
     "paths": {
       "@data/*": ["./src/data/*"],
@@ -15,10 +15,11 @@
     "noEmit": false, 
     "strict": true,
     "skipLibCheck": true,
+    
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "importsNotUsedAsValues": "error"
+    "importsNotUsedAsValues": "remove"
   },
   "include": ["src", "@types"],
 

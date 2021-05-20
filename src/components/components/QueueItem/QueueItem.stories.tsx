@@ -10,12 +10,19 @@ import  QueueItem  from './QueueItem';
 export default {
   title: 'QueueItem',
   component: QueueItem,
-};
+  argTypes: {
+    type: { type: "select", options: ["urgent", "normal"] }
+    
+  }
+}
+
 
 //👇 We create a “template” of how args map to rendering
 const Template: Story<ComponentProps<typeof QueueItem>> = (args) => <QueueItem {...args} />;
 
-export const FirstStory = Template.bind({});
-FirstStory.args = {
-  /*👇 The args you need here will depend on your component */
+export const Primary = Template.bind({});
+Primary.args = {
+  name: 'adam smith',
+  position: 1,
 };
+
