@@ -23,10 +23,24 @@
     export default {{componentName}};`,
   ],
   [
-    'index.scss',
+    'style/index.scss',
     `.{{componentName}}{
     
   }`,
   ],
+  ["{{componentName}}.stories.tsx",
+  `import React, { ComponentProps } from 'react';
+  import type { Story } from '@storybook/react';
+  import  {{componentName}}  from './{{componentName}}';
+  //👇 This default export determines where your story goes in the story list
+  export default {
+    title: '{{componentName}}',
+    component: {{componentName}},
+  };
+  const Template: Story<ComponentProps<typeof {{componentName}}>> = (args) => <{{componentName}} {...args} />;
+  export const FirstStory = Template.bind({});
+  FirstStory.args = {
+  };`
+]
 ]
 }];

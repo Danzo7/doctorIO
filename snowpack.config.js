@@ -12,6 +12,7 @@ module.exports = {
     [
       'snowpack-svgr-plugin',
       {
+        
         include: './src/assets/svg/render',
       },
     ],
