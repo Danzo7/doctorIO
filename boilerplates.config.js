@@ -1,46 +1,46 @@
-[{name:"react",variants:["componentName"],template:[
-  [
-    '{{componentName}}.tsx',
-    `
-  import React from 'react';
-  import './index.scss';
-  interface {{componentName}} {
-  }
-  
-  function {{componentName}}({}: {{componentName}}) {
-    return (
-      <div className="{{componentName}}"></div>
-    );
-  }
-  
-  export default {{componentName}};
-  
-  `,
-  ],
-  [
-    'index.ts',
-    `import {{componentName}} from './{{componentName}}';
-    export default {{componentName}};`,
-  ],
-  [
-    'style/index.scss',
-    `.{{componentName}}{
+[
+  {name:"react",variants:["componentName"],template:[
+    [
+      '{{componentName}sc}/{{componentName}pc}.tsx',
+`import React from 'react';
+import '.style/index.scss';
+interface I{{componentName}cc} {
+}
+
+function {{componentName}pc}({}: I{{componentName}cc}) {
+  return (
+    <div className="{{componentName}pc}"></div>
+  );
+}
     
-  }`,
-  ],
-  ["{{componentName}}.stories.tsx",
-  `import React, { ComponentProps } from 'react';
-  import type { Story } from '@storybook/react';
-  import  {{componentName}}  from './{{componentName}}';
-  //👇 This default export determines where your story goes in the story list
-  export default {
-    title: '{{componentName}}',
-    component: {{componentName}},
-  };
-  const Template: Story<ComponentProps<typeof {{componentName}}>> = (args) => <{{componentName}} {...args} />;
-  export const FirstStory = Template.bind({});
-  FirstStory.args = {
-  };`
-]
-]
-}];
+export default {{componentName}pc};
+
+`,
+    ],
+    [
+      '{{componentName}sc}/index.ts',
+`import {{componentName}pc} from './{{componentName}pc}';
+export default {{componentName}pc};`,
+    ],
+    [
+      '{{componentName}sc}/style/index.scss',
+      `.{{componentName}kc}{
+      }`,
+    ],
+    ["{{componentName}sc}/{{componentName}pc}.stories.tsx",
+    `import React, { ComponentProps } from 'react';
+    import type { Story } from '@storybook/react';
+    import  {{componentName}pc}  from './{{componentName}pc}';
+    //👇 This default export determines where your story goes in the story list
+    export default {
+      title: '{{componentName}pc}',
+      component: {{componentName}pc},
+    };
+    const Template: Story<ComponentProps<typeof {{componentName}pc}>> = (args) => <{{componentName}pc} {...args} />;
+    export const FirstStory = Template.bind({});
+    FirstStory.args = {
+    };`
+  ]
+  ]
+  }
+];
