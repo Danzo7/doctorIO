@@ -1,3 +1,5 @@
+@import '~styles/appColors';
+
 .AppSidebar {
   border-radius: 1.5vw;
   flex-grow: 6;
@@ -7,6 +9,6 @@
   align-items: stretch;
   gap: 6vh;
   padding: 3vh 1.5vw;
-  background: #2c3964;
+  background: $lighterbackground;
   min-width: 20%;
 }
