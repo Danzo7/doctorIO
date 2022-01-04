@@ -92,7 +92,7 @@
     "prettier": "^2.3.0",
     "sass": "^1.32.13",
     "sass-loader": "^11.1.1",
-    "snowpack": "3.0.13",
+    "snowpack": "^3.8.8",
     "snowpack-sass-compiler": "^1.0.6",
     "snowpack-svgr-plugin": "^1.0.3",
     "storybook-dark-mode": "^1.0.8",
