@@ -11,11 +11,12 @@ ReactDOM.render(
 );
 
 // Hot Module Replacement (HMR) - Remove this snippet to remove HMR.
-// Learn more: https://snowpack.dev/concepts/hot-module-replacement
-/* if (import.meta.hot) {
+//Snowpack HMR
+if (typeof import.meta !== 'undefined' && import.meta.hot) {
   import.meta.hot.accept();
-} */
-if (module && module.hot) {
+} 
+//Webpack HMR
+if (typeof module !== 'undefined' && module.hot) {
   module.hot.accept(function (err) {
     console.log('An error occurred while accepting new version');
   });

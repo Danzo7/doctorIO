@@ -12,8 +12,8 @@ module.exports = {
     [
       'snowpack-svgr-plugin',
       {
+        "exportType":"named",//experimental will not work yet on latest version of plugin until tests.
         
-        include: './src/assets/svg/render',
       },
     ],
     //'@snowpack/plugin-postcss',
