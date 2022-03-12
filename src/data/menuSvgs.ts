@@ -27,7 +27,7 @@ export  {
   logo,
 };
 export let strokeTypes: any = {
-  home: 'stroke',
+  home: 'fill',
   messages: 'stroke',
   stats: 'stroke',
   history: 'stroke',

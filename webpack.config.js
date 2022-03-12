@@ -72,12 +72,12 @@ const config={
   }),
   ],
   devServer: {
-    contentBase: path.resolve(__dirname, 'public'),
+    static: path.resolve(__dirname, 'public'),
     liveReload: true,
     port: envConf?.PORT_NUMBER||4000,
     hot: true,
     historyApiFallback: true,
-    writeToDisk: true,
+   // writeToDisk: true,
   },
   experiments: {
       // asset: true

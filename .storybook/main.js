@@ -5,8 +5,6 @@ console.log(webpackConfig.resolve.alias);
 
 module.exports = {
   webpackFinal: async (config) => {
-    console.log(config);
-
 
     
     config.module.rules=[
@@ -31,6 +29,15 @@ module.exports = {
     "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(js|jsx|ts|tsx)"
   ],
+
+  babel: async (options) => ({
+    ...options,
+    presets: [
+      ['@babel/preset-env', { shippedProposals: true, loose: true }],
+      ['@babel/preset-react', { runtime: 'automatic', importSource: '@emotion/react' }],
+      ['@babel/preset-typescript'],
+    ],
+  }),
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
@@ -38,6 +45,10 @@ module.exports = {
     'storybook-dark-mode'
    // "@storybook/addon-postcss"
   ],
+  "framework": "@storybook/react",
+  "features": {
+    emotionAlias: false,  // <----------------------------- here
+  },
   "core": {
     "builder": "webpack5"
   }
