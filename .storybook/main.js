@@ -1,30 +1,15 @@
 
-const path = require("path");
 const webpackConfig=require("../webpack.config")({mode:"development"})
-console.log(webpackConfig.resolve.alias);
-
 module.exports = {
   webpackFinal: async (config) => {
-
-    
-    config.module.rules=[
-      {
-        test: /\.svg$/,
-       // type: 'asset/inline',
-        use: ['@svgr/webpack',"url-loader"]
-      },
-
-      ...config.module.rules,
-    
-   //   ...webpackConfig.module.rules
-    ];
-
-    config.resolve.alias ={
-      ...webpackConfig.resolve.alias,
-      ...config.resolve.alias
-    };
-    return config;
-  },
+    return   { ...config,
+       resolve:{...config.resolve,
+        alias:{
+              ...webpackConfig.resolve.alias,
+              ...config.resolve.alias}},
+       module: { ...config.module,
+                  rules: webpackConfig.module.rules }
+    } },
   "stories": [
     "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(js|jsx|ts|tsx)"
@@ -33,6 +18,7 @@ module.exports = {
   babel: async (options) => ({
     ...options,
     presets: [
+      ['@emotion/babel-preset-css-prop'],
       ['@babel/preset-env', { shippedProposals: true, loose: true }],
       ['@babel/preset-react', { runtime: 'automatic', importSource: '@emotion/react' }],
       ['@babel/preset-typescript'],
