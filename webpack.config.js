@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 console.log(envConf);
 const aliasResolver = (alias,callback) => {
-  resAlias={};
+ let resAlias={};
   Object.entries(alias).forEach(en => { 
     resAlias[en[0].replace("/*","")] = path.resolve(__dirname, en[1][0].replace("/*",""))
    });
@@ -62,6 +62,7 @@ const config={
  
   plugins: [
     new HtmlWebpackPlugin({
+      favicon: "public/favicon.ico",
       template: "public/index.html"
     }),
     new webpack.DefinePlugin({
