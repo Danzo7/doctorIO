@@ -5,17 +5,7 @@ const envConf=require('dotenv').config().parsed
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 console.log(envConf);
-const aliasResolver = (alias,callback) => {
- let resAlias={};
-  Object.entries(alias).forEach(en => { 
-    resAlias[en[0].replace("/*","")] = path.resolve(__dirname, en[1][0].replace("/*",""))
-   });
-  return resAlias;
-}
-const snToVt = (alias) => {
-  Object.entries(alias).forEach(en => { alias[en[0]] = path.resolve(__dirname, en[1]) });
-  return alias;
-}
+
 module.exports = ({mode})=>{
 const config={
   mode: mode,
@@ -89,3 +79,10 @@ console.log(JSON.stringify(config));
 
   return config;
 };
+const aliasResolver = (alias) => {
+  const resAlias={};
+   Object.entries(alias).forEach(en => { 
+     resAlias[en[0].replace("/*","")] = path.resolve(__dirname, en[1][0].replace("/*",""))
+    });
+   return resAlias;
+ }
