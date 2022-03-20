@@ -15,32 +15,31 @@
     "forge": "./electron-config/forge.config.js"
   },
   "scripts": {
-    "start": "electron-forge start",
+    "devServer": "webpack serve  --env mode=development",
+    "productionWeb": "webpack  --env mode=production",
+    "startApp": "electron-forge start",
+    "storybook": "start-storybook -p 6006",
+    "realtimeServer": "http-server ./build",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "eslint": "eslint --ext .ts,.tsx .",
-
-    "dev": "webpack serve  --env mode=development",
-    "prod": "webpack  --env mode=production",
-    "storybook": "start-storybook -p 6006",
-    "realtimeServer": "http-server ./build",
-    "test": "web-test-runner \"src/**/*.test.tsx\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
     "exampleServer": "http-server ./example",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test": "web-test-runner \"src/**/*.test.tsx\""
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
     "@emotion/css": "^11.7.1",
     "@emotion/react": "^11.8.2",
-    "@storybook/manager-webpack5": "^6.4.19",
     "bootstrap": "^5.1.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@storybook/manager-webpack5": "^6.4.19",
     "@vercel/webpack-asset-relocator-loader": "^1.7.0",
     "fork-ts-checker-webpack-plugin": "^7.2.1",
     "node-loader": "^2.0.0",
