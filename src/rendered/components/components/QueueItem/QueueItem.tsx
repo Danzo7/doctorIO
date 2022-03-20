@@ -1,7 +1,7 @@
 import LinkyIcon from '@components/LinkyIcon';
 import React from 'react';
 import './style/index.scss';
-import {ReactComponent as Indicator } from 'toSvg/render/exclamation.svgr.svg';
+import {ReactComponent as Indicator } from 'toSvg/exclamation.svg';
 interface QueueItem {
   name: string;
   position: number;

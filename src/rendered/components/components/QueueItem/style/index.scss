@@ -1,0 +1,66 @@
+@import '~styles/appColors';
+.queue-item {
+  /* Auto Layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: $secondarycolor;
+  border-radius: 11px;
+  align-items: center;
+  overflow: hidden;
+  height: 30vh;
+  max-width: 50px;
+  min-height: 180px;
+  //height: 100%;
+.indicator{
+  display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 18px;
+        background: $coldblue;
+        margin: 2px;
+        
+    &.isUrgent {
+          background: $coldred;
+        }
+      
+      
+}
+  .client-name {
+    font-family: Sarabun;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.15px;
+    color: #ffffff;
+    transform: rotate(90deg);
+    flex-grow: 1;
+    white-space: nowrap;
+
+  }
+
+  .index-section {
+    height: 2em;
+    background: $hotpurple;
+    width: 100%;
+    border-radius: 50% 50% 0 0;
+    display: flex;
+    justify-content: center;
+    > span {
+      font-family: Sarabun;
+      font-style: normal;
+      font-weight: 800;
+      font-size: 1em;
+      line-height: 24px;
+      /* identical to box height, or 150% */
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.15px;
+      color: white;
+    }
+  }
+}

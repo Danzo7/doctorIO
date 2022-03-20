@@ -1,27 +1,27 @@
-{
-  "compilerOptions": {
-    "module": "esnext",
-    "target": "es5",
-    "moduleResolution": "node",
-    "jsx": "react",
-    "baseUrl": "./",
-    "paths": {
-      "@data/*": ["./src/data/*"],
-      "@components/*": ["./src/components/components/*"],
-      "@containers/*": ["./src/components/containers/*"],
-      "@assets/*": ["./src/assets/*"],
-      "toSvg/*": ["./src/assets/svg/*"]
-    },
-    "noEmit": false, 
-    "strict": true,
-    "skipLibCheck": true,
-    
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "importsNotUsedAsValues": "remove"
+{ "compilerOptions": {
+  "module": "esnext",
+  "target": "es5",
+  "moduleResolution": "node",
+  "jsx": "react",
+  "baseUrl": "./",
+  "paths": {
+    "*": ["node_modules/*"],
+    "@data/*": ["./src/rendered/data/*"],
+    "@components/*": ["./src/rendered/components/components/*"],
+    "@containers/*": ["./src/rendered/components/containers/*"],
+    "@assets/*": ["./src/rendered/assets/*"],
+    "toSvg/*": ["./src/rendered/assets/svg/*"]
   },
-  "include": ["src", "@types"],
-
-  "exclude": ["node_modules"]
+  "noEmit": false, 
+  "strict": true,
+  "skipLibCheck": true,
+  "forceConsistentCasingInFileNames": true,
+  "resolveJsonModule": true,
+  "allowSyntheticDefaultImports": true,
+  "importsNotUsedAsValues": "remove",
+  "esModuleInterop": true,
+  "noImplicitAny": true,
+  "sourceMap": true,
+  "outDir": "dist"},
+"include": ["src", "@types"]
 }

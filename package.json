@@ -1,5 +1,26 @@
 {
+ 
+  "name": "clinicord",
+  "productName": "clinicord",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": ".webpack/main",
+  "keywords": [],
+  "author": {
+    "name": "Danzo7",
+    "email": "aymenmiro@gmail.com"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": "./electron-config/forge.config.js"
+  },
   "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "eslint": "eslint --ext .ts,.tsx .",
+
     "dev": "webpack serve  --env mode=development",
     "prod": "webpack  --env mode=production",
     "storybook": "start-storybook -p 6006",
@@ -7,11 +28,11 @@
     "test": "web-test-runner \"src/**/*.test.tsx\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
-    "eslint": "eslint \"src/**/*.{js,jsx}\" --quiet",
     "exampleServer": "http-server ./example",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
     "@emotion/css": "^11.7.1",
     "@emotion/react": "^11.8.2",
     "@storybook/manager-webpack5": "^6.4.19",
@@ -20,6 +41,15 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@vercel/webpack-asset-relocator-loader": "^1.7.0",
+    "fork-ts-checker-webpack-plugin": "^7.2.1",
+    "node-loader": "^2.0.0",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "@electron-forge/plugin-webpack": "^6.0.0-beta.63",
     "@babel/core": "^7.17.7",
     "@babel/preset-typescript": "^7.16.7",
     "@emotion/babel-plugin": "^11.7.2",
@@ -49,6 +79,7 @@
     "del-cli": "^4.0.1",
     "dotenv": "^16.0.0",
     "dotenv-webpack": "^7.1.0",
+    "electron": "^17.1.2",
     "es6-promise-promise": "^1.0.0",
     "eslint": "^8.11.0",
     "eslint-config-airbnb": "^19.0.4",

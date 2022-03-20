@@ -1,15 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const tsconfig = require("./tsconfig.json");
-const envConf=require('dotenv').config().parsed
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-console.log(envConf);
-
 module.exports = ({mode})=>{
-const config={
+return {
   mode: mode,
-  entry: ['./src/index.tsx'],
+  entry: ['./src/rendered/index.tsx'],
   output: {
     path: `${__dirname}/build`,
     publicPath: '/',
@@ -45,7 +42,7 @@ const config={
     extensions: ['.tsx', '.ts', '.js','.scss'],
     alias:{... aliasResolver({
       ...tsconfig.compilerOptions.paths,
-      'styles': ['./src/assets/styles']
+      'styles': ['./src/rendered/assets/styles']
     })
     }
   },
@@ -65,7 +62,7 @@ const config={
   devServer: {
     static: path.resolve(__dirname, 'public'),
     liveReload: true,
-    port: envConf?.PORT_NUMBER||4000,
+    port: 4000,
     hot: true,
     historyApiFallback: true,
    // writeToDisk: true,
@@ -75,9 +72,6 @@ const config={
      },
   target: mode === "development" ? "web" : "browserslist",
 }
-console.log(JSON.stringify(config));
-
-  return config;
 };
 const aliasResolver = (alias) => {
   const resAlias={};
