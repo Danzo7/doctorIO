@@ -18,9 +18,9 @@
   "scripts":{
      "devServer":"webpack serve  --env mode=development",
      "productionWeb":"webpack  --env mode=production",
-     "startApp":"electron-forge start",
      "storybook":"start-storybook -p 6006",
      "realtimeServer":"http-server ./build",
+     "startApp":"electron-forge start",
      "package":"electron-forge package",
      "make":"electron-forge make",
      "publish":"electron-forge publish",

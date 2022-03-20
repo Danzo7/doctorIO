@@ -1,9 +1,7 @@
 import React from 'react';
 import './index.scss';
 import { css, CSSInterpolation } from '@emotion/css';
-type Svg =
-  | React.FunctionComponent<React.SVGProps<SVGSVGElement>>
-  | any;
+type Svg = React.FunctionComponent<React.SVGProps<SVGSVGElement>> | any;
 interface LinkyIcon {
   Src: string | Svg;
   link?: string;

@@ -15,7 +15,7 @@ if (typeof module !== 'undefined' && module.hot) {
     console.log('An error occurred while accepting new version');
   });
 
-  module.hot.addStatusHandler(status => {
+  module.hot.addStatusHandler((status) => {
     if (status === 'prepare') console.clear();
   });
 }

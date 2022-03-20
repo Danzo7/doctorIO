@@ -5,9 +5,7 @@ import './style/index.scss';
 interface MenuOption {
   items: {
     name: string;
-    svg:
-      | React.FunctionComponent<React.SVGProps<SVGSVGElement>>
-      | string;
+    svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | string;
   }[];
 }
 
@@ -19,7 +17,8 @@ function MenuOption({ items }: MenuOption) {
       {items.map(
         ({ name, svg }) =>
           name !== 'logo' && (
-            <li key={name}
+            <li
+              key={name}
               onClick={(e) => setCurrentPge(name)}
               className={`menuItem ${
                 currentPage === name ? ' isActive' : 'menuItem'
