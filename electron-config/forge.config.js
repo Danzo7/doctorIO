@@ -5,7 +5,9 @@ module.exports = {
       {
         "name": "@electron-forge/maker-squirrel",
         "config": {
-          "name": "Clinicord"
+          "name": "Clinicord",
+          "icon": "/src/renderer/assets/svg/logo.svg"
+          
         }
       },
       {
@@ -33,7 +35,7 @@ module.exports = {
             "entryPoints": [
               {
                 "html": "./public/index.html",
-                "js": "./src/rendered/index.tsx",
+                "js": "./src/renderer/index.tsx",
                 "name": "main_window"
               }
             ]

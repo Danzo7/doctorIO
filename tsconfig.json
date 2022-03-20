@@ -6,11 +6,11 @@
   "baseUrl": "./",
   "paths": {
     "*": ["node_modules/*"],
-    "@data/*": ["./src/rendered/data/*"],
-    "@components/*": ["./src/rendered/components/components/*"],
-    "@containers/*": ["./src/rendered/components/containers/*"],
-    "@assets/*": ["./src/rendered/assets/*"],
-    "toSvg/*": ["./src/rendered/assets/svg/*"]
+    "@data/*": ["src/renderer/data/*"],
+    "@components/*": ["src/renderer/components/components/*"],
+    "@containers/*": ["src/renderer/components/containers/*"],
+    "@assets/*": ["src/renderer/assets/*"],
+    "toSvg/*": ["src/renderer/assets/svg/*"]
   },
   "noEmit": false, 
   "strict": true,

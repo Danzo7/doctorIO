@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = ({mode})=>{
 return {
   mode: mode,
-  entry: ['./src/rendered/index.tsx'],
+  entry: ['./src/renderer/index.tsx'],
   output: {
     path: `${__dirname}/build`,
     publicPath: '/',
@@ -42,7 +42,7 @@ return {
     extensions: ['.tsx', '.ts', '.js','.scss'],
     alias:{... aliasResolver({
       ...tsconfig.compilerOptions.paths,
-      'styles': ['./src/rendered/assets/styles']
+      'styles': ['./src/renderer/assets/styles']
     })
     }
   },
