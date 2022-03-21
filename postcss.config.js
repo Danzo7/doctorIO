@@ -14,7 +14,7 @@ module.exports = {
     autoprefixer,
     color_rgba_fallback,
     opacity,
-    pseudoelements,
+  //  pseudoelements,
     vmin,
     pixrem,
     cssnano,

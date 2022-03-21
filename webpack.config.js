@@ -10,9 +10,8 @@ return {
   output: {
     path: `${__dirname}/build`,
     publicPath: '/',
-    filename: 'index.js',
+    filename: 'main.js',
   },
-  devtool:mode==="production"?"source-map":'eval-source-map',
   module: {
     rules: [
       {
@@ -67,9 +66,7 @@ return {
     historyApiFallback: true,
    // writeToDisk: true,
   },
-  experiments: {
-      // asset: true
-     },
+  devtool:mode==="production"?"source-map":'eval-source-map',
   target: mode === "development" ? "web" : "browserslist",
 }
 };

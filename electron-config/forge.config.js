@@ -1,6 +1,8 @@
 module.exports = {
   
-    "packagerConfig": {},
+    "packagerConfig": { 
+     // "asar": true,
+      },
     "makers": [
       {
         "name": "@electron-forge/maker-squirrel",
@@ -29,6 +31,7 @@ module.exports = {
       [
         "@electron-forge/plugin-webpack",
         {
+          
           "mainConfig": "./electron-config/webpack.main.config.js",
           "renderer": {
             "config": "./electron-config/webpack.renderer.config.js",
@@ -36,7 +39,7 @@ module.exports = {
               {
                 "html": "./public/index.html",
                 "js": "./src/renderer/index.tsx",
-                "name": "main_window"
+                "name": "app"
               }
             ]
           }
