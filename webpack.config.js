@@ -48,6 +48,7 @@ module.exports = ({ mode }) => {
               loader: 'url-loader',
               options: {
                 limit: 8192,
+                name: 'dist/img[hash].[ext]',
               },
             },
           ],
