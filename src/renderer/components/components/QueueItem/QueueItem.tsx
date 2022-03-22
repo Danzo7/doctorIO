@@ -1,7 +1,9 @@
 import LinkyIcon from '@components/LinkyIcon';
 import React from 'react';
 import './style/index.scss';
-import { ReactComponent as Indicator } from 'toSvg/exclamation.svg';
+import url, { ReactComponent as Indicator } from 'toSvg/exclamation.svg';
+import image from '/src/renderer/assets/icon/icon.png';
+
 interface QueueItem {
   name: string;
   position: number;
@@ -12,8 +14,9 @@ function QueueItem({ name, position, type }: QueueItem) {
   return (
     <div className="queue-item">
       <div className={'indicator ' + (type === 'urgent' ? 'isUrgent' : '')}>
+        <img src={image}></img>
         <LinkyIcon
-          Src={Indicator}
+          Src={url}
           viewBox="-10 -10 50  50"
           alt={'home'}
           width="50%"

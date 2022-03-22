@@ -11,7 +11,7 @@ function AppMenu({}: AppMenu) {
       <div className="AppLogo">
         <LinkyIcon
           Src={menuI.logo}
-          viewBox="-6 -8 70 70"
+          viewBox="-10 -10 70 70"
           alt={'home'}
           width="80%"
         />
