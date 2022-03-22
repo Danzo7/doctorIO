@@ -1,7 +1,6 @@
-let mode="development";
+let mode = 'development';
 
-const webpackDefault=require('../webpack.config')(mode);
-
+const webpackDefault = require('../webpack.config')(mode);
 
 module.exports = {
   /**
@@ -9,18 +8,18 @@ module.exports = {
    * that runs in the main process.
    */
   entry: './src/main/index.ts',
-//  output: webpackDefault.output,
-  mode:webpackDefault.mode,
-  
+  //  output: webpackDefault.output,
+  mode: webpackDefault.mode,
+
   // Put your normal webpack config below here
   module: {
     rules: require('./webpack.rules'),
   },
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
-   
+    alias: webpackDefault.resolve.alias,
   },
- // devServer:webpackDefault.devServer,
- // devtool:webpackDefault.devtool,
- // target:webpackDefault.target
+  // devServer:webpackDefault.devServer,
+  // devtool:webpackDefault.devtool,
+  // target:webpackDefault.target
 };
