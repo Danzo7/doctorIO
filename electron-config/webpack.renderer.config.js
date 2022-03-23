@@ -31,6 +31,6 @@ module.exports = {
   module: {
     rules: webpackDefault.module.rules,
   },
-  plugins: plugins,
+  plugins: [...plugins, ...webpackDefault.plugins],
   resolve: webpackDefault.resolve,
 };
