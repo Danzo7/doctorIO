@@ -18,7 +18,7 @@ module.exports = {
   ],
   plugins: [
     [
-      '@electron-forge/plugin-webpack',
+      'electron-forge-webpack',
       {
         mainConfig: './electron-config/webpack.main.config.js',
         renderer: {
