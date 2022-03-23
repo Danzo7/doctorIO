@@ -20,6 +20,7 @@ module.exports = {
     [
       'electron-forge-webpack',
       {
+        output: 'dist',
         mainConfig: './electron-config/webpack.main.config.js',
         renderer: {
           config: './electron-config/webpack.renderer.config.js',

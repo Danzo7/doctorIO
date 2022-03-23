@@ -3,7 +3,7 @@
   "productName": "clinicord",
   "version": "1.0.0",
   "description": "My Electron application description",
-  "main": ".webpack/main",
+  "main": "dist/main",
   "keywords": [],
   "author": {
     "name": "Danzo7",
@@ -67,6 +67,7 @@
     "dotenv": "^16.0.0",
     "dotenv-webpack": "^7.1.0",
     "electron": "^17.1.2",
+    "electron-forge-webpack": "https://github.com/Danzo7/electron-forge-webpack",
     "eslint": "^8.11.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^16.1.3",
