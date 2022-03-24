@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import App from './App';
 import './index.scss';
 
-ReactDOM.render(
+render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
@@ -11,8 +11,8 @@ ReactDOM.render(
 );
 
 if (typeof module !== 'undefined' && module.hot) {
-  module.hot.accept(function (err) {
-    console.log('An error occurred while accepting new version');
+  module.hot.accept(function () {
+    console.error('An error occurred while accepting new version');
   });
 
   module.hot.addStatusHandler((status) => {

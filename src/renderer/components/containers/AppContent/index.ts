@@ -1,2 +1,2 @@
-import AppContent from './AppContent';
-export default AppContent;
+import AppContentProps from './AppContent';
+export default AppContentProps;

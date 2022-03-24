@@ -1,13 +1,16 @@
 [
-  {name:"react",variants:["componentName"],template:[
-    [
-      '{{componentName}sc}/{{componentName}pc}.tsx',
-`import React from 'react';
+  {
+    name: 'react',
+    variants: ['componentName'],
+    template: [
+      [
+        '{{componentName}sc}/{{componentName}pc}.tsx',
+        `import React from 'react';
 import '.style/index.scss';
-interface I{{componentName}cc} {
+interface {{componentName}cc}Props {
 }
 
-function {{componentName}pc}({}: I{{componentName}cc}) {
+function {{componentName}pc}({}: {{componentName}cc}Props) {
   return (
     <div className="{{componentName}pc}"></div>
   );
@@ -16,19 +19,20 @@ function {{componentName}pc}({}: I{{componentName}cc}) {
 export default {{componentName}pc};
 
 `,
-    ],
-    [
-      '{{componentName}sc}/index.ts',
-`import {{componentName}pc} from './{{componentName}pc}';
+      ],
+      [
+        '{{componentName}sc}/index.ts',
+        `import {{componentName}pc} from './{{componentName}pc}';
 export default {{componentName}pc};`,
-    ],
-    [
-      '{{componentName}sc}/style/index.scss',
-      `.{{componentName}kc}{
+      ],
+      [
+        '{{componentName}sc}/style/index.scss',
+        `.{{componentName}kc}{
       }`,
-    ],
-    ["{{componentName}sc}/{{componentName}pc}.stories.tsx",
-    `import React, { ComponentProps } from 'react';
+      ],
+      [
+        '{{componentName}sc}/{{componentName}pc}.stories.tsx',
+        `import React, { ComponentProps } from 'react';
     import type { Story } from '@storybook/react';
     import  {{componentName}pc}  from './{{componentName}pc}';
     //👇 This default export determines where your story goes in the story list
@@ -39,8 +43,8 @@ export default {{componentName}pc};`,
     const Template: Story<ComponentProps<typeof {{componentName}pc}>> = (args) => <{{componentName}pc} {...args} />;
     export const FirstStory = Template.bind({});
     FirstStory.args = {
-    };`
-  ]
-  ]
-  }
+    };`,
+      ],
+    ],
+  },
 ];

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.scss';
 import AppMenu from '@containers/AppMenu';
 import AppContent from '@containers/AppContent';

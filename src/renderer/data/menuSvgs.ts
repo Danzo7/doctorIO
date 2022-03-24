@@ -17,7 +17,11 @@ export default {
   logo,
 };
 export { home, messages, stats, history, database, clinic, settings, logo };
-export let strokeTypes: any = {
+type Strokes = {
+  [key: string]: string;
+};
+
+export const strokeTypes: Strokes = {
   home: 'fill',
   messages: 'stroke',
   stats: 'stroke',

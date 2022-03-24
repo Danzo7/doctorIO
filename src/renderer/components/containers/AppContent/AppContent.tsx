@@ -1,8 +1,8 @@
 import React from 'react';
 import './index.scss';
-interface AppContent {}
+interface AppContentProps {}
 
-function AppContent({}: AppContent) {
+function AppContent({}: AppContentProps) {
   return <div className="AppContent"></div>;
 }
 

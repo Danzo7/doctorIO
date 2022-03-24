@@ -2,9 +2,8 @@ import React from 'react';
 import './index.scss';
 import { css, CSSInterpolation } from '@emotion/css';
 type Svg = React.FunctionComponent<React.SVGProps<SVGSVGElement>> | any;
-interface LinkyIcon {
+interface LinkyIconProps {
   Src: string | Svg;
-  link?: string;
   alt: string;
   width?: string;
   cssMod?: CSSInterpolation;
@@ -15,14 +14,13 @@ interface LinkyIcon {
 
 function LinkyIcon({
   Src,
-  link = '',
   alt,
   width = '50%',
   cssMod,
   viewBox,
   stroke,
   svgClassName,
-}: LinkyIcon) {
+}: LinkyIconProps) {
   return (
     <div className="LinkyIcon">
       {(Src.prototype && (

@@ -1,9 +1,9 @@
 import QueueItem from '@components/QueueItem';
 import React from 'react';
 import './index.scss';
-interface AppSidebar {}
+interface AppSidebarProps {}
 
-function AppSidebar({}: AppSidebar) {
+function AppSidebar({}: AppSidebarProps) {
   return (
     <div className="AppSidebar">
       <QueueItem name="hello" position={2}></QueueItem>

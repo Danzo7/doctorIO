@@ -1,22 +1,20 @@
 import LinkyIcon from '@components/LinkyIcon';
 import React from 'react';
 import './style/index.scss';
-import url, { ReactComponent as Indicator } from 'toSvg/exclamation.svg';
-import image from '/src/renderer/assets/icon/icon.png';
+import { ReactComponent as Indicator } from 'toSvg/exclamation.svg';
 
-interface QueueItem {
+interface QueueItemProps {
   name: string;
   position: number;
   type?: string;
   variant?: string;
 }
-function QueueItem({ name, position, type }: QueueItem) {
+function QueueItem({ name, position, type }: QueueItemProps) {
   return (
     <div className="queue-item">
       <div className={'indicator ' + (type === 'urgent' ? 'isUrgent' : '')}>
-        <img src={image}></img>
         <LinkyIcon
-          Src={url}
+          Src={Indicator}
           viewBox="-10 -10 50  50"
           alt={'home'}
           width="50%"

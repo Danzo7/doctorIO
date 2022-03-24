@@ -1,16 +1,16 @@
 import React from 'react';
 import MenuOption from './MenuOption';
 import './style/index.scss';
-import menuI from '@data/menuSvgs';
+import menuI, { logo } from '@data/menuSvgs';
 import LinkyIcon from '@components/LinkyIcon';
-interface AppMenu {}
+interface AppMenuProps {}
 
-function AppMenu({}: AppMenu) {
+function AppMenu({}: AppMenuProps) {
   return (
     <div className="AppMenu">
       <div className="AppLogo">
         <LinkyIcon
-          Src={menuI.logo}
+          Src={logo}
           viewBox="-10 -10 70 70"
           alt={'home'}
           width="80%"

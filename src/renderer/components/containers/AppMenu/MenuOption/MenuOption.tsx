@@ -2,14 +2,14 @@ import LinkyIcon from '@components/LinkyIcon';
 import { strokeTypes } from '@data/menuSvgs';
 import React, { useState } from 'react';
 import './style/index.scss';
-interface MenuOption {
+interface MenuOptionProps {
   items: {
     name: string;
     svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | string;
   }[];
 }
 
-function MenuOption({ items }: MenuOption) {
+function MenuOption({ items }: MenuOptionProps) {
   const [currentPage, setCurrentPge] = useState('home');
 
   return (
@@ -19,7 +19,7 @@ function MenuOption({ items }: MenuOption) {
           name !== 'logo' && (
             <li
               key={name}
-              onClick={(e) => setCurrentPge(name)}
+              onClick={() => setCurrentPge(name)}
               className={`menuItem ${
                 currentPage === name ? ' isActive' : 'menuItem'
               }`}
