@@ -1,12 +1,12 @@
 {
   "name": "clinicord",
-  "productName": "clinicord",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "productName": "Clinicord",
+  "version": "0.0.1-alpha",
+  "description": "Clinicord is An intranet medical practice management system platform",
   "main": "dist/main",
   "keywords": [],
   "author": {
-    "name": "Danzo7",
+    "name": "dzBrackets",
     "email": "aymenmiro@gmail.com"
   },
   "license": "MIT",
