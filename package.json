@@ -3,7 +3,7 @@
   "productName": "Clinicord",
   "version": "0.0.1-alpha",
   "description": "Clinicord is An intranet medical practice management system platform",
-  "main": "dist/main",
+  "main": "build/main",
   "keywords": [],
   "author": {
     "name": "dzBrackets",

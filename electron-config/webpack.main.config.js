@@ -1,7 +1,3 @@
-let mode = 'development';
-
-const webpackDefault = require('../webpack.config')(mode);
-
 module.exports = {
   /**
    * This is the main entry point for your application, it's the first file
@@ -9,15 +5,41 @@ module.exports = {
    */
   entry: './src/main/index.ts',
   //  output: webpackDefault.output,
-  mode: webpackDefault.mode,
 
   // Put your normal webpack config below here
   module: {
-    rules: require('./webpack.rules'),
+    rules: [
+      // Add support for native node modules
+      {
+        // We're specifying native_modules in the test because the asset relocator loader generates a
+        // "fake" .node file which is really a cjs file.
+        test: /native_modules\/.+\.node$/,
+        use: 'node-loader',
+      },
+      {
+        test: /\.(m?js|node)$/,
+        parser: { amd: false },
+        use: {
+          loader: '@vercel/webpack-asset-relocator-loader',
+          options: {
+            outputAssetBase: 'native_modules',
+          },
+        },
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /(node_modules|\.webpack)/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+          },
+        },
+      },
+    ],
   },
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
-    alias: webpackDefault.resolve.alias,
   },
   // devServer:webpackDefault.devServer,
   // devtool:webpackDefault.devtool,

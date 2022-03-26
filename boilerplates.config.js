@@ -12,7 +12,7 @@ interface {{componentName}cc}Props {
 
 function {{componentName}pc}({}: {{componentName}cc}Props) {
   return (
-    <div className="{{componentName}pc}"></div>
+    <div className="{{componentName}kc}"></div>
   );
 }
     

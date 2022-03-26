@@ -1,14 +1,18 @@
+//launching .env
+require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const tsconfig = require('./tsconfig.json');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-module.exports = ({ mode }) => {
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
+module.exports = ({ mode } = { mode: process.env.mode }) => {
   return {
     mode: mode,
     entry: ['./src/renderer/index.tsx'],
     output: {
-      path: `${__dirname}/build`,
+      path: `${__dirname}/build/renderer`,
       publicPath: '/',
       filename: 'main.js',
     },
@@ -24,17 +28,16 @@ module.exports = ({ mode }) => {
           sideEffects: true,
 
           use: [
-            (() =>
-              mode === 'development'
-                ? 'style-loader'
-                : MiniCssExtractPlugin.loader)(),
+            mode === 'development'
+              ? 'style-loader'
+              : MiniCssExtractPlugin.loader,
             {
               loader: 'css-loader',
               options: { sourceMap: true, importLoaders: 1 },
             },
-            'postcss-loader',
+            mode !== 'development' ? 'postcss-loader' : undefined,
             { loader: 'sass-loader', options: { sourceMap: true } },
-          ],
+          ].filter((r) => r != undefined),
         },
         {
           test: /\.svg$/,
@@ -48,7 +51,7 @@ module.exports = ({ mode }) => {
               loader: 'url-loader',
               options: {
                 limit: 8192,
-                name: 'dist/img[hash].[ext]',
+                name: 'assets/img[hash].[ext]',
               },
             },
           ],
@@ -67,6 +70,8 @@ module.exports = ({ mode }) => {
     },
 
     plugins: [
+      new ForkTsCheckerWebpackPlugin(),
+
       new HtmlWebpackPlugin({
         favicon: 'public/favicon.ico',
         template: 'public/index.html',
@@ -75,9 +80,10 @@ module.exports = ({ mode }) => {
         __DEV__: true,
       }),
       new MiniCssExtractPlugin({
-        filename: 'dist/[name].css',
+        filename: 'assets/[name].css',
       }),
     ],
+
     devServer: {
       static: path.resolve(__dirname, 'public'),
       liveReload: true,
