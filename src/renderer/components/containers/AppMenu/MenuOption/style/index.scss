@@ -14,7 +14,7 @@
   align-items: center;
   flex-direction: column;
   transition: 0.3s;
-  height: 100%;
+  padding: 10% 0 10% 0;
   border-radius: 200%;
   transition: 0.2s;
 
@@ -56,6 +56,8 @@
   > div > svg {
     width: 80%;
     height: auto;
+    display: block;
+    margin: auto;
   }
 }
 @keyframes circleToBox {

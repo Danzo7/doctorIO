@@ -10,7 +10,7 @@
   height: 100%;
   background: #2c3964;
   border-radius: 10vh;
-  max-width: 5%;
+  width: 40px;
 }
 .AppLogo {
   flex-grow: 5;
@@ -18,11 +18,10 @@
     flex-direction: column;
     transition: 0.2s;
     flex-shrink: 0;
-    width: 4vw;
-    height: 4vw;
+    width: 100%;
+    height: auto;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
     // background: #01b9ca;
     border-radius: 50%;
   }
