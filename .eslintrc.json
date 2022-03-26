@@ -29,6 +29,7 @@
     "ecmaVersion": 12,
     "sourceType": "module",
     "project": "./tsconfig.json"
+    
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "globals": { "Atomics": "readonly", "SharedArrayBuffer": "readonly" },
@@ -43,5 +44,5 @@
     "@typescript-eslint/no-explicit-any":"off",
     "@typescript-eslint/no-empty-interface":"off"
   },
-  "ignorePatterns": ["boilerplates.config.js"],
+  "ignorePatterns": ["*.config.js"]
 }
