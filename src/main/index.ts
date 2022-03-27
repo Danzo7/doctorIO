@@ -20,7 +20,6 @@ const createWindow = (): void => {
   // and load the index.html of the app.
   mainWindow.loadURL(APP_WEBPACK_ENTRY);
   mainWindow.maximize();
-  console.log(12);
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };
