@@ -6266,7 +6266,7 @@ ee-first@1.1.1:
 
 "electron-forge-webpack@https://github.com/Danzo7/electron-forge-webpack#dist":
   version "6.0.1-beta.63"
-  resolved "https://github.com/Danzo7/electron-forge-webpack#4f148b2620b2306a9c6a8017e2fa6c72bab4beb0"
+  resolved "https://github.com/Danzo7/electron-forge-webpack#6e2ef5f72b95a7a7b7a281ad8934ac2bb456ee2a"
   dependencies:
     "@electron-forge/async-ora" "6.0.0-beta.63"
     "@electron-forge/core" "6.0.0-beta.63"
