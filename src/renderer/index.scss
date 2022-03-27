@@ -1,10 +1,13 @@
 @import '~styles/appColors';
-@import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
 
+@font-face {
+  font-family: 'sarabun';
+  src: url(./assets/font/Sarabun-Regular.ttf) format('truetype');
+}
 * {
   box-sizing: border-box;
   user-select: none;
-  font-family: 'Sarabun', sans-serif;
+  font-family: 'sarabun';
 }
 body,
 #app-mount {

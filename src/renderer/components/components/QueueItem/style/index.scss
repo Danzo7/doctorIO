@@ -12,23 +12,20 @@
   max-width: 50px;
   min-height: 180px;
   //height: 100%;
-.indicator{
-  display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        border-radius: 18px;
-        background: $coldblue;
-        margin: 2px;
-        
+  .indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 18px;
+    background: $coldblue;
+    margin: 2px;
+
     &.isUrgent {
-          background: $coldred;
-        }
-      
-      
-}
+      background: $coldred;
+    }
+  }
   .client-name {
-    font-family: Sarabun;
     font-weight: 600;
     font-size: 13px;
     line-height: 24px;
@@ -39,7 +36,6 @@
     transform: rotate(90deg);
     flex-grow: 1;
     white-space: nowrap;
-
   }
 
   .index-section {

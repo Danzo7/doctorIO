@@ -51,9 +51,15 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
           },
         },
         {
-          test: /\.svg$/,
-          // type: 'asset/inline',
-          use: ['@svgr/webpack', 'url-loader'],
+          test: /\.svg$/i,
+          type: 'asset',
+          resourceQuery: /url/, // *.svg ?url
+        },
+        {
+          test: /\.svg$/i,
+          issuer: /\.[jt]sx?$/, // only work ib jsx/tsx file
+          resourceQuery: { not: [/url/] },
+          use: ['@svgr/webpack'],
         },
         {
           test: /\.png/,
@@ -78,9 +84,6 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       new HtmlWebpackPlugin({
         favicon: 'public/favicon.ico',
         template: 'public/index.html',
-      }),
-      new webpack.DefinePlugin({
-        __DEV__: true,
       }),
       new MiniCssExtractPlugin({
         filename: 'assets/[name].css',
