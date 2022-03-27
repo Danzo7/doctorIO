@@ -23,6 +23,7 @@
   "noImplicitAny": true,
   "sourceMap": true,
   "outDir": "dist"},
+  "skipLibCheck": true,
 "include": ["src", "@types"],
 "exclude": ["node_modules"]
 
