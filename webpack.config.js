@@ -15,6 +15,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       path: `${__dirname}/build/renderer`,
       publicPath: '/',
       filename: 'main.js',
+      assetModuleFilename: 'assets/[hash][ext][query]',
     },
     module: {
       rules: [
@@ -23,6 +24,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
           use: 'ts-loader',
           exclude: /node_modules/,
         },
+
         {
           test: /\.scss$/,
           sideEffects: true,
@@ -35,9 +37,18 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
               loader: 'css-loader',
               options: { sourceMap: true, importLoaders: 1 },
             },
+
             mode !== 'development' ? 'postcss-loader' : undefined,
+
             { loader: 'sass-loader', options: { sourceMap: true } },
           ].filter((r) => r != undefined),
+        },
+        {
+          test: [/\.(woff|tff)$/],
+          type: 'asset/resource',
+          generator: {
+            filename: '/font/[name][ext]',
+          },
         },
         {
           test: /\.svg$/,
@@ -45,16 +56,8 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
           use: ['@svgr/webpack', 'url-loader'],
         },
         {
-          test: /\.(png|jpg|gif|ico)$/i,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                limit: 8192,
-                name: 'assets/img[hash].[ext]',
-              },
-            },
-          ],
+          test: /\.png/,
+          type: 'asset/resource',
         },
       ],
     },
