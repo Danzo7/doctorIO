@@ -14,13 +14,13 @@
     "forge": "./electron-config/forge.config.js"
   },
   "scripts": {
-    "devServer": "webpack serve  --env mode=development",
-    "productionWeb": "webpack  --env mode=production",
+    "devServer": "set mode=development&& webpack serve",
+    "productionWeb": "set mode=production&& webpack",
     "storybook": "start-storybook -p 6006",
     "realtimeServer": "http-server ./build/renderer",
-    "startApp": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
+    "startApp": "set mode=development&& electron-forge start ",
+    "package": "set mode=production&& electron-forge package",
+    "make": "set mode=production&& electron-forge make",
     "publish": "electron-forge publish",
     "eslint": "eslint --ext .ts,.tsx .",
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",

@@ -14,7 +14,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
     output: {
       path: `${__dirname}/build/renderer`,
       publicPath: '/',
-      filename: 'main.js',
+      filename: 'index.js',
       assetModuleFilename: 'assets/[hash][ext][query]',
     },
     module: {

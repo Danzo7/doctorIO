@@ -1,3 +1,4 @@
+process.env;
 module.exports = {
   packagerConfig: {
     // "asar": true,
@@ -29,6 +30,7 @@ module.exports = {
               html: './public/index.html',
               js: './src/renderer/index.tsx',
               name: 'app',
+              isMain: true,
             },
           ],
         },
