@@ -14,8 +14,8 @@
     "forge": "./electron-config/forge.config.js"
   },
   "scripts": {
-    "devServer": "set mode=development&& webpack serve",
-    "productionWeb": "set mode=production&& webpack",
+    "devServer": "webpack serve  --env mode=development",
+    "productionWeb": "webpack  --env mode=production",
     "storybook": "start-storybook -p 6006",
     "realtimeServer": "http-server ./build/renderer",
     "startApp": "set mode=development&& electron-forge start ",
