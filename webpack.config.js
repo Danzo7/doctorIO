@@ -1,7 +1,6 @@
 //launching .env
 require('dotenv').config();
 const path = require('path');
-const webpack = require('webpack');
 const tsconfig = require('./tsconfig.json');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
