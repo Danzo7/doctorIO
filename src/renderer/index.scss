@@ -1,13 +1,13 @@
 @import '~styles/appColors';
 
 @font-face {
-  font-family: 'sarabun';
+  font-family: 'Sarabun';
   src: url(./assets/font/Sarabun-Regular.ttf) format('truetype');
 }
 * {
   box-sizing: border-box;
   user-select: none;
-  font-family: 'sarabun';
+  font-family: 'Sarabun';
 }
 body,
 #app-mount {
