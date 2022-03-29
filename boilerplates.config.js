@@ -6,14 +6,11 @@
       [
         '{{componentName}sc}/{{componentName}pc}.tsx',
         `import React from 'react';
-import '.style/index.scss';
-interface {{componentName}cc}Props {
+import './style/index.scss';
+interface {{componentName}pc}Props {
 }
-
-function {{componentName}pc}({}: {{componentName}cc}Props) {
-  return (
-    <div className="{{componentName}kc}"></div>
-  );
+function {{componentName}pc}({}: {{componentName}pc}Props) {
+  return (<div className="{{componentName}kc}"></div>);
 }
     
 export default {{componentName}pc};
@@ -23,11 +20,13 @@ export default {{componentName}pc};
       [
         '{{componentName}sc}/index.ts',
         `import {{componentName}pc} from './{{componentName}pc}';
-export default {{componentName}pc};`,
+export default {{componentName}pc};
+`,
       ],
       [
         '{{componentName}sc}/style/index.scss',
-        `.{{componentName}kc}{
+        `@use '~styles/appColors' as *;
+.{{componentName}kc}{
       }`,
       ],
       [
