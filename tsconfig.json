@@ -6,8 +6,8 @@
   "baseUrl": "./",
   "paths": {
     "*": ["node_modules/*"],
-    "@data/*": ["src/renderer/data/*"],
     "@components/*": ["src/renderer/components/components/*"],
+    "@buttons/*": ["src/renderer/components/components/buttons/*"],
     "@containers/*": ["src/renderer/components/containers/*"],
     "@assets/*": ["src/renderer/assets/*"],
     "toSvg/*": ["src/renderer/assets/svg/*"]
