@@ -16,7 +16,7 @@ function QueueItem({ name, position, type }: QueueItemProps) {
         <LinkyIcon
           Src={Indicator}
           viewBox="-10 -10 50  50"
-          alt={'home'}
+          alt={'indicator'}
           width="50%"
         />
       </div>

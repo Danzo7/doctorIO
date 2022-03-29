@@ -1,4 +1,6 @@
-@import '~styles/appColors';
+@use '~styles/appColors' as *;
+@use '~styles/effects' as *;
+
 .MenuOption {
   display: flex;
   flex-direction: column;
@@ -19,16 +21,14 @@
   transition: 0.2s;
 
   &:hover {
-    background: #00000020;
+    @include darken;
     border-radius: 0;
-    transition: 0.2s;
   }
 
   &.isActive {
     &:active {
-      background: #00000040;
+      @include darken;
       border-radius: 0%;
-      transition: 0.2s;
     }
     background: #00000030;
     border-radius: 200%;

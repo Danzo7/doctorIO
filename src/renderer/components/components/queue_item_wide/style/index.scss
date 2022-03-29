@@ -1,0 +1,96 @@
+@use '~styles/appColors' as *;
+@use '~styles/effects' as effects;
+$gap: 5px;
+.queue-item-wide {
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 140px;
+  height: 207px;
+  gap: $gap;
+  background: $secondarycolor;
+  border-radius: 11px;
+  .back-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 5px 5px 0px 0px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+
+    .pat-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0px;
+      > span {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 24px;
+        /* identical to box height, or 141% */
+
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.15px;
+      }
+    }
+
+    > .buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: $gap;
+
+      > .text-icon-button {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 5px;
+        height: 10px;
+        background: #0acf83;
+        border-radius: 5px;
+        width: fit-content;
+        justify-content: space-between;
+        gap: $gap;
+
+        > .text {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 9px;
+          line-height: 9px;
+          /* identical to box height, or 100% */
+
+          display: flex;
+          align-items: center;
+          letter-spacing: 0.15px;
+        }
+      }
+    }
+  }
+  .preview {
+    overflow: hidden;
+    width: 100%;
+    background: $hotred;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    > div {
+      position: relative;
+      left: -10%;
+      + div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+}

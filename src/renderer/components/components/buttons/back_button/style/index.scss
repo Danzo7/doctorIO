@@ -1,0 +1,15 @@
+@use '~styles/effects' as *;
+.back-button {
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  height: 20px;
+  width: 20px;
+  border-radius: 5px;
+  &:hover {
+    @include darken;
+  }
+}

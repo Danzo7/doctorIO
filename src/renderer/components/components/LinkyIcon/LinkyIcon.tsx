@@ -6,6 +6,7 @@ interface LinkyIconProps {
   Src: string | Svg;
   alt: string;
   width?: string;
+  scale?: number;
   cssMod?: CSSInterpolation;
   viewBox?: string;
   stroke?: string;
@@ -19,6 +20,7 @@ function LinkyIcon({
   cssMod,
   viewBox,
   stroke,
+  scale,
   svgClassName,
 }: LinkyIconProps) {
   return (
@@ -28,13 +30,16 @@ function LinkyIcon({
           className={`${css({
             width: '100%',
             height: '100%',
+            transform: `scale(${scale}%)`,
           })} ${svgClassName}`}
           viewBox={viewBox}
           stroke={stroke}
         ></Src>
       )) || (
         <img
-          className={css(cssMod ? cssMod : { width: width })}
+          className={css(
+            cssMod ? cssMod : { width: width, transform: `scale(${scale}%)` },
+          )}
           src={Src}
           alt={alt}
         />
