@@ -1,4 +1,4 @@
-@import '~styles/appColors';
+@use '~styles/appColors' as *;
 
 .appContainer {
   /* Auto Layout */
