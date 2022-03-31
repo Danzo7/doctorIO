@@ -20,9 +20,7 @@ function MenuOption({ items }: MenuOptionProps) {
             <li
               key={name}
               onClick={() => setCurrentPge(name)}
-              className={`menuItem ${
-                currentPage === name ? ' isActive' : 'menuItem'
-              }`}
+              className={`menuItem${currentPage === name ? ' isActive' : ''}`}
             >
               <LinkyIcon
                 svgClassName={strokeTypes[name]}
