@@ -1,22 +1,21 @@
 import React from 'react';
 import './style/index.scss';
-import clinic from 'toSvg/clinic.svg';
-import home from 'toSvg/home.svg';
-import stats from 'toSvg/stats.svg';
-const arr = [home, clinic, stats];
+
 interface MiniStatsProps {
-  value?: string;
-  text?: string;
-  state?: number;
+  value: number;
+  text: string;
+  Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  percentage?: number;
+  state: string;
 }
 
-function MiniStats({ value, text, state }: MiniStatsProps) {
-  const Comp = arr[state ?? 0];
+function MiniStats({ value, text, Icon, percentage, state }: MiniStatsProps) {
   return (
-    <div className="mini-stats">
-      <span>{value}</span>
+    <div className={`mini-stats ${state}`}>
+      <span>{percentage}%</span>
+      <Icon></Icon>
       <span>{text}</span>
-      <Comp></Comp>
+      <span>{value}</span>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuOption from './MenuOption';
 import './style/index.scss';
-import menuI, { logo } from './menuSvgs';
+import menuI, { logo } from './svgList';
 import LinkyIcon from '@components/LinkyIcon';
 interface AppMenuProps {}
 

@@ -1,5 +1,9 @@
 @use '~styles/appColors' as *;
+@use '~styles/constants' as *;
+@use '~styles/effects' as effects;
+
 .text-icon-button {
+  color: $white;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -11,15 +15,30 @@
   justify-content: space-between;
   gap: $gap;
 
+  &:hover > .text {
+    animation: fadeIn 0.2s;
+    display: flex;
+  }
   > .text {
+    @include effects.fastTrans;
+    display: none;
     font-style: normal;
     font-weight: 700;
     font-size: 9px;
     line-height: 9px;
     /* identical to box height, or 100% */
 
-    display: flex;
+    //  display: none;
     align-items: center;
     letter-spacing: 0.15px;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

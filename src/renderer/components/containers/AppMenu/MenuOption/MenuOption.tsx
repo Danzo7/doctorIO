@@ -1,5 +1,5 @@
 import LinkyIcon from '@components/LinkyIcon';
-import { strokeTypes } from '../menuSvgs';
+import { strokeTypes } from '../svgList';
 import React, { useState } from 'react';
 import './style/index.scss';
 interface MenuOptionProps {

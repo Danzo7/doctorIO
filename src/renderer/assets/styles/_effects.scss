@@ -2,3 +2,6 @@
   background: #00000020;
   transition: 0.2s;
 }
+@mixin fastTrans {
+  transition: 0.2s;
+}

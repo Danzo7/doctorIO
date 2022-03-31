@@ -4,6 +4,7 @@ import PregnantState from 'toSvg/pregnant.svg?url';
 import InviteIn from 'toSvg/invitePatientIn.svg';
 import { css } from '@emotion/css';
 import BackButton from '@buttons/back_button';
+import TextIconButton from '@components/buttons/text_icon_button';
 
 interface QueueItemWideProps {}
 
@@ -22,18 +23,8 @@ function QueueItemWide({}: QueueItemWideProps) {
         </div>
 
         <div className="buttons">
-          <div className="text-icon-button">
-            <div className="text">Invite in</div>
-            <div className="icon">
-              <InviteIn />
-            </div>
-          </div>
-
-          <div className="text-icon-button">
-            <div className="icon">
-              <InviteIn />
-            </div>
-          </div>
+          <TextIconButton Icon={InviteIn} text="invite in"></TextIconButton>
+          <TextIconButton Icon={InviteIn} text="invite in"></TextIconButton>
         </div>
       </div>
       <div className="preview">
