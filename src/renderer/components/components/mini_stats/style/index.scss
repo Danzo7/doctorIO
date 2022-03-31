@@ -24,4 +24,7 @@
       line-height: 24px;
     }
   }
+  > svg > path {
+    stroke: $white;
+  }
 }
