@@ -6,11 +6,11 @@ interface MiniStatsProps {
   text?: string;
 }
 
-function MiniStats({}: MiniStatsProps) {
+function MiniStats({ value, text }: MiniStatsProps) {
   return (
     <div className="mini-stats">
-      <span>999</span>
-      <span>text</span>
+      <span>{value}</span>
+      <span>{text}</span>
       <Clinic></Clinic>
     </div>
   );

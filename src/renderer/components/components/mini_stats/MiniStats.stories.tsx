@@ -10,4 +10,4 @@ const Template: Story<ComponentProps<typeof MiniStats>> = (args) => (
   <MiniStats {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = {};
+FirstStory.args = { value: '10', text: '11' };
