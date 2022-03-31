@@ -1,6 +1,5 @@
 build
 node_modules
-.vscode/
 .cache/ 
 coverage/
 example

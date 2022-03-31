@@ -1,0 +1,8 @@
+{
+    "cSpell.words": [
+        "vmin"
+    ],
+    "npm.exclude": [
+        "**/out/**"
+    ],
+}
