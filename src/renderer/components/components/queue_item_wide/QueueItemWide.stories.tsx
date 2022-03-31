@@ -11,4 +11,4 @@ const Template: Story<ComponentProps<typeof QueueItemWide>> = (args) => (
   <QueueItemWide {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = {};
+FirstStory.args = { value: '10', text: '11' };
