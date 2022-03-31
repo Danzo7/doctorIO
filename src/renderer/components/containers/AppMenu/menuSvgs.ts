@@ -2,7 +2,7 @@ import clinic from 'toSvg/clinic.svg';
 import database from 'toSvg/database.svg';
 import history from 'toSvg/history.svg';
 import home from 'toSvg/home.svg';
-import logo from 'toSvg/logo.svg?url';
+import logo from 'toSvg/logo.svg';
 import messages from 'toSvg/messages.svg';
 import settings from 'toSvg/settings.svg';
 import stats from 'toSvg/stats.svg';
