@@ -1,0 +1,27 @@
+@use '~styles/appColors' as *;
+.mini-stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 7px 23px;
+
+  border: 1px solid $bordercolor;
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 130px;
+  height: 170px;
+  gap: 5vh;
+  color: $white;
+  > span {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    + span {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+}

@@ -1,8 +1,15 @@
 import React from 'react';
 import './style/index.scss';
-interface TextIconButtonProps {}
-function TextIconButton({}: TextIconButtonProps) {
-  return <div className="text-icon-button"></div>;
+interface TextIconButtonProps {
+  Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  text?: string;
+}
+
+function TextIconButton({ Icon, text }: TextIconButtonProps) {
+  <div className="text-icon-button">
+    <div className="text">{text}</div>
+    <div className="icon">{Icon && <Icon />}</div>
+  </div>;
 }
 
 export default TextIconButton;

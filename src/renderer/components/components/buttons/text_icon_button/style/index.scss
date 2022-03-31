@@ -1,3 +1,25 @@
 @use '~styles/appColors' as *;
-.text-icon-button{
-      }
+.text-icon-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+  height: 10px;
+  background: #0acf83;
+  border-radius: 5px;
+  width: fit-content;
+  justify-content: space-between;
+  gap: $gap;
+
+  > .text {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 9px;
+    line-height: 9px;
+    /* identical to box height, or 100% */
+
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.15px;
+  }
+}
