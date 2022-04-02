@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style/index.scss';
 import Panding from 'toSvg/pending.svg';
 import Inqueue from 'toSvg/inqueue.svg';
@@ -9,16 +9,8 @@ interface BookedItemProps {
   state: string;
 }
 function BookedItem({ name, bookTime, state }: BookedItemProps) {
-  const [hover, setHover] = useState(false);
-  const hundleHover = () => {
-    setHover(!hover);
-  };
   return (
-    <div
-      onMouseEnter={hundleHover}
-      onMouseLeave={hundleHover}
-      className="booked-item"
-    >
+    <div className="booked-item">
       <div className="info-container">
         <span className="name">{name}</span>
         <span className="info">{bookTime}</span>
@@ -35,7 +27,9 @@ function BookedItem({ name, bookTime, state }: BookedItemProps) {
           <span>In queue</span>
         </div>
       )}
-      {hover && <Menu />}
+      <div className="option-menu">
+        <Menu />
+      </div>
     </div>
   );
 }
