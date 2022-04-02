@@ -15,12 +15,12 @@
   justify-content: space-between;
   gap: $gap;
 
-  &:hover > .text {
+  &:hover > .text,
+  &.active > .text {
     animation: fadeIn 0.2s;
     display: flex;
   }
   > .text {
-    @include effects.fastTrans;
     display: none;
     font-style: normal;
     font-weight: 700;
