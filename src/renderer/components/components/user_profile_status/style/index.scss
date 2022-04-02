@@ -1,0 +1,25 @@
+@use '~styles/appColors' as *;
+.user-profile-status {
+  display: flex;
+  border-radius: 25px;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  > img {
+    object-fit: cover;
+  }
+  .online {
+    position: absolute;
+    border-radius: 6px;
+    width: 12px;
+    height: 12px;
+    background-color: $goodgreen;
+  }
+  .offline {
+    position: absolute;
+    border-radius: 6.5px;
+    width: 12px;
+    height: 12px;
+    background-color: $coldred;
+  }
+}

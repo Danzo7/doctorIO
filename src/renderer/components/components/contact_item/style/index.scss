@@ -1,0 +1,12 @@
+@use '~styles/appColors' as *;
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 10px;
+  background: $darkerseccolor;
+  width: 500px;
+  height: 52px;
+  border-radius: 17px;
+}
