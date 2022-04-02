@@ -1,10 +1,8 @@
 import React from 'react';
 import './style/index.scss';
-import PregnantState from 'toSvg/pregnant.svg?url';
-import InviteIn from 'toSvg/invitePatientIn.svg';
-import { css } from '@emotion/css';
+import PregnantState from 'toSvg/pregnant.svg';
 import BackButton from '@buttons/back_button';
-import TextIconButton from '@components/buttons/text_icon_button';
+import ButtonsHoverLock from './buttons_hover_lock';
 
 interface QueueItemWideProps {}
 
@@ -21,20 +19,11 @@ function QueueItemWide({}: QueueItemWideProps) {
           <span>John wild</span>
           <span>14 yo</span>
         </div>
-
-        <div className="buttons">
-          <TextIconButton Icon={InviteIn} text="invite in"></TextIconButton>
-          <TextIconButton Icon={InviteIn} text="invite in"></TextIconButton>
-        </div>
+        <ButtonsHoverLock />
       </div>
       <div className="preview">
         <div>
-          <img
-            src={PregnantState}
-            className={`${css({
-              width: '95%',
-            })}`}
-          />
+          <PregnantState />
         </div>
         <div className="number">
           <span>Number</span>

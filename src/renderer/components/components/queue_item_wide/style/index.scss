@@ -23,7 +23,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0px;
+    padding-left: 20%;
+    width: 100%;
 
     .pat-info {
       display: flex;
@@ -41,13 +42,6 @@
         align-items: center;
         letter-spacing: 0.15px;
       }
-    }
-
-    > .buttons {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: $gap;
     }
   }
   .preview {
