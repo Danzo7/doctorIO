@@ -1,12 +1,49 @@
 @use '~styles/appColors' as *;
 .contact-item {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
   padding: 5px 10px;
-  background: $darkerseccolor;
   width: 500px;
   height: 52px;
   border-radius: 17px;
+  margin: 0px 8px;
+
+  &:hover {
+    background: $darkerseccolor;
+
+    .info-container > span {
+      visibility: visible;
+    }
+    .avatars-container {
+      visibility: visible;
+    }
+  }
+
+  .info-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+
+    > span {
+      visibility: hidden;
+      color: $white;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 24px;
+      margin-left: 14px;
+    }
+  }
+  .avatars-container {
+    visibility: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    margin-left: auto;
+  }
 }

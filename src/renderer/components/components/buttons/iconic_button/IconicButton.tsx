@@ -7,7 +7,7 @@ interface IconicButtonProps {
 function IconicButton({ Icon, backgroundColor }: IconicButtonProps) {
   return (
     <div
-      className={`iconic-button `}
+      className={`iconic-button`}
       style={{ backgroundColor: backgroundColor }}
     >
       {<Icon width={17} height={17} />}

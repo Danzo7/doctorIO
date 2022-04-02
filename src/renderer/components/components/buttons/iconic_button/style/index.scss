@@ -1,9 +1,10 @@
 @use '~styles/appColors' as *;
 .iconic-button {
-  width: 36px;
-  height: 36px;
-  border-radius: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 5px 3px;
 }
