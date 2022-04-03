@@ -1,0 +1,9 @@
+@use '~styles/appColors' as *;
+.simple-avatar {
+  display: flex;
+  border-radius: 100%;
+
+  > img {
+    object-fit: cover;
+  }
+}
