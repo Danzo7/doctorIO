@@ -2,7 +2,7 @@ import UserProfileStatus from '@components/user_profile_status';
 import React from 'react';
 import './style/index.scss';
 import colors from '@assets/styles/color';
-import IdCard from 'toSvg/idCard.svg';
+import IdCard from 'toSvg/id_card.svg';
 import Messages from 'toSvg/messagesSmall.svg';
 import Call_Icon from 'toSvg/callicon.svg';
 import IconicButton from '@components/buttons/iconic_button';
@@ -19,9 +19,21 @@ function ContactItem({ status, img_src, fullName }: ContactItemProps) {
         <span>{fullName}</span>
       </div>
       <div className="avatars-container">
-        <IconicButton Icon={IdCard} backgroundColor={colors.secondary_color} />
-        <IconicButton Icon={Messages} backgroundColor={colors.cold_blue} />
-        <IconicButton Icon={Call_Icon} backgroundColor={colors.good_green} />
+        <IconicButton
+          Icon={IdCard}
+          afterColor={colors.secondary_color}
+          width={40}
+        />
+        <IconicButton
+          Icon={Messages}
+          afterColor={colors.secondary_color}
+          width={40}
+        />
+        <IconicButton
+          Icon={Call_Icon}
+          afterColor={colors.good_green}
+          width={40}
+        />
       </div>
     </div>
   );

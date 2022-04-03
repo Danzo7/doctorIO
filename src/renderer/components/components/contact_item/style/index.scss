@@ -2,48 +2,39 @@
 .contact-item {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  padding: 5px 10px;
+  padding: 10px;
   width: 500px;
   height: 52px;
   border-radius: 17px;
-  margin: 0px 8px;
 
   &:hover {
     background: $darkerseccolor;
-
-    .info-container > span {
-      visibility: visible;
-    }
-    .avatars-container {
+    > .avatars-container {
       visibility: visible;
     }
   }
 
-  .info-container {
+  > .info-container {
+    gap: 1vw;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0px;
 
     > span {
-      visibility: hidden;
       color: $white;
       font-style: normal;
       font-weight: 600;
       font-size: 15px;
-      line-height: 24px;
-      margin-left: 14px;
     }
   }
-  .avatars-container {
+  > .avatars-container {
     visibility: hidden;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0px;
-    margin-left: auto;
+    gap: 1vw;
   }
 }
