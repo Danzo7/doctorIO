@@ -1,29 +1,37 @@
-import LinkyIcon from '@components/LinkyIcon';
-import React from 'react';
+import React, { useState } from 'react';
 import './style/index.scss';
-import Indicator from 'toSvg/exclamation.svg';
+import QueueItemSmall from './queue_item_small';
+import QueueItemWide from './queue_item_wide';
 
 interface QueueItemProps {
   name: string;
-  position: number;
-  type?: string;
-  variant?: string;
+  number: number;
+  timeAgo: string;
+  state?: string;
 }
-function QueueItem({ name, position, type }: QueueItemProps) {
+function QueueItem({ name, number, state, timeAgo }: QueueItemProps) {
+  const [isActive, activate] = useState(false);
   return (
-    <div className="queue-item">
-      <div className={'indicator ' + (type === 'urgent' ? 'isUrgent' : '')}>
-        <LinkyIcon
-          Src={Indicator}
-          viewBox="-10 -10 50  50"
-          alt={'indicator'}
-          width="50%"
-        />
-      </div>
-      <div className="client-name">{name}</div>
-      <div className="index-section">
-        <span className="text">{position}</span>
-      </div>
+    <div className={`queue-item ${isActive ? 'wide' : ''}`}>
+      {!isActive && (
+        <div onClick={() => activate(true)}>
+          <QueueItemSmall
+            name={name}
+            state={state}
+            number={number}
+          ></QueueItemSmall>
+        </div>
+      )}
+      {isActive && (
+        <div onClick={() => activate(false)}>
+          <QueueItemWide
+            name={name}
+            state={state}
+            number={number}
+            timeAgo={timeAgo}
+          ></QueueItemWide>
+        </div>
+      )}
     </div>
   );
 }

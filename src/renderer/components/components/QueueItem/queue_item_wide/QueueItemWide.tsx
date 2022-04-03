@@ -4,9 +4,14 @@ import PregnantState from 'toSvg/pregnant.svg';
 import BackButton from '@buttons/back_button';
 import ButtonsHoverLock from './buttons_hover_lock';
 
-interface QueueItemWideProps {}
+interface QueueItemWideProps {
+  name: string;
+  timeAgo: string;
+  number: number;
+  state?: string;
+}
 
-function QueueItemWide({}: QueueItemWideProps) {
+function QueueItemWide({ name, timeAgo, number }: QueueItemWideProps) {
   return (
     <div className="queue-item-wide">
       <div className="back-container">
@@ -16,8 +21,8 @@ function QueueItemWide({}: QueueItemWideProps) {
       </div>
       <div className="content">
         <div className="pat-info">
-          <span>John wild</span>
-          <span>14 yo</span>
+          <span>{name}</span>
+          <span>{timeAgo}</span>
         </div>
         <ButtonsHoverLock />
       </div>
@@ -27,7 +32,7 @@ function QueueItemWide({}: QueueItemWideProps) {
         </div>
         <div className="number">
           <span>Number</span>
-          <span>1</span>
+          <span>{number}</span>
         </div>
       </div>
     </div>
