@@ -1,7 +1,7 @@
 import React from 'react';
 import './style/index.scss';
 import Panding from 'toSvg/pending.svg';
-import Inqueue from 'toSvg/inqueue.svg';
+import InQueue from 'toSvg/in_queue.svg';
 import Menu from 'toSvg/menu.svg';
 interface BookedItemProps {
   name: string;
@@ -23,7 +23,7 @@ function BookedItem({ name, bookTime, state }: BookedItemProps) {
       )}
       {state == 'in queue' && (
         <div className="state-container">
-          <Inqueue></Inqueue>
+          <InQueue></InQueue>
           <span>In queue</span>
         </div>
       )}
