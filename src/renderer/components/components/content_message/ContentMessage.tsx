@@ -5,12 +5,12 @@ interface ContentMessageProps {
   img_src: string;
   messenger: string;
   message_time: string;
-  message: string;
+  message_content: string;
 }
 function ContentMessage({
   messenger,
   message_time,
-  message,
+  message_content,
   img_src,
 }: ContentMessageProps) {
   return (
@@ -21,7 +21,7 @@ function ContentMessage({
           <span>{messenger}</span>
           <span>{message_time}</span>
         </div>
-        <span>{message}</span>
+        <span>{message_content}</span>
       </div>
     </div>
   );

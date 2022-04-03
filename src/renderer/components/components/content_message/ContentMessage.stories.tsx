@@ -15,5 +15,5 @@ FirstStory.args = {
   img_src: client,
   messenger: 'Aymen',
   message_time: 'Today at 12:18AM',
-  message: 'hello doctor therapist ',
+  message_content: 'hello doctor therapist ',
 };
