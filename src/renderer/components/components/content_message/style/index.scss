@@ -1,0 +1,49 @@
+@use '~styles/appColors' as *;
+.content-message {
+  background-color: $background;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 7px;
+  width: 210px;
+  height: 50px;
+  gap: 5vh;
+  overflow: hidden;
+
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 2px;
+
+    .title-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 5px;
+      align-items: center;
+      padding: 0px;
+
+      > span {
+        color: $white;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        + span {
+          color: $lesswhite;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+        }
+      }
+    }
+    > span {
+      color: $white;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 15px;
+    }
+  }
+}
