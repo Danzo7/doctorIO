@@ -1,4 +1,4 @@
-import SimpleAvatar from '@components/avatars/simple_avatar';
+import CircleAvatar from '@components/avatars/circle_avatar';
 import React from 'react';
 import './style/index.scss';
 interface ContentMessageProps {
@@ -15,7 +15,7 @@ function ContentMessage({
 }: ContentMessageProps) {
   return (
     <div className="content-message">
-      <SimpleAvatar img_src={img_src} />
+      <CircleAvatar src={img_src} width="40px" />
       <div className="info-container">
         <div className="title-container">
           <span>{messenger}</span>

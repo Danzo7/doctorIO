@@ -3,10 +3,7 @@
   display: flex;
   border-radius: 100%;
 
-  > img {
-    object-fit: cover;
-  }
-  > div {
+  > .dot {
     position: absolute;
     border-radius: 100%;
     width: 10px;

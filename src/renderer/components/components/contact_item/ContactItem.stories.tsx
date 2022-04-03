@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import ContactItem from './ContactItem';
-import profile from 'toSvg/profile.png';
+import profile from '@assets/pictures/test.png';
 //👇 This default export determines where your story goes in the story list
 export default {
   title: 'ContactItem',
