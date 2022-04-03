@@ -1,25 +1,21 @@
 @use '~styles/appColors' as *;
 .user-profile-status {
   display: flex;
-  border-radius: 25px;
-  width: 42px;
-  height: 42px;
-  overflow: hidden;
+  border-radius: 100%;
+
   > img {
     object-fit: cover;
   }
-  .online {
+  > div {
     position: absolute;
-    border-radius: 6px;
-    width: 12px;
-    height: 12px;
-    background-color: $goodgreen;
-  }
-  .offline {
-    position: absolute;
-    border-radius: 6.5px;
-    width: 12px;
-    height: 12px;
-    background-color: $coldred;
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    &.online {
+      background-color: $goodgreen;
+    }
+    &.offline {
+      background-color: $coldred;
+    }
   }
 }
