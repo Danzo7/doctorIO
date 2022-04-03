@@ -6,8 +6,8 @@ export default {
   title: 'ButtonsHoverLock',
   component: ButtonsHoverLock,
 };
-const Template: Story<ComponentProps<typeof ButtonsHoverLock>> = (args) => (
-  <ButtonsHoverLock {...args} />
+const Template: Story<ComponentProps<typeof ButtonsHoverLock>> = () => (
+  <ButtonsHoverLock />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {};
