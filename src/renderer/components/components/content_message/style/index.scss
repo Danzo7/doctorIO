@@ -1,13 +1,13 @@
 @use '~styles/appColors' as *;
 .content-message {
+  background-color: $background;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-direction: row;
   align-items: center;
-  padding: 4px 7px;
   width: 210px;
   height: 50px;
-  gap: 5vh;
+  gap: 5px;
   overflow: hidden;
 
   .info-container {
