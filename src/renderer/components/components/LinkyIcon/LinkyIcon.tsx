@@ -4,7 +4,7 @@ import { css, CSSInterpolation } from '@emotion/css';
 type Svg = React.FunctionComponent<React.SVGProps<SVGSVGElement>> | any;
 interface LinkyIconProps {
   Src: string | Svg;
-  alt: string;
+  alt?: string;
   width?: string;
   scale?: number;
   cssMod?: CSSInterpolation;
