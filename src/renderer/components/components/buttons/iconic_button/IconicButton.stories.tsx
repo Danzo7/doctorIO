@@ -13,5 +13,6 @@ const Template: Story<ComponentProps<typeof IconicButton>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   Icon: Call_icon,
+  width: 40,
   backgroundColor: 'red',
 };
