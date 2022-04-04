@@ -23,12 +23,13 @@ function QueueItem({ name, number, state, timeAgo }: QueueItemProps) {
         </div>
       )}
       {isActive && (
-        <div onClick={() => activate(false)}>
+        <div>
           <QueueItemWide
             name={name}
             state={state}
             number={number}
             timeAgo={timeAgo}
+            backBtnOnClick={() => activate(false)}
           ></QueueItemWide>
         </div>
       )}

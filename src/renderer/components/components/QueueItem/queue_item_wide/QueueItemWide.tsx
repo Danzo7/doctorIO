@@ -9,14 +9,20 @@ interface QueueItemWideProps {
   timeAgo: string;
   number: number;
   state?: string;
+  backBtnOnClick: () => void;
 }
 
-function QueueItemWide({ name, timeAgo, number }: QueueItemWideProps) {
+function QueueItemWide({
+  name,
+  timeAgo,
+  number,
+  backBtnOnClick,
+}: QueueItemWideProps) {
   return (
     <div className="queue-item-wide">
       <div className="back-container">
         <div className="back">
-          <BackButton />
+          <BackButton onClick={backBtnOnClick} />
         </div>
       </div>
       <div className="content">

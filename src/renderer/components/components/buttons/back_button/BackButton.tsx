@@ -3,12 +3,12 @@ import './style/index.scss';
 import BackSvg from 'toSvg/back-button.svg';
 
 interface BackButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
-function BackButton({}: BackButtonProps) {
+function BackButton({ onClick }: BackButtonProps) {
   return (
-    <div className="back-button">
+    <div onClick={onClick} className="back-button">
       <BackSvg />
     </div>
   );
