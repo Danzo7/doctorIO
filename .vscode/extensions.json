@@ -27,6 +27,7 @@
         "wayou.vscode-todo-highlight",
         "rbbit.typescript-hero",
         "redhat.vscode-xml",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker"
     ]
 }
