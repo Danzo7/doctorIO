@@ -1,10 +1,50 @@
 @use '~styles/appColors' as *;
 .toggle-button {
-  width: 50px;
-  height: 25px;
+  width: 40px;
   border-radius: 200px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  &.disabled {
+    > .circle {
+      background-color: $textgray;
+    }
+    &.on {
+      svg > path {
+        fill: $white;
+      }
+    }
+    &.off {
+      svg > path {
+        fill: $silvergray;
+      }
+    }
+  }
+  &.on {
+    transition: 0.3s;
+    justify-content: flex-end;
+    background-color: $goodgreen;
+    > .circle {
+      animation: widePutin 0.2s;
+    }
+    svg > path {
+      fill: $goodgreen;
+    }
+  }
+  &.off {
+    svg > path {
+      fill: $silvergray;
+    }
 
-  > .cirle {
+    background-color: $silvergray;
+    > .circle {
+      animation: widePutin2 0.2s;
+    }
+  }
+
+  > .circle {
+    transition: 0.1s;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,26 +52,22 @@
     height: 20px;
     border-radius: 100%;
     background-color: $white;
-    position: relative;
-    cursor: pointer;
-    top: 2px;
-    transition: left 0.3s;
-  }
-  > .disabled {
-    background-color: $textgray;
   }
 }
 
-.on {
-  background-color: $goodgreen;
-  > .cirle {
-    left: 25px;
+@keyframes widePutin {
+  from {
+    width: 100%;
+    border-radius: 200px;
+  }
+  to {
   }
 }
-.off {
-  background-color: $silvergray;
-
-  > .cirle {
-    left: 4px;
+@keyframes widePutin2 {
+  from {
+    width: 100%;
+    border-radius: 200px;
+  }
+  to {
   }
 }

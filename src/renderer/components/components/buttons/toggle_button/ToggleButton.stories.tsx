@@ -12,4 +12,5 @@ const Template: Story<ComponentProps<typeof ToggleButton>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   disabled: false,
+  isChecked: true,
 };
