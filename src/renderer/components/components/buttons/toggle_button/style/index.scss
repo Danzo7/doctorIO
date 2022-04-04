@@ -1,6 +1,5 @@
 @use '~styles/appColors' as *;
 .toggle-button {
-  width: 40px;
   border-radius: 200px;
   cursor: pointer;
   display: flex;
@@ -48,8 +47,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20px;
-    height: 20px;
+
     border-radius: 100%;
     background-color: $white;
   }
