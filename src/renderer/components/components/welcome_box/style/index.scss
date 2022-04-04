@@ -23,7 +23,7 @@
   }
   > .content {
     background-image: url(toPng/pattern.png);
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
     display: flex;
     flex-direction: row;
     align-items: center;
