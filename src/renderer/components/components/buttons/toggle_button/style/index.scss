@@ -1,0 +1,37 @@
+@use '~styles/appColors' as *;
+.toggle-button {
+  width: 50px;
+  height: 25px;
+  border-radius: 200px;
+
+  > .cirle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: $white;
+    position: relative;
+    cursor: pointer;
+    top: 2px;
+    transition: left 0.3s;
+  }
+  > .disabled {
+    background-color: $lesswhite;
+  }
+}
+
+.on {
+  background-color: $goodgreen;
+  > .cirle {
+    left: 25px;
+  }
+}
+.off {
+  background-color: $silvergray;
+
+  > .cirle {
+    left: 4px;
+  }
+}
