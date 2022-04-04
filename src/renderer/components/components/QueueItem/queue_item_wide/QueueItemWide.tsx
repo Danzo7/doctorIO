@@ -1,6 +1,7 @@
 import React from 'react';
 import './style/index.scss';
 import PregnantState from 'toSvg/pregnant.svg';
+import WaitingFigure from 'toSvg/figure_waiting.svg';
 import BackButton from '@buttons/back_button';
 import ButtonsHoverLock from './buttons_hover_lock';
 
@@ -17,7 +18,9 @@ function QueueItemWide({
   timeAgo,
   number,
   backBtnOnClick,
+  state,
 }: QueueItemWideProps) {
+  const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
   return (
     <div className="queue-item-wide">
       <div className="back-container">
@@ -32,9 +35,9 @@ function QueueItemWide({
         </div>
         <ButtonsHoverLock />
       </div>
-      <div className="preview">
+      <div className={`preview ${state ?? ''}`}>
         <div>
-          <PregnantState />
+          <Svg />
         </div>
         <div className="number">
           <span>Number</span>
