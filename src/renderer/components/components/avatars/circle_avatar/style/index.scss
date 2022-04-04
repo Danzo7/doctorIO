@@ -1,0 +1,8 @@
+@use '~styles/appColors' as *;
+.circle-avatar {
+  display: flex;
+  overflow: hidden;
+  border-radius: 100%;
+  width: fit-content;
+  height: fit-content;
+}

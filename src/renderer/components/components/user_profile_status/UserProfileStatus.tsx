@@ -1,3 +1,4 @@
+import CircleAvatar from '@components/avatars/circle_avatar/CircleAvatar';
 import React from 'react';
 import './style/index.scss';
 interface UserProfileStatusProps {
@@ -7,8 +8,8 @@ interface UserProfileStatusProps {
 function UserProfileStatus({ img_src, status }: UserProfileStatusProps) {
   return (
     <div className="user-profile-status">
-      <div className={status ? 'online' : 'offline'}></div>
-      <img src={img_src} alt="profile image" />
+      <div className={`dot ${status ? 'online' : 'offline'}`} />
+      <CircleAvatar src={img_src} width="42px" alt="profile image" />
     </div>
   );
 }

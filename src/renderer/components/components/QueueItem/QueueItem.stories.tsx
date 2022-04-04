@@ -23,5 +23,6 @@ const Template: Story<ComponentProps<typeof QueueItem>> = (args) => (
 export const Primary = Template.bind({});
 Primary.args = {
   name: 'adam smith',
-  position: 1,
+  number: 1,
+  timeAgo: '1 min',
 };

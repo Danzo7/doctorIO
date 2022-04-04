@@ -11,4 +11,7 @@ export default {
   hot_purple: '#5144ff',
   silver_gray: '#646d8d',
   white: '#fff',
+  text_gray: '#bdbdbd',
+  good_black: '#18191c',
+  warm_orange: '#f2994a',
 };

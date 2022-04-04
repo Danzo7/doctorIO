@@ -1,0 +1,39 @@
+@use '~styles/appColors' as *;
+@use '~styles/effects' as *;
+.welcome-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  > .hide-btn {
+    text-align: center;
+
+    > svg {
+      transform: rotate(90deg);
+    }
+    &:hover {
+      @include darken;
+      > svg > path {
+        stroke: $white;
+      }
+    }
+  }
+  > svg {
+    position: absolute;
+    z-index: -1;
+  }
+  > .content {
+    background-image: url(toPng/pattern.png);
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 50px;
+    border-radius: 15px;
+    gap: 50px;
+    > span {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 40px;
+    }
+  }
+}

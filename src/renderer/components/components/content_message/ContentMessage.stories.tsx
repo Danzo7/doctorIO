@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import ContentMessage from './ContentMessage';
-import client from 'toSvg/client.png';
+import client from '@assets/pictures/test.png';
 //👇 This default export determines where your story goes in the story list
 export default {
   title: 'ContentMessage',

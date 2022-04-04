@@ -6,11 +6,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 140px;
-  height: 207px;
   gap: $gap;
-  background: $secondarycolor;
-  border-radius: 11px;
+  max-height: 200px;
+
   .back-container {
     width: 100%;
     display: flex;
