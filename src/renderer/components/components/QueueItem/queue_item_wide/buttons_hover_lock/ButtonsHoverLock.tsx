@@ -3,7 +3,7 @@ import './style/index.scss';
 import invite from 'toSvg/invitePatientIn.svg';
 import view from 'toSvg/view-test.svg';
 import TextIconButton from '@components/buttons/text_icon_button';
-import colors from '@assets/styles/color';
+import colors from '@colors';
 
 const btnList = [
   { icon: invite, text: 'invite in', color: colors.good_green },
