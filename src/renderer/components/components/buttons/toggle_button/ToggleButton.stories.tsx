@@ -3,7 +3,7 @@ import type { Story } from '@storybook/react';
 import ToggleButton from './ToggleButton';
 //👇 This default export determines where your story goes in the story list
 export default {
-  title: 'ToggleButton',
+  title: 'Buttons/ToggleButton',
   component: ToggleButton,
 };
 const Template: Story<ComponentProps<typeof ToggleButton>> = (args) => (
