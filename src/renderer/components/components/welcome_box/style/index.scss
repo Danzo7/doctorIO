@@ -3,15 +3,21 @@
 .welcome-box {
   display: flex;
   flex-direction: column;
+  width: 90%;
+  &.animate {
+    animation: hide 1s;
+  }
   gap: 5px;
   > .hide-btn {
-    text-align: center;
-
-    > svg {
+    display: flex;
+    justify-content: center;
+    svg {
       transform: rotate(90deg);
     }
     &:hover {
       @include darken;
+      border-radius: 0 0 10px 10px;
+
       > svg > path {
         stroke: $white;
       }
@@ -33,7 +39,15 @@
     > span {
       font-style: normal;
       font-weight: 700;
-      font-size: 40px;
+      font-size: 30px;
+    }
+  }
+  @keyframes hide {
+    from {
+      transform: translateY(0%);
+    }
+    to {
+      transform: translateY(-100%);
     }
   }
 }
