@@ -1,16 +1,16 @@
+@use '~styles/appColors' as *;
 .AppMenu {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 5vh;
   justify-content: flex-start;
-  flex-grow: 1;
+  width: 4%;
   order: 0;
   padding: 1vh 0 5vh 0;
   height: 100%;
-  background: #2c3964;
+  background: $lighterbackground;
   border-radius: 10vh;
-  width: 40px;
 }
 .AppLogo {
   flex-grow: 5;
