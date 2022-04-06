@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import './style/index.scss';
-import XMark from 'toSvg/x_mark.svg';
-import GoodMark from 'toSvg/good_mark.svg';
+import XMark from 'toSvg/x_mark.svg?icon';
+import GoodMark from 'toSvg/good_mark.svg?icon';
 import { css } from '@emotion/css';
 interface ToggleButtonProps {
   disabled: boolean;
   isChecked?: boolean;
   size?: number;
+  withIcons?: boolean;
 }
-function ToggleButton({ disabled, isChecked, size }: ToggleButtonProps) {
+function ToggleButton({
+  disabled,
+  isChecked,
+  size = 40,
+  withIcons = true,
+}: ToggleButtonProps) {
   const [checked, setChecked] = useState(isChecked ?? false);
 
   const Svg = checked ? GoodMark : XMark;
@@ -21,18 +27,18 @@ function ToggleButton({ disabled, isChecked, size }: ToggleButtonProps) {
         disabled ? 'disabled' : ''
       }
       ${css`
-        width: ${size ?? 40}px;
+        width: ${size}px;
       `}
        `}
       onClick={switchToggle}
     >
       <div
         className={`circle  ${css`
-          width: ${(size ?? 40) / 2}px;
-          height: ${(size ?? 40) / 2}px;
+          width: ${size / 2}px;
+          height: ${size / 2}px;
         `}`}
       >
-        <Svg />
+        {withIcons && <Svg width={size / 4} height={size / 4} />}
       </div>
     </div>
   );
