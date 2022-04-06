@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import IconicButton from './IconicButton';
-import Call_icon from 'toSvg/messagesSmall.svg';
+import Call_icon from 'toSvg/messagesSmall.svg?icon';
 //👇 This default export determines where your story goes in the story list
 export default {
   title: 'Buttons/IconicButton',
