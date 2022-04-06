@@ -3,7 +3,8 @@
 .welcome-box {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 95%;
+
   &.animate {
     animation: hide 1s;
   }
@@ -11,15 +12,20 @@
   > .hide-btn {
     display: flex;
     justify-content: center;
-    svg {
-      transform: rotate(90deg);
+    padding: 5px;
+
+    > svg > path {
+      transform: rotate(180deg);
+      transform-origin: center;
+      fill: $white;
     }
     &:hover {
       @include darken;
       border-radius: 0 0 10px 10px;
+      padding: 10px;
 
       > svg > path {
-        stroke: $white;
+        fill: $white;
       }
     }
   }

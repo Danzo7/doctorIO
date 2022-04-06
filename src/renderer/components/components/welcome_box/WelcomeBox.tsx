@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './style/index.scss';
 import Svg from 'toSvg/doctor_face.svg';
 import Arrow from 'toSvg/arrow.svg';
-import LinkyIcon from '@components/LinkyIcon';
 
 interface WelcomeBoxProps {}
 function WelcomeBox({}: WelcomeBoxProps) {
@@ -24,7 +23,7 @@ function WelcomeBox({}: WelcomeBoxProps) {
           setClose({ isHidding: true, isHidden: false });
         }}
       >
-        <LinkyIcon Src={Arrow} width="30px" viewBox="0 -27 9 73"></LinkyIcon>
+        <Arrow />
       </div>
     </div>
   ) : (
