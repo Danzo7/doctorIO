@@ -6,7 +6,7 @@
   width: 95%;
 
   &.animate {
-    animation: hide 1s;
+    animation: hide 0.5s forwards;
   }
   gap: 5px;
   > .hide-btn {
