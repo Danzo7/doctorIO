@@ -57,8 +57,21 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
         {
           test: /\.svg$/i,
           issuer: /\.[jt]sx?$/, // only work ib jsx/tsx file
-          resourceQuery: { not: [/url/] },
+          resourceQuery: { not: [/url/, /icon/] },
           use: ['@svgr/webpack'],
+        },
+        {
+          test: /\.svg$/i,
+          issuer: /\.[jt]sx?$/,
+          resourceQuery: /icon/,
+          use: [
+            {
+              loader: '@svgr/webpack',
+              options: {
+                icon: true,
+              },
+            },
+          ],
         },
         {
           test: /\.png/,
