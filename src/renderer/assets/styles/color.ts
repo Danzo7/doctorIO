@@ -8,7 +8,7 @@ export default {
   secondary_color: '#344175',
   darkersec_color: '#29336a',
   border_color: '#3c4b7e',
-  hot_purple: '#5144ff',
+  hot_purple: '#626ED4',
   silver_gray: '#646d8d',
   white: '#fff',
   text_gray: '#bdbdbd',
