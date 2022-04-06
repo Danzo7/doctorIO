@@ -1,0 +1,13 @@
+@use '~styles/appColors' as *;
+.add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $darkerseccolor;
+  border: 1px solid $bordercolor;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: fit-content;
+  padding: 5px;
+  cursor: pointer;
+}

@@ -7,4 +7,14 @@
         "**/out/**"
     ],
     "npm-scripts.showStartNotification": false,
+    "spellright.language": [
+        "ar",
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext",
+        "typescriptreact"
+    ],
 }
