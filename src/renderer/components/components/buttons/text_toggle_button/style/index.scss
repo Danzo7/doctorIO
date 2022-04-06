@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   background-color: $darkerseccolor;
   border: 1px solid $bordercolor;
   box-sizing: border-box;
@@ -19,6 +18,10 @@
     align-items: center;
 
     > span {
+      color: $white;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
     }
   }
 }

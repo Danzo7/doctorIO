@@ -10,4 +10,8 @@ const Template: Story<ComponentProps<typeof TextToggleButton>> = (args) => (
   <TextToggleButton {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = {};
+FirstStory.args = {
+  first_text: 'mony',
+  second_text: 'fame',
+  default_select: 'first',
+};

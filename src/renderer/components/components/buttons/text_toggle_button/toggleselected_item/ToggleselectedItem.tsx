@@ -10,7 +10,7 @@ function ToggleselectedItem({
 }: ToggleselectedItemProps) {
   return (
     <div className="toggleselected-item">
-      {separator_direction == 'left' && (
+      {separator_direction == 'right' && (
         <>
           <div className="span-container">
             <span>{text}</span>
@@ -18,7 +18,7 @@ function ToggleselectedItem({
           <div className="separator"></div>
         </>
       )}
-      {separator_direction == 'right' && (
+      {separator_direction == 'left' && (
         <>
           <div className="separator"></div>
           <div className="span-container">
