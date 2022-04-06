@@ -3,17 +3,29 @@
 .welcome-box {
   display: flex;
   flex-direction: column;
+  width: 95%;
+
+  &.animate {
+    animation: hide 0.5s forwards;
+  }
   gap: 5px;
   > .hide-btn {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
 
-    > svg {
-      transform: rotate(90deg);
+    > svg > path {
+      transform: rotate(180deg);
+      transform-origin: center;
+      fill: $white;
     }
     &:hover {
       @include darken;
+      border-radius: 0 0 10px 10px;
+      padding: 10px;
+
       > svg > path {
-        stroke: $white;
+        fill: $white;
       }
     }
   }
@@ -23,7 +35,7 @@
   }
   > .content {
     background-image: url(toPng/pattern.png);
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -33,7 +45,15 @@
     > span {
       font-style: normal;
       font-weight: 700;
-      font-size: 40px;
+      font-size: 30px;
+    }
+  }
+  @keyframes hide {
+    from {
+      transform: translateY(0%);
+    }
+    to {
+      transform: translateY(-100%);
     }
   }
 }

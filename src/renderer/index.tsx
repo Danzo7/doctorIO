@@ -1,14 +1,11 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.scss';
 
-render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('app-mount'),
-);
+const container = document.getElementById('app-mount');
+const root = createRoot(container as HTMLElement);
+root.render(<App />);
 
 if (typeof module !== 'undefined' && module.hot) {
   module.hot.accept(function () {

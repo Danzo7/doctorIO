@@ -11,7 +11,7 @@ export default {
   title: 'QueueItem',
   component: QueueItem,
   argTypes: {
-    type: { type: 'select', options: ['urgent', 'normal'] },
+    state: { type: 'select', options: ['urgent', 'normal'] },
   },
 };
 
@@ -24,5 +24,5 @@ export const Primary = Template.bind({});
 Primary.args = {
   name: 'adam smith',
   number: 1,
-  timeAgo: '1 min',
+  timeAgo: 'created 1h ago',
 };

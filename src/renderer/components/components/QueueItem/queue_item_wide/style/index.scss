@@ -23,7 +23,7 @@
     align-items: flex-start;
     padding-left: 20%;
     width: 100%;
-
+    gap: 10px;
     .pat-info {
       display: flex;
       flex-direction: column;
@@ -33,7 +33,10 @@
         font-style: normal;
         font-weight: 400;
         font-size: 17px;
-        line-height: 24px;
+        + span {
+          color: $textgray;
+          font-size: 10px;
+        }
         /* identical to box height, or 141% */
 
         display: flex;
@@ -45,11 +48,14 @@
   .preview {
     overflow: hidden;
     width: 100%;
-    background: $hotred;
+    background: $coldblue;
     border-radius: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    &.urgent {
+      background: $hotred;
+    }
     > div {
       position: relative;
       left: -10%;

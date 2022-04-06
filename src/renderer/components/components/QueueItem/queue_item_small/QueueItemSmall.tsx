@@ -10,7 +10,7 @@ interface QueueItemSmallProps {
 function QueueItemSmall({ name, state, number }: QueueItemSmallProps) {
   return (
     <div className="queue-item-small">
-      <div className={'indicator ' + (state === 'urgent' ? 'isUrgent' : '')}>
+      <div className={'indicator ' + state}>
         <Indicator />
       </div>
       <div className="client-name">{name}</div>

@@ -1,6 +1,12 @@
 .AppContent {
-  background: #01b9ca;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   border-radius: 1.5vw;
-  flex-grow: 67;
+  flex-grow: 70;
   order: 1;
+
+  padding: 0px;
+  gap: 40px;
 }

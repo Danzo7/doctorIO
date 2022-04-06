@@ -16,7 +16,7 @@ interface LinkyIconProps {
 function LinkyIcon({
   Src,
   alt,
-  width = '50%',
+  width,
   cssMod,
   viewBox,
   stroke,
@@ -24,15 +24,20 @@ function LinkyIcon({
   svgClassName,
 }: LinkyIconProps) {
   return (
-    <div className="LinkyIcon">
+    <div
+      className={`LinkyIcon ${css`
+        width: ${width ?? 100 + '%'};
+        height: ${width ?? 100 + '%'};
+      `}`}
+    >
       {(Src.prototype && (
         <Src
           className={`${css({
             width: '100%',
             height: '100%',
             transform: `scale(${scale}%)`,
-          })} ${svgClassName}`}
-          viewBox={viewBox}
+          })} ${svgClassName ?? ''}`}
+          viewBox={viewBox ?? '0 -27 36 90'}
           stroke={stroke}
         ></Src>
       )) || (
