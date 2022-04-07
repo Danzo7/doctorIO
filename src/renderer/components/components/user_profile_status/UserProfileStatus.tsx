@@ -5,16 +5,23 @@ interface UserProfileStatusProps {
   imgSrc: string;
   status: boolean;
   width?: number;
+  avatarRadius?: number;
 }
 function UserProfileStatus({
   imgSrc,
   status,
   width = 42,
+  avatarRadius,
 }: UserProfileStatusProps) {
   return (
     <div className="user-profile-status">
       <div className={`dot ${status ? 'online' : 'offline'}`} />
-      <CircleAvatar src={imgSrc} width={width} alt="profile image" />
+      <CircleAvatar
+        src={imgSrc}
+        width={width}
+        alt="profile image"
+        radius={avatarRadius}
+      />
     </div>
   );
 }
