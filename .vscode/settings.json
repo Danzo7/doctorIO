@@ -1,20 +1,8 @@
 {
     "cSpell.words": [
-        "Toggleselected",
         "vmin"
     ],
     "npm.exclude": [
         "**/out/**"
-    ],
-    "npm-scripts.showStartNotification": false,
-    "spellright.language": [
-        "ar",
-        "en"
-    ],
-    "spellright.documentTypes": [
-        "markdown",
-        "latex",
-        "plaintext",
-        "typescriptreact"
     ],
 }
