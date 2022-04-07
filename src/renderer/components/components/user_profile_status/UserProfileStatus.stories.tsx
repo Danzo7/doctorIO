@@ -12,5 +12,5 @@ const Template: Story<ComponentProps<typeof UserProfileStatus>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  img_src: profile,
+  imgSrc: profile,
 };

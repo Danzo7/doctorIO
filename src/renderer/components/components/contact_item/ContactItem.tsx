@@ -8,14 +8,14 @@ import Call_Icon from 'toSvg/callicon.svg';
 import IconicButton from '@components/buttons/iconic_button';
 interface ContactItemProps {
   status: boolean;
-  img_src: string;
+  imgSrc: string;
   fullName: string;
 }
-function ContactItem({ status, img_src, fullName }: ContactItemProps) {
+function ContactItem({ status, imgSrc, fullName }: ContactItemProps) {
   return (
     <div className="contact-item">
       <div className="info-container">
-        <UserProfileStatus status={status} img_src={img_src} />
+        <UserProfileStatus status={status} imgSrc={imgSrc} />
         <span>{fullName}</span>
       </div>
       <div className="avatars-container">
