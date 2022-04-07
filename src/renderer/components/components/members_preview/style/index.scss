@@ -45,7 +45,14 @@
       justify-content: center;
       align-items: center;
       margin-bottom: auto;
-      > svg {
+      &.shown > svg > path {
+        transform: rotate(180deg);
+        transform-origin: center;
+      }
+      > svg > path {
+        fill: $bordercolor;
+        transform: rotate(0deg);
+        transform-origin: center;
       }
     }
   }

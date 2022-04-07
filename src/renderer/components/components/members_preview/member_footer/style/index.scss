@@ -19,9 +19,8 @@
   align-items: center;
   background: $background;
   border-radius: 7px;
-  width: fit-content;
   padding: 5px;
-  gap: 5vw;
+  width: 90%;
   > .member-container {
     @include member-container-style();
     > span {
