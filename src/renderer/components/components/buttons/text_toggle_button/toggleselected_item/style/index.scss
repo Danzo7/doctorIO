@@ -1,0 +1,28 @@
+@use '~styles/appColors' as *;
+.toggleselected-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+  height: 30px;
+  gap: 15px;
+
+  > .span-container {
+    > span {
+      border-radius: 9px;
+      padding: 5px 10px;
+      background: $bordercolor;
+      color: $white;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
+
+  > .separator {
+    height: 20px;
+    width: 0;
+    border: 1px solid $bordercolor;
+  }
+}

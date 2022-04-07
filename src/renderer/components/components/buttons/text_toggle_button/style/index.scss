@@ -1,0 +1,28 @@
+@use '~styles/appColors' as *;
+.text-toggle-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: $darkerseccolor;
+  border: 1px solid $bordercolor;
+  box-sizing: border-box;
+  border-radius: 11px;
+  width: fit-content;
+  height: 35px;
+  gap: 10px;
+  padding: 20px 10px;
+  cursor: pointer;
+
+  > .span-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > span {
+      color: $white;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
+}
