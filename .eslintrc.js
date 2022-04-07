@@ -42,7 +42,27 @@ module.exports = {
     'no-empty-pattern': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
-    '@typescript-eslint/naming-convention': ['warn'],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'typeProperty',
+        format: ['camelCase', 'PascalCase'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+      {
+        selector: 'parameter',
+        format: ['camelCase', 'PascalCase'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+      {
+        selector: 'interface',
+        format: ['PascalCase'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+    ],
   },
   ignorePatterns: ['*.config.js', '.eslintrc.js'],
 };
