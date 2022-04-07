@@ -1,20 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './style/index.scss';
 import QueueItemSmall from './queue_item_small';
 import QueueItemWide from './queue_item_wide';
+import { VisibilityContext } from 'react-horizontal-scrolling-menu';
 
 interface QueueItemProps {
   name: string;
   number: number;
   timeAgo: string;
   state?: string;
+  itemId?: number;
+  onPress?: (visibility: any) => void;
 }
-function QueueItem({ name, number, state, timeAgo }: QueueItemProps) {
+function QueueItem({ name, number, state, timeAgo, onPress }: QueueItemProps) {
   const [isActive, activate] = useState(false);
+  const visibility = useContext(VisibilityContext);
+
+  const setActive = (value: boolean) => {
+    console.log(onPress);
+    activate(value);
+    //onPress?.(visibility);
+  };
   return (
-    <div className={`queue-item ${isActive ? 'wide' : ''}`}>
+    <div
+      className={`queue-item ${isActive ? 'wide' : ''}`}
+      onClick={() => onPress?.(visibility)}
+    >
       {!isActive && (
-        <div onClick={() => activate(true)}>
+        <div onClick={() => setActive(true)}>
           <QueueItemSmall
             name={name}
             state={state}
@@ -29,7 +42,7 @@ function QueueItem({ name, number, state, timeAgo }: QueueItemProps) {
             state={state}
             number={number}
             timeAgo={timeAgo}
-            backBtnOnClick={() => activate(false)}
+            backBtnOnClick={() => setActive(false)}
           ></QueueItemWide>
         </div>
       )}
