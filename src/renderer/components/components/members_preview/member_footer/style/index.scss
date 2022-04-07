@@ -1,0 +1,41 @@
+@use '~styles/appColors' as *;
+@mixin span-style {
+  color: $silvergray;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 11px;
+}
+@mixin member-container-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5px;
+}
+.member-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: $background;
+  border-radius: 7px;
+  width: fit-content;
+  padding: 5px;
+  gap: 5vw;
+  > .member-container {
+    @include member-container-style();
+    > span {
+      @include span-style();
+    }
+    .member-span {
+      color: $white;
+    }
+  }
+  > .controls-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1vw;
+  }
+}

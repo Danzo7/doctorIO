@@ -15,7 +15,7 @@ function ContentMessage({
 }: ContentMessageProps) {
   return (
     <div className="content-message">
-      <CircleAvatar src={img_src} width="40px" />
+      <CircleAvatar src={img_src} width={40} />
       <div className="info-container">
         <div className="title-container">
           <span>{messenger}</span>

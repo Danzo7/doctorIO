@@ -13,5 +13,5 @@ const Template: Story<ComponentProps<typeof CircleAvatar>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   src: profile,
-  width: '100px',
+  width: 100,
 };
