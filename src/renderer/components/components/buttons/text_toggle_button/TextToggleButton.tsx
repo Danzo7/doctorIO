@@ -6,6 +6,9 @@ interface TextToggleButtonProps {
   second_text: string;
   default_select?: string;
 }
+/**
+ * @deprecated Deprecated in favor of MultiOptionSwitcher
+ */
 function TextToggleButton({
   first_text,
   second_text,
