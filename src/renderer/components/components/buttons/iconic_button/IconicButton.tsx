@@ -1,19 +1,26 @@
 import React from 'react';
 import { css } from '@emotion/css';
 import './style/index.scss';
+
 interface IconicButtonProps {
   Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   backgroundColor?: string;
   afterColor?: string;
   width?: number;
+  iconSize?: number;
   radius?: number;
 }
+
+/**
+ * @param {number} iconSize -Size of icon if ?icon query is used, Default=35vw
+ * @param {number} width -Size of button use ?icon query for dynamic icon size*/
 function IconicButton({
   Icon,
   backgroundColor,
   width = 40,
   afterColor,
   radius,
+  iconSize,
 }: IconicButtonProps) {
   return (
     <div
@@ -27,7 +34,7 @@ function IconicButton({
         }
       `}`}
     >
-      <Icon height={width / 2} width={width / 2} />
+      <Icon height={iconSize ?? width / 2} width={iconSize ?? width / 2} />
     </div>
   );
 }
