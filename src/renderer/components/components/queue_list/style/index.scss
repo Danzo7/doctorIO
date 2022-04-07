@@ -1,0 +1,52 @@
+@use '~styles/appColors' as *;
+.queue-list {
+  display: flex;
+  gap: 0.5vw;
+  overflow: hidden;
+  padding: 15px;
+  width: 250px;
+  height: fit-content; /* BorderColor */
+  flex-direction: column;
+  border: 1px solid $bordercolor;
+  box-sizing: border-box;
+  border-radius: 15px;
+  gap: 10px;
+  > .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    > span {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+    }
+    > .control {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 10px;
+      > div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        width: 30px;
+        height: 30px;
+      }
+      > .next {
+        background: $coldblue;
+      }
+      > .pause {
+        background: $hotred;
+      }
+    }
+  }
+  > .queue-items {
+    width: 100%;
+    > div > div {
+      gap: 5px;
+    }
+  }
+}

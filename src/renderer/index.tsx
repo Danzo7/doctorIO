@@ -3,8 +3,8 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.scss';
 
-const container = document.getElementById('app-mount');
-const root = createRoot(container as HTMLElement);
+const app = document.getElementById('app-mount');
+const root = createRoot(app as HTMLElement);
 root.render(<App />);
 
 if (typeof module !== 'undefined' && module.hot) {

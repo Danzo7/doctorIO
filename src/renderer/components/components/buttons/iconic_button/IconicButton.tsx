@@ -5,29 +5,29 @@ interface IconicButtonProps {
   Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   backgroundColor?: string;
   afterColor?: string;
-  size?: number;
   width?: number;
+  radius?: number;
 }
 function IconicButton({
   Icon,
   backgroundColor,
-  size,
-  width,
+  width = 40,
   afterColor,
+  radius,
 }: IconicButtonProps) {
   return (
     <div
       className={`iconic-button ${css`
         background-color: ${backgroundColor};
-        padding: ${size}%;
         width: ${width}px;
         height: ${width}px;
+        border-radius: ${radius}px;
         &:hover {
           background-color: ${afterColor};
         }
       `}`}
     >
-      <Icon />
+      <Icon height={width / 2} width={width / 2} />
     </div>
   );
 }
