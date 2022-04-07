@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import MiniStats from './MiniStats';
-import exclamation from 'toSvg/exclamation.svg';
+import exclamation from 'toSvg/exclamation.svg?icon';
 //👇 This default export determines where your story goes in the story list
 export default {
   title: 'MiniStats',

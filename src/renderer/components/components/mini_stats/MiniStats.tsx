@@ -13,7 +13,7 @@ function MiniStats({ value, text, Icon, percentage, state }: MiniStatsProps) {
   return (
     <div className={`mini-stats ${state}`}>
       <span>{percentage}%</span>
-      <Icon></Icon>
+      <Icon width={35} height={35}></Icon>
       <span>{text}</span>
       <span>{value}</span>
     </div>
