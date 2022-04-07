@@ -7,11 +7,20 @@ import AddButton from './add_button';
 import MemberFooter from './member_footer';
 interface MembersPreviewProps {
   fullName: string;
+  memberID: string;
+  status: string;
   imgSrc: string;
   roleArray: Array<string>;
 }
-function MembersPreview({ fullName, imgSrc, roleArray }: MembersPreviewProps) {
+function MembersPreview({
+  fullName,
+  memberID,
+  status,
+  imgSrc,
+  roleArray,
+}: MembersPreviewProps) {
   const [showFooter, setshowFooter] = useState(false);
+  const addRole = () => {};
   return (
     <div className="preview-container">
       <div className="members-preview">
@@ -27,7 +36,9 @@ function MembersPreview({ fullName, imgSrc, roleArray }: MembersPreviewProps) {
             {roleArray.map((rollName) => (
               <SmallRolePreview roleName={rollName} />
             ))}
-            <AddButton />
+            <div onClick={addRole} className="add-btn-container">
+              <AddButton />
+            </div>
           </div>
         </div>
         <div
@@ -37,7 +48,7 @@ function MembersPreview({ fullName, imgSrc, roleArray }: MembersPreviewProps) {
           <UpArrow width={15} />
         </div>
       </div>
-      {showFooter && <MemberFooter memberID="100" status="online" />}
+      {showFooter && <MemberFooter memberID={memberID} status={status} />}
     </div>
   );
 }
