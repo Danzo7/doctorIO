@@ -10,4 +10,7 @@ const Template: Story<ComponentProps<typeof MultiOptionSwitcher>> = (args) => (
   <MultiOptionSwitcher {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = { textList: ['first', 'second', 'anotherOne'] };
+FirstStory.args = {
+  textList: ['first', 'second', 'anotherOne'],
+  growOnselection: false,
+};

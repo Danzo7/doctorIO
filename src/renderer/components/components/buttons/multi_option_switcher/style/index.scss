@@ -16,6 +16,7 @@
     height: 1em;
   }
   > .text {
+    @include fastTrans;
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -33,6 +34,10 @@
     }
     &.selected {
       background: $bordercolor;
+      &.grow {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
     }
   }
 }
