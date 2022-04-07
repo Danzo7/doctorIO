@@ -2,15 +2,15 @@ import UserProfileStatus from '@components/user_profile_status';
 import React, { useState } from 'react';
 import './style/index.scss';
 import UpArrow from 'toSvg/arrow.svg?icon';
-import SmallRoll from './small_roll';
+import SmallRolePreview from './small_role_preview';
 import AddButton from './add_button';
 import MemberFooter from './member_footer';
 interface MembersPreviewProps {
   fullName: string;
   imgSrc: string;
-  rollArray: Array<string>;
+  roleArray: Array<string>;
 }
-function MembersPreview({ fullName, imgSrc, rollArray }: MembersPreviewProps) {
+function MembersPreview({ fullName, imgSrc, roleArray }: MembersPreviewProps) {
   const [showFooter, setshowFooter] = useState(false);
   return (
     <div className="preview-container">
@@ -24,8 +24,8 @@ function MembersPreview({ fullName, imgSrc, rollArray }: MembersPreviewProps) {
         <div className="info-container">
           <span>{fullName}</span>
           <div className="roll-container">
-            {rollArray.map((rollName) => (
-              <SmallRoll rollName={rollName} />
+            {roleArray.map((rollName) => (
+              <SmallRolePreview roleName={rollName} />
             ))}
             <AddButton />
           </div>
@@ -34,7 +34,7 @@ function MembersPreview({ fullName, imgSrc, rollArray }: MembersPreviewProps) {
           onClick={() => setshowFooter(!showFooter)}
           className={`arrow-container${showFooter ? ' shown' : ''}`}
         >
-          <UpArrow width={10} />
+          <UpArrow width={15} />
         </div>
       </div>
       {showFooter && <MemberFooter memberID="100" status="online" />}

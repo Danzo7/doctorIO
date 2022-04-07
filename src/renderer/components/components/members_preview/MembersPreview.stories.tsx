@@ -14,7 +14,7 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   fullName: 'Amanda Clark',
   imgSrc: test,
-  rollArray: [
+  roleArray: [
     'Gamer',
     'Assistant',
     'Assistant',
