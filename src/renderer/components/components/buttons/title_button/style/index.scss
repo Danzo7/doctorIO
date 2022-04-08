@@ -5,13 +5,12 @@
   align-items: center;
   background: $darkerseccolor;
   border: 1px solid $bordercolor;
-  border-radius: 7px;
-  padding: 5px;
   overflow: hidden;
-
+  width: fit-content;
+  height: fit-content;
+  padding: 7px 12px;
   > span {
     font-style: normal;
     font-weight: 600;
-    line-height: 0;
   }
 }
