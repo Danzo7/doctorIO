@@ -1,3 +1,32 @@
 @use '~styles/appColors' as *;
 .members-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0px;
+  width: fit-content;
+  gap: 20px;
+
+  > .header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    min-width: 400px;
+
+    > span {
+      color: $white;
+      font-weight: 600;
+      font-size: 23px;
+    }
+  }
+  > .members-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    height: 80%;
+  }
 }
