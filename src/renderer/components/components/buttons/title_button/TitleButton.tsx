@@ -34,7 +34,7 @@ function TitleButton({
       `} `}
     >
       <span
-        className={`${css`
+        className={` title ${css`
           color: ${fontColor};
           font-size: ${fontSize}px;
           line-height: ${fontSize}px;
