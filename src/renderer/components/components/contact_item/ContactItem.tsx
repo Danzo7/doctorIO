@@ -2,9 +2,9 @@ import UserProfileStatus from '@components/user_profile_status';
 import React from 'react';
 import './style/index.scss';
 import colors from '@assets/styles/color';
-import IdCard from 'toSvg/id_card.svg';
-import Messages from 'toSvg/messagesSmall.svg';
-import Call_Icon from 'toSvg/callicon.svg';
+import IdCard from 'toSvg/id_card.svg?icon';
+import Messages from 'toSvg/messagesSmall.svg?icon';
+import Call_Icon from 'toSvg/callicon.svg?icon';
 import IconicButton from '@components/buttons/iconic_button';
 interface ContactItemProps {
   status: boolean;
@@ -23,16 +23,19 @@ function ContactItem({ status, imgSrc, fullName }: ContactItemProps) {
           Icon={IdCard}
           afterColor={colors.secondary_color}
           width={40}
+          iconSize={15}
         />
         <IconicButton
           Icon={Messages}
           afterColor={colors.secondary_color}
           width={40}
+          iconSize={15}
         />
         <IconicButton
           Icon={Call_Icon}
           afterColor={colors.good_green}
           width={40}
+          iconSize={15}
         />
       </div>
     </div>
