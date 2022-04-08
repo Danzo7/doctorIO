@@ -25,11 +25,11 @@ function TitleButton({
     <div
       className={`title-button ${css`
         background-color: ${backgroundColor};
-        border-color: ${borderColor};
+        ${borderColor ? `border: 1px solid ${borderColor} ` : ''};
         border-radius: ${radius}px;
         &:hover {
           background-color: ${afterBgColor};
-          border-color: ${afterBorderColor};
+          ${afterBorderColor ? `border: 1px solid ${afterBorderColor} ` : ''};
         }
       `} `}
     >
