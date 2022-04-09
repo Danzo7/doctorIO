@@ -7,14 +7,10 @@
         '{{componentName}sc}/{{componentName}pc}.tsx',
         `import React from 'react';
 import './style/index.scss';
-interface {{componentName}pc}Props {
+interface {{componentName}pc}Props {}
+export default function {{componentName}pc}({}: {{componentName}pc}Props) {
+  return <div className="{{componentName}kc}"></div>;
 }
-function {{componentName}pc}({}: {{componentName}pc}Props) {
-  return (<div className="{{componentName}kc}"></div>);
-}
-    
-export default {{componentName}pc};
-
 `,
       ],
       [
@@ -26,23 +22,25 @@ export default {{componentName}pc};
       [
         '{{componentName}sc}/style/index.scss',
         `@use '~styles/appColors' as *;
-.{{componentName}kc}{
-      }`,
+.{{componentName}kc} {
+}
+`,
       ],
       [
         '{{componentName}sc}/{{componentName}pc}.stories.tsx',
         `import React, { ComponentProps } from 'react';
-    import type { Story } from '@storybook/react';
-    import  {{componentName}pc}  from './{{componentName}pc}';
-    //👇 This default export determines where your story goes in the story list
-    export default {
-      title: '{{componentName}pc}',
-      component: {{componentName}pc},
-    };
-    const Template: Story<ComponentProps<typeof {{componentName}pc}>> = (args) => <{{componentName}pc} {...args} />;
-    export const FirstStory = Template.bind({});
-    FirstStory.args = {
-    };`,
+import type { Story } from '@storybook/react';
+import {{componentName}pc} from './{{componentName}pc}';
+export default {
+  title: '{{componentName}pc}',
+  component: {{componentName}pc},
+};
+const Template: Story<ComponentProps<typeof {{componentName}pc}>> = (args) => (
+  <{{componentName}pc} {...args} />
+);
+export const FirstStory = Template.bind({});
+FirstStory.args = {};
+`,
       ],
     ],
   },
