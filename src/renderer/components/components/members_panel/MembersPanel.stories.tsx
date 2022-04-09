@@ -34,5 +34,19 @@ FirstStory.args = {
       status: 'Online',
       roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
     },
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: test,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: test,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
   ],
 };

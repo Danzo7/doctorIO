@@ -12,22 +12,24 @@ function MembersPanel({ membersList = [] }: MembersPanelProps) {
         <span>Members</span>
         <DarkLightCornerButton title="Members ..." />
       </div>
-      <div className="members-list">
-        {membersList.length != 0 ? (
-          membersList.map(
-            ({ fullName, imgSrc, memberID, status, roleArray }) => (
-              <MembersPreview
-                fullName={fullName}
-                imgSrc={imgSrc}
-                memberID={memberID}
-                status={status}
-                roleArray={roleArray}
-              />
-            ),
-          )
-        ) : (
-          <div>No Members</div>
-        )}
+      <div className="members-list-container">
+        <div className="members-list">
+          {membersList.length != 0 ? (
+            membersList.map(
+              ({ fullName, imgSrc, memberID, status, roleArray }) => (
+                <MembersPreview
+                  fullName={fullName}
+                  imgSrc={imgSrc}
+                  memberID={memberID}
+                  status={status}
+                  roleArray={roleArray}
+                />
+              ),
+            )
+          ) : (
+            <div>No Members</div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -21,12 +21,16 @@
       font-size: 23px;
     }
   }
-  > .members-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
+  > .members-list-container {
     height: 80%;
+    overflow: auto;
+    max-height: 500px;
+    > .members-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px;
+    }
   }
 }
