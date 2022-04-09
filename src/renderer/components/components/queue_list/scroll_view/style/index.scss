@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+.scroll-view {
+  display: flex;
+  height: max-content;
+  overflow-y: hidden;
+  position: relative;
+  width: 100%;
+  gap: 5px;
+  padding-bottom: 10px;
+}

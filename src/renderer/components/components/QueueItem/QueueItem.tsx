@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import './style/index.scss';
 import QueueItemSmall from './queue_item_small';
 import QueueItemWide from './queue_item_wide';
-import { VisibilityContext } from 'react-horizontal-scrolling-menu';
 
 interface QueueItemProps {
   name: string;
@@ -10,24 +9,28 @@ interface QueueItemProps {
   timeAgo: string;
   state?: string;
   itemId?: number;
-  onPress?: (visibility: any) => void;
+  opened?: boolean;
+  onPress?: () => void;
 }
-function QueueItem({ name, number, state, timeAgo, onPress }: QueueItemProps) {
-  const [isActive, activate] = useState(false);
-  const visibility = useContext(VisibilityContext);
-
-  const setActive = (value: boolean) => {
-    console.log(onPress);
+function QueueItem({
+  name,
+  number,
+  state,
+  timeAgo,
+  opened,
+  onPress,
+}: QueueItemProps) {
+  const [, activate] = useState(opened ?? false);
+  const setActivate = (value: boolean) => {
+    opened = value;
     activate(value);
-    //onPress?.(visibility);
+
+    if (value == true) onPress?.();
   };
   return (
-    <div
-      className={`queue-item ${isActive ? 'wide' : ''}`}
-      onClick={() => onPress?.(visibility)}
-    >
-      {!isActive && (
-        <div onClick={() => setActive(true)}>
+    <div className={`queue-item ${opened ? 'wide' : ''}`}>
+      {!opened && (
+        <div onClick={() => setActivate(true)}>
           <QueueItemSmall
             name={name}
             state={state}
@@ -35,14 +38,14 @@ function QueueItem({ name, number, state, timeAgo, onPress }: QueueItemProps) {
           ></QueueItemSmall>
         </div>
       )}
-      {isActive && (
+      {opened && (
         <div>
           <QueueItemWide
             name={name}
             state={state}
             number={number}
             timeAgo={timeAgo}
-            backBtnOnClick={() => setActive(false)}
+            backBtnOnClick={() => setActivate(false)}
           ></QueueItemWide>
         </div>
       )}

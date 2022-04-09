@@ -2,16 +2,16 @@
 import QueueItem from '@components/QueueItem';
 import React, { useState } from 'react';
 import './style/index.scss';
-import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import NextIcon from 'toSvg/next.svg?icon';
 import PauseIcon from 'toSvg/pause.svg?icon';
+import ScrollView from './scroll_view';
 
 interface QueueListProps {}
 
 const itemList = [
   {
     name: 'adam smith',
-    number: 1,
+    number: 0,
     timeAgo: 'created 1h ago',
   },
   {
@@ -21,33 +21,24 @@ const itemList = [
   },
   {
     name: 'adam smith',
-    number: 1,
+    number: 2,
     timeAgo: 'created 1h ago',
   },
   {
     name: 'adam smith',
-    number: 1,
+    number: 3,
     timeAgo: 'created 1h ago',
   },
   {
     name: 'adam smith',
-    number: 1,
+    number: 4,
     timeAgo: 'created 1h ago',
   },
 ];
 function QueueList({}: QueueListProps) {
   const [items, setItems] = useState(itemList);
-  const [selected, setSelected] = useState(0);
-  //const [position, setPosition] = useState(0);
-  const isItemSelected = (id: number) => selected === id;
+  const [selected, setSelected] = useState(-1);
 
-  const handleClick =
-    (id: number) =>
-    ({ getItemById, scrollToItem }: any) => {
-      console.log({ getItemById, scrollToItem, id });
-      scrollToItem(id);
-      setSelected(id);
-    };
   return (
     <div className="queue-list">
       <div className="header">
@@ -62,16 +53,20 @@ function QueueList({}: QueueListProps) {
         </div>
       </div>
       <div className="queue-items">
-        <ScrollMenu>
+        <ScrollView>
           {items.map(({ name, number, timeAgo }, index) => (
-            <QueueItem
-              name={name}
-              number={number}
-              timeAgo={timeAgo}
-              onPress={handleClick(index)}
-            />
+            <div>
+              <QueueItem
+                name={name}
+                number={number}
+                timeAgo={timeAgo}
+                key={index}
+                opened={selected == index}
+                onPress={() => setSelected(index)}
+              />
+            </div>
           ))}
-        </ScrollMenu>
+        </ScrollView>
         <div className="scrollbar"></div>
       </div>
     </div>
