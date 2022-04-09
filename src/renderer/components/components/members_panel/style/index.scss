@@ -22,9 +22,8 @@
     }
   }
   > .members-list-container {
-    height: 80%;
     overflow: auto;
-    max-height: 500px;
+
     > .members-list {
       display: flex;
       flex-direction: column;

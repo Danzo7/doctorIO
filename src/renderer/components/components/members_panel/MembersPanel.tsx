@@ -1,13 +1,19 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import MembersPreview from '@components/members_preview';
+import { css } from '@emotion/css';
 import React from 'react';
 import './style/index.scss';
 interface MembersPanelProps {
   membersList: Array<any>;
+  height: number;
 }
-function MembersPanel({ membersList = [] }: MembersPanelProps) {
+function MembersPanel({ membersList = [], height = 400 }: MembersPanelProps) {
   return (
-    <div className="members-panel">
+    <div
+      className={`members-panel ${css`
+        height: ${height}px;
+      `} `}
+    >
       <div className="header">
         <span>Members</span>
         <DarkLightCornerButton title="Members ..." />
