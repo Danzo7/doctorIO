@@ -1,41 +1,31 @@
 import { css } from '@emotion/css';
-import React, { Children, useRef } from 'react';
+import React, { Children } from 'react';
+import ScrollController from './ScrollController';
 import './style/index.scss';
 interface ScrollViewProps {
   children: React.ReactNode[];
   gap?: number;
+  controller: ScrollController;
 }
-export const ScrollView = ({ children, gap = 5 }: ScrollViewProps) => {
-  const scrollRef = useRef(null);
-
-  const scrollTo = (index: number) => {
-    const scroll = scrollRef.current as unknown as HTMLDivElement;
-    let scrollX = 0;
-    if (index == scroll.children.length - 1) scrollX = scroll.scrollWidth;
-    else
-      for (let i = 0; i < index; i++)
-        scrollX += scroll.children[i].clientWidth + gap;
-
-    scroll.scrollTo(scrollX, 0);
-  };
-
+export const ScrollView = ({
+  children,
+  controller,
+  gap = controller.gap,
+}: ScrollViewProps) => {
+  controller.gap = gap;
   return (
-    <div className="scroll-view" ref={scrollRef}>
-      {Children.map(children, (child, index) => {
-        return (
-          <div
-            className="items"
-            onClick={() => {
-              scrollTo(index);
-            }}
-          >
-            {child}
-          </div>
-        );
+    <div
+      className={`scroll-view ${css`
+        gap: ${gap}px;
+      `}`}
+      ref={controller.ref}
+    >
+      {Children.map(children, (child) => {
+        return <>{child}</>;
       })}
       <div
         className={css`
-          padding-left: 80px;
+          padding-left: 90px;
         `}
       ></div>
     </div>
