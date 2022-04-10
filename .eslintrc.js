@@ -34,7 +34,7 @@ module.exports = {
   globals: { Atomics: 'readonly', SharedArrayBuffer: 'readonly' },
   rules: {
     'react/prop-types': 0,
-    'no-console': 'off',
+    'no-console': 'warn',
     'linebreak-style': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'react-hooks/rules-of-hooks': 2,
