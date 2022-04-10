@@ -11,26 +11,28 @@ interface QueueItemProps {
   itemId?: number;
   opened?: boolean;
   onPress?: () => void;
+  onClose?: () => void;
 }
 function QueueItem({
   name,
   number,
   state,
   timeAgo,
-  opened,
+  opened = false,
   onPress,
+  onClose,
 }: QueueItemProps) {
-  const [, activate] = useState(opened ?? false);
-  const setActivate = (value: boolean) => {
-    opened = value;
-    activate(value);
+  const [isOpen, open] = useState(opened);
 
-    if (value == true) onPress?.();
+  if (isOpen != opened) open(opened);
+  const setopen = (value: boolean) => {
+    open(value);
+    if (isOpen == false) onPress?.();
   };
   return (
-    <div className={`queue-item ${opened ? 'wide' : ''}`}>
-      {!opened && (
-        <div onClick={() => setActivate(true)}>
+    <div className={`queue-item ${isOpen ? 'wide' : ''}`}>
+      {!isOpen && (
+        <div onClick={() => setopen(true)}>
           <QueueItemSmall
             name={name}
             state={state}
@@ -38,14 +40,17 @@ function QueueItem({
           ></QueueItemSmall>
         </div>
       )}
-      {opened && (
+      {isOpen && (
         <div>
           <QueueItemWide
             name={name}
             state={state}
             number={number}
             timeAgo={timeAgo}
-            backBtnOnClick={() => setActivate(false)}
+            backBtnOnClick={() => {
+              onClose?.();
+              setopen(false);
+            }}
           ></QueueItemWide>
         </div>
       )}

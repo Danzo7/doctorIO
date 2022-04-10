@@ -5,46 +5,95 @@ import './style/index.scss';
 import NextIcon from 'toSvg/next.svg?icon';
 import PauseIcon from 'toSvg/pause.svg?icon';
 import ScrollView from './scroll_view';
+import ScrollController from './scroll_view/ScrollController';
 
 interface QueueListProps {}
 
-const itemList = [
+const itemsL = [
   {
     name: 'adam smith',
-    number: 0,
     timeAgo: 'created 1h ago',
+    number: 20,
   },
   {
     name: 'adam smith',
-    number: 1,
     timeAgo: 'created 1h ago',
+    number: 20,
   },
   {
     name: 'adam smith',
-    number: 2,
     timeAgo: 'created 1h ago',
+    number: 21,
   },
   {
     name: 'adam smith',
-    number: 3,
     timeAgo: 'created 1h ago',
+    number: 22,
   },
   {
     name: 'adam smith',
-    number: 4,
     timeAgo: 'created 1h ago',
+    number: 23,
+  },
+  {
+    name: 'adam smith',
+    timeAgo: 'created 1h ago',
+    number: 24,
+  },
+  {
+    name: 'adam smith',
+    timeAgo: 'created 1h ago',
+    number: 25,
+  },
+  {
+    name: 'adam smith',
+    timeAgo: 'created 1h ago',
+    number: 26,
+  },
+  {
+    name: 'adam smith',
+    timeAgo: 'created 1h ago',
+    number: 27,
+  },
+  {
+    name: 'adam smith',
+    timeAgo: 'created 1h ago',
+    number: 28,
+  },
+  {
+    name: 'adam smith',
+    timeAgo: 'created 1h ago',
+    number: 29,
+  },
+  {
+    name: 'adam smith',
+    timeAgo: 'created 1h ago',
+    number: 30,
   },
 ];
-function QueueList({}: QueueListProps) {
-  const [items, setItems] = useState(itemList);
-  const [selected, setSelected] = useState(-1);
+const controller = new ScrollController();
 
+function QueueList({}: QueueListProps) {
+  const [selected, setSelected] = useState(-1);
+  const [items, setItems] = useState(itemsL);
+  function goToSelection(index: number) {
+    if (selected > items.length - 1) return;
+    controller.scrollTo(index, selected);
+    setSelected(index);
+  }
   return (
     <div className="queue-list">
       <div className="header">
         <span>Appointment</span>
         <div className="control">
-          <div className="next">
+          <div
+            className="next"
+            onClick={() => {
+              setItems(items.slice(1, items.length));
+              setSelected(-1);
+              controller.scrollTo(0, selected);
+            }}
+          >
             <NextIcon width={10} />
           </div>
           <div className="pause">
@@ -53,20 +102,27 @@ function QueueList({}: QueueListProps) {
         </div>
       </div>
       <div className="queue-items">
-        <ScrollView>
-          {items.map(({ name, number, timeAgo }, index) => (
-            <div>
-              <QueueItem
-                name={name}
-                number={number}
-                timeAgo={timeAgo}
-                key={index}
-                opened={selected == index}
-                onPress={() => setSelected(index)}
-              />
-            </div>
-          ))}
-        </ScrollView>
+        {items.length > 0 ? (
+          <ScrollView controller={controller} gap={10}>
+            {items.map(({ name, timeAgo, number }, index) => (
+              <div>
+                <QueueItem
+                  name={name}
+                  number={number}
+                  timeAgo={timeAgo}
+                  key={index}
+                  opened={selected == index}
+                  onClose={() => {
+                    if (selected == index) setSelected(-1);
+                  }}
+                  onPress={() => goToSelection(index)}
+                />
+              </div>
+            ))}
+          </ScrollView>
+        ) : (
+          <span>nothing...</span>
+        )}
         <div className="scrollbar"></div>
       </div>
     </div>
