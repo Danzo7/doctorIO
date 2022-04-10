@@ -23,7 +23,7 @@ export default function ShortStatsPanel({
               Icon={Icon}
               value={value}
               backgroundColor={backgroundColor ? backgroundColor : ''}
-              percentage={percentage ? percentage : 0}
+              percentage={percentage ? percentage : -1}
             />
           ),
         )}

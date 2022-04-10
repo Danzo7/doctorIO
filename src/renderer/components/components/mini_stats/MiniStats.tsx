@@ -15,7 +15,7 @@ function MiniStats({
   value,
   text,
   Icon,
-  percentage,
+  percentage = -1,
   state,
   backgroundColor,
 }: MiniStatsProps) {
@@ -27,7 +27,7 @@ function MiniStats({
     >
       <span
         className={` ${css`
-          visibility: ${percentage ? 'visible' : 'hidden'};
+          visibility: ${percentage >= 0 ? 'visible' : 'hidden'};
         `} `}
       >
         {percentage}%
