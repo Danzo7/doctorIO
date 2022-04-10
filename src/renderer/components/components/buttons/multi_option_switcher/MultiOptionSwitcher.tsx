@@ -3,7 +3,7 @@ import './style/index.scss';
 interface MultiOptionSwitcherProps {
   textList: string[];
   defaultSelected?: number;
-  growOnselection: boolean;
+  growOnselection?: boolean;
 }
 function MultiOptionSwitcher({
   textList,

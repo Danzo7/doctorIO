@@ -7,7 +7,7 @@ interface MiniStatsProps {
   text: string;
   Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   percentage?: number;
-  state: string;
+  state?: string;
   backgroundColor?: string;
 }
 
@@ -26,7 +26,7 @@ function MiniStats({
       `} ${state}`}
     >
       <span
-        className={`percentage-span ${css`
+        className={` ${css`
           visibility: ${percentage ? 'visible' : 'hidden'};
         `} `}
       >
