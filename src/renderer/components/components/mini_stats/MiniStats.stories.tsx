@@ -15,6 +15,6 @@ FirstStory.args = {
   value: 10,
   text: 'hello',
   Icon: exclamation,
-  percentage: 50,
+  percentage: 0,
   state: '',
 };

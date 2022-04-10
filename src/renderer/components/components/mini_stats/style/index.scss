@@ -14,13 +14,14 @@
   &.warn {
     background-color: $hotred;
   }
-  > span {
+  > .percentage-span {
     font-style: normal;
     font-weight: 600;
     font-size: 9px;
     width: 100%;
     text-align: right;
     color: $goodgreen;
+
     ~ span {
       font-size: 20px;
       text-align: center;
