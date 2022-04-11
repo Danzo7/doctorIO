@@ -1,0 +1,23 @@
+@use '~styles/appColors' as *;
+.search-profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  width: fit-content;
+  gap: 5px;
+
+  > input {
+    background-color: transparent;
+    border: none;
+    width: 60%;
+    padding: 12px 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+  }
+  > input[type='search']:focus {
+    outline: none;
+  }
+}
