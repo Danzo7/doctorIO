@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
 import React from 'react';
 import './style/index.scss';
+import colors from '@colors';
 interface TitleButtonProps {
   title: string;
   fontColor?: string;
@@ -9,6 +10,7 @@ interface TitleButtonProps {
   borderColor?: string;
   afterBgColor?: string;
   afterBorderColor?: string;
+  afterFontColor?: string;
   radius?: number;
 }
 function TitleButton({
@@ -19,6 +21,7 @@ function TitleButton({
   borderColor,
   afterBgColor,
   afterBorderColor,
+  afterFontColor,
   radius,
 }: TitleButtonProps) {
   return (
@@ -30,6 +33,9 @@ function TitleButton({
         &:hover {
           background-color: ${afterBgColor};
           ${afterBorderColor ? `border: 1px solid ${afterBorderColor} ` : ''};
+          > span {
+            color: ${afterFontColor ? afterFontColor : colors.white};
+          }
         }
       `} `}
     >
