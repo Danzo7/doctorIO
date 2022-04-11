@@ -2,26 +2,26 @@ import CircleAvatar from '@components/avatars/circle_avatar';
 import React from 'react';
 import './style/index.scss';
 interface ContentMessageProps {
-  img_src: string;
+  imgSrc: string;
   messenger: string;
-  message_time: string;
-  message_content: string;
+  messageTime: string;
+  messageContent: string;
 }
 function ContentMessage({
   messenger,
-  message_time,
-  message_content,
-  img_src,
+  messageTime,
+  messageContent,
+  imgSrc,
 }: ContentMessageProps) {
   return (
     <div className="content-message">
-      <CircleAvatar src={img_src} width={40} />
+      <CircleAvatar src={imgSrc} width={40} />
       <div className="info-container">
         <div className="title-container">
           <span>{messenger}</span>
-          <span>{message_time}</span>
+          <span>{messageTime}</span>
         </div>
-        <span>{message_content}</span>
+        <span>{messageContent}</span>
       </div>
     </div>
   );
