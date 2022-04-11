@@ -1,4 +1,4 @@
-import TitleButton from '@components/buttons/title_button';
+import TextButton from '@components/buttons/text_button';
 import React, { ReactNode } from 'react';
 import './style/index.scss';
 import colors from '@colors';
@@ -14,8 +14,8 @@ export default function RecentPanel({
     <div className="recent-panel">
       <div className="header">
         <span>{headerText}</span>
-        <TitleButton
-          title="show all"
+        <TextButton
+          text="show all"
           fontColor={colors.text_gray}
           afterBgColor={colors.secondary_color}
           fontSize={14}

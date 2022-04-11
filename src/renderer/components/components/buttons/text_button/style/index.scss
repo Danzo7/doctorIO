@@ -1,5 +1,5 @@
 @use '~styles/appColors' as *;
-.title-button {
+.text-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,7 +8,7 @@
   height: fit-content;
   padding: 0.5em 0.8em;
 
-  > .title {
+  > .text {
     font-style: normal;
     font-weight: 600;
   }

@@ -2,8 +2,8 @@ import { css } from '@emotion/css';
 import React from 'react';
 import './style/index.scss';
 import colors from '@colors';
-interface TitleButtonProps {
-  title: string;
+interface TextButtonProps {
+  text: string;
   fontColor?: string;
   fontSize?: number;
   backgroundColor?: string;
@@ -13,8 +13,8 @@ interface TitleButtonProps {
   afterFontColor?: string;
   radius?: number;
 }
-function TitleButton({
-  title,
+function TextButton({
+  text,
   fontColor,
   fontSize = 14,
   backgroundColor,
@@ -23,10 +23,10 @@ function TitleButton({
   afterBorderColor,
   afterFontColor,
   radius,
-}: TitleButtonProps) {
+}: TextButtonProps) {
   return (
     <div
-      className={`title-button ${css`
+      className={`text-button ${css`
         background-color: ${backgroundColor};
         ${borderColor ? `border: 1px solid ${borderColor} ` : ''};
         border-radius: ${radius}px;
@@ -40,16 +40,16 @@ function TitleButton({
       `} `}
     >
       <span
-        className={` title ${css`
+        className={` text ${css`
           color: ${fontColor};
           font-size: ${fontSize}px;
           line-height: ${fontSize}px;
         `}`}
       >
-        {title}
+        {text}
       </span>
     </div>
   );
 }
 
-export default TitleButton;
+export default TextButton;

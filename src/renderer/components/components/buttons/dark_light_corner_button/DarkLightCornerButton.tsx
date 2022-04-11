@@ -1,7 +1,7 @@
 import React from 'react';
-import TitleButton from '../title_button';
 import './style/index.scss';
 import colors from '@colors';
+import TextButton from '../text_button/TextButton';
 interface DarkLightCornerButtonProps {
   title: string;
 }
@@ -9,8 +9,8 @@ interface DarkLightCornerButtonProps {
 function DarkLightCornerButton({ title }: DarkLightCornerButtonProps) {
   return (
     <div className="dark-light-corner-button">
-      <TitleButton
-        title={title}
+      <TextButton
+        text={title}
         fontColor={colors.white}
         fontSize={14}
         borderColor={colors.background}
