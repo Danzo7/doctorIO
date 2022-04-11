@@ -2,14 +2,14 @@ import TextButton from '@components/buttons/text_button';
 import React, { ReactNode } from 'react';
 import './style/index.scss';
 import colors from '@colors';
-interface RecentPanelProps {
+interface SideColumnViewProps {
   headerText: string;
   children?: ReactNode;
 }
-export default function RecentPanel({
+export default function SideColumnView({
   headerText,
   children,
-}: RecentPanelProps) {
+}: SideColumnViewProps) {
   return (
     <div className="recent-panel">
       <div className="header">

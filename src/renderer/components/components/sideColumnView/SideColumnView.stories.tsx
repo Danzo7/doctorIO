@@ -1,13 +1,13 @@
 import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
-import RecentPanel from './RecentPanel';
+import SideColumnView from './SideColumnView';
 import BookedItem from '@components/booked_item';
 export default {
-  title: 'RecentPanel',
-  component: RecentPanel,
+  title: 'SideColumnView',
+  component: SideColumnView,
 };
-const Template: Story<ComponentProps<typeof RecentPanel>> = (args) => (
-  <RecentPanel {...args} />
+const Template: Story<ComponentProps<typeof SideColumnView>> = (args) => (
+  <SideColumnView {...args} />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
