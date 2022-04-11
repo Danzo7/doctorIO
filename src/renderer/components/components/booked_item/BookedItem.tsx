@@ -11,22 +11,24 @@ interface BookedItemProps {
 function BookedItem({ name, bookTime, state }: BookedItemProps) {
   return (
     <div className="booked-item">
-      <div className="info-container">
-        <span className="name">{name}</span>
-        <span className="info">{bookTime}</span>
+      <div className="right-container">
+        <div className="info-container">
+          <span className="name">{name}</span>
+          <span className="info">{bookTime}</span>
+        </div>
+        {state == 'panding' && (
+          <div className="state-container">
+            <Panding></Panding>
+            <span>Panding</span>
+          </div>
+        )}
+        {state == 'in queue' && (
+          <div className="state-container">
+            <InQueue></InQueue>
+            <span>In queue</span>
+          </div>
+        )}
       </div>
-      {state == 'panding' && (
-        <div className="state-container">
-          <Panding></Panding>
-          <span>Panding</span>
-        </div>
-      )}
-      {state == 'in queue' && (
-        <div className="state-container">
-          <InQueue></InQueue>
-          <span>In queue</span>
-        </div>
-      )}
       <div className="option-menu">
         <Menu />
       </div>

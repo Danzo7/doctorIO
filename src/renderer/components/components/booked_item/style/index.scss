@@ -2,10 +2,11 @@
 .booked-item {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: flex-start;
-  padding: 10px;
-  width: 280px;
-  height: 80px;
+  padding: 15px 10px 15px 15px;
+  width: fit-content;
+  height: fit-content;
   border-radius: 11px;
 
   &:hover {
@@ -14,50 +15,61 @@
       visibility: visible;
     }
   }
+  > .right-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+
+    > .info-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 0px;
+      gap: 5px;
+
+      > .name {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        color: $white;
+        flex: none;
+      }
+      > .info {
+        color: $white;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+      }
+    }
+    > .state-container {
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      flex: none;
+      flex-grow: 0;
+      margin-left: auto;
+
+      > span {
+        color: $white;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        margin-top: 2px;
+      }
+    }
+  }
   > .option-menu {
     visibility: hidden;
-  }
-  .info-container {
-    align-self: center;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
-    flex: none;
-    flex-grow: 0;
-    margin: 0px 10px;
-
-    .name {
-      font-style: normal;
-      font-weight: 600;
-      font-size: 18px;
-      color: $white;
-      flex: none;
-    }
-    .info {
-      color: $white;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 15px;
-    }
-  }
-  .state-container {
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    flex: none;
-    flex-grow: 0;
-    margin-left: auto;
-
-    > span {
-      color: $white;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 11px;
-      margin-top: 2px;
-    }
+    justify-content: flex-start;
+    cursor: pointer;
   }
 }
