@@ -2,15 +2,15 @@ import React from 'react';
 import './style/index.scss';
 interface ToggleselectedItemProps {
   text: string;
-  separator_direction: string;
+  separatorDirection: string;
 }
 function ToggleselectedItem({
   text,
-  separator_direction,
+  separatorDirection,
 }: ToggleselectedItemProps) {
   return (
     <div className="toggleselected-item">
-      {separator_direction == 'right' && (
+      {separatorDirection == 'right' && (
         <>
           <div className="span-container">
             <span>{text}</span>
@@ -18,7 +18,7 @@ function ToggleselectedItem({
           <div className="separator"></div>
         </>
       )}
-      {separator_direction == 'left' && (
+      {separatorDirection == 'left' && (
         <>
           <div className="separator"></div>
           <div className="span-container">

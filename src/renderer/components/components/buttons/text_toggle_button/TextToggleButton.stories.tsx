@@ -11,7 +11,7 @@ const Template: Story<ComponentProps<typeof TextToggleButton>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  first_text: 'mony',
-  second_text: 'fame',
-  default_select: 'first',
+  firstText: 'mony',
+  secondText: 'fame',
+  defaultSelect: 'first',
 };

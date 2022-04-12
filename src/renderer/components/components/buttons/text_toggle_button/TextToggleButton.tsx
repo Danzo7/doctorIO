@@ -2,35 +2,35 @@ import React, { useState } from 'react';
 import './style/index.scss';
 import ToggleselectedItem from './toggleselected_item';
 interface TextToggleButtonProps {
-  first_text: string;
-  second_text: string;
-  default_select?: string;
+  firstText: string;
+  secondText: string;
+  defaultSelect?: string;
 }
 /**
  * @deprecated Deprecated in favor of MultiOptionSwitcher
  */
 function TextToggleButton({
-  first_text,
-  second_text,
-  default_select,
+  firstText,
+  secondText,
+  defaultSelect,
 }: TextToggleButtonProps) {
-  const [selected, setselected] = useState(default_select);
+  const [selected, setselected] = useState(defaultSelect);
   return (
     <div className="text-toggle-button">
       {selected == 'first' && (
         <>
-          <ToggleselectedItem text={first_text} separator_direction="right" />
+          <ToggleselectedItem text={firstText} separator_direction="right" />
           <div onClick={() => setselected('second')} className="span-container">
-            <span>{second_text}</span>
+            <span>{secondText}</span>
           </div>
         </>
       )}
       {selected == 'second' && (
         <>
           <div onClick={() => setselected('first')} className="span-container">
-            <span>{first_text}</span>
+            <span>{firstText}</span>
           </div>
-          <ToggleselectedItem text={second_text} separator_direction="left" />
+          <ToggleselectedItem text={secondText} separator_direction="left" />
         </>
       )}
     </div>

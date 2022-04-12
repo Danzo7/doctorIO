@@ -2,8 +2,6 @@ import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import SideColumnView from './SideColumnView';
 import BookedItem from '@components/booked_item';
-import LastDmMessage from '@components/last_dm_message';
-import client from '@assets/pictures/test.png';
 export default {
   title: 'SideColumnView',
   component: SideColumnView,
