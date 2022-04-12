@@ -2,6 +2,8 @@ import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import SideColumnView from './SideColumnView';
 import BookedItem from '@components/booked_item';
+import LastDmMessage from '@components/last_dm_message';
+import client from '@assets/pictures/test.png';
 export default {
   title: 'SideColumnView',
   component: SideColumnView,
@@ -34,3 +36,20 @@ FirstStory.args = {
     </>
   ),
 };
+
+/*
+
+       <LastDmMessage
+        imgSrc={client}
+        status={true}
+        lastMessage="hellodgggggg ggggggg ggggggg gggggg ggggg there"
+      />
+      <LastDmMessage
+        imgSrc={client}
+        status={true}
+        lastMessage="hello gggggggggggthere"
+      />
+      <LastDmMessage imgSrc={client} status={true} lastMessage="hello there" />
+      <LastDmMessage imgSrc={client} status={true} lastMessage="hello there" />
+
+      */

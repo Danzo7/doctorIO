@@ -1,9 +1,8 @@
 @use '~styles/appColors' as *;
 .content-message {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-direction: row;
-  align-items: center;
   width: fit-content;
   height: fit-content;
   gap: 15px;
@@ -39,6 +38,7 @@
       font-style: normal;
       font-weight: 400;
       font-size: 15px;
+      word-break: break-all;
     }
   }
 }
