@@ -1,3 +1,38 @@
 @use '~styles/appColors' as *;
 .last-dm-message {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+  width: fit-content;
+  padding: 10px 5px;
+  background-color: $background;
+
+  > .info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 5px;
+    min-width: 220px;
+    max-width: 220px;
+
+    > span {
+      font-weight: 600;
+      font-size: 18px;
+
+      + span {
+        font-weight: 400;
+        font-size: 12px;
+        color: $textgray;
+        -webkit-line-clamp: 1; /* number of lines to show */
+        word-break: break-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        white-space: nowrap;
+      }
+    }
+  }
 }
