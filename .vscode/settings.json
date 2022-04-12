@@ -6,4 +6,5 @@
         "**/out/**"
     ],
     "npm-scripts.showStartNotification": false,
+    "prettier.requireConfig": true,
 }
