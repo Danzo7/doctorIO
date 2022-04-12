@@ -1,6 +1,6 @@
 import React from 'react';
 import './style/index.scss';
-import Indicator from 'toSvg/exclamation.svg';
+import Indicator from 'toSvg/exclamation.svg?icon';
 
 interface QueueItemSmallProps {
   name: string;
@@ -11,7 +11,7 @@ function QueueItemSmall({ name, state, number }: QueueItemSmallProps) {
   return (
     <div className="queue-item-small">
       <div className={'indicator ' + state}>
-        <Indicator />
+        <Indicator width={30} height={30} />
       </div>
       <div className="client-name">{name}</div>
       <div className="index-section">

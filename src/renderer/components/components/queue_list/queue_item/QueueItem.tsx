@@ -18,13 +18,13 @@ function QueueItem({
   number,
   state,
   timeAgo,
-  opened = false,
+  opened,
   onPress,
   onClose,
 }: QueueItemProps) {
-  const [isOpen, open] = useState(opened);
+  const [isOpen, open] = useState(opened ?? false);
 
-  if (isOpen != opened) open(opened);
+  if (opened != undefined && opened != isOpen) open(opened);
   const setopen = (value: boolean) => {
     open(value);
     if (isOpen == false) onPress?.();
