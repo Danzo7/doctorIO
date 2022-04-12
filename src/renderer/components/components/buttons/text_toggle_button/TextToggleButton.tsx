@@ -19,7 +19,7 @@ function TextToggleButton({
     <div className="text-toggle-button">
       {selected == 'first' && (
         <>
-          <ToggleselectedItem text={firstText} separator_direction="right" />
+          <ToggleselectedItem text={firstText} separatorDirection="right" />
           <div onClick={() => setselected('second')} className="span-container">
             <span>{secondText}</span>
           </div>
@@ -30,7 +30,7 @@ function TextToggleButton({
           <div onClick={() => setselected('first')} className="span-container">
             <span>{firstText}</span>
           </div>
-          <ToggleselectedItem text={secondText} separator_direction="left" />
+          <ToggleselectedItem text={secondText} separatorDirection="left" />
         </>
       )}
     </div>
