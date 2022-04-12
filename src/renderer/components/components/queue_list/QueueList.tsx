@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import QueueItem from '@components/QueueItem';
+import QueueItem from './queue_item';
 import React, { useState } from 'react';
 import './style/index.scss';
 import NextIcon from 'toSvg/next.svg?icon';
