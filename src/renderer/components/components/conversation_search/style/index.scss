@@ -1,0 +1,31 @@
+@use '~styles/appColors' as *;
+.conversation-search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px 10px;
+  background: #2a3a71;
+  border-radius: 11px;
+  justify-content: space-between;
+  gap: 10px;
+  flex: 1;
+  min-width: 200px;
+
+  > input {
+    flex: 1;
+    box-sizing: border-box;
+    resize: none;
+    display: block;
+    color: #737ea5;
+    background-color: transparent;
+    border: none;
+    padding: 10px 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+  }
+  > input[type='search']:focus {
+    outline: none;
+    color: $white;
+  }
+}
