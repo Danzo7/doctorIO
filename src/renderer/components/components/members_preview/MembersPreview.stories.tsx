@@ -26,6 +26,5 @@ FirstStory.args = {
     'Assistant',
     'Assistant',
     'Assistant',
-    'Assistant',
   ],
 };
