@@ -19,6 +19,15 @@ export const ScrollView = ({
         gap: ${gap}px;
       `}`}
       ref={controller.ref}
+      onWheel={(e) => {
+        const direction = e.deltaY > 0 ? -1 < 0 : 0;
+        e.currentTarget.scrollTo(
+          e.currentTarget.scrollLeft + (direction ? 50 : -50),
+          0,
+        );
+        e.preventDefault();
+        e.stopPropagation();
+      }}
     >
       {Children.map(children, (child) => {
         return <>{child}</>;
