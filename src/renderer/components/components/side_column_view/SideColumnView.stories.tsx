@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import SideColumnView from './SideColumnView';
-import BookedItem from '@components/booked_item';
+import BookedItem from '@components/booked_list/booked_item';
 export default {
   title: 'SideColumnView',
   component: SideColumnView,
