@@ -4,7 +4,7 @@
   flex-direction: row;
   align-items: center;
   padding: 5px 10px;
-  background: #2a3a71;
+  background: $darkerseccolor;
   border-radius: 11px;
   justify-content: space-between;
   gap: 10px;
@@ -16,7 +16,7 @@
     box-sizing: border-box;
     resize: none;
     display: block;
-    color: #737ea5;
+    color: $silvergray;
     background-color: transparent;
     border: none;
     padding: 10px 0;
