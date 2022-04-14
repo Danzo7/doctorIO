@@ -1,7 +1,7 @@
-import { MutableRefObject, createRef } from 'react';
+import { createRef, RefObject } from 'react';
 
 export default class ScrollController {
-  ref: MutableRefObject<null>;
+  ref: RefObject<HTMLDivElement>;
 
   gap: number;
 
@@ -9,7 +9,7 @@ export default class ScrollController {
 
   constructor(gap = 5) {
     this.gap = gap;
-    this.ref = createRef();
+    this.ref = createRef<HTMLDivElement>();
     this.scrollTo = (index, currentSelected) => {
       const scroll = this.ref?.current as unknown as HTMLDivElement;
       let scrollX: any = 0;

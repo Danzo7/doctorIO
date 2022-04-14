@@ -8,7 +8,7 @@ import QueueItem from './QueueItem';
 
 //👇 This default export determines where your story goes in the story list
 export default {
-  title: 'QueueItem',
+  title: 'queue/QueueItem',
   component: QueueItem,
   argTypes: {
     state: { type: 'select', options: ['urgent', 'normal'] },

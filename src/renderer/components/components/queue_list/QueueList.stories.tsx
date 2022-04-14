@@ -3,7 +3,7 @@ import type { Story } from '@storybook/react';
 import QueueList from './QueueList';
 //👇 This default export determines where your story goes in the story list
 export default {
-  title: 'QueueList',
+  title: 'queue/QueueList',
   component: QueueList,
 };
 const Template: Story<ComponentProps<typeof QueueList>> = (args) => (
