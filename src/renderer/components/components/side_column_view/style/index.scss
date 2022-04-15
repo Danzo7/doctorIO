@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 15px;
-  width: fit-content;
+  width: 100%;
   border: 1px solid $bordercolor;
   border-radius: 17px;
   gap: 15px;
@@ -16,7 +16,6 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    gap: 30px;
 
     > span {
       font-style: normal;
@@ -25,6 +24,7 @@
     }
   }
   > .children-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

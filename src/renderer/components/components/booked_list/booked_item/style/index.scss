@@ -4,10 +4,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 15px 10px 15px 15px;
-  width: fit-content;
+  padding: 10px;
+  width: 100%;
   height: fit-content;
-  border-radius: 11px;
+  border-radius: 10px;
 
   &:hover {
     background: $secondarycolor;
@@ -20,26 +20,20 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 60px;
+    width: 100%;
 
     > .info-container {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: flex-start;
-      padding: 0px;
-      gap: 5px;
-
       > .name {
-        font-style: normal;
         font-weight: 600;
         font-size: 18px;
         color: $white;
-        flex: none;
       }
       > .info {
         color: $white;
-        font-style: normal;
         font-weight: 400;
         font-size: 15px;
       }
@@ -51,16 +45,12 @@
       justify-content: center;
       align-items: center;
       padding: 10px;
-      flex: none;
-      flex-grow: 0;
-      margin-left: auto;
 
       > span {
         color: $white;
         font-style: normal;
         font-weight: 400;
         font-size: 11px;
-        margin-top: 2px;
       }
     }
   }
