@@ -1,4 +1,4 @@
-import React, { createRef, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import Clinic from 'toSvg/clinic.svg?icon';
 import { RenderTimer } from './render_timer_canvas';
 import './style/index.scss';
@@ -8,6 +8,9 @@ interface TimerProps {
 }
 
 export default function Timer({ ratio = 0, pNum = 0 }: TimerProps) {
+  const size = useMemo(() => {
+    return { width: 300, height: 300 };
+  }, []);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestIdRef = useRef<number>();
 
@@ -15,9 +18,12 @@ export default function Timer({ ratio = 0, pNum = 0 }: TimerProps) {
 
   const renderFrame = useCallback(() => {
     if (TimeRef.current.ratio > 100) TimeRef.current.ratio = 0;
-    TimeRef.current.ratio += 1;
-    RenderTimer.call(canvasRef?.current?.getContext('2d'), {});
-  }, [canvasRef]);
+    TimeRef.current.ratio += 0.1;
+    RenderTimer.call(canvasRef?.current?.getContext('2d'), {
+      timeRatio: TimeRef.current.ratio,
+      ...size,
+    });
+  }, [size]);
   const tick = useCallback(() => {
     if (!canvasRef.current) return;
     renderFrame();
@@ -33,7 +39,7 @@ export default function Timer({ ratio = 0, pNum = 0 }: TimerProps) {
 
   return (
     <div className="timer">
-      <canvas ref={canvasRef} height={250} width={260}></canvas>
+      <canvas ref={canvasRef} {...size}></canvas>
       <div>
         <Clinic></Clinic>
         <span>Time to close</span>

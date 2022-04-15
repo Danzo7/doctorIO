@@ -26,6 +26,7 @@ export function RenderTimer(
   }: Params,
 ) {
   if (this) {
+    this.clearRect(0, 0, width, height);
     let deg: number;
     deg = (deg = map(timeRatio, 0, 100, -225, 45)) > 45 ? -225 : deg;
     const x = width / 2 + Math.cos(radians(deg)) * 100;
@@ -34,7 +35,7 @@ export function RenderTimer(
     smallDSize = (smallDSize = map(pNum, 0, 20, 15, 30)) > 30 ? 30 : smallDSize;
     this.globalCompositeOperation = 'source-out';
     this.beginPath();
-    this.arc(x, y, smallDSize + 5, 0, 2 * Math.PI);
+    this.arc(x, y, smallDSize + 10, 0, 2 * Math.PI);
     this.fillStyle = color.background;
     this.fill();
     this.closePath();
@@ -56,6 +57,7 @@ export function RenderTimer(
     this.fillStyle = color.white;
 
     this.font = '14px sarabun';
-    this.fillText(pNum + " patient's", x - smallDSize, y - smallDSize - 5);
+
+    this.fillText(pNum + " patient's", x - smallDSize, y - smallDSize);
   }
 }
