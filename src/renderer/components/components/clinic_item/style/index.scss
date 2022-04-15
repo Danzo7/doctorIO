@@ -1,0 +1,91 @@
+@use '~styles/appColors' as *;
+.clinic-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid $secondarycolor;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 15px 30px;
+  width: fit-content;
+  gap: 20px;
+
+  &:hover {
+    background-color: $secondarycolor;
+  }
+
+  > .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    gap: 60px;
+    min-width: 200px;
+
+    > span {
+      font-weight: 600;
+      font-size: 15px;
+      color: $white;
+    }
+
+    > .option-menu {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+    }
+  }
+  > .time-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    width: 100%;
+    gap: 5px;
+
+    > svg {
+      height: 40%;
+      width: 40%;
+    }
+    > span {
+      font-weight: 600;
+      font-size: 16px;
+
+      + span {
+        font-weight: 700;
+        font-size: 25px;
+      }
+    }
+  }
+
+  > .stats-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0px;
+    width: 100%;
+
+    > .info-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0px;
+      gap: 5px;
+
+      > span {
+        color: $white;
+        font-weight: 600;
+        font-size: 17px;
+
+        + span {
+          font-weight: 400;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
