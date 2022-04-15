@@ -25,7 +25,6 @@ export const ScrollView = ({
           e.currentTarget.scrollLeft + (direction ? 50 : -50),
           0,
         );
-        e.preventDefault();
         e.stopPropagation();
       }}
     >
