@@ -39,7 +39,16 @@ export default function ClinicItem({
         <Clinic />
         <span>Time to close</span>
         <span>
-          {timeToClose.hour}h:{timeToClose.min}m
+          {timeToClose.hour == 0 && '00'}
+          {timeToClose.hour > 0 && timeToClose.hour < 24
+            ? timeToClose.hour
+            : ''}
+          h:
+          {timeToClose.min >= 0 &&
+            timeToClose.min < 10 &&
+            `0${timeToClose.min}`}
+          {timeToClose.min >= 10 && timeToClose.min < 60 ? timeToClose.min : ''}
+          m
         </span>
       </div>
       <div className="stats-container">
