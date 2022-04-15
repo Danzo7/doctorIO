@@ -25,17 +25,19 @@
     > .info-container {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       align-items: flex-start;
+      gap: 3px;
+      justify-content: center;
+      align-content: flex-start;
       > .name {
         font-weight: 600;
-        font-size: 18px;
+        font-size: 15px;
         color: $white;
       }
       > .info {
-        color: $white;
+        color: $textgray;
         font-weight: 400;
-        font-size: 15px;
+        font-size: 12px;
       }
     }
     > .state-container {
