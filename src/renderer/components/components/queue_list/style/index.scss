@@ -4,7 +4,7 @@
   gap: 0.5vw;
   overflow: hidden;
   padding: 15px;
-  width: 250px;
+  width: 100%;
   height: fit-content; /* BorderColor */
   flex-direction: column;
   border: 1px solid $bordercolor;
@@ -45,6 +45,9 @@
   }
   > .queue-items {
     width: 100%;
+    li {
+      list-style-type: none;
+    }
     > div > div {
       gap: 5px;
     }

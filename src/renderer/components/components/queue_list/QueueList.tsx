@@ -105,19 +105,19 @@ function QueueList({}: QueueListProps) {
         {items.length > 0 ? (
           <ScrollView controller={controller} gap={10}>
             {items.map(({ name, timeAgo, number }, index) => (
-              <div>
+              <li>
                 <QueueItem
                   name={name}
                   number={number}
                   timeAgo={timeAgo}
-                  key={index}
+                  key={name + index}
                   opened={selected == index}
                   onClose={() => {
                     if (selected == index) setSelected(-1);
                   }}
                   onPress={() => goToSelection(index)}
                 />
-              </div>
+              </li>
             ))}
           </ScrollView>
         ) : (
