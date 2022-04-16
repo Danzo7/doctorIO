@@ -6,15 +6,14 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid $bordercolor;
-  justify-content: space-between;
   width: 100%;
 
   > .member-item {
-    width: 70%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    gap: 5%;
 
     > .member-Info {
       display: flex;
@@ -48,10 +47,18 @@
       gap: 2px;
     }
     > .date-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 80px;
+      > span {
+        font-weight: 600;
+        font-size: 14px;
+        color: $textgray;
+      }
     }
   }
   > .option-menu {
-    flex-shrink: 1;
     height: 100%;
     display: flex;
     flex-direction: column;

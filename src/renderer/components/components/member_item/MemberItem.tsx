@@ -44,6 +44,7 @@ export default function MemberItem({
           <span>28 Feb 2021</span>
         </div>
       </div>
+
       <div className="option-menu">
         <Menu />
       </div>
