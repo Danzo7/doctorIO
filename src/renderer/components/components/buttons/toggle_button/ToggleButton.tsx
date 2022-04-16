@@ -4,22 +4,27 @@ import XMark from 'toSvg/x_mark.svg?icon';
 import GoodMark from 'toSvg/good_mark.svg?icon';
 import { css } from '@emotion/css';
 interface ToggleButtonProps {
-  disabled: boolean;
+  disabled?: boolean;
   isChecked?: boolean;
   size?: number;
   withIcons?: boolean;
+  onChange?: (isChecked: boolean) => void;
 }
 function ToggleButton({
   disabled,
   isChecked,
   size = 40,
   withIcons = true,
+  onChange,
 }: ToggleButtonProps) {
   const [checked, setChecked] = useState(isChecked ?? false);
 
   const Svg = checked ? GoodMark : XMark;
   const switchToggle = () => {
-    if (!disabled) setChecked(!checked);
+    if (!disabled) {
+      setChecked(!checked);
+      onChange?.(!checked);
+    }
   };
   return (
     <div
