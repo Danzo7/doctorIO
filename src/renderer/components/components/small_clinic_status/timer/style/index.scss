@@ -1,23 +1,25 @@
 @use '~styles/appColors' as *;
 .timer {
-  width: 260px;
   height: 250px;
   display: flex;
   position: relative;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   > canvas {
     position: absolute;
+    pointer-events: none;
   }
-  > div {
+
+  > .time-to-close {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
     > svg {
-      height: 40%;
+      height: 30%;
       width: 40%;
     }
 

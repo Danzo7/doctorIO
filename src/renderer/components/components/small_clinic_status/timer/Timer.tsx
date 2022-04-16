@@ -3,14 +3,15 @@ import Clinic from 'toSvg/clinic.svg?icon';
 import { RenderTimer } from './render_timer_canvas';
 import './style/index.scss';
 interface TimerProps {
-  pNum: number;
-  ratio: number;
+  isActive?: boolean;
 }
 
-export default function Timer({ ratio = 0, pNum = 0 }: TimerProps) {
+export default function Timer({ isActive }: TimerProps) {
   const size = useMemo(() => {
     return { width: 300, height: 300 };
   }, []);
+  const hoverRef = useRef(false);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestIdRef = useRef<number>();
 
@@ -22,6 +23,7 @@ export default function Timer({ ratio = 0, pNum = 0 }: TimerProps) {
     RenderTimer.call(canvasRef?.current?.getContext('2d'), {
       timeRatio: TimeRef.current.ratio,
       ...size,
+      renderText: hoverRef.current,
     });
   }, [size]);
   const tick = useCallback(() => {
@@ -31,16 +33,31 @@ export default function Timer({ ratio = 0, pNum = 0 }: TimerProps) {
   }, [canvasRef, renderFrame]);
 
   useEffect(() => {
-    requestIdRef.current = requestAnimationFrame(tick);
+    if (isActive) requestIdRef.current = requestAnimationFrame(tick);
+    else {
+      cancelAnimationFrame(requestIdRef.current ?? 0);
+      RenderTimer.call(canvasRef?.current?.getContext('2d'), {
+        timeRatio: TimeRef.current.ratio,
+        state: 'stopped',
+        renderText: true,
+
+        ...size,
+      });
+    }
+
     return () => {
       cancelAnimationFrame(requestIdRef.current ?? 0);
     };
-  }, [tick]);
+  }, [isActive, size, tick]);
 
   return (
-    <div className="timer">
+    <div
+      className="timer"
+      onMouseEnter={() => (hoverRef.current = true)}
+      onMouseLeave={() => (hoverRef.current = false)}
+    >
       <canvas ref={canvasRef} {...size}></canvas>
-      <div>
+      <div className="time-to-close">
         <Clinic></Clinic>
         <span>Time to close</span>
         <span className="count-down">10h:50m</span>

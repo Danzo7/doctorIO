@@ -5,6 +5,8 @@ type Params = {
   radius?: number;
   pNum?: number;
   timeRatio?: number;
+  state?: 'stopped' | 'end' | 'moving';
+  renderText: boolean;
 };
 const radians = (degrees: number) => degrees * (Math.PI / 180);
 const map = (
@@ -23,6 +25,8 @@ export function RenderTimer(
     radius = 100,
     pNum = 10,
     timeRatio = 10,
+    state = 'moving',
+    renderText,
   }: Params,
 ) {
   if (this) {
@@ -50,14 +54,15 @@ export function RenderTimer(
     this.globalCompositeOperation = 'source-over';
     this.beginPath();
     this.arc(x, y, smallDSize, 0, 2 * Math.PI);
-    this.fillStyle = color.hot_red;
+    this.fillStyle = state == 'moving' ? color.cold_blue : color.hot_red;
 
     this.fill();
     this.closePath();
-    this.fillStyle = color.white;
 
-    this.font = '14px sarabun';
-
-    this.fillText(pNum + " patient's", x - smallDSize, y - smallDSize);
+    if (renderText) {
+      this.fillStyle = color.white;
+      this.font = '14px sarabun';
+      this.fillText(pNum + " patient's", x - smallDSize, y - smallDSize);
+    }
   }
 }
