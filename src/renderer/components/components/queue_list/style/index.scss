@@ -1,8 +1,6 @@
 @use '~styles/appColors' as *;
 .queue-list {
   display: flex;
-  gap: 0.5vw;
-  overflow: hidden;
   padding: 15px;
   width: 100%;
   height: fit-content; /* BorderColor */
