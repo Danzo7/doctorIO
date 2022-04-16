@@ -12,6 +12,7 @@ interface TextButtonProps {
   afterBorderColor?: string;
   afterFontColor?: string;
   radius?: number;
+  padding?: string;
 }
 function TextButton({
   text,
@@ -23,6 +24,7 @@ function TextButton({
   afterBorderColor,
   afterFontColor,
   radius,
+  padding,
 }: TextButtonProps) {
   return (
     <div
@@ -30,6 +32,8 @@ function TextButton({
         background-color: ${backgroundColor};
         ${borderColor ? `border: 1px solid ${borderColor} ` : ''};
         border-radius: ${radius}px;
+        padding: ${padding};
+
         &:hover {
           background-color: ${afterBgColor};
           ${afterBorderColor ? `border: 1px solid ${afterBorderColor} ` : ''};
