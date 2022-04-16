@@ -77,6 +77,9 @@
       padding: 5px;
       height: 100%;
       width: auto;
+      > svg {
+        transform: rotate(90deg);
+      }
     }
   }
 
