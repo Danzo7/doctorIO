@@ -12,7 +12,7 @@
 
   &:hover {
     > .control {
-      animation: bubble 0.3s forwards;
+      animation: bubble 0.2s forwards;
     }
   }
   > .sidebar {
@@ -22,15 +22,23 @@
     width: 95%;
     height: 100%;
     .content {
+      transition: opacity 0.1s;
       height: 100%;
       display: flex;
       flex-direction: column;
       align-items: stretch;
       gap: 15px;
+
+      &.entered {
+        opacity: 1;
+      }
+      &.entering {
+        opacity: 0;
+      }
     }
   }
   > .control {
-    animation: bubble2 0.5s reverse;
+    animation: bubble2 0.3s reverse;
     background-color: $lighterbackground;
     height: 6%;
     width: 0;
@@ -56,6 +64,7 @@
   &.minimize {
     max-width: 0;
     padding: 0;
+
     &:hover {
       > .control {
         padding: 10px;
@@ -64,14 +73,17 @@
     }
 
     > .sidebar {
+      border-radius: 0 1.5vw 1.5vw 0;
       padding: 0;
       > .content {
         padding: 0;
-        display: none;
+        visibility: hidden;
+        opacity: 0;
       }
     }
     > .control {
       transition: padding 0.2s;
+      margin: 0;
 
       animation: none;
       padding: 5px;
