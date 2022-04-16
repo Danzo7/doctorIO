@@ -1,0 +1,62 @@
+@use '~styles/appColors' as *;
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid $bordercolor;
+  justify-content: space-between;
+  width: 100%;
+
+  > .member-item {
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    > .member-Info {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+
+      > .id-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+
+        > span {
+          color: $white;
+          font-weight: 500;
+          font-size: 15px;
+          + span {
+            color: $textgray;
+            font-weight: 400;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+    > .roles-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 2px;
+    }
+    > .date-container {
+    }
+  }
+  > .option-menu {
+    flex-shrink: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+}
