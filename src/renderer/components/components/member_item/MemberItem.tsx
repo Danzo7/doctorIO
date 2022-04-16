@@ -18,34 +18,33 @@ export default function MemberItem({
   const addRole = () => {};
   return (
     <div className="container">
-      <div className="content">
-        <div className="member-item">
-          <div className="member-Info">
-            <UserProfileStatus
-              imgSrc={memberImgSrc}
-              status={memberStatus}
-              width={30}
-            />
-            <div className="id-container">
-              <span>Aymen Daouadji</span>
-              <span>@mohamed#2000</span>
-            </div>
-            <IsOwner />
+      <div className="member-item">
+        <div className="member-Info">
+          <UserProfileStatus
+            imgSrc={memberImgSrc}
+            status={memberStatus}
+            width={30}
+          />
+          <div className="id-container">
+            <span>Aymen Daouadji</span>
+            <span>@mohamed#2000</span>
           </div>
-          <div className="roles-container">
-            {roleArray.length > 0 &&
-              roleArray.map((rollName) => (
-                <SmallRolePreview roleName={rollName} />
-              ))}
-            <div onClick={addRole} className="add-btn-container">
-              <AddButton />
-            </div>
-          </div>
-          <div className="date-container">
-            <span>28 Feb 2021</span>
+          <IsOwner />
+        </div>
+        <div className="roles-container">
+          {roleArray.length > 0 &&
+            roleArray.map((rollName) => (
+              <SmallRolePreview roleName={rollName} />
+            ))}
+          <div onClick={addRole} className="add-btn-container">
+            <AddButton />
           </div>
         </div>
+        <div className="date-container">
+          <span>28 Feb 2021</span>
+        </div>
       </div>
+
       <div className="option-menu">
         <Menu />
       </div>

@@ -13,5 +13,5 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   memberImgSrc: test,
   memberStatus: true,
-  roleArray: ['Gamer', 'Assistant', 'Assistant'],
+  roleArray: ['Gamer', 'Assistant'],
 };

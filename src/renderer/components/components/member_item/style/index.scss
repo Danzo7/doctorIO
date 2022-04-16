@@ -6,58 +6,55 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid $bordercolor;
+  width: 100%;
 
-  > .content {
+  > .member-item {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
 
-    > .member-item {
-      width: 70%;
+    > .member-Info {
       display: flex;
       flex-direction: row;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
+      gap: 15px;
 
-      > .member-Info {
+      > .id-container {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
 
-        > .id-container {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 2px;
-
-          > span {
-            color: $white;
-            font-weight: 500;
+        > span {
+          color: $white;
+          font-weight: 500;
+          font-size: 15px;
+          + span {
+            color: $textgray;
+            font-weight: 400;
             font-size: 15px;
-            + span {
-              color: $textgray;
-              font-weight: 400;
-              font-size: 15px;
-            }
           }
         }
       }
-      > .roles-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 2px;
-      }
-      > .date-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-width: 80px;
-        > span {
-          font-weight: 600;
-          font-size: 14px;
-          color: $textgray;
-        }
+    }
+    > .roles-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 2px;
+    }
+    > .date-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 80px;
+      > span {
+        font-weight: 600;
+        font-size: 14px;
+        color: $textgray;
       }
     }
   }
