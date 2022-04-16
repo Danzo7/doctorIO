@@ -11,10 +11,6 @@
   width: fit-content;
   gap: 20px;
 
-  &:hover {
-    background-color: $secondarycolor;
-  }
-
   > .header {
     display: flex;
     flex-direction: row;

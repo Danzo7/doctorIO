@@ -27,6 +27,9 @@ export default function ClinicItem({
     <div
       className={`clinic-item ${css`
         background-color: ${selected ? '' : colors.secondary_color};
+        &:hover {
+          background: ${selected == false && 'none'};
+        }
       `} `}
     >
       <div className="header">
