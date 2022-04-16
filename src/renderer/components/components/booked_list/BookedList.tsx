@@ -4,24 +4,22 @@ import React from 'react';
 interface BookedListProps {}
 export default function BookedList({}: BookedListProps) {
   return (
-    <div className="booked-list">
-      <SideColumnView headerText="Booked appointment">
-        <BookedItem
-          name="John Doe"
-          bookTime="booked  20 days ago"
-          state="panding"
-        />
-        <BookedItem
-          name="John Doe"
-          bookTime="booked  20 days ago"
-          state="panding"
-        />
-        <BookedItem
-          name="John Doe"
-          bookTime="booked  20 days ago"
-          state="panding"
-        />
-      </SideColumnView>
-    </div>
+    <SideColumnView headerText="Booked appointment">
+      <BookedItem
+        name="John Doe"
+        bookTime="booked  20 days ago"
+        state="panding"
+      />
+      <BookedItem
+        name="John Doe"
+        bookTime="booked  20 days ago"
+        state="panding"
+      />
+      <BookedItem
+        name="John Doe"
+        bookTime="booked  20 days ago"
+        state="panding"
+      />
+    </SideColumnView>
   );
 }
