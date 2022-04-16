@@ -1,4 +1,4 @@
-import Timer from '@components/timer';
+import SmallClinicStatus from '@components/small_clinic_status';
 import WelcomeBox from '@components/welcome_box';
 import React from 'react';
 import './index.scss';
@@ -8,7 +8,7 @@ function AppContent({}: AppContentProps) {
   return (
     <div className="AppContent">
       <WelcomeBox />
-      <Timer pNum={1} ratio={10}></Timer>
+      <SmallClinicStatus />
     </div>
   );
 }
