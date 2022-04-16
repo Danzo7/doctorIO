@@ -2,7 +2,6 @@
 .short-stats-panel {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: flex-start;
   padding: 10px 0px;
   gap: 15px;
@@ -17,7 +16,6 @@
     padding: 0px;
 
     > span {
-      font-style: normal;
       font-weight: 600;
       font-size: 20px;
       letter-spacing: 0.3px;

@@ -7,7 +7,7 @@
   border: 1px solid $bordercolor;
   box-sizing: border-box;
   border-radius: 17px;
-  width: 160px;
+  width: fit-content;
   gap: 5vh;
   > span {
     color: $white;
@@ -23,8 +23,7 @@
     align-items: center;
     background: $coldblue;
     border-radius: 7px;
-    width: 100%;
-    height: 40px;
+    padding: 0.5em 1em;
     > span {
       font-weight: 600;
       font-size: 16px;
