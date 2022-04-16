@@ -1,14 +1,107 @@
 @import '~styles/appColors';
 
 .AppSidebar {
-  border-radius: 1.5vw;
   flex-grow: 6;
   order: 2;
+  width: 25%;
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 15px;
-  padding: 3vh 1.5vw;
-  background: $lighterbackground;
-  max-width: 25%;
+  flex-direction: row-reverse;
+  align-items: center;
+  max-width: 350px;
+  transition: max-width 0.2s;
+
+  &:hover {
+    > .control {
+      animation: bubble 0.3s forwards;
+    }
+  }
+  > .sidebar {
+    padding: 3vh 1.5vw;
+    background: $lighterbackground;
+    border-radius: 1.5vw;
+    width: 95%;
+    height: 100%;
+    .content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 15px;
+    }
+  }
+  > .control {
+    animation: bubble2 0.5s reverse;
+    background-color: $lighterbackground;
+    height: 6%;
+    width: 0;
+    border-radius: 100% 0 0 100%;
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    margin-bottom: 10%;
+    padding: 0;
+    &:hover {
+      > svg > path {
+        stroke: $white;
+      }
+    }
+    > svg {
+      transform: rotate(-90deg);
+      > path {
+        stroke: $silvergray;
+      }
+    }
+  }
+
+  &.minimize {
+    max-width: 0;
+    padding: 0;
+    &:hover {
+      > .control {
+        padding: 10px;
+        animation: none;
+      }
+    }
+
+    > .sidebar {
+      padding: 0;
+      > .content {
+        padding: 0;
+        display: none;
+      }
+    }
+    > .control {
+      transition: padding 0.2s;
+
+      animation: none;
+      padding: 5px;
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  @keyframes bubble {
+    from {
+    }
+    50% {
+      padding: 10px;
+    }
+    to {
+      padding: 5px;
+
+      width: auto;
+    }
+  }
+  @keyframes bubble2 {
+    from {
+    }
+    50% {
+      padding: 10px;
+    }
+    to {
+      padding: 5px;
+
+      width: auto;
+    }
+  }
 }
