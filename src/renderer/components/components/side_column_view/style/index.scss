@@ -4,11 +4,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 15px;
+  padding: 15px calc(15px - 6px);
   width: 100%;
   border: 1px solid $bordercolor;
   border-radius: 17px;
   gap: 15px;
+  overflow: hidden;
+  padding-right: calc(15px - 6px); //for scrollbar
 
   > .header {
     display: flex;
@@ -16,6 +18,8 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding-right: 6px; //for scrollbar
+    padding-left: 6px; //for scrollbar
 
     > span {
       font-style: normal;
@@ -30,5 +34,18 @@
     justify-content: space-between;
     align-items: center;
     gap: 5px;
+    overflow-y: scroll;
+    padding-right: 5px; //gap between scrollbar and column
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        visibility: visible;
+        transition: 1s all linear;
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      visibility: hidden;
+      transition: 1s all linear;
+    }
   }
 }
