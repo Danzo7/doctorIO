@@ -8,12 +8,18 @@ import AddButton from '@components/members_preview/add_button';
 interface MemberItemProps {
   memberImgSrc: string;
   memberStatus: boolean;
+  memberFullName: string;
+  memberID: string;
   roleArray: Array<string>;
+  timeAdded: string;
 }
 export default function MemberItem({
   memberImgSrc,
   memberStatus,
+  memberFullName,
+  memberID,
   roleArray = [],
+  timeAdded,
 }: MemberItemProps) {
   const addRole = () => {};
   return (
@@ -26,8 +32,8 @@ export default function MemberItem({
             width={30}
           />
           <div className="id-container">
-            <span>Aymen Daouadji</span>
-            <span>@mohamed#2000</span>
+            <span>{memberFullName}</span>
+            <span>{memberID}</span>
           </div>
           <IsOwner />
         </div>
@@ -41,7 +47,7 @@ export default function MemberItem({
           </div>
         </div>
         <div className="date-container">
-          <span>28 Feb 2021</span>
+          <span>{timeAdded}</span>
         </div>
       </div>
 

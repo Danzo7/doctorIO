@@ -13,5 +13,8 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   memberImgSrc: test,
   memberStatus: true,
+  memberFullName: 'Aymen Daouadji',
+  memberID: '@mohamed#2000',
   roleArray: ['Gamer', 'Assistant'],
+  timeAdded: '28 Feb 2021',
 };
