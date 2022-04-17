@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import Clinic from 'toSvg/clinic.svg?icon';
 import { RenderTimer } from './render_timer_canvas';
 import './style/index.scss';
@@ -7,9 +7,7 @@ interface TimerProps {
 }
 
 export default function Timer({ isActive }: TimerProps) {
-  const size = useMemo(() => {
-    return { width: 300, height: 300 };
-  }, []);
+  const size = 500;
   const hoverRef = useRef(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -22,7 +20,7 @@ export default function Timer({ isActive }: TimerProps) {
     TimeRef.current.ratio += 0.1;
     RenderTimer.call(canvasRef?.current?.getContext('2d'), {
       timeRatio: TimeRef.current.ratio,
-      ...size,
+      size,
       renderText: hoverRef.current,
     });
   }, [size]);
@@ -41,7 +39,7 @@ export default function Timer({ isActive }: TimerProps) {
         state: 'stopped',
         renderText: true,
 
-        ...size,
+        size,
       });
     }
 
@@ -56,7 +54,7 @@ export default function Timer({ isActive }: TimerProps) {
       onMouseEnter={() => (hoverRef.current = true)}
       onMouseLeave={() => (hoverRef.current = false)}
     >
-      <canvas ref={canvasRef} {...size}></canvas>
+      <canvas ref={canvasRef} width={size} height={size}></canvas>
       <div className="time-to-close">
         <Clinic></Clinic>
         <span>Time to close</span>

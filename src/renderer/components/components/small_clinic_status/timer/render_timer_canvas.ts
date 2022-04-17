@@ -1,7 +1,6 @@
 import color from '@assets/styles/color';
 type Params = {
-  width?: number;
-  height?: number;
+  size: number;
   radius?: number;
   pNum?: number;
   timeRatio?: number;
@@ -20,34 +19,37 @@ const map = (
 export function RenderTimer(
   this: CanvasRenderingContext2D | null | undefined,
   {
-    width = 260,
-    height = 290,
-    radius = 100,
+    size,
+    radius,
     pNum = 10,
     timeRatio = 10,
     state = 'moving',
     renderText,
   }: Params,
 ) {
+  radius = radius ?? size / 3;
   if (this) {
-    this.clearRect(0, 0, width, height);
+    this.clearRect(0, 0, size, size);
     let deg: number;
     deg = (deg = map(timeRatio, 0, 100, -225, 45)) > 45 ? -225 : deg;
-    const x = width / 2 + Math.cos(radians(deg)) * 100;
-    const y = height / 2 + Math.sin(radians(deg)) * 100;
+    const x = size / 2 + Math.cos(radians(deg)) * radius;
+    const y = size / 2 + Math.sin(radians(deg)) * radius;
     let smallDSize: number;
-    smallDSize = (smallDSize = map(pNum, 0, 20, 15, 30)) > 30 ? 30 : smallDSize;
+    smallDSize =
+      (smallDSize = map(pNum, 0, 20, 15, size / 10)) > size / 10
+        ? size / 10
+        : smallDSize;
     this.globalCompositeOperation = 'source-out';
     this.beginPath();
-    this.arc(x, y, smallDSize + 10, 0, 2 * Math.PI);
+    this.arc(x, y, smallDSize + size / 30, 0, 2 * Math.PI);
     this.fillStyle = color.background;
     this.fill();
     this.closePath();
 
     this.beginPath();
-    this.arc(width / 2, height / 2, radius, 0.75 * Math.PI, 0.25 * Math.PI);
+    this.arc(size / 2, size / 2, radius, 0.75 * Math.PI, 0.25 * Math.PI);
     this.lineCap = 'round';
-    this.lineWidth = 30;
+    this.lineWidth = size / 10;
     this.strokeStyle = color.hot_purple;
     this.stroke();
     this.closePath();
@@ -61,7 +63,7 @@ export function RenderTimer(
 
     if (renderText) {
       this.fillStyle = color.white;
-      this.font = '14px sarabun';
+      this.font = (14 / 300) * size + 'px sarabun';
       this.fillText(pNum + " patient's", x - smallDSize, y - smallDSize);
     }
   }
