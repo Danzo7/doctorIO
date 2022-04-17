@@ -13,13 +13,15 @@ export default function SearchProfile({ status, imgSrc }: SearchProfileProps) {
     <div className="search-profile">
       <UserProfileStatus width={60} status={status} imgSrc={imgSrc} />
       <input type={'search'} />
-      <IconicButton
-        Icon={Search}
-        width={60}
-        iconSize={20}
-        backgroundColor={colors.secondary_color}
-        radius={18}
-      />
+      <div>
+        <IconicButton
+          Icon={Search}
+          width={60}
+          iconSize={20}
+          backgroundColor={colors.silver_gray}
+          radius={18}
+        />
+      </div>
     </div>
   );
 }
