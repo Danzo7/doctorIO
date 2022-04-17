@@ -1,0 +1,44 @@
+@use '~styles/appColors' as *;
+.input-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+  > .label-container {
+    width: 100%;
+    > span {
+      font-weight: 500;
+      font-size: 16px;
+      color: $textgray;
+    }
+  }
+
+  > .input-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 7px;
+    background-color: $darkerseccolor;
+
+    > input {
+      width: 100%;
+      color: $silvergray;
+      background-color: transparent;
+      border: none;
+      padding: 10px 5px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+    }
+    > input:focus {
+      outline: none;
+      color: $white;
+    }
+    > .search-btn-container {
+      padding: 0px 5px;
+    }
+  }
+}
