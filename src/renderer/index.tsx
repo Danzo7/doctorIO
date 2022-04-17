@@ -6,7 +6,11 @@ import './index.scss';
 
 const app = document.getElementById('app-mount');
 const root = createRoot(app as HTMLElement);
-root.render(<App />);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
 
 if (typeof module !== 'undefined' && module.hot) {
   module.hot.accept(function () {
