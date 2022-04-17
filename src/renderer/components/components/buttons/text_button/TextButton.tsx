@@ -13,6 +13,7 @@ interface TextButtonProps {
   afterFontColor?: string;
   radius?: number;
   padding?: string;
+  onPress?: () => void;
 }
 function TextButton({
   text,
@@ -23,14 +24,16 @@ function TextButton({
   afterBgColor,
   afterBorderColor,
   afterFontColor,
+
   radius,
   padding,
+  onPress,
 }: TextButtonProps) {
   return (
     <div
       className={`text-button ${css`
         background-color: ${backgroundColor};
-        ${borderColor ? `border: 1px solid ${borderColor} ` : ''};
+        border: 1px solid ${borderColor ? `${borderColor} ` : 'transparent'};
         border-radius: ${radius}px;
         padding: ${padding};
 
@@ -42,6 +45,7 @@ function TextButton({
           }
         }
       `} `}
+      onClick={onPress}
     >
       <span
         className={` text ${css`
