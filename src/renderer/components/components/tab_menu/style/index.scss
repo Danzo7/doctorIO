@@ -1,0 +1,9 @@
+@use '~styles/appColors' as *;
+.tab-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  width: 100%;
+  gap: 10px;
+}
