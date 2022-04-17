@@ -37,6 +37,10 @@ export default function MemberItem({
           </div>
           <IsOwner />
         </div>
+
+        <div className="date-container">
+          <span>{timeAdded}</span>
+        </div>
         <div className="roles-container">
           {roleArray.length > 0 &&
             roleArray.map((rollName) => (
@@ -45,9 +49,6 @@ export default function MemberItem({
           <div onClick={addRole} className="add-btn-container">
             <AddButton />
           </div>
-        </div>
-        <div className="date-container">
-          <span>{timeAdded}</span>
         </div>
       </div>
 

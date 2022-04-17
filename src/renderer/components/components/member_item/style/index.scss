@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5%;
+    gap: 20px;
 
     > .member-Info {
       display: flex;
@@ -32,6 +32,12 @@
           color: $white;
           font-weight: 500;
           font-size: 15px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          width: 150px;
+
           + span {
             color: $textgray;
             font-weight: 400;
@@ -44,6 +50,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
+      flex-wrap: wrap;
       gap: 2px;
     }
     > .date-container {

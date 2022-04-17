@@ -15,6 +15,15 @@ FirstStory.args = {
   memberStatus: true,
   memberFullName: 'Aymen Daouadji',
   memberID: '@mohamed#2000',
-  roleArray: ['Gamer', 'Assistant'],
+  roleArray: [
+    'Gamer',
+    'Assistant',
+    'Assistant',
+    'Assistant',
+    'Assistant',
+    'Assistant',
+    'Assistant',
+    'Assistant',
+  ],
   timeAdded: '28 Feb 2021',
 };
