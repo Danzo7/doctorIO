@@ -16,8 +16,10 @@
   }
 
   > .description-container {
-    display: inline-block;
     overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
 
     > span {
       font-weight: 600;
