@@ -6,8 +6,8 @@
   padding: 0px;
   width: 300px;
   gap: 5px;
-  height: fit-content;
   padding: 5px;
+  max-height: 220px;
 
   > span {
     font-weight: 600;
@@ -16,7 +16,7 @@
   }
 
   > .description-container {
-    height: 100%;
+    display: inline-block;
     overflow: hidden;
 
     > span {
@@ -24,6 +24,7 @@
       font-size: 13px;
       color: $textgray;
       word-break: break-word;
+      text-overflow: ellipsis;
     }
   }
 }
