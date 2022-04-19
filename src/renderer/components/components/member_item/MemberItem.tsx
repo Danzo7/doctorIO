@@ -10,7 +10,7 @@ interface MemberItemProps {
   memberStatus: boolean;
   memberFullName: string;
   memberID: string;
-  roleArray: Array<string>;
+  roleArray: string[];
   timeAdded: string;
 }
 export default function MemberItem({
