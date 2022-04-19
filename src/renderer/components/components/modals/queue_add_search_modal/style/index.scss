@@ -1,0 +1,15 @@
+@use '~styles/appColors' as *;
+.queue-add-search-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px 20px;
+  background: $secondarycolor;
+  border-radius: 7px;
+  width: fit-content;
+
+  > .back-btn-container {
+    margin-left: auto;
+  }
+}
