@@ -1,0 +1,29 @@
+import TextButton from '@components/buttons/text_button';
+import React from 'react';
+import './style/index.scss';
+import colors from '@colors';
+interface RecentAppsItemProps {}
+export default function RecentAppsItem({}: RecentAppsItemProps) {
+  return (
+    <div className="recent-apps-item">
+      <div className="container">
+        <div className="info-container">
+          <span>John Doe</span>
+          <span>Age 34</span>
+        </div>
+        <div className="controls-container">
+          <TextButton
+            text="Run diagnosis..."
+            backgroundColor={colors.cold_blue}
+            radius={7}
+          />
+          <TextButton
+            text="Add"
+            backgroundColor={colors.good_green}
+            radius={7}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
