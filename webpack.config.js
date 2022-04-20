@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = ({ mode } = { mode: process.env.mode }) => {
+  const isDevelopment = mode === 'development';
   return {
     mode: mode,
     entry: ['./src/renderer/index.tsx'],
@@ -27,17 +28,30 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
         {
           test: /\.scss$/,
           sideEffects: true,
-
+          exclude: /\.module.(s(a|c)ss)$/,
           use: [
-            mode === 'development'
-              ? 'style-loader'
-              : MiniCssExtractPlugin.loader,
+            isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
             {
               loader: 'css-loader',
               options: { sourceMap: true, importLoaders: 1 },
             },
 
             mode !== 'development' ? 'postcss-loader' : undefined,
+
+            { loader: 'sass-loader', options: { sourceMap: true } },
+          ].filter((r) => r != undefined),
+        },
+        {
+          test: /\.module\.s(a|c)ss$/,
+          sideEffects: true,
+          use: [
+            isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: { sourceMap: true, importLoaders: 1, modules: true },
+            },
+
+            !isDevelopment ? 'postcss-loader' : undefined,
 
             { loader: 'sass-loader', options: { sourceMap: true } },
           ].filter((r) => r != undefined),
@@ -98,7 +112,8 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
         template: 'public/index.html',
       }),
       new MiniCssExtractPlugin({
-        filename: 'assets/[name].css',
+        filename: isDevelopment ? '[name].css' : '[name].[hash].css',
+        chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css',
       }),
     ],
 
@@ -110,8 +125,8 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       historyApiFallback: true,
       // writeToDisk: true,
     },
-    devtool: mode === 'production' ? 'source-map' : 'eval-source-map',
-    target: mode === 'development' ? 'web' : 'browserslist',
+    devtool: isDevelopment ? 'eval-source-map' : 'source-map',
+    target: isDevelopment ? 'web' : 'browserslist',
   };
 };
 const aliasResolver = (alias) => {
