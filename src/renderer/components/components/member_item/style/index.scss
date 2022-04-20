@@ -1,7 +1,7 @@
 @use '~styles/appColors' as *;
 @use '~styles/effects' as *;
 
-.container {
+.member-item {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -13,7 +13,7 @@
     @include darken;
   }
 
-  > .member-item {
+  > .item-container {
     width: 100%;
     display: flex;
     flex-direction: row;

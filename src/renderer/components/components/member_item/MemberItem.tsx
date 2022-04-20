@@ -23,8 +23,8 @@ export default function MemberItem({
 }: MemberItemProps) {
   const addRole = () => {};
   return (
-    <div className="container">
-      <div className="member-item">
+    <div className="member-item">
+      <div className="item-container">
         <div className="member-Info">
           <UserProfileStatus
             imgSrc={memberImgSrc}
