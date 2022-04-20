@@ -1,44 +1,36 @@
 @use '~styles/appColors' as *;
 .recent-apps-item {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
   background: $darkerseccolor;
   border-radius: 11px;
-  width: 100%;
+  padding: 10px 20px;
+  align-items: center;
 
-  > .container {
-    padding: 10px;
-    width: 95%;
+  > .info-container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 5px;
 
-    > .info-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 0px;
-      gap: 5px;
+    > span {
+      color: $white;
+      font-weight: 600;
+      font-size: 18px;
 
-      > span {
-        color: $white;
-        font-weight: 600;
-        font-size: 18px;
-
-        + span {
-          font-weight: 400;
-          font-size: 15px;
-        }
+      + span {
+        font-weight: 400;
+        font-size: 15px;
       }
     }
-    > .controls-container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 0px;
-      gap: 10px;
-    }
+  }
+  > .controls-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 10px;
   }
 }
