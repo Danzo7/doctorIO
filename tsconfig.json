@@ -6,9 +6,9 @@
   "baseUrl": "./",
   "paths": {
     "*": ["node_modules/*"],
-    "@components/*": ["src/renderer/components/components/*"],
-    "@buttons/*": ["src/renderer/components/components/buttons/*"],
-    "@containers/*": ["src/renderer/components/containers/*"],
+    "@components/*": ["src/renderer/ui/components/*"],
+    "@buttons/*": ["src/renderer/ui/components/buttons/*"],
+    "@containers/*": ["src/renderer/ui/containers/*"],
     "@assets/*": ["src/renderer/assets/*"],
     "@libs/*": ["src/renderer/libs/*"],
     "toSvg/*": ["src/renderer/assets/svg/*"],

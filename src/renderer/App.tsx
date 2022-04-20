@@ -8,11 +8,14 @@ interface AppProps {}
 
 function App({}: AppProps) {
   return (
-    <div className=" appContainer ">
-      <AppMenu />
-      <AppContent />
-      <AppSidebar />
-    </div>
+    <>
+      <div className="app-container">
+        <AppMenu />
+        <AppContent />
+        <AppSidebar />
+      </div>
+      <div className="overlay-container"></div>
+    </>
   );
 }
 
