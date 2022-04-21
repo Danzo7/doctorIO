@@ -7,14 +7,18 @@ interface InputFieldProps {
   searchIcon?: boolean;
   placeholder?: string;
   inputType?: string;
+  value?: string;
   otherInputProps?: any;
+  onChange?: (e: Event) => void;
 }
 export default function InputField({
   label,
   searchIcon,
   placeholder,
   inputType = 'text',
+  value,
   otherInputProps,
+  onChange,
 }: InputFieldProps) {
   return (
     <div className="input-field">
@@ -25,6 +29,8 @@ export default function InputField({
       )}
       <div className="input-container">
         <input
+          value={value}
+          onChange={onChange}
           type={inputType}
           placeholder={placeholder}
           {...otherInputProps}
