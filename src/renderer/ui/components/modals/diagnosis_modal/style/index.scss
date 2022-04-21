@@ -1,0 +1,39 @@
+@use '~styles/appColors' as *;
+.diagnosis-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background: $secondarycolor;
+  border-radius: 7px;
+  gap: 20px;
+
+  > .diagnosis-header {
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    justify-content: space-between;
+    width: 100%;
+
+    > span {
+      font-weight: 500;
+      font-size: 21px;
+      color: $white;
+    }
+  }
+
+  > .diagnosis-inputs-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    align-items: flex-start;
+
+    > .input-width {
+      width: 30%;
+      min-width: 200px;
+    }
+  }
+}
