@@ -4,7 +4,7 @@ import TextButton from './TextButton';
 import colors from '@colors';
 //👇 This default export determines where your story goes in the story list
 export default {
-  title: 'Buttons/TitleButton',
+  title: 'Buttons/TextButton',
   component: TextButton,
 };
 const Template: Story<ComponentProps<typeof TextButton>> = (args) => (
