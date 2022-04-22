@@ -6,6 +6,7 @@ interface TextButtonProps {
   text: string;
   fontColor?: string;
   fontSize?: number;
+  fontWeight?: number;
   backgroundColor?: string;
   borderColor?: string;
   afterBgColor?: string;
@@ -20,6 +21,7 @@ function TextButton({
   text,
   fontColor,
   fontSize = 14,
+  fontWeight = 600,
   backgroundColor,
   borderColor,
   afterBgColor,
@@ -55,6 +57,7 @@ function TextButton({
           color: ${fontColor};
           font-size: ${fontSize}px;
           line-height: ${fontSize}px;
+          font-weight: ${fontWeight};
         `}`}
       >
         {text}
