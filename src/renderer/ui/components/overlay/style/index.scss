@@ -1,0 +1,26 @@
+@use '~styles/appColors' as *;
+.overlay-container {
+  display: flex;
+  position: absolute;
+  align-content: stretch;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+
+  > .backdrop {
+    display: flex;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
+  > .layer {
+    z-index: 100;
+    pointer-events: all;
+  }
+}
