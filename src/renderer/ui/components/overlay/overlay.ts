@@ -9,8 +9,10 @@ export class Overlay {
   static _ref: HTMLDivElement;
 
   static setRenderer(ref: HTMLDivElement) {
-    this._ref = ref;
-    this._root = createRoot(ref);
+    if (!this._root) {
+      this._ref = ref;
+      this._root = createRoot(ref);
+    }
   }
 
   static showModal(target: ReactNode, props: OverlayOptions) {
