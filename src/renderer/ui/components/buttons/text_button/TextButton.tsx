@@ -6,6 +6,7 @@ interface TextButtonProps {
   text: string;
   fontColor?: string;
   fontSize?: number;
+  fontWeight?: number;
   backgroundColor?: string;
   borderColor?: string;
   afterBgColor?: string;
@@ -14,17 +15,19 @@ interface TextButtonProps {
   radius?: number;
   padding?: string;
   onPress?: () => void;
+  width?: number | string;
 }
 function TextButton({
   text,
   fontColor,
   fontSize = 14,
+  fontWeight = 600,
   backgroundColor,
   borderColor,
   afterBgColor,
   afterBorderColor,
   afterFontColor,
-
+  width,
   radius,
   padding,
   onPress,
@@ -36,6 +39,8 @@ function TextButton({
         border: 1px solid ${borderColor ? `${borderColor} ` : 'transparent'};
         border-radius: ${radius}px;
         padding: ${padding};
+        width: ${typeof width === 'number' ? `${width}px` : ''};
+        width: ${typeof width === 'string' ? `${width}` : ''};
 
         &:hover {
           background-color: ${afterBgColor};
@@ -52,6 +57,7 @@ function TextButton({
           color: ${fontColor};
           font-size: ${fontSize}px;
           line-height: ${fontSize}px;
+          font-weight: ${fontWeight};
         `}`}
       >
         {text}

@@ -10,4 +10,8 @@ const Template: Story<ComponentProps<typeof RoleItem>> = (args) => (
   <RoleItem {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = {};
+FirstStory.args = {
+  roleName: 'Support',
+  linked: true,
+  selected: true,
+};

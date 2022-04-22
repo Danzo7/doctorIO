@@ -1,0 +1,9 @@
+@use '~styles/appColors' as *;
+.role-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0px;
+  overflow: auto;
+  height: 100%;
+}

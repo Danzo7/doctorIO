@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+.new-role {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $bordercolor;
+  box-sizing: border-box;
+  border-radius: 7px;
+  width: 100%;
+}
