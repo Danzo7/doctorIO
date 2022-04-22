@@ -3,13 +3,27 @@ import InputField from '@components/inputs/input_field';
 import RecentAppsItem from '@components/recent_apps_item';
 import React, { useState } from 'react';
 import './style/index.scss';
-interface QueueAddSearchModalProps {
-  usersData: any[];
-}
-export default function QueueAddSearchModal({
-  usersData,
-}: QueueAddSearchModalProps) {
-  const [userInput, setUserInput] = useState('');
+interface QueueAddSearchModalProps {}
+const usersData = [
+  {
+    fullName: 'brahim aymen',
+    age: 24,
+  },
+  {
+    fullName: 'daouadji aymen',
+    age: 24,
+  },
+  {
+    fullName: 'amine bou',
+    age: 24,
+  },
+  {
+    fullName: 'John Doe',
+    age: 24,
+  },
+];
+export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
+  const [, setUserInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const onChangeHandler = (event: Event) => {
     const text = (event.target as HTMLInputElement).value;
