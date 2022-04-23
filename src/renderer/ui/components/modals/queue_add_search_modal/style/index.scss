@@ -3,14 +3,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   padding: 10px 20px 20px;
   background: $secondarycolor;
   border-radius: 7px;
   gap: 10px;
 
   > .back-btn-container {
-    margin-left: auto;
+    align-self: flex-end;
   }
   > .suggestions-container {
     display: flex;
