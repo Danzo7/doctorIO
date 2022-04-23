@@ -1,5 +1,5 @@
-import NewRole from '@components/new_role';
-import RoleItem from '@components/role_item';
+import NewRole from './new_role';
+import RoleItem from './role_item';
 import React from 'react';
 import './style/index.scss';
 
