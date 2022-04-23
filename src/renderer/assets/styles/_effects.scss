@@ -2,6 +2,10 @@
   background: #00000020;
   transition: 0.2s;
 }
+@mixin lighter {
+  background: #ffffff20;
+  transition: 0.2s;
+}
 @mixin fastTrans {
   transition: 0.2s;
 }

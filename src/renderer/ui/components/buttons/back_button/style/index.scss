@@ -9,7 +9,8 @@
   height: 25px;
   width: 25px;
   border-radius: 5px;
+  cursor: pointer;
   &:hover {
-    @include darken;
+    @include lighter;
   }
 }
