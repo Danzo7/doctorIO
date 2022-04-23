@@ -8,11 +8,10 @@
   border-radius: 11px;
   justify-content: space-between;
   gap: 10px;
-  flex: 1;
   min-width: 200px;
 
   > input {
-    flex: 1;
+    flex-grow: 1;
     box-sizing: border-box;
     resize: none;
     display: block;

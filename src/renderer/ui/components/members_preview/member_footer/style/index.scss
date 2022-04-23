@@ -20,7 +20,6 @@
   background: $background;
   border-radius: 7px;
   padding: 5px;
-  width: 90%;
   > .member-container {
     @include member-container-style();
     > span {

@@ -2,11 +2,10 @@
 .dm-history {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   border: 1px solid $lighterbackground;
   box-sizing: border-box;
   border-radius: 17px;
-  width: fit-content;
   padding: 15px;
   justify-content: space-between;
 
@@ -15,7 +14,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
     min-width: 260px;
 
     > span {
@@ -37,9 +35,9 @@
   }
   > .lastDmMessages-container {
     display: flex;
+    align-items: stretch;
+
     flex-direction: column;
-    align-items: flex-start;
-    padding: 0px;
     gap: 15px;
   }
 }

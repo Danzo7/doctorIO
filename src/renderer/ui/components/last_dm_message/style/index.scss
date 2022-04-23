@@ -2,20 +2,20 @@
 .last-dm-message {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 15px;
   align-items: center;
-  width: fit-content;
   padding: 10px 5px;
-  background-color: $background;
-
+  cursor: pointer;
+  &:hover {
+    background-color: $background;
+  }
   > .info-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
     min-width: 220px;
-    max-width: 220px;
 
     > span {
       font-weight: 600;
