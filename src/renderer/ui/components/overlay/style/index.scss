@@ -20,7 +20,23 @@
     align-items: center;
   }
   > .layer {
+    display: flex;
+    flex-direction: column;
     z-index: 100;
     pointer-events: all;
+    > .close-btn {
+      align-self: flex-end;
+      border-radius: 5px;
+      padding-bottom: 5px;
+      //fused
+      &.inner {
+        position: absolute;
+        margin: 5px;
+      }
+      &.outer {
+        position: static;
+        margin-right: -25px;
+      }
+    }
   }
 }
