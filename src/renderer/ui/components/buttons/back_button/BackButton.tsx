@@ -1,6 +1,6 @@
 import React from 'react';
 import './style/index.scss';
-import BackSvg from 'toSvg/back-button.svg';
+import BackSvg from 'toSvg/back-button.svg?icon';
 
 interface BackButtonProps {
   onClick?: () => void;
