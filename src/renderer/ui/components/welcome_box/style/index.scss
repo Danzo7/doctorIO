@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   width: 95%;
-
+  max-height: 230px;
   &.animate {
     animation: hide 0.5s forwards;
   }
@@ -51,9 +51,11 @@
   @keyframes hide {
     from {
       transform: translateY(0%);
+      max-height: 230px;
     }
     to {
-      transform: translateY(-100%);
+      transform: translateY(-90000%);
+      max-height: 1px;
     }
   }
 }

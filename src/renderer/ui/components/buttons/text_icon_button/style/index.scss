@@ -8,37 +8,32 @@
   flex-direction: row;
   align-items: center;
   padding: 5px;
-  height: 10px;
-  background: $goodgreen;
+  height: fit-content;
   border-radius: 5px;
   width: fit-content;
-  justify-content: space-between;
-  gap: $gap;
+  cursor: pointer;
 
   &:hover > .text,
   &.active > .text {
-    animation: fadeIn 0.2s;
-    display: flex;
+    transition: width 0.2s;
+
+    width: 100%;
+    > span {
+      display: block;
+      white-space: nowrap;
+    }
   }
   > .text {
-    display: none;
+    transition: width 0.2s;
+
+    display: flex;
+    width: 0;
     font-style: normal;
     font-weight: 700;
-    font-size: 9px;
-    line-height: 9px;
-    /* identical to box height, or 100% */
-
-    //  display: none;
+    font-size: 12px;
     align-items: center;
-    letter-spacing: 0.15px;
-  }
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
+    > span {
+      display: none;
+    }
   }
 }
