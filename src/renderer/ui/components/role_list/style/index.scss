@@ -3,5 +3,13 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 10px 0px;
+  gap: 10px;
+
+  > .content-list {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-right: 10px;
+  }
 }

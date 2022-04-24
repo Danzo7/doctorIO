@@ -37,5 +37,20 @@ FirstStory.args = {
       status: true,
       lastMessage: 'hello there!',
     },
+    {
+      imgSrc: client,
+      status: true,
+      lastMessage: 'hello there!',
+    },
+    {
+      imgSrc: client,
+      status: true,
+      lastMessage: 'hello there!',
+    },
+    {
+      imgSrc: client,
+      status: true,
+      lastMessage: 'hello there!',
+    },
   ],
 };

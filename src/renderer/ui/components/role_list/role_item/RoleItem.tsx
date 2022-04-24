@@ -6,11 +6,18 @@ import color from '@assets/styles/color';
 interface RoleItemProps {
   roleName: string;
   selected: boolean;
+  onClick: () => void;
   linked?: boolean;
 }
-function RoleItem({ roleName, linked = false, selected }: RoleItemProps) {
+function RoleItem({
+  roleName,
+  linked = false,
+  selected,
+  onClick,
+}: RoleItemProps) {
   return (
     <div
+      onClick={onClick}
       className={`role-item ${css`
         background: ${selected ? color.darkersec_color : 'none'};
         box-shadow: 0px 0px 0px ${selected ? 1 : 0}px ${color.border_color};

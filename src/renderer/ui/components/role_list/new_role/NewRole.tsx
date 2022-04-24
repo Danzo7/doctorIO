@@ -13,6 +13,7 @@ export default function NewRole({}: NewRoleProps) {
       fontWeight={100}
       radius={7}
       borderColor={color.border_color}
+      padding={'15px'}
     />
   );
 }

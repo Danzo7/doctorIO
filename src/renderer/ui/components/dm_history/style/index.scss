@@ -7,7 +7,7 @@
   box-sizing: border-box;
   border-radius: 17px;
   padding: 15px;
-  justify-content: space-between;
+  gap: 10px;
 
   > .header {
     display: flex;
@@ -36,8 +36,9 @@
   > .lastDmMessages-container {
     display: flex;
     align-items: stretch;
-
+    overflow-y: scroll;
     flex-direction: column;
     gap: 15px;
+    padding-right: 10px;
   }
 }

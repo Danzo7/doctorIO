@@ -19,9 +19,10 @@
     }
   }
   > .members-list-container {
-    overflow: auto;
+    overflow-y: scroll;
 
     > .members-list {
+      padding-right: 10px;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
