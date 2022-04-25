@@ -3,25 +3,31 @@ import React from 'react';
 import './style/index.scss';
 interface ContentMessageProps {
   imgSrc: string;
-  messenger: string;
+  messengerName: string;
   messageTime: string;
   messageContent: string;
+  isLastMessageSent: boolean;
 }
 function ContentMessage({
-  messenger,
+  messengerName,
   messageTime,
   messageContent,
   imgSrc,
+  isLastMessageSent,
 }: ContentMessageProps) {
   return (
-    <div className="content-message">
+    <div
+      className={`content-message ${
+        isLastMessageSent ? 'last-message-sent' : ''
+      } `}
+    >
       <div>
         <CircleAvatar src={imgSrc} width={40} />
       </div>
 
       <div className="info-container">
         <div className="title-container">
-          <span>{messenger}</span>
+          <span>{messengerName}</span>
           <span>{messageTime}</span>
         </div>
         <span>{messageContent}</span>

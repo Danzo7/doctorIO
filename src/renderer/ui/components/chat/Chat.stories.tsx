@@ -1,5 +1,6 @@
 import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
+
 import Chat from './Chat';
 export default {
   title: 'Chat',
@@ -12,4 +13,5 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   memberFullName: 'Dr therapist',
   status: false,
+  sepPos: 1,
 };
