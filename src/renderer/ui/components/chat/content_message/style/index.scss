@@ -1,11 +1,15 @@
 @use '~styles/appColors' as *;
 .content-message {
   display: flex;
-  justify-content: space-between;
   flex-direction: row;
-  width: fit-content;
+  width: 100%;
   height: fit-content;
   gap: 15px;
+
+  &.last-message-sent {
+    padding-bottom: 10px;
+    border-bottom: 1px solid $silvergray;
+  }
 
   > .info-container {
     display: flex;

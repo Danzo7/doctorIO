@@ -13,7 +13,7 @@ const Template: Story<ComponentProps<typeof ContentMessage>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   imgSrc: client,
-  messenger: 'Aymen',
+  messengerName: 'Aymen',
   messageTime: 'Today at 12:18AM',
   messageContent: 'hello doctor therapist ',
 };
