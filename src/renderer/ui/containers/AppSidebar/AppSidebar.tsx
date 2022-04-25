@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import Arrow from 'toSvg/arrow.svg?icon';
 import { Transition } from 'react-transition-group';
 import './index.scss';
+import SearchProfile from '@components/search_profile';
+import test from 'toPng/test.png';
+
 interface AppSidebarProps {}
 
 function AppSidebar({}: AppSidebarProps) {
@@ -16,6 +19,7 @@ function AppSidebar({}: AppSidebarProps) {
             {state != 'exited' && (
               <div className="sidebar">
                 <div className={`content ${state}`}>
+                  <SearchProfile imgSrc={test} />
                   <QueueList></QueueList>
                   <BookedList></BookedList>
                 </div>
