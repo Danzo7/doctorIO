@@ -26,7 +26,7 @@ export default function Chat({ memberFullName, status }: ChatProps) {
       <div className="chat-content"></div>
       <div className="chat-footer">
         <ChatAddButton />
-        <InputField inputBackgroundColor="none" />
+        <InputField />
       </div>
     </div>
   );
