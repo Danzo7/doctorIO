@@ -1,2 +1,3 @@
-import InputField from './InputField';
+import InputField, { evolvedTypes } from './InputField';
 export default InputField;
+export { evolvedTypes };

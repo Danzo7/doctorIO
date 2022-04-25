@@ -1,7 +1,9 @@
 import BackButton from '@components/buttons/back_button';
-import InputField from '@components/inputs/input_field';
+import InputField, { evolvedTypes } from '@components/inputs/input_field';
 import RecentAppsItem from '@components/recent_apps_item';
 import React, { useState } from 'react';
+import search from 'toSvg/search.svg?icon';
+
 import './style/index.scss';
 interface QueueAddSearchModalProps {}
 const usersData = [
@@ -48,8 +50,8 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
       <InputField
         label="Add a patient to appointment queue"
         placeholder="search for a patients"
-        searchIcon={true}
-        inputType="search"
+        leadingIcon={search}
+        type={{ rawType: 'search', evolvedType: evolvedTypes.raw }}
         onChange={(e) => {
           onChangeHandler(e);
         }}

@@ -1,46 +1,73 @@
-import IconicButton from '@components/buttons/iconic_button';
-import React from 'react';
+/* eslint-disable no-unused-vars */
+import React, { ReactNode } from 'react';
 import './style/index.scss';
-import Search from 'toSvg/search.svg?icon';
+export enum evolvedTypes {
+  raw,
+  leadingDropdown,
+  trainlingDropdown,
+  dropdown,
+}
+type InputType = {
+  evolvedType: evolvedTypes;
+  rawType: 'text' | 'password' | string;
+};
 interface InputFieldProps {
   label?: string;
-  searchIcon?: boolean;
+  leadingIcon?: ReactNode;
+  traillingIcon?: ReactNode;
+  hintText?: string;
   placeholder?: string;
-  inputType?: string;
-  value?: string;
+  type?: InputType;
+  value?: string | string[];
   otherInputProps?: any;
+  state?: 'error' | 'disabled' | 'focused';
   onChange?: (e: Event) => void;
 }
 export default function InputField({
   label,
-  searchIcon,
+  leadingIcon,
+  traillingIcon,
   placeholder,
-  inputType = 'text',
+  hintText,
+  type = { evolvedType: evolvedTypes.raw, rawType: 'text' },
   value,
   otherInputProps,
   onChange,
 }: InputFieldProps) {
   return (
     <div className="input-field">
-      {label && (
-        <div className="label-container">
-          <span>{label}</span>
-        </div>
-      )}
+      {label && <span>{label}</span>}
       <div className="input-container">
-        <input
-          value={value}
-          onChange={onChange}
-          type={inputType}
-          placeholder={placeholder}
-          {...otherInputProps}
-        />
-        {searchIcon && (
-          <div className="search-btn-container">
-            <IconicButton Icon={Search} width={30} iconSize={15} radius={18} />
-          </div>
-        )}
+        {leadingIcon}
+
+        {(() => {
+          switch (type.evolvedType) {
+            case evolvedTypes.dropdown:
+              return (
+                <select name="cars" id="cars">
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="mercedes">Mercedes</option>
+                  <option value="audi">Audi</option>
+                </select>
+              );
+
+            default:
+              return (
+                <input
+                  value={value}
+                  onChange={onChange}
+                  type={type.rawType}
+                  placeholder={placeholder}
+                  {...otherInputProps}
+                />
+              );
+          }
+        })()}
+
+        {leadingIcon}
       </div>
+      {label && <span>{hintText}</span>}
     </div>
   );
 }

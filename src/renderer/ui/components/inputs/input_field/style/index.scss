@@ -6,13 +6,10 @@
   gap: 10px;
   width: 100%;
 
-  > .label-container {
-    width: 100%;
-    > span {
-      font-weight: 500;
-      font-size: 16px;
-      color: $textgray;
-    }
+  > span :nth-child(0) {
+    font-weight: 500;
+    font-size: 16px;
+    color: $textgray;
   }
 
   > .input-container {
@@ -36,12 +33,21 @@
       font-weight: 400;
       font-size: 14px;
     }
-    > input:focus {
-      outline: none;
+    > input:focus-visible {
+      outline: $hotpurple 1px solid;
+      border-radius: 5px;
+      box-shadow: 0 0px 1px $bordercolor inset, 0 0 5px $hotpurple;
       color: $white;
     }
     > .search-btn-container {
       padding: 0px 5px;
     }
   }
+}
+//Global style:
+input[type='search']::-webkit-search-decoration,
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-results-button,
+input[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
