@@ -5,21 +5,19 @@ import colors from '@colors';
 import React from 'react';
 import './style/index.scss';
 interface SearchProfileProps {
-  status: boolean;
   imgSrc: string;
 }
-export default function SearchProfile({ status, imgSrc }: SearchProfileProps) {
+export default function SearchProfile({ imgSrc }: SearchProfileProps) {
   return (
     <div className="search-profile">
-      <UserProfileStatus width={60} status={status} imgSrc={imgSrc} />
-      <input type={'search'} />
+      <UserProfileStatus width={40} status={true} imgSrc={imgSrc} />
       <div>
         <IconicButton
           Icon={Search}
-          width={60}
-          iconSize={20}
+          width={40}
+          iconSize={15}
           backgroundColor={colors.silver_gray}
-          radius={18}
+          radius={7}
         />
       </div>
     </div>
