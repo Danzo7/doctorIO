@@ -1,0 +1,65 @@
+@use '~styles/appColors' as *;
+@use '~styles/constants' as *;
+.dropdown-input {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: stretch;
+  gap: 5px;
+  cursor: pointer;
+  height: 40px;
+
+  &.open {
+    @include focused;
+    > .options {
+      display: flex;
+    }
+    > .dropdown {
+      > svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  > .dropdown {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    > svg {
+      stroke: white;
+    }
+    > span {
+      padding-left: 20px;
+
+      font-weight: 500;
+      font-size: 14px;
+      color: $silvergray;
+    }
+  }
+  > .options {
+    z-index: 10;
+    display: none;
+    background: $lighterbackground;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+    border-radius: 7px;
+
+    > a {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 10px;
+      background: $lighterbackground;
+      border-radius: 7px;
+      font-weight: 500;
+      font-size: 13px;
+      color: $white;
+      cursor: pointer;
+      &:hover {
+        background-color: $secondarycolor;
+      }
+    }
+  }
+}
