@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { ReactNode } from 'react';
+import Dropdown from '../dropdown';
 import './style/index.scss';
 export enum evolvedTypes {
   raw,
@@ -25,7 +26,7 @@ interface InputFieldProps {
 }
 export default function InputField({
   label,
-  leadingIcon,
+  leadingIcon: LeadingIcon,
   traillingIcon,
   placeholder,
   hintText,
@@ -38,19 +39,11 @@ export default function InputField({
     <div className="input-field">
       {label && <span>{label}</span>}
       <div className="input-container">
-        {leadingIcon}
-
+        {traillingIcon}
         {(() => {
           switch (type.evolvedType) {
             case evolvedTypes.dropdown:
-              return (
-                <select name="cars" id="cars">
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
-                </select>
-              );
+              return <Dropdown />;
 
             default:
               return (
@@ -64,10 +57,9 @@ export default function InputField({
               );
           }
         })()}
-
-        {leadingIcon}
+        {type.evolvedType != evolvedTypes.dropdown && LeadingIcon}
       </div>
-      {label && <span>{hintText}</span>}
+      {hintText && <span>{hintText}</span>}
     </div>
   );
 }
