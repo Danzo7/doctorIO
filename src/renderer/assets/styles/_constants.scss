@@ -1,1 +1,9 @@
+@use '~styles/appColors' as *;
+
 $gap: 5px;
+@mixin focused {
+  outline: $hotpurple 1px solid;
+  border-radius: 5px;
+  box-shadow: 0 0px 1px $bordercolor inset, 0 0 5px $hotpurple;
+  color: $white;
+}
