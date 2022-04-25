@@ -12,6 +12,12 @@
     border-bottom: 1px solid $bordercolor;
     padding-bottom: 10px;
   }
+  > .chat-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+  }
   > .chat-footer {
     display: flex;
     flex-direction: row;
