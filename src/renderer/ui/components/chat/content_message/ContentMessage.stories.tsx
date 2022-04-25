@@ -4,7 +4,7 @@ import ContentMessage from './ContentMessage';
 import client from '@assets/pictures/test.png';
 //👇 This default export determines where your story goes in the story list
 export default {
-  title: 'ContentMessage',
+  title: 'Chat/ContentMessage',
   component: ContentMessage,
 };
 const Template: Story<ComponentProps<typeof ContentMessage>> = (args) => (

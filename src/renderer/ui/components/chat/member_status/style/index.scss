@@ -1,0 +1,32 @@
+@use '~styles/appColors' as *;
+.member-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+  > span {
+    font-weight: 600;
+    font-size: 17px;
+    color: $white;
+  }
+  &.online > svg {
+    width: 15px;
+    > circle {
+      fill: $goodgreen;
+      outline-color: $goodgreen;
+      outline-style: solid;
+      outline-width: 3px;
+      outline-offset: -3px;
+      border-radius: 100%;
+    }
+  }
+  &.offline > svg > circle {
+    fill: none;
+    outline-color: #7d7d7d;
+    outline-style: solid;
+    outline-width: 3px;
+    outline-offset: -3px;
+    border-radius: 100%;
+  }
+}
