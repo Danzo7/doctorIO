@@ -1,7 +1,8 @@
 import React from 'react';
 interface SvgProps {
-  Src: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  children: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 }
-export default function Svg({ Src }: SvgProps) {
+export default function Svg({ children }: SvgProps) {
+  const Src = children;
   return <Src />;
 }
