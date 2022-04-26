@@ -17,7 +17,7 @@ export default function DiagnosisModal({ inputArray }: DiagnosisModalProps) {
       <div className="diagnosis-inputs-container">
         {inputArray.map((label) => (
           <div className="input-width">
-            <InputField label={label} />
+            <InputField name={`input-${label}`} label={label} />
           </div>
         ))}
       </div>

@@ -73,7 +73,7 @@ export default function Chat({ memberFullName, status, sepPos }: ChatProps) {
       </div>
       <div className="chat-footer">
         <ChatAddButton />
-        <InputField />
+        <InputField name="msg" />
       </div>
     </div>
   );
