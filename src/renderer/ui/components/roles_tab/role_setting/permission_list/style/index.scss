@@ -1,0 +1,8 @@
+@use '~styles/appColors' as *;
+.permission-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow-y: scroll;
+  padding-right: 15px;
+}
