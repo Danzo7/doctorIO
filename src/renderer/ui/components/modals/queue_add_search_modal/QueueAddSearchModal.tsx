@@ -1,6 +1,7 @@
 import BackButton from '@components/buttons/back_button';
 import InputField, { evolvedTypes } from '@components/inputs/input_field';
 import RecentAppsItem from '@components/recent_apps_item';
+import Svg from '@libs/svg';
 import React, { useState } from 'react';
 import search from 'toSvg/search.svg?icon';
 
@@ -48,9 +49,10 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
         <BackButton />
       </div>
       <InputField
+        name="QueueAddSearch"
         label="Add a patient to appointment queue"
         placeholder="search for a patients"
-        leadingIcon={search}
+        leading={<Svg>{search}</Svg>}
         type={{ rawType: 'search', evolvedType: evolvedTypes.raw }}
         onChange={(e) => {
           onChangeHandler(e);
