@@ -6,11 +6,15 @@ import React from 'react';
 import Icon from 'toSvg/link.svg?icon';
 import './style/index.scss';
 interface PermissionItemProps {
-  linked?: boolean;
+  permissionName: string;
+  permissionDescription: string;
+  linkedPermission?: string;
   disabled?: boolean;
 }
 export default function PermissionItem({
-  linked = false,
+  permissionName,
+  permissionDescription,
+  linkedPermission,
   disabled = false,
 }: PermissionItemProps) {
   return (
@@ -22,22 +26,21 @@ export default function PermissionItem({
               color: ${disabled ? color.text_gray : color.white};
             `}
           >
-            Assistant
+            {permissionName}
           </span>
           <span
             className={css`
               color: ${disabled ? color.text_gray : color.white};
             `}
           >
-            people with this role will assist another role, mean they can only
-            access to the dependent role permission
+            {permissionDescription}
           </span>
         </div>
         <div>
           <ToggleButton disabled={disabled} />
         </div>
       </div>
-      {linked && (
+      {linkedPermission && (
         <div className="permission-linked">
           <div className={`left-linked`}>
             <span
@@ -49,7 +52,7 @@ export default function PermissionItem({
             </span>
             <Icon />
             <div className="linked-permission-container">
-              <span>@Rythm#3722</span>
+              <span>{linkedPermission}</span>
             </div>
           </div>
           <TextButton
