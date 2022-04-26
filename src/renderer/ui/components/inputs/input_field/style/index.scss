@@ -1,67 +1,50 @@
 @use '~styles/appColors' as *;
+@use '~styles/constants' as *;
 .input-field {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  align-items: stretch;
   gap: 10px;
-  width: 100%;
 
   > span:first-child {
     font-weight: 500;
     font-size: 16px;
-    color: $textgray;
+    color: $white;
   }
   > span:last-child {
     font-weight: 500;
-    font-size: 10px;
-    color: $white;
+    font-size: 14px;
+    color: $textgray;
   }
 
   > .input-container {
-    background-color: $darkerseccolor;
-
-    width: 100%;
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    background-color: $darkerseccolor;
     border-radius: 7px;
-    justify-content: center;
-    flex-direction: column;
-    > svg:first-child {
-      position: absolute;
-      padding-left: 10px;
+    height: 40px;
+
+    &:focus-within {
+      @include idle;
+      > input {
+        outline: none;
+        color: $white;
+      }
     }
-    > svg:last-child {
-      position: absolute;
-      padding-right: 10px;
-      align-self: flex-end;
-    }
-    > input,
-    .input {
+
+    > input {
+      flex-grow: 10;
       align-self: stretch;
       color: $silvergray;
       background-color: transparent;
       border: none;
-      padding: 10px;
-      padding-left: calc(20px + 1em);
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
-      &:focus-visible {
-        outline: $hotpurple 1px solid;
-        border-radius: 5px;
-        box-shadow: 0 0px 1px $bordercolor inset, 0 0 5px $hotpurple;
-        color: $white;
-      }
-      > div {
-        position: absolute;
-        > a {
-          display: flex;
-          flex-direction: row;
-          align-items: flex-start;
-          padding: 10px;
-          background: $lighterbackground;
-          border-radius: 7px;
-        }
-      }
+      padding: 0;
     }
   }
 }

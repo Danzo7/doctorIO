@@ -8,14 +8,19 @@
   gap: 5px;
   cursor: pointer;
   height: 40px;
-
+  flex-grow: 1;
+  &.select {
+    > .dropdown > span {
+      color: $white;
+    }
+  }
   &.open {
-    @include focused;
+    inset-inline-start: $coldred;
     > .options {
       display: flex;
     }
     > .dropdown {
-      > svg {
+      > .arrow {
         transform: rotate(180deg);
       }
     }
@@ -25,12 +30,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    > svg {
+    padding: 10px;
+    gap: 10px;
+    > .arrow {
       stroke: white;
     }
     > span {
-      padding-left: 20px;
+      flex-grow: 1;
 
       font-weight: 500;
       font-size: 14px;

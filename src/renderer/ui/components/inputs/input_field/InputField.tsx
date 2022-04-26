@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { css } from '@emotion/css';
 import React, { ReactNode } from 'react';
 import Dropdown from '../dropdown';
 import './style/index.scss';
@@ -13,22 +14,27 @@ type InputType = {
   rawType: 'text' | 'password' | string;
 };
 interface InputFieldProps {
+  name: string;
   label?: string;
-  leadingIcon?: ReactNode;
-  traillingIcon?: ReactNode;
+  leading?: ReactNode;
+  trailing?: ReactNode;
   hintText?: string;
   placeholder?: string;
   type?: InputType;
   value?: string | string[];
   otherInputProps?: any;
   state?: 'error' | 'disabled' | 'focused';
+  padding?: number;
   onChange?: (e: Event) => void;
 }
 export default function InputField({
+  name,
   label,
-  leadingIcon: LeadingIcon,
-  traillingIcon,
+  leading,
+  trailing,
   placeholder,
+  padding = 10,
+
   hintText,
   type = { evolvedType: evolvedTypes.raw, rawType: 'text' },
   value,
@@ -38,16 +44,31 @@ export default function InputField({
   return (
     <div className="input-field">
       {label && <span>{label}</span>}
-      <div className="input-container">
-        {traillingIcon}
+      <div
+        className={`input-container ${css`
+          padding: 0 ${padding}px 0 ${padding}px;
+        `}`}
+      >
+        {type.evolvedType != evolvedTypes.dropdown && (
+          <div className="lead" children={leading} />
+        )}
         {(() => {
           switch (type.evolvedType) {
             case evolvedTypes.dropdown:
-              return <Dropdown />;
+              return (
+                <Dropdown
+                  name={name}
+                  options={['اثممخ', 'hello']}
+                  placeholder="hemm"
+                  leading={leading}
+                  trailing={trailing}
+                />
+              );
 
             default:
               return (
                 <input
+                  name={name}
                   value={value}
                   onChange={onChange}
                   type={type.rawType}
@@ -57,7 +78,7 @@ export default function InputField({
               );
           }
         })()}
-        {type.evolvedType != evolvedTypes.dropdown && LeadingIcon}
+        {type.evolvedType != evolvedTypes.dropdown && trailing}
       </div>
       {hintText && <span>{hintText}</span>}
     </div>
