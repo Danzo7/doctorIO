@@ -5,9 +5,8 @@ import Dropdown from '../dropdown';
 import './style/index.scss';
 export enum evolvedTypes {
   raw,
-  leadingDropdown,
-  trainlingDropdown,
   dropdown,
+  checkbox,
 }
 type InputType = {
   evolvedType: evolvedTypes;
@@ -41,17 +40,27 @@ export default function InputField({
   otherInputProps,
   onChange,
 }: InputFieldProps) {
+  const paddedLeading = (
+    <div
+      className={`${css`
+        padding-left: ${padding}px;
+      `}`}
+      children={leading}
+    />
+  );
+  const paddedTrailing = (
+    <div
+      children={trailing}
+      className={`${css`
+        padding-right: ${padding}px;
+      `}`}
+    />
+  );
   return (
     <div className="input-field">
       {label && <span>{label}</span>}
-      <div
-        className={`input-container ${css`
-          padding: 0 ${padding}px 0 ${padding}px;
-        `}`}
-      >
-        {type.evolvedType != evolvedTypes.dropdown && (
-          <div className="lead" children={leading} />
-        )}
+      <div className={`input-container`}>
+        {type.evolvedType != evolvedTypes.dropdown && paddedLeading}
         {(() => {
           switch (type.evolvedType) {
             case evolvedTypes.dropdown:
@@ -60,8 +69,8 @@ export default function InputField({
                   name={name}
                   options={['اثممخ', 'hello']}
                   placeholder="hemm"
-                  leading={leading}
-                  trailing={trailing}
+                  leading={paddedLeading}
+                  trailing={paddedTrailing}
                 />
               );
 
@@ -69,7 +78,7 @@ export default function InputField({
               return (
                 <input
                   name={name}
-                  value={value}
+                  defaultValue={value}
                   onChange={onChange}
                   type={type.rawType}
                   placeholder={placeholder}
@@ -78,7 +87,9 @@ export default function InputField({
               );
           }
         })()}
-        {type.evolvedType != evolvedTypes.dropdown && trailing}
+        {type.evolvedType != evolvedTypes.dropdown && (
+          <Dropdown name={name} options={['kg', 'g']} placeholder="hemm" />
+        )}
       </div>
       {hintText && <span>{hintText}</span>}
     </div>
