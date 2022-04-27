@@ -2,7 +2,6 @@ import NewRole from './new_role';
 import RoleItem from './role_item';
 import React, { useState } from 'react';
 import './style/index.scss';
-import { css } from '@emotion/css';
 
 interface RoleType {
   roleName: string;
@@ -16,21 +15,11 @@ interface RoleListProps {
 }
 export default function RoleList({
   roleList,
-  height = 500,
   defaultSelected = 0,
 }: RoleListProps) {
   const [selectedRole, setSelectedRole] = useState(defaultSelected);
   return (
-    <div
-      className={`role-list ${css`
-        height: ${typeof height === 'number' ? `${height}px` : ''};
-        height: ${typeof height === 'string'
-          ? height == '100%'
-            ? 'unset'
-            : `${height}`
-          : ''};
-      `} `}
-    >
+    <div className={`role-list `}>
       <NewRole />
       <div className="content-list">
         {roleList.map(({ roleName, linked }, index) => (
