@@ -18,6 +18,7 @@ interface TextButtonProps {
   onPress?: () => void;
   width?: number | string;
   height?: number | string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }
 function TextButton({
   text,
@@ -25,19 +26,22 @@ function TextButton({
   fontColor,
   fontSize = 14,
   fontWeight = 600,
-  backgroundColor,
+  backgroundColor = 'transparent',
   borderColor,
+  radius = 7,
   afterBgColor,
   afterBorderColor,
   afterFontColor,
   width,
   height,
-  radius,
+
   padding,
   onPress,
+  type,
 }: TextButtonProps) {
   return (
-    <div
+    <button
+      type={type}
       className={`${css`
         background-color: ${backgroundColor};
         border: 1px solid ${borderColor ? `${borderColor} ` : 'transparent'};
@@ -80,7 +84,7 @@ function TextButton({
           {text}
         </span>
       )}
-    </div>
+    </button>
   );
 }
 
