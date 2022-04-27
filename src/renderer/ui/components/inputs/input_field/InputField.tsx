@@ -19,6 +19,8 @@ interface InputFieldProps {
   trailing?: ReactNode;
   hintText?: string;
   placeholder?: string;
+  background?: string;
+  radius?: number;
   type?: InputType;
   value?: string | string[];
   otherInputProps?: any;
@@ -33,7 +35,8 @@ export default function InputField({
   trailing,
   placeholder,
   padding = 10,
-
+  background,
+  radius,
   hintText,
   type = { evolvedType: evolvedTypes.raw, rawType: 'text' },
   value,
@@ -59,7 +62,12 @@ export default function InputField({
   return (
     <div className="input-field">
       {label && <span>{label}</span>}
-      <div className={`input-container`}>
+      <div
+        className={` ${css`
+          background-color: ${background};
+          border-radius: ${radius}px;
+        `} input-container`}
+      >
         {type.evolvedType != evolvedTypes.dropdown && paddedLeading}
         {(() => {
           switch (type.evolvedType) {
@@ -87,9 +95,7 @@ export default function InputField({
               );
           }
         })()}
-        {type.evolvedType != evolvedTypes.dropdown && (
-          <Dropdown name={name} options={['kg', 'g']} placeholder="hemm" />
-        )}
+        {type.evolvedType != evolvedTypes.dropdown && trailing}
       </div>
       {hintText && <span>{hintText}</span>}
     </div>
