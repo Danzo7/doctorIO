@@ -1,42 +1,47 @@
 @use '~styles/appColors' as *;
+@use '~styles/effects' as *;
 .role-item {
   display: flex;
   border-radius: 7px;
   height: fit-content;
-  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  &.selected {
+    background-color: $darkerseccolor;
+    outline: $bordercolor 1px solid;
+    outline-offset: -1px;
+  }
+  &:hover {
+    @include darken;
+    transition: none;
+  }
 
-  > .role-item-wrapper {
+  > span {
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  > .linked {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
-    padding: 10px 20px;
     gap: 10px;
-    width: 100%;
 
-    > span {
-      font-weight: 700;
-      font-size: 16px;
-    }
-
-    > .linked {
+    > .linked-role-container {
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: center;
-      gap: 10px;
-
-      > .linked-role-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 5px 5px;
-        background-color: $secondarycolor;
-        border-radius: 5px;
-        > span {
-          font-weight: 500;
-          font-size: 12px;
-          color: $textgray;
-        }
+      padding: 5px 5px;
+      background-color: $secondarycolor;
+      border-radius: 5px;
+      > span {
+        font-weight: 500;
+        font-size: 12px;
+        color: $textgray;
       }
     }
   }
