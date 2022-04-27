@@ -10,7 +10,6 @@ const Template: Story<ComponentProps<typeof PermissionList>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  height: 400,
   permissionArray: [
     {
       permissionName: 'administrator',

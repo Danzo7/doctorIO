@@ -1,4 +1,4 @@
-import PermissionItem from '@components/new_permission';
+import PermissionItem from './Permission_item';
 import React from 'react';
 import './style/index.scss';
 interface PermissionListProps {

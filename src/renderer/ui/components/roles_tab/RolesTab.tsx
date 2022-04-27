@@ -1,4 +1,4 @@
-import RoleList from '@components/role_list';
+import RoleList from './role_list';
 import React from 'react';
 import RoleSetting from './role_setting';
 import './style/index.scss';

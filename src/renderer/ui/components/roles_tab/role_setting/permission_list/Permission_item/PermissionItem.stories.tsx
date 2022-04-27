@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import PermissionItem from './PermissionItem';
 export default {
-  title: 'PermissionItem',
+  title: 'rolestab/PermissionItem',
   component: PermissionItem,
 };
 const Template: Story<ComponentProps<typeof PermissionItem>> = (args) => (

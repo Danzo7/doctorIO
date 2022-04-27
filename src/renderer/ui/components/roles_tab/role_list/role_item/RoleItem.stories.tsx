@@ -3,7 +3,7 @@ import type { Story } from '@storybook/react';
 import RoleItem from './RoleItem';
 //👇 This default export determines where your story goes in the story list
 export default {
-  title: 'RoleItem',
+  title: 'rolestab/RoleItem',
   component: RoleItem,
 };
 const Template: Story<ComponentProps<typeof RoleItem>> = (args) => (

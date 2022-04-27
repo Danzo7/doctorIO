@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import RoleList from './RoleList';
 export default {
-  title: 'RoleList',
+  title: 'rolestab/RoleList',
   component: RoleList,
 };
 const Template: Story<ComponentProps<typeof RoleList>> = (args) => (
