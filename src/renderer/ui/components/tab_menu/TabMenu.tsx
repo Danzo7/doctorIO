@@ -22,7 +22,7 @@ export default function TabMenu({
         <DarkLightCornerButton
           title={text}
           isActive={selected == index}
-          onPress={() => setTab}
+          onPress={() => setTab(index)}
         />
       ))}
     </div>
