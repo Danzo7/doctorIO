@@ -4,21 +4,25 @@ import './style/index.scss';
 interface TabMenuProps {
   textList: Array<string>;
   defaultSelected?: number;
+  onChanged?: (selected: number) => void;
 }
 export default function TabMenu({
   textList = [],
   defaultSelected = 0,
+  onChanged,
 }: TabMenuProps) {
   const [selected, setSelected] = useState(defaultSelected);
+  function setTab(index: number) {
+    setSelected(index);
+    onChanged?.(index);
+  }
   return (
     <div className="tab-menu">
       {textList.map((text, index) => (
         <DarkLightCornerButton
           title={text}
           isActive={selected == index}
-          onPress={() => {
-            setSelected(index);
-          }}
+          onPress={() => setTab}
         />
       ))}
     </div>
