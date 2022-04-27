@@ -4,7 +4,7 @@ import React from 'react';
 import './style/index.scss';
 interface PermissionListProps {
   permissionArray: any[];
-  height: number | string;
+  height?: number | string;
 }
 export default function PermissionList({
   permissionArray,
