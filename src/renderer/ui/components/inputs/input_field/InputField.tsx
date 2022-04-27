@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { css } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 import React, { ReactNode } from 'react';
 import Dropdown from '../dropdown';
 import './style/index.scss';
@@ -62,11 +62,15 @@ export default function InputField({
   return (
     <div className="input-field">
       {label && <span>{label}</span>}
+
       <div
-        className={` ${css`
-          background-color: ${background};
-          border-radius: ${radius}px;
-        `} input-container`}
+        className={cx(
+          'input-container',
+          css`
+            background-color: ${background}!important;
+            border-radius: ${radius}px!important;
+          `,
+        )}
       >
         {type.evolvedType != evolvedTypes.dropdown && paddedLeading}
         {(() => {
@@ -97,6 +101,7 @@ export default function InputField({
         })()}
         {type.evolvedType != evolvedTypes.dropdown && trailing}
       </div>
+
       {hintText && <span>{hintText}</span>}
     </div>
   );
