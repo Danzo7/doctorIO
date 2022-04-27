@@ -2,6 +2,7 @@
 .roles-tab {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 40px;
+  height: 400px; //todo:remove later
 }
