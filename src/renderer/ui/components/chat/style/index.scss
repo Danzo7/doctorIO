@@ -24,13 +24,4 @@
       align-items: stretch;
     }
   }
-  > .chat-footer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 5px 15px;
-    background: $lighterbackground;
-    border-radius: 17px;
-    gap: 5px;
-  }
 }

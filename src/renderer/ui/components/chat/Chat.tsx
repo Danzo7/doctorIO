@@ -71,10 +71,12 @@ export default function Chat({ memberFullName, status, sepPos }: ChatProps) {
           )}
         </div>
       </div>
-      <div className="chat-footer">
-        <ChatAddButton />
-        <InputField name="msg" />
-      </div>
+      <InputField
+        name="msg"
+        background={color.lighter_background}
+        leading={<ChatAddButton />}
+        radius={17}
+      />
     </div>
   );
 }
