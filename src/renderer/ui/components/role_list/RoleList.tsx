@@ -10,14 +10,14 @@ interface RoleType {
 }
 interface RoleListProps {
   roleList: RoleType[];
-  selected: boolean;
+  selected?: number;
   height: number | string;
   defaultSelected?: number;
 }
 export default function RoleList({
   roleList,
   height = 500,
-  defaultSelected = 1,
+  defaultSelected = 0,
 }: RoleListProps) {
   const [selectedRole, setSelectedRole] = useState(defaultSelected);
   return (
