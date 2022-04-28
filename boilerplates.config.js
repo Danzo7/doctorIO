@@ -5,8 +5,7 @@
     template: [
       [
         '{{componentName}sc}/{{componentName}pc}.tsx',
-        `import React from 'react';
-import './style/index.scss';
+        `import './style/index.scss';
 interface {{componentName}pc}Props {}
 export default function {{componentName}pc}({}: {{componentName}pc}Props) {
   return <div className="{{componentName}kc}"></div>;
@@ -28,7 +27,7 @@ export default {{componentName}pc};
       ],
       [
         '{{componentName}sc}/{{componentName}pc}.stories.tsx',
-        `import React, { ComponentProps } from 'react';
+        `import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import {{componentName}pc} from './{{componentName}pc}';
 export default {
