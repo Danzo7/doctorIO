@@ -2,7 +2,7 @@
   "module": "esnext",
   "target": "es5",
   "moduleResolution": "node",
-  "jsx": "react",
+  "jsx": "react-jsx",
   "baseUrl": "./",
   "paths": {
     "*": ["node_modules/*"],

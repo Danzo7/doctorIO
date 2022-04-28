@@ -30,6 +30,7 @@
     "test": "web-test-runner \"src/**/*.test.tsx\""
   },
   "dependencies": {
+    "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/css": "^11.7.1",
     "@emotion/react": "^11.8.2",
     "@popperjs/core": "^2.11.5",
@@ -37,15 +38,18 @@
     "electron-squirrel-startup": "^1.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-hook-form": "^7.30.0",
     "react-transition-group": "^4.4.2"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.16.7",
     "@electron-forge/cli": "^6.0.0-beta.63",
     "@electron-forge/maker-deb": "^6.0.0-beta.63",
     "@electron-forge/maker-rpm": "^6.0.0-beta.63",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
     "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@electron-forge/plugin-webpack": "^6.0.0-beta.63",
+    "@emotion/babel-plugin": "^11.9.2",
     "@storybook/addon-actions": "^6.4.20",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-links": "^6.4.20",
@@ -65,6 +69,7 @@
     "@typescript-eslint/parser": "^5.15.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.2",
     "autoprefixer": "^10.4.4",
+    "babel-loader": "^8.2.5",
     "chai": "^4.3.6",
     "css-loader": "^6.7.1",
     "cssnano": "^5.1.4",
