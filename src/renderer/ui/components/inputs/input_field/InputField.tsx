@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { css, cx } from '@emotion/css';
 import React, { ReactNode } from 'react';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import Dropdown from '../dropdown';
 import './style/index.scss';
 export enum evolvedTypes {
@@ -13,7 +14,6 @@ type InputType = {
   rawType: 'text' | 'password' | string;
 };
 interface InputFieldProps {
-  name: string;
   label?: string;
   leading?: ReactNode;
   trailing?: ReactNode;
@@ -23,13 +23,14 @@ interface InputFieldProps {
   radius?: number;
   type?: InputType;
   value?: string | string[];
-  otherInputProps?: any;
   state?: 'error' | 'disabled' | 'focused';
+  register?: UseFormRegisterReturn;
+  errorField?: FieldError;
   padding?: number;
-  onChange?: (e: Event) => void;
+  name?: string;
+  onChange?: (value: string) => void;
 }
 export default function InputField({
-  name,
   label,
   leading,
   trailing,
@@ -39,11 +40,12 @@ export default function InputField({
   radius,
   hintText,
   type = { evolvedType: evolvedTypes.raw, rawType: 'text' },
-  value,
-  otherInputProps,
+  register,
+  errorField,
+  name,
   onChange,
 }: InputFieldProps) {
-  const paddedLeading = (
+  const paddedLeading = leading && (
     <div
       className={`${css`
         padding-left: ${padding}px;
@@ -51,7 +53,7 @@ export default function InputField({
       children={leading}
     />
   );
-  const paddedTrailing = (
+  const paddedTrailing = trailing && (
     <div
       children={trailing}
       className={`${css`
@@ -60,12 +62,12 @@ export default function InputField({
     />
   );
   return (
-    <div className="input-field">
+    <div className={`input-field${errorField ? ' error' : ''}`}>
       {label && <span>{label}</span>}
 
       <div
         className={cx(
-          'input-container',
+          `input-container`,
           css`
             background-color: ${background}!important;
             border-radius: ${radius}px!important;
@@ -78,31 +80,25 @@ export default function InputField({
             case evolvedTypes.dropdown:
               return (
                 <Dropdown
-                  name={name}
                   options={['اثممخ', 'hello']}
-                  placeholder="hemm"
+                  placeholder={placeholder}
                   leading={paddedLeading}
                   trailing={paddedTrailing}
                 />
               );
 
             default:
-              return (
-                <input
-                  name={name}
-                  defaultValue={value}
-                  onChange={onChange}
-                  type={type.rawType}
-                  placeholder={placeholder}
-                  {...otherInputProps}
-                />
-              );
+              return <input placeholder={placeholder} {...register} />;
           }
         })()}
         {type.evolvedType != evolvedTypes.dropdown && trailing}
       </div>
 
-      {hintText && <span>{hintText}</span>}
+      {errorField ? (
+        <span>{errorField.message}</span>
+      ) : (
+        hintText && <span>{hintText}</span>
+      )}
     </div>
   );
 }

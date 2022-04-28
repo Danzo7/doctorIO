@@ -49,14 +49,14 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
         <BackButton />
       </div>
       <InputField
-        name="QueueAddSearch"
+        //name="QueueAddSearch"
         label="Add a patient to appointment queue"
         placeholder="search for a patients"
         leading={<Svg>{search}</Svg>}
         type={{ rawType: 'search', evolvedType: evolvedTypes.raw }}
-        onChange={(e) => {
-          onChangeHandler(e);
-        }}
+        // onChange={(e) => {
+        //   onChangeHandler(e);
+        // }}
         //  value={userInput}
       />
       <div className="suggestions-container">

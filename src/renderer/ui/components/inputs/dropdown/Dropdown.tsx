@@ -2,23 +2,24 @@ import React, { ReactNode, useRef, useState } from 'react';
 import './style/index.scss';
 import Arrow from 'toSvg/arrow.svg?icon';
 import { css } from '@emotion/css';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface DropdownProps {
-  name: string;
   options: string[];
-  placeholder: string;
+  placeholder?: string;
   leading?: ReactNode;
   trailing?: ReactNode;
   onChange?: (value: string) => void;
+  register?: UseFormRegisterReturn;
 }
 
 export default function Dropdown({
-  name,
   options,
   placeholder = '',
   leading,
   trailing,
   onChange,
+  register,
 }: DropdownProps) {
   const field = useRef<HTMLDivElement>(null);
   const [isOpen, setOpen] = useState(false);
@@ -52,9 +53,7 @@ export default function Dropdown({
         ))}
       </div>
       <input
-        type="text"
-        value={selected}
-        name={name}
+        {...register}
         className={css`
           display: none;
         `}

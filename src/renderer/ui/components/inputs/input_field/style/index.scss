@@ -6,7 +6,16 @@
   align-items: flex-start;
   align-items: stretch;
   gap: 10px;
-
+  &.active {
+    > .input-container {
+      &:focus-within {
+        @include idle;
+      }
+    }
+    > span:last-child {
+      color: $hotred;
+    }
+  }
   > span:first-child {
     font-weight: 500;
     font-size: 16px;
@@ -45,6 +54,9 @@
       font-weight: 400;
       font-size: 14px;
       padding: 0;
+      &:-webkit-autofill {
+        box-shadow: 0 0 0px 1000px $darkerseccolor inset;
+      }
     }
   }
 }
