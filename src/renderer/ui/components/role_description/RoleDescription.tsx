@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 interface RoleDescriptionProps {
   roleName: string;

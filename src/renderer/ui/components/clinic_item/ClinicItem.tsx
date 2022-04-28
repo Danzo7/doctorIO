@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 import Menu from 'toSvg/bigMenu.svg';
 import Clinic from 'toSvg/clinic.svg?icon';

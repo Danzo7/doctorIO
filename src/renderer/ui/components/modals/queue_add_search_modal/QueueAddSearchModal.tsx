@@ -2,7 +2,7 @@ import BackButton from '@components/buttons/back_button';
 import InputField, { evolvedTypes } from '@components/inputs/input_field';
 import RecentAppsItem from '@components/recent_apps_item';
 import Svg from '@libs/svg';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import search from 'toSvg/search.svg?icon';
 
 import './style/index.scss';

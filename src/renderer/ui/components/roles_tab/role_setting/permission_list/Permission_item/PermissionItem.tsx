@@ -2,7 +2,6 @@ import color from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ToggleButton from '@components/buttons/toggle_button';
 import { css } from '@emotion/css';
-import React from 'react';
 import Icon from 'toSvg/link.svg?icon';
 import './style/index.scss';
 interface PermissionItemProps {

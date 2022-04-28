@@ -31,7 +31,7 @@ export default function Firo() {
       </div>
       <InputField
         hintText="hint"
-        label="example"
+        label={'example'}
         errorField={errors.example}
         register={register('example', { required: 'this is required' })}
       />

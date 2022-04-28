@@ -1,5 +1,5 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './style/index.scss';
 interface TabMenuProps {
   textList: Array<string>;

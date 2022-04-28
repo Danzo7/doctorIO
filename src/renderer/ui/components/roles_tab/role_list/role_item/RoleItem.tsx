@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 import Icon from 'toSvg/link.svg?icon';
 import { css } from '@emotion/css';

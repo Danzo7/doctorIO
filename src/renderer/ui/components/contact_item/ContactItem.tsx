@@ -1,5 +1,4 @@
 import UserProfileStatus from '@components/user_profile_status';
-import React from 'react';
 import './style/index.scss';
 import colors from '@assets/styles/color';
 import IdCard from 'toSvg/id_card.svg?icon';

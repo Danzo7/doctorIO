@@ -1,5 +1,4 @@
 import IconicButton from '@components/buttons/iconic_button';
-import React from 'react';
 import './style/index.scss';
 import colors from '@assets/styles/color';
 import IdCard from 'toSvg/id_card.svg?icon'; //Add ?icon to be able to resize svg

@@ -1,6 +1,5 @@
 import MultiOptionSwitcher from '@components/buttons/multi_option_switcher';
 import MiniStats from '@components/mini_stats';
-import React from 'react';
 import './style/index.scss';
 interface ShortStatsPanelProps {
   miniStatsList: Array<any>;

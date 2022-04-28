@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './style/index.scss';
 import Svg from 'toSvg/doctor_face.svg';
 import Arrow from 'toSvg/arrow.svg';

@@ -1,5 +1,4 @@
 import IconicButton from '@components/buttons/iconic_button';
-import React from 'react';
 import './style/index.scss';
 import Search from 'toSvg/search.svg?icon';
 

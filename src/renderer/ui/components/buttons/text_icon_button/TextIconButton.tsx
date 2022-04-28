@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import './style/index.scss';
 import { css } from '@emotion/css';
 

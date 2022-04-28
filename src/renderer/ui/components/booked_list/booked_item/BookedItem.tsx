@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 import Panding from 'toSvg/pending.svg';
 import InQueue from 'toSvg/in_queue.svg';

@@ -1,5 +1,4 @@
 import UserProfileStatus from '@components/user_profile_status';
-import React from 'react';
 import './style/index.scss';
 interface LastDmMessageProps {
   imgSrc: string;

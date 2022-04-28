@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import QueueItem from './queue_item';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './style/index.scss';
 import NextIcon from 'toSvg/next.svg?icon';
 import PauseIcon from 'toSvg/pause.svg?icon';

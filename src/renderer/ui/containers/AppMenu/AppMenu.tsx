@@ -1,4 +1,3 @@
-import React from 'react';
 import MenuOption from './MenuOption';
 import './style/index.scss';
 import menuI, { logo } from './svgList';

@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import './style/index.scss';
 import Arrow from 'toSvg/arrow.svg?icon';
 import { css } from '@emotion/css';

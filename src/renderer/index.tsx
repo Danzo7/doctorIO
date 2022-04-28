@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.scss';
@@ -7,9 +7,9 @@ import './index.scss';
 const app = document.getElementById('app-mount');
 const root = createRoot(app as HTMLElement);
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <App />
-  </React.StrictMode>,
+  </StrictMode>,
 );
 
 if (typeof module !== 'undefined' && module.hot) {

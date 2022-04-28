@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 import Add from 'toSvg/add.svg';
 interface AddButtonProps {}

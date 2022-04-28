@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './style/index.scss';
 import XMark from 'toSvg/x_mark.svg?icon';
 import GoodMark from 'toSvg/good_mark.svg?icon';

@@ -1,5 +1,4 @@
 import MemberItem from '@components/member_item';
-import React from 'react';
 import './style/index.scss';
 import test from 'toPng/test.png';
 interface MembersTableProps {}

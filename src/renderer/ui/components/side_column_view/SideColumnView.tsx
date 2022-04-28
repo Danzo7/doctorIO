@@ -1,5 +1,5 @@
 import TextButton from '@components/buttons/text_button';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import './style/index.scss';
 import colors from '@colors';
 interface SideColumnViewProps {

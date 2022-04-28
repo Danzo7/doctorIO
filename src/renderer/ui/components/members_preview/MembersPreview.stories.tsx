@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import MembersPreview from './MembersPreview';
 import test from 'toPng/test.png';

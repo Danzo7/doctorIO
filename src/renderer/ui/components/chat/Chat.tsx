@@ -1,5 +1,4 @@
 import IconicButton from '@components/buttons/iconic_button';
-import React from 'react';
 import MemberStatus from './member_status';
 import './style/index.scss';
 import Call_Icon from 'toSvg/callicon.svg?icon';

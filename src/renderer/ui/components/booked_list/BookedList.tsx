@@ -1,6 +1,5 @@
 import BookedItem from './booked_item';
 import SideColumnView from '@components/side_column_view';
-import React from 'react';
 interface BookedListProps {}
 export default function BookedList({}: BookedListProps) {
   return (

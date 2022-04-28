@@ -1,5 +1,5 @@
 import UserProfileStatus from '@components/user_profile_status';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './style/index.scss';
 import UpArrow from 'toSvg/arrow.svg?icon';
 import SmallRolePreview from './small_role_preview';

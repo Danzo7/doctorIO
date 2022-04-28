@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import { Overlay } from './overlay';
-import React, { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import './style/index.scss';
 import BackButton from '@components/buttons/back_button';
 interface OverlayContainerProps {}

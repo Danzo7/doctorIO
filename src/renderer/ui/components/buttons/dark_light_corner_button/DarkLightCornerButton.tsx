@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 import colors from '@colors';
 import TextButton from '../text_button/TextButton';

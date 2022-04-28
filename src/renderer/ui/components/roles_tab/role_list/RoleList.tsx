@@ -1,6 +1,6 @@
 import NewRole from './new_role';
 import RoleItem from './role_item';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './style/index.scss';
 
 interface RoleType {

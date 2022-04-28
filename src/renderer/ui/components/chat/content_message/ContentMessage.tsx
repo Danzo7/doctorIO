@@ -1,5 +1,4 @@
 import CircleAvatar from '@components/avatars/circle_avatar';
-import React from 'react';
 import './style/index.scss';
 interface ContentMessageProps {
   imgSrc: string;

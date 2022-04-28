@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 import Status from 'toSvg/status.svg?icon';
 interface MemberStatusProps {

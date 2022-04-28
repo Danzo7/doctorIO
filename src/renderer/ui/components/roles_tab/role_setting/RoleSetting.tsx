@@ -1,5 +1,4 @@
 import TabMenu from '@components/tab_menu';
-import React from 'react';
 import PermissionList from './permission_list';
 import './style/index.scss';
 interface RoleSettingProps {

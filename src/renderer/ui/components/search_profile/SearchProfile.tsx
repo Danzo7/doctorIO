@@ -2,7 +2,6 @@ import IconicButton from '@components/buttons/iconic_button';
 import UserProfileStatus from '@components/user_profile_status';
 import Search from 'toSvg/search.svg?icon';
 import colors from '@colors';
-import React from 'react';
 import './style/index.scss';
 interface SearchProfileProps {
   imgSrc: string;

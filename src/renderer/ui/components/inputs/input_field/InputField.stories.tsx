@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import InputField, { evolvedTypes } from './InputField';
 import search from 'toSvg/search.svg?icon';

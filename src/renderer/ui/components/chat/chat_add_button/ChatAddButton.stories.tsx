@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import ChatAddButton from './ChatAddButton';
 export default {

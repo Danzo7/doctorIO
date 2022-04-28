@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import IconicButton from './IconicButton';
 import Call_icon from 'toSvg/messagesSmall.svg?icon';

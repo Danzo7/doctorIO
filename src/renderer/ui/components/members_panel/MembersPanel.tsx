@@ -1,7 +1,6 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import MembersPreview from '@components/members_preview';
 import { css } from '@emotion/css';
-import React from 'react';
 import './style/index.scss';
 interface MembersPanelProps {
   membersList: Array<any>;

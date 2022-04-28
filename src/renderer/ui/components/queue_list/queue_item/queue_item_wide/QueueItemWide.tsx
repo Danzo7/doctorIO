@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 import PregnantState from 'toSvg/pregnant.svg';
 import WaitingFigure from 'toSvg/figure_waiting.svg';

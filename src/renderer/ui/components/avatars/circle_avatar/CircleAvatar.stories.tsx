@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import CircleAvatar from './CircleAvatar';
 import profile from '@assets/pictures/test.png';

@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import SideColumnView from './SideColumnView';
 import BookedItem from '@components/booked_list/booked_item';

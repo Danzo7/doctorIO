@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 import Indicator from 'toSvg/exclamation.svg?icon';
 

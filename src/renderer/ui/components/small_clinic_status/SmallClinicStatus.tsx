@@ -3,7 +3,7 @@ import ToggleButton from '@components/buttons/toggle_button';
 import QueueAddSearchModal from '@components/modals/queue_add_search_modal';
 import Timer from '@components/small_clinic_status/timer';
 import { Overlay } from '@components/overlay';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './style/index.scss';
 interface SmallClinicStatusProps {}
 

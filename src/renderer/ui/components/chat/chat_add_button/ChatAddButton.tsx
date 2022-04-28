@@ -1,5 +1,4 @@
 import IconicButton from '@components/buttons/iconic_button';
-import React from 'react';
 import './style/index.scss';
 import Add from 'toSvg/lighterAdd.svg?icon';
 import color from '@assets/styles/color';

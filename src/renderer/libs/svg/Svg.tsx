@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 interface SvgProps {
   children: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
 }

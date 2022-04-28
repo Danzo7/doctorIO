@@ -1,6 +1,5 @@
 import TextButton from '@components/buttons/text_button';
 import LastDmMessage from '@components/last_dm_message';
-import React from 'react';
 import './style/index.scss';
 import add from 'toSvg/add.svg?icon';
 import color from '@assets/styles/color';

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { css, cx } from '@emotion/css';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import Dropdown from '../dropdown';
 import './style/index.scss';

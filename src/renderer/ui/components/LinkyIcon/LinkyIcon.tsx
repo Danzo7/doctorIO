@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import './index.scss';
 import { css, CSSInterpolation } from '@emotion/css';
 type Svg = React.FunctionComponent<React.SVGProps<SVGSVGElement>> | any;

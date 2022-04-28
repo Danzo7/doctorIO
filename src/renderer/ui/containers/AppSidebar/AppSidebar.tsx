@@ -1,6 +1,6 @@
 import BookedList from '@components/booked_list';
 import QueueList from '@components/queue_list';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Arrow from 'toSvg/arrow.svg?icon';
 import { Transition } from 'react-transition-group';
 import './index.scss';

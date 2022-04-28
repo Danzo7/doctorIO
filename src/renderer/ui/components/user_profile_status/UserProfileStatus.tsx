@@ -1,6 +1,5 @@
 import CircleAvatar from '@components/avatars/circle_avatar/CircleAvatar';
 import { css } from '@emotion/css';
-import React from 'react';
 import './style/index.scss';
 interface UserProfileStatusProps {
   imgSrc: string;

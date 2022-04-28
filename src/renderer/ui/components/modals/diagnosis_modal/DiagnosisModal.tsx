@@ -2,7 +2,6 @@ import color from '@assets/styles/color';
 import BackButton from '@components/buttons/back_button';
 import TextButton from '@components/buttons/text_button';
 import InputField from '@components/inputs/input_field';
-import React from 'react';
 import './style/index.scss';
 interface DiagnosisModalProps {
   inputArray: any[];

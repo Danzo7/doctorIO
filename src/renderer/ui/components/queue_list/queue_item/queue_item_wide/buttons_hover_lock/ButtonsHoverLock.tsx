@@ -1,4 +1,3 @@
-import React from 'react';
 import './style/index.scss';
 import invite from 'toSvg/invitePatientIn.svg?icon';
 import view from 'toSvg/view-test.svg?icon';
@@ -14,7 +13,7 @@ function ButtonsHoverLock() {
 
   return (
     <div className="buttons-hover-lock">
-      {...btnList.map((e, i) => (
+      {btnList.map((e, i) => (
         <TextIconButton
           id={i}
           //onMouseOver={setActive}

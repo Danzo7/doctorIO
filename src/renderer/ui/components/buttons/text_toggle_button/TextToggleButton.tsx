@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './style/index.scss';
 import ToggleselectedItem from './toggleselected_item';
 interface TextToggleButtonProps {

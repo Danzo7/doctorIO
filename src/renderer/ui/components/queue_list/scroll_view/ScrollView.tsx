@@ -1,5 +1,6 @@
 import { css } from '@emotion/css';
-import React, { Children } from 'react';
+import { Children } from 'react';
+import * as React from 'react';
 import ScrollController from './ScrollController';
 import './style/index.scss';
 interface ScrollViewProps {
