@@ -30,7 +30,6 @@
     "test": "web-test-runner \"src/**/*.test.tsx\""
   },
   "dependencies": {
-    "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/css": "^11.7.1",
     "@emotion/react": "^11.8.2",
     "@popperjs/core": "^2.11.5",
@@ -43,6 +42,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
     "@electron-forge/cli": "^6.0.0-beta.63",
     "@electron-forge/maker-deb": "^6.0.0-beta.63",
     "@electron-forge/maker-rpm": "^6.0.0-beta.63",

@@ -21,7 +21,13 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: [{ loader: 'babel-loader' }, { loader: 'ts-loader' }],
+          use: [
+            {
+              loader: 'babel-loader',
+            },
+
+            //   { loader: 'ts-loader' },disabled for now.(testing babel instead)
+          ],
           exclude: /node_modules/,
         },
 
