@@ -4,7 +4,6 @@ import Clinic from 'toSvg/clinic.svg?icon';
 import MedicalAssistant from 'toSvg/medicalAssistant.svg';
 import Patient from 'toSvg/patient.svg';
 import Union from 'toSvg/Union.svg';
-import { css } from '@emotion/css';
 import colors from '@colors';
 interface TimeToClose {
   hour: number;
@@ -24,12 +23,13 @@ export default function ClinicItem({
 }: ClinicItemProps) {
   return (
     <div
-      className={`clinic-item ${css`
-        background-color: ${selected ? '' : colors.secondary_color};
-        &:hover {
-          background: ${selected == false && 'none'};
-        }
-      `} `}
+      className="clinic-item"
+      css={{
+        backgroundColor: !selected ? colors.secondary_color : undefined,
+        '&:hover': {
+          backgroundColor: !selected ? 'unset' : undefined,
+        },
+      }}
     >
       <div className="header">
         <span>Default {selected ? '-Selected' : ''}</span>

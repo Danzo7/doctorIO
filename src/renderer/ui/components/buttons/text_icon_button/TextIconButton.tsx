@@ -1,9 +1,8 @@
-import * as React from 'react';
+import { FunctionComponent, SVGProps } from 'react';
 import './style/index.scss';
-import { css } from '@emotion/css';
 
 interface TextIconButtonProps {
-  Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   text: string;
   color?: string;
   startFocus?: boolean;
@@ -29,9 +28,8 @@ function TextIconButton({
           ? onMouseOver(id)
           : undefined
       }
-      className={`text-icon-button${startFocus ? ' active' : ''} ${css`
-        background-color: ${color};
-      `}`}
+      className={`text-icon-button${startFocus ? ' active' : ''}`}
+      css={{ backgroundColor: color }}
     >
       <div className="text">
         <span>{text}</span>

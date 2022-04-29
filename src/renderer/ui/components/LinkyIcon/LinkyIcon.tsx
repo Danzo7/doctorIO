@@ -1,13 +1,13 @@
-import * as React from 'react';
+import { css } from '@emotion/react';
+import { FunctionComponent, SVGProps } from 'react';
 import './index.scss';
-import { css, CSSInterpolation } from '@emotion/css';
-type Svg = React.FunctionComponent<React.SVGProps<SVGSVGElement>> | any;
+type Svg = FunctionComponent<SVGProps<SVGSVGElement>> | any;
 interface LinkyIconProps {
   Src: string | Svg;
   alt?: string;
   width?: string;
   scale?: number;
-  cssMod?: CSSInterpolation;
+  cssMod?: any;
   viewBox?: string;
   stroke?: string;
   svgClassName?: string;
@@ -42,9 +42,14 @@ function LinkyIcon({
         ></Src>
       )) || (
         <img
-          className={css(
-            cssMod ? cssMod : { width: width, transform: `scale(${scale}%)` },
-          )}
+          css={
+            cssMod
+              ? cssMod
+              : {
+                  width: width,
+                  transform: `scale(${scale}%)`,
+                }
+          }
           src={Src}
           alt={alt}
         />

@@ -1,11 +1,11 @@
-import { css } from '@emotion/css';
-import * as React from 'react';
+import { css } from '@emotion/react';
+import { FunctionComponent, SVGProps } from 'react';
 import './style/index.scss';
 
 interface MiniStatsProps {
   value: number;
   text: string;
-  Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   percentage?: number;
   state?: string;
   backgroundColor?: string;
@@ -21,15 +21,10 @@ function MiniStats({
 }: MiniStatsProps) {
   return (
     <div
-      className={`mini-stats ${css`
-        background-color: ${backgroundColor};
-      `} ${state}`}
+      className={`mini-stats ${state}`}
+      css={{ backgroundColor: backgroundColor }}
     >
-      <span
-        className={` ${css`
-          visibility: ${percentage >= 0 ? 'visible' : 'hidden'};
-        `} `}
-      >
+      <span css={css({ visibility: percentage >= 0 ? undefined : 'hidden' })}>
         {percentage}%
       </span>
       <Icon width={35} height={35}></Icon>

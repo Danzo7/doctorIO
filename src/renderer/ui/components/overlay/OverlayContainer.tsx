@@ -1,4 +1,3 @@
-import { css } from '@emotion/css';
 import { Overlay } from './overlay';
 import { ReactNode, useEffect, useRef } from 'react';
 import './style/index.scss';
@@ -42,20 +41,17 @@ export function OverlayItem({
   return (
     <>
       <div
-        className={`backdrop ${css`
-          background-color: ${isDimmed ? backdropColor ?? '#000000d9' : ''};
-          pointer-events: ${clickThrough ? 'none' : 'all'};
-        `}`}
+        className="backdrop"
+        css={{
+          backgroundColor: isDimmed ? backdropColor ?? '#000000d9' : undefined,
+          'pointer-events': clickThrough ? 'none' : 'all',
+        }}
         onClick={(e) => {
           Overlay.closeModal();
           e.stopPropagation();
         }}
       ></div>
-      <div
-        className={`layer ${css`
-          width: ${width};
-        `}`}
-      >
+      <div className="layer" css={{ width: width }}>
         {closeBtn && (
           <div className={`close-btn ${closeBtn.placement}`}>
             {closeBtn.component ?? (

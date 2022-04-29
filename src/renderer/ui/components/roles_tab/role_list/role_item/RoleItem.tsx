@@ -1,6 +1,5 @@
 import './style/index.scss';
 import Icon from 'toSvg/link.svg?icon';
-import { css } from '@emotion/css';
 interface RoleItemProps {
   roleName: string;
   selected: boolean;
@@ -20,9 +19,8 @@ function RoleItem({
     >
       <span>{roleName}</span>
       <div
-        className={`linked  ${css`
-          visibility: ${linked ? 'visible' : 'hidden'};
-        `} `}
+        className="linked"
+        css={{ display: linked ? 'flex' : 'none!important' }}
       >
         <Icon />
         <div className="linked-role-container">

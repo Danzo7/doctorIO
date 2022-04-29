@@ -1,7 +1,6 @@
 import color from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ToggleButton from '@components/buttons/toggle_button';
-import { css } from '@emotion/css';
 import Icon from 'toSvg/link.svg?icon';
 import './style/index.scss';
 interface PermissionItemProps {
@@ -21,17 +20,13 @@ export default function PermissionItem({
       <div className="permission-info">
         <div className="permission-text-container">
           <span
-            className={css`
-              color: ${disabled ? color.text_gray : color.white};
-            `}
+            css={{
+              color: disabled ? color.text_gray : color.white,
+            }}
           >
             {permissionName}
           </span>
-          <span
-            className={css`
-              color: ${disabled ? color.text_gray : color.white};
-            `}
-          >
+          <span css={{ color: disabled ? color.text_gray : color.white }}>
             {permissionDescription}
           </span>
         </div>
@@ -43,9 +38,9 @@ export default function PermissionItem({
         <div className="permission-linked">
           <div className={`left-linked`}>
             <span
-              className={css`
-                color: ${disabled ? color.text_gray : color.white};
-              `}
+              css={{
+                color: disabled ? color.text_gray : color.white,
+              }}
             >
               Linked To
             </span>

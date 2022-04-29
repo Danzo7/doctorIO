@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { css, cx } from '@emotion/css';
+import { css } from '@emotion/react';
 import { ReactNode } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import Dropdown from '../dropdown';
@@ -47,18 +47,18 @@ export default function InputField({
 }: InputFieldProps) {
   const paddedLeading = leading && (
     <div
-      className={`${css`
+      css={css`
         padding-left: ${padding}px;
-      `}`}
+      `}
       children={leading}
     />
   );
   const paddedTrailing = trailing && (
     <div
       children={trailing}
-      className={`${css`
+      css={css`
         padding-right: ${padding}px;
-      `}`}
+      `}
     />
   );
   return (
@@ -66,13 +66,11 @@ export default function InputField({
       {label && <span>{label}</span>}
 
       <div
-        className={cx(
-          `input-container`,
-          css`
-            background-color: ${background}!important;
-            border-radius: ${radius}px!important;
-          `,
-        )}
+        className="input-container"
+        css={css`
+          background-color: ${background} !important;
+          border-radius: ${radius}px!important;
+        `}
       >
         {type.evolvedType != evolvedTypes.dropdown && paddedLeading}
         {(() => {
@@ -91,7 +89,7 @@ export default function InputField({
               return <input placeholder={placeholder} {...register} />;
           }
         })()}
-        {type.evolvedType != evolvedTypes.dropdown && trailing}
+        {type.evolvedType != evolvedTypes.dropdown && paddedTrailing}
       </div>
 
       {errorField ? (

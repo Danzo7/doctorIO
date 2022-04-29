@@ -1,7 +1,7 @@
-import { css } from '@emotion/css';
 import * as React from 'react';
 import './style/index.scss';
 import colors from '@colors';
+import { css } from '@emotion/react';
 interface TextButtonProps {
   text?: string;
   Icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
@@ -42,7 +42,8 @@ function TextButton({
   return (
     <button
       type={type}
-      className={`${css`
+      className={`text-button`}
+      css={css`
         background-color: ${backgroundColor};
         border: 1px solid ${borderColor ? `${borderColor} ` : 'transparent'};
         border-radius: ${radius ? radius + 'px' : ''};
@@ -67,7 +68,7 @@ function TextButton({
             color: ${afterFontColor ? afterFontColor : colors.white};
           }
         }
-      `} text-button`}
+      `}
       onClick={onPress}
     >
       {Icon ? (

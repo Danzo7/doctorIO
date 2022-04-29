@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { css } from '@emotion/css';
+import { FunctionComponent, SVGProps } from 'react';
 import './style/index.scss';
 
 interface IconicButtonProps {
-  Icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   backgroundColor?: string;
   afterColor?: string;
   width?: number;
@@ -24,15 +23,16 @@ function IconicButton({
 }: IconicButtonProps) {
   return (
     <div
-      className={`iconic-button ${css`
-        background-color: ${backgroundColor};
-        width: ${width}px;
-        height: ${width}px;
-        border-radius: ${radius}px;
-        &:hover {
-          background-color: ${afterColor};
-        }
-      `}`}
+      className="iconic-button"
+      css={{
+        backgroundColor: backgroundColor,
+        width: width,
+        height: width,
+        borderRadius: radius,
+        '&:hover': {
+          backgroundColor: afterColor,
+        },
+      }}
     >
       <Icon height={iconSize ?? width / 2} width={iconSize ?? width / 2} />
     </div>

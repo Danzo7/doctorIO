@@ -1,5 +1,4 @@
 import CircleAvatar from '@components/avatars/circle_avatar/CircleAvatar';
-import { css } from '@emotion/css';
 import './style/index.scss';
 interface UserProfileStatusProps {
   imgSrc: string;
@@ -16,11 +15,12 @@ function UserProfileStatus({
   return (
     <div className="user-profile-status">
       <div
-        className={`dot ${css`
-          width: ${width / 4}px;
-          height: ${width / 4}px;
-          left: ${width / 4.2}px;
-        `} ${status ? 'online' : 'offline'}`}
+        className={`dot ${status ? 'online' : 'offline'}`}
+        css={{
+          width: width / 4,
+          height: width / 4,
+          left: width / 4.2,
+        }}
       />
       <CircleAvatar
         src={imgSrc}

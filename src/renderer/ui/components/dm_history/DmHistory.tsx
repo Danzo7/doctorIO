@@ -3,7 +3,7 @@ import LastDmMessage from '@components/last_dm_message';
 import './style/index.scss';
 import add from 'toSvg/add.svg?icon';
 import color from '@assets/styles/color';
-import { css } from '@emotion/css';
+import { css } from '@emotion/react';
 interface DmHistoryProps {
   lastDmMessage: Array<any>;
   height: number | string;
@@ -14,14 +14,15 @@ export default function DmHistory({
 }: DmHistoryProps) {
   return (
     <div
-      className={`dm-history  ${css`
+      className="dm-history"
+      css={css`
         height: ${typeof height === 'number' ? `${height}px` : ''};
         height: ${typeof height === 'string'
           ? height == '100%'
             ? 'unset'
             : `${height}`
           : ''};
-      `}`}
+      `}
     >
       <div className="header">
         <span>DM’s</span>

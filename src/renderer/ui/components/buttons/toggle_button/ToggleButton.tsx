@@ -2,7 +2,6 @@ import { useState } from 'react';
 import './style/index.scss';
 import XMark from 'toSvg/x_mark.svg?icon';
 import GoodMark from 'toSvg/good_mark.svg?icon';
-import { css } from '@emotion/css';
 interface ToggleButtonProps {
   disabled?: boolean;
   isChecked?: boolean;
@@ -31,18 +30,11 @@ function ToggleButton({
       className={`toggle-button ${checked ? 'on' : 'off'} ${
         disabled ? 'disabled' : ''
       }
-      ${css`
-        width: ${size}px;
-      `}
        `}
+      css={{ width: size }}
       onClick={switchToggle}
     >
-      <div
-        className={`circle  ${css`
-          width: ${size / 2}px;
-          height: ${size / 2}px;
-        `}`}
-      >
+      <div className="circle" css={{ width: size / 2, height: size / 2 }}>
         {withIcons && <Svg width={size / 4} height={size / 4} />}
       </div>
     </div>

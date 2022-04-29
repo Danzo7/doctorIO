@@ -1,4 +1,3 @@
-import { css } from '@emotion/css';
 import { Children } from 'react';
 import * as React from 'react';
 import ScrollController from './ScrollController';
@@ -16,9 +15,8 @@ export const ScrollView = ({
   controller.gap = gap;
   return (
     <div
-      className={`scroll-view ${css`
-        gap: ${gap}px;
-      `}`}
+      className="scroll-view"
+      css={{ gap: gap }}
       ref={controller.ref}
       onWheel={(e) => {
         const direction = e.deltaY > 0 ? -1 < 0 : 0;
@@ -32,11 +30,7 @@ export const ScrollView = ({
       {Children.map(children, (child) => {
         return <>{child}</>;
       })}
-      <div
-        className={css`
-          padding-left: 90px;
-        `}
-      ></div>
+      <div css={{ paddingLeft: 90 }}></div>
     </div>
   );
 };

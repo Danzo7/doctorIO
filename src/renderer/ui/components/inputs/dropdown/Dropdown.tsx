@@ -1,7 +1,6 @@
 import { ReactNode, useRef, useState } from 'react';
 import './style/index.scss';
 import Arrow from 'toSvg/arrow.svg?icon';
-import { css } from '@emotion/css';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface DropdownProps {
@@ -52,13 +51,7 @@ export default function Dropdown({
           <a onClick={() => changeSelected(index)}>{e}</a>
         ))}
       </div>
-      <input
-        {...register}
-        className={css`
-          display: none;
-        `}
-        style={{ display: 'none' }}
-      />
+      <input {...register} type="hidden" />
     </div>
   );
 }

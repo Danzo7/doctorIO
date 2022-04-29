@@ -1,5 +1,4 @@
 import './style/index.scss';
-import { css } from '@emotion/css';
 interface CircleAvatarProps {
   src: string;
   width: number;
@@ -8,15 +7,11 @@ interface CircleAvatarProps {
 }
 function CircleAvatar({ src, width, alt, radius }: CircleAvatarProps) {
   return (
-    <div
-      className={`circle-avatar ${css`
-        border-radius: ${radius}px;
-      `}`}
-    >
+    <div className="circle-avatar" css={{ borderRadius: radius }}>
       <img
-        className={css`
-          width: ${width}px;
-        `}
+        css={{
+          width: width,
+        }}
         src={src}
         alt={alt}
       />
