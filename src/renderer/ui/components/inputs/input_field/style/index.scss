@@ -31,7 +31,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
     background-color: $darkerseccolor;
     border-radius: 7px;
     height: 40px;
@@ -53,7 +52,7 @@
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
-      padding: 0;
+      padding-left: 10px;
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $darkerseccolor inset;
       }
