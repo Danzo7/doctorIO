@@ -2,7 +2,8 @@
   "module": "esnext",
   "target": "es5",
   "moduleResolution": "node",
-  "jsx": "react-jsx","jsxImportSource": "@emotion/react",
+  "jsx": "react-jsx",
+  "jsxImportSource": "@emotion/react",
   "baseUrl": "./",
   "paths": {
     "*": ["node_modules/*"],
