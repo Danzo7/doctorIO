@@ -15,6 +15,8 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/electron',
     'plugin:import/typescript',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
   ],
   settings: {
     'import/resolver': {
