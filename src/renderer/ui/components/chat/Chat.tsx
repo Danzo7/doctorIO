@@ -58,6 +58,8 @@ export default function Chat({ memberFullName, status, sepPos }: ChatProps) {
           {messagesArray.map(
             ({ messengerName, imgSrc, messageTime, messageContent }, index) => (
               <ContentMessage
+                //todo:messageId
+                key={index.toString() + messageContent}
                 isLastMessageSent={
                   index == sepPos && sepPos != messagesArray.length
                 }

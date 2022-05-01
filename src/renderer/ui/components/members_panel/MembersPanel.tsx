@@ -17,6 +17,8 @@ function MembersPanel({ membersList = [] }: MembersPanelProps) {
             membersList.map(
               ({ fullName, imgSrc, memberID, status, roleArray }) => (
                 <MembersPreview
+                  //todo unique memberID
+                  key={memberID}
                   fullName={fullName}
                   imgSrc={imgSrc}
                   memberID={memberID}

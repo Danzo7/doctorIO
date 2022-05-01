@@ -48,7 +48,9 @@ export default function Dropdown({
       </div>
       <div className="options">
         {options.map((e, index) => (
-          <a onClick={() => changeSelected(index)}>{e}</a>
+          <a key={e + index} onClick={() => changeSelected(index)}>
+            {e}
+          </a>
         ))}
       </div>
       <input {...register} type="hidden" />

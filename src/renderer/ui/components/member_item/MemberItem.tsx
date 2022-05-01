@@ -42,8 +42,12 @@ export default function MemberItem({
         </div>
         <div className="roles-container">
           {roleArray.length > 0 &&
-            roleArray.map((rollName) => (
-              <SmallRolePreview roleName={rollName} />
+            roleArray.map((rollName, index) => (
+              <SmallRolePreview
+                roleName={rollName}
+                //todo RoleID
+                key={index}
+              />
             ))}
           <div onClick={addRole} className="add-btn-container">
             <AddButton />
