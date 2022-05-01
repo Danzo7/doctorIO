@@ -50,16 +50,18 @@ export default function InputField({
       css={css`
         padding-left: ${padding}px;
       `}
-      children={leading}
-    />
+    >
+      {leading}
+    </div>
   );
   const paddedTrailing = trailing && (
     <div
-      children={trailing}
       css={css`
         padding-right: ${padding}px;
       `}
-    />
+    >
+      {trailing}
+    </div>
   );
   return (
     <div className={`input-field${errorField ? ' error' : ''}`}>

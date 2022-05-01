@@ -22,7 +22,7 @@ export default function SideColumnView({
           radius={10}
         />
       </div>
-      <div className="children-container" children={children} />
+      <div className="children-container">{children}</div>
     </div>
   );
 }

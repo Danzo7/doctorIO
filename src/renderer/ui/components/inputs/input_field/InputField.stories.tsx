@@ -15,7 +15,7 @@ FirstStory.args = {
   label: 'hello',
   placeholder: 'search for a patients',
   type: { rawType: 'search', evolvedType: evolvedTypes.dropdown },
-  leading: <Svg children={search} />,
-  trailing: <Svg children={search} />,
+  leading: <Svg>{search}</Svg>,
+  trailing: <Svg>{search}</Svg>,
   hintText: 'hello',
 };
