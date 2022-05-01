@@ -2,6 +2,7 @@ import { Overlay } from './overlay';
 import { ReactNode, useEffect, useRef } from 'react';
 import './style/index.scss';
 import BackButton from '@components/buttons/back_button';
+import { css } from '@emotion/react';
 interface OverlayContainerProps {}
 
 export function OverlayContainer({}: OverlayContainerProps) {
@@ -42,16 +43,16 @@ export function OverlayItem({
     <>
       <div
         className="backdrop"
-        css={{
+        css={css({
           backgroundColor: isDimmed ? backdropColor ?? '#000000d9' : undefined,
-          'pointer-events': clickThrough ? 'none' : 'all',
-        }}
+          pointerEvents: clickThrough ? 'none' : 'all',
+        })}
         onClick={(e) => {
           Overlay.closeModal();
           e.stopPropagation();
         }}
       ></div>
-      <div className="layer" css={{ width: width }}>
+      <div className="layer" css={css({ width: width })}>
         {closeBtn && (
           <div className={`close-btn ${closeBtn.placement}`}>
             {closeBtn.component ?? (
