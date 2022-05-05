@@ -6,10 +6,13 @@
   align-items: flex-start;
   align-items: stretch;
   gap: 10px;
-  &.active {
+
+  &.error {
     > .input-container {
+      @include bad;
+
       &:focus-within {
-        @include idle;
+        @include bad;
       }
     }
     > span:last-child {
