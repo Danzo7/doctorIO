@@ -5,12 +5,14 @@ interface DarkLightCornerButtonProps {
   title: string;
   isActive?: boolean;
   onPress?: () => void;
+  type?: 'button' | 'submit' | 'reset';
 }
 //the reason why i put borderColor={colors.background} is to eliminate the height change after hover //
 function DarkLightCornerButton({
   title,
   isActive = false,
   onPress,
+  type,
 }: DarkLightCornerButtonProps) {
   return (
     <div className="dark-light-corner-button">
@@ -24,6 +26,7 @@ function DarkLightCornerButton({
         afterBgColor={colors.darkersec_color}
         afterBorderColor={colors.border_color}
         radius={7}
+        type={type}
       />
     </div>
   );
