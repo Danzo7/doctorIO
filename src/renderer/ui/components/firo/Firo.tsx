@@ -1,10 +1,10 @@
-import TextButton from '@components/buttons/text_button';
+import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import InputField from '@components/inputs/input_field';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 type Inputs = {
-  example: string;
-  exampleRequired: string;
+  password: string;
+  moms: string;
 };
 
 export default function Firo() {
@@ -30,21 +30,21 @@ export default function Firo() {
         This has ahotpink background.
       </div>
       <InputField
-        hintText="hint"
-        label={'example'}
-        errorField={errors.example}
-        register={register('example', { required: 'this is required' })}
+        placeholder="write something long"
+        label="password"
+        errorField={errors.password}
+        register={register('password', { required: 'this is required' })}
       />
       <InputField
-        hintText="hint"
-        label="example2"
-        errorField={errors.exampleRequired}
-        register={register('exampleRequired', {
+        hintText="write your mom's name"
+        label="mom's name"
+        errorField={errors.moms}
+        register={register('moms', {
           required: 'this is required too',
-          minLength: { message: 'are you stupid or what!', value: 5 },
+          minLength: { message: 'are you stupid or what! ', value: 5 },
         })}
       />
-      <TextButton type="submit" text="submit" />
+      <DarkLightCornerButton type="submit" title="submit" />
     </form>
   );
 }
