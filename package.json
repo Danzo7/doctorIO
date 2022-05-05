@@ -50,6 +50,7 @@
     "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@electron-forge/plugin-webpack": "^6.0.0-beta.63",
     "@emotion/babel-plugin": "^11.9.2",
+    "@emotion/eslint-plugin": "^11.7.0",
     "@storybook/addon-actions": "^6.4.20",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-links": "^6.4.20",

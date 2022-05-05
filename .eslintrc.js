@@ -35,9 +35,10 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['react', '@typescript-eslint', 'react-hooks'],
+  plugins: ['react', '@typescript-eslint', 'react-hooks', '@emotion'],
   globals: { Atomics: 'readonly', SharedArrayBuffer: 'readonly' },
   rules: {
+    '@emotion/pkg-renaming': 'error',
     'react/prop-types': 0,
     'no-console': 'warn',
     'linebreak-style': 'off',
