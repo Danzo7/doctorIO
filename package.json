@@ -23,7 +23,7 @@
     "make": "set mode=production&& electron-forge make",
     "publish": "electron-forge publish",
     "eslint": "eslint --ext .ts,.tsx .",
-    "eslint-fix": "eslint --fix",
+    "eslint-fix": "eslint --ext .ts,.tsx --fix",
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "exampleServer": "http-server ./example",

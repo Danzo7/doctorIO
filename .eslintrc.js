@@ -10,15 +10,18 @@ module.exports = {
     'airbnb-typescript',
     'airbnb/hooks',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
     'eslint:recommended',
     'plugin:import/recommended',
     'plugin:import/electron',
     'plugin:import/typescript',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
+    'plugin:prettier/recommended',
   ],
   settings: {
+    react: {
+      version: 'detect', // React version. "detect" automatically picks the version you have installed.
+    },
     'import/resolver': {
       typescript: {},
     },
