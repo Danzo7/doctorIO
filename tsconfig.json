@@ -25,6 +25,8 @@
   "importsNotUsedAsValues": "remove",
   "esModuleInterop": true,
   "noImplicitAny": true,
+  "noUnusedLocals": false,
+  "noUnusedParameters": false,
   "sourceMap": true,
   "outDir": "dist"},
   "skipLibCheck": true,
