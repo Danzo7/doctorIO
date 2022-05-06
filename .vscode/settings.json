@@ -1,11 +1,21 @@
 {
-    "cSpell.words": [
-        "brahim",
-        "vmin"
-    ],
-    "npm.exclude": [
-        "**/out/**"
-    ],
-    "npm-scripts.showStartNotification": false,
-    "prettier.requireConfig": true,
+  "cSpell.words": ["brahim", "vmin"],
+  "npm.exclude": ["**/out/**"],
+  "npm-scripts.showStartNotification": false,
+  "prettier.requireConfig": true,
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": true
+    }
+  },
+  "stylelint.validate": ["css", "scss", "sass"]
 }
