@@ -7,13 +7,13 @@ module.exports = {
   },
 
   extends: [
-    'airbnb-typescript',
-    'airbnb/hooks',
-    'plugin:@typescript-eslint/recommended',
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
     'plugin:import/electron',
     'plugin:import/typescript',
+    'airbnb-typescript',
+    'airbnb/hooks',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     'plugin:prettier/recommended',
@@ -38,6 +38,11 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'react-hooks', '@emotion'],
   globals: { Atomics: 'readonly', SharedArrayBuffer: 'readonly' },
   rules: {
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    ],
     '@emotion/pkg-renaming': 'error',
     'react/prop-types': 0,
     'no-console': 'warn',
