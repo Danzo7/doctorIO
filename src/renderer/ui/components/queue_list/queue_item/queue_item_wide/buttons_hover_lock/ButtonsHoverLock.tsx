@@ -16,6 +16,7 @@ function ButtonsHoverLock() {
       {btnList.map((e, i) => (
         <TextIconButton
           id={i}
+          key={i}
           //onMouseOver={setActive}
           Icon={e.icon}
           text={e.text}
