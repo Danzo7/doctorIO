@@ -1,4 +1,4 @@
-import HomeContent from './contents/home';
+import HomeContent from './pages/home';
 import './index.scss';
 interface AppContentProps {}
 
