@@ -7,18 +7,6 @@
   align-items: stretch;
   gap: 10px;
 
-  &.error {
-    > .input-container {
-      @include bad;
-
-      &:focus-within {
-        @include bad;
-      }
-    }
-    > span:last-child {
-      color: $hotred;
-    }
-  }
   > span:first-child {
     font-weight: 500;
     font-size: 16px;
@@ -29,7 +17,6 @@
     font-size: 14px;
     color: $textgray;
   }
-
   > .input-container {
     display: flex;
     flex-direction: row;
@@ -37,14 +24,6 @@
     background-color: $darkerseccolor;
     border-radius: 7px;
     height: 40px;
-
-    &:focus-within {
-      @include idle;
-      > input {
-        outline: none;
-        color: $white;
-      }
-    }
 
     > input {
       flex-grow: 10;
@@ -56,9 +35,20 @@
       font-weight: 400;
       font-size: 14px;
       padding-left: 10px;
-      &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $darkerseccolor inset;
+      &:-webkit-autofill { box-shadow: 0 0 0px 1000px $darkerseccolor inset; }
+    }
+  }
+
+  &.error {
+    > .input-container {
+      @include bad;
+
+      &:focus-within {
+        @include bad;
       }
+    }
+    > span:last-child {
+      color: $hotred;
     }
   }
 }
