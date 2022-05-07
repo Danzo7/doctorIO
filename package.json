@@ -27,6 +27,8 @@
     "check": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "exampleServer": "http-server ./example",
+    "check-sass": " npx stylelint \"src/**/*.{css,sass,scss}\"",
+    "fix-sass": " npx stylelint \"src/**/*.{css,sass,scss}\" --fix",
     "build-storybook": "build-storybook",
     "test": "web-test-runner \"src/**/*.test.tsx\""
   },
