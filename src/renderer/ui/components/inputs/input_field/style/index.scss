@@ -37,6 +37,14 @@
       padding-left: 10px;
       &:-webkit-autofill { box-shadow: 0 0 0px 1000px $darkerseccolor inset; }
     }
+
+    &:focus-within {
+      @include idle;
+      > input {
+        outline: none;
+        color: $white;
+      }
+    }
   }
 
   &.error {
