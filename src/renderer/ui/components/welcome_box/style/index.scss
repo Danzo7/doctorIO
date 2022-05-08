@@ -1,19 +1,28 @@
 @use '~styles/appColors' as *;
 @use '~styles/effects' as *;
+@use '~styles/constants' as *;
 .welcome-box {
+  animation:show .2s forwards;
+
   display: flex;
-  flex-direction: column;
-  width: 95%;
+  flex-direction: row;
   max-height: 230px;
-  &.animate {
-    animation: hide 0.5s forwards;
-  }
   gap: 5px;
+  position: relative;
+  justify-content: center;
+  height: 100px;
+
+  &.hide {
+    visibility: hidden;
+    animation:garbage .2s forwards;
+  }
   > .hide-btn {
     display: flex;
     justify-content: center;
     padding: 5px;
-
+    position: absolute;
+    bottom: -25px;
+    width: 10%;
     > svg > path {
       transform: rotate(180deg);
       transform-origin: center;
@@ -34,28 +43,54 @@
     z-index: -1;
   }
   > .content {
+    @include idle;
+
     background-image: url(toPng/pattern.png);
     background-repeat: repeat-x;
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding-left: 50px;
     border-radius: 15px;
-    gap: 50px;
+    padding: 10px;
     > span {
       font-style: normal;
       font-weight: 700;
-      font-size: 30px;
+      font-size: 24px;
     }
   }
-  @keyframes hide {
+  @keyframes garbage {
+    0% {
+      visibility: visible;
+      max-height: 100px;
+      transform: translateY(0);
+    }
+    50% {
+      visibility: hidden;
+
+      max-height: 100px;
+      transform: translateY(-100%);
+    }
+    /* stylelint-disable-next-line block-no-empty */
+    100% {
+
+      max-height: 1px;
+      transform: translateY(-200%);
+      visibility: hidden;
+    }
+  }
+  @keyframes show {
     from {
-      transform: translateY(0%);
-      max-height: 230px;
+      transform: translateY(-200%);
+      max-height: 1px;
+    }
+    50% {
+
+      max-height: 100px;
+      transform: translateY(-100%);
     }
     to {
-      transform: translateY(-90000%);
-      max-height: 1px;
+      transform: none;
+      max-height: 100px;
     }
   }
 }

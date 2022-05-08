@@ -1,22 +1,29 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './style/index.scss';
-import Svg from 'toSvg/doctor_face.svg';
+import Svg from 'toSvg/doctor_face.svg?icon';
 import Arrow from 'toSvg/arrow.svg';
-interface WelcomeBoxProps {}
-function WelcomeBox({}: WelcomeBoxProps) {
+interface WelcomeBoxProps {
+  message: string;
+}
+function WelcomeBox({ message }: WelcomeBoxProps) {
   const [close, setClose] = useState({ isHidding: false, isHidden: false });
+  const animationCount = useRef(0);
   return (
     <>
       {!close.isHidden && (
         <div
-          className={`welcome-box ${close.isHidding ? 'animate' : ''}`}
-          onAnimationEnd={() => {
-            setClose({ isHidding: true, isHidden: true });
+          className={`welcome-box ${close.isHidding ? 'hide' : ''}`}
+          onAnimationEnd={function () {
+            setClose({
+              isHidding: animationCount.current > 0,
+              isHidden: animationCount.current > 0,
+            });
+            animationCount.current++;
           }}
         >
           <div className="content">
-            <Svg />
-            <span>Welcome to marely</span>
+            <Svg css={{ height: '100%', width: 'auto' }} />
+            <span>{message}</span>
           </div>
           <div
             className="hide-btn"
