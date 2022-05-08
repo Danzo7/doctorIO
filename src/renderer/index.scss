@@ -9,6 +9,8 @@
   user-select: none;
   font-family: 'Sarabun';
   color: $white;
+  scrollbar-color: $hotpurple transparent ;
+  scrollbar-width: thin;
 }
 body,
 #app-mount {
@@ -18,6 +20,7 @@ body,
   margin: 0;
   overflow: hidden;
 }
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 1vh;
