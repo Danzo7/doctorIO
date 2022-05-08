@@ -1,12 +1,12 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
-import Mesages from './Mesages';
+import Messages from './Messages';
 export default {
-  title: 'Contents/Mesages',
-  component: Mesages,
+  title: 'Messages',
+  component: Messages,
 };
-const Template: Story<ComponentProps<typeof Mesages>> = (args) => (
-  <Mesages {...args} />
+const Template: Story<ComponentProps<typeof Messages>> = (args) => (
+  <Messages {...args} />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {};
