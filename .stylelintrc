@@ -10,7 +10,6 @@
     "block-opening-brace-space-after": "always-single-line",
     "declaration-block-semicolon-newline-after": "always",
     "declaration-colon-newline-after": "always-multi-line",
-    "indentation": 2,
     "max-empty-lines": 1
   }
 }
