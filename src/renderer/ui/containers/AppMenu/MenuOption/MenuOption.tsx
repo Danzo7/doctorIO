@@ -1,8 +1,7 @@
-import LinkyIcon from '@components/LinkyIcon';
 import { strokeTypes } from '../svgList';
-import { useState } from 'react';
 import * as React from 'react';
 import './style/index.scss';
+import { NavLink } from 'react-router-dom';
 interface MenuOptionProps {
   items: {
     name: string;
@@ -11,28 +10,23 @@ interface MenuOptionProps {
 }
 
 function MenuOption({ items }: MenuOptionProps) {
-  const [currentPage, setCurrentPge] = useState('home');
-
   return (
-    <ul className="MenuOption">
+    <nav className="MenuOption">
       {items.map(
-        ({ name, svg }) =>
+        ({ name, svg: Svg }) =>
           name !== 'logo' && (
-            <li
+            <NavLink
               key={name}
-              onClick={() => setCurrentPge(name)}
-              className={`menuItem${currentPage === name ? ' isActive' : ''}`}
+              className={({ isActive }) =>
+                `menuItem${isActive ? ' isActive' : ''}`
+              }
+              to={name === 'home' ? '/' : name}
             >
-              <LinkyIcon
-                svgClassName={strokeTypes[name]}
-                Src={svg}
-                viewBox="0 -27 38 90"
-                alt={name}
-              />
-            </li>
+              <Svg className={strokeTypes[name]} />
+            </NavLink>
           ),
       )}
-    </ul>
+    </nav>
   );
 }
 

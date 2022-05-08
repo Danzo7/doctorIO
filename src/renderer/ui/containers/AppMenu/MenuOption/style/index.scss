@@ -4,59 +4,59 @@
 .MenuOption {
   display: flex;
   flex-direction: column;
-  flex-grow: 7;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
+  align-self: stretch;
+  justify-content: center;
+  flex-grow: 1;
 }
 .menuItem {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 10% 0 10% 0;
+  padding: 35%;
   border-radius: 200%;
   transition: 0.2s;
+  gap: 10px;
 
   &:hover {
     @include darken;
     border-radius: 0;
   }
-
+  > svg {
+    width: 100%;
+    height: auto;
+  }
   &.isActive {
+    background: #00000030;
+    border-radius: 200%;
+    transition: 0.8s;
     &:active {
       @include darken;
       border-radius: 0%;
     }
-    background: #00000030;
-    border-radius: 200%;
-    transition: 0.8s;
-    > div > svg.stroke {
-      stroke: white;
-      path {
+
+    >svg {
+
+      &.stroke {
         stroke: white;
+        path {
+          stroke: white;
+        }
       }
-    }
-    > div > svg.fill {
-      fill: white;
-      path {
+      &.fill {
         fill: white;
+        path {
+          fill: white;
+        }
+      }
+      &.stroke-fill {
+        path {
+          fill: white;
+          stroke: transparent;
+          stroke-width: 4px;
+        }
       }
     }
-    > div > svg.strokeFill {
-      path {
-        fill: white;
-        stroke: transparent;
-        stroke-width: 4px;
-      }
-    }
-  }
-  > div > svg {
-    width: 80%;
-    height: auto;
-    display: block;
-    margin: auto;
   }
 }
 @keyframes circleToBox {

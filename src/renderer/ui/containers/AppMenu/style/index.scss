@@ -3,26 +3,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5vh;
   justify-content: flex-start;
   width: 4%;
-  order: 0;
-  padding: 1vh 0 5vh 0;
+  padding-top: 10px;
   height: 100%;
   background: $lighterbackground;
   border-radius: 10vh;
-}
-.AppLogo {
-  flex-grow: 5;
-  div {
-    flex-direction: column;
-    transition: 0.2s;
-    flex-shrink: 0;
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: flex-start;
-    // background: #01b9ca;
-    border-radius: 50%;
-  }
 }

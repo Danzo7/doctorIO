@@ -1,20 +1,13 @@
 import MenuOption from './MenuOption';
 import './style/index.scss';
-import menuI, { logo } from './svgList';
-import LinkyIcon from '@components/LinkyIcon';
+import menuI from './svgList';
+
 interface AppMenuProps {}
 
 function AppMenu({}: AppMenuProps) {
   return (
     <div className="AppMenu">
-      <div className="AppLogo">
-        <LinkyIcon
-          Src={logo}
-          viewBox="-10 -10 70 70"
-          alt={'home'}
-          width="80%"
-        />
-      </div>
+      <menuI.logo css={{ width: '70%', height: 'auto' }}></menuI.logo>
 
       <MenuOption
         items={Object.entries(menuI).map((n) => {
