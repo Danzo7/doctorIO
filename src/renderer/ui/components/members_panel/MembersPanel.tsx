@@ -1,10 +1,71 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import MembersPreview from '@components/members_preview';
+import avatar from 'toPng/test.png';
+
 import './style/index.scss';
 interface MembersPanelProps {
-  membersList: Array<any>;
+  membersList?: Array<any>;
 }
-function MembersPanel({ membersList = [] }: MembersPanelProps) {
+function MembersPanel({
+  membersList = [
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: avatar,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: avatar,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: avatar,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: avatar,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: avatar,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: avatar,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: avatar,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
+    {
+      fullName: 'Amanda clarck',
+      imgSrc: avatar,
+      memberID: '100',
+      status: 'Online',
+      roleArray: ['Gamer', 'Assistant', 'Assistant', 'Assistant'],
+    },
+  ],
+}: MembersPanelProps) {
   return (
     <div className="members-panel">
       <div className="header">
@@ -18,7 +79,7 @@ function MembersPanel({ membersList = [] }: MembersPanelProps) {
               ({ fullName, imgSrc, memberID, status, roleArray }) => (
                 <MembersPreview
                   //todo unique memberID
-                  key={memberID}
+                  key={memberID + Math.random()}
                   fullName={fullName}
                   imgSrc={imgSrc}
                   memberID={memberID}
