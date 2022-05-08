@@ -8,12 +8,8 @@ import InputField from '@components/inputs/input_field';
 import ContentMessage from './content_message';
 import client from '@assets/pictures/test.png';
 
-interface ChatProps {
-  memberFullName: string;
-  status: boolean;
-  sepPos: number;
-}
-export default function Chat({ memberFullName, status, sepPos }: ChatProps) {
+interface ChatProps {}
+export default function Chat({}: ChatProps) {
   const messagesArray = [
     {
       imgSrc: client,
@@ -41,10 +37,11 @@ export default function Chat({ memberFullName, status, sepPos }: ChatProps) {
       messageContent: 'ok mor nhoto dossier ta3 la fac nrouho lih inchallh ',
     },
   ];
+  const sepPos = 2;
   return (
     <div className="chat">
       <div className="chat-header">
-        <MemberStatus memberFullName={memberFullName} status={status} />
+        <MemberStatus memberFullName={'John Doe'} status={true} />
         <IconicButton
           Icon={Call_Icon}
           backgroundColor={color.secondary_color}
