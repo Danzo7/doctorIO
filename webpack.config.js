@@ -156,6 +156,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       port: 4000,
       hot: true,
       historyApiFallback: true,
+      open: true,
     },
     devtool: isDevelopment ? 'eval-source-map' : 'source-map',
     target: isDevelopment ? 'web' : 'browserslist',
@@ -163,6 +164,9 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       minimize: isProduction,
       minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
       nodeEnv: mode,
+      splitChunks: {
+        chunks: 'all',
+      },
     },
   };
 };
