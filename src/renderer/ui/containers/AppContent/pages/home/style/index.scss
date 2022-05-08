@@ -1,3 +1,5 @@
 @use '~styles/appColors' as *;
-.home {
+.home-body {
+    display: flex;
+    overflow-y: scroll;
 }

@@ -6,7 +6,7 @@
   align-items: stretch;
   padding: 0px;
   gap: 20px;
-
+  flex-grow: 1;
   > .header {
     display: flex;
     flex-direction: row;
