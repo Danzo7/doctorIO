@@ -3,7 +3,7 @@ import MemberStatus from './member_status';
 import './style/index.scss';
 import Call_Icon from 'toSvg/callicon.svg?icon';
 import color from '@assets/styles/color';
-import ChatAddButton from './chat_add_button';
+import ChatAddButton from '@components/buttons/chat_add_button';
 import InputField from '@components/inputs/input_field';
 import ContentMessage from './content_message';
 import client from '@assets/pictures/test.png';
