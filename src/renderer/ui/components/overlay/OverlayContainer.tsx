@@ -1,7 +1,7 @@
 import { Overlay } from './overlay';
 import { ReactNode, useEffect, useRef } from 'react';
 import './style/index.scss';
-import BackButton from '@components/buttons/back_button';
+import SquareIconButton from '@components/buttons/square_icon_button';
 import { css } from '@emotion/react';
 interface OverlayContainerProps {}
 
@@ -56,7 +56,7 @@ export function OverlayItem({
         {closeBtn && (
           <div className={`close-btn ${closeBtn.placement}`}>
             {closeBtn.component ?? (
-              <BackButton onClick={() => Overlay.closeModal()} />
+              <SquareIconButton onPress={() => Overlay.closeModal()} />
             )}
           </div>
         )}

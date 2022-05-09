@@ -1,4 +1,4 @@
-import BackButton from '@components/buttons/back_button';
+import SquareIconButton from '@components/buttons/square_icon_button';
 import InputField, { evolvedTypes } from '@components/inputs/input_field';
 import RecentAppsItem from '@components/recent_apps_item';
 import Svg from '@libs/svg';
@@ -46,7 +46,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   return (
     <div className="queue-add-search-modal">
       <div className="back-btn-container">
-        <BackButton />
+        <SquareIconButton />
       </div>
       <InputField
         //name="QueueAddSearch"
@@ -61,8 +61,8 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
       />
       <div className="suggestions-container">
         {suggestions &&
-          suggestions.map(({ fullName, age }) => (
-            <RecentAppsItem fullName={fullName} age={age} />
+          suggestions.map(({ fullName, age }, index) => (
+            <RecentAppsItem fullName={fullName} age={age} key={index} />
           ))}
       </div>
     </div>

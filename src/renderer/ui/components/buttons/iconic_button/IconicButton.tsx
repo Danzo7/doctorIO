@@ -8,6 +8,7 @@ interface IconicButtonProps {
   width?: number;
   iconSize?: number;
   radius?: number;
+  onPress?: () => void;
 }
 
 /**
@@ -19,10 +20,15 @@ function IconicButton({
   width = 40,
   afterColor,
   radius,
+  onPress,
   iconSize,
 }: IconicButtonProps) {
   return (
     <div
+      onClick={(e) => {
+        e.stopPropagation();
+        onPress?.();
+      }}
       className="iconic-button"
       css={{
         backgroundColor: backgroundColor,

@@ -1,13 +1,13 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
-import BackButton from './BackButton';
+import SquareIconButton from './SquareIconButton';
 //👇 This default export determines where your story goes in the story list
 export default {
-  title: 'Buttons/BackButton',
-  component: BackButton,
+  title: 'Buttons/SquareIconButton``',
+  component: SquareIconButton,
 };
-const Template: Story<ComponentProps<typeof BackButton>> = (args) => (
-  <BackButton {...args} />
+const Template: Story<ComponentProps<typeof SquareIconButton>> = (args) => (
+  <SquareIconButton {...args} />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {};

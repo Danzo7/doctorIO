@@ -1,5 +1,5 @@
 import color from '@assets/styles/color';
-import BackButton from '@components/buttons/back_button';
+import SquareIconButton from '@components/buttons/square_icon_button';
 import TextButton from '@components/buttons/text_button';
 import InputField from '@components/inputs/input_field';
 import './style/index.scss';
@@ -11,11 +11,11 @@ export default function DiagnosisModal({ inputArray }: DiagnosisModalProps) {
     <div className="diagnosis-modal">
       <div className="diagnosis-header">
         <span>Diagnosis</span>
-        <BackButton />
+        <SquareIconButton />
       </div>
       <div className="diagnosis-inputs-container">
-        {inputArray.map((label) => (
-          <div className="input-width">
+        {inputArray.map((label, index) => (
+          <div className="input-width" key={index}>
             <InputField label={label} />
           </div>
         ))}
