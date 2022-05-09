@@ -1,5 +1,5 @@
 import './style/index.scss';
-import Status from 'toSvg/status.svg?icon';
+import Status from 'toSvg/dot.svg?icon';
 interface MemberStatusProps {
   memberFullName: string;
   status: boolean;

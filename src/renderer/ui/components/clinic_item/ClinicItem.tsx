@@ -1,9 +1,9 @@
 import './style/index.scss';
-import Menu from 'toSvg/bigMenu.svg';
+import Menu from 'toSvg/threedots.svg';
 import Clinic from 'toSvg/clinic.svg?icon';
 import MedicalAssistant from 'toSvg/medicalAssistant.svg';
 import Patient from 'toSvg/patient.svg';
-import Union from 'toSvg/Union.svg';
+import Union from 'toSvg/server_state.svg';
 import colors from '@colors';
 interface TimeToClose {
   hour: number;

@@ -2,8 +2,8 @@ import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import colors from '@assets/styles/color';
 import IdCard from 'toSvg/id_card.svg?icon';
-import Messages from 'toSvg/messagesSmall.svg?icon';
-import Call_Icon from 'toSvg/callicon.svg?icon';
+import Messages from 'toSvg/messages_small.svg?icon';
+import Call_Icon from 'toSvg/phone.svg?icon';
 import IconicButton from '@components/buttons/iconic_button';
 interface ContactItemProps {
   status: boolean;

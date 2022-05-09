@@ -1,5 +1,5 @@
 import './style/index.scss';
-import BackSvg from 'toSvg/back-button.svg?icon';
+import BackSvg from 'toSvg/arrow_line.svg?icon';
 
 interface BackButtonProps {
   onClick?: () => void;

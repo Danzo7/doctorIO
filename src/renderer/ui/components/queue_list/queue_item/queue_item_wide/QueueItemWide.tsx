@@ -1,6 +1,6 @@
 import './style/index.scss';
 import PregnantState from 'toSvg/pregnant.svg';
-import WaitingFigure from 'toSvg/figure_waiting.svg';
+import WaitingFigure from 'toSvg/waiting_figure.svg';
 import BackButton from '@buttons/back_button';
 import ButtonsHoverLock from './buttons_hover_lock';
 
@@ -9,14 +9,14 @@ interface QueueItemWideProps {
   timeAgo: string;
   number: number;
   state?: string;
-  backBtnOnClick: () => void;
+  btnOnclick: () => void;
 }
 
 function QueueItemWide({
   name,
   timeAgo,
   number,
-  backBtnOnClick,
+  btnOnclick,
   state,
 }: QueueItemWideProps) {
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
@@ -24,7 +24,7 @@ function QueueItemWide({
     <div className="queue-item-wide">
       <div className="back-container">
         <div className="back">
-          <BackButton onClick={backBtnOnClick} />
+          <BackButton onClick={btnOnclick} />
         </div>
       </div>
       <div className="content">

@@ -1,6 +1,6 @@
 import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
-import IsOwner from 'toSvg/isOwner.svg';
+import IsOwner from 'toSvg/host.svg';
 import Menu from 'toSvg/menu.svg';
 import SmallRolePreview from '@components/members_preview/small_role_preview';
 import AddButton from '@components/buttons/dark_add_button';

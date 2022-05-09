@@ -2,8 +2,8 @@ import IconicButton from '@components/buttons/iconic_button';
 import './style/index.scss';
 import colors from '@assets/styles/color';
 import IdCard from 'toSvg/id_card.svg?icon'; //Add ?icon to be able to resize svg
-import Messages from 'toSvg/messagesSmall.svg?icon';
-import Call_Icon from 'toSvg/callicon.svg?icon';
+import Messages from 'toSvg/messages_small.svg?icon';
+import Call_Icon from 'toSvg/phone.svg?icon';
 interface MemberFooterProps {
   memberID: string;
   status: string;

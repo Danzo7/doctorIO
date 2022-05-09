@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import './style/index.scss';
-import Svg from 'toSvg/doctor_face.svg?icon';
+import Svg from 'toSvg/doctor_figure.svg?icon';
 import Arrow from 'toSvg/arrow.svg';
 interface WelcomeBoxProps {
   message: string;

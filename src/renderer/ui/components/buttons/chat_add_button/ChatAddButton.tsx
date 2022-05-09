@@ -1,6 +1,6 @@
 import IconicButton from '@components/buttons/iconic_button';
 import './style/index.scss';
-import Add from 'toSvg/lighterAdd.svg?icon';
+import Add from 'toSvg/add.svg?icon';
 import color from '@assets/styles/color';
 interface ChatAddButtonProps {}
 export default function ChatAddButton({}: ChatAddButtonProps) {

@@ -1,7 +1,7 @@
 import IconicButton from '@components/buttons/iconic_button';
 import MemberStatus from './member_status';
 import './style/index.scss';
-import Call_Icon from 'toSvg/callicon.svg?icon';
+import Call_Icon from 'toSvg/phone.svg?icon';
 import color from '@assets/styles/color';
 import ChatAddButton from '@components/buttons/chat_add_button';
 import InputField from '@components/inputs/input_field';

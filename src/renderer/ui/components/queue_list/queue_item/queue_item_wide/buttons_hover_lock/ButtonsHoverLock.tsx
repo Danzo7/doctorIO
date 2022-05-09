@@ -1,6 +1,6 @@
 import './style/index.scss';
-import invite from 'toSvg/invitePatientIn.svg?icon';
-import view from 'toSvg/view-test.svg?icon';
+import invite from 'toSvg/enter.svg?icon';
+import view from 'toSvg/view_test.svg?icon';
 import TextIconButton from '@components/buttons/text_icon_button';
 import colors from '@colors';
 
