@@ -36,7 +36,12 @@ export default function ClinicItem({
     >
       <div className="header">
         <span>{selected ? 'Selected' : ''}</span>
-        <div className="option-menu">
+        <div
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
+          className="option-menu"
+        >
           <Menu />
         </div>
       </div>
