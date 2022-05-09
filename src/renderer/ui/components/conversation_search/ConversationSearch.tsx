@@ -1,13 +1,15 @@
-import IconicButton from '@components/buttons/iconic_button';
-import './style/index.scss';
 import Search from 'toSvg/search.svg?icon';
+import InputField from '@components/inputs/input_field';
+import color from '@assets/styles/color';
 
 interface ConversationSearchProps {}
 export default function ConversationSearch({}: ConversationSearchProps) {
   return (
-    <div className="conversation-search">
-      <IconicButton Icon={Search} width={30} iconSize={15} radius={18} />
-      <input type={'search'} placeholder="search for conversation" />
-    </div>
+    <InputField
+      background={color.darkersec_color}
+      radius={10}
+      placeholder="search"
+      leading={<Search />}
+    />
   );
 }
