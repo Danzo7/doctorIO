@@ -3,8 +3,8 @@ import { useState } from 'react';
 import './style/index.scss';
 import UpArrow from 'toSvg/arrow.svg?icon';
 import SmallRolePreview from './small_role_preview';
-import AddButton from './add_button';
 import MemberFooter from './member_footer';
+import DarkAddButton from '@components/buttons/dark_add_button';
 interface MembersPreviewProps {
   fullName: string;
   memberID: string;
@@ -22,7 +22,7 @@ function MembersPreview({
   const [showFooter, setshowFooter] = useState(false);
   const addRole = () => {};
   return (
-    <div className="preview-container">
+    <div className={`preview-container${showFooter ? ' shown' : ''}`}>
       <div className="members-preview">
         <UserProfileStatus
           imgSrc={imgSrc}
@@ -33,22 +33,21 @@ function MembersPreview({
         <div className="info-container">
           <span>{fullName}</span>
           <div className="roll-container">
-            {roleArray.map((rollName) => (
-              <SmallRolePreview roleName={rollName} />
+            {roleArray.map((rollName, index) => (
+              <SmallRolePreview roleName={rollName} key={index} />
             ))}
-            <div onClick={addRole} className="add-btn-container">
-              <AddButton />
-            </div>
+
+            <DarkAddButton />
           </div>
         </div>
         <div
+          className={`arrow-container`}
           onClick={() => setshowFooter(!showFooter)}
-          className={`arrow-container${showFooter ? ' shown' : ''}`}
         >
           <UpArrow width={15} />
         </div>
       </div>
-      {showFooter && <MemberFooter memberID={memberID} status={status} />}
+      <MemberFooter memberID={memberID} status={status} />
     </div>
   );
 }

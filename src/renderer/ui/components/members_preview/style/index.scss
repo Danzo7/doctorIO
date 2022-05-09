@@ -9,6 +9,7 @@
   border-radius: 17px;
   gap: 10px;
   padding: 10px;
+  transition: all .2s;
 
   > .members-preview {
     display: flex;
@@ -50,15 +51,23 @@
       justify-content: center;
       align-items: center;
       margin-bottom: auto;
-      &.shown > svg > path {
-        transform: rotate(180deg);
-        transform-origin: center;
-      }
       > svg > path {
+        transition: all 0.2s;
+
         fill: $textgray;
         transform: rotate(0deg);
         transform-origin: center;
       }
     }
   }
+  &.shown {
+    gap: 0;
+    >div:last-child {
+      visibility: hidden;
+      max-height:0
+    }
+    .members-preview>.arrow-container> svg > path {
+      transform: rotate(180deg);
+      transform-origin: center;
+    }}
 }
