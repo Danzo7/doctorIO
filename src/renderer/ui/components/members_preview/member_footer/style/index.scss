@@ -21,7 +21,7 @@
   border-radius: 7px;
   padding: 5px;
   max-height: 60px;
-  transition: max-height .2s ;
+  transition: max-height .1s ;
   > .member-container {
     @include member-container-style();
     > span {

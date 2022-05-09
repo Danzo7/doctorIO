@@ -19,10 +19,10 @@ function MembersPreview({
   imgSrc,
   roleArray,
 }: MembersPreviewProps) {
-  const [showFooter, setshowFooter] = useState(false);
+  const [hideFooter, setHideFooter] = useState(true);
   const addRole = () => {};
   return (
-    <div className={`preview-container${showFooter ? ' shown' : ''}`}>
+    <div className={`preview-container${hideFooter ? ' hidden' : ''}`}>
       <div className="members-preview">
         <UserProfileStatus
           imgSrc={imgSrc}
@@ -42,7 +42,7 @@ function MembersPreview({
         </div>
         <div
           className={`arrow-container`}
-          onClick={() => setshowFooter(!showFooter)}
+          onClick={() => setHideFooter(!hideFooter)}
         >
           <UpArrow width={15} />
         </div>

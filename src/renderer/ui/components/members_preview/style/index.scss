@@ -52,22 +52,22 @@
       align-items: center;
       margin-bottom: auto;
       > svg > path {
-        transition: all 0.2s;
+        transition: all 0.1s;
 
         fill: $textgray;
-        transform: rotate(0deg);
+        transform: rotate(180deg);
         transform-origin: center;
       }
     }
   }
-  &.shown {
+  &.hidden {
     gap: 0;
     >div:last-child {
       visibility: hidden;
       max-height:0
     }
     .members-preview>.arrow-container> svg > path {
-      transform: rotate(180deg);
+      transform: unset;
       transform-origin: center;
     }}
 }
