@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 interface TextButtonProps {
   text?: string;
   Icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  children?: React.ReactNode;
   fontColor?: string;
   fontSize?: number;
   fontWeight?: number;
@@ -14,7 +15,7 @@ interface TextButtonProps {
   afterBorderColor?: string;
   afterFontColor?: string;
   radius?: number;
-  padding?: string;
+  padding?: string | number;
   onPress?: () => void;
   width?: number | string;
   height?: number | string;
@@ -34,7 +35,7 @@ function TextButton({
   afterFontColor,
   width,
   height,
-
+  children,
   padding,
   onPress,
   type,
@@ -43,44 +44,36 @@ function TextButton({
     <button
       type={type}
       className={`text-button`}
-      css={css`
-        background-color: ${backgroundColor};
-        border: 1px solid ${borderColor ? `${borderColor} ` : 'transparent'};
-        border-radius: ${radius ? radius + 'px' : ''};
-        padding: ${padding};
-        width: ${typeof width === 'number' ? `${width}px` : ''};
-        width: ${typeof width === 'string'
-          ? width == '100%'
-            ? 'unset'
-            : `${width}`
-          : ''};
-        height: ${typeof height === 'number' ? `${height}px` : ''};
-        height: ${typeof height === 'string'
-          ? height == '100%'
-            ? 'unset'
-            : `${height}`
-          : ''};
-
-        &:hover {
-          background-color: ${afterBgColor};
-          ${afterBorderColor ? `border: 1px solid ${afterBorderColor} ` : ''};
-          > span {
-            color: ${afterFontColor ? afterFontColor : colors.white};
-          }
-        }
-      `}
+      css={{
+        backgroundColor: backgroundColor,
+        border: ` 1px solid ${borderColor ? `${borderColor} ` : 'transparent'}`,
+        borderRadius: radius,
+        padding: padding,
+        width: width,
+        height: height,
+        '&:hover': {
+          backgroundColor: afterBgColor,
+          border: afterBorderColor
+            ? `1px solid ${afterBorderColor}`
+            : undefined,
+          '> span': {
+            color: afterFontColor ? afterFontColor : colors.white,
+          },
+        },
+      }}
       onClick={onPress}
     >
+      {children}
       {Icon ? (
         <Icon />
       ) : (
         <span
-          className={` text ${css`
-            color: ${fontColor};
-            font-size: ${fontSize}px;
-            line-height: ${fontSize}px;
-            font-weight: ${fontWeight};
-          `}`}
+          className={'text'}
+          css={{
+            color: fontColor,
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+          }}
         >
           {text}
         </span>
