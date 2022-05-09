@@ -14,15 +14,18 @@ interface ClinicItemProps {
   timeToClose: TimeToClose;
   numOfAssistants: number;
   numOfPatients: number;
+  onClick: () => void;
 }
 export default function ClinicItem({
   selected,
   timeToClose,
   numOfAssistants,
   numOfPatients,
+  onClick,
 }: ClinicItemProps) {
   return (
     <div
+      onClick={onClick}
       className="clinic-item"
       css={{
         backgroundColor: !selected ? colors.secondary_color : undefined,
@@ -32,7 +35,7 @@ export default function ClinicItem({
       }}
     >
       <div className="header">
-        <span>Default {selected ? '-Selected' : ''}</span>
+        <span>{selected ? 'Selected' : ''}</span>
         <div className="option-menu">
           <Menu />
         </div>

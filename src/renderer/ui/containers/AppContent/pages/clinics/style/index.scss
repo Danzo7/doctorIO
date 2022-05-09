@@ -1,0 +1,27 @@
+@use '~styles/appColors' as *;
+.clinics {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    > span {
+        font-weight: 700;
+        font-size: 24px;
+        color: $white;
+    }
+
+    > .servers-container{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        > .join-button-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 250px;
+            height: 315px;
+        }
+    }
+}
