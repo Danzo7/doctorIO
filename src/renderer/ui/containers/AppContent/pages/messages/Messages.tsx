@@ -4,7 +4,9 @@ interface MessagesProps {}
 export default function Messages({}: MessagesProps) {
   return (
     <div className="messages">
-      <Chat></Chat>
+      {/**Replace with messagesSidebar */}
+      <div style={{ width: 320, background: 'red', borderRadius: 10 }}></div>
+      <Chat />
     </div>
   );
 }
