@@ -6,6 +6,8 @@ import NextIcon from 'toSvg/next.svg?icon';
 import PauseIcon from 'toSvg/pause.svg?icon';
 import ScrollView from './scroll_view';
 import ScrollController from './scroll_view/ScrollController';
+import IconicButton from '@components/buttons/iconic_button';
+import color from '@assets/styles/color';
 
 interface QueueListProps {}
 
@@ -86,19 +88,25 @@ function QueueList({}: QueueListProps) {
       <div className="header">
         <span>Appointment</span>
         <div className="control">
-          <div
-            className="next"
-            onClick={() => {
+          <IconicButton
+            Icon={NextIcon}
+            backgroundColor={color.cold_blue}
+            width={25}
+            radius={7}
+            iconSize={10}
+            onPress={() => {
               setItems(items.slice(1, items.length));
               setSelected(-1);
               controller.scrollTo(0, selected);
             }}
-          >
-            <NextIcon width={10} />
-          </div>
-          <div className="pause">
-            <PauseIcon width={8} />
-          </div>
+          />
+          <IconicButton
+            Icon={PauseIcon}
+            backgroundColor={color.hot_red}
+            width={25}
+            radius={7}
+            iconSize={10}
+          />
         </div>
       </div>
       <div className="queue-items">
