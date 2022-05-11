@@ -28,7 +28,7 @@ const usersData = [
 export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const [, setUserInput] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const onChangeHandler = (event: Event) => {
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const text = (event.target as HTMLInputElement).value;
     let matches = [];
     if (text.length > 0 && text.trim().length > 0) {
@@ -54,9 +54,9 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
         placeholder="search for a patients"
         leading={<Svg>{search}</Svg>}
         type={{ rawType: 'search', evolvedType: evolvedTypes.raw }}
-        // onChange={(e) => {
-        //   onChangeHandler(e);
-        // }}
+        onChange={(e) => {
+          onChangeHandler(e);
+        }}
         //  value={userInput}
       />
       <div className="suggestions-container">

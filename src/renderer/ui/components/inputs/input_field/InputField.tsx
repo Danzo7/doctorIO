@@ -28,7 +28,7 @@ interface InputFieldProps {
   errorField?: FieldError;
   padding?: number;
   name?: string;
-  onChange?: (value: string) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 export default function InputField({
   label,
@@ -88,7 +88,13 @@ export default function InputField({
               );
 
             default:
-              return <input placeholder={placeholder} {...register} />;
+              return (
+                <input
+                  onChange={onChange}
+                  placeholder={placeholder}
+                  {...register}
+                />
+              );
           }
         })()}
         {type.evolvedType != evolvedTypes.dropdown && paddedTrailing}
