@@ -14,4 +14,6 @@ export default {
   text_gray: '#bdbdbd',
   good_black: '#18191c',
   warm_orange: '#f2994a',
+  darker: ' #00000020',
+  light: '#ffffff20',
 };

@@ -1,9 +1,11 @@
+@use '~styles/appColors' as *;
+
 @mixin darken {
-  background: #00000020;
+  box-shadow:inset 1000px 1000px 1px $darker;
   transition: 0.2s;
 }
 @mixin lighter {
-  background: #ffffff20;
+  box-shadow:inset 1000px 1000px 1px $light;
   transition: 0.2s;
 }
 @mixin fastTrans {
