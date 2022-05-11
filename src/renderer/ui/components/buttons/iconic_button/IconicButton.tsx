@@ -1,14 +1,23 @@
+import color from '@assets/styles/color';
 import { FunctionComponent, SVGProps } from 'react';
-import './style/index.scss';
+import TextButton from '../text_button';
 
 interface IconicButtonProps {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
-  backgroundColor?: string;
-  afterColor?: string;
   width?: number;
-  iconSize?: number;
-  radius?: number;
+  backgroundColor?: string;
+  afterBgColor?: string;
+  activeBgColor?: string;
+  borderColor?: string;
+  afterBorderColor?: string;
+  activeBorderColor?: string;
+  iconColor?: string;
+  iconType?: 'stroke' | 'fill';
+  radius?: string | number;
   onPress?: () => void;
+  iconSize?: number | string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
+  disabled?: boolean;
 }
 
 /**
@@ -16,32 +25,59 @@ interface IconicButtonProps {
  * @param {number} width -Size of button use ?icon query for dynamic icon size*/
 function IconicButton({
   Icon,
+
   backgroundColor,
+  borderColor,
+  radius = '100%',
+  afterBgColor,
+  afterBorderColor,
+  iconColor,
+  iconType,
   width = 40,
-  afterColor,
-  radius,
   onPress,
+  activeBgColor = color.darker,
+  type,
+  activeBorderColor,
   iconSize,
+  disabled = false,
 }: IconicButtonProps) {
   return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation();
-        onPress?.();
-      }}
-      className="iconic-button"
-      css={{
-        backgroundColor: backgroundColor,
-        width: width,
-        height: width,
-        borderRadius: radius,
-        '&:hover': {
-          backgroundColor: afterColor,
-        },
-      }}
+    <TextButton
+      type={type}
+      backgroundColor={backgroundColor}
+      afterBgColor={afterBgColor}
+      width={width}
+      height={width}
+      padding={'unset'}
+      radius={radius}
+      activeBgColor={activeBgColor}
+      borderColor={borderColor}
+      activeBorderColor={activeBorderColor}
+      afterBorderColor={afterBorderColor}
+      onPress={onPress}
+      disabled={disabled}
     >
-      <Icon height={iconSize ?? width / 2} width={iconSize ?? width / 2} />
-    </div>
+      <Icon
+        height={iconSize ?? width / 2}
+        width={iconSize ?? width / 2}
+        css={{
+          '>path': {
+            stroke:
+              iconType === 'stroke'
+                ? !disabled
+                  ? iconColor
+                  : color.text_gray
+                : undefined,
+            fill:
+              iconType === 'fill'
+                ? !disabled
+                  ? iconColor
+                  : color.text_gray
+                : undefined,
+          },
+        }}
+      />
+    </TextButton>
   );
 }
 

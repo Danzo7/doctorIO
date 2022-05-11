@@ -15,4 +15,5 @@ FirstStory.args = {
   Icon: Call_icon,
   width: 40,
   backgroundColor: 'red',
+  iconType: 'fill',
 };
