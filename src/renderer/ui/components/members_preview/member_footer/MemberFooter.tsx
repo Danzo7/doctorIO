@@ -22,19 +22,19 @@ function MemberFooter({ memberID, status }: MemberFooterProps) {
       <div className="controls-container">
         <IconicButton
           Icon={IdCard}
-          afterColor={colors.secondary_color}
+          afterBgColor={colors.secondary_color}
           width={40}
           iconSize={15}
         />
         <IconicButton
           Icon={Messages}
-          afterColor={colors.secondary_color}
+          afterBgColor={colors.secondary_color}
           width={40}
           iconSize={15}
         />
         <IconicButton
           Icon={Call_Icon}
-          afterColor={colors.good_green}
+          afterBgColor={colors.good_green}
           width={40}
           iconSize={15}
         />

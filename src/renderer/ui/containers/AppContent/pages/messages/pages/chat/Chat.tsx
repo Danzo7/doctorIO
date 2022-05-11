@@ -45,7 +45,7 @@ export default function Chat({}: ChatProps) {
         <IconicButton
           Icon={Call_Icon}
           backgroundColor={color.secondary_color}
-          afterColor={color.good_green}
+          afterBgColor={color.good_green}
           width={35}
           iconSize={15}
         />
