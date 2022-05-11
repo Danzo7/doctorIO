@@ -13,7 +13,8 @@
     flex-direction: row;
     align-content: stretch;
     justify-content: space-between;
-    width: 100%;
+    flex-grow: 1;
+    align-self: stretch;
 
     > span {
       font-weight: 500;

@@ -19,6 +19,8 @@
     font-weight: 600;
     font-size: 14px;
     color: $white;
+    align-self: stretch;
+    flex-grow: 1;
 
     > .members-container {
       padding: 5px 15px;
