@@ -13,7 +13,7 @@ function SquareIconButton({ onPress, svg }: SquareIconButtonProps) {
       width={25}
       Icon={svg ?? back}
       backgroundColor="transparent"
-      afterColor="#ffffff20"
+      afterBgColor="#ffffff20"
       radius={5}
       onPress={onPress}
     />
