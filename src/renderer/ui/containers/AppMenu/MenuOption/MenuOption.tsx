@@ -21,6 +21,7 @@ function MenuOption({ items }: MenuOptionProps) {
                 `menuItem${isActive ? ' isActive' : ''}`
               }
               to={name === 'home' ? '/' : name}
+              draggable={false}
             >
               <Svg className={strokeTypes[name]} />
             </NavLink>
