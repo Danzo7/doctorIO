@@ -14,7 +14,7 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   text: 'Members...',
   fontSize: 14,
-  backgroundColor: colors.background,
-  borderColor: colors.border_color,
+  afterBgColor: colors.darkersec_color,
+  afterBorderColor: colors.border_color,
   radius: 7,
 };
