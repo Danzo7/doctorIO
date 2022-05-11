@@ -20,6 +20,7 @@ function MultiOptionSwitcher({
               growOnselection ? ' grow' : ''
             }`}
             onClick={() => setSelected(index)}
+            key={index}
           >
             {text}
           </div>
