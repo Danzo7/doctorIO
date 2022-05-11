@@ -12,17 +12,17 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   roleList: [
     { roleName: 'Doctor' },
-    { roleName: 'paramedic', linked: true },
-    { roleName: 'Support', linked: true },
-    { roleName: 'paramedic', linked: true },
+    { roleName: 'paramedic', linked: '@doctor' },
+    { roleName: 'Support', linked: '@doctor' },
+    { roleName: 'paramedic', linked: '@doctor' },
     { roleName: 'Doctor' },
-    { roleName: 'paramedic', linked: true },
-    { roleName: 'Support', linked: true },
-    { roleName: 'paramedic', linked: true },
+    { roleName: 'paramedic', linked: '@doctor' },
+    { roleName: 'Support', linked: '@doctor' },
+    { roleName: 'paramedic', linked: '@doctor' },
     { roleName: 'Doctor' },
-    { roleName: 'paramedic', linked: true },
-    { roleName: 'Support', linked: true },
-    { roleName: 'paramedic', linked: true },
+    { roleName: 'paramedic', linked: '@doctor' },
+    { roleName: 'Support', linked: '@doctor' },
+    { roleName: 'paramedic', linked: '@doctor' },
   ],
   permissionArray: [
     {

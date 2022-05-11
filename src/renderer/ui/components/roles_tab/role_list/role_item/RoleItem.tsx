@@ -4,14 +4,9 @@ interface RoleItemProps {
   roleName: string;
   selected: boolean;
   onClick: () => void;
-  linked?: boolean;
+  linked?: string;
 }
-function RoleItem({
-  roleName,
-  linked = false,
-  selected,
-  onClick,
-}: RoleItemProps) {
+function RoleItem({ roleName, linked, selected, onClick }: RoleItemProps) {
   return (
     <div
       onClick={onClick}
@@ -24,7 +19,7 @@ function RoleItem({
       >
         <Icon />
         <div className="linked-role-container">
-          <span>@Rythm#3722</span>
+          <span>{linked}</span>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import './style/index.scss';
 
 interface RoleType {
   roleName: string;
-  linked?: boolean;
+  linked?: string;
 }
 interface RoleListProps {
   roleList: RoleType[];
