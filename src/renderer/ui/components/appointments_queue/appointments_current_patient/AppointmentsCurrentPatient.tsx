@@ -1,19 +1,19 @@
 import './style/index.scss';
 interface AppointmentsCurrentPatientProps {
   patientName: string;
-  appointmentDuration: string;
+  duration: string;
   patientNumber: number;
 }
 export default function AppointmentsCurrentPatient({
   patientName,
-  appointmentDuration,
+  duration,
   patientNumber,
 }: AppointmentsCurrentPatientProps) {
   return (
     <div className="appointments-current-patient">
       <div className="patient-info">
         <span>{patientName}</span>
-        <span>{appointmentDuration}</span>
+        <span>{duration}</span>
       </div>
       <div className="line" />
       <div className="number-container">

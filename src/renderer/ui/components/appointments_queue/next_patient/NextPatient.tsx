@@ -21,7 +21,7 @@ export default function NextPatient({
       </div>
       <AppointmentsCurrentPatient
         patientName={patientName}
-        appointmentDuration={appointmentDuration}
+        duration={appointmentDuration}
         patientNumber={patientNumber}
       />
       <TextButton
