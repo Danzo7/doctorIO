@@ -8,8 +8,11 @@
     border-radius: 5px;
     align-self: stretch;
     flex-grow: 1;
-
     transition: background-color 0.2s;
+
+    &:hover {
+        background-color: $bordercolor;
+    }
 
     > span {
         font-weight: 600;
