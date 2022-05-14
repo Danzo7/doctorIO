@@ -1,4 +1,5 @@
 import UserProfileStatus from '@components/user_profile_status';
+import { NavLink } from 'react-router-dom';
 import './style/index.scss';
 interface LastDmMessageProps {
   imgSrc: string;
@@ -11,12 +12,12 @@ export default function LastDmMessage({
   lastMessage,
 }: LastDmMessageProps) {
   return (
-    <div className="last-dm-message">
+    <NavLink to={'tobe'} className="last-dm-message">
       <UserProfileStatus imgSrc={imgSrc} status={status} width={35} />
       <div className="info-container">
         <span>Mahmoud Benaissa</span>
         <span>{`You: ${lastMessage ? lastMessage : ''}`}</span>
       </div>
-    </div>
+    </NavLink>
   );
 }
