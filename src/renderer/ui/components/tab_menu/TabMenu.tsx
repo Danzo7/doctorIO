@@ -5,11 +5,13 @@ interface TabMenuProps {
   textList: Array<string>;
   defaultSelected?: number;
   onChanged?: (selected: number) => void;
+  borderBottom?: boolean;
 }
 export default function TabMenu({
   textList = [],
   defaultSelected = 0,
   onChanged,
+  borderBottom = true,
 }: TabMenuProps) {
   const [selected, setSelected] = useState(defaultSelected);
   function setTab(index: number) {
@@ -17,9 +19,10 @@ export default function TabMenu({
     onChanged?.(index);
   }
   return (
-    <div className="tab-menu">
+    <div className={`tab-menu ${borderBottom ? 'border-bottom' : ''} `}>
       {textList.map((text, index) => (
         <DarkLightCornerButton
+          key={index}
           title={text}
           isActive={selected == index}
           onPress={() => setTab(index)}
