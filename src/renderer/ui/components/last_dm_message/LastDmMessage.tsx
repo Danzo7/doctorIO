@@ -15,7 +15,7 @@ export default function LastDmMessage({
 }: LastDmMessageProps) {
   return (
     <NavLink
-      to={id.toString()}
+      to={id?.toString() ?? ''}
       className={({ isActive }) =>
         ` last-dm-message${isActive ? ' selected' : ''}`
       }
