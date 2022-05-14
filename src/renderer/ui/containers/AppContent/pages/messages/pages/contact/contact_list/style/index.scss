@@ -1,0 +1,24 @@
+@use '~styles/appColors' as *;
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    align-items:stretch;
+    gap: 10px;
+    height: 300px;
+
+    > span {
+        padding-left: 20px;
+        font-weight: 500;
+        font-size: 15px;
+        color: $textgray;
+    }
+
+    > .contact-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding-right: 10px;
+        overflow-y: scroll;
+    }
+}
