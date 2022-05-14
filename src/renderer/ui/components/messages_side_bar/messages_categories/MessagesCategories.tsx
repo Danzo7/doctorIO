@@ -1,13 +1,21 @@
 import { useState } from 'react';
 import MessagesCategoryItem from './messages_category_item';
+import Doctor from 'toSvg/doctor_icon.svg?icon';
+import Nurse from 'toSvg/nurse_icon.svg?icon';
 import './style/index.scss';
 
-interface MessagesCategoriesProps {
-  categories: any[];
-}
-export default function MessagesCategories({
-  categories,
-}: MessagesCategoriesProps) {
+interface MessagesCategoriesProps {}
+export default function MessagesCategories({}: MessagesCategoriesProps) {
+  const categories = [
+    {
+      Icon: Doctor,
+      categoryName: 'Clinic',
+    },
+    {
+      Icon: Nurse,
+      categoryName: 'Public',
+    },
+  ];
   const [selectedCategory, setSelectedCategory] = useState(0);
   return (
     <div className="messages-categories">
