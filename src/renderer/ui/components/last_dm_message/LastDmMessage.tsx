@@ -5,14 +5,16 @@ interface LastDmMessageProps {
   imgSrc: string;
   status: boolean;
   lastMessage: string;
+  id: number;
 }
 export default function LastDmMessage({
   imgSrc,
   status,
   lastMessage,
+  id,
 }: LastDmMessageProps) {
   return (
-    <NavLink to={'tobe'} className="last-dm-message">
+    <NavLink to={id.toString()} className="last-dm-message">
       <UserProfileStatus imgSrc={imgSrc} status={status} width={35} />
       <div className="info-container">
         <span>Mahmoud Benaissa</span>

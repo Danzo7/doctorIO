@@ -23,14 +23,17 @@ export default function DmHistory({ lastDmMessage = [] }: DmHistoryProps) {
       </div>
       <div className="lastDmMessages-container">
         {lastDmMessage.length > 0
-          ? lastDmMessage.map(({ imgSrc, lastMessage, status }, index) => (
-              <LastDmMessage
-                imgSrc={imgSrc}
-                lastMessage={lastMessage}
-                status={status}
-                key={index}
-              />
-            ))
+          ? lastDmMessage.map(
+              ({ imgSrc, lastMessage, status, dmId }, index) => (
+                <LastDmMessage
+                  imgSrc={imgSrc}
+                  lastMessage={lastMessage}
+                  status={status}
+                  id={dmId}
+                  key={index}
+                />
+              ),
+            )
           : 'No DM’s messages '}
       </div>
     </div>

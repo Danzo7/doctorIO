@@ -9,41 +9,49 @@ const lastDmMessage = [
     imgSrc: client,
     status: true,
     lastMessage: 'hello there hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh!',
+    dmId: 123456789,
   },
   {
     imgSrc: client,
     status: true,
     lastMessage: 'hello there!',
+    dmId: 123456789,
   },
   {
     imgSrc: client,
     status: true,
     lastMessage: 'hello there!',
+    dmId: 123456789,
   },
   {
     imgSrc: client,
     status: true,
     lastMessage: 'hello there!',
+    dmId: 123456789,
   },
   {
     imgSrc: client,
     status: true,
     lastMessage: 'hello there long text here okayhhhhhhhhhhhhhhhhhhhhhhhhhhh!',
+    dmId: 123456789,
   },
   {
     imgSrc: client,
     status: true,
     lastMessage: 'hello there!',
+    dmId: 123456789,
   },
   {
     imgSrc: client,
     status: true,
     lastMessage: 'hello there!',
+    dmId: 123456789,
   },
   {
     imgSrc: client,
     status: true,
     lastMessage: 'the last one !',
+    dmId: 123456789,
   },
 ];
 interface MessagesSideBarProps {}
