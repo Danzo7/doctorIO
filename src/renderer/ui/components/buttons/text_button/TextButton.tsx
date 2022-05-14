@@ -23,8 +23,6 @@ interface TextButtonProps {
   type?: 'button' | 'submit' | 'reset' | undefined;
   disabled?: boolean;
   alignment?: 'center' | 'end' | 'flex-end' | 'flex-start' | 'start';
-  iconWidth?: number | string;
-  iconHeight?: number | string;
 }
 function TextButton({
   text,
@@ -48,8 +46,6 @@ function TextButton({
   activeBorderColor,
   disabled = false,
   alignment,
-  iconWidth,
-  iconHeight,
 }: TextButtonProps) {
   return (
     <button
@@ -95,7 +91,7 @@ function TextButton({
       disabled={disabled}
     >
       {children}
-      {Icon && <Icon width={iconWidth} height={iconHeight} />}
+      {Icon && <Icon />}
       {text && (
         <span
           className={'text'}
