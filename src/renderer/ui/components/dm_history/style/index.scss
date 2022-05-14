@@ -2,14 +2,12 @@
 .dm-history {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   border: 1px solid $bordercolor;
   box-sizing: border-box;
   border-radius: 17px;
   padding: 5px 10px;
   gap: 10px;
 
-  > ::-webkit-scrollbar { display:none; }
   overflow: hidden;
 
   > .header {
@@ -38,7 +36,6 @@
   }
   > .lastDmMessages-container {
     display: flex;
-    align-items: stretch;
     overflow-y: scroll;
     flex-direction: column;
     gap: 15px;

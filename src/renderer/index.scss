@@ -36,3 +36,15 @@ body,
   //box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.25);
   border-radius: 11vh;
 }
+div{
+  &::-webkit-scrollbar-thumb {
+    visibility: hidden;
+    transition: 1s all linear;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      visibility: visible;
+      transition: 1s all linear;
+    }
+  }
+}
