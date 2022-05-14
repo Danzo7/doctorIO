@@ -7,11 +7,13 @@
 * {
   box-sizing: border-box;
   user-select: none;
-  font-family: 'Sarabun';
+  font-family: 'Sarabun',Arial,sans-serif;
   color: $white;
   scrollbar-color: $hotpurple transparent ;
   scrollbar-width: thin;
 }
+:any-link{ text-decoration: none; }
+
 body,
 #app-mount {
   display: flex;
