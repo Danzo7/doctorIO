@@ -1,0 +1,7 @@
+@use '~styles/appColors' as *;
+.contact {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    flex-grow: 1;
+}

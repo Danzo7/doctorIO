@@ -4,7 +4,7 @@ import ContactItem from './ContactItem';
 import profile from '@assets/pictures/test.png';
 //👇 This default export determines where your story goes in the story list
 export default {
-  title: 'ContactItem',
+  title: 'Contact/ContactItem',
   component: ContactItem,
 };
 const Template: Story<ComponentProps<typeof ContactItem>> = (args) => (

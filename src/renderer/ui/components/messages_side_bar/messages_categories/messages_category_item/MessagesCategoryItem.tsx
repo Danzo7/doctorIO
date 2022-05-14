@@ -3,8 +3,8 @@ import { FunctionComponent, SVGProps } from 'react';
 interface MessagesCategoryItemProps {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   categoryName: string;
-  selected: boolean;
-  onSelect: () => void;
+  selected?: boolean;
+  onSelect?: () => void;
 }
 export default function MessagesCategoryItem({
   Icon,

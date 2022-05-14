@@ -1,0 +1,20 @@
+@use '~styles/appColors' as *;
+.contact-tab-menu {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid $bordercolor;
+    align-items: center;
+
+    > .messages-category-container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+        > .sep {
+            border-right: 1px solid $bordercolor;
+            align-self: stretch;
+        }
+    }
+}
