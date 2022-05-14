@@ -62,9 +62,12 @@ interface MessagesSideBarProps {}
 export default function MessagesSideBar({}: MessagesSideBarProps) {
   return (
     <div className="messages-side-bar">
-      <ConversationSearch />
-      <MessagesCategories categories={categories} />
-      <DmHistory lastDmMessage={lastDmMessage} />
+      {/* add new div for content just for organizing */}
+      <div className="content">
+        <ConversationSearch />
+        <MessagesCategories categories={categories} />
+        <DmHistory lastDmMessage={lastDmMessage} />
+      </div>
     </div>
   );
 }

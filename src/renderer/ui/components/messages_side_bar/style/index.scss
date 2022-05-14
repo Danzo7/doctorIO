@@ -1,12 +1,17 @@
 @use '~styles/appColors' as *;
 .messages-side-bar {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 25px 15px ;
-    gap: 25px;
+    flex-direction: row;
     background: $lighterbackground;
-    border-radius: 17px;
-    width :30%;
-    height: 95vh;
-}
+    border-radius: 1.5vw;
+    width :340px;
+
+    >.content{
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding:5% ;
+        gap: 25px;
+        border-radius: 17px;
+        overflow: hidden;
+    }}

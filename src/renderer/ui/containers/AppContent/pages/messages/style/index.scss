@@ -1,9 +1,9 @@
 @use '~styles/appColors' as *;
 .messages {
     display: flex;
-
     align-items: stretch;
     flex-direction: row;
     flex-grow: 1;
     gap: 1vw;
+    overflow: hidden;
 }
