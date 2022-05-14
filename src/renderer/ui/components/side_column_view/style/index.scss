@@ -34,17 +34,6 @@
     align-items: stretch;
     gap: 5px;
     overflow-y: scroll;
-    padding-right: 5px; //gap between scrollbar and column
-    &:hover {
-      &::-webkit-scrollbar-thumb {
-        visibility: visible;
-        transition: 1s all linear;
-      }
-    }
-
-    &::-webkit-scrollbar-thumb {
-      visibility: hidden;
-      transition: 1s all linear;
-    }
+    padding: 0;
   }
 }
