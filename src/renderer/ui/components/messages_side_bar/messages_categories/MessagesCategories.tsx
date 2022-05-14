@@ -8,11 +8,11 @@ interface MessagesCategoriesProps {}
 export default function MessagesCategories({}: MessagesCategoriesProps) {
   const categories = [
     {
-      Icon: Doctor,
+      Icon: Nurse,
       categoryName: 'Clinic',
     },
     {
-      Icon: Nurse,
+      Icon: Doctor,
       categoryName: 'Public',
     },
   ];
