@@ -1,5 +1,6 @@
 import MessagesSideBar from '@components/messages_side_bar';
 import Chat from './pages/chat';
+import Contact from './pages/contact';
 import './style/index.scss';
 interface MessagesProps {}
 export default function Messages({}: MessagesProps) {
@@ -7,7 +8,7 @@ export default function Messages({}: MessagesProps) {
     <div className="messages">
       {/**Replace with messagesSidebar */}
       <MessagesSideBar />
-      <Chat />
+      <Contact />
     </div>
   );
 }
