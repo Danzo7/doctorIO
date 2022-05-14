@@ -22,6 +22,7 @@ interface TextButtonProps {
   height?: number | string;
   type?: 'button' | 'submit' | 'reset' | undefined;
   disabled?: boolean;
+  alignment?: 'center' | 'end' | 'flex-end' | 'flex-start' | 'start';
 }
 function TextButton({
   text,
@@ -44,6 +45,7 @@ function TextButton({
   type,
   activeBorderColor,
   disabled = false,
+  alignment,
 }: TextButtonProps) {
   return (
     <button
@@ -52,7 +54,7 @@ function TextButton({
       css={{
         backgroundColor: !disabled ? backgroundColor : colors.silver_gray,
         border: `${borderColor} 1px solid`,
-
+        justifyContent: alignment,
         borderRadius: radius,
         padding: padding,
         width: width,
@@ -89,9 +91,8 @@ function TextButton({
       disabled={disabled}
     >
       {children}
-      {Icon ? (
-        <Icon />
-      ) : (
+      {Icon && <Icon />}
+      {text && (
         <span
           className={'text'}
           css={{
