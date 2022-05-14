@@ -1,32 +1,28 @@
-import color from '@assets/styles/color';
-import TextButton from '@components/buttons/text_button';
 import TabMenu from '@components/tab_menu';
-import { FunctionComponent, SVGProps } from 'react';
+import Doctor from 'toSvg/doctor_icon.svg?icon';
+import Nurse from 'toSvg/nurse_icon.svg?icon';
+
 import './style/index.scss';
 interface ContactTabMenuProps {
-  messagesCategoryIcon: FunctionComponent<SVGProps<SVGSVGElement>>;
-  messagesCategoryName: string;
+  category: 'public' | 'clinic';
+  filters: string[];
+  onChanged?: (selected: number) => void;
 }
 export default function ContactTabMenu({
-  messagesCategoryIcon,
-  messagesCategoryName,
+  category,
+  filters: filter,
+  onChanged,
 }: ContactTabMenuProps) {
   return (
     <div className="contact-tab-menu">
-      <div className="messages-category-container">
-        <TextButton
-          text={messagesCategoryName}
-          Icon={messagesCategoryIcon}
-          fontColor={color.white}
-          fontSize={17}
-          fontWeight={600}
-          iconWidth={30}
-          iconHeight={30}
-          padding={0}
-        />
-        <div className="sep" />
-      </div>
-      <TabMenu textList={['OnLine', 'All']} borderBottom={false} />
+      {category === 'public' ? (
+        <Doctor css={{ width: 25, height: 'auto' }} />
+      ) : (
+        <Nurse css={{ width: 25, height: 'auto' }} />
+      )}
+      <span>{category}</span>
+      <div className="sep" />
+      <TabMenu textList={filter} borderBottom={false} onChanged={onChanged} />
     </div>
   );
 }

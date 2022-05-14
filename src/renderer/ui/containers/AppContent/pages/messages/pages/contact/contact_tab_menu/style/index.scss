@@ -6,15 +6,12 @@
     padding-bottom: 15px;
     border-bottom: 1px solid $bordercolor;
     align-items: center;
+    >span{
+        font-size: 17;
+        font-weight: 600; }
 
-    > .messages-category-container {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-
-        > .sep {
-            border-right: 1px solid $bordercolor;
-            align-self: stretch;
-        }
+    > .sep {
+        border-right: 1px solid $bordercolor;
+        align-self: stretch;
     }
 }

@@ -10,7 +10,4 @@ const Template: Story<ComponentProps<typeof ContactTabMenu>> = (args) => (
   <ContactTabMenu {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = {
-  messagesCategoryIcon: Doctor,
-  messagesCategoryName: 'Clinic',
-};
+FirstStory.args = {};
