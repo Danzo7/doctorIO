@@ -7,6 +7,7 @@ import ChatAddButton from '@components/buttons/chat_add_button';
 import InputField from '@components/inputs/input_field';
 import ContentMessage from './content_message';
 import client from '@assets/pictures/test.png';
+import { useParams } from 'react-router-dom';
 
 interface ChatProps {}
 export default function Chat({}: ChatProps) {
@@ -38,8 +39,11 @@ export default function Chat({}: ChatProps) {
     },
   ];
   const sepPos = 2;
+  const { dmId } = useParams();
+
   return (
     <div className="chat">
+      {dmId}
       <div className="chat-header">
         <MemberStatus memberFullName={'John Doe'} status={true} />
         <IconicButton

@@ -16,7 +16,7 @@ function AppContent({}: AppContentProps) {
 
         {/* lazy route example */}
         <Route
-          path="messages"
+          path="messages/*"
           element={
             <Suspense fallback={<>Loading</>}>
               <Messages />
