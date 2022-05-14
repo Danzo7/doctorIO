@@ -12,7 +12,6 @@ const Template: Story<ComponentProps<typeof ContactList>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   contactType: 'ONLINE',
-  numContact: 20,
   contactList: [
     {
       status: true,

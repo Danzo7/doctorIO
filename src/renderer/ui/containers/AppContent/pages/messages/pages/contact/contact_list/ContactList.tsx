@@ -2,18 +2,16 @@ import ContactItem from './contact_item';
 import './style/index.scss';
 interface ContactListProps {
   contactType: string;
-  numContact: number;
   contactList: any[];
 }
 export default function ContactList({
   contactType,
-  numContact,
   contactList = [],
 }: ContactListProps) {
   return (
     <div className="contact-list">
       <span>
-        {contactType}--{numContact}{' '}
+        {contactType}--{contactList.length}
       </span>
       <div className="contact-container">
         {contactList.map(({ fullName, imgSrc, status }) => (
