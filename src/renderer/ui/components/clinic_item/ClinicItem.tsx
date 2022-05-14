@@ -1,7 +1,7 @@
 import './style/index.scss';
 import Menu from 'toSvg/threedots.svg';
 import Clinic from 'toSvg/clinic.svg?icon';
-import MedicalAssistant from 'toSvg/medicalAssistant.svg';
+import MedicalAssistant from 'toSvg/nurse_icon.svg';
 import Patient from 'toSvg/patient.svg';
 import Union from 'toSvg/server_state.svg';
 import colors from '@colors';
