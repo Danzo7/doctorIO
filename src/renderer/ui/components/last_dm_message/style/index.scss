@@ -43,6 +43,11 @@
       color: $white;
     }
   }
+  &.selected{
+    background-color: $secondarycolor;
+    >.info-container> span {
+      color: $white;
+    }}
   &:active{
     @include lighter;
   }

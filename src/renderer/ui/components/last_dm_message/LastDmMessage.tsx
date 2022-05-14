@@ -14,7 +14,12 @@ export default function LastDmMessage({
   id,
 }: LastDmMessageProps) {
   return (
-    <NavLink to={id.toString()} className="last-dm-message">
+    <NavLink
+      to={id.toString()}
+      className={({ isActive }) =>
+        ` last-dm-message${isActive ? ' selected' : ''}`
+      }
+    >
       <UserProfileStatus imgSrc={imgSrc} status={status} width={35} />
       <div className="info-container">
         <span>Mahmoud Benaissa</span>
