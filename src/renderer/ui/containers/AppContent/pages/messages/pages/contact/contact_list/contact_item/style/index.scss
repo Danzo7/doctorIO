@@ -8,13 +8,6 @@
   height: 52px;
   border-radius: 17px;
 
-  &:hover {
-    background: $darkerseccolor;
-    > .avatars-container {
-      visibility: visible;
-    }
-  }
-
   > .info-container {
     gap: 1vw;
     display: flex;
@@ -28,10 +21,15 @@
     }
   }
   > .avatars-container {
-    visibility: hidden;
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     gap: 1vw;
+  }
+  &:hover {
+    background: $darkerseccolor;
+    > .avatars-container {
+      display: flex;
+    }
   }
 }
