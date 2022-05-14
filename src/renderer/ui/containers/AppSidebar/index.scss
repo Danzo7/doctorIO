@@ -6,7 +6,7 @@
   width: 25%;
   display: flex;
   flex-direction: row-reverse;
-  align-items: center;
+  align-items: stretch;
   max-width: 22%;
   transition: max-width 0.2s;
   > .control {
@@ -43,7 +43,6 @@
     background: $lighterbackground;
     border-radius: 1.5vw;
     width: 95%;
-    height: 100%;
     .content {
       transition: opacity 0.1s;
       height: 100%;
@@ -64,7 +63,18 @@
   &.minimize {
     max-width: 0;
     padding: 0;
+    > .control {
+      transition: padding 0.2s;
+      margin: 0;
 
+      animation: none;
+      padding: 5px;
+      height: 100%;
+      width: auto;
+      > svg {
+        transform: rotate(90deg);
+      }
+    }
     &:hover {
       > .control {
         padding: 10px;
@@ -81,23 +91,10 @@
         opacity: 0;
       }
     }
-    > .control {
-      transition: padding 0.2s;
-      margin: 0;
-
-      animation: none;
-      padding: 5px;
-      height: 100%;
-      width: auto;
-      > svg {
-        transform: rotate(90deg);
-      }
-    }
   }
 
   @keyframes bubble {
-    from {
-    }
+
     50% {
       padding: 10px;
     }
@@ -108,8 +105,7 @@
     }
   }
   @keyframes bubble2 {
-    from {
-    }
+
     50% {
       padding: 10px;
     }
