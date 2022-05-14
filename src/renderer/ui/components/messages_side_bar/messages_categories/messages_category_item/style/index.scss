@@ -1,4 +1,5 @@
 @use '~styles/appColors' as *;
+@use '~styles/effects' as *;
 .messages-category-item {
     display: flex;
     flex-direction: row;
@@ -9,14 +10,27 @@
     align-self: stretch;
     flex-grow: 1;
     transition: background-color 0.2s;
-
-    &:hover {
-        background-color: $bordercolor;
-    }
-
     > span {
         font-weight: 600;
-        font-size: 19px;
-        color:$white;
+        font-size: 18px;
+        color:$textgray;
+    }
+    >svg>path{
+        fill:$textgray;
+    }
+    &.selected{
+        background-color: $secondarycolor;
+        >svg>path{
+            fill:$white;
+        }
+        > span {
+            color:$white;
+        }
+    }
+    &:hover {
+        background-color: $secondarycolor;
+    }
+    &:active{
+        @include lighter;
     }
 }

@@ -1,6 +1,5 @@
 import './style/index.scss';
 import { FunctionComponent, SVGProps } from 'react';
-import color from '@assets/styles/color';
 interface MessagesCategoryItemProps {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   categoryName: string;
@@ -15,8 +14,7 @@ export default function MessagesCategoryItem({
 }: MessagesCategoryItemProps) {
   return (
     <div
-      className="messages-category-item"
-      css={{ backgroundColor: selected ? color.border_color : undefined }}
+      className={`messages-category-item${selected ? ' selected' : ''}`}
       onClick={onSelect}
     >
       <Icon width={18} height={21} />
