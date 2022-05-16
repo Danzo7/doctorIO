@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import AppointmentHistoryItem from './AppointmentHistoryItem';
 export default {
-  title: 'AppointmentHistoryItem',
+  title: 'AppointmentHistory/AppointmentHistoryItem',
   component: AppointmentHistoryItem,
 };
 const Template: Story<ComponentProps<typeof AppointmentHistoryItem>> = (

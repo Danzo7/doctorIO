@@ -1,0 +1,24 @@
+@use '~styles/appColors' as *;
+.appointment-history-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 15px ;
+    gap: 15px;
+    border: 1px solid $bordercolor;
+    border-radius: 17px;
+    align-self: stretch;
+    flex-grow: 1;
+
+    > span {
+        font-weight: 400;
+        font-size: 18px;
+        color: $white;
+    }
+
+    > .historyList-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
