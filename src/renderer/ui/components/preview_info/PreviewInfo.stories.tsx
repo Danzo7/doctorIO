@@ -11,7 +11,7 @@ const Template: Story<ComponentProps<typeof PreviewInfo>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   title: 'Patient',
-  previewInfoObj: {
+  data: {
     Name: 'John Brown',
     dateOfBirth: '1998/04/25 (24yo)',
     FirstVisit: '2022/05/20 ',
