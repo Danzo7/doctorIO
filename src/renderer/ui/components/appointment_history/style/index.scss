@@ -1,0 +1,43 @@
+@use '~styles/appColors' as *;
+.appointment-history {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-radius: 9px;
+    flex-grow: 1;
+    transition: all 0.2s;
+
+    > .appointment-history-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        > span {
+            font-weight: 600;
+            font-size: 14px;
+            color: $textgray;
+
+            +span {
+                font-weight: 400;
+                font-size: 12px;
+            }
+        }
+    }
+    > .appointment-history-button {
+        opacity: 0;
+    }
+
+    &:hover {
+        background: $secondarycolor;
+
+        > .appointment-history-info > span {
+            color: $white;
+        }
+
+        > .appointment-history-button {
+            opacity: 1;
+        }
+    }
+}
