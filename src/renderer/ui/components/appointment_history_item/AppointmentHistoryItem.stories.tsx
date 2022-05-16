@@ -1,13 +1,13 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
-import AppointmentHistory from './AppointmentHistory';
+import AppointmentHistoryItem from './AppointmentHistoryItem';
 export default {
-  title: 'AppointmentHistory',
-  component: AppointmentHistory,
+  title: 'AppointmentHistoryItem',
+  component: AppointmentHistoryItem,
 };
-const Template: Story<ComponentProps<typeof AppointmentHistory>> = (args) => (
-  <AppointmentHistory {...args} />
-);
+const Template: Story<ComponentProps<typeof AppointmentHistoryItem>> = (
+  args,
+) => <AppointmentHistoryItem {...args} />;
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   appointmentDate: '28 Feb 2021',

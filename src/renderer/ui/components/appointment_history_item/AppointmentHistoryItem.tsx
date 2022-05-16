@@ -2,16 +2,16 @@ import IconicButton from '@components/buttons/iconic_button';
 import './style/index.scss';
 import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 import color from '@assets/styles/color';
-interface AppointmentHistoryProps {
+interface AppointmentHistoryItemProps {
   appointmentDate: string;
   appointmentDescription: string;
   onPress: () => void;
 }
-export default function AppointmentHistory({
+export default function AppointmentHistoryItem({
   appointmentDate,
   appointmentDescription,
   onPress,
-}: AppointmentHistoryProps) {
+}: AppointmentHistoryItemProps) {
   return (
     <div className="appointment-history">
       <div className="appointment-history-info">
