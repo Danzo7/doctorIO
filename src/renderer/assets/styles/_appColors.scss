@@ -1,17 +1,19 @@
-$coldred: #ff4b59;
-$background: #23315e;
-$lighterbackground: #2c3964;
-$coldblue: #01b9ca;
-$hotred: #f44336;
-$goodgreen: #0acf83;
-$secondarycolor: #344175;
-$darkerseccolor: #29336a;
-$bordercolor: #3c4b7e;
-$hotpurple: #626ed4;
-$silvergray: #646d8d;
-$white: #ffffff;
-$textgray: #bdbdbd;
-$goodblack: #18191c;
-$warmorange: #f2994a;
-$darker: #00000020;
-$light: #ffffff20;
+$coldred: var(--cold-red);
+$background: var(--background);
+$lighterbackground: var(--lighter-background);
+$coldblue: var(--cold-blue);
+$hotred: var(--hot-red);
+$goodgreen: var(--good-green);
+$secondarycolor: var(--secondary-color);
+$darkerseccolor: var(--darker-secondary-color);
+$bordercolor: var(--border-color);
+$hotpurple:var(--hot-purple);
+$silvergray: var(--silver-gray);
+$white: var(--white);
+$textgray: var(--text-gray);
+$goodblack: var(--good-black);
+$warmorange:var(--warm-orange);
+$darker: var(--darker);
+$light: var(--light);
+//todo: add text colors(text-primary,text-secondary,text-accent) with the values of white,textgray,silverGray for the default theme
+//todo:& replace every color attribute with text colors instead
