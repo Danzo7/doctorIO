@@ -30,6 +30,7 @@
     "redhat.vscode-yaml",
     "streetsidesoftware.code-spell-checker",
     "stylelint.vscode-stylelint",
-    "csstools.postcss"
+    "csstools.postcss",
+    "bradlc.vscode-tailwindcss"
   ]
 }
