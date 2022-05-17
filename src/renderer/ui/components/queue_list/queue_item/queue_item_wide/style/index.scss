@@ -24,7 +24,14 @@
     padding-left: 20%;
     width: 100%;
     gap: 10px;
-    .pat-info {
+    >.buttons-hover-lock {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+    }
+
+    > .pat-info {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
