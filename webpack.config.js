@@ -45,7 +45,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
           //SCSS files
           //load sass files and ignore module extension
           {
-            test: /\.s(a|c)ss$/,
+            test: /\.s?(a|c)ss$/,
             sideEffects: true,
             exclude: /\.module.(s(a|c)ss)$/,
             use: [
