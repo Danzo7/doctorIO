@@ -6,17 +6,22 @@ const vmin = require('postcss-vmin');
 const pixrem = require('pixrem');
 const will_change = require('postcss-will-change');
 const cssnano = require('cssnano');
-
+const tailwindcss = require('tailwindcss');
+const mode = process.env.mode;
 module.exports = {
   syntax: 'postcss-scss',
-   plugins: [
-    will_change,
-    autoprefixer,
-    color_rgba_fallback,
-    opacity,
-  //  pseudoelements,
-    vmin,
-    pixrem,
-    cssnano,
-  ],
+  plugins:
+    mode === 'development'
+      ? [tailwindcss]
+      : [
+          will_change,
+          tailwindcss,
+          autoprefixer,
+          color_rgba_fallback,
+          opacity,
+          //  pseudoelements,
+          vmin,
+          pixrem,
+          cssnano,
+        ],
 };

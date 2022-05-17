@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-
+const webpack = require('webpack');
 module.exports = ({ mode } = { mode: process.env.mode }) => {
   const isDevelopment = mode === 'development';
   const isProduction = mode === 'production';
@@ -55,7 +55,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
                 options: { sourceMap: true, importLoaders: 1 },
               },
 
-              isProduction && 'postcss-loader',
+              'postcss-loader',
 
               { loader: 'sass-loader', options: { sourceMap: true } },
             ].filter(Boolean),
@@ -72,7 +72,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
                 options: { sourceMap: true, importLoaders: 1, modules: true },
               },
 
-              isProduction && 'postcss-loader',
+              'postcss-loader',
 
               { loader: 'sass-loader', options: { sourceMap: true } },
             ].filter(Boolean),
@@ -147,6 +147,10 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       new MiniCssExtractPlugin({
         filename: isDevelopment ? '[name].css' : '[name].[contenthash].css',
         chunkFilename: isDevelopment ? '[id].css' : '[id].[contenthash].css',
+      }),
+      new webpack.DefinePlugin({
+        //Setting environment variables
+        'process.env.NODE_ENV': JSON.stringify('development'),
       }),
     ],
 

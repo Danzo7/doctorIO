@@ -29,6 +29,7 @@
     "redhat.vscode-xml",
     "redhat.vscode-yaml",
     "streetsidesoftware.code-spell-checker",
-    "stylelint.vscode-stylelint"
+    "stylelint.vscode-stylelint",
+    "csstools.postcss"
   ]
 }

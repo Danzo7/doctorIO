@@ -17,5 +17,6 @@
       "source.fixAll.stylelint": true
     }
   },
-  "stylelint.validate": ["css", "scss", "sass"]
+  "stylelint.validate": ["css", "scss", "sass"],
+  "files.associations": { "*.scss": "postcss" }
 }
