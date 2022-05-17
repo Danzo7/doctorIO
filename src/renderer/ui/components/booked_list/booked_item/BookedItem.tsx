@@ -1,7 +1,8 @@
 import './style/index.scss';
 import Panding from 'toSvg/pending.svg';
 import InQueue from 'toSvg/in_queue.svg';
-import Menu from 'toSvg/menu.svg';
+import threeDots from 'toSvg/threedots.svg?icon';
+import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 
 interface BookedItemProps {
   name: string;
@@ -29,9 +30,7 @@ function BookedItem({ name, bookTime, state }: BookedItemProps) {
           </div>
         )}
       </div>
-      <div className="option-menu">
-        <Menu />
-      </div>
+      <SquareIconButton svg={threeDots} />
     </div>
   );
 }

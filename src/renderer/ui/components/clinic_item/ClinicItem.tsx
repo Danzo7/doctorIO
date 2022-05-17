@@ -1,10 +1,11 @@
 import './style/index.scss';
-import Menu from 'toSvg/threedots.svg';
+import threeDots from 'toSvg/threedots.svg?icon';
 import Clinic from 'toSvg/clinic.svg?icon';
 import MedicalAssistant from 'toSvg/nurse_icon.svg';
 import Patient from 'toSvg/patient.svg';
 import Union from 'toSvg/server_state.svg';
 import colors from '@colors';
+import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 interface TimeToClose {
   hour: number;
   min: number;
@@ -42,7 +43,7 @@ export default function ClinicItem({
           }}
           className="option-menu"
         >
-          <Menu />
+          <SquareIconButton svg={threeDots} />
         </div>
       </div>
       <div className="time-container">
