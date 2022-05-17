@@ -22,7 +22,11 @@ function MembersPreview({
   const [hideFooter, setHideFooter] = useState(true);
   const addRole = () => {};
   return (
-    <div className={`preview-container${hideFooter ? ' hidden' : ''}`}>
+    <div
+      className={`preview-container${
+        hideFooter ? ' preview-container-hidden' : ''
+      }`}
+    >
       <div className="members-preview">
         <UserProfileStatus
           imgSrc={imgSrc}
