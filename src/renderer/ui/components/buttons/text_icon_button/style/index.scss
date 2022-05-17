@@ -2,38 +2,23 @@
 @use '~styles/constants' as *;
 @use '~styles/effects' as effects;
 
-.text-icon-button {
-  color: $white;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.text-icon-button >button{
+  gap:0;
   padding: 5px;
-  height: fit-content;
-  border-radius: 5px;
-  width: fit-content;
-  cursor: pointer;
-
-  &:hover > .text,
-  &.active > .text {
-    transition: width 0.2s;
-
-    width: 100%;
-    > span {
-      display: block;
-      white-space: nowrap;
-    }
-  }
-  > .text {
-    transition: width 0.2s;
-
-    display: flex;
-    width: 0;
+  > span {
+    transition: max-width 0.2s;
+    max-width: 0;
     font-style: normal;
-    font-weight: 700;
     font-size: 12px;
     align-items: center;
-    > span {
-      display: none;
-    }
+    visibility: hidden;
+    white-space: nowrap;
+  }
+  &:hover >  span {
+    transition: max-width 0.2s;
+    max-width: 100px;
+    width: 100%;
+    visibility: visible;
+    white-space: nowrap;
   }
 }

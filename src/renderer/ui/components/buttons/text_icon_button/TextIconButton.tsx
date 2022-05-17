@@ -1,40 +1,21 @@
 import { FunctionComponent, SVGProps } from 'react';
+import TextButton from '../text_button';
 import './style/index.scss';
 
 interface TextIconButtonProps {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   text: string;
   color?: string;
-  startFocus?: boolean;
-  id?: number;
-  onMouseOver?: (a: number) => void;
   onPress?: () => void;
 }
 
-function TextIconButton({
-  Icon,
-  text,
-  color,
-  startFocus,
-  onMouseOver,
-  onPress,
-  id,
-}: TextIconButtonProps) {
+function TextIconButton({ Icon, text, color, onPress }: TextIconButtonProps) {
   return (
-    <div
-      onClick={onPress}
-      onMouseEnter={() =>
-        id != undefined && onMouseOver != undefined
-          ? onMouseOver(id)
-          : undefined
-      }
-      className={`text-icon-button${startFocus ? ' active' : ''}`}
-      css={{ backgroundColor: color }}
-    >
-      <div className="text">
+    <div className="text-icon-button">
+      <TextButton backgroundColor={color} onPress={onPress}>
         <span>{text}</span>
-      </div>
-      {Icon && <Icon />}
+        {<Icon />}
+      </TextButton>
     </div>
   );
 }
