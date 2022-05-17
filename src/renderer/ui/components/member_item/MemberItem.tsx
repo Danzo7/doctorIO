@@ -1,9 +1,10 @@
 import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import IsOwner from 'toSvg/host.svg';
-import Menu from 'toSvg/menu.svg';
+import threeDots from 'toSvg/threedots.svg?icon';
 import SmallRolePreview from '@components/members_preview/small_role_preview';
 import AddButton from '@components/buttons/dark_add_button';
+import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 interface MemberItemProps {
   memberImgSrc: string;
   memberStatus: boolean;
@@ -56,7 +57,7 @@ export default function MemberItem({
       </div>
 
       <div className="option-menu">
-        <Menu />
+        <SquareIconButton svg={threeDots} />
       </div>
     </div>
   );
