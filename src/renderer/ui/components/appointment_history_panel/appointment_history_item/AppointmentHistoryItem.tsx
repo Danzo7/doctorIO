@@ -2,6 +2,7 @@ import IconicButton from '@components/buttons/iconic_button';
 import './style/index.scss';
 import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 import color from '@assets/styles/color';
+import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 interface AppointmentHistoryItemProps {
   appointmentDate: string;
   appointmentDescription: string;
@@ -19,13 +20,7 @@ export default function AppointmentHistoryItem({
         <span>{appointmentDescription}</span>
       </div>
       <div className="appointment-history-button">
-        <IconicButton
-          Icon={AppointmentHistoryIcon}
-          backgroundColor={color.light}
-          iconSize={18}
-          width={50}
-          onPress={onPress}
-        />
+        <SquareIconButton svg={AppointmentHistoryIcon} />
       </div>
     </div>
   );
