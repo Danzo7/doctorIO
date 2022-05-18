@@ -43,7 +43,6 @@ export default function Chat({}: ChatProps) {
 
   return (
     <div className="chat">
-      {dmId}
       <div className="chat-header">
         <MemberStatus memberFullName={'John Doe'} status={true} />
         <IconicButton
