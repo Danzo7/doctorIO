@@ -12,4 +12,5 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   appointmentDate: '28 Feb 2021',
   appointmentDescription: 'Sick from eating flesh',
+  onPressHistory: () => {},
 };

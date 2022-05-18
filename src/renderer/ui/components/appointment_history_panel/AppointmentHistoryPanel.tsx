@@ -17,7 +17,7 @@ export default function AppointmentHistoryPanel({
             <AppointmentHistoryItem
               appointmentDate={appointmentDate}
               appointmentDescription={appointmentDescription}
-              onPress={onPress}
+              onPressHistory={onPress}
               key={appointmentDate} //we need to change this
             />
           ),

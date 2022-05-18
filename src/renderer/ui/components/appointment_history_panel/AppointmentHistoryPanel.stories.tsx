@@ -16,22 +16,22 @@ FirstStory.args = {
     {
       appointmentDate: '28 Feb 2021',
       appointmentDescription: 'Sick from eating flesh',
-      onPress: () => {},
+      onPressHistory: () => {},
     },
     {
       appointmentDate: '21 Feb 2021',
       appointmentDescription: 'Sick from eating flesh',
-      onPress: () => {},
+      onPressHistory: () => {},
     },
     {
       appointmentDate: '29 Feb 2021',
       appointmentDescription: 'Sick from eating flesh',
-      onPress: () => {},
+      onPressHistory: () => {},
     },
     {
       appointmentDate: '22 Feb 2021',
       appointmentDescription: 'Sick from eating flesh',
-      onPress: () => {},
+      onPressHistory: () => {},
     },
   ],
 };
