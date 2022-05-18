@@ -16,7 +16,7 @@
   "scripts": {
     "devServer": "set mode=development&& webpack serve  --env mode=development",
     "productionWeb": "set mode=production&& webpack  --env mode=production",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "set mode=production&& start-storybook -p 6006",
     "realtimeServer": "http-server ./build/renderer",
     "startApp": "set mode=development&& electron-forge start ",
     "package": "set mode=production&& electron-forge package",
