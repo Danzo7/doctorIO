@@ -1,12 +1,12 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
-import DocumentPreview from './DocumentPreview';
+import DocumentPreviewItem from './DocumentPreviewItem';
 export default {
-  title: 'DocumentPreview',
-  component: DocumentPreview,
+  title: 'DocumentPreviewPanel/DocumentPreviewItem',
+  component: DocumentPreviewItem,
 };
-const Template: Story<ComponentProps<typeof DocumentPreview>> = (args) => (
-  <DocumentPreview {...args} />
+const Template: Story<ComponentProps<typeof DocumentPreviewItem>> = (args) => (
+  <DocumentPreviewItem {...args} />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
