@@ -1,14 +1,26 @@
+import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import PreviewList from '@components/preview_list';
 import AppointmentHistoryItem from './appointment_history_item';
 import './style/index.scss';
 interface AppointmentHistoryPanelProps {
   historyList: any[];
+  onViewAll: () => void;
 }
 export default function AppointmentHistoryPanel({
   historyList = [],
+  onViewAll,
 }: AppointmentHistoryPanelProps) {
   return (
-    <PreviewList title="Post appointment" buttonText="View all">
+    <PreviewList
+      title="Post appointment"
+      buttonNode={
+        <DarkLightCornerButton
+          title="View all"
+          onPress={onViewAll}
+          isActive={true}
+        />
+      }
+    >
       {historyList.map(
         ({ appointmentDate, appointmentDescription, onPressHistory }) => (
           <AppointmentHistoryItem
