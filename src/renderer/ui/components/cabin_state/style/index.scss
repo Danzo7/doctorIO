@@ -1,0 +1,41 @@
+@use '~styles/appColors' as *;
+@mixin commonStyle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 30px;
+    border-radius: 7px;
+
+    > span {
+        font-weight: 600;
+        font-size: 16px;
+    }
+}
+
+.cabin-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+
+    > .In-progress-div {
+        @include commonStyle();
+        border: 1px solid $bordercolor;
+        align-self: stretch;
+
+        > span {
+            color: $coldblue;
+        }
+    }
+    > .paused-div {
+        @include commonStyle();
+        border: 1px solid $hotred;
+
+        > span {
+            color: $hotred;
+        }
+    }
+}
