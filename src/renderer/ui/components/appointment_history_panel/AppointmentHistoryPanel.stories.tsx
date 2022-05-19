@@ -10,8 +10,6 @@ const Template: Story<ComponentProps<typeof AppointmentHistoryPanel>> = (
 ) => <AppointmentHistoryPanel {...args} />;
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  title: '  Medical history',
-
   historyList: [
     {
       appointmentDate: '28 Feb 2021',
@@ -25,6 +23,21 @@ FirstStory.args = {
     },
     {
       appointmentDate: '29 Feb 2021',
+      appointmentDescription: 'Sick from eating flesh',
+      onPressHistory: () => {},
+    },
+    {
+      appointmentDate: '22 Feb 2021',
+      appointmentDescription: 'Sick from eating flesh',
+      onPressHistory: () => {},
+    },
+    {
+      appointmentDate: '22 Feb 2021',
+      appointmentDescription: 'Sick from eating flesh',
+      onPressHistory: () => {},
+    },
+    {
+      appointmentDate: '22 Feb 2021',
       appointmentDescription: 'Sick from eating flesh',
       onPressHistory: () => {},
     },
