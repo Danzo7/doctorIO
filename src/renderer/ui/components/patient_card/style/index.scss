@@ -1,0 +1,18 @@
+@use '~styles/appColors' as *;
+.patient-card {
+    display: flex;
+    flex-direction: row;
+    padding: 10px ;
+    gap: 10px;
+    border: 1px solid $bordercolor;
+    flex-grow: 1;
+    border-radius: 20px;
+
+    > .key-value-items {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        flex-grow: 1;
+    }
+}
