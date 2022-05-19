@@ -1,0 +1,35 @@
+@use '~styles/appColors' as *;
+.preview-list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 5px 15px ;
+    gap: 15px;
+    border: 1px solid $bordercolor;
+    border-radius: 17px;
+    align-self: stretch;
+    flex-grow: 1;
+
+    > .preview-list-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-grow: 1;
+        align-items: baseline;
+        padding-right: 10px;
+
+        > span {
+            font-weight: 400;
+            font-size: 18px;
+            color: $white;
+        }
+    }
+    > .preview-list-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        max-height: 350px;
+        overflow-y: scroll;
+        padding-right: 10px;
+    }
+}
