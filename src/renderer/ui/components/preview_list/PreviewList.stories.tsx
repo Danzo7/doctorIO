@@ -13,7 +13,7 @@ const Template: Story<ComponentProps<typeof PreviewList>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   title: 'Medical history',
-  button: (
+  buttonNode: (
     <DarkLightCornerButton title="Add" isActive={true} onPress={() => {}} />
   ),
   children: (
