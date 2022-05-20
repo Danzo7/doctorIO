@@ -8,30 +8,24 @@
   box-sizing: border-box;
   border-radius: 20px;
   padding: 15px 30px;
-  width: fit-content;
+  width: 250px;
   gap: 20px;
-
-  > .header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  >span:first-child{
+    color: $textgray;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  >.backdrop{
+    display: none;
+    justify-content: center;
     align-items: center;
-    padding: 0px;
-    gap: 60px;
-    min-width: 200px;
-
-    > span {
-      font-weight: 600;
-      font-size: 15px;
-      color: $white;
-    }
-
-    > .option-menu {
-      padding: 5px ;
-      display: flex;
-      justify-content: center;
-      cursor: pointer;
-    }
+    background-color: $darker;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
   }
   > .time-container {
     display: flex;
@@ -81,6 +75,14 @@
           font-weight: 400;
           font-size: 14px;
         }
+      }
+    }
+  }
+  &:hover{
+    .backdrop{
+      display: flex;
+      +div ,+div+div{
+        filter: blur(4px);
       }
     }
   }

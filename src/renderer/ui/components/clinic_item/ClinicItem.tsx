@@ -1,66 +1,45 @@
 import './style/index.scss';
-import threeDots from 'toSvg/threedots.svg?icon';
 import Clinic from 'toSvg/clinic.svg?icon';
 import MedicalAssistant from 'toSvg/nurse_icon.svg';
 import Patient from 'toSvg/patient.svg';
-import Union from 'toSvg/server_state.svg';
-import colors from '@colors';
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-interface TimeToClose {
-  hour: number;
-  min: number;
-}
+import ServerState from 'toSvg/server_state.svg';
+import { color } from '@colors';
+import TextButton from '@components/buttons/text_button';
+
 interface ClinicItemProps {
   selected: boolean;
-  timeToClose: TimeToClose;
+  timeToClose: string;
   numOfAssistants: number;
   numOfPatients: number;
-  onClick: () => void;
+  onClick?: () => void;
+  isHost?: boolean;
 }
 export default function ClinicItem({
   selected,
   timeToClose,
   numOfAssistants,
   numOfPatients,
+  isHost = false,
   onClick,
 }: ClinicItemProps) {
   return (
-    <div
-      onClick={onClick}
-      className="clinic-item"
-      css={{
-        backgroundColor: !selected ? colors.secondary_color : undefined,
-        '&:hover': {
-          backgroundColor: !selected ? 'unset' : undefined,
-        },
-      }}
-    >
-      <div className="header">
-        <span>{selected ? 'Selected' : ''}</span>
-        <div
-          onClick={(event) => {
-            event.stopPropagation();
-          }}
-          className="option-menu"
-        >
-          <SquareIconButton svg={threeDots} />
-        </div>
+    <div onClick={onClick} className="clinic-item">
+      {selected && <span>Current</span>}
+      <div className="backdrop">
+        <TextButton
+          text={selected ? 'Setting' : 'Join...'}
+          fontSize={15}
+          fontColor={selected ? color.white : color.hot_red}
+          borderColor={color.border_color}
+          radius={7}
+          onPress={onClick}
+          backgroundColor={color.darkersec_color}
+        />
       </div>
       <div className="time-container">
         <Clinic />
         <span>Time to close</span>
-        <span>
-          {timeToClose.hour == 0 && '00'}
-          {timeToClose.hour > 0 && timeToClose.hour < 24
-            ? timeToClose.hour
-            : ''}
-          h:
-          {timeToClose.min >= 0 &&
-            timeToClose.min < 10 &&
-            `0${timeToClose.min}`}
-          {timeToClose.min >= 10 && timeToClose.min < 60 ? timeToClose.min : ''}
-          m
-        </span>
+        <span>{timeToClose}</span>
       </div>
       <div className="stats-container">
         <div className="info-container">
@@ -68,7 +47,9 @@ export default function ClinicItem({
           <span>{numOfAssistants}</span>
           <span>Online</span>
         </div>
-        <Union />
+        {isHost && (
+          <ServerState css={{ '>path': { fill: color.good_green } }} />
+        )}
         <div className="info-container">
           <Patient />
           <span>{numOfPatients}</span>

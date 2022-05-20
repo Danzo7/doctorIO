@@ -11,7 +11,7 @@ const Template: Story<ComponentProps<typeof ClinicItem>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   selected: false,
-  timeToClose: { hour: 12, min: 30 },
+  timeToClose: '12:00PM',
   numOfAssistants: 20,
   numOfPatients: 28,
 };
