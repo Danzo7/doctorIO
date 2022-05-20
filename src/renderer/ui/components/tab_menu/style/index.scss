@@ -1,13 +1,13 @@
 @use '~styles/appColors' as *;
-.tab-menu {
+.tab-menu{
   display: flex;
   flex-direction: row;
-  align-items: center;
-  flex-grow: 1;
-  gap: 10px;
-
-  &.border-bottom {
-    border-bottom: 1px solid $bordercolor;
-    padding: 0 0 10px 0;
+  padding: 10px;
+  .menu-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+    gap: 10px;
   }
 }

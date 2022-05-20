@@ -10,7 +10,7 @@ const Template: Story<ComponentProps<typeof TabMenu>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  textList: [
+  items: [
     'Overview',
     'Members',
     'Roles',
