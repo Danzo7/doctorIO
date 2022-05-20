@@ -6,9 +6,11 @@ import logo from 'toSvg/logo.svg?icon';
 import messages from 'toSvg/messages.svg?icon';
 import settings from 'toSvg/settings.svg?icon';
 import stats from 'toSvg/stats.svg?icon';
+import queue from 'toSvg/queue.svg?icon';
 export default {
   '/': home,
   'messages/@clinic': messages,
+  queue,
   stats,
   records,
   database,
