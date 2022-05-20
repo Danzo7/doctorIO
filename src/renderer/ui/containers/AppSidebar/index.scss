@@ -61,7 +61,7 @@
   }
 
   &.minimize {
-    max-width: 0;
+    max-width: 10px;
     padding: 0;
     > .control {
       transition: padding 0.2s;
@@ -69,7 +69,6 @@
 
       animation: none;
       padding: 5px;
-      height: 100%;
       width: auto;
       > svg {
         transform: rotate(90deg);
