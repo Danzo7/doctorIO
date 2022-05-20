@@ -23,7 +23,7 @@ export default function ClinicItem({
   onClick,
 }: ClinicItemProps) {
   return (
-    <div onClick={onClick} className="clinic-item">
+    <div className="clinic-item">
       {selected && <span>Current</span>}
       <div className="backdrop">
         <TextButton
