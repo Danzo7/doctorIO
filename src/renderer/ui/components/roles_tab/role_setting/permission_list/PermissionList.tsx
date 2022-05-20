@@ -19,7 +19,7 @@ export default function PermissionList({
             permissionName={permissionName}
             permissionDescription={permissionDescription}
             linkedPermission={linkedPermission}
-            disabled={disabled}
+            editable={disabled}
             key={permissionName}
           />
         ),

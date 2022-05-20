@@ -1,4 +1,4 @@
-import color from '@assets/styles/color';
+import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ToggleButton from '@components/buttons/toggle_button';
 import Icon from 'toSvg/link.svg?icon';
@@ -7,43 +7,32 @@ interface PermissionItemProps {
   permissionName: string;
   permissionDescription: string;
   linkedPermission?: string;
-  disabled?: boolean;
+  editable?: boolean;
 }
 export default function PermissionItem({
   permissionName,
   permissionDescription,
   linkedPermission,
-  disabled = false,
+  editable = false,
 }: PermissionItemProps) {
   return (
-    <div className="permission-item">
+    <div
+      className="permission-item"
+      css={editable ? { opacity: 0.3, cursor: 'not-allowed' } : null}
+    >
       <div className="permission-info">
         <div className="permission-text-container">
-          <span
-            css={{
-              color: disabled ? color.text_gray : color.white,
-            }}
-          >
-            {permissionName}
-          </span>
-          <span css={{ color: disabled ? color.text_gray : color.white }}>
-            {permissionDescription}
-          </span>
+          <span>{permissionName}</span>
+          <span>{permissionDescription}</span>
         </div>
         <div>
-          <ToggleButton disabled={disabled} />
+          <ToggleButton disabled={editable} isChecked={true} />
         </div>
       </div>
       {linkedPermission && (
         <div className="permission-linked">
           <div className={`left-linked`}>
-            <span
-              css={{
-                color: disabled ? color.text_gray : color.white,
-              }}
-            >
-              Linked To
-            </span>
+            <span>Linked To</span>
             <Icon />
             <div className="linked-permission-container">
               <span>{linkedPermission}</span>
@@ -51,14 +40,15 @@ export default function PermissionItem({
           </div>
           <TextButton
             text="Change dependent..."
-            fontColor={disabled ? color.text_gray : color.cold_red}
+            fontColor={colors.cold_red}
             fontSize={9}
             fontWeight={700}
-            backgroundColor={color.darkersec_color}
+            backgroundColor={colors.darkersec_color}
             radius={7}
-            borderColor={color.border_color}
-            afterBgColor={color.darkersec_color}
-            afterFontColor={disabled ? color.text_gray : color.cold_red}
+            borderColor={colors.border_color}
+            afterBgColor={colors.darkersec_color}
+            afterFontColor={colors.cold_red}
+            disabled={editable}
           />
         </div>
       )}

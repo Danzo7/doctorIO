@@ -13,6 +13,6 @@ FirstStory.args = {
   permissionName: 'Assistant',
   permissionDescription:
     '   people with this role will assist another role, mean they can only access to the dependent role permission',
-  disabled: false,
+  editable: false,
   linkedPermission: ' @Rythm#3722',
 };
