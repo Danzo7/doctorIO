@@ -5,21 +5,16 @@
   display: flex;
   align-items: center;
   padding: 2px;
-  &.disabled {
-    > .circle {
-      background-color: $textgray;
-    }
-    &.on {
-      svg > path {
-        fill: $white;
-      }
-    }
-    &.off {
-      svg > path {
-        fill: $silvergray;
-      }
-    }
+  > .circle {
+    transition: 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100%;
+    background-color: $white;
   }
+
   &.on {
     transition: 0.3s;
     justify-content: flex-end;
@@ -41,15 +36,21 @@
       animation: widePutin2 0.2s;
     }
   }
-
-  > .circle {
-    transition: 0.1s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border-radius: 100%;
-    background-color: $white;
+  &.disabled {
+    cursor: not-allowed;
+    > .circle {
+      background-color: $textgray;
+    }
+    &.on {
+      svg > path {
+        fill: $white;
+      }
+    }
+    &.off {
+      svg > path {
+        fill: $silvergray;
+      }
+    }
   }
 }
 
@@ -58,14 +59,10 @@
     width: 100%;
     border-radius: 200px;
   }
-  to {
-  }
 }
 @keyframes widePutin2 {
   from {
     width: 100%;
     border-radius: 200px;
-  }
-  to {
   }
 }
