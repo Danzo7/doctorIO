@@ -1,7 +1,7 @@
 import color from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ClinicItem from '@components/clinic_item';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './style/index.scss';
 interface ClinicsProps {
   selected: number;
@@ -28,6 +28,7 @@ const clinicsArray = [
   },
 ];
 export default function Clinics({ selected = 0 }: ClinicsProps) {
+  const navigate = useNavigate();
   return (
     <div className="clinics">
       <span>Clinics</span>
@@ -42,6 +43,9 @@ export default function Clinics({ selected = 0 }: ClinicsProps) {
               numOfPatients={numOfPatients}
               numOfAssistants={numOfAssistants}
               timeToClose={timeToClose}
+              onClick={() => {
+                if (selected === index) navigate('123', { replace: true });
+              }}
             />
           ),
         )}
