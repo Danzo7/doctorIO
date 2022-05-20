@@ -1,4 +1,3 @@
-import { strokeTypes } from '../svgList';
 import * as React from 'react';
 import './style/index.scss';
 import { NavLink } from 'react-router-dom';
@@ -20,10 +19,10 @@ function MenuOption({ items }: MenuOptionProps) {
               className={({ isActive }) =>
                 `menuItem${isActive ? ' isActive' : ''}`
               }
-              to={name === 'home' ? '/' : name}
+              to={name}
               draggable={false}
             >
-              <Svg className={strokeTypes[name]} />
+              <Svg />
             </NavLink>
           ),
       )}

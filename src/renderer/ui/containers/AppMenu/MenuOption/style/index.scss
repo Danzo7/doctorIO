@@ -22,12 +22,17 @@
     @include darken;
     border-radius: 0;
   }
-  > svg {
+
+  >svg {
     width: 100%;
     height: auto;
+    path {
+      stroke: $silvergray;
+    }
   }
+
   &.isActive {
-    background: #00000030;
+    background: $darker;
     border-radius: 200%;
     transition: 0.8s;
     &:active {
@@ -35,27 +40,8 @@
       border-radius: 0%;
     }
 
-    >svg {
-
-      &.stroke {
-        stroke: white;
-        path {
-          stroke: white;
-        }
-      }
-      &.fill {
-        fill: white;
-        path {
-          fill: white;
-        }
-      }
-      &.stroke-fill {
-        path {
-          fill: white;
-          stroke: transparent;
-          stroke-width: 4px;
-        }
-      }
+    >svg >path{
+      stroke: $white;
     }
   }
 }

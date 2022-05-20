@@ -7,8 +7,8 @@ import messages from 'toSvg/messages.svg?icon';
 import settings from 'toSvg/settings.svg?icon';
 import stats from 'toSvg/stats.svg?icon';
 export default {
-  home,
-  messages,
+  '/': home,
+  'messages/@clinic': messages,
   stats,
   history,
   database,
@@ -17,17 +17,3 @@ export default {
   logo,
 };
 export { home, messages, stats, history, database, clinic, settings, logo };
-type Strokes = {
-  [key: string]: string;
-};
-
-export const strokeTypes: Strokes = {
-  home: 'fill',
-  messages: 'stroke',
-  stats: 'stroke',
-  history: 'stroke',
-  database: 'fill',
-  clinic: 'stroke',
-  settings: 'stroke',
-  logo: 'fill',
-};
