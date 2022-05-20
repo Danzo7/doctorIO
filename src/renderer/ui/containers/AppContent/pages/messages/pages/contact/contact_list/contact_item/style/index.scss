@@ -7,7 +7,6 @@
   padding: 10px;
   height: 52px;
   border-radius: 17px;
-  transition: all 0.1s;
 
   > .info-container {
     gap: 1vw;
@@ -22,8 +21,7 @@
     }
   }
   > .avatars-container {
-    opacity: 0;
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     gap: 1vw;
@@ -31,7 +29,7 @@
   &:hover {
     background: $darkerseccolor;
     > .avatars-container {
-      opacity: 1;
+      display: flex;
     }
   }
 }

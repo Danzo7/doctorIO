@@ -3,21 +3,21 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding: 5px 15px ;
+    padding: 15px 10px ;
     gap: 15px;
     border: 1px solid $bordercolor;
     border-radius: 17px;
     align-self: stretch;
-    flex-grow: 1;
+    overflow: hidden;
 
     > .preview-list-header {
+
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        flex-grow: 1;
         align-items: baseline;
-        padding-right: 10px;
-
+        padding-left: 6px;
+        padding-right: 6px;
         > span {
             font-weight: 400;
             font-size: 18px;
@@ -28,8 +28,6 @@
         display: flex;
         flex-direction: column;
         gap: 5px;
-        max-height: 350px;
-        overflow-y: scroll;
-        padding-right: 10px;
+        overflow-y: auto;
     }
 }

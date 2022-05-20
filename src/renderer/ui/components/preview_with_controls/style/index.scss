@@ -4,10 +4,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 15px;
+    padding: 10px;
     border-radius: 9px;
     flex-grow: 1;
-    transition: all 0.1s;
 
     > .preview-spans{
         display: flex;
@@ -21,15 +20,14 @@
 
             +span {
                 font-weight: 400;
-                font-size: 11px;
+                font-size: 12px;
             }
         }
     }
     > .controls-container {
-        display: flex;
         flex-direction: row;
         gap: 5px;
-        opacity: 0;
+        display: none;
     }
 
     &:hover {
@@ -40,7 +38,7 @@
         }
 
         > .controls-container {
-            opacity: 1;
+            display: flex;
         }
     }
 }
