@@ -5,8 +5,13 @@
     align-items: stretch;
     gap: 40px;
     overflow: hidden;
-    >span{
-        font-size: 24;
-        font-weight: 600;
+    >div{
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        span:first-child{
+            flex-grow: 1;
+            font-size: 24;
+            font-weight: 600;}
     }
 }
