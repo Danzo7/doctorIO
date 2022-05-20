@@ -25,7 +25,7 @@ export default function NextPatient({
         patientNumber={patientNumber}
       />
       <TextButton
-        text="Invite in"
+        text="Start session"
         backgroundColor={color.good_green}
         width="100%"
         fontColor={color.white}
