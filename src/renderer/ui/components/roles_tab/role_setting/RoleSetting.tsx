@@ -7,7 +7,7 @@ interface RoleSettingProps {
 export default function RoleSetting({ permissionArray }: RoleSettingProps) {
   return (
     <div className="role-setting">
-      <TabMenu textList={['General', 'Permissions', 'Members']} />
+      <TabMenu items={['General', 'Permissions', 'Members']} />
       <PermissionList permissionArray={permissionArray} />
     </div>
   );

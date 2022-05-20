@@ -22,7 +22,13 @@ export default function ContactTabMenu({
       )}
       <span>{category}</span>
       <div className="sep" />
-      <TabMenu textList={filter} borderBottom={false} onChanged={onChanged} />
+      <TabMenu
+        items={filter}
+        borderBottom={false}
+        onChanged={({ index }) => {
+          onChanged?.(index);
+        }}
+      />
     </div>
   );
 }
