@@ -8,6 +8,8 @@
   align-items: center;
   gap: $gap;
   max-height: 200px;
+  background: $secondarycolor;
+  border-radius: 10px;
 
   .back-container {
     width: 100%;

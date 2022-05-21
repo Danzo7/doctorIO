@@ -1,5 +1,5 @@
 import BookedList from '@components/booked_list';
-import QueueList from '@components/queue_list';
+import AppointmentQueueSmall from '@components/appointment_queue_small';
 import { useState } from 'react';
 import Arrow from 'toSvg/arrow.svg?icon';
 import { Transition } from 'react-transition-group';
@@ -20,7 +20,7 @@ function AppSidebar({}: AppSidebarProps) {
               <div className="sidebar">
                 <div className={`content ${state}`}>
                   <SearchProfile imgSrc={test} />
-                  <QueueList></QueueList>
+                  <AppointmentQueueSmall></AppointmentQueueSmall>
                   <BookedList></BookedList>
                 </div>
               </div>

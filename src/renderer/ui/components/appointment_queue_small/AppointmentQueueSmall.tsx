@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
 import QueueItem from './queue_item';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import './style/index.scss';
 import NextIcon from 'toSvg/next.svg?icon';
 import PauseIcon from 'toSvg/pause.svg?icon';
 import ScrollView from './scroll_view';
 import ScrollController from './scroll_view/ScrollController';
 import IconicButton from '@components/buttons/iconic_button';
-import color from '@assets/styles/color';
+import colors from '@assets/styles/color';
 
-interface QueueListProps {}
+interface AppointmentQueueSmallProps {}
 
 const itemsL = [
   {
@@ -73,36 +73,37 @@ const itemsL = [
     number: 30,
   },
 ];
-const controller = new ScrollController();
 
-function QueueList({}: QueueListProps) {
+export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [selected, setSelected] = useState(-1);
   const [items, setItems] = useState(itemsL);
+  const controller = useRef(new ScrollController());
+
   function goToSelection(index: number) {
     if (selected > items.length - 1) return;
-    controller.scrollTo(index, selected);
+    controller.current.scrollTo(index, selected);
     setSelected(index);
   }
   return (
-    <div className="queue-list">
+    <div className="appointment-queue-small">
       <div className="header">
         <span>Appointment</span>
         <div className="control">
           <IconicButton
             Icon={NextIcon}
-            backgroundColor={color.cold_blue}
+            backgroundColor={colors.cold_blue}
             width={25}
             radius={7}
             iconSize={10}
             onPress={() => {
               setItems(items.slice(1, items.length));
               setSelected(-1);
-              controller.scrollTo(0, selected);
+              controller.current.scrollTo(0, selected);
             }}
           />
           <IconicButton
             Icon={PauseIcon}
-            backgroundColor={color.hot_red}
+            backgroundColor={colors.hot_red}
             width={25}
             radius={7}
             iconSize={10}
@@ -111,29 +112,28 @@ function QueueList({}: QueueListProps) {
       </div>
       <div className="queue-items">
         {items.length > 0 ? (
-          <ScrollView controller={controller} gap={10}>
-            {items.map(({ name, timeAgo, number }, index) => (
-              <li key={name + index}>
-                <QueueItem
-                  name={name}
-                  number={number}
-                  timeAgo={timeAgo}
-                  opened={selected == index}
-                  onClose={() => {
-                    if (selected == index) setSelected(-1);
-                  }}
-                  onPress={() => goToSelection(index)}
-                />
-              </li>
-            ))}
+          <ScrollView controller={controller.current} gap={10}>
+            {(c) => {
+              return items.map(({ name, timeAgo, number }, index) => (
+                <li key={name + index}>
+                  <QueueItem
+                    name={name}
+                    number={number}
+                    timeAgo={timeAgo}
+                    opened={selected == index}
+                    onClose={() => {
+                      if (selected == index) setSelected(-1);
+                    }}
+                    onPress={() => goToSelection(index)}
+                  />
+                </li>
+              ));
+            }}
           </ScrollView>
         ) : (
           <span>nothing...</span>
         )}
-        <div className="scrollbar"></div>
       </div>
     </div>
   );
 }
-
-export default QueueList;
