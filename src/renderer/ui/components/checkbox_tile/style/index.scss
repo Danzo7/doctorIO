@@ -1,0 +1,22 @@
+@use '~styles/appColors' as *;
+.checkbox-tile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    > .checkbox-tile-text-container{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        > span {
+            font-style: normal;
+            font-weight: 700;
+            + span {
+                font-weight: 500;
+                font-size: 15px;
+            }
+        }
+    }
+}
