@@ -5,7 +5,7 @@ interface ClinicProps {}
 export default function Clinic({}: ClinicProps) {
   return (
     <Routes>
-      <Route path="/all" element={<Clinics selected={1} />} />
+      <Route path="all" element={<Clinics selected={1} />} />
       <Route path="/*" element={<ClinicSettings />} />
     </Routes>
   );
