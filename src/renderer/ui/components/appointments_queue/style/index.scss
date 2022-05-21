@@ -1,3 +1,28 @@
 @use '~styles/appColors' as *;
 .appointments-queue {
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+    gap: 10px;
+    >.header{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0px;
+        gap: 10px;
+    }
+    >.content{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        >.queue-list{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            overflow: hidden;
+        }
+    }
 }
