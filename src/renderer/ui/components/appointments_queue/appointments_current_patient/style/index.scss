@@ -17,15 +17,17 @@
         gap: 5px;
         flex-grow: 1;
 
-        > span {
+        > span:first-child {
             font-weight: 400;
             font-size: 17px;
             color: $white;
+            white-space: nowrap;
 
             + span {
                 font-weight: 400;
                 font-size: 10px;
                 color: $textgray;
+                white-space: nowrap;
             }
         }
     }

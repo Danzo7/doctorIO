@@ -12,7 +12,7 @@ interface QueueItemWideProps {
   timeAgo: string;
   number: number;
   state?: string;
-  btnOnclick: () => void;
+  btnOnclick?: () => void;
 }
 
 function QueueItemWide({

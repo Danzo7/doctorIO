@@ -3,21 +3,21 @@ import * as React from 'react';
 import ScrollController from './ScrollController';
 import './style/index.scss';
 interface ScrollViewProps {
-  children: React.ReactNode[];
+  children: (controller: ScrollController) => React.ReactNode;
   gap?: number;
-  controller: ScrollController;
+  controller?: ScrollController;
 }
 export const ScrollView = ({
   children,
-  controller,
-  gap = controller.gap,
+  controller = new ScrollController(),
+  gap = controller?.gap,
 }: ScrollViewProps) => {
-  controller.gap = gap;
+  if (controller) controller.gap = gap ?? controller.gap;
   return (
     <div
       className="scroll-view"
       css={{ gap: gap }}
-      ref={controller.ref}
+      ref={controller?.ref}
       onWheel={(e) => {
         const direction = e.deltaY > 0 ? -1 < 0 : 0;
         e.currentTarget.scrollTo(
@@ -27,10 +27,7 @@ export const ScrollView = ({
         e.stopPropagation();
       }}
     >
-      {Children.map(children, (child) => {
-        return <>{child}</>;
-      })}
-      <div css={{ paddingLeft: 90 }}></div>
+      {children(controller)};<div css={{ paddingLeft: 90 }}></div>
     </div>
   );
 };
