@@ -5,6 +5,7 @@ import TextButton from '../text_button';
 interface IconicButtonProps {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   width?: number;
+  height?: number;
   backgroundColor?: string;
   afterBgColor?: string;
   activeBgColor?: string;
@@ -34,6 +35,7 @@ function IconicButton({
   iconColor,
   iconType,
   width = 40,
+  height,
   onPress,
   activeBgColor = color.darker,
   type,
@@ -47,7 +49,7 @@ function IconicButton({
       backgroundColor={backgroundColor}
       afterBgColor={afterBgColor}
       width={width}
-      height={width}
+      height={height ? height : width}
       padding={'unset'}
       radius={radius}
       activeBgColor={activeBgColor}
