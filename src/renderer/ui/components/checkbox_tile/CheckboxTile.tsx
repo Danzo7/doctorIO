@@ -6,7 +6,7 @@ interface CheckboxTileProps {
   secondaryText: string;
 }
 export default function CheckboxTile({
-  editable,
+  editable = true,
   primaryText,
   secondaryText,
 }: CheckboxTileProps) {

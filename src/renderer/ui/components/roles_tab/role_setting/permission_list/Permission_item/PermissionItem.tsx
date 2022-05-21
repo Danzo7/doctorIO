@@ -1,6 +1,7 @@
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ToggleButton from '@components/buttons/toggle_button';
+import CheckboxTile from '@components/checkbox_tile';
 import Icon from 'toSvg/link.svg?icon';
 import './style/index.scss';
 interface PermissionItemProps {
@@ -18,19 +19,18 @@ export default function PermissionItem({
   return (
     <div
       className="permission-item"
-      css={editable ? null : { opacity: 0.3, cursor: 'not-allowed' }}
+      css={editable ? null : { cursor: 'not-allowed' }}
     >
-      <div className="permission-info">
-        <div className="permission-text-container">
-          <span>{permissionName}</span>
-          <span>{permissionDescription}</span>
-        </div>
-        <div>
-          <ToggleButton disabled={!editable} isChecked={true} />
-        </div>
-      </div>
+      <CheckboxTile
+        primaryText={permissionName}
+        secondaryText={permissionDescription}
+        editable={editable}
+      />
       {linkedPermission && (
-        <div className="permission-linked">
+        <div
+          className="permission-linked"
+          css={editable ? null : { opacity: 0.3 }}
+        >
           <div className={`left-linked`}>
             <span>Linked To</span>
             <Icon />
