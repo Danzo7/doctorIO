@@ -1,0 +1,26 @@
+@use '~styles/appColors' as *;
+.logo-changer {
+    position: relative;
+    cursor: pointer;
+    width: fit-content;
+
+    > .logo-changer-small-indicator {
+        position: absolute;
+        top: 0px;
+        right: 0;
+        left: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: $textgray;
+        border-radius: 100%;
+        z-index: 1;
+    }
+
+    &:hover {
+        > .circle-avatar-wrapper {
+            opacity: 0.5;
+        }
+    }
+}
