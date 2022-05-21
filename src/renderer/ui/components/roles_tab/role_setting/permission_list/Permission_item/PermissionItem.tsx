@@ -13,12 +13,12 @@ export default function PermissionItem({
   permissionName,
   permissionDescription,
   linkedPermission,
-  editable = false,
+  editable = true,
 }: PermissionItemProps) {
   return (
     <div
       className="permission-item"
-      css={editable ? { opacity: 0.3, cursor: 'not-allowed' } : null}
+      css={editable ? null : { opacity: 0.3, cursor: 'not-allowed' }}
     >
       <div className="permission-info">
         <div className="permission-text-container">
@@ -26,7 +26,7 @@ export default function PermissionItem({
           <span>{permissionDescription}</span>
         </div>
         <div>
-          <ToggleButton disabled={editable} isChecked={true} />
+          <ToggleButton disabled={!editable} isChecked={true} />
         </div>
       </div>
       {linkedPermission && (
@@ -48,7 +48,7 @@ export default function PermissionItem({
             borderColor={colors.border_color}
             afterBgColor={colors.darkersec_color}
             afterFontColor={colors.cold_red}
-            disabled={editable}
+            disabled={!editable}
           />
         </div>
       )}
