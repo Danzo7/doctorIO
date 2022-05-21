@@ -18,14 +18,18 @@ export default function LogoChanger({
         className="logo-changer-small-indicator"
         css={{ width: width * 0.3, height: width * 0.3 }}
       >
-        <AddImage width={width / 8} height={width / 8} />
+        <AddImage
+          width={width / 8}
+          height={width / 8}
+          css={{ '>path': { fill: color.silver_gray } }}
+        />
       </div>
       <div className="circle-avatar-wrapper">
         <CircleAvatar
           src={src}
           width={width}
           alt="Change Logo"
-          border={`${width < 100 ? 3 : 5}px solid ${color.hot_purple} `}
+          border={`${(width * 5) / 100}px solid ${color.hot_purple} `}
         />
       </div>
     </div>
