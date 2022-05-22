@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import QueueItem from './queue_item';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import './style/index.scss';
 import NextIcon from 'toSvg/next.svg?icon';
 import PauseIcon from 'toSvg/pause.svg?icon';
 import ScrollView from './scroll_view';
-import ScrollController from './scroll_view/ScrollController';
 import IconicButton from '@components/buttons/iconic_button';
 import colors from '@assets/styles/color';
+import { useScroller } from '@libs/hooks/useScroller';
 
 interface AppointmentQueueSmallProps {}
 
@@ -77,11 +77,10 @@ const itemsL = [
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [selected, setSelected] = useState(-1);
   const [items, setItems] = useState(itemsL);
-  const controller = useRef(new ScrollController());
-
+  const { ref, gotoFrom } = useScroller(10);
   function goToSelection(index: number) {
     if (selected > items.length - 1) return;
-    controller.current.scrollTo(index, selected);
+    gotoFrom(index, selected);
     setSelected(index);
   }
   return (
@@ -98,7 +97,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
             onPress={() => {
               setItems(items.slice(1, items.length));
               setSelected(-1);
-              controller.current.scrollTo(0, selected);
+              gotoFrom(0, selected);
             }}
           />
           <IconicButton
@@ -112,23 +111,21 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       </div>
       <div className="queue-items">
         {items.length > 0 ? (
-          <ScrollView controller={controller.current} gap={10}>
-            {(c) => {
-              return items.map(({ name, timeAgo, number }, index) => (
-                <li key={name + index}>
-                  <QueueItem
-                    name={name}
-                    number={number}
-                    timeAgo={timeAgo}
-                    opened={selected == index}
-                    onClose={() => {
-                      if (selected == index) setSelected(-1);
-                    }}
-                    onPress={() => goToSelection(index)}
-                  />
-                </li>
-              ));
-            }}
+          <ScrollView refs={ref} gap={10}>
+            {items.map(({ name, timeAgo, number }, index) => (
+              <li key={name + index}>
+                <QueueItem
+                  name={name}
+                  number={number}
+                  timeAgo={timeAgo}
+                  opened={selected == index}
+                  onClose={() => {
+                    if (selected == index) setSelected(-1);
+                  }}
+                  onPress={() => goToSelection(index)}
+                />
+              </li>
+            ))}
           </ScrollView>
         ) : (
           <span>nothing...</span>

@@ -3,6 +3,7 @@ import QueueItemWide from '@components/appointment_queue_small/queue_item/queue_
 import ScrollView from '@components/appointment_queue_small/scroll_view';
 import TextButton from '@components/buttons/text_button';
 import CabinState from '@components/cabin_state';
+import { useScroller } from '@libs/hooks/useScroller';
 import Arrow from 'toSvg/arrow.svg?icon';
 import './style/index.scss';
 interface AppointmentsQueueProps {}
@@ -69,6 +70,8 @@ const items = [
   },
 ];
 export default function AppointmentsQueue({}: AppointmentsQueueProps) {
+  const { ref, gotoFirst, gotoLast, next, previous } = useScroller(6);
+
   return (
     <div className="appointments-queue">
       <div className="header"></div>
@@ -84,22 +87,22 @@ export default function AppointmentsQueue({}: AppointmentsQueueProps) {
             borderColor={colors.border_color}
             padding="30px 10px"
             afterBgColor={colors.darkersec_color}
+            onPress={previous}
+            onHold={gotoFirst}
           >
             <Arrow css={{ transform: 'rotate(90deg)' }} />
           </TextButton>
           {items.length > 0 ? (
-            <ScrollView gap={10}>
-              {(controller) => {
-                return items.map(({ name, timeAgo, number }, index) => (
-                  <li key={name + index}>
-                    <QueueItemWide
-                      name={name}
-                      number={number}
-                      timeAgo={timeAgo}
-                    />
-                  </li>
-                ));
-              }}
+            <ScrollView refs={ref} gap={10}>
+              {items.map(({ name, timeAgo, number }, index) => (
+                <li key={name + index}>
+                  <QueueItemWide
+                    name={name}
+                    number={number}
+                    timeAgo={timeAgo}
+                  />
+                </li>
+              ))}
             </ScrollView>
           ) : (
             <span>nothing...</span>
@@ -108,6 +111,8 @@ export default function AppointmentsQueue({}: AppointmentsQueueProps) {
             borderColor={colors.border_color}
             padding="30px 10px"
             afterBgColor={colors.darkersec_color}
+            onPress={next}
+            onHold={gotoLast}
           >
             <Arrow css={{ transform: 'rotate(-90deg)' }} />
           </TextButton>
