@@ -21,24 +21,24 @@ export default function ClinicOverviewCard({
     <div className="clinic-overview-card">
       <LogoChanger src={profile} width={100} />
       <span>{clinicName}</span>
-      <div className="clinic-info-div">
+      <div>
         <span>Address</span>
         <span>{clinicAddress}</span>
       </div>
-      <div className="clinic-info-div">
+      <div>
         <span>Service status</span>
         <span>{serviceStatus}</span>
       </div>
-      <div className="clinic-info-div">
+      <div>
         <span>Current Connections</span>
         <span>{numOfCurrentConnections}</span>
       </div>
       <div className="clinic-info-bottom-div">
-        <div className="clinic-info-div">
+        <div>
           <span>Patients</span>
           <span>{numOfPatients}</span>
         </div>
-        <div className="clinic-info-div">
+        <div>
           <span>Members</span>
           <span>{numOfMembers}</span>
         </div>
