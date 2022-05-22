@@ -58,5 +58,9 @@ export default function useLongPress(
     }
   }, [onEndHold, endTimer]);
 
-  return [startHold, endHold, cancelHold];
+  return [
+    onEndHold ? startHold : undefined,
+    onEndHold ? cancelHold : undefined,
+    onEndHold ? endHold : undefined,
+  ];
 }
