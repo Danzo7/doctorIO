@@ -12,6 +12,7 @@ interface QueueItemWideProps {
   timeAgo: string;
   number: number;
   state?: string;
+  width?: number;
   btnOnclick?: () => void;
 }
 
@@ -21,10 +22,15 @@ function QueueItemWide({
   number,
   btnOnclick,
   state,
+  width,
 }: QueueItemWideProps) {
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
   return (
-    <div className="queue-item-wide" onClick={btnOnclick}>
+    <div
+      className="queue-item-wide"
+      css={{ width: width }}
+      onClick={btnOnclick}
+    >
       <div className="back-container">
         <div className="back">
           <SquareIconButton svg={threeDots} />

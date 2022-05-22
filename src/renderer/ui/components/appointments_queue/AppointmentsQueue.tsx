@@ -100,6 +100,7 @@ export default function AppointmentsQueue({}: AppointmentsQueueProps) {
                     name={name}
                     number={number}
                     timeAgo={timeAgo}
+                    width={150}
                   />
                 </li>
               ))}
