@@ -51,7 +51,7 @@ function TextButton({
   onHold,
 }: TextButtonProps) {
   const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
-  const [startHold, , cancelHold] = useLongPress({
+  const [startHold, cancelHold] = useLongPress({
     onEndHold: onHold
       ? () => {
           onHold();
@@ -106,6 +106,7 @@ function TextButton({
       onClick={
         onHold == undefined
           ? (e) => {
+              e.preventDefault();
               e.stopPropagation();
               onPress?.();
             }
@@ -114,16 +115,18 @@ function TextButton({
       onMouseDown={
         onHold != undefined
           ? (e) => {
+              e.preventDefault();
               e.stopPropagation();
-              startHold();
+              startHold?.();
             }
           : undefined
       }
       onMouseUp={
         onHold != undefined
           ? (e) => {
+              e.preventDefault();
               e.stopPropagation();
-              cancelHold();
+              cancelHold?.();
             }
           : undefined
       }

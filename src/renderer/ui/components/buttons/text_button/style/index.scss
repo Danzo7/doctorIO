@@ -22,13 +22,13 @@
   //todo add to mixin
   @keyframes glowInside {
     from{
-      box-shadow:inset 0 0 0px $hotpurple;
+      box-shadow:inset 0 0 0px $goodgreen;
     }
     50%{
-      box-shadow:inset 0 0 5px $hotpurple;
+      box-shadow:inset 0 0 5px $goodgreen;
     }
     to{
-      box-shadow:inset 0 0 0px $hotpurple;
+      box-shadow:inset 0 0 0px $goodgreen;
     }
   }
 }
