@@ -1,7 +1,7 @@
-import color from '@assets/styles/color';
+import colors from '@colors';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import TextButton from '@components/buttons/text_button';
-import AppointmentsCurrentPatient from '../appointments_current_patient';
+import AppointmentsCurrentPatient from '@components/appointments_current_patient';
 import './style/index.scss';
 interface NextPatientProps {
   patientName: string;
@@ -26,9 +26,9 @@ export default function NextPatient({
       />
       <TextButton
         text="Start session"
-        backgroundColor={color.good_green}
+        backgroundColor={colors.good_green}
         width="100%"
-        fontColor={color.white}
+        fontColor={colors.white}
         fontSize={13}
         fontWeight={700}
       />

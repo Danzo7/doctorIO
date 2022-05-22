@@ -1,6 +1,6 @@
 import colors from '@assets/styles/color';
-import QueueItemWide from '@components/appointment_queue_small/queue_item/queue_item_wide';
-import ScrollView from '@components/appointment_queue_small/scroll_view';
+import QueueItemWide from './components/queue_item/queue_item_wide';
+import ScrollView from '@components/scroll_view';
 import TextButton from '@components/buttons/text_button';
 import CabinState from '@components/cabin_state';
 import { useScroller } from '@libs/hooks/useScroller';

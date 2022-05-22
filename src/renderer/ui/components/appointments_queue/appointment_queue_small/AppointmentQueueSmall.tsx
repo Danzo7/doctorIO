@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import QueueItem from './queue_item';
+import QueueItem from '@components/appointments_queue/components/queue_item';
 import { useState } from 'react';
 import './style/index.scss';
 import NextIcon from 'toSvg/next.svg?icon';
 import PauseIcon from 'toSvg/pause.svg?icon';
-import ScrollView from './scroll_view';
+import ScrollView from '@components/scroll_view';
 import IconicButton from '@components/buttons/iconic_button';
 import colors from '@assets/styles/color';
 import { useScroller } from '@libs/hooks/useScroller';

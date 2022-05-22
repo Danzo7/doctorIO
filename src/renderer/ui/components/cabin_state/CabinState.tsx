@@ -1,4 +1,4 @@
-import AppointmentsCurrentPatient from '@components/appointments_queue/appointments_current_patient';
+import AppointmentsCurrentPatient from '@components/appointments_current_patient';
 import './style/index.scss';
 
 interface CabinStateProps {
