@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import './style/index.scss';
 interface MultiOptionSwitcherProps {
   textList: string[];
@@ -14,18 +14,17 @@ function MultiOptionSwitcher({
   return (
     <div className="multi-option-switcher">
       {textList.map((text, index) => (
-        <>
+        <Fragment key={index}>
           <div
             className={`text${selected === index ? ' selected' : ''}${
               growOnselection ? ' grow' : ''
             }`}
             onClick={() => setSelected(index)}
-            key={index}
           >
             {text}
           </div>
           {index !== textList.length - 1 && <div className="separator" />}
-        </>
+        </Fragment>
       ))}
     </div>
   );
