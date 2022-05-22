@@ -1,0 +1,51 @@
+@use '~styles/appColors' as *;
+
+@mixin clinic-info-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    > span {
+        font-weight: 600;
+        font-size: 15px;
+        color: $textgray;
+
+        + span {
+            font-weight: 700;
+            font-size: 18px;
+            color: $white;
+        }
+    }
+}
+
+.clinic-overview-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+
+    > span {
+        font-weight: 600;
+        font-size: 18px;
+        color: $white;
+    }
+
+    > div {
+        @include clinic-info-div()
+    }
+    > .clinic-info-bottom-div {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 5px;
+        min-width: 300px;
+
+        > div {
+            @include clinic-info-div()
+        }
+    }
+}
