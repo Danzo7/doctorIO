@@ -32,6 +32,7 @@ export default function LogoChanger({
           border={`${(width * 5) / 100}px solid ${color.hot_purple} `}
         />
       </div>
+      <span className="change-logo-span">Change Icon</span>
     </div>
   );
 }

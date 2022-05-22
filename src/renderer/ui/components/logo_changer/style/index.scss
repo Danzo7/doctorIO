@@ -17,8 +17,26 @@
         border-radius: 100%;
         z-index: 1;
     }
+    > .change-logo-span {
+        visibility: hidden;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+        font-weight: 700;
+        font-size: 12px;
+    }
+    > .circle-avatar-wrapper {
+        opacity: 1;
+        transition: opacity 0.2s;
+    }
 
     &:hover {
+        > .change-logo-span{
+            visibility: visible;
+        }
+
         > .circle-avatar-wrapper {
             opacity: 0.5;
         }
