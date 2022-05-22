@@ -1,9 +1,10 @@
-import * as React from 'react';
 import './style/index.scss';
 import colors from '@colors';
+import useLongPress from '@libs/hooks/useLongPress';
+import { FunctionComponent, SVGProps, useState } from 'react';
 interface TextButtonProps {
   text?: string;
-  Icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   children?: React.ReactNode;
   fontColor?: string;
   fontSize?: number;
@@ -18,6 +19,7 @@ interface TextButtonProps {
   radius?: number | string;
   padding?: string | number;
   onPress?: () => void;
+  onHold?: () => void;
   width?: number | string;
   height?: number | string;
   type?: 'button' | 'submit' | 'reset' | undefined;
@@ -46,11 +48,28 @@ function TextButton({
   activeBorderColor,
   disabled = false,
   alignment,
+  onHold,
 }: TextButtonProps) {
+  const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
+  const [startHold, , cancelHold] = useLongPress({
+    onEndHold: onHold
+      ? () => {
+          onHold();
+          setHold(true);
+        }
+      : undefined,
+    ms: 1000,
+
+    onStartHold: () => {},
+    onCancel: () => {
+      onPress?.();
+    },
+  });
+
   return (
     <button
       type={type}
-      className={`text-button`}
+      className={`text-button${isHold ? ' hold' : ''}`}
       css={{
         backgroundColor: !disabled ? backgroundColor : colors.silver_gray,
         border: `${borderColor} 1px solid`,
@@ -84,10 +103,37 @@ function TextButton({
           },
         },
       }}
-      onClick={(e) => {
-        e.stopPropagation();
-        onPress?.();
-      }}
+      onClick={
+        onHold == undefined
+          ? (e) => {
+              e.stopPropagation();
+              onPress?.();
+            }
+          : undefined
+      }
+      onMouseDown={
+        onHold != undefined
+          ? (e) => {
+              e.stopPropagation();
+              startHold();
+            }
+          : undefined
+      }
+      onMouseUp={
+        onHold != undefined
+          ? (e) => {
+              e.stopPropagation();
+              cancelHold();
+            }
+          : undefined
+      }
+      onAnimationEnd={
+        onHold != undefined
+          ? () => {
+              setHold(false);
+            }
+          : undefined
+      }
       disabled={disabled}
     >
       {children}

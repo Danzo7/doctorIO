@@ -1,4 +1,5 @@
 @use '~styles/appColors' as *;
+@use '~styles/constants' as *;
 .text-button {
   display: flex;
   justify-content: center;
@@ -10,8 +11,24 @@
   transition: all .2s;
   gap:10px;
   cursor: pointer;
+  &.hold{
+    animation: glowInside 1s forwards;
+  }
+  outline-offset: -1px;
   > .text {
     font-style: normal;
     text-align: center;
+  }
+  //todo add to mixin
+  @keyframes glowInside {
+    from{
+      box-shadow:inset 0 0 0px $hotpurple;
+    }
+    50%{
+      box-shadow:inset 0 0 5px $hotpurple;
+    }
+    to{
+      box-shadow:inset 0 0 0px $hotpurple;
+    }
   }
 }
