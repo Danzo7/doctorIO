@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["brahim", "vmin"],
+  "cSpell.words": ["brahim", "Scroller", "vmin"],
   "npm.exclude": ["**/out/**"],
   "npm-scripts.showStartNotification": false,
   "prettier.requireConfig": true,
