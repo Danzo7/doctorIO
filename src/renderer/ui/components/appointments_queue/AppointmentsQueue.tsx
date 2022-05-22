@@ -70,7 +70,7 @@ const items = [
   },
 ];
 export default function AppointmentsQueue({}: AppointmentsQueueProps) {
-  const { ref, gotoFirst, gotoLast, next, previous } = useScroller(6);
+  const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
 
   return (
     <div className="appointments-queue">
