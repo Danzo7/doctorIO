@@ -1,23 +1,20 @@
 @use '~styles/appColors' as *;
 
 $gap: 5px;
+$opacityBlur:var(--opacity-blur);
 @mixin idle {
   outline: $hotpurple 1px solid;
-  border-radius: 5px;
   box-shadow: 0 0px 1px $bordercolor inset, 0 0 5px $hotpurple;
 }
 @mixin bad {
   outline: $hotred 1px solid;
-  border-radius: 5px;
   box-shadow: 0 0px 1px $bordercolor inset, 0 0 5px $hotred;
 }
 @mixin good {
   outline: $goodgreen 1px solid;
-  border-radius: 5px;
   box-shadow: 0 0px 1px $bordercolor inset, 0 0 5px $goodgreen;
 }
 @mixin warm {
   outline: $warmorange 1px solid;
-  border-radius: 5px;
   box-shadow: 0 0px 1px $bordercolor inset, 0 0 5px $warmorange;
 }
