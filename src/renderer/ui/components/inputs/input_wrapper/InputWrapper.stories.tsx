@@ -12,7 +12,6 @@ const Template: Story<ComponentProps<typeof InputField>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  label: 'hello',
   leading: <Svg>{search}</Svg>,
   trailing: <Svg>{search}</Svg>,
 };
