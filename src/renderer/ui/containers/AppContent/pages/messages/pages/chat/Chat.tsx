@@ -2,12 +2,13 @@ import IconicButton from '@components/buttons/iconic_button';
 import MemberStatus from './member_status';
 import './style/index.scss';
 import Call_Icon from 'toSvg/phone.svg?icon';
-import color from '@assets/styles/color';
+import colors from '@assets/styles/color';
 import ChatAddButton from '@components/buttons/chat_add_button';
-import InputField from '@components/inputs/input_field';
 import ContentMessage from './content_message';
 import client from '@assets/pictures/test.png';
 import { useParams } from 'react-router-dom';
+import Input from '@components/inputs/input';
+import InputWrapper from '@components/inputs/input_wrapper';
 
 interface ChatProps {}
 export default function Chat({}: ChatProps) {
@@ -48,8 +49,8 @@ export default function Chat({}: ChatProps) {
         <MemberStatus memberFullName={'John Doe'} status={true} />
         <IconicButton
           Icon={Call_Icon}
-          backgroundColor={color.secondary_color}
-          afterBgColor={color.good_green}
+          backgroundColor={colors.secondary_color}
+          afterBgColor={colors.good_green}
           width={35}
           iconSize={15}
         />
@@ -73,12 +74,13 @@ export default function Chat({}: ChatProps) {
           )}
         </div>
       </div>
-      <InputField
-        name="msg"
-        background={color.lighter_background}
+      <InputWrapper
         leading={<ChatAddButton />}
         radius={17}
-      />
+        background={colors.lighter_background}
+      >
+        <input />
+      </InputWrapper>
     </div>
   );
 }

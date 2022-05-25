@@ -1,7 +1,7 @@
-import color from '@assets/styles/color';
+import colors from '@assets/styles/color';
 import SquareIconButton from '@components/buttons/square_icon_button';
 import TextButton from '@components/buttons/text_button';
-import InputField from '@components/inputs/input_field';
+import Input from '@components/inputs/input';
 import './style/index.scss';
 interface DiagnosisModalProps {
   inputArray: any[];
@@ -16,13 +16,13 @@ export default function DiagnosisModal({ inputArray }: DiagnosisModalProps) {
       <div className="diagnosis-inputs-container">
         {inputArray.map((label, index) => (
           <div className="input-width" key={index}>
-            <InputField label={label} />
+            <Input type="text" label={label} />
           </div>
         ))}
       </div>
       <TextButton
         text="Add to queue"
-        backgroundColor={color.good_green}
+        backgroundColor={colors.good_green}
         radius={7}
         fontSize={12}
         width={'60%'}

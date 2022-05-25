@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-key */
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import InputField from '@components/inputs/input_field';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Menu } from '@headlessui/react';
-import PreviewInfo from '@components/preview_info';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Column, useTable } from 'react-table';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import Input from '@components/inputs/input';
 
 type Inputs = {
   password: string;
@@ -59,6 +59,7 @@ export default function Firo() {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
+  const [startDate, setStartDate] = useState(new Date());
 
   // console.log(watch('example')); // watch input value by passing the name of it
   return (
@@ -138,24 +139,29 @@ export default function Firo() {
             },
           }}
         >
-          This has ahotpink background.
+          This has a hotpink background.
         </div>
-        <InputField
+        <Input
           placeholder="write something long"
+          type={'password'}
           label="password"
-          errorField={errors.password}
+          errorMsg={errors.password?.message}
           register={register('password', { required: 'this is required' })}
         />
-        <InputField
-          hintText="write your mom's name"
+        <Input
+          hint="write your mom's name"
           label="mom's name"
-          errorField={errors.moms}
+          type={'email'}
+          errorMsg={errors.moms?.message}
           register={register('moms', {
             required: 'this is required too',
             minLength: { message: 'are you stupid or what! ', value: 5 },
           })}
         />
-
+        <DatePicker
+          selected={startDate}
+          onChange={(date) => date && setStartDate(date)}
+        />
         <DarkLightCornerButton type="submit" title="submit" />
       </form>
     </>

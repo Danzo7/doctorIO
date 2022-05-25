@@ -1,11 +1,11 @@
 import SquareIconButton from '@components/buttons/square_icon_button';
-import InputField, { evolvedTypes } from '@components/inputs/input_field';
 import RecentAppsItem from '@components/recent_apps_item';
 import Svg from '@libs/svg';
 import search from 'toSvg/search.svg?icon';
 import { useForm } from 'react-hook-form';
 
 import './style/index.scss';
+import Input from '@components/inputs/input';
 interface QueueAddSearchModalProps {}
 interface SearchInput {
   searchField: string;
@@ -49,11 +49,11 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
         <SquareIconButton />
       </div>
       <form>
-        <InputField
+        <Input
           label="Add a patient to appointment queue"
           placeholder="search for a patients"
           leading={<Svg>{search}</Svg>}
-          type={{ rawType: 'search', evolvedType: evolvedTypes.raw }}
+          type="search"
           register={register(
             'searchField',
             //onchange={handleChange} most input props are define in register
