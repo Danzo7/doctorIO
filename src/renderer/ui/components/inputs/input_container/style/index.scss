@@ -1,0 +1,38 @@
+@use '~styles/appColors' as *;
+@use '~styles/constants' as *;
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-items: stretch;
+    gap: 10px;
+    span{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    > span:first-of-type {
+        font-weight: 500;
+        font-size: 16px;
+        color: $white;
+    }
+    > span:last-of-type {
+        font-weight: 500;
+        font-size: 14px;
+        color: $textgray;
+    }
+
+    &.error {
+        div {
+            @include bad;
+
+            &:focus-within {
+                @include bad;
+            }
+        }
+        > span:last-of-type {
+            color: $hotred;
+        }
+    }
+}

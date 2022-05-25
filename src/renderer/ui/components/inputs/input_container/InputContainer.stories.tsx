@@ -1,0 +1,12 @@
+import { ComponentProps } from 'react';
+import type { Story } from '@storybook/react';
+import InputContainer from './InputContainer';
+export default {
+  title: 'InputContainer',
+  component: InputContainer,
+};
+const Template: Story<ComponentProps<typeof InputContainer>> = (args) => (
+  <InputContainer {...args} />
+);
+export const FirstStory = Template.bind({});
+FirstStory.args = {};
