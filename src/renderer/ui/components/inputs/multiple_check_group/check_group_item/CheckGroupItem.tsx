@@ -17,7 +17,7 @@ export default function CheckGroupItem({
       backgroundColor={checked ? color.cold_blue : undefined}
       borderColor={color.border_color}
       onPress={onSelect}
-      afterBgColor={color.light}
+      afterBgColor={!checked ? color.light : color.cold_blue}
     />
   );
 }
