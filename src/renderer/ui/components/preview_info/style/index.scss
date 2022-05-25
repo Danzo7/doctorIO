@@ -10,10 +10,18 @@
     align-self: stretch;
     flex-grow: 1;
 
-    > span {
-        font-weight: 600;
-        font-size: 18px;
-        color: $white;
+    > .preview-info-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+        padding-right: 6px;
+
+        > span {
+            font-weight: 600;
+            font-size: 18px;
+            color: $white;
+        }
     }
 
     > .preview-list-container {

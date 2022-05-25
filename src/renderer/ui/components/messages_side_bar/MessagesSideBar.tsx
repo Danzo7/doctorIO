@@ -71,7 +71,7 @@ export default function MessagesSideBar({}: MessagesSideBarProps) {
     for egs like "MessagesCategories" its not possible to have more than one category for messages in other hand "categories" component must indeed have a list  property. 
     for vague and unclear component use props
       */}
-      <div className="content">
+      <div className="messages-side-bar-content">
         <ConversationSearch />
         <MessagesCategories />
         <DmHistory lastDmMessage={lastDmMessage} />

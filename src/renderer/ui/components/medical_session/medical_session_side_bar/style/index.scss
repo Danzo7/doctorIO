@@ -1,17 +1,20 @@
 @use '~styles/appColors' as *;
-.messages-side-bar {
+.medical-session-side-bar {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     background: $lighterbackground;
     border-radius: 1.5vw;
-    width :300px;
+    width :350px;
+    overflow: hidden;
 
-    >.messages-side-bar-content{
+    > .medical-session-side-bar-content {
         display: flex;
         flex-direction: column;
         align-items: stretch;
         padding:5% ;
-        gap: 25px;
-        border-radius: 17px;
-        overflow: hidden;
-    }}
+        gap: 15px;
+        flex-grow: 1;
+        overflow-y:scroll ;
+    }
+}
