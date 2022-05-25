@@ -17,6 +17,7 @@ export default function CheckGroupItem({
       type="button"
       backgroundColor={checked ? color.cold_blue : color.darkersec_color}
       onPress={onSelect}
+      afterBgColor={color.cold_blue}
     />
   );
 }
