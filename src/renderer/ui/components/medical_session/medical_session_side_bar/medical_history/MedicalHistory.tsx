@@ -3,11 +3,11 @@ import PreviewList from '@components/preview_list';
 import PreviewWithControls from '@components/preview_with_controls';
 
 interface MedicalHistoryProps {
-  MedicalHistoryList: any[];
+  medicalHistoryList: any[];
   onAdd: () => void;
 }
 export default function MedicalHistory({
-  MedicalHistoryList = [],
+  medicalHistoryList = [],
   onAdd,
 }: MedicalHistoryProps) {
   return (
@@ -17,7 +17,7 @@ export default function MedicalHistory({
         <DarkLightCornerButton title="Add" isActive={true} onPress={onAdd} />
       }
     >
-      {MedicalHistoryList.map(({ medicalDescription, descriptionDate }) => (
+      {medicalHistoryList.map(({ medicalDescription, descriptionDate }) => (
         <PreviewWithControls
           primaryText={medicalDescription}
           secondaryText={descriptionDate}
