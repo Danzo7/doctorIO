@@ -2,7 +2,7 @@ import { HTMLInputTypeAttribute, ReactNode } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Select from '../dropdown';
+import Select from '../select';
 import InputContainer from '../input_container';
 import InputWrapper from '../input_wrapper';
 import NumberInput from '../number_input';

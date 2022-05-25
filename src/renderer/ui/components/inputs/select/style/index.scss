@@ -1,6 +1,6 @@
 @use '~styles/appColors' as *;
 @use '~styles/constants' as *;
-.dropdown-input {
+.select-input {
   display: flex;
   flex-direction: column;
   align-content: stretch;
@@ -8,24 +8,8 @@
   gap: 5px;
   cursor: pointer;
   height: 40px;
-  flex-grow: 1;
-  &.select {
-    > .dropdown > span {
-      color: $white;
-    }
-  }
-  &.open {
-    inset-inline-start: $coldred;
-    > .options {
-      display: flex;
-    }
-    > .dropdown {
-      > .arrow {
-        transform: rotate(180deg);
-      }
-    }
-  }
-  > .dropdown {
+
+  > .select {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -33,39 +17,54 @@
     padding: 10px 0 10px 0;
     gap: 10px;
     > .arrow {
-      stroke: white;
+      stroke: $white;
     }
     > span {
       flex-grow: 1;
 
       font-weight: 500;
-      font-size: 14px;
+      font-size: 15px;
       color: $silvergray;
     }
   }
   > .options {
     z-index: 10;
     display: none;
-    background: $lighterbackground;
+    background-color: $secondarycolor;
     flex-direction: column;
     align-items: stretch;
-    padding: 10px;
-    border-radius: 7px;
+    padding:10px;
+    border-radius: 15px;
 
-    > a {
+    > span {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      padding: 10px;
-      background: $lighterbackground;
-      border-radius: 7px;
+      padding:15px ;
+      border-radius: 10px;
       font-weight: 500;
-      font-size: 13px;
+      font-size: 15px;
       color: $white;
       cursor: pointer;
       &:hover {
-        background-color: $secondarycolor;
+        background-color: $lighterbackground;
       }
+    }
+  }
+  &.select {
+    > .select > span {
+      color: $white;
+    }
+  }
+
+  &.open {
+    inset-inline-start: $coldred;
+    > .options {
+      display: flex;
+    }
+    > .select >div
+    > .arrow {
+      transform: rotate(180deg);
     }
   }
 }
