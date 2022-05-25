@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import MultipleCheckGroup from './MultipleCheckGroup';
 export default {
-  title: 'MultipleCheckGroup',
+  title: 'Inputs/MultipleCheckGroup',
   component: MultipleCheckGroup,
 };
 const Template: Story<ComponentProps<typeof MultipleCheckGroup>> = (args) => (

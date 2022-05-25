@@ -4,9 +4,7 @@ import './style/index.scss';
 interface MultipleCheckGroupProps {
   items: string[];
 }
-export default function MultipleCheckGroup({
-  items = [],
-}: MultipleCheckGroupProps) {
+export default function MultipleCheckGroup({ items }: MultipleCheckGroupProps) {
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
   const isChecked = (index: number) => {
     return checkedItems.find((item) => item === index) == undefined
@@ -24,6 +22,12 @@ export default function MultipleCheckGroup({
   };
   return (
     <div className="multiple-check-group">
+      <input
+        type={'hidden'}
+        value={checkedItems.join(',')}
+        onChange={() => {}}
+      />
+
       {items.map((text, index) => (
         <CheckGroupItem
           label={text}
