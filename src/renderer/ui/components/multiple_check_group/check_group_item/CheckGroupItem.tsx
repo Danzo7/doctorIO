@@ -1,6 +1,5 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import './style/index.scss';
 interface CheckGroupItemProps {
   label: string;
   checked: boolean;
