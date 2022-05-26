@@ -1,7 +1,7 @@
 import colors from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
+import { NavTabMenu } from '@components/tab_menu';
 import RolesTab from '@components/roles_tab';
-import TabMenu from '@components/tab_menu';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './style/index.scss';
 interface ClinicSettingsProps {}
@@ -21,7 +21,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
           isActive={true}
         />
       </div>
-      <TabMenu
+      <NavTabMenu
         items={[
           'Overview',
           'Members',
@@ -31,9 +31,6 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
           'Audit log',
           'Security settings',
         ]}
-        onChanged={({ item }) =>
-          navigate(item.toLowerCase().replace(/\s/g, '-'))
-        }
       />
 
       <Routes>
