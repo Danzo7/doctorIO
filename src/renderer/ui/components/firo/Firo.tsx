@@ -3,9 +3,8 @@ import DarkLightCornerButton from '@components/buttons/dark_light_corner_button'
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useMemo, useState } from 'react';
 import { Column, useTable } from 'react-table';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import Input from '@components/inputs/input';
+import Datepicker from '@components/inputs/datepicker';
 
 type Inputs = {
   password: string;
@@ -59,7 +58,14 @@ export default function Firo() {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
+
   const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const onChange = (dates: [Date, Date]) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
 
   // console.log(watch('example')); // watch input value by passing the name of it
   return (
@@ -158,9 +164,12 @@ export default function Firo() {
             minLength: { message: 'are you stupid or what! ', value: 5 },
           })}
         />
-        <DatePicker
+        <Datepicker
           selected={startDate}
-          onChange={(date) => date && setStartDate(date)}
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
         />
         <DarkLightCornerButton type="submit" title="submit" />
       </form>
