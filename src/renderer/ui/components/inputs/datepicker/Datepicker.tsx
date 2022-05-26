@@ -5,9 +5,10 @@ import { ComponentProps } from 'react';
 import InputWrapper from '../input_wrapper';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import Arrow from 'toSvg/arrow.svg?icon';
-export default function Datepicker(
-  props: ComponentProps<typeof DatePickerReact>,
-) {
+export default function Datepicker({
+  onChange,
+  ...props
+}: ComponentProps<typeof DatePickerReact>) {
   return (
     <InputWrapper>
       <DatePickerReact
@@ -36,7 +37,13 @@ export default function Datepicker(
           </div>
         )}
         wrapperClassName="date-content"
-        shouldCloseOnSelect={true}
+        onChange={(
+          date: Date | [Date | null, Date | null] | null,
+          event: React.SyntheticEvent<any, Event> | undefined,
+        ) => {
+          event?.stopPropagation();
+          onChange(date, event);
+        }}
         {...props}
       />
     </InputWrapper>
