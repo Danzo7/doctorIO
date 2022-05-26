@@ -7,6 +7,7 @@ import './style/index.scss';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
+
   return (
     <div className="clinic-settings">
       <div className="header">
@@ -23,7 +24,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
       </div>
       <NavTabMenu
         items={[
-          'Overview',
+          { name: 'Overview', route: '' },
           'Members',
           'Roles',
           'Timing and Schedule',
@@ -32,7 +33,6 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
           'Security settings',
         ]}
       />
-
       <Routes>
         <Route path="/*" element={<div>hello</div>} />
         <Route path="Roles" element={<RolesTab />} />
