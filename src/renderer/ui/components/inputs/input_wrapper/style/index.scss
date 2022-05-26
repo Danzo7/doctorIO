@@ -23,6 +23,7 @@
       font-size: 14px;
       padding-left: 10px;
       &:-webkit-autofill { box-shadow: 0 0 0px 1000px $darkerseccolor inset; }
+      &::placeholder{ color: $textgray; }
     }
     >*:first-child,>.date-content div{
       flex-grow: 1;
