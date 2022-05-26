@@ -13,10 +13,7 @@
     display: flex;
     align-self: stretch;
     align-items: center;
-    >*:first-child{
-      flex-grow: 1;
-    }
-    >input {
+    input{
       align-self: stretch;
       color: $white;
       background-color: transparent;
@@ -27,6 +24,14 @@
       padding-left: 10px;
       &:-webkit-autofill { box-shadow: 0 0 0px 1000px $darkerseccolor inset; }
     }
+    >*:first-child,>.date-content div{
+      flex-grow: 1;
+      align-self: stretch;
+      display: flex;
+      >input{
+        flex-grow: 1;
+      }}
+
     >input.auto-size-input {
       flex-grow: 0;
     }
@@ -36,7 +41,8 @@
     @include idle;
     >.input-content{
       opacity: 1;
-      > input {
+      /* stylelint-disable-next-line no-descending-specificity */
+      input {
         outline: none;
       }}
   }

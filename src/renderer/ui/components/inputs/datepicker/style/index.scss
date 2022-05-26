@@ -1,0 +1,92 @@
+@use '~styles/appColors' as *;
+@use '~styles/effects' as *;
+$c:".react-datepicker";
+.datepicker {
+    display: flex;
+    background-color: $secondarycolor;
+    border-radius: 10px;
+    padding: 10px;
+
+    margin-top: 5px;
+
+    >div{
+       >#{$c}__header {
+            text-align: center;
+            background-color: unset;
+            position: relative;
+            border: none;
+            display: flex;
+
+            flex-direction: column;
+            >.header{
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+
+                >.month{
+                    color:$white;
+                    font-weight: 600;
+                }
+            }
+            >#{$c}__day-names{
+                margin: auto;
+                >div{
+                color:$silvergray;
+                font-weight: 600;
+                }
+            }
+        }
+        >#{$c}__month{
+            margin:auto;
+        >#{$c}__week>#{$c}__day{
+            color: $textgray;
+            border-radius: 0.5em;
+            font-size: 1em;
+            text-align: center;
+             &:hover{
+                color: $white;
+                background-color: $light;
+            }
+            &--outside-month{
+                color: $silvergray;
+            }
+
+            &--in-selecting-range{
+                color: $white;
+                background-color: $light;
+            }
+
+            &--keyboard-selected{
+                color: $white;
+                background-color:$darker;
+             &:hover{
+                    background-color:unset;
+                    @include lighter;
+                }
+            }
+            &--selected{
+                color: $white;
+                font-weight: 600;
+                background-color: $darkerseccolor;
+                outline: $bordercolor 1px solid;
+                &:hover{
+                    background-color:unset;
+                    @include darken;
+                }
+                }
+            &--in-range{
+                color: $white;
+                font-weight: 600;
+                background-color: $warmorange;
+                &:hover{
+                    background-color: $warmorange;
+                    @include darken;
+                }
+            }
+            &--today{
+                color: $white;
+                font-weight: 600;
+                background-color: $hotpurple;
+            }
+        }}}
+}
