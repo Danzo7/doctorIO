@@ -25,6 +25,7 @@ interface TextButtonProps {
   type?: 'button' | 'submit' | 'reset' | undefined;
   disabled?: boolean;
   alignment?: 'center' | 'end' | 'flex-end' | 'flex-start' | 'start';
+  blank?: true;
 }
 function TextButton({
   text,
@@ -49,6 +50,7 @@ function TextButton({
   disabled = false,
   alignment,
   onHold,
+  blank,
 }: TextButtonProps) {
   const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
   const [startHold, cancelHold] = useLongPress({
@@ -104,7 +106,7 @@ function TextButton({
         },
       }}
       onClick={
-        onHold == undefined
+        onHold == undefined && !blank
           ? (e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -113,7 +115,7 @@ function TextButton({
           : undefined
       }
       onMouseDown={
-        onHold != undefined
+        onHold != undefined && !blank
           ? (e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -122,7 +124,7 @@ function TextButton({
           : undefined
       }
       onMouseUp={
-        onHold != undefined
+        onHold != undefined && !blank
           ? (e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -131,7 +133,7 @@ function TextButton({
           : undefined
       }
       onAnimationEnd={
-        onHold != undefined
+        onHold != undefined && !blank
           ? () => {
               setHold(false);
             }

@@ -7,6 +7,7 @@ interface DarkLightCornerButtonProps {
   textColor?: string;
   blend?: true;
   type?: 'button' | 'submit' | 'reset';
+  blank?: true;
 }
 //the reason why i put borderColor={colors.background} is to eliminate the height change after hover //
 function DarkLightCornerButton({
@@ -16,6 +17,7 @@ function DarkLightCornerButton({
   type,
   textColor = colors.white,
   blend,
+  blank,
 }: DarkLightCornerButtonProps) {
   return (
     <TextButton
@@ -29,6 +31,7 @@ function DarkLightCornerButton({
       afterBorderColor={!blend ? colors.border_color : undefined}
       radius={7}
       type={type}
+      blank={blank}
     />
   );
 }
