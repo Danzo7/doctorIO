@@ -13,9 +13,7 @@ export default function MedicalHistory({
   return (
     <PreviewList
       title="Medical history"
-      buttonNode={
-        <DarkLightCornerButton title="Add" isActive={true} onPress={onAdd} />
-      }
+      buttonNode={<DarkLightCornerButton title="Add" onPress={onAdd} blend />}
     >
       {medicalHistoryList.map(({ medicalDescription, descriptionDate }) => (
         <PreviewWithControls

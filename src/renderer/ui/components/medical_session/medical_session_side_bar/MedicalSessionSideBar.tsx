@@ -68,11 +68,7 @@ export default function MedicalSessionSideBar({}: MedicalSessionSideBarProps) {
           title="Diagnosis"
           data={diagnosisData}
           buttonNode={
-            <DarkLightCornerButton
-              title="preview"
-              isActive={true}
-              onPress={() => {}}
-            />
+            <DarkLightCornerButton title="preview" onPress={() => {}} blend />
           }
         />
         <MedicalHistory

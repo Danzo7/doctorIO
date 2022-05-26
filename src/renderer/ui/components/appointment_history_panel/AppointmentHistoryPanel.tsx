@@ -14,11 +14,7 @@ export default function AppointmentHistoryPanel({
     <PreviewList
       title="Post appointment"
       buttonNode={
-        <DarkLightCornerButton
-          title="View all"
-          onPress={onViewAll}
-          isActive={true}
-        />
+        <DarkLightCornerButton title="View all" onPress={onViewAll} blend />
       }
     >
       {historyList.map(
