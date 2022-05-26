@@ -1,9 +1,9 @@
-import color from '@assets/styles/color';
-import { FunctionComponent, SVGProps } from 'react';
+import colors from '@assets/styles/color';
+import { FunctionComponent, ReactNode, SVGProps } from 'react';
 import TextButton from '../text_button';
 
 interface IconicButtonProps {
-  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
   width?: number;
   height?: number;
   backgroundColor?: string;
@@ -37,12 +37,36 @@ function IconicButton({
   width = 40,
   height,
   onPress,
-  activeBgColor = color.darker,
+  activeBgColor = colors.darker,
   type,
   activeBorderColor,
   iconSize,
   disabled = false,
 }: IconicButtonProps) {
+  const TransIcon = Icon as FunctionComponent<SVGProps<SVGSVGElement>>;
+  const FIcon = (Icon as FunctionComponent)?.prototype ? (
+    <TransIcon
+      height={iconSize ?? width / 2}
+      width={iconSize ?? width / 2}
+      css={{
+        '>path': {
+          stroke:
+            iconType === 'stroke'
+              ? !disabled
+                ? iconColor
+                : colors.text_gray
+              : undefined,
+          fill:
+            iconType === 'fill'
+              ? !disabled
+                ? iconColor
+                : colors.text_gray
+              : undefined,
+        },
+      }}
+    />
+  ) : undefined;
+  const RIcon = FIcon == undefined ? (Icon as ReactNode) : undefined;
   return (
     <TextButton
       type={type}
@@ -59,26 +83,7 @@ function IconicButton({
       onPress={onPress}
       disabled={disabled}
     >
-      <Icon
-        height={iconSize ?? width / 2}
-        width={iconSize ?? width / 2}
-        css={{
-          '>path': {
-            stroke:
-              iconType === 'stroke'
-                ? !disabled
-                  ? iconColor
-                  : color.text_gray
-                : undefined,
-            fill:
-              iconType === 'fill'
-                ? !disabled
-                  ? iconColor
-                  : color.text_gray
-                : undefined,
-          },
-        }}
-      />
+      {FIcon ? FIcon : RIcon}
     </TextButton>
   );
 }
