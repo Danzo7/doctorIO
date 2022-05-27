@@ -15,6 +15,7 @@ export default function CabinState({
 }: CabinStateProps) {
   return (
     <div className="cabin-state">
+      <span>Status</span>
       {state == 'inProgress' && patientName && patientNumber && duration && (
         <>
           <div className="In-progress-div">
