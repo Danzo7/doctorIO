@@ -1,21 +1,31 @@
 import useRouteMatch from '@libs/hooks/useRouteMatch';
-import { ComponentProps, ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { CSSProperties, ReactNode } from 'react';
+import { Link, LinkProps } from 'react-router-dom';
 import './style/index.scss';
-type Route = { route: string; exact?: true };
+export type Route = { route: string; exact?: true };
 interface SmartLinkProps {
   match?: string | Route | (string | Route)[];
-  className?: (props: { isMatch: boolean }) => string;
-  children?: (props: { isMatch: boolean }) => ReactNode;
+  className?: string | ((props: { isMatch: boolean }) => string);
+  children?: ReactNode | ((props: { isMatch: boolean }) => ReactNode);
   to: string | Route;
+  caseSensitive?: boolean;
+  end?: boolean;
+  style?: CSSProperties | ((props: { isMatch: boolean }) => CSSProperties);
 }
 export default function SmartLink({
   match,
   className,
+  style,
   children,
   to,
-}: SmartLinkProps) {
-  const { isDescendent, isOnlyDescendent } = useRouteMatch();
+  caseSensitive = true,
+  ...others
+}: SmartLinkProps &
+  Omit<LinkProps, 'className' | 'style' | 'children' | 'to'> &
+  React.RefAttributes<HTMLAnchorElement>) {
+  const { isFirstDescendent, isOnlyDescendent } = useRouteMatch({
+    caseSensitive: caseSensitive,
+  });
   const matches = [
     to,
     ...(match
@@ -28,19 +38,35 @@ export default function SmartLink({
     return (
       (matches as (string | Route)[]).find((route: string | Route) =>
         typeof route == 'string'
-          ? isDescendent(route as string)
+          ? isFirstDescendent(route as string)
           : route.exact
           ? isOnlyDescendent(route.route as string)
-          : isDescendent(route.route as string),
+          : isFirstDescendent(route.route as string),
       ) != undefined
     );
   };
   return (
     <Link
       to={typeof to == 'string' ? to : (to as Route).route}
-      className={className?.({ isMatch: checkMatches() })}
+      className={
+        typeof className == 'function'
+          ? (className as (props: { isMatch: boolean }) => string)?.({
+              isMatch: checkMatches(),
+            })
+          : (className as string)
+      }
+      style={
+        typeof style == 'function'
+          ? (style as (props: { isMatch: boolean }) => CSSProperties)?.({
+              isMatch: checkMatches(),
+            })
+          : (style as CSSProperties)
+      }
+      {...others}
     >
-      {children?.({ isMatch: checkMatches() })}
+      {typeof children == 'function'
+        ? children?.({ isMatch: checkMatches() })
+        : children}
     </Link>
   );
 }
