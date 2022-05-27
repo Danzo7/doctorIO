@@ -5,9 +5,14 @@ import RolesTab from '@components/roles_tab';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './style/index.scss';
 import OverviewTab from '@components/overview_tap';
+import { useEffect } from 'react';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
+  useEffect(() => {
+    navigate('Overview');
+    return () => {};
+  }, []);
 
   return (
     <div className="clinic-settings">
