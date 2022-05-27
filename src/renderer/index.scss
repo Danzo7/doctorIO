@@ -12,6 +12,9 @@
   scrollbar-color: $hotpurple transparent;
   scrollbar-width: thin;
 }
+li {
+  list-style-type: none;
+}
 :root {
   --cold-red: #ff4b59;
   --background: #23315e;

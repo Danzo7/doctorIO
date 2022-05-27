@@ -60,11 +60,9 @@ export default function Firo() {
     tableInstance;
 
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const onChange = (dates: [Date, Date]) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
+
+  const onChange = (dates: Date) => {
+    setStartDate(dates);
   };
 
   // console.log(watch('example')); // watch input value by passing the name of it
@@ -168,8 +166,7 @@ export default function Firo() {
           selected={startDate}
           onChange={onChange}
           startDate={startDate}
-          endDate={endDate}
-          selectsRange
+          shouldCloseOnSelect={false}
         />
         <DarkLightCornerButton type="submit" title="submit" />
       </form>
