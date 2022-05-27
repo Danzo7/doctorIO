@@ -1,0 +1,14 @@
+@use '~styles/appColors' as *;
+.overview-tab {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 30px;
+    flex-grow: 1;
+    align-self: stretch;
+
+    > .overview-tab-sep {
+        border-right: 1px solid $bordercolor;
+        align-self: stretch;
+    }
+}

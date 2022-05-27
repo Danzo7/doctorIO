@@ -2,7 +2,7 @@ import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import OverviewInfoForm from './OverviewInfoForm';
 export default {
-  title: 'Overview/OverviewInfoForm',
+  title: 'OverviewTab/OverviewInfoForm',
   component: OverviewInfoForm,
 };
 const Template: Story<ComponentProps<typeof OverviewInfoForm>> = (args) => (
