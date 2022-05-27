@@ -6,6 +6,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import './style/index.scss';
 import OverviewTab from '@components/overview_tap';
 import { useEffect } from 'react';
+import MembersTab from '@components/members_tab';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
         defaultSelected={0}
         items={[
           { name: 'Overview', route: 'Overview' },
-          'Members',
+          { name: 'Members', route: 'Members' },
           'Roles',
           'Timing and Schedule',
           'Preferences',
@@ -41,9 +42,10 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
         ]}
       />
       <Routes>
-        <Route path="/*" element={<div>hello</div>} />
+        <Route path="/*" element={<div>No matches</div>} />
         <Route path="Roles" element={<RolesTab />} />
         <Route path="Overview" element={<OverviewTab />} />
+        <Route path="Members" element={<MembersTab />} />
       </Routes>
     </div>
   );
