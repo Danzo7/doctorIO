@@ -34,7 +34,6 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
         ]}
       />
       <Routes>
-        <Route path="/*" element={<div>hello</div>} />
         <Route path="Roles" element={<RolesTab />} />
       </Routes>
     </div>

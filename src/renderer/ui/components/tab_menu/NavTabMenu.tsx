@@ -1,7 +1,6 @@
 import colors from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import SmartLink from '@components/smart_link';
-import useRouteMatch from '@libs/hooks/useRouteMatch';
 import './style/index.scss';
 
 type RouteDef = { name: string; route: string };
