@@ -2,12 +2,15 @@
 .small-info-card {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 10px;
     gap: 10px;
     border: 1px solid $bordercolor;
     border-radius: 7px;
-    width: fit-content;
+    min-width: 120px;
+    flex-grow: 1;
+    align-self: stretch;
 
     > .small-info-row {
         display: flex;
