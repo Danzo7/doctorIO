@@ -26,7 +26,7 @@ export default function PaymentItem({
         />
         <TextButton
           text="Confirm"
-          fontSize={14}
+          fontSize={13}
           fontColor={color.white}
           fontWeight={700}
           backgroundColor={color.good_green}
