@@ -23,6 +23,11 @@
         color: $textgray;
     }
 
+    > input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
     &.error {
         div {
             @include bad;
