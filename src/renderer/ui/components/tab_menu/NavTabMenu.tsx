@@ -1,6 +1,7 @@
 import colors from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import { NavLink } from 'react-router-dom';
+import SmartLink from '@components/smart_link';
+import useRouteMatch from '@libs/hooks/useRouteMatch';
 import './style/index.scss';
 
 type RouteDef = { name: string; route: string };
@@ -13,7 +14,6 @@ interface NavTabMenuProps {
 
 export default function NavTabMenu({
   items,
-
   borderBottom = true,
 }: NavTabMenuProps) {
   return (
@@ -27,15 +27,18 @@ export default function NavTabMenu({
     >
       <div className="menu-items">
         {items.map((item, index) => (
-          <NavLink to={(item as RouteDef)?.route ?? item} key={index}>
-            {({ isActive }) => (
+          <SmartLink
+            to={{ route: (item as RouteDef)?.route ?? item }}
+            key={index}
+          >
+            {({ isMatch }) => (
               <DarkLightCornerButton
                 title={(item as RouteDef)?.name ?? item}
-                isActive={isActive}
+                isActive={isMatch}
                 blank
               />
             )}
-          </NavLink>
+          </SmartLink>
         ))}
       </div>
     </div>
