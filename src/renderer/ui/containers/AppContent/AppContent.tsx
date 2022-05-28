@@ -5,8 +5,8 @@ import { lazy, Suspense } from 'react';
 import Statistics from './pages/statistics';
 import Records from './pages/records';
 import Data from './pages/data';
-import Clinic from './pages/clinic';
 const Messages = lazy(() => import('./pages/messages'));
+const Clinic = lazy(() => import('./pages/clinic'));
 
 interface AppContentProps {}
 
@@ -23,11 +23,18 @@ function AppContent({}: AppContentProps) {
               <Messages />
             </Suspense>
           }
-        />{' '}
+        />
         <Route path="stats" element={<Statistics />} />
         <Route path="records" element={<Records />} />
         <Route path="data" element={<Data />} />
-        <Route path="clinic/*" element={<Clinic />} />
+        <Route
+          path="clinic/*"
+          element={
+            <Suspense fallback={<>Loading</>}>
+              <Clinic />
+            </Suspense>
+          }
+        />
       </Routes>
     </div>
   );
