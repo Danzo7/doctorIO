@@ -1,17 +1,20 @@
 /* eslint-disable no-console */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import App from './App';
 import './index.scss';
-
+declare const ELECTRON_ROUTING: boolean;
 const app = document.getElementById('app-mount');
 const root = createRoot(app as HTMLElement);
+console.log(ELECTRON_ROUTING);
+const Routing = ELECTRON_ROUTING ? HashRouter : BrowserRouter;
+
 root.render(
   <StrictMode>
-    <BrowserRouter>
+    <Routing>
       <App />
-    </BrowserRouter>
+    </Routing>
   </StrictMode>,
 );
 

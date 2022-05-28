@@ -150,7 +150,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       }),
       new webpack.DefinePlugin({
         //Setting environment variables
-        'process.env.NODE_ENV': JSON.stringify('development'),
+        ELECTRON_ROUTING: JSON.stringify(false),
       }),
     ],
 

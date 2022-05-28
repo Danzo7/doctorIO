@@ -1,4 +1,6 @@
 const webpackDefault = require('../webpack.config')();
+const webpack = require('webpack');
+
 module.exports = {
   output: {
     assetModuleFilename: 'assets/[hash][ext][query]',
@@ -6,6 +8,16 @@ module.exports = {
   mode: webpackDefault.mode,
   devtool: webpackDefault.devtool,
   module: webpackDefault.module,
-  plugins: webpackDefault.plugins,
+  plugins: [
+    new webpack.DefinePlugin({
+      //Setting environment variables
+      ELECTRON_ROUTING: JSON.stringify(true),
+    }),
+    ...webpackDefault.plugins,
+    new webpack.DefinePlugin({
+      //Setting environment variables
+      ELECTRON_ROUTING: JSON.stringify(true),
+    }),
+  ],
   resolve: webpackDefault.resolve,
 };
