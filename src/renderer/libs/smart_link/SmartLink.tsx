@@ -10,7 +10,7 @@ export type ToRoute = string | RouteExact | ToWithInclude;
 interface SmartLinkProps {
   className?: string | ((props: { isMatch: boolean }) => string);
   children?: ReactNode | ((props: { isMatch: boolean }) => ReactNode);
-  to: string | RouteExact | ToWithInclude;
+  to: ToRoute;
   caseSensitive?: boolean;
   end?: boolean;
   style?: CSSProperties | ((props: { isMatch: boolean }) => CSSProperties);
