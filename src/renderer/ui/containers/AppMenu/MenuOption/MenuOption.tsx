@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './style/index.scss';
-import { NavLink } from 'react-router-dom';
+import SmartLink, { ToRoute } from '@libs/smart_link';
 interface MenuOptionProps {
   items: {
     name: string;
@@ -9,21 +9,34 @@ interface MenuOptionProps {
 }
 
 function MenuOption({ items }: MenuOptionProps) {
+  const routes: { [key: string]: ToRoute } = {
+    home: { route: '', exact: true },
+    messages: {
+      to: 'messages/@clinic',
+      include: ['messages/@public'],
+    },
+    queue: 'queue',
+    stats: 'stats',
+    records: 'records',
+    database: 'database',
+    clinic: 'clinic',
+    settings: 'settings',
+  };
   return (
     <nav className="MenuOption">
       {items.map(
         ({ name, svg: Svg }) =>
           name !== 'logo' && (
-            <NavLink
+            <SmartLink
               key={name}
-              className={({ isActive }) =>
-                `menuItem${isActive ? ' isActive' : ''}`
+              className={({ isMatch }) =>
+                `menuItem${isMatch ? ' isActive' : ''}`
               }
-              to={name}
+              to={routes[name]}
               draggable={false}
             >
               <Svg />
-            </NavLink>
+            </SmartLink>
           ),
       )}
     </nav>

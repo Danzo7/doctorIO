@@ -8,8 +8,8 @@ import settings from 'toSvg/settings.svg?icon';
 import stats from 'toSvg/stats.svg?icon';
 import queue from 'toSvg/queue.svg?icon';
 export default {
-  '/': home,
-  'messages/@clinic': messages,
+  home,
+  messages,
   queue,
   stats,
   records,
