@@ -14,10 +14,6 @@ module.exports = {
       ELECTRON_ROUTING: JSON.stringify(true),
     }),
     ...webpackDefault.plugins,
-    new webpack.DefinePlugin({
-      //Setting environment variables
-      ELECTRON_ROUTING: JSON.stringify(true),
-    }),
   ],
   resolve: webpackDefault.resolve,
 };

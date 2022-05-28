@@ -7,7 +7,6 @@ import './index.scss';
 declare const ELECTRON_ROUTING: boolean;
 const app = document.getElementById('app-mount');
 const root = createRoot(app as HTMLElement);
-console.log(ELECTRON_ROUTING);
 const Routing = ELECTRON_ROUTING ? HashRouter : BrowserRouter;
 
 root.render(
