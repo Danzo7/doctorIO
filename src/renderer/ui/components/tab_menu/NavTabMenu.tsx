@@ -1,6 +1,6 @@
 import colors from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import SmartLink from '@components/smart_link';
+import SmartLink from '@libs/smart_link';
 import './style/index.scss';
 
 type RouteDef = { name: string; route: string };
@@ -26,10 +26,7 @@ export default function NavTabMenu({
     >
       <div className="menu-items">
         {items.map((item, index) => (
-          <SmartLink
-            to={{ route: (item as RouteDef)?.route ?? item }}
-            key={index}
-          >
+          <SmartLink to={(item as RouteDef)?.route ?? item} key={index}>
             {({ isMatch }) => (
               <DarkLightCornerButton
                 title={(item as RouteDef)?.name ?? item}
