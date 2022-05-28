@@ -26,7 +26,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
       </div>
       <NavTabMenu
         items={[
-          { name: 'Overview', route: '' }, // always there is a default page/tab represented by =>""
+          { name: 'Overview', route: { to: '', include: 'Overview' } }, // always there is a default page/tab represented by =>""
           'Members',
           'Roles',
           'Timing and Schedule',
@@ -38,6 +38,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
       <Routes>
         <Route path="Roles" element={<RolesTab />} />
         <Route path="" element={<OverviewTab />} />
+        <Route path="Overview" element={<OverviewTab />} />
         <Route path="Members" element={<MembersTab />} />
       </Routes>
     </div>
