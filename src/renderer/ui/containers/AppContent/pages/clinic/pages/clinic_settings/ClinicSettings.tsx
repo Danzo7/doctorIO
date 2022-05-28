@@ -4,13 +4,15 @@ import { NavTabMenu } from '@components/tab_menu';
 import RolesTab from '@components/roles_tab';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './style/index.scss';
+import OverviewTab from '@components/overview_tap';
+import MembersTab from '@components/members_tab';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
 
   return (
     <div className="clinic-settings">
-      <div className="header">
+      <div className="clinic-settings-header">
         <span>Clinic Settings</span>
         <DarkLightCornerButton
           title="view all"
@@ -24,7 +26,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
       </div>
       <NavTabMenu
         items={[
-          { name: 'Overview', route: '' },
+          { name: 'Overview', route: '' }, // always there is a default page/tab represented by =>""
           'Members',
           'Roles',
           'Timing and Schedule',
@@ -35,6 +37,8 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
       />
       <Routes>
         <Route path="Roles" element={<RolesTab />} />
+        <Route path="" element={<OverviewTab />} />
+        <Route path="Members" element={<MembersTab />} />
       </Routes>
     </div>
   );

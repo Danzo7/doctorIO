@@ -6,7 +6,6 @@ import './style/index.scss';
 type RouteDef = { name: string; route: string };
 interface NavTabMenuProps {
   items: (string | RouteDef)[];
-  defaultSelected?: number;
   onChanged?: ({ item, index }: { item: string; index: number }) => void;
   borderBottom?: boolean;
 }

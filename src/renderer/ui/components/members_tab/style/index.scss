@@ -1,0 +1,8 @@
+@use '~styles/appColors' as *;
+.members-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 40px;
+    overflow-y:scroll ;
+}

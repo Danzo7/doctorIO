@@ -1,0 +1,15 @@
+@use '~styles/appColors' as *;
+.overview-info-form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    align-self: stretch;
+    flex-grow: 1;
+
+    > span {
+        font-weight: 700;
+        font-size: 17px;
+        color: $textgray;
+    }
+}

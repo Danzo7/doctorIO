@@ -6,7 +6,11 @@ import CabinState from '@components/cabin_state';
 import { useScroller } from '@libs/hooks/useScroller';
 import Arrow from 'toSvg/arrow.svg?icon';
 import './style/index.scss';
-interface AppointmentsQueueProps {}
+import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
+interface AppointmentsQueueProps {
+  cabinState: 'inProgress' | 'paused';
+  rollName: string;
+}
 const items = [
   {
     name: 'adam smith',
@@ -69,15 +73,21 @@ const items = [
     number: 30,
   },
 ];
-export default function AppointmentsQueue({}: AppointmentsQueueProps) {
+export default function AppointmentsQueue({
+  cabinState,
+  rollName,
+}: AppointmentsQueueProps) {
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
 
   return (
     <div className="appointments-queue">
-      <div className="header"></div>
-      <div className="content">
+      <div className="appointments-queue-header">
+        <span>{rollName}</span>
+        <DarkLightCornerButton title="Add ..." textColor={colors.white} />
+      </div>
+      <div className="appointments-queue-content">
         <CabinState
-          state="inProgress"
+          state={cabinState}
           duration="1 minute ago"
           patientName="John doe"
           patientNumber={12}

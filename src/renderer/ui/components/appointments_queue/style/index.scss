@@ -2,21 +2,30 @@
 .appointments-queue {
     display: flex;
     flex-direction: column;
-
     align-items: stretch;
     gap: 10px;
-    >.header{
+
+    >.appointments-queue-header{
         display: flex;
         flex-direction: row;
-        align-items: center;
-        padding: 0px;
-        gap: 10px;
+        justify-content: space-between;
+        align-items: baseline;
+        align-self: stretch;
+        flex-grow: 1;
+
+        > span {
+            font-weight: 600;
+            font-size: 18px;
+            color: $white;
+        }
     }
-    >.content{
+
+    >.appointments-queue-content{
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
         gap: 10px;
+
         >.queue-list{
             display: flex;
             flex-direction: row;

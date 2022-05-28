@@ -12,6 +12,13 @@
   scrollbar-color: $hotpurple transparent;
   scrollbar-width: thin;
 }
+li {
+  list-style-type: none;
+}
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 :root {
   --cold-red: #ff4b59;
   --background: #23315e;
