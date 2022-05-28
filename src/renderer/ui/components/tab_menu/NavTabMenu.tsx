@@ -1,9 +1,9 @@
 import colors from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import SmartLink from '@libs/smart_link';
+import SmartLink, { ToRoute } from '@libs/smart_link';
 import './style/index.scss';
 
-type RouteDef = { name: string; route: string };
+type RouteDef = { name: string; route: ToRoute };
 interface NavTabMenuProps {
   items: (string | RouteDef)[];
   onChanged?: ({ item, index }: { item: string; index: number }) => void;
