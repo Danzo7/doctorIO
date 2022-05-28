@@ -1,7 +1,7 @@
-import color from '@assets/styles/color';
+import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ClinicItem from '@components/clinic_item';
-import { useNavigate } from 'react-router-dom';
+import useNavigation from '@libs/hooks/useNavigation';
 import './style/index.scss';
 interface ClinicsProps {
   selected: number;
@@ -28,7 +28,7 @@ const clinicsArray = [
   },
 ];
 export default function Clinics({ selected = 0 }: ClinicsProps) {
-  const navigate = useNavigate();
+  const { toParent } = useNavigation();
   return (
     <div className="clinics">
       <span>Clinics</span>
@@ -44,7 +44,7 @@ export default function Clinics({ selected = 0 }: ClinicsProps) {
               numOfAssistants={numOfAssistants}
               timeToClose={timeToClose}
               onClick={() => {
-                if (selected === index) navigate('123', { replace: true });
+                if (selected === index) toParent();
               }}
             />
           ),
@@ -53,10 +53,10 @@ export default function Clinics({ selected = 0 }: ClinicsProps) {
           <TextButton
             text="Join  a new server..."
             fontSize={15}
-            fontColor={color.white}
-            borderColor={color.border_color}
+            fontColor={colors.white}
+            borderColor={colors.border_color}
             radius={7}
-            backgroundColor={color.darkersec_color}
+            backgroundColor={colors.darkersec_color}
           />
         </div>
       </div>
