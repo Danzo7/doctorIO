@@ -24,7 +24,14 @@ interface TextButtonProps {
   height?: number | string;
   type?: 'button' | 'submit' | 'reset' | undefined;
   disabled?: boolean;
-  alignment?: 'center' | 'end' | 'flex-end' | 'flex-start' | 'start';
+  alignment?:
+    | 'center'
+    | 'baseline'
+    | 'end'
+    | 'flex-end'
+    | 'flex-start'
+    | 'start';
+  itemsDirection?: 'row' | 'row-reverse';
   blank?: true;
 }
 function TextButton({
@@ -49,6 +56,7 @@ function TextButton({
   activeBorderColor,
   disabled = false,
   alignment,
+  itemsDirection,
   onHold,
   blank,
 }: TextButtonProps) {
@@ -76,6 +84,7 @@ function TextButton({
         backgroundColor: !disabled ? backgroundColor : colors.silver_gray,
         border: `${borderColor} 1px solid`,
         justifyContent: alignment,
+        flexDirection: itemsDirection,
         borderRadius: radius,
         padding: padding,
         width: width,
