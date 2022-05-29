@@ -1,0 +1,14 @@
+@use '~styles/appColors' as *;
+.border-separator {
+    flex-grow: 1;
+    align-self: stretch;
+
+    &.vertical {
+
+        border-right: 1px solid $bordercolor;
+    }
+    &.horizontal {
+
+        border-top: 1px solid $bordercolor;
+    }
+}
