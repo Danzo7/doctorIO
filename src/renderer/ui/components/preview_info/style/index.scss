@@ -1,47 +1,22 @@
 @use '~styles/appColors' as *;
-.preview-info {
+
+.preview-list-container {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    padding: 15px;
     gap: 15px;
-    border: 1px solid $bordercolor;
-    border-radius: 17px;
-    align-self: stretch;
-    flex-grow: 1;
 
-    > .preview-info-header {
+    > .preview-list-row {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        align-items: baseline;
-        padding-right: 6px;
+        gap: 10px;
 
         > span {
             font-weight: 600;
             font-size: 18px;
-            color: $white;
-        }
-    }
+            color: $textgray;
 
-    > .preview-list-container {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-
-        > .preview-list-row {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-
-            > span {
-                font-weight: 600;
-                font-size: 18px;
-                color: $textgray;
-
-                + span {
-                    font-weight: 400;
-                }
+            + span {
+                font-weight: 400;
             }
         }
     }

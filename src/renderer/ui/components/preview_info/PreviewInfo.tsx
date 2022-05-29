@@ -1,3 +1,4 @@
+import PreviewList from '@components/preview_list';
 import { ReactNode } from 'react';
 import './style/index.scss';
 interface PreviewInfoProps {
@@ -11,11 +12,7 @@ export default function PreviewInfo({
   data,
 }: PreviewInfoProps) {
   return (
-    <div className="preview-info">
-      <div className="preview-info-header">
-        <span>{title}</span>
-        {buttonNode}
-      </div>
+    <PreviewList title={title} buttonNode={buttonNode}>
       <div className="preview-list-container">
         {Object.entries(data).map(([key, value]) => (
           <div className="preview-list-row" key={key}>
@@ -24,6 +21,6 @@ export default function PreviewInfo({
           </div>
         ))}
       </div>
-    </div>
+    </PreviewList>
   );
 }
