@@ -1,10 +1,16 @@
 import './style/index.scss';
 import colors from '@colors';
 import useLongPress from '@libs/hooks/useLongPress';
-import { FunctionComponent, SVGProps, useState } from 'react';
+import { FunctionComponent, ReactNode, SVGProps, useState } from 'react';
+type IconProps = {
+  svg: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
+  iconColor?: string;
+  iconAfterColor?: string;
+  iconType?: 'stroke' | 'fill';
+};
 interface TextButtonProps {
   text?: string;
-  Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
+  Icon?: FunctionComponent<SVGProps<SVGSVGElement>> | IconProps | ReactNode;
   children?: React.ReactNode;
   fontColor?: string;
   fontSize?: number;
@@ -75,6 +81,19 @@ function TextButton({
       onPress?.();
     },
   });
+  const IconChild = () => {
+    let Node: FunctionComponent | ReactNode;
+    Node =
+      (Icon as IconProps)?.svg != undefined
+        ? (Icon as IconProps).svg
+        : (Node = Icon as FunctionComponent | ReactNode);
+
+    if ((Node as FunctionComponent)?.prototype != undefined) {
+      Node = Node as FunctionComponent<SVGProps<SVGSVGElement>>;
+      return <Node />;
+    }
+    return Node as ReactNode;
+  };
 
   return (
     <button
@@ -90,7 +109,20 @@ function TextButton({
         width: width,
         height: height,
         cursor: disabled ? 'no-drop' : undefined,
-
+        '>svg>path': {
+          stroke:
+            (Icon as IconProps)?.iconType === 'stroke'
+              ? !disabled
+                ? (Icon as IconProps)?.iconColor
+                : colors.text_gray
+              : undefined,
+          fill:
+            (Icon as IconProps)?.iconType === 'fill'
+              ? !disabled
+                ? (Icon as IconProps)?.iconColor
+                : colors.text_gray
+              : undefined,
+        },
         '&:active': {
           boxShadow:
             !disabled && activeBgColor
@@ -108,7 +140,20 @@ function TextButton({
             !disabled && afterBorderColor
               ? `${afterBorderColor} 1px solid`
               : undefined,
-
+          '>svg>path': {
+            stroke:
+              (Icon as IconProps)?.iconType === 'stroke'
+                ? !disabled
+                  ? (Icon as IconProps)?.iconAfterColor
+                  : colors.text_gray
+                : undefined,
+            fill:
+              (Icon as IconProps)?.iconType === 'fill'
+                ? !disabled
+                  ? (Icon as IconProps)?.iconAfterColor
+                  : colors.text_gray
+                : undefined,
+          },
           '> span': {
             color: !disabled && afterFontColor ? afterFontColor : undefined,
           },
@@ -150,8 +195,10 @@ function TextButton({
       }
       disabled={disabled}
     >
-      {children}
-      {Icon && <Icon />}
+      <>
+        {children}
+        {IconChild()}
+      </>
       {text && (
         <span
           className={'text'}

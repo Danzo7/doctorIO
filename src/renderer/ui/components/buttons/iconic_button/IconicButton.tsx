@@ -13,6 +13,7 @@ interface IconicButtonProps {
   afterBorderColor?: string;
   activeBorderColor?: string;
   iconColor?: string;
+  iconAfterColor?: string;
   iconType?: 'stroke' | 'fill';
   radius?: string | number;
   onPress?: () => void;
@@ -40,33 +41,19 @@ function IconicButton({
   activeBgColor = colors.darker,
   type,
   activeBorderColor,
+  iconAfterColor,
   iconSize,
   disabled = false,
 }: IconicButtonProps) {
-  const TransIcon = Icon as FunctionComponent<SVGProps<SVGSVGElement>>;
-  const FIcon = (Icon as FunctionComponent)?.prototype ? (
-    <TransIcon
-      height={iconSize ?? width / 2}
-      width={iconSize ?? width / 2}
-      css={{
-        '>path': {
-          stroke:
-            iconType === 'stroke'
-              ? !disabled
-                ? iconColor
-                : colors.text_gray
-              : undefined,
-          fill:
-            iconType === 'fill'
-              ? !disabled
-                ? iconColor
-                : colors.text_gray
-              : undefined,
-        },
-      }}
-    />
-  ) : undefined;
-  const RIcon = FIcon == undefined ? (Icon as ReactNode) : undefined;
+  const castIcon = () => {
+    if ((Icon as FunctionComponent)?.prototype) {
+      Icon = Icon as FunctionComponent<SVGProps<SVGSVGElement>>;
+      return (
+        <Icon height={iconSize ?? width / 2} width={iconSize ?? width / 2} />
+      );
+    } else return Icon as ReactNode;
+  };
+
   return (
     <TextButton
       type={type}
@@ -82,9 +69,13 @@ function IconicButton({
       afterBorderColor={afterBorderColor}
       onPress={onPress}
       disabled={disabled}
-    >
-      {FIcon ? FIcon : RIcon}
-    </TextButton>
+      Icon={{
+        svg: castIcon(),
+        iconColor: iconColor,
+        iconAfterColor: iconAfterColor,
+        iconType: iconType,
+      }}
+    />
   );
 }
 

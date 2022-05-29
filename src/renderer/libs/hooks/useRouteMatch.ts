@@ -18,7 +18,9 @@ export default function useRouteMatch(
   const tree =
     path == '/' //this is the root path and in this case it will result ["",""]
       ? [''] //We prevent that by setting it to [""] manually, (empty string for representing the root)
-      : decodeURI(caseSensitive ? path : path.toLowerCase()).split('/');
+      : decodeURI(caseSensitive ? path : path.toLowerCase())
+          .replace(/\/*$/, '')
+          .split('/');
 
   //if length equal to 1 mean we are in root
   const inRoot = tree.length == 1;
@@ -59,14 +61,16 @@ export default function useRouteMatch(
         : caseSensitive
         ? splittedRoute[splittedRoute.length - 1]
         : splittedRoute[splittedRoute.length - 1].toLowerCase();
+
     return (
       route == parentRoute ||
       (route.length == 0
         ? parentRoute == lastRoute || inRoot
-        : sRoute == childRoute &&
-          (splittedRoute.length > 1
-            ? tree.indexOf(eRoute) == tree.indexOf(sRoute) + 1
-            : true))
+        : sRoute == childRoute ||
+          (route == childRoute?.split('/')[0] &&
+            (splittedRoute.length > 1
+              ? tree.indexOf(eRoute) == tree.indexOf(sRoute) + 1
+              : true)))
     );
   };
 
