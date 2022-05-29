@@ -1,10 +1,11 @@
 import HomeContent from './pages/home';
 import './index.scss';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Statistics from './pages/statistics';
 import Records from './pages/records';
 import Data from './pages/data';
+import Queues from './pages/queues';
 const Messages = lazy(() => import('./pages/messages'));
 const Clinic = lazy(() => import('./pages/clinic'));
 
@@ -16,6 +17,7 @@ function AppContent({}: AppContentProps) {
       <Routes>
         {/* route example */}
         <Route path="/" element={<HomeContent />} />
+        <Route path="queue" element={<Queues />} />
         <Route
           path="messages/:category/*"
           element={
@@ -35,6 +37,7 @@ function AppContent({}: AppContentProps) {
             </Suspense>
           }
         />
+        <Route path="*" element={<Navigate to={''} replace={true} />} />
       </Routes>
     </div>
   );

@@ -31,18 +31,22 @@ export default function NumberInput({
   min = 0,
   unit = 'kg',
 }: NumberInputProps) {
-  const [value, changeValue] = useState('');
+  const [value, changeValue] = useState(min.toString());
   const setValue = (v: string) => {
-    if (v.length != 0 || (Number(v) <= max && Number(v) >= min)) changeValue(v);
+    if (v.length == 0 || (Number(v) <= max && Number(v) >= min)) changeValue(v);
   };
   const increase = () => {
     setValue(
-      (Number(value) + step).toFixed(step.toString().split('.')[1].length),
+      (Number(value) + step).toFixed(
+        step.toString().split('.')[1]?.length ?? 0,
+      ),
     );
   };
   const decrease = () => {
     setValue(
-      (Number(value) - step).toFixed(step.toString().split('.')[1].length),
+      (Number(value) - step).toFixed(
+        step.toString().split('.')[1]?.length ?? 0,
+      ),
     );
   };
   return (
