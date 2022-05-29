@@ -16,7 +16,7 @@
         align-items: flex-start;
         gap: 5px;
         flex-grow: 1;
-
+        border-right: 1px solid $bordercolor;
         > span:first-child {
             font-weight: 400;
             font-size: 17px;

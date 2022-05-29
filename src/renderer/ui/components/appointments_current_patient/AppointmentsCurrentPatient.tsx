@@ -1,4 +1,3 @@
-import BorderSeparator from '@components/border_separator';
 import './style/index.scss';
 interface AppointmentsCurrentPatientProps {
   patientName: string;
@@ -16,7 +15,6 @@ export default function AppointmentsCurrentPatient({
         <span>{patientName}</span>
         <span>{duration}</span>
       </div>
-      <BorderSeparator direction="vertical" />
       <div className="number-container">
         <span>Number</span>
         <span>{patientNumber}</span>
