@@ -1,0 +1,9 @@
+@use '~styles/appColors' as *;
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 6px;
+    flex-grow: 1;
+    align-self: stretch;
+}
