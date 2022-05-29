@@ -9,20 +9,6 @@
     align-self: stretch;
     overflow: hidden;
 
-    > .preview-list-header {
-
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: baseline;
-        padding-left: 6px;
-        padding-right: 6px;
-        > span {
-            font-weight: 400;
-            font-size: 18px;
-            color: $white;
-        }
-    }
     > .preview-list-wrapper {
         display: flex;
         flex-direction: column;

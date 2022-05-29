@@ -1,4 +1,5 @@
 import { color } from '@assets/styles/color';
+import Header from '@components/header';
 import { ReactNode } from 'react';
 import './style/index.scss';
 interface PreviewListProps {
@@ -18,10 +19,7 @@ export default function PreviewList({
       className="preview-list"
       css={{ border: border ? `1px solid ${color.border_color}` : undefined }}
     >
-      <div className="preview-list-header">
-        <span>{title}</span>
-        {buttonNode}
-      </div>
+      <Header title={title} buttonNode={buttonNode} />
       <div className="preview-list-wrapper">{children}</div>
     </div>
   );

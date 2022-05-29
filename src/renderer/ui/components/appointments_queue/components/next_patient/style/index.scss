@@ -6,19 +6,4 @@
     align-items: stretch;
     padding: 10px 20px;
     gap: 10px;
-
-    > .next-patient-header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        flex-grow: 1;
-        align-self: stretch;
-
-        > span {
-            font-weight: 600;
-            font-size: 21px;
-            color: $white;
-        }
-    }
 }

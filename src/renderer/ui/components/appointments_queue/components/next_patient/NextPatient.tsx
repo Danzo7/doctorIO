@@ -3,6 +3,7 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import TextButton from '@components/buttons/text_button';
 import AppointmentsCurrentPatient from '@components/appointments_current_patient';
 import './style/index.scss';
+import Header from '@components/header';
 interface NextPatientProps {
   patientName: string;
   appointmentDuration: string;
@@ -15,10 +16,11 @@ export default function NextPatient({
 }: NextPatientProps) {
   return (
     <div className="next-patient">
-      <div className="next-patient-header">
-        <span>Next patient</span>
-        <SquareIconButton />
-      </div>
+      <Header
+        title="Next patient"
+        buttonNode={<SquareIconButton />}
+        titleFontSize={21}
+      />
       <AppointmentsCurrentPatient
         patientName={patientName}
         duration={appointmentDuration}
