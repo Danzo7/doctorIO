@@ -5,4 +5,11 @@
   align-items: stretch;
   gap: 40px;
   overflow: hidden;
+
+  > .roles-miniTabs {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
 }
