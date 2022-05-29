@@ -61,14 +61,16 @@ export default function useRouteMatch(
         : caseSensitive
         ? splittedRoute[splittedRoute.length - 1]
         : splittedRoute[splittedRoute.length - 1].toLowerCase();
+
     return (
       route == parentRoute ||
       (route.length == 0
         ? parentRoute == lastRoute || inRoot
-        : sRoute == childRoute &&
-          (splittedRoute.length > 1
-            ? tree.indexOf(eRoute) == tree.indexOf(sRoute) + 1
-            : true))
+        : sRoute == childRoute ||
+          (route == childRoute?.split('/')[0] &&
+            (splittedRoute.length > 1
+              ? tree.indexOf(eRoute) == tree.indexOf(sRoute) + 1
+              : true)))
     );
   };
 
