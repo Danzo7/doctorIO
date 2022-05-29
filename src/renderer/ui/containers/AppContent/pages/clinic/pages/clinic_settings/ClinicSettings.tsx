@@ -36,7 +36,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
         ]}
       />
       <Routes>
-        <Route path="Roles" element={<RolesTab />} />
+        <Route path="Roles/*" element={<RolesTab />} />
         <Route path="" element={<OverviewTab />} />
         <Route path="Overview" element={<OverviewTab />} />
         <Route path="Members" element={<MembersTab />} />
