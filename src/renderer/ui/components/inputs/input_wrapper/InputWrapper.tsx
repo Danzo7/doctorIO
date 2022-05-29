@@ -8,6 +8,8 @@ interface InputWrapperProps {
   borderColor?: string;
   radius?: number;
   padding?: number;
+  flexGrow?: number;
+  inputAlignment?: string;
   children: ReactNode;
   leading?: ReactNode;
   trailing?: ReactNode;
@@ -20,6 +22,8 @@ export default function InputWrapper({
   leading,
   trailing,
   padding = 10,
+  flexGrow = 0,
+  inputAlignment = 'flex-start',
   background = color.darkersec_color,
   borderColor = color.border_color,
   radius = 10,
@@ -58,12 +62,18 @@ export default function InputWrapper({
         backgroundColor: background,
         borderRadius: radius,
         border: borderColor ? `1px solid ${borderColor}` : undefined,
+        flexGrow: flexGrow,
       }}
     >
       {
         <>
           {paddedLeading}
-          <div className="input-content">{children}</div>
+          <div
+            className="input-content"
+            css={{ justifyContent: inputAlignment }}
+          >
+            {children}
+          </div>
           {paddedTrailing}
         </>
       }

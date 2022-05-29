@@ -10,6 +10,8 @@ import { color } from '@assets/styles/color';
 interface NumberInputProps {
   placeholder?: string;
   padding?: number;
+  flexGrow?: number;
+  inputAlignment?: string;
   register?: UseFormRegisterReturn;
   errorMessage?: string;
   step?: number;
@@ -19,8 +21,9 @@ interface NumberInputProps {
 }
 export default function NumberInput({
   errorMessage,
-
   padding,
+  flexGrow,
+  inputAlignment,
   placeholder,
   register,
   step = 0.1,
@@ -30,7 +33,7 @@ export default function NumberInput({
 }: NumberInputProps) {
   const [value, changeValue] = useState('');
   const setValue = (v: string) => {
-    if (v.length == 0 || (Number(v) <= max && Number(v) >= min)) changeValue(v);
+    if (v.length != 0 || (Number(v) <= max && Number(v) >= min)) changeValue(v);
   };
   const increase = () => {
     setValue(
@@ -46,6 +49,8 @@ export default function NumberInput({
     <InputWrapper
       errorMessage={errorMessage}
       padding={padding}
+      flexGrow={flexGrow}
+      inputAlignment={inputAlignment}
       onClick={(e) => {
         e.preventDefault();
         const input = e.currentTarget?.children[1]

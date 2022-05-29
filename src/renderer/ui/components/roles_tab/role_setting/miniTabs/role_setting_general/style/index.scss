@@ -1,0 +1,14 @@
+@use '~styles/appColors' as *;
+.role-setting-general {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-self: stretch;
+    flex-grow: 1;
+
+    > .role-setting-general-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+}
