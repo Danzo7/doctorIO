@@ -4,7 +4,7 @@ import { NavTabMenu } from '@components/tab_menu';
 import RolesTab from './pages/roles_tab';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './style/index.scss';
-import OverviewTab from './pages/overview_tap';
+import OverviewTab from './pages/overview_tab';
 import MembersTab from './pages/members_tab';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
