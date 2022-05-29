@@ -19,7 +19,11 @@ export default function PaymentItem({
       <div className="payment-controls">
         <IconicButton
           Icon={Print}
-          backgroundColor={color.cold_blue}
+          iconType="fill"
+          iconColor={color.text_gray}
+          iconAfterColor={color.white}
+          borderColor={color.border_color}
+          afterBgColor={color.cold_blue}
           radius={7}
           iconSize={15}
           width={30}
@@ -27,9 +31,11 @@ export default function PaymentItem({
         <TextButton
           text="Confirm"
           fontSize={13}
-          fontColor={color.white}
+          fontColor={color.text_gray}
+          afterFontColor={color.white}
           fontWeight={700}
-          backgroundColor={color.good_green}
+          borderColor={color.border_color}
+          afterBgColor={color.good_green}
           padding=" 5px 10px"
         />
       </div>
