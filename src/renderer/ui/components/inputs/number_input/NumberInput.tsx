@@ -101,9 +101,10 @@ export default function NumberInput({
             : v;
           v = v.startsWith('.') ? '0.' + v : v;
           const floatRegex = new RegExp(
-            '(^([0-9])+(.[0-9]{0,' +
-              step.toString().split('.')[1].length +
-              '})?)',
+            '(^([0-9])+(' + step.toString().includes('.')
+              ? '.'
+              : '' + '[0-9]{0,' + step.toString().split('.')[1]?.length ??
+                '' + '})?)',
             'g',
           );
           const res = v?.match(floatRegex)?.join('') ?? '';
