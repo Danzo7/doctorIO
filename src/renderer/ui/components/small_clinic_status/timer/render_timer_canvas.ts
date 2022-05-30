@@ -1,4 +1,4 @@
-import { color } from '@assets/styles/color';
+import { staticColors as color } from '@assets/styles/color';
 type Params = {
   size: number;
   radius?: number;

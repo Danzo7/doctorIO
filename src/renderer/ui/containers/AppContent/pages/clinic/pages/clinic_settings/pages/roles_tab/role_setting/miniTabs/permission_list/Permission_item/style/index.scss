@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: stretch;
   padding: 10px;
-  border-bottom: 1px solid #3a467c;
+  border-bottom: 1px solid $bordercolor;
   gap: 10px;
 
   > .permission-linked {
