@@ -1,6 +1,5 @@
 @use '~styles/appColors' as *;
 .border-separator {
-    flex-grow: 1;
     align-self: stretch;
 
     &.vertical {
