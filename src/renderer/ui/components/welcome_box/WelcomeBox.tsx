@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import './style/index.scss';
 import Svg from 'toSvg/doctor_figure.svg?icon';
 import Arrow from 'toSvg/arrow.svg';
+import Pattern from 'toSvg/pattern.svg';
 interface WelcomeBoxProps {
   message: string;
 }
@@ -22,6 +23,7 @@ function WelcomeBox({ message }: WelcomeBoxProps) {
           }}
         >
           <div className="content">
+            <Pattern css={{ position: 'absolute', left: -10 }} />
             <Svg css={{ height: '100%', width: 'auto' }} />
             <span>{message}</span>
           </div>
