@@ -14,6 +14,7 @@ interface NumberInputProps {
   inputAlignment?: string;
   register?: UseFormRegisterReturn;
   errorMessage?: string;
+  width?: string | number;
   step?: number;
   min?: number;
   max?: number;
@@ -30,10 +31,13 @@ export default function NumberInput({
   max = 100000,
   min = 0,
   unit = 'kg',
+  width = 'fit-content',
 }: NumberInputProps) {
   const [value, changeValue] = useState(min.toString());
-  const setValue = (v: string) => {
-    if (v.length == 0 || (Number(v) <= max && Number(v) >= min)) changeValue(v);
+  const setValue = (v: string, external?: boolean) => {
+    if (Number(v) <= max && (external || Number(v) >= min)) changeValue(v);
+    else if (Number(v) > max) changeValue(max.toString());
+    else if (Number(v) < min) changeValue(min.toString());
   };
   const increase = () => {
     setValue(
@@ -51,6 +55,7 @@ export default function NumberInput({
   };
   return (
     <InputWrapper
+      maxWidth={width}
       errorMessage={errorMessage}
       padding={padding}
       flexGrow={flexGrow}
@@ -86,10 +91,8 @@ export default function NumberInput({
         onWheel={(e) => {
           e.preventDefault();
           const direction = e.deltaY > 0 ? -1 < 0 : 0;
-          if (direction > 0) increase();
-          else {
-            decrease();
-          }
+          if (direction > 0) decrease();
+          else increase();
           e.stopPropagation();
         }}
         onChange={(event) => {
@@ -108,7 +111,7 @@ export default function NumberInput({
             'g',
           );
           const res = v?.match(floatRegex)?.join('') ?? '';
-          setValue(res);
+          if (!Number.isNaN(Number(res))) setValue(res, true);
         }}
         {...register}
         placeholder={placeholder}
