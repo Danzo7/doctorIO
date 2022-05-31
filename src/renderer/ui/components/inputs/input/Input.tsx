@@ -1,5 +1,10 @@
 import { HTMLInputTypeAttribute, ReactNode } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import {
+  ChangeHandler,
+  InternalFieldName,
+  RefCallBack,
+  UseFormRegisterReturn,
+} from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '../select';
@@ -7,6 +12,15 @@ import InputContainer from '../input_container';
 import InputWrapper from '../input_wrapper';
 import NumberInput from '../number_input';
 import './style/index.scss';
+export type FormHookProps = Omit<
+  UseFormRegisterReturn,
+  'onChange' | 'onBlur' | 'ref' | 'name'
+> & {
+  onChange?: ChangeHandler;
+  onBlur?: ChangeHandler;
+  ref?: RefCallBack;
+  name?: InternalFieldName;
+};
 type NumericInput = {
   type: 'numeric';
   min: number;
@@ -27,7 +41,6 @@ type DateTimeInput = {
 interface InputProps {
   type: SelectInput | DateTimeInput | NumericInput | HTMLInputTypeAttribute;
   errorMsg?: string;
-  register?: UseFormRegisterReturn;
 
   hint?: string;
   label?: string;
@@ -36,6 +49,8 @@ interface InputProps {
   children?: ReactNode;
   placeholder?: string;
   flexGrow?: number;
+  onChange?: ChangeHandler;
+  onBlur?: ChangeHandler;
 }
 export default function Input({
   type = 'text',
@@ -46,9 +61,9 @@ export default function Input({
   leading,
   trailing,
   children,
-  register,
   flexGrow,
-}: InputProps) {
+  ...others
+}: InputProps & FormHookProps) {
   return (
     <InputContainer
       flexGrow={flexGrow}
@@ -59,12 +74,10 @@ export default function Input({
       {(type as NumericInput)?.type == 'numeric' ? (
         <NumberInput
           errorMessage={errorMsg}
-          max={(type as NumericInput)?.max}
-          min={(type as NumericInput)?.min}
           step={(type as NumericInput)?.step}
           unit={(type as NumericInput)?.unit}
           placeholder={placeholder}
-          register={register}
+          {...others}
         />
       ) : (
         <InputWrapper
@@ -81,7 +94,7 @@ export default function Input({
                       options={(type as SelectInput)?.options}
                       icon={(type as SelectInput)?.icon}
                       placeholder={placeholder}
-                      register={register}
+                      {...others}
                     />
                   );
                 else if ((type as DateTimeInput).type == 'datetime')
@@ -92,7 +105,7 @@ export default function Input({
                   return (
                     <input
                       placeholder={placeholder}
-                      {...register}
+                      {...others}
                       type={type as HTMLInputTypeAttribute}
                     ></input>
                   );
