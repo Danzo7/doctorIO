@@ -62,7 +62,6 @@ export default function Records({}: RecordsProps) {
         type={'search'}
         hint="You have to select a patient by fullName or Id to access to his medical records"
         {...register('searchField')}
-        flexGrow={0}
       />
       <div className="records-suggestions-container">
         {results?.map(({ fullName, id }, index) => (

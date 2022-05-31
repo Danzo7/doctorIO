@@ -48,7 +48,7 @@ interface InputProps {
   trailing?: ReactNode;
   children?: ReactNode;
   placeholder?: string;
-  flexGrow?: number;
+  fillContainer?: true;
   onChange?: ChangeHandler;
   onBlur?: ChangeHandler;
 }
@@ -61,12 +61,12 @@ export default function Input({
   leading,
   trailing,
   children,
-  flexGrow,
+  fillContainer,
   ...others
 }: InputProps & FormHookProps) {
   return (
     <InputContainer
-      flexGrow={flexGrow}
+      fillContainer={fillContainer}
       errorMessage={errorMsg}
       hint={hint}
       label={label}
