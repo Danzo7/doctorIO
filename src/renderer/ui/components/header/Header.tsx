@@ -8,6 +8,7 @@ interface HeaderProps {
   titleFontSize?: number;
   titleFontWeight?: number | string;
   titleColor?: string;
+  flexGrow?: number;
 }
 export default function Header({
   buttonNode,
@@ -16,9 +17,13 @@ export default function Header({
   titleFontSize = 18,
   titleFontWeight = 600,
   titleColor = color.white,
+  flexGrow = 0,
 }: HeaderProps) {
   return (
-    <div className="header" css={{ alignItems: alignItems }}>
+    <div
+      className="header"
+      css={{ alignItems: alignItems, flexGrow: flexGrow }}
+    >
       <span
         css={{
           fontSize: titleFontSize,
