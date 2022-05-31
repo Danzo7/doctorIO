@@ -7,7 +7,7 @@ export default function BookedAppointmentPanel({
   bookedAppointmentData = [],
 }: BookedAppointmentPanelProps) {
   return (
-    <PreviewList title="Booked Appointment" border={false}>
+    <PreviewList title="Booked Appointment" noBorder>
       {bookedAppointmentData.map(
         ({ BookedByFullName, patientFullName, BookedInDate }) => (
           <BookedAppointmentItem
