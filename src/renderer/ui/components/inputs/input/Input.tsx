@@ -35,6 +35,7 @@ interface InputProps {
   trailing?: ReactNode;
   children?: ReactNode;
   placeholder?: string;
+  flexGrow?: number;
 }
 export default function Input({
   type = 'text',
@@ -46,9 +47,15 @@ export default function Input({
   trailing,
   children,
   register,
+  flexGrow,
 }: InputProps) {
   return (
-    <InputContainer errorMessage={errorMsg} hint={hint} label={label}>
+    <InputContainer
+      flexGrow={flexGrow}
+      errorMessage={errorMsg}
+      hint={hint}
+      label={label}
+    >
       {(type as NumericInput)?.type == 'numeric' ? (
         <NumberInput
           errorMessage={errorMsg}
