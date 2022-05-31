@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 
 import './style/index.scss';
 import Input from '@components/inputs/input';
+import Header from '@components/header';
 interface QueueAddSearchModalProps {}
 interface SearchInput {
   searchField: string;
@@ -30,7 +31,7 @@ const usersData = [
 ];
 export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const { register, watch } = useForm<SearchInput>();
-  const watchSearch = watch('searchField', ''); //Watch will cause component to rerender when value change similar to  onChange(setState()), watch: https://www.youtube.com/watch?v=RkXv4AXXC_4
+  const watchSearch = watch('searchField', '');
 
   const onChangeHandler = (text: string) => {
     let matches = [];
@@ -45,9 +46,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
 
   return (
     <div className="queue-add-search-modal">
-      <div className="back-btn-container">
-        <SquareIconButton />
-      </div>
+      <Header title="Add patient" buttonNode={<SquareIconButton />} />
       <form>
         <Input
           label="Add a patient to appointment queue"
