@@ -9,7 +9,6 @@ import './style/index.scss';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 interface AppointmentsQueueProps {
   cabinState: 'inProgress' | 'paused';
-  rollName: string;
 }
 const items = [
   {
@@ -75,14 +74,13 @@ const items = [
 ];
 export default function AppointmentsQueue({
   cabinState,
-  rollName,
 }: AppointmentsQueueProps) {
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
 
   return (
     <div className="appointments-queue">
       <div className="appointments-queue-header">
-        <span>{rollName}</span>
+        <span>Queue list</span>
         <DarkLightCornerButton title="Add ..." textColor={colors.white} />
       </div>
       <div className="appointments-queue-content">

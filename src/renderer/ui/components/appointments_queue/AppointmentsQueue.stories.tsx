@@ -11,5 +11,4 @@ const Template: Story<ComponentProps<typeof AppointmentsQueue>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   cabinState: 'inProgress',
-  rollName: 'Doctor',
 };
