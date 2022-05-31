@@ -8,6 +8,7 @@ interface PreviewListProps {
   children?: ReactNode;
   noBorder?: true;
   gap?: number;
+  maxHeight?: number;
 }
 export default function PreviewList({
   title,
@@ -15,13 +16,15 @@ export default function PreviewList({
   children,
   noBorder,
   gap = 5,
+  maxHeight,
 }: PreviewListProps) {
   return (
     <div
       className="preview-list"
       css={{
         border: !noBorder ? `1px solid ${color.border_color}` : undefined,
-        padding: !noBorder ? '15px 10px' : undefined,
+        padding: !noBorder ? '15px 10px' : '5px',
+        maxHeight: maxHeight ? maxHeight : undefined,
       }}
     >
       <Header title={title} buttonNode={buttonNode} />
