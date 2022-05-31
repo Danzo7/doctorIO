@@ -5,8 +5,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 type Inputs = {
   name: string;
   description: string;
-  Location: string;
-  PhoneNumber: number;
+  location: string;
+  phoneNumber: number;
 };
 
 interface OverviewInfoFormProps {}
@@ -16,10 +16,18 @@ export default function OverviewInfoForm({}: OverviewInfoFormProps) {
   return (
     <div className="overview-info-form">
       <span>Informations</span>
-      <Input label="Name" type={'text'} />
-      <Input label="Description" type={'text'} />
-      <Input label="Location" type={'text'} />
-      <Input label="Phone number" type={'number'} />
+      <Input register={register('name')} label="Name" type={'text'} />
+      <Input
+        register={register('description')}
+        label="Description"
+        type={'text'}
+      />
+      <Input register={register('location')} label="Location" type={'text'} />
+      <Input
+        register={register('phoneNumber')}
+        label="Phone number"
+        type={'number'}
+      />
     </div>
   );
 }
