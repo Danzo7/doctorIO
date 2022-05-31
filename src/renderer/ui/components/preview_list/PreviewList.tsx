@@ -20,8 +20,8 @@ export default function PreviewList({
     <div
       className="preview-list"
       css={{
-        border: noBorder ? `1px solid ${color.border_color}` : undefined,
-        padding: noBorder && '15px 10px',
+        border: !noBorder ? `1px solid ${color.border_color}` : undefined,
+        padding: !noBorder ? '15px 10px' : undefined,
       }}
     >
       <Header title={title} buttonNode={buttonNode} />
