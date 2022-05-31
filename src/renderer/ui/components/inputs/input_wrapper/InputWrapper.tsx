@@ -73,7 +73,10 @@ export default function InputWrapper({
           {paddedLeading}
           <div
             className="input-content"
-            css={{ justifyContent: inputAlignment }}
+            css={{
+              justifyContent: inputAlignment,
+              paddingLeft: leading ? undefined : 10,
+            }}
           >
             {children}
           </div>

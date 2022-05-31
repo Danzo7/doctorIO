@@ -13,6 +13,7 @@
     display: flex;
     align-self: stretch;
     align-items: center;
+    justify-content: center;
     input{
       align-self: stretch;
       color: $white;
@@ -21,11 +22,11 @@
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
-      padding-left: 10px;
       &:-webkit-autofill { box-shadow: 0 0 0px 1000px $darkerseccolor inset; }
       &::placeholder{ color: $textgray; }
       width: 100%;
     }
+
     >*:first-child>.date-content div{
       flex-grow: 1;
       align-self: stretch;

@@ -9,7 +9,7 @@ interface AppProps {}
 function App({}: AppProps) {
   return (
     <>
-      <div className="app-container joke">
+      <div className="app-container">
         <AppMenu />
         <AppContent />
         <AppSidebar />

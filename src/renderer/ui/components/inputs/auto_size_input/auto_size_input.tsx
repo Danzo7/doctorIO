@@ -15,7 +15,7 @@ export default function AutoSizeInput({
       inputRef.current?.setAttribute(
         'style',
         `width:${
-          (inputSize === true ? 3 : inputSize) +
+          (inputSize === true ? 2 : inputSize) +
           (inputRef.current?.value.toString().length - 1 ?? 0)
         }ch`,
       );
