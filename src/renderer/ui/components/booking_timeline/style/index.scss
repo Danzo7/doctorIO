@@ -1,4 +1,7 @@
 @use '~styles/appColors' as *;
 .booking-timeline {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
