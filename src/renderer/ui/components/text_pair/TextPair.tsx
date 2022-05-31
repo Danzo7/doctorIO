@@ -15,7 +15,8 @@ export default function TextPair({ first, second, reversed }: TextPairProps) {
     >
       <span
         css={{
-          fontSize: typeof first != 'string' ? first.fontSize : 15,
+          fontSize: typeof first != 'string' ? first?.fontSize : 17,
+          fontWeight: 500,
           color: typeof first != 'string' ? first?.fontColor : color.white,
         }}
       >
@@ -23,7 +24,8 @@ export default function TextPair({ first, second, reversed }: TextPairProps) {
       </span>
       <span
         css={{
-          fontSize: typeof second != 'string' ? second.fontSize : 12,
+          fontSize: typeof second != 'string' ? second?.fontSize : 12,
+          fontWeight: 500,
           color:
             typeof second != 'string' ? second?.fontColor : color.text_gray,
         }}
