@@ -23,7 +23,9 @@ export default function PreviewList({
       className="preview-list"
       css={{
         border: !noBorder ? `1px solid ${color.border_color}` : undefined,
-        padding: !noBorder ? '15px 10px' : '5px',
+        padding: !noBorder ? '15px 10px' : undefined,
+        borderRadius: noBorder ? 0 : 15,
+
         maxHeight: maxHeight ? maxHeight : undefined,
       }}
     >
