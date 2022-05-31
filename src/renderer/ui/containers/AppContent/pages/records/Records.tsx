@@ -1,6 +1,5 @@
 import Header from '@components/header';
 import Input from '@components/inputs/input';
-import Select from '@components/inputs/select';
 import RecordInfoItem from '@components/record_info_item';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -31,8 +30,8 @@ const usersData = [
 
 interface RecordsProps {}
 export default function Records({}: RecordsProps) {
-  const { register, watch } = useForm<SearchInput>();
-  const watchSearch = watch('searchField', '');
+  const { register, watch, handleSubmit } = useForm<SearchInput>();
+  const watchSearch = watch('searchField');
   const [results, setResults] = useState<any[]>([]);
 
   const onChangeHandler = (text: string) => {
@@ -55,6 +54,7 @@ export default function Records({}: RecordsProps) {
         trailing={
           <Search
             onClick={() => {
+              console.log(watchSearch);
               onChangeHandler(watchSearch);
             }}
           />
@@ -62,7 +62,6 @@ export default function Records({}: RecordsProps) {
         type={'search'}
         hint="You have to select a patient by fullName or Id to access to his medical records"
         {...register('searchField')}
-        flexGrow={0}
       />
       <div className="records-suggestions-container">
         {results?.map(({ fullName, id }, index) => (
