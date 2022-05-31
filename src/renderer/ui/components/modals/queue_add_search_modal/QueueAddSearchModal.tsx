@@ -53,7 +53,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
           placeholder="search for a patients"
           leading={<Svg>{search}</Svg>}
           type="search"
-          register={register(
+          {...register(
             'searchField',
             //onchange={handleChange} most input props are define in register
           )}

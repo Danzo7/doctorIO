@@ -152,14 +152,14 @@ export default function Firo() {
           type={'password'}
           label="password"
           errorMsg={errors.password?.message}
-          register={register('password', { required: 'this is required' })}
+          {...register('password', { required: 'this is required' })}
         />
         <Input
           hint="write your mom's name"
           label="mom's name"
           type={'email'}
           errorMsg={errors.moms?.message}
-          register={register('moms', {
+          {...register('moms', {
             required: 'this is required too',
             minLength: { message: 'are you stupid or what! ', value: 5 },
           })}
