@@ -6,21 +6,28 @@ interface PreviewListProps {
   title: string;
   buttonNode?: ReactNode;
   children?: ReactNode;
-  border?: boolean;
+  noBorder?: true;
+  gap?: number;
 }
 export default function PreviewList({
   title,
   buttonNode,
   children,
-  border = true,
+  noBorder,
+  gap = 5,
 }: PreviewListProps) {
   return (
     <div
       className="preview-list"
-      css={{ border: border ? `1px solid ${color.border_color}` : undefined }}
+      css={{
+        border: !noBorder ? `1px solid ${color.border_color}` : undefined,
+        padding: !noBorder ? '15px 10px' : undefined,
+      }}
     >
       <Header title={title} buttonNode={buttonNode} />
-      <div className="preview-list-wrapper">{children}</div>
+      <div className="preview-list-wrapper" css={{ gap: gap }}>
+        {children}
+      </div>
     </div>
   );
 }

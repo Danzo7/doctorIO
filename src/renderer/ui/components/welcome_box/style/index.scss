@@ -11,11 +11,6 @@
   position: relative;
   justify-content: center;
   height: 100px;
-
-  &.hide {
-    visibility: hidden;
-    animation:garbage .2s forwards;
-  }
   > .hide-btn {
     display: flex;
     justify-content: center;
@@ -32,20 +27,13 @@
       @include darken;
       border-radius: 0 0 10px 10px;
       padding: 10px;
-
-      > svg > path {
-        fill: $white;
-      }
     }
-  }
-  > svg {
-    position: absolute;
-    z-index: -1;
   }
   > .content {
     @include idle;
-
-    background-image: url(toPng/pattern.png);
+    overflow: hidden;
+    position: relative;
+    background: $lighterbackground;
     background-repeat: repeat-x;
     display: flex;
     flex-direction: row;
@@ -57,7 +45,15 @@
       font-weight: 700;
       font-size: 24px;
     }
+    >svg:first-of-type>path{
+      stroke: $light;
+    }
   }
+  &.hide {
+    visibility: hidden;
+    animation:garbage .2s forwards;
+  }
+
   @keyframes garbage {
     0% {
       visibility: visible;

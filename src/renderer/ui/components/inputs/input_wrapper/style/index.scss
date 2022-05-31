@@ -6,7 +6,7 @@
   flex-direction: row;
   align-items: center;
   height: 40px;
-
+  gap: 5px;
   >.input-content{
     opacity: $opacityBlur;
     flex-grow: 1;
@@ -24,8 +24,9 @@
       padding-left: 10px;
       &:-webkit-autofill { box-shadow: 0 0 0px 1000px $darkerseccolor inset; }
       &::placeholder{ color: $textgray; }
+      width: 100%;
     }
-    >*:first-child,>.date-content div{
+    >*:first-child>.date-content div{
       flex-grow: 1;
       align-self: stretch;
       display: flex;

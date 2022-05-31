@@ -14,6 +14,7 @@ interface InputWrapperProps {
   leading?: ReactNode;
   trailing?: ReactNode;
   errorMessage?: string;
+  maxWidth?: number | string;
   onWheel?: WheelEventHandler<HTMLDivElement>;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
@@ -31,6 +32,7 @@ export default function InputWrapper({
   errorMessage,
   onClick,
   onWheel,
+  maxWidth,
 }: InputWrapperProps) {
   const paddedLeading = leading && (
     <div
@@ -63,6 +65,7 @@ export default function InputWrapper({
         borderRadius: radius,
         border: borderColor ? `1px solid ${borderColor}` : undefined,
         flexGrow: flexGrow,
+        minWidth: maxWidth,
       }}
     >
       {
