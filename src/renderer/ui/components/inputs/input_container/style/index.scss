@@ -6,7 +6,7 @@
     align-items: stretch;
     gap: 10px;
 
-    span{
+    > span{
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
