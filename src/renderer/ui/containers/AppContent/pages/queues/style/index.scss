@@ -1,3 +1,27 @@
 @use '~styles/appColors' as *;
 .queues {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+    gap: 30px;
+    flex-grow: 1;
+    align-self: stretch;
+    overflow-y: scroll;
+
+    > span {
+        font-weight: 600;
+        font-size: 22px;
+        color: $white;
+    }
+
+    > .queues-footer {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 15%;
+        align-self: stretch;
+        border-top: 1px solid $bordercolor;
+        padding-top: 15px;
+    }
 }
