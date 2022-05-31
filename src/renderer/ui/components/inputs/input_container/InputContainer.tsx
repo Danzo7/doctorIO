@@ -5,18 +5,18 @@ interface InputContainerProps {
   label?: string;
   errorMessage?: string;
   hint?: string;
-  flexGrow?: number;
+  fillContainer?: true;
 }
 export default function InputContainer({
   label,
   errorMessage,
   hint,
   children,
-  flexGrow = 1,
+  fillContainer,
 }: InputContainerProps) {
   return (
     <div
-      css={{ flexGrow: flexGrow }}
+      css={{ width: fillContainer ? '100%' : undefined }}
       className={`input-container${errorMessage ? ' error' : ''}`}
     >
       <>
