@@ -3,21 +3,18 @@ import add from 'toSvg/add.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import InputWrapper from '../input_wrapper/InputWrapper';
 import { useState } from 'react';
-import { UseFormRegisterReturn } from 'react-hook-form';
 import AutoSizeInput from '../auto_size_input';
 import { color } from '@assets/styles/color';
+import { FormHookProps } from '../input/Input';
 
 interface NumberInputProps {
   placeholder?: string;
   padding?: number;
   flexGrow?: number;
   inputAlignment?: string;
-  register?: UseFormRegisterReturn;
   errorMessage?: string;
   width?: string | number;
   step?: number;
-  min?: number;
-  max?: number;
   unit?: string;
 }
 export default function NumberInput({
@@ -26,13 +23,15 @@ export default function NumberInput({
   flexGrow,
   inputAlignment,
   placeholder,
-  register,
   step = 0.1,
-  max = 100000,
+  max = 1000,
   min = 0,
   unit = 'kg',
   width = 'fit-content',
-}: NumberInputProps) {
+  maxLength = 4,
+  onChange,
+  ...others
+}: NumberInputProps & FormHookProps) {
   const [value, changeValue] = useState(min.toString());
   const setValue = (v: string, external?: boolean) => {
     if (Number(v) <= max && (external || Number(v) >= min)) changeValue(v);
@@ -79,6 +78,7 @@ export default function NumberInput({
       trailing={<SquareIconButton svg={add} onPress={increase} />}
     >
       <AutoSizeInput
+        css={{ textAlign: 'end' }}
         onKeyDown={(e) => {
           if (e.key == 'ArrowUp') increase();
           if (e.key == 'ArrowDown') decrease();
@@ -96,6 +96,7 @@ export default function NumberInput({
           e.stopPropagation();
         }}
         onChange={(event) => {
+          onChange?.(event);
           let v = event.target.value;
           v = v.startsWith('.')
             ? '0.' + v
@@ -113,7 +114,8 @@ export default function NumberInput({
           const res = v?.match(floatRegex)?.join('') ?? '';
           if (!Number.isNaN(Number(res))) setValue(res, true);
         }}
-        {...register}
+        {...others}
+        maxLength={maxLength}
         placeholder={placeholder}
       />
       {unit && (
