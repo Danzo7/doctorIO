@@ -3,7 +3,7 @@ import PreviewList from '@components/preview_list';
 import DocumentPreviewItem from './document_preview_item';
 interface DocumentPreviewPanelProps {
   documentList: any[];
-  onUpload: () => void;
+  onUpload?: () => void;
 }
 export default function DocumentPreviewPanel({
   documentList = [],
@@ -11,14 +11,9 @@ export default function DocumentPreviewPanel({
 }: DocumentPreviewPanelProps) {
   return (
     <PreviewList
+      maxHeight={400}
       title="Documents"
-      buttonNode={
-        <DarkLightCornerButton
-          title="Upload"
-          isActive={true}
-          onPress={onUpload}
-        />
-      }
+      buttonNode={<DarkLightCornerButton title="Upload" onPress={onUpload} />}
     >
       {documentList.map(
         ({ documentName, publishDate, onDelete, onPressHistory }) => (

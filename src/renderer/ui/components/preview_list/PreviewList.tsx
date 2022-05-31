@@ -27,7 +27,7 @@ export default function PreviewList({
         maxHeight: maxHeight ? maxHeight : undefined,
       }}
     >
-      <Header title={title} buttonNode={buttonNode} />
+      <Header title={title} buttonNode={buttonNode} flexGrow={1} />
       <div className="preview-list-wrapper" css={{ gap: gap }}>
         {children}
       </div>
