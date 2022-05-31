@@ -1,0 +1,36 @@
+@use '~styles/appColors' as *;
+.presentation-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: $darkerseccolor;
+    border-radius: 11px;
+    padding: 10px 20px;
+    align-items: center;
+
+    > .info-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+
+        > span {
+            color: $white;
+            font-weight: 600;
+            font-size: 18px;
+
+            + span {
+                font-weight: 500;
+                font-size: 15px;
+                color: $textgray;
+            }
+        }
+    }
+    > .controls-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0px;
+        gap: 10px;
+    }
+}
