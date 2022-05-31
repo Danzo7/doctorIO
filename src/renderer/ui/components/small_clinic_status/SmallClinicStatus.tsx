@@ -11,15 +11,17 @@ export default function SmallClinicStatus({}: SmallClinicStatusProps) {
   const [isAccept, setIsAccept] = useState(true);
   return (
     <div className="small-clinic-status">
-      <DarkLightCornerButton
-        title=" View clinic..."
-        onPress={() =>
-          Overlay.showModal(<QueueAddSearchModal />, {
-            clickThrough: false,
-            isDimmed: true,
-          })
-        }
-      />
+      <div className="view-button-wrapper">
+        <DarkLightCornerButton
+          title=" View clinic..."
+          onPress={() =>
+            Overlay.showModal(<QueueAddSearchModal />, {
+              clickThrough: false,
+              isDimmed: true,
+            })
+          }
+        />
+      </div>
       <div className="content">
         <Timer isActive={isAccept} />
         <div className="switch">

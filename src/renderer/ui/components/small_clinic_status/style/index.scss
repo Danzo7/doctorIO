@@ -6,9 +6,16 @@
   align-content: center;
   width: 350px;
   height: 300px;
-  > .dark-light-corner-button {
-    align-self: flex-end;
+  gap: 20px;
+
+  > .view-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-self: 1;
+    justify-content: flex-end;
   }
+
   > .content {
     display: flex;
     flex-direction: column;
