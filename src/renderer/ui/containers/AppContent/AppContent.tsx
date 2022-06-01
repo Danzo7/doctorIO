@@ -5,7 +5,7 @@ import { lazy, Suspense } from 'react';
 import Statistics from './pages/statistics';
 import Data from './pages/data';
 import Queues from './pages/queues';
-import RecordsRouter from './pages/records_router';
+import Records from './pages/records';
 const Messages = lazy(() => import('./pages/messages'));
 const Clinic = lazy(() => import('./pages/clinic'));
 
@@ -26,7 +26,7 @@ function AppContent({}: AppContentProps) {
           }
         />
         <Route path="stats" element={<Statistics />} />
-        <Route path="records/*" element={<RecordsRouter />} />
+        <Route path="records/*" element={<Records />} />
         <Route path="data" element={<Data />} />
         <Route
           path="clinic/*"

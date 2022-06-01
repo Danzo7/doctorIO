@@ -1,12 +1,12 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
-import Records from './Records';
+import RecordSearch from './RecordSearch';
 export default {
   title: 'Records',
-  component: Records,
+  component: RecordSearch,
 };
-const Template: Story<ComponentProps<typeof Records>> = (args) => (
-  <Records {...args} />
+const Template: Story<ComponentProps<typeof RecordSearch>> = (args) => (
+  <RecordSearch {...args} />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {};

@@ -29,15 +29,15 @@ const usersData = [
   },
 ];
 
-interface RecordsProps {}
-export default function Records({}: RecordsProps) {
+interface RecordSearchProps {}
+export default function RecordSearch({}: RecordSearchProps) {
   const { register, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField');
   const matches = useSearchPatient(watchSearch, usersData);
   const { navigate } = useNavigation();
 
   return (
-    <div className="records">
+    <div className="record-search">
       <Header title="Select a patient" titleFontWeight={500} />
       <Input
         placeholder="Enter patient Id"
