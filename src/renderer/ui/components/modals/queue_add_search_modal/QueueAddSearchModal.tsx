@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import './style/index.scss';
 import Input from '@components/inputs/input';
 import Header from '@components/header';
+import useSearchPatient from '@libs/hooks/useSearchPatient';
 interface QueueAddSearchModalProps {}
 interface SearchInput {
   searchField: string;
@@ -14,35 +15,29 @@ interface SearchInput {
 const usersData = [
   {
     fullName: 'brahim aymen',
+    id: '#123456789',
     age: 24,
   },
   {
     fullName: 'daouadji aymen',
     age: 24,
+    id: '#1234546789',
   },
   {
     fullName: 'amine bou',
     age: 24,
+    id: '#223456789',
   },
   {
     fullName: 'John Doe',
     age: 24,
+    id: '#323456789',
   },
 ];
 export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const { register, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField', '');
-
-  const onChangeHandler = (text: string) => {
-    let matches = [];
-    if (text.length > 0 && text.trim().length > 0) {
-      matches = usersData?.filter((user) => {
-        const regex = new RegExp(`${text}`, 'gi');
-        return user.fullName.match(regex);
-      });
-      return matches;
-    }
-  };
+  const matches = useSearchPatient(watchSearch, usersData, true);
 
   return (
     <div className="queue-add-search-modal">
@@ -60,7 +55,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
         />
       </form>
       <div className="suggestions-container">
-        {onChangeHandler(watchSearch)?.map(({ fullName, age }, index) => (
+        {matches?.map(({ fullName, age }, index) => (
           <RecentAppsItem fullName={fullName} age={age} key={index} />
         ))}
       </div>

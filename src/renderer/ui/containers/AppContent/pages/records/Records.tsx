@@ -1,6 +1,7 @@
 import Header from '@components/header';
 import Input from '@components/inputs/input';
 import RecordInfoItem from '@components/record_info_item';
+import useSearchPatient from '@libs/hooks/useSearchPatient';
 import { useForm } from 'react-hook-form';
 import Search from 'toSvg/search.svg?icon';
 import './style/index.scss';
@@ -29,21 +30,10 @@ const usersData = [
 
 interface RecordsProps {}
 export default function Records({}: RecordsProps) {
-  const { register, watch, handleSubmit } = useForm<SearchInput>();
+  const { register, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField');
+  const matches = useSearchPatient(watchSearch, usersData);
 
-  const onChangeHandler = (text: string) => {
-    let matches: any[] = [];
-    if (text && text.length > 0 && text.trim().length > 0) {
-      matches = usersData?.filter((user) => {
-        return (
-          user.fullName.toLowerCase() == text.toLowerCase() ||
-          user.id.toLowerCase() == text.toLowerCase()
-        );
-      });
-      return matches;
-    }
-  };
   return (
     <div className="records">
       <Header title="Select a patient" titleFontWeight={500} />
@@ -55,7 +45,7 @@ export default function Records({}: RecordsProps) {
         {...register('searchField', { min: 5 })}
       />
       <div className="records-suggestions-container">
-        {onChangeHandler(watchSearch)?.map(({ fullName, id }, index) => (
+        {matches?.map(({ fullName, id }, index) => (
           <RecordInfoItem fullName={fullName} id={id} key={index} />
         ))}
       </div>
