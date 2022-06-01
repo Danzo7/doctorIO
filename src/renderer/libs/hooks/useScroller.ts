@@ -55,12 +55,16 @@ export function useScroller(gap: number) {
   }, [gap, ref]);
   const gotoFirst = useCallback(() => {
     const scroll = ref?.current as unknown as HTMLDivElement;
-    scroll.children[0].scrollIntoView({ behavior: 'smooth' });
+    (scroll.firstChild as Element)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+    });
   }, [ref]);
   const gotoLast = useCallback(() => {
     const scroll = ref?.current as unknown as HTMLDivElement;
-    scroll.children[scroll.children.length - 1].scrollIntoView({
+    (scroll.lastChild as Element)?.scrollIntoView({
       behavior: 'smooth',
+      block: 'nearest',
     });
   }, [ref]);
   return { ref, gotoFirst, gotoFrom, gotoLast, next, previous };
