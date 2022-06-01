@@ -69,8 +69,8 @@ export default function TimelineItem({ type }: TimelineItemProps) {
           <WideCard borderColor={selectedColor}>
             <TextPair first="Booked appointment" second="28 Feb 2021" />
             <TextPair
-              first="status"
-              second={typeof type == 'string' ? type : 'Done'}
+              second="status"
+              first={typeof type == 'string' ? type : 'Done'}
               reversed
             />
           </WideCard>

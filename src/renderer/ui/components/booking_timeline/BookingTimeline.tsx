@@ -13,8 +13,8 @@ export default function BookingTimeline({}: BookingTimelineProps) {
           height: '100%',
           position: 'absolute',
           left: 2.5,
-          zIndex: -1,
-          top: 80,
+          zIndex: 0,
+          top: 48,
         }}
       />
       <PreviewList
