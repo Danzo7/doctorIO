@@ -3,9 +3,9 @@ import './index.scss';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Statistics from './pages/statistics';
-import Records from './pages/records';
 import Data from './pages/data';
 import Queues from './pages/queues';
+import RecordsRouter from './pages/records_router';
 const Messages = lazy(() => import('./pages/messages'));
 const Clinic = lazy(() => import('./pages/clinic'));
 
@@ -15,7 +15,6 @@ function AppContent({}: AppContentProps) {
   return (
     <div className="AppContent">
       <Routes>
-        {/* route example */}
         <Route path="/" element={<HomeContent />} />
         <Route path="queue" element={<Queues />} />
         <Route
@@ -27,7 +26,7 @@ function AppContent({}: AppContentProps) {
           }
         />
         <Route path="stats" element={<Statistics />} />
-        <Route path="records" element={<Records />} />
+        <Route path="records/*" element={<RecordsRouter />} />
         <Route path="data" element={<Data />} />
         <Route
           path="clinic/*"
