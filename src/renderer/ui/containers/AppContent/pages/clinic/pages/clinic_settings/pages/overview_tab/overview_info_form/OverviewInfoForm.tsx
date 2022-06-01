@@ -16,15 +16,11 @@ export default function OverviewInfoForm({}: OverviewInfoFormProps) {
   return (
     <div className="overview-info-form">
       <span>Informations</span>
-      <Input register={register('name')} label="Name" type={'text'} />
+      <Input {...register('name')} label="Name" type={'text'} />
+      <Input {...register('description')} label="Description" type={'text'} />
+      <Input {...register('location')} label="Location" type={'text'} />
       <Input
-        register={register('description')}
-        label="Description"
-        type={'text'}
-      />
-      <Input register={register('location')} label="Location" type={'text'} />
-      <Input
-        register={register('phoneNumber')}
+        {...register('phoneNumber')}
         label="Phone number"
         type={'number'}
       />
