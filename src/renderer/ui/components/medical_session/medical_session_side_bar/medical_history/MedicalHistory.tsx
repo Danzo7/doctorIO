@@ -4,7 +4,7 @@ import PreviewWithControls from '@components/preview_with_controls';
 
 interface MedicalHistoryProps {
   medicalHistoryList: any[];
-  onAdd: () => void;
+  onAdd?: () => void;
 }
 export default function MedicalHistory({
   medicalHistoryList = [],
@@ -12,6 +12,7 @@ export default function MedicalHistory({
 }: MedicalHistoryProps) {
   return (
     <PreviewList
+      maxHeight={300}
       title="Medical history"
       buttonNode={<DarkLightCornerButton title="Add" onPress={onAdd} blend />}
     >

@@ -11,7 +11,7 @@ export default function DocumentPreviewPanel({
 }: DocumentPreviewPanelProps) {
   return (
     <PreviewList
-      maxHeight={400}
+      maxHeight={300}
       title="Documents"
       buttonNode={<DarkLightCornerButton title="Upload" onPress={onUpload} />}
     >
