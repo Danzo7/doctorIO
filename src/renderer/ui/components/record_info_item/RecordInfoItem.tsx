@@ -13,7 +13,7 @@ export default function RecordInfoItem({
   onViewRecord,
 }: RecordInfoItemProps) {
   return (
-    <PresentationItem primaryText={fullName} secondaryText={id}>
+    <PresentationItem primaryText={fullName} secondaryText={`#${id}`}>
       <TextButton
         text="View record"
         backgroundColor={color.cold_blue}
