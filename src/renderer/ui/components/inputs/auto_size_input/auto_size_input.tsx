@@ -1,24 +1,35 @@
-import { ClassAttributes, InputHTMLAttributes, useEffect, useRef } from 'react';
+import { ClassAttributes, forwardRef, InputHTMLAttributes } from 'react';
+import { RefCallBack } from 'react-hook-form';
 interface AutoSizeInputProps {
   inputSize?: boolean | number;
 }
-export default function AutoSizeInput({
-  inputSize = true,
+export default forwardRef(function AutoSizeInput(
+  {
+    inputSize = true,
 
-  ...others
-}: ClassAttributes<HTMLInputElement> &
-  InputHTMLAttributes<HTMLInputElement> &
-  AutoSizeInputProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (inputSize == true)
-      inputRef.current?.setAttribute(
-        'style',
-        `width:${
-          (inputSize === true ? 2 : inputSize) +
-          (inputRef.current?.value.toString().length - 1 ?? 0)
-        }ch`,
-      );
-  });
-  return <input className="auto-size-input" ref={inputRef} {...others} />;
-}
+    ...others
+  }: ClassAttributes<HTMLInputElement> &
+    InputHTMLAttributes<HTMLInputElement> &
+    AutoSizeInputProps,
+  ref: any,
+) {
+  const inputRef = ref as RefCallBack;
+
+  return (
+    <input
+      className="auto-size-input"
+      ref={(e) => {
+        inputRef?.(e);
+        if (inputSize == true)
+          e?.setAttribute(
+            'style',
+            `width:${
+              (inputSize === true ? 2 : inputSize) +
+              (e?.value.toString().length - 1 ?? 0)
+            }ch`,
+          );
+      }}
+      {...others}
+    />
+  );
+});

@@ -1,8 +1,7 @@
-import { HTMLInputTypeAttribute, ReactNode } from 'react';
+import { forwardRef, HTMLInputTypeAttribute, ReactNode } from 'react';
 import {
   ChangeHandler,
   InternalFieldName,
-  RefCallBack,
   UseFormRegisterReturn,
 } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
@@ -18,15 +17,14 @@ export type FormHookProps = Omit<
 > & {
   onChange?: ChangeHandler;
   onBlur?: ChangeHandler;
-  ref?: RefCallBack;
   name?: InternalFieldName;
 };
 type NumericInput = {
   type: 'numeric';
-  min: number;
-  max: number;
-  step: number;
-  unit: string;
+  min?: number;
+  max?: number;
+  step?: number;
+  unit?: string;
 };
 type SelectInput = {
   type: 'select';
@@ -41,7 +39,6 @@ type DateTimeInput = {
 interface InputProps {
   type: SelectInput | DateTimeInput | NumericInput | HTMLInputTypeAttribute;
   errorMsg?: string;
-
   hint?: string;
   label?: string;
   leading?: ReactNode;
@@ -49,21 +46,22 @@ interface InputProps {
   children?: ReactNode;
   placeholder?: string;
   fillContainer?: true;
-  onChange?: ChangeHandler;
-  onBlur?: ChangeHandler;
 }
-export default function Input({
-  type = 'text',
-  errorMsg,
-  hint,
-  label,
-  placeholder,
-  leading,
-  trailing,
-  children,
-  fillContainer,
-  ...others
-}: InputProps & FormHookProps) {
+export default forwardRef(function Input(
+  {
+    type = 'text',
+    errorMsg,
+    hint,
+    label,
+    placeholder,
+    leading,
+    trailing,
+    children,
+    fillContainer,
+    ...others
+  }: InputProps & FormHookProps,
+  ref: any,
+) {
   return (
     <InputContainer
       fillContainer={fillContainer}
@@ -78,6 +76,7 @@ export default function Input({
           unit={(type as NumericInput)?.unit}
           placeholder={placeholder}
           {...others}
+          ref={ref}
         />
       ) : (
         <InputWrapper
@@ -105,8 +104,9 @@ export default function Input({
                   return (
                     <input
                       placeholder={placeholder}
-                      {...others}
                       type={type as HTMLInputTypeAttribute}
+                      {...others}
+                      ref={ref}
                     ></input>
                   );
               })()}
@@ -114,4 +114,4 @@ export default function Input({
       )}
     </InputContainer>
   );
-}
+});

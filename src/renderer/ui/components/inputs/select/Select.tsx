@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from 'react';
+import { forwardRef, ReactNode, useRef, useState } from 'react';
 import './style/index.scss';
 import Arrow from 'toSvg/arrow.svg?icon';
 import { FormHookProps } from '../input';
@@ -11,14 +11,17 @@ interface SelectProps {
   width?: number | string;
 }
 
-export default function Select({
-  options,
-  placeholder = '',
-  icon,
-  padding = 10,
-  width,
-  ...others
-}: SelectProps & FormHookProps) {
+export default forwardRef(function Select(
+  {
+    options,
+    placeholder = '',
+    icon,
+    padding = 10,
+    width,
+    ...others
+  }: SelectProps & FormHookProps,
+  ref: any,
+) {
   const field = useRef<HTMLDivElement>(null);
   const [isOpen, setOpen] = useState(false);
   const [selected, setSelected] = useState(-1);
@@ -73,10 +76,11 @@ export default function Select({
           ))}
       </div>
       <input
+        ref={ref}
         {...others}
         value={options ? options[selected] : undefined}
         type="hidden"
       />
     </div>
   );
-}
+});

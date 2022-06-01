@@ -2,7 +2,7 @@ import minus from 'toSvg/minus.svg?icon';
 import add from 'toSvg/add.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import InputWrapper from '../input_wrapper/InputWrapper';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import AutoSizeInput from '../auto_size_input';
 import { color } from '@assets/styles/color';
 import { FormHookProps } from '../input/Input';
@@ -17,21 +17,24 @@ interface NumberInputProps {
   step?: number;
   unit?: string;
 }
-export default function NumberInput({
-  errorMessage,
-  padding,
-  flexGrow,
-  inputAlignment,
-  placeholder,
-  step = 0.1,
-  max = 1000,
-  min = 0,
-  unit = 'kg',
-  width = 'fit-content',
-  maxLength = 4,
-  onChange,
-  ...others
-}: NumberInputProps & FormHookProps) {
+export default forwardRef(function NumberInput(
+  {
+    errorMessage,
+    padding,
+    flexGrow,
+    inputAlignment,
+    placeholder,
+    step = 0.1,
+    max = 1000,
+    min = 0,
+    unit = 'kg',
+    width = 'fit-content',
+    maxLength = 4,
+    onChange,
+    ...others
+  }: NumberInputProps & FormHookProps,
+  ref: any,
+) {
   const [value, changeValue] = useState(min.toString());
   const setValue = (v: string, external?: boolean) => {
     if (Number(v) <= max && (external || Number(v) >= min)) changeValue(v);
@@ -115,6 +118,7 @@ export default function NumberInput({
           if (!Number.isNaN(Number(res))) setValue(res, true);
         }}
         {...others}
+        ref={ref}
         maxLength={maxLength}
         placeholder={placeholder}
       />
@@ -123,4 +127,4 @@ export default function NumberInput({
       )}
     </InputWrapper>
   );
-}
+});
