@@ -4,7 +4,6 @@ import RecordInfoItem from '@components/record_info_item';
 import useNavigation from '@libs/hooks/useNavigation';
 import useSearchPatient from '@libs/hooks/useSearchPatient';
 import { useForm } from 'react-hook-form';
-import { Outlet } from 'react-router-dom';
 import Search from 'toSvg/search.svg?icon';
 import './style/index.scss';
 
@@ -47,7 +46,6 @@ export default function Records({}: RecordsProps) {
         hint="You have to select a patient by fullName or Id to access to his medical records"
         {...register('searchField', { min: 5 })}
       />
-      <Outlet />
       <div className="records-suggestions-container">
         {matches?.map(({ fullName, id }, index) => (
           <RecordInfoItem
