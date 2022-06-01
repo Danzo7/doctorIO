@@ -24,13 +24,7 @@
     }
 
     &.error {
-        div {
-            @include bad;
 
-            &:focus-within {
-                @include bad;
-            }
-        }
         > span:last-of-type {
             color: $hotred;
         }
