@@ -32,7 +32,7 @@ export default function PrescriptionTab({}: PrescriptionTabProps) {
       <Datepicker
         selected={selectedDate}
         onChange={onDateChange}
-        dateFormat="EEEE, mm MMM"
+        dateFormat="EEEE, dd MMM"
       />
 
       <div className="payment-container">
