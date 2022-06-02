@@ -17,6 +17,7 @@ interface TextButtonProps {
   fontWeight?: number;
   backgroundColor?: string;
   borderColor?: string;
+  borderWidth?: number;
   afterBgColor?: string;
   activeBgColor?: string;
   activeBorderColor?: string;
@@ -48,6 +49,7 @@ function TextButton({
   fontWeight = 600,
   backgroundColor = 'transparent',
   borderColor = 'transparent',
+  borderWidth = 1,
   radius = 7,
   afterBgColor,
   afterBorderColor,
@@ -101,7 +103,7 @@ function TextButton({
       className={`text-button${isHold ? ' hold' : ''}`}
       css={{
         backgroundColor: !disabled ? backgroundColor : colors.silver_gray,
-        border: `${borderColor} 1px solid`,
+        border: `${borderColor} ${borderWidth}px solid`,
         justifyContent: alignment,
         flexDirection: itemsDirection,
         borderRadius: radius,
