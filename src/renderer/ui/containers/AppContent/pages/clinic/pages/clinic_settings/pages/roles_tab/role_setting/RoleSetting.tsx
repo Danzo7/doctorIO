@@ -2,6 +2,7 @@ import TabMenu, { NavTabMenu } from '@components/tab_menu';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import PermissionList from './miniTabs/permission_list';
 import RoleSettingGeneral from './miniTabs/role_setting_general';
+import RoleSettingMembers from './miniTabs/role_setting_members';
 import './style/index.scss';
 
 const permissionArray = [
@@ -66,6 +67,7 @@ export default function RoleSetting({}: RoleSettingProps) {
           path="Permissions"
           element={<PermissionList permissionArray={permissionArray} />}
         />
+        <Route path="Members" element={<RoleSettingMembers />} />
       </Routes>
     </div>
   );
