@@ -8,7 +8,7 @@ interface InputWrapperProps {
   borderColor?: string;
   radius?: number;
   padding?: number;
-  flexGrow?: number;
+  fillContainer?: true;
   inputAlignment?: string;
   children: ReactNode;
   leading?: ReactNode;
@@ -23,7 +23,6 @@ export default function InputWrapper({
   leading,
   trailing,
   padding = 10,
-  flexGrow = 0,
   inputAlignment = 'flex-start',
   background = color.darkersec_color,
   borderColor = color.border_color,
@@ -33,6 +32,7 @@ export default function InputWrapper({
   onClick,
   onWheel,
   maxWidth,
+  fillContainer,
 }: InputWrapperProps) {
   const paddedLeading = leading && (
     <div
@@ -64,7 +64,8 @@ export default function InputWrapper({
         backgroundColor: background,
         borderRadius: radius,
         border: borderColor ? `1px solid ${borderColor}` : undefined,
-        flexGrow: flexGrow,
+        flexGrow: fillContainer ? 1 : 0,
+        width: !fillContainer ? 'fit-content' : undefined,
         minWidth: maxWidth,
       }}
     >

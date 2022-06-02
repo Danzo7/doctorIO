@@ -83,6 +83,7 @@ export default forwardRef(function Input(
           errorMessage={errorMsg}
           leading={leading}
           trailing={trailing}
+          fillContainer
         >
           {children
             ? children

@@ -10,7 +10,7 @@ import { FormHookProps } from '../input/Input';
 interface NumberInputProps {
   placeholder?: string;
   padding?: number;
-  flexGrow?: number;
+  fillContainer?: true;
   inputAlignment?: string;
   errorMessage?: string;
   width?: string | number;
@@ -21,7 +21,7 @@ export default forwardRef(function NumberInput(
   {
     errorMessage,
     padding,
-    flexGrow,
+    fillContainer,
     inputAlignment,
     placeholder,
     step = 0.1,
@@ -60,7 +60,7 @@ export default forwardRef(function NumberInput(
       maxWidth={width}
       errorMessage={errorMessage}
       padding={padding}
-      flexGrow={flexGrow}
+      fillContainer={fillContainer}
       inputAlignment={inputAlignment}
       onClick={(e) => {
         e.preventDefault();
