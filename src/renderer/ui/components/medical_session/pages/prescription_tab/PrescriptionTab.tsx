@@ -1,16 +1,13 @@
 import color from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import IconicButton from '@components/buttons/iconic_button';
 import TextButton from '@components/buttons/text_button';
 import ToggleButton from '@components/buttons/toggle_button';
 import Header from '@components/header';
 import Datepicker from '@components/inputs/datepicker';
 import Input from '@components/inputs/input';
-import InputContainer from '@components/inputs/input_container';
-import InputWrapper from '@components/inputs/input_wrapper';
 import MultipleCheckGroup from '@components/inputs/multiple_check_group';
 import { useState } from 'react';
-import Checked from 'toSvg/checked.svg?icon';
+import Checked from 'toSvg/good_mark.svg?icon';
 import './style/index.scss';
 interface PrescriptionTabProps {}
 export default function PrescriptionTab({}: PrescriptionTabProps) {
