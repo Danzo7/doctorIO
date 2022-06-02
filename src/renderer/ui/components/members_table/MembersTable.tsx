@@ -41,6 +41,70 @@ export default function MembersTable({}: MembersTableProps) {
           memberStatus={true}
           timeAdded="28 Feb 2021"
         />
+        <MemberItem
+          memberFullName="Mahmoud Benaissa"
+          memberID="@mohamed#2000"
+          memberImgSrc={test}
+          roleArray={['Gamer', 'Assistant']}
+          memberStatus={true}
+          timeAdded="28 Feb 2021"
+        />
+        <MemberItem
+          memberFullName="Mahmoud Benaissa"
+          memberID="@mohamed#2000"
+          memberImgSrc={test}
+          roleArray={['Gamer', 'Assistant']}
+          memberStatus={true}
+          timeAdded="28 Feb 2021"
+        />
+        <MemberItem
+          memberFullName="Mahmoud Benaissa"
+          memberID="@mohamed#2000"
+          memberImgSrc={test}
+          roleArray={['Gamer', 'Assistant']}
+          memberStatus={true}
+          timeAdded="28 Feb 2021"
+        />
+        <MemberItem
+          memberFullName="Mahmoud Benaissa"
+          memberID="@mohamed#2000"
+          memberImgSrc={test}
+          roleArray={['Gamer', 'Assistant']}
+          memberStatus={true}
+          timeAdded="28 Feb 2021"
+        />
+        <MemberItem
+          memberFullName="Mahmoud Benaissa"
+          memberID="@mohamed#2000"
+          memberImgSrc={test}
+          roleArray={['Gamer', 'Assistant']}
+          memberStatus={true}
+          timeAdded="28 Feb 2021"
+        />
+        <MemberItem
+          memberFullName="Mahmoud Benaissa"
+          memberID="@mohamed#2000"
+          memberImgSrc={test}
+          roleArray={['Gamer', 'Assistant']}
+          memberStatus={true}
+          timeAdded="28 Feb 2021"
+        />
+        <MemberItem
+          memberFullName="Mahmoud Benaissa"
+          memberID="@mohamed#2000"
+          memberImgSrc={test}
+          roleArray={['Gamer', 'Assistant']}
+          memberStatus={true}
+          timeAdded="28 Feb 2021"
+        />
+        <MemberItem
+          memberFullName="Mahmoud Benaissa"
+          memberID="@mohamed#2000"
+          memberImgSrc={test}
+          roleArray={['Gamer', 'Assistant']}
+          memberStatus={true}
+          timeAdded="28 Feb 2021"
+        />
       </div>
     </div>
   );
