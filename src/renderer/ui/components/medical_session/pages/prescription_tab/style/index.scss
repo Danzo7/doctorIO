@@ -1,0 +1,63 @@
+@use '~styles/appColors' as *;
+.prescription-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    align-self: stretch;
+    flex-grow: 1;
+
+    > .payment-container{
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+
+        > span {
+            font-weight: 600;
+            font-size: 13px;
+            color: $silvergray;
+        }
+    }
+    > .payment-input-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+
+        > span {
+            font-weight: 700;
+            font-size: 14px;
+            color: $white;
+        }
+    }
+
+    > .hand-payment-container {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+
+        > span {
+            font-weight: 600;
+            font-size: 15px;
+            color: $textgray;
+        }
+    }
+
+    > .bottom-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        flex-grow: 1;
+        align-self: stretch;
+
+        > .controls-div {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: baseline;
+            align-self: flex-end;
+            justify-content: flex-end;
+        }
+    }
+}
