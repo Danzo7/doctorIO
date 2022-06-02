@@ -29,7 +29,11 @@ export default function PrescriptionTab({}: PrescriptionTabProps) {
         buttonNode={<ToggleButton isChecked={true} />}
       />
 
-      <Datepicker selected={selectedDate} onChange={onDateChange} />
+      <Datepicker
+        selected={selectedDate}
+        onChange={onDateChange}
+        dateFormat="EEEE, mm MMM"
+      />
 
       <div className="payment-container">
         <Header

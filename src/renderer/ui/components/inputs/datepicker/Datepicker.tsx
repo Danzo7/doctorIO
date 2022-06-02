@@ -12,7 +12,6 @@ export default function Datepicker({
   return (
     <InputWrapper>
       <DatePickerReact
-        dateFormat="dd/MM/yyyy"
         calendarContainer={({ children }) => (
           <div className="datepicker">{children}</div>
         )}
