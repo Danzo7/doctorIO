@@ -1,0 +1,45 @@
+@use '~styles/appColors' as *;
+
+@mixin secondaryFontStyle {
+    font-weight: 400;
+    font-size: 12px;
+    color: $textgray;
+}
+
+.log-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 20px;
+    gap: 10px;
+    background: $lighterbackground;
+    border-radius: 7px;
+    align-self: stretch;
+
+    > .log-info-container{
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+        gap: 5px;
+
+        > span {
+            @include secondaryFontStyle()
+        }
+
+        > .name-id-container{
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+
+            > span {
+                font-weight: 500;
+                font-size: 17px;
+                color: $white;
+
+                + span {
+                    @include secondaryFontStyle()
+                }
+            }
+        }
+    }
+}
