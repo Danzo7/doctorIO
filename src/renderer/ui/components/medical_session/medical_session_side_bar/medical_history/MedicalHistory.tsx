@@ -15,6 +15,7 @@ export default function MedicalHistory({
       maxHeight={300}
       title="Medical history"
       buttonNode={<DarkLightCornerButton title="Add" onPress={onAdd} blend />}
+      notScrollable
     >
       {medicalHistoryList.map(({ medicalDescription, descriptionDate }) => (
         <PreviewWithControls

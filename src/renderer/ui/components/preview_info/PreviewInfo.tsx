@@ -12,7 +12,7 @@ export default function PreviewInfo({
   data,
 }: PreviewInfoProps) {
   return (
-    <PreviewList title={title} buttonNode={buttonNode}>
+    <PreviewList title={title} buttonNode={buttonNode} notScrollable>
       <div className="preview-list-container">
         {Object.entries(data).map(([key, value]) => (
           <div className="preview-list-row" key={key}>

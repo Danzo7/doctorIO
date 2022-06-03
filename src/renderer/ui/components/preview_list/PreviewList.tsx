@@ -9,6 +9,7 @@ interface PreviewListProps {
   noBorder?: true;
   gap?: number;
   maxHeight?: number;
+  notScrollable?: true;
 }
 export default function PreviewList({
   title,
@@ -17,6 +18,7 @@ export default function PreviewList({
   noBorder,
   gap = 5,
   maxHeight,
+  notScrollable,
 }: PreviewListProps) {
   return (
     <div
@@ -25,7 +27,7 @@ export default function PreviewList({
         border: !noBorder ? `1px solid ${color.border_color}` : undefined,
         padding: !noBorder ? '15px 10px' : undefined,
         borderRadius: noBorder ? 0 : 15,
-
+        overflow: notScrollable && 'visible',
         maxHeight: maxHeight ? maxHeight : undefined,
       }}
     >

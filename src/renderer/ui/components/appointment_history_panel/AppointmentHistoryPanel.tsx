@@ -16,6 +16,7 @@ export default function AppointmentHistoryPanel({
       buttonNode={
         <DarkLightCornerButton title="View all" onPress={onViewAll} blend />
       }
+      notScrollable
     >
       {historyList.map(
         ({ appointmentDate, appointmentDescription, onPressHistory }) => (
