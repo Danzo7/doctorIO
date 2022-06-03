@@ -7,6 +7,7 @@ import './style/index.scss';
 import OverviewTab from './pages/overview_tab';
 import MembersTab from './pages/members_tab';
 import TimingAndSchedule from './pages/timing_and_schedule';
+import PreferencesTab from './pages/preferences_tab';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
         <Route path="Overview" element={<OverviewTab />} />
         <Route path="Members" element={<MembersTab />} />
         <Route path="TimingAndSchedule" element={<TimingAndSchedule />} />
+        <Route path="Preferences" element={<PreferencesTab />} />
       </Routes>
     </div>
   );
