@@ -11,6 +11,7 @@ import InputContainer from '../input_container';
 import InputWrapper from '../input_wrapper';
 import NumberInput from '../number_input';
 import './style/index.scss';
+import Checkbox from '../checkbox';
 export type FormHookProps = Omit<
   UseFormRegisterReturn,
   'onChange' | 'onBlur' | 'ref' | 'name'
@@ -62,7 +63,9 @@ export default forwardRef(function Input(
   }: InputProps & FormHookProps,
   ref: any,
 ) {
-  return (
+  return (type as string) == 'checkbox' ? (
+    <Checkbox label={label} ref={ref} {...others} />
+  ) : (
     <InputContainer
       fillContainer={fillContainer}
       errorMessage={errorMsg}

@@ -1,0 +1,45 @@
+@use '~styles/appColors' as *;
+
+.checkbox {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    >input[type="checkbox"]{
+        cursor: pointer;
+        display: grid;
+        place-content: center;
+        appearance: none;
+        margin: 0;
+        font: inherit;
+        width: 1.15em;
+        height: 1.15em;
+        border: 1px solid $bordercolor;
+        background-color: $secondarycolor;
+
+        border-radius: 5px;
+        &::before{
+            content: "";
+            width: 0.65em;
+            transform: scale(0);
+            height: 0.65em;
+            transition: 0.1s transform ease-in-out;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+            box-shadow: inset 1em 1em $white;
+            transform-origin: center;
+        }
+        &:checked{
+            background-color: $goodgreen;
+            border: 1px solid goodgreen;
+            &::before{
+                transform: scale(1);
+                background-color: $white;
+            }
+        }
+    }
+    > span {
+        font-weight: 600;
+        font-size: 15px;
+        color: $textgray;
+    }
+}
