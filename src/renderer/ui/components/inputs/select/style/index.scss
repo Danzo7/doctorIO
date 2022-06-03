@@ -23,13 +23,14 @@
       flex-grow: 1;
 
       font-weight: 500;
-      font-size: 15px;
+      font-size: 13px;
       color: $silvergray;
     }
   }
   > .options {
+    display: flex;
     z-index: 10;
-    display: none;
+    visibility: hidden;
     background-color: $secondarycolor;
     flex-direction: column;
     align-items: stretch;
@@ -43,7 +44,7 @@
       padding:15px ;
       border-radius: 10px;
       font-weight: 500;
-      font-size: 15px;
+      font-size: 13px;
       color: $white;
       cursor: pointer;
       &:hover {
@@ -60,7 +61,7 @@
   &.open {
     inset-inline-start: $coldred;
     > .options {
-      display: flex;
+      visibility: visible;
     }
     > .select >div
     > .arrow {
