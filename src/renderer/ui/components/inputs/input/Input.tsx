@@ -30,7 +30,6 @@ type NumericInput = {
 type SelectInput = {
   type: 'select';
   options: string[];
-  icon: ReactNode;
 };
 
 type DateTimeInput = {
@@ -95,7 +94,7 @@ export default forwardRef(function Input(
                   return (
                     <Select
                       options={(type as SelectInput)?.options}
-                      icon={(type as SelectInput)?.icon}
+                      icon={trailing}
                       placeholder={placeholder}
                       {...others}
                     />
