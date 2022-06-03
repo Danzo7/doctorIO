@@ -17,6 +17,7 @@ interface InputWrapperProps {
   maxWidth?: number | string;
   onWheel?: WheelEventHandler<HTMLDivElement>;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  noFocus?: true;
 }
 
 export default function InputWrapper({
@@ -33,6 +34,7 @@ export default function InputWrapper({
   onWheel,
   maxWidth,
   fillContainer,
+  noFocus,
 }: InputWrapperProps) {
   const paddedLeading = leading && (
     <div
@@ -56,7 +58,7 @@ export default function InputWrapper({
     <div
       className={`input-wrapper${errorMessage ? ' error' : ''}`}
       onClick={(e) => {
-        e.currentTarget?.querySelector('input')?.focus();
+        if (!noFocus) e.currentTarget?.querySelector('input')?.focus();
         onClick?.(e);
       }}
       onWheel={onWheel}
