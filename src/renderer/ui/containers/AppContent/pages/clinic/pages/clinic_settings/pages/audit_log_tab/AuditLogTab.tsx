@@ -1,10 +1,7 @@
 import './style/index.scss';
-import color from '@assets/styles/color';
-import SortButton from '@components/buttons/sort_button';
-import TextButton from '@components/buttons/text_button';
-import Header from '@components/header';
 import PreviewList from '@components/preview_list';
 import LogItem from '@components/log_item';
+import Input from '@components/inputs/input';
 
 const logsData = [
   {
@@ -108,6 +105,7 @@ export default function AuditLogTab({}: AuditLogTabProps) {
         maxHeight={700}
         title="Logs"
         noBorder
+        notScrollable
         buttonNode={
           <div
             css={{
@@ -117,8 +115,14 @@ export default function AuditLogTab({}: AuditLogTabProps) {
               alignItems: 'baseline',
             }}
           >
-            <SortButton title="Actions" />
-            <SortButton title="Members" />
+            <Input
+              placeholder="Actions"
+              type={{ type: 'select', options: ['add', 'delete', 'edit'] }}
+            />
+            <Input
+              placeholder="Members"
+              type={{ type: 'select', options: ['add', 'delete', 'edit'] }}
+            />
           </div>
         }
       >
