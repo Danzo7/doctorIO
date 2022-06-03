@@ -6,6 +6,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import './style/index.scss';
 import OverviewTab from './pages/overview_tab';
 import MembersTab from './pages/members_tab';
+import TimingAndSchedule from './pages/timing_and_schedule';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
@@ -29,7 +30,10 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
           { name: 'Overview', route: { to: '', include: 'Overview' } }, // always there is a default page/tab represented by =>""
           'Members',
           'Roles',
-          'Timing and Schedule',
+          {
+            name: 'Timing and Schedule',
+            route: { route: 'TimingAndSchedule', exact: true },
+          },
           'Preferences',
           'Audit log',
           'Security settings',
@@ -40,6 +44,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
         <Route path="" element={<OverviewTab />} />
         <Route path="Overview" element={<OverviewTab />} />
         <Route path="Members" element={<MembersTab />} />
+        <Route path="TimingAndSchedule" element={<TimingAndSchedule />} />
       </Routes>
     </div>
   );
