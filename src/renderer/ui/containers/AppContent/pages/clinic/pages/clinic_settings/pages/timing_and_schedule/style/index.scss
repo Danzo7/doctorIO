@@ -1,0 +1,37 @@
+@use '~styles/appColors' as *;
+.timing-and-schedule {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 50px;
+    align-self: stretch;
+    flex-grow: 1;
+
+    > .timing-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+        flex-grow: 1;
+        padding-right: 15px;
+
+        > span {
+            font-weight: 700;
+            font-size: 15px;
+            color: $textgray;
+        }
+        > .rules-container {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 15px;
+            flex-grow: 1;
+
+            > span {
+                font-weight: 700;
+                font-size: 17px;
+                color: $textgray;
+            }
+        }
+    }
+}
