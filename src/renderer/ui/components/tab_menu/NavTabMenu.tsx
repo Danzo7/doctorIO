@@ -15,26 +15,28 @@ export default function NavTabMenu({
   borderBottom = true,
 }: NavTabMenuProps) {
   return (
-    <div
-      className="tab-menu"
-      css={
-        borderBottom
-          ? { borderBottom: `1px solid ${colors.border_color}` }
-          : undefined
-      }
-    >
-      <div className="menu-items">
-        {items.map((item, index) => (
-          <SmartLink to={(item as RouteDef)?.route ?? item} key={index}>
-            {({ isMatch }) => (
-              <DarkLightCornerButton
-                title={(item as RouteDef)?.name ?? item}
-                isActive={isMatch}
-                blank
-              />
-            )}
-          </SmartLink>
-        ))}
+    <div className="tab-menu">
+      <div
+        className="tab-menu-bar"
+        css={
+          borderBottom
+            ? { borderBottom: `1px solid ${colors.border_color}` }
+            : undefined
+        }
+      >
+        <div className="menu-items">
+          {items.map((item, index) => (
+            <SmartLink to={(item as RouteDef)?.route ?? item} key={index}>
+              {({ isMatch }) => (
+                <DarkLightCornerButton
+                  title={(item as RouteDef)?.name ?? item}
+                  isActive={isMatch}
+                  blank
+                />
+              )}
+            </SmartLink>
+          ))}
+        </div>
       </div>
     </div>
   );
