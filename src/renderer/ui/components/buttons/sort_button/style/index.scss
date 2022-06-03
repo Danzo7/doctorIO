@@ -1,0 +1,5 @@
+@use '~styles/appColors' as *;
+.arrow {
+    transform-origin: center;
+    transition: all 0.1s;
+}
