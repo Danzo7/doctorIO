@@ -1,2 +1,2 @@
-import TimePicker from './TimePicker';
-export default TimePicker;
+import PeriodTimePicker from './PeriodTimePicker';
+export default PeriodTimePicker;
