@@ -1,15 +1,20 @@
-import color from '@colors';
-import TextButton from '../text_button';
+import { color } from '@colors';
+import { PressHandler } from '../text_button';
 import Add from 'toSvg/add.svg?icon';
-interface DarkAddButtonProps {}
-export default function DarkAddButton({}: DarkAddButtonProps) {
+import IconicButton from '../iconic_button';
+interface DarkAddButtonProps {
+  onPress?: PressHandler;
+}
+export default function DarkAddButton({ onPress }: DarkAddButtonProps) {
   return (
-    <TextButton
+    <IconicButton
+      radius={7}
       padding={5}
+      width={'fit-content'}
       borderColor={color.border_color}
       backgroundColor={color.darkersec_color}
-    >
-      <Add height={11} />
-    </TextButton>
+      Icon={<Add height={11} />}
+      onPress={onPress}
+    />
   );
 }

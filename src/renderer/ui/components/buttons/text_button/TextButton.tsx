@@ -1,13 +1,20 @@
 import './style/index.scss';
 import colors from '@colors';
 import useLongPress from '@libs/hooks/useLongPress';
-import { FunctionComponent, ReactNode, SVGProps, useState } from 'react';
+import {
+  FunctionComponent,
+  ReactNode,
+  SVGProps,
+  useState,
+  MouseEvent,
+} from 'react';
 type IconProps = {
   svg: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
   iconColor?: string;
   iconAfterColor?: string;
   iconType?: 'stroke' | 'fill';
 };
+export type PressHandler = (e?: MouseEvent<HTMLButtonElement>) => void;
 interface TextButtonProps {
   text?: string;
   Icon?: FunctionComponent<SVGProps<SVGSVGElement>> | IconProps | ReactNode;
@@ -25,7 +32,7 @@ interface TextButtonProps {
   afterFontColor?: string;
   radius?: number | string;
   padding?: string | number;
-  onPress?: () => void;
+  onPress?: PressHandler;
   onHold?: () => void;
   width?: number | string;
   height?: number | string;
@@ -166,7 +173,7 @@ function TextButton({
           ? (e) => {
               e.preventDefault();
               e.stopPropagation();
-              onPress?.();
+              onPress?.(e);
             }
           : undefined
       }

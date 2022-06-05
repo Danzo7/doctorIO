@@ -1,10 +1,10 @@
 import colors from '@assets/styles/color';
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
-import TextButton from '../text_button';
+import TextButton, { PressHandler } from '../text_button';
 
 interface IconicButtonProps {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
-  width?: number;
+  width?: number | string;
   height?: number;
   backgroundColor?: string;
   afterBgColor?: string;
@@ -16,8 +16,9 @@ interface IconicButtonProps {
   iconAfterColor?: string;
   iconType?: 'stroke' | 'fill';
   radius?: string | number;
-  onPress?: () => void;
+  onPress?: PressHandler;
   iconSize?: number | string;
+  padding?: number | string;
   type?: 'button' | 'submit' | 'reset' | undefined;
   disabled?: boolean;
 }
@@ -43,13 +44,18 @@ function IconicButton({
   activeBorderColor,
   iconAfterColor,
   iconSize,
+  padding = 'unset',
   disabled = false,
 }: IconicButtonProps) {
   const castIcon = () => {
     if ((Icon as FunctionComponent)?.prototype) {
       Icon = Icon as FunctionComponent<SVGProps<SVGSVGElement>>;
       return (
-        <Icon height={iconSize ?? width / 2} width={iconSize ?? width / 2} />
+        <Icon
+          {...(typeof width == 'number'
+            ? { height: iconSize ?? width / 2, width: iconSize ?? width / 2 }
+            : undefined)}
+        />
       );
     } else return Icon as ReactNode;
   };
@@ -61,7 +67,7 @@ function IconicButton({
       afterBgColor={afterBgColor}
       width={width}
       height={height ? height : width}
-      padding={'unset'}
+      padding={padding}
       radius={radius}
       activeBgColor={activeBgColor}
       borderColor={borderColor}

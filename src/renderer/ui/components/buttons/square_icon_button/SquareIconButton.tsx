@@ -1,9 +1,10 @@
 import { FunctionComponent, ReactNode, SVGProps } from 'react';
 import IconicButton from '../iconic_button';
 import back from 'toSvg/arrow_line.svg?icon';
+import { PressHandler } from '../text_button';
 
 interface SquareIconButtonProps {
-  onPress?: () => void;
+  onPress?: PressHandler;
   svg?: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
 }
 

@@ -1,12 +1,12 @@
 import { FunctionComponent, SVGProps } from 'react';
-import TextButton from '../text_button';
+import TextButton, { PressHandler } from '../text_button';
 import './style/index.scss';
 
 interface TextIconButtonProps {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   text: string;
   color?: string;
-  onPress?: () => void;
+  onPress?: PressHandler;
 }
 
 function TextIconButton({ Icon, text, color, onPress }: TextIconButtonProps) {

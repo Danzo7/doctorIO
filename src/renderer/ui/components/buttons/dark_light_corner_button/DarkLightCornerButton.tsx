@@ -1,9 +1,9 @@
 import colors from '@colors';
-import TextButton from '../text_button/TextButton';
+import TextButton, { PressHandler } from '../text_button';
 interface DarkLightCornerButtonProps {
   title: string;
   isActive?: boolean;
-  onPress?: () => void;
+  onPress?: PressHandler;
   textColor?: string;
   blend?: true;
   type?: 'button' | 'submit' | 'reset';

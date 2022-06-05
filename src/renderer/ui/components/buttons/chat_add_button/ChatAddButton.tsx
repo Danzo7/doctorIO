@@ -12,6 +12,7 @@ export default function ChatAddButton({}: ChatAddButtonProps) {
         radius={100}
         iconSize={10}
         width={25}
+        type={'submit'}
       />
     </div>
   );
