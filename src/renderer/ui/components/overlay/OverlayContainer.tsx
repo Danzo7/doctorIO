@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useRef } from 'react';
 import './style/index.scss';
 import SquareIconButton from '@components/buttons/square_icon_button';
 import { css } from '@emotion/react';
+import { createPopper } from '@popperjs/core';
 interface OverlayContainerProps {}
 
 export function OverlayContainer({}: OverlayContainerProps) {
@@ -19,7 +20,9 @@ export interface OverlayOptions {
   isDimmed?: boolean;
   clickThrough?: boolean;
   backdropColor?: string;
+  closeOnClickOutside?: true;
   width?: string;
+  popperTarget?: HTMLElement;
   //draggable?: boolean;
   closeBtn?: {
     placement: 'inner' | 'outer' | 'above';
@@ -30,14 +33,15 @@ export interface OverlayOptions {
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
 };
-
 export function OverlayItem({
   children,
-  isDimmed = true,
+  isDimmed = false,
   clickThrough = false,
   backdropColor,
   width = '50%',
   closeBtn,
+  popperTarget,
+  closeOnClickOutside,
 }: OverlayItemProps) {
   return (
     <>
@@ -48,11 +52,25 @@ export function OverlayItem({
           pointerEvents: clickThrough ? 'none' : 'all',
         })}
         onClick={(e) => {
-          Overlay.closeModal();
+          if (closeOnClickOutside) {
+            Overlay.closeModal();
+          }
           e.stopPropagation();
         }}
       ></div>
-      <div className="layer" css={css({ width: width })}>
+      <div
+        className="layer"
+        css={css({ width: width })}
+        ref={
+          popperTarget
+            ? (e) => {
+                if (e != null) {
+                  createPopper(popperTarget, e);
+                }
+              }
+            : undefined
+        }
+      >
         {closeBtn && (
           <div className={`close-btn ${closeBtn.placement}`}>
             {closeBtn.component ?? (
