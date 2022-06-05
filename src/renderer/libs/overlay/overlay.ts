@@ -1,5 +1,5 @@
 //import { OverlayItem } from '@components/overlay_container/OverlayContainer';
-import { OverlayItem } from '@components/overlay/OverlayContainer';
+import { OverlayItem } from '@libs/overlay/OverlayContainer';
 import { ReactNode } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { OverlayOptions } from '.';
@@ -9,17 +9,19 @@ export class Overlay {
   static _ref: HTMLDivElement;
 
   static setRenderer(ref: HTMLDivElement) {
-    if (!this._root) {
-      this._ref = ref;
-      this._root = createRoot(ref);
-    }
+    this._ref = ref;
   }
 
+  static killRoot = () => {
+    this._ref.replaceChildren();
+    this._root?.unmount();
+    this._root = undefined;
+  };
+
   static showModal(target: ReactNode, props: OverlayOptions) {
-    if (this._ref && !this._root) {
-      this.setRenderer(this._ref);
-    }
-    if (this._root) {
+    if (this._ref) {
+      this.killRoot();
+      this._root = createRoot(this._ref);
       this._root.render(OverlayItem({ children: target, ...props }));
     } else
       throw Error(
@@ -28,9 +30,10 @@ export class Overlay {
   }
 
   static closeModal() {
-    if (this._root) {
-      this._root.unmount();
-      this._root = undefined;
+    if (this._ref) {
+      if (this._root) {
+        this.killRoot();
+      }
     } else
       throw Error(
         'You have to setRenderer first. Call seRenderer(Element) on your overlay component.',

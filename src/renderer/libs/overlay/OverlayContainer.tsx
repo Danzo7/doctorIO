@@ -20,7 +20,8 @@ export interface OverlayOptions {
   isDimmed?: boolean;
   clickThrough?: boolean;
   backdropColor?: string;
-  closeOnClickOutside?: true;
+  closeOnClickOutside?: (() => void) | true;
+  onClose?: () => void;
   width?: string;
   popperTarget?: HTMLElement;
   //draggable?: boolean;
@@ -53,7 +54,8 @@ export function OverlayItem({
         })}
         onClick={(e) => {
           if (closeOnClickOutside) {
-            Overlay.closeModal();
+            if (typeof closeOnClickOutside == 'function') closeOnClickOutside();
+            else Overlay.closeModal();
           }
           e.stopPropagation();
         }}
