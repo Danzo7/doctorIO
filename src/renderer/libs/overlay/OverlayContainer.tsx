@@ -55,7 +55,7 @@ export function OverlayItem({
         onClick={(e) => {
           if (closeOnClickOutside) {
             if (typeof closeOnClickOutside == 'function') closeOnClickOutside();
-            else Overlay.closeModal();
+            else Overlay.close();
           }
           e.stopPropagation();
         }}
@@ -76,7 +76,7 @@ export function OverlayItem({
         {closeBtn && (
           <div className={`close-btn ${closeBtn.placement}`}>
             {closeBtn.component ?? (
-              <SquareIconButton onPress={() => Overlay.closeModal()} />
+              <SquareIconButton onPress={() => Overlay.close()} />
             )}
           </div>
         )}

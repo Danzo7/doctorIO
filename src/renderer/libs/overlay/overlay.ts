@@ -18,10 +18,12 @@ export class Overlay {
     this._root = undefined;
   };
 
-  static showModal(target: ReactNode, props: OverlayOptions) {
+  static open(target: ReactNode, props: OverlayOptions) {
     if (this._ref) {
       this.killRoot();
-      this._root = createRoot(this._ref);
+      const el = document.createElement('div');
+      this._ref.appendChild(el);
+      this._root = createRoot(el);
       this._root.render(OverlayItem({ children: target, ...props }));
     } else
       throw Error(
@@ -29,7 +31,7 @@ export class Overlay {
       );
   }
 
-  static closeModal() {
+  static close() {
     if (this._ref) {
       if (this._root) {
         this.killRoot();
