@@ -7,17 +7,16 @@ import {
   useTableInstance,
 } from '@tanstack/react-table';
 import './style/index.scss';
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import Arrow from 'toSvg/arrow.svg?icon';
-import Minus from 'toSvg/minus.svg?icon';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 
 interface TableDemoProps {}
 type Data = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  id: string;
+  name: string;
+  dose?: number;
+  comment: string;
+  qts: number;
+  id: number;
 };
 const table = createTable().setRowType<Data>();
 
@@ -26,28 +25,31 @@ export default function TableDemo({}: TableDemoProps) {
 
   const columns = useMemo(
     () => [
-      table.createDataColumn('firstName', {
+      table.createDataColumn('qts', {
         footer: (props) => props.column.id,
       }),
-      table.createDataColumn((row) => row.lastName, {
-        id: 'lastName',
-        header: () => 'Last name',
+      table.createDataColumn('name', {
+        footer: (props) => props.column.id,
+      }),
+      table.createDataColumn('dose', {
+        header: 'Dose',
+        cell: ({ getValue }) => (getValue() ?? '*') + '/day',
+      }),
+
+      table.createDataColumn('comment', {
         footer: (props) => props.column.id,
       }),
 
-      table.createDataColumn('age', {
-        header: () => 'Age',
-        footer: (props) => props.column.id,
-      }),
-      table.createDataColumn('id', {
-        footer: (props) => props.column.id,
-      }),
       table.createDataColumn('id', {
         header: '',
         id: 'skip',
+        size: 1,
         cell: ({ getValue }) => (
           <div css={{ float: 'right' }}>
-            <DarkLightCornerButton title={getValue()} isActive={true} />
+            <DarkLightCornerButton
+              title={getValue().toString()}
+              isActive={true}
+            />
           </div>
         ),
       }),
@@ -55,10 +57,15 @@ export default function TableDemo({}: TableDemoProps) {
     [],
   );
   const [data, setData] = useState<Data[]>([
-    { firstName: 'aymen', lastName: 'brahim', age: 118, id: '12421' },
-    { firstName: 'cq', lastName: 'brahim', age: 18, id: '12124' },
-    { firstName: 'bx', lastName: 'brahim', age: 1823, id: '1214' },
-    { firstName: 'dad', lastName: 'brahim', age: 180, id: '2124' },
+    { name: 'aymen', comment: 'dont die', qts: 2, dose: 3, id: 1 },
+    { name: 'panadol 500g', comment: 'after dinner', qts: 2, dose: 3, id: 3 },
+    { name: 'panadol 500g', comment: 'after dinner', qts: 2, dose: 3, id: 2 },
+    {
+      name: 'panadol 500g',
+      comment: 'after dinner',
+      qts: 2,
+      id: 4,
+    },
   ]);
 
   const instance = useTableInstance(table, {
@@ -84,7 +91,9 @@ export default function TableDemo({}: TableDemoProps) {
                   <th key={header.id} colSpan={header.colSpan}>
                     {header.isPlaceholder || header.id == 'skip' ? null : (
                       <div onClick={header.column.getToggleSortingHandler()}>
-                        <span>{header.renderHeader()}</span>
+                        <span className="text-cell">
+                          {header.renderHeader()}
+                        </span>
                         {header.column.getIsSorted() && (
                           <Arrow
                             css={{
@@ -109,7 +118,11 @@ export default function TableDemo({}: TableDemoProps) {
             return (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => {
-                  return <td key={cell.id}>{cell.renderCell()}</td>;
+                  return (
+                    <td className="text-cell" key={cell.id}>
+                      {cell.renderCell()}
+                    </td>
+                  );
                 })}
               </tr>
             );
