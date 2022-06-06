@@ -78,6 +78,7 @@ export default function Chat({}: ChatProps) {
         leading={<ChatAddButton />}
         radius={17}
         background={colors.lighter_background}
+        fillContainer
       >
         <input />
       </InputWrapper>
