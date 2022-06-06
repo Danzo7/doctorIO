@@ -13,7 +13,6 @@ export class Overlay {
   }
 
   static killRoot = () => {
-    this._ref.replaceChildren();
     this._root?.unmount();
     this._root = undefined;
   };
@@ -31,11 +30,37 @@ export class Overlay {
       );
   }
 
+  static push(target: ReactNode, props: OverlayOptions) {
+    if (this._ref) {
+      const layer = document.createElement('div');
+      layer.setAttribute('id', 'overlay-' + this._ref.children.length);
+      layer.setAttribute(
+        'style',
+        'z-index:' + 10 + Overlay._ref.children.length,
+      );
+      this._ref.appendChild(layer);
+      this._root = createRoot(layer);
+      this._root.render(OverlayItem({ children: target, ...props }));
+    } else
+      throw Error(
+        'You have to setRenderer first. Call seRenderer(Element) on your overlay component.',
+      );
+  }
+
+  static pop() {
+    if (this._ref) {
+      this._ref.lastChild?.remove();
+      if (this._ref.children.length == 0) this.close();
+    } else
+      throw Error(
+        'You have to setRenderer first. Call seRenderer(Element) on your overlay component.',
+      );
+  }
+
   static close() {
     if (this._ref) {
-      if (this._root) {
-        this.killRoot();
-      }
+      this._ref.replaceChildren();
+      this.killRoot();
     } else
       throw Error(
         'You have to setRenderer first. Call seRenderer(Element) on your overlay component.',

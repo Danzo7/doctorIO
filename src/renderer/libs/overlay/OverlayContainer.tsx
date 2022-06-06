@@ -38,7 +38,7 @@ export interface OverlayOptions {
     placement: 'inner' | 'outer' | 'above';
     component?: ReactNode;
   };
-  //bgColor,position,draggable,closeBtn
+  //draggable,
 }
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
