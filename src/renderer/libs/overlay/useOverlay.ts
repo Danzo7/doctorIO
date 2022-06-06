@@ -8,7 +8,7 @@ export function useOverlay() {
   const id = 'l' + useId() + 'ov';
   const layer = document.createElement('div');
   layer.setAttribute('class', 'overlay ' + id);
-  if (id) layer.setAttribute('id', id);
+  layer.setAttribute('id', id);
   const root = useRef<Root>();
   const killRoot = useCallback(() => {
     root.current?.unmount();
@@ -17,7 +17,7 @@ export function useOverlay() {
   const close = useCallback(() => {
     if (Overlay._ref == undefined)
       throw Error(
-        'No overlay reference found,please create `<OverlayContainer></OverlayContainer>`',
+        'No overlay reference found,please create `<OverlayContainer></OverlayContainer> or you have to setRenderer first. Call seRenderer(Element) on your overlay component`',
       );
     Overlay._ref.removeChild(layer);
     if (root) {
