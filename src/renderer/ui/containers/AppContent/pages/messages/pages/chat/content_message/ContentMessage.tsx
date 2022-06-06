@@ -1,4 +1,6 @@
 import CircleAvatar from '@components/avatars/circle_avatar';
+import MemberCard from '@components/member_card';
+import { useOverlay } from '@libs/overlay/useOverlay';
 import './style/index.scss';
 interface ContentMessageProps {
   imgSrc: string;
@@ -14,6 +16,7 @@ function ContentMessage({
   imgSrc,
   isLastMessageSent,
 }: ContentMessageProps) {
+  const { open } = useOverlay();
   return (
     <div
       className={`content-message ${
@@ -26,7 +29,24 @@ function ContentMessage({
 
       <div className="info-container">
         <div className="title-container">
-          <span>{messengerName}</span>
+          <span
+            onClick={(e) => {
+              open(
+                <MemberCard
+                  imgSrc={imgSrc}
+                  fullName={messengerName}
+                  roleArray={['a', 'b']}
+                />,
+                {
+                  popperTarget: e.currentTarget,
+                  closeOnBlur: true,
+                  clickThrough: true,
+                },
+              );
+            }}
+          >
+            {messengerName}
+          </span>
           <span>{messageTime}</span>
         </div>
         <span>{messageContent}</span>
