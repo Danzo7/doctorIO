@@ -21,7 +21,7 @@ function MiniStats({
 }: MiniStatsProps) {
   return (
     <div
-      className={`mini-stats ${state}`}
+      className={`mini-stats${state ? ' ' + state : ''}`}
       css={{ backgroundColor: backgroundColor }}
     >
       <span css={css({ visibility: percentage >= 0 ? undefined : 'hidden' })}>
