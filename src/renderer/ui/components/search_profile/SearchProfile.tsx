@@ -5,6 +5,7 @@ import colors from '@colors';
 import './style/index.scss';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import QueueAddSearchModal from '@components/modals/queue_add_search_modal';
+import { Overlay } from '@libs/overlay';
 interface SearchProfileProps {
   imgSrc: string;
 }
@@ -21,9 +22,10 @@ export default function SearchProfile({ imgSrc }: SearchProfileProps) {
           iconSize={15}
           backgroundColor={colors.silver_gray}
           radius={7}
-          onPress={() =>
-            open(<QueueAddSearchModal />, {
+          onPress={(e) =>
+            Overlay.open(<QueueAddSearchModal />, {
               closeOnClickOutside: true,
+              isDimmed: true,
               clickThrough: false,
               position: { top: '30%' },
               width: '50%',
