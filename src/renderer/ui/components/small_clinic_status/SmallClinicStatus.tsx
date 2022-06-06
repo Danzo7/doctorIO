@@ -1,8 +1,6 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import ToggleButton from '@components/buttons/toggle_button';
-import QueueAddSearchModal from '@components/modals/queue_add_search_modal';
 import Timer from '@components/small_clinic_status/timer';
-import { Overlay } from '@components/overlay';
 import { useState } from 'react';
 import './style/index.scss';
 interface SmallClinicStatusProps {}
@@ -12,15 +10,7 @@ export default function SmallClinicStatus({}: SmallClinicStatusProps) {
   return (
     <div className="small-clinic-status">
       <div className="view-button-wrapper">
-        <DarkLightCornerButton
-          title=" View clinic..."
-          onPress={() =>
-            Overlay.showModal(<QueueAddSearchModal />, {
-              clickThrough: false,
-              isDimmed: true,
-            })
-          }
-        />
+        <DarkLightCornerButton title=" View clinic..." />
       </div>
       <div className="content">
         <Timer isActive={isAccept} />
