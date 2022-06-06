@@ -1,5 +1,6 @@
 import CircleAvatar from '@components/avatars/circle_avatar';
 import MemberCard from '@components/member_card';
+import { Overlay } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import './style/index.scss';
 interface ContentMessageProps {
@@ -31,7 +32,7 @@ function ContentMessage({
         <div className="title-container">
           <span
             onClick={(e) => {
-              open(
+              Overlay.open(
                 <MemberCard
                   imgSrc={imgSrc}
                   fullName={messengerName}
