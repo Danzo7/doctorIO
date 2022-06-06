@@ -66,7 +66,7 @@ export default function InputWrapper({
         backgroundColor: background,
         borderRadius: radius,
         border: borderColor ? `1px solid ${borderColor}` : undefined,
-        flexGrow: fillContainer ? 1 : 0,
+        //  flexGrow: fillContainer ? 1 : 0,
         width: !fillContainer ? 'fit-content' : undefined,
         minWidth: maxWidth,
       }}
