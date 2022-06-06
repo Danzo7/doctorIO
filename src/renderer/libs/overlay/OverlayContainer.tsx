@@ -15,15 +15,24 @@ export function OverlayContainer({}: OverlayContainerProps) {
 
   return <div className="overlay-container" ref={overlayRef}></div>;
 }
-
+type Position = {
+  top?: number | string;
+  bottom?: number | string;
+  left?: number | string;
+  right?: number | string;
+};
 export interface OverlayOptions {
   isDimmed?: boolean;
   clickThrough?: boolean;
   backdropColor?: string;
-  closeOnClickOutside?: (() => void) | true;
+  closeOnClickOutside?: true;
+  position?: Position;
+  closeOnBlur?: true;
   onClose?: () => void;
-  width?: string;
+  width?: number | string;
+  height?: number | string;
   popperTarget?: HTMLElement;
+  closeMethod?: () => void;
   //draggable?: boolean;
   closeBtn?: {
     placement: 'inner' | 'outer' | 'above';
@@ -39,11 +48,17 @@ export function OverlayItem({
   isDimmed = false,
   clickThrough = false,
   backdropColor,
-  width = '50%',
+  width,
+  height,
   closeBtn,
   popperTarget,
   closeOnClickOutside,
+  closeOnBlur,
+  closeMethod,
+  position,
 }: OverlayItemProps) {
+  const closeOverlay = () => (closeMethod ? closeMethod() : Overlay.close());
+
   return (
     <>
       <div
@@ -52,31 +67,53 @@ export function OverlayItem({
           backgroundColor: isDimmed ? backdropColor ?? '#000000d9' : undefined,
           pointerEvents: clickThrough ? 'none' : 'all',
         })}
-        onClick={(e) => {
-          if (closeOnClickOutside) {
-            if (typeof closeOnClickOutside == 'function') closeOnClickOutside();
-            else Overlay.close();
-          }
-          e.stopPropagation();
-        }}
-      ></div>
-      <div
-        className="layer"
-        css={css({ width: width })}
-        ref={
-          popperTarget
+        onClick={
+          closeOnClickOutside
             ? (e) => {
-                if (e != null) {
-                  createPopper(popperTarget, e);
-                }
+                closeOverlay();
+                e.stopPropagation();
               }
             : undefined
         }
+      ></div>
+      <div
+        className="layer"
+        css={{
+          width: width,
+          height: height,
+          position: position && 'absolute',
+          top: position?.top,
+          bottom: position?.bottom,
+          left: position?.left,
+          right: position?.right,
+        }}
+        tabIndex={-1}
+        onBlur={
+          closeOnBlur
+            ? (event) => {
+                if (
+                  !(
+                    event.relatedTarget == event.currentTarget ||
+                    event.relatedTarget == event.currentTarget ||
+                    event.target.contains(event.relatedTarget)
+                  )
+                )
+                  closeOverlay();
+              }
+            : undefined
+        }
+        ref={(e) => {
+          e?.focus();
+          if (e != null) {
+            if (popperTarget)
+              createPopper(popperTarget, e, { placement: 'right' });
+          }
+        }}
       >
         {closeBtn && (
           <div className={`close-btn ${closeBtn.placement}`}>
             {closeBtn.component ?? (
-              <SquareIconButton onPress={() => Overlay.close()} />
+              <SquareIconButton onPress={() => closeOverlay()} />
             )}
           </div>
         )}
