@@ -7,6 +7,9 @@
     padding: 10px;
     gap: 5px;
     width: fit-content;
+    background: $darkerseccolor;
+    border-radius: 10px;
+    border: 1px solid $bordercolor;
 
     > .member-card-info {
         display: flex;
