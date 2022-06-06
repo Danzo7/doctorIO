@@ -95,7 +95,7 @@ export function OverlayItem({
                   !(
                     event.relatedTarget == event.currentTarget ||
                     event.relatedTarget == event.currentTarget ||
-                    event.target.contains(event.relatedTarget)
+                    event.currentTarget.contains(event.relatedTarget)
                   )
                 )
                   closeOverlay();
@@ -106,7 +106,7 @@ export function OverlayItem({
           e?.focus();
           if (e != null) {
             if (popperTarget)
-              createPopper(popperTarget, e, { placement: 'right' });
+              createPopper(popperTarget, e, { placement: 'right-end' });
           }
         }}
       >
