@@ -30,10 +30,18 @@ export default function AddDrugModal({ onAdd }: AddDrugModalProps) {
       <Input label="Drug name" type={'text'} />
       <div className="pick-container">
         <InputContainer label="Duration" fillContainer>
-          <NumberInput inputAlignment="center" unit="Day" /* step={1} */ />
+          <NumberInput
+            fillContainer={true}
+            inputAlignment="center"
+            unit="Day" /* step={1} */
+          />
         </InputContainer>
         <InputContainer label="Qts" fillContainer>
-          <NumberInput inputAlignment="center" unit={''} /* step={1} */ />
+          <NumberInput
+            fillContainer={true}
+            inputAlignment="center"
+            unit={''} /* step={1} */
+          />
         </InputContainer>
       </div>
       <Input label="Comment" type={'text'} />

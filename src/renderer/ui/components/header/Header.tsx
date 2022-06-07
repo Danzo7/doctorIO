@@ -2,7 +2,7 @@ import { color } from '@assets/styles/color';
 import { ReactNode } from 'react';
 import './style/index.scss';
 interface HeaderProps {
-  title: string;
+  title?: string;
   buttonNode?: ReactNode;
   alignItems?: string;
   titleFontSize?: number;
