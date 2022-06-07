@@ -1,0 +1,47 @@
+@use '~styles/appColors' as *;
+@mixin textAreaPlaceHolderStyle {
+    color: $silvergray;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.notice-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex-grow: 1;
+    align-self: stretch;
+
+    > .textarea-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        flex-grow: 1;
+        align-self: stretch;
+
+        > .save-btn-wrapper {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        > textarea {
+            background-color: $darkerseccolor;
+            border-radius: 7px;
+            border: 2px solid $bordercolor ;
+            padding: 5px;
+            min-height: 100px;
+            resize: none;
+        }
+        > textarea::placeholder {
+            @include textAreaPlaceHolderStyle()
+        }
+        > textarea::-moz-placeholder {
+            @include textAreaPlaceHolderStyle()
+        }
+        textarea:focus {
+            outline: none;
+        }
+    }
+}
