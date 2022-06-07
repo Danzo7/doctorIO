@@ -3,14 +3,18 @@ import ToggleButton from '@components/buttons/toggle_button';
 import Timer from '@components/small_clinic_status/timer';
 import { useState } from 'react';
 import './style/index.scss';
-interface SmallClinicStatusProps {}
+interface SmallClinicStatusProps {
+  OnViewClinic?: () => void;
+}
 
-export default function SmallClinicStatus({}: SmallClinicStatusProps) {
+export default function SmallClinicStatus({
+  OnViewClinic,
+}: SmallClinicStatusProps) {
   const [isAccept, setIsAccept] = useState(true);
   return (
     <div className="small-clinic-status">
       <div className="view-button-wrapper">
-        <DarkLightCornerButton title=" View clinic..." />
+        <DarkLightCornerButton title=" View clinic..." onPress={OnViewClinic} />
       </div>
       <div className="content">
         <Timer isActive={isAccept} />

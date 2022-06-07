@@ -1,5 +1,7 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
+import Header from '@components/header';
 import MembersPreview from '@components/members_preview';
+import useNavigation from '@libs/hooks/useNavigation';
 import avatar from 'toPng/test.png';
 
 import './style/index.scss';
@@ -66,12 +68,20 @@ function MembersPanel({
     },
   ],
 }: MembersPanelProps) {
+  const { navigate } = useNavigation();
   return (
     <div className="members-panel">
-      <div className="header">
-        <span>Members</span>
-        <DarkLightCornerButton title="Members ..." />
-      </div>
+      <Header
+        title="Members"
+        buttonNode={
+          <DarkLightCornerButton
+            onPress={() => {
+              navigate('/clinic/Members');
+            }}
+            title="Members ..."
+          />
+        }
+      />
       <div className="members-list-container">
         <div className="members-list">
           {membersList.length != 0 ? (
