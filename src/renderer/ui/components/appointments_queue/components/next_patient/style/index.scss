@@ -6,4 +6,12 @@
     align-items: stretch;
     padding: 10px 20px;
     gap: 10px;
+
+    > .next-patient-controls {
+        display: flex;
+        flex-direction: row;
+        align-self: stretch;
+        align-items: stretch;
+        gap: 10px;
+    }
 }

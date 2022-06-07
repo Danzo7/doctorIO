@@ -8,11 +8,15 @@ interface NextPatientProps {
   patientName: string;
   appointmentDuration: string;
   patientNumber: number;
+  onNotify?: () => void;
+  onStartSession?: () => void;
 }
 export default function NextPatient({
   patientName,
   appointmentDuration,
   patientNumber,
+  onNotify,
+  onStartSession,
 }: NextPatientProps) {
   return (
     <div className="next-patient">
@@ -26,14 +30,25 @@ export default function NextPatient({
         duration={appointmentDuration}
         patientNumber={patientNumber}
       />
-      <TextButton
-        text="Start session"
-        backgroundColor={colors.good_green}
-        width="100%"
-        fontColor={colors.white}
-        fontSize={13}
-        fontWeight={700}
-      />
+      <div className="next-patient-controls">
+        <TextButton
+          text="Notify"
+          backgroundColor={colors.cold_blue}
+          fontColor={colors.white}
+          fontSize={13}
+          fontWeight={700}
+          onPress={onNotify}
+        />
+        <TextButton
+          text="Start session"
+          backgroundColor={colors.good_green}
+          width="100%"
+          fontColor={colors.white}
+          fontSize={13}
+          fontWeight={700}
+          onPress={onStartSession}
+        />
+      </div>
     </div>
   );
 }
