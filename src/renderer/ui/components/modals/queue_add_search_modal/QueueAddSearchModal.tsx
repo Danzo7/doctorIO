@@ -8,6 +8,8 @@ import './style/index.scss';
 import Input from '@components/inputs/input';
 import Header from '@components/header';
 import useSearchPatient from '@libs/hooks/useSearchPatient';
+import color from '@assets/styles/color';
+import TextButton from '@components/buttons/text_button';
 interface QueueAddSearchModalProps {}
 interface SearchInput {
   searchField: string;
@@ -41,12 +43,18 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
 
   return (
     <div className="queue-add-search-modal">
-      <Header title="Add patient" buttonNode={<SquareIconButton />} />
+      <Header buttonNode={<SquareIconButton />} />
+      <span>Add a Patient to appointment queue</span>
       <form>
         <Input
-          label="Add a patient to appointment queue"
-          placeholder="search for a patients"
-          leading={<Svg>{search}</Svg>}
+          hint={
+            matches?.length == 0
+              ? 'Can’t find any patient with the same name'
+              : undefined
+          }
+          fillContainer
+          placeholder="search for a patient"
+          trailing={<Svg>{search}</Svg>}
           type="search"
           {...register(
             'searchField',
@@ -54,11 +62,20 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
           )}
         />
       </form>
+
       <div className="suggestions-container">
         {matches?.map(({ fullName, age }, index) => (
           <RecentAppsItem fullName={fullName} age={age} key={index} />
         ))}
       </div>
+      <TextButton
+        text="Add new patient"
+        backgroundColor={color.lighter_background}
+        padding="10px 15px"
+        fontSize={13}
+        fontWeight={700}
+        borderColor={color.border_color}
+      />
     </div>
   );
 }
