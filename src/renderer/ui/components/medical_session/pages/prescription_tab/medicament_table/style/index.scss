@@ -1,0 +1,46 @@
+@use '~styles/appColors' as *;
+.medicament-table {
+    border:1px solid $bordercolor;
+    overflow: hidden;
+    border-radius: 7px;
+
+    >table{
+        table-layout: auto;
+        border-collapse: collapse;
+        text-align: left;
+        width: 100%;
+
+        .text-cell{
+            font-size: 14px;
+            font-weight: 600;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        >thead{
+            background: $secondarycolor;
+            >tr{
+
+                >th{
+
+                    padding: 10px 15px;
+                    >div{
+                        display: flex;
+                        align-items: center;
+                        gap: 2px;
+                    }
+                }
+            }
+        }
+        >tbody{
+            >tr{
+
+                border-top: 1px solid $bordercolor;
+                >td{
+                    padding: 5px 15px;
+                    color:$textgray;
+                }
+            }
+        }
+    }
+}
