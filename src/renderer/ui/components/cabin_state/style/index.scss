@@ -33,10 +33,6 @@
         @include commonStyle();
         border: 1px solid $bordercolor;
         align-self: stretch;
-
-        > span {
-            color: $coldblue;
-        }
     }
     > .paused-div {
         @include commonStyle();
