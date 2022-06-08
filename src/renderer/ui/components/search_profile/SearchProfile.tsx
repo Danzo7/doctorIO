@@ -4,7 +4,7 @@ import Search from 'toSvg/search.svg?icon';
 import colors from '@colors';
 import './style/index.scss';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import QueueAddSearchModal from '@components/modals/queue_add_search_modal';
+import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { Overlay } from '@libs/overlay';
 interface SearchProfileProps {
   imgSrc: string;
