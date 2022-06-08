@@ -18,6 +18,7 @@ interface InputWrapperProps {
   onWheel?: WheelEventHandler<HTMLDivElement>;
   onClick?: MouseEventHandler<HTMLDivElement>;
   noFocus?: true;
+  height?: number | string;
 }
 
 export default function InputWrapper({
@@ -35,6 +36,7 @@ export default function InputWrapper({
   maxWidth,
   fillContainer,
   noFocus,
+  height = 40,
 }: InputWrapperProps) {
   const paddedLeading = leading && (
     <div
@@ -69,6 +71,7 @@ export default function InputWrapper({
         //  flexGrow: fillContainer ? 1 : 0,
         width: !fillContainer ? 'fit-content' : undefined,
         minWidth: maxWidth,
+        height: height,
       }}
     >
       {
