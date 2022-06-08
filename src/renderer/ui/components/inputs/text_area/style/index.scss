@@ -1,0 +1,34 @@
+@use '~styles/appColors' as *;
+
+.text-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex-grow: 1;
+    align-self: stretch;
+
+    > .save-btn-wrapper {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    > textarea {
+        background-color: unset;
+        border-radius: 7px;
+        border: none ;
+        padding-top: 10px;
+        min-height: 100px;
+        resize: none;
+    }
+    > textarea::placeholder,> textarea::-moz-placeholder {
+        color: $silvergray;
+        font-weight: 400;
+        font-size: 15px;
+    }
+
+    textarea:focus {
+        outline: none;
+    }
+}
