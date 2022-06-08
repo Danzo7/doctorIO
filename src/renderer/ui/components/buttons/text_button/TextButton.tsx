@@ -169,34 +169,40 @@ function TextButton({
         },
       }}
       onClick={
-        onHold == undefined && !blank
+        onHold == undefined
           ? (e) => {
-              e.preventDefault();
-              e.stopPropagation();
+              if (!blank) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
               onPress?.(e);
             }
           : undefined
       }
       onMouseDown={
-        onHold != undefined && !blank
+        onHold != undefined
           ? (e) => {
-              e.preventDefault();
-              e.stopPropagation();
+              if (!blank) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
               startHold?.();
             }
           : undefined
       }
       onMouseUp={
-        onHold != undefined && !blank
+        onHold != undefined
           ? (e) => {
-              e.preventDefault();
-              e.stopPropagation();
+              if (!blank) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
               cancelHold?.();
             }
           : undefined
       }
       onAnimationEnd={
-        onHold != undefined && !blank
+        onHold != undefined
           ? () => {
               setHold(false);
             }
