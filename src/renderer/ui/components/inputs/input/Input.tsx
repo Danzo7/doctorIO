@@ -73,6 +73,7 @@ export default forwardRef(function Input(
     >
       {(type as NumericInput)?.type == 'numeric' ? (
         <NumberInput
+          fillContainer={fillContainer}
           errorMessage={errorMsg}
           step={(type as NumericInput)?.step}
           unit={(type as NumericInput)?.unit}
