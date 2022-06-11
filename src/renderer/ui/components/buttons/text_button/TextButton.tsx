@@ -46,6 +46,14 @@ interface TextButtonProps {
     | 'flex-start'
     | 'start';
   itemsDirection?: 'row' | 'row-reverse';
+  alignSelf?:
+    | 'center'
+    | 'baseline'
+    | 'end'
+    | 'flex-end'
+    | 'flex-start'
+    | 'start'
+    | 'stretch';
   blank?: true;
 }
 function TextButton({
@@ -71,6 +79,7 @@ function TextButton({
   activeBorderColor,
   disabled = false,
   alignment,
+  alignSelf,
   itemsDirection,
   onHold,
   blank,
@@ -113,6 +122,7 @@ function TextButton({
         border: `${borderColor} ${borderWidth}px solid`,
         justifyContent: alignment,
         flexDirection: itemsDirection,
+        alignSelf: alignSelf,
         borderRadius: radius,
         padding: padding,
         width: width,
