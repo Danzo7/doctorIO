@@ -1,0 +1,12 @@
+@use '~styles/appColors' as *;
+.join-new-clinic-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 10px 20px 20px;
+    gap: 10px;
+    background: $secondarycolor;
+    border-radius: 7px;
+    max-width: 370px;
+}
