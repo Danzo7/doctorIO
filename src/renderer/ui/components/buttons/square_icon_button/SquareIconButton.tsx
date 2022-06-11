@@ -6,9 +6,10 @@ import { PressHandler } from '../text_button';
 interface SquareIconButtonProps {
   onPress?: PressHandler;
   svg?: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
+  blank?: true;
 }
 
-function SquareIconButton({ onPress, svg }: SquareIconButtonProps) {
+function SquareIconButton({ onPress, svg, blank }: SquareIconButtonProps) {
   return (
     <IconicButton
       width={25}
@@ -17,6 +18,7 @@ function SquareIconButton({ onPress, svg }: SquareIconButtonProps) {
       afterBgColor="#ffffff20"
       radius={5}
       onPress={onPress}
+      blank={blank}
     />
   );
 }

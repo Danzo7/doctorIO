@@ -21,6 +21,7 @@ interface IconicButtonProps {
   padding?: number | string;
   type?: 'button' | 'submit' | 'reset' | undefined;
   disabled?: boolean;
+  blank?: true;
 }
 
 /**
@@ -46,6 +47,7 @@ function IconicButton({
   iconSize,
   padding = 'unset',
   disabled = false,
+  blank,
 }: IconicButtonProps) {
   const castIcon = () => {
     if ((Icon as FunctionComponent)?.prototype) {
@@ -62,6 +64,7 @@ function IconicButton({
 
   return (
     <TextButton
+      blank={blank}
       type={type}
       backgroundColor={backgroundColor}
       afterBgColor={afterBgColor}

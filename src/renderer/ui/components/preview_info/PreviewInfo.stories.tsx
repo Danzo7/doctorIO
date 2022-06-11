@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import PreviewInfo from './PreviewInfo';
-import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 export default {
   title: 'PreviewInfo',
   component: PreviewInfo,
