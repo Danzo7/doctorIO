@@ -10,5 +10,12 @@ const Template: Story<ComponentProps<typeof DiagnosisModal>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  inputArray: ['weight', 'Tall', 'Blood pressure', 'Input', 'Input', 'Input'],
+  inputArray: [
+    { label: 'weight', type: 'number' },
+    { label: 'Tall', type: 'number' },
+    { label: 'Blood pressure', type: 'text' },
+    { label: 'Input1', type: 'number' },
+    { label: 'Input2', type: 'text' },
+    { label: 'Input3', type: 'text' },
+  ],
 };
