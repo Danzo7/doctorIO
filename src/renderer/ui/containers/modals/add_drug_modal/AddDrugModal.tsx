@@ -3,8 +3,6 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import TextButton from '@components/buttons/text_button';
 import Header from '@components/header';
 import Input from '@components/inputs/input';
-import InputContainer from '@components/inputs/input_container';
-import NumberInput from '@components/inputs/number_input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './style/index.scss';
 
@@ -21,30 +19,34 @@ export default function AddDrugModal({ onAdd }: AddDrugModalProps) {
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData);
   return (
-    <div className="add-drug-modal">
+    <form onSubmit={handleSubmit(onSubmit)} className="add-drug-modal">
       <Header
         title="Add drug"
         buttonNode={<SquareIconButton />}
         titleFontSize={20}
       />
-      <Input label="Drug name" type={'text'} />
+      <Input
+        {...register('drugName', {
+          required: { value: true, message: 'Drug name is required' },
+        })}
+        label="Drug name"
+        type={'text'}
+      />
       <div className="pick-container">
-        <InputContainer label="Duration" fillContainer>
-          <NumberInput
-            fillContainer={true}
-            inputAlignment="center"
-            unit="Day" /* step={1} */
-          />
-        </InputContainer>
-        <InputContainer label="Qts" fillContainer>
-          <NumberInput
-            fillContainer={true}
-            inputAlignment="center"
-            unit={''} /* step={1} */
-          />
-        </InputContainer>
+        <Input
+          {...register('duration')}
+          label="Duration"
+          fillContainer
+          type={{ type: 'numeric', min: 1, step: 1, unit: 'Day' }}
+        />
+        <Input
+          {...register('qts')}
+          label="Qts"
+          fillContainer
+          type={{ type: 'numeric', min: 1, step: 1, unit: '' }}
+        />
       </div>
-      <Input label="Comment" type={'text'} />
+      <Input {...register('comment', {})} label="Comment" type={'text'} />
       <TextButton
         text="Add"
         backgroundColor={color.good_green}
@@ -52,8 +54,10 @@ export default function AddDrugModal({ onAdd }: AddDrugModalProps) {
         fontColor={color.white}
         fontSize={13}
         fontWeight={700}
-        onPress={onAdd}
+        onPress={() => {
+          handleSubmit(onSubmit)();
+        }}
       />
-    </div>
+    </form>
   );
 }
