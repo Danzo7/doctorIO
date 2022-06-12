@@ -58,19 +58,6 @@ interface MessagesSideBarProps {}
 export default function MessagesSideBar({}: MessagesSideBarProps) {
   return (
     <div className="messages-side-bar">
-      {/* 
-    - fixes: add new div for content for organizing and set the parent and the new content to overflow hidden 
-          -  remove fixed height
-          -  width=70% is useless flex-grow=1 do the job
-    -  selected is one item from messageCategories or DmHistory cant be both (like discord)
-    - if a category is selected show contact
-    - if a Dm is selected show chat 
-    notice:
-    - objects that seem like a constant config are self contained and they better not to be props to avoid props hell,
-    self contained mean that objects/configs are related to the component in a direct clear way, by its name 
-    for egs like "MessagesCategories" its not possible to have more than one category for messages in other hand "categories" component must indeed have a list  property. 
-    for vague and unclear component use props
-      */}
       <div className="messages-side-bar-content">
         <ConversationSearch />
         <MessagesCategories />

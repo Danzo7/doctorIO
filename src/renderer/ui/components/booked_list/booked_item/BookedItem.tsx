@@ -7,9 +7,10 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 interface BookedItemProps {
   name: string;
   bookTime: string;
+  onPressMenu?: () => void;
   state: 'panding' | 'in queue'; //This will force ts to accept only those values with their types.
 }
-function BookedItem({ name, bookTime, state }: BookedItemProps) {
+function BookedItem({ name, bookTime, state, onPressMenu }: BookedItemProps) {
   return (
     <div className="booked-item">
       <div className="right-container">
@@ -30,7 +31,7 @@ function BookedItem({ name, bookTime, state }: BookedItemProps) {
           </div>
         )}
       </div>
-      <SquareIconButton svg={threeDots} />
+      <SquareIconButton svg={threeDots} onPress={onPressMenu} />
     </div>
   );
 }
