@@ -1,0 +1,11 @@
+@use '~styles/appColors' as *;
+.tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 5px;
+    gap: 5px;
+    background: #18191C;
+    border-radius: 7px;
+    width: fit-content;
+}
