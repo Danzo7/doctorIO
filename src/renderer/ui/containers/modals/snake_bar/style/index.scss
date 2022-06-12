@@ -1,0 +1,19 @@
+@use '~styles/appColors' as *;
+.snake-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    max-width: 715px;
+    background: $lighterbackground;
+    border: 1px solid $bordercolor;
+    border-radius: 7px;
+
+    > span {
+        font-weight: 600;
+        font-size: 15px;
+        color: $white;
+    }
+}
