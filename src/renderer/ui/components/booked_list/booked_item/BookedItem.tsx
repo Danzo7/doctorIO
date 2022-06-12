@@ -54,7 +54,8 @@ function BookedItem({ name, bookTime, state }: BookedItemProps) {
             />,
             {
               closeOnClickOutside: true,
-              clickThrough: false,
+              clickThrough: true,
+              closeOnBlur: true,
               popperTarget: e?.currentTarget,
             },
           );
