@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+.tooltip-item {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-self: stretch;
+    align-items: stretch;
+    min-width: 115px;
+    width: fit-content;
+}
