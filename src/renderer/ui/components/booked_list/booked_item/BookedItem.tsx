@@ -3,14 +3,17 @@ import Panding from 'toSvg/pending.svg';
 import InQueue from 'toSvg/in_queue.svg';
 import threeDots from 'toSvg/threedots.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import { color } from '@assets/styles/color';
+import Tooltip from '@components/poppers/tooltip';
 
 interface BookedItemProps {
   name: string;
   bookTime: string;
-  onPressMenu?: () => void;
   state: 'panding' | 'in queue'; //This will force ts to accept only those values with their types.
 }
-function BookedItem({ name, bookTime, state, onPressMenu }: BookedItemProps) {
+function BookedItem({ name, bookTime, state }: BookedItemProps) {
+  const { open } = useOverlay();
   return (
     <div className="booked-item">
       <div className="right-container">
@@ -31,7 +34,32 @@ function BookedItem({ name, bookTime, state, onPressMenu }: BookedItemProps) {
           </div>
         )}
       </div>
-      <SquareIconButton svg={threeDots} onPress={onPressMenu} />
+      <SquareIconButton
+        svg={threeDots}
+        onPress={(e) => {
+          open(
+            <Tooltip
+              actionList={[
+                {
+                  text: 'Add to queue',
+                },
+                {
+                  text: 'View records',
+                },
+                {
+                  text: 'Remove',
+                  type: 'warning',
+                },
+              ]}
+            />,
+            {
+              closeOnClickOutside: true,
+              clickThrough: false,
+              popperTarget: e?.currentTarget,
+            },
+          );
+        }}
+      />
     </div>
   );
 }
