@@ -1,24 +1,23 @@
-import color from '@assets/styles/color';
-import TextButton from '@components/buttons/text_button';
-import { FunctionComponent, ReactNode, SVGProps } from 'react';
+import { color } from '@assets/styles/color';
+import TextButton, {
+  IconType,
+  PressHandler,
+} from '@components/buttons/text_button';
 import './style/index.scss';
-type IconProps = {
-  svg: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
-  iconColor?: string;
-  iconAfterColor?: string;
-  iconType?: 'stroke' | 'fill';
-};
+
 interface TooltipItemProps {
   text: string;
   selectedColor?: string;
-  Icon?: FunctionComponent<SVGProps<SVGSVGElement>> | IconProps | ReactNode;
-  onPress: () => void;
+  Icon?: IconType;
+  onPress?: PressHandler;
+  type?: 'normal' | 'warning';
 }
 export default function TooltipItem({
   Icon,
   text,
   selectedColor = color.secondary_color,
   onPress,
+  type,
 }: TooltipItemProps) {
   return (
     <div className="tooltip-item">
@@ -27,8 +26,9 @@ export default function TooltipItem({
         text={text}
         fontSize={13}
         fontWeight={500}
-        fontColor={color.white}
-        afterBgColor={selectedColor}
+        fontColor={type == 'warning' ? color.hot_red : color.text_gray}
+        afterFontColor={color.white}
+        afterBgColor={type == 'warning' ? color.hot_red : selectedColor}
         padding={'5px 10px'}
         alignment="start"
         width={'100%'}
