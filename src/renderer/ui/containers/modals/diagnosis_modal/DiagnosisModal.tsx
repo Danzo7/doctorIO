@@ -7,14 +7,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import './style/index.scss';
 
 interface Inputs {
-  [label: string]: [type: string];
+  [label: string]: string;
 }
 interface DiagnosisModalProps {
   inputArray: any[];
 }
 export default function DiagnosisModal({ inputArray }: DiagnosisModalProps) {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData);
+  console.log(errors);
   return (
     <div className="diagnosis-modal">
       <Header title="Diagnosis" buttonNode={<SquareIconButton />} />
@@ -27,6 +32,7 @@ export default function DiagnosisModal({ inputArray }: DiagnosisModalProps) {
               {...register(label, {
                 required: { value: true, message: `${label} is required` },
               })}
+              errorMsg={errors[label]?.message}
             />
           </div>
         ))}
@@ -35,9 +41,8 @@ export default function DiagnosisModal({ inputArray }: DiagnosisModalProps) {
         text="Add to queue"
         backgroundColor={colors.good_green}
         radius={7}
-        fontSize={12}
+        fontSize={14}
         width={'60%'}
-        padding={'15px 0px'}
         onPress={() => {
           handleSubmit(onSubmit)();
         }}

@@ -14,8 +14,8 @@ FirstStory.args = {
     { label: 'weight', type: 'number' },
     { label: 'Tall', type: 'number' },
     { label: 'Blood pressure', type: 'text' },
-    { label: 'Input1', type: 'number' },
-    { label: 'Input2', type: 'text' },
-    { label: 'Input3', type: 'text' },
+    { label: 'Input', type: 'number' },
+    { label: 'Input', type: 'text' },
+    { label: 'Input', type: 'text' },
   ],
 };
