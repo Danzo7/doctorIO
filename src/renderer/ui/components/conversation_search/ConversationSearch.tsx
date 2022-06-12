@@ -1,16 +1,16 @@
 import Search from 'toSvg/search.svg?icon';
 import colors from '@assets/styles/color';
-import InputWrapper from '@components/inputs/input_wrapper';
+import Input from '@components/inputs/input';
 
 interface ConversationSearchProps {}
 export default function ConversationSearch({}: ConversationSearchProps) {
+  //TODO? add Dm search
   return (
-    <InputWrapper
-      background={colors.darkersec_color}
-      radius={10}
+    <Input
+      fillContainer
+      placeholder="search"
+      type={'search'}
       leading={<Search></Search>}
-    >
-      <input placeholder="search" type={'search'} />
-    </InputWrapper>
+    />
   );
 }
