@@ -106,7 +106,7 @@ export function OverlayItem({
           e?.focus();
           if (e != null) {
             if (popperTarget)
-              createPopper(popperTarget, e, { placement: 'right-end' });
+              createPopper(popperTarget, e, { placement: 'auto-end' });
           }
         }}
       >
