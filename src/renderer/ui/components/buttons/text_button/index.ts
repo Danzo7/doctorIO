@@ -1,3 +1,3 @@
-import TextButton, { PressHandler } from './TextButton';
+import TextButton, { PressHandler, IconType } from './TextButton';
 export default TextButton;
-export type { PressHandler };
+export type { PressHandler, IconType };

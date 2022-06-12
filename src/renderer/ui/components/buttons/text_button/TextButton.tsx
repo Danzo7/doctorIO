@@ -15,9 +15,13 @@ type IconProps = {
   iconType?: 'stroke' | 'fill';
 };
 export type PressHandler = (e?: MouseEvent<HTMLButtonElement>) => void;
+export type IconType =
+  | FunctionComponent<SVGProps<SVGSVGElement>>
+  | IconProps
+  | ReactNode;
 interface TextButtonProps {
   text?: string;
-  Icon?: FunctionComponent<SVGProps<SVGSVGElement>> | IconProps | ReactNode;
+  Icon?: IconType;
   children?: React.ReactNode;
   fontColor?: string;
   fontSize?: number;
