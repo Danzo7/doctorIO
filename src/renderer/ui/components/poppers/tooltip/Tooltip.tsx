@@ -6,11 +6,11 @@ interface TooltipProps {
 export default function Tooltip({ actionList }: TooltipProps) {
   return (
     <div className="tooltip">
-      {actionList?.map(({ text, fontColor, Icon, onPress }, index) => (
+      {actionList?.map(({ text, selectedColor, Icon, onPress }, index) => (
         <TooltipItem
           key={index}
           text={text}
-          fontColor={fontColor}
+          selectedColor={selectedColor}
           Icon={Icon}
           onPress={onPress}
         />

@@ -10,14 +10,14 @@ type IconProps = {
 };
 interface TooltipItemProps {
   text: string;
-  fontColor?: string;
+  selectedColor?: string;
   Icon?: FunctionComponent<SVGProps<SVGSVGElement>> | IconProps | ReactNode;
   onPress: () => void;
 }
 export default function TooltipItem({
   Icon,
   text,
-  fontColor = color.white,
+  selectedColor = color.secondary_color,
   onPress,
 }: TooltipItemProps) {
   return (
@@ -27,8 +27,8 @@ export default function TooltipItem({
         text={text}
         fontSize={13}
         fontWeight={500}
-        fontColor={fontColor}
-        afterBgColor={color.secondary_color}
+        fontColor={color.white}
+        afterBgColor={selectedColor}
         padding={'5px 10px'}
         alignment="start"
         width={'100%'}

@@ -14,19 +14,19 @@ FirstStory.args = {
   actionList: [
     {
       text: 'add...',
-      fontColor: color.white,
+      selectedColor: color.secondary_color,
     },
     {
       text: 'close...',
-      fontColor: color.white,
+      selectedColor: color.secondary_color,
     },
     {
       text: 'open...',
-      fontColor: color.white,
+      selectedColor: color.secondary_color,
     },
     {
       text: 'delete...',
-      fontColor: color.hot_red,
+      selectedColor: color.hot_red,
     },
   ],
 };
