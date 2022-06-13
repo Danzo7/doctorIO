@@ -1,6 +1,7 @@
 import Input from '@components/inputs/input';
 import './style/index.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import usePrompt from '@libs/History';
 
 type Inputs = {
   name: string;
@@ -11,8 +12,15 @@ type Inputs = {
 
 interface OverviewInfoFormProps {}
 export default function OverviewInfoForm({}: OverviewInfoFormProps) {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty },
+  } = useForm<Inputs>();
+
   const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData);
+  usePrompt('are you stupid', isDirty);
+
   return (
     <div className="overview-info-form">
       <span>Informations</span>
