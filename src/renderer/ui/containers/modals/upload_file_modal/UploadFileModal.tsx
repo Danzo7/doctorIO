@@ -1,4 +1,5 @@
 import color from '@assets/styles/color';
+import IconicButton from '@components/buttons/iconic_button';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import TextButton from '@components/buttons/text_button';
 import Header from '@components/header';
@@ -14,19 +15,15 @@ export default function UploadFileModal({ onUpload }: UploadFileModalProps) {
       <Header title="Upload a document" buttonNode={<SquareIconButton />} />
       <Input
         trailing={
-          <TextButton
-            padding={7}
+          <IconicButton
+            blank
+            width={25}
+            radius={7}
             backgroundColor={color.cold_blue}
-            Icon={
-              <Upload
-                css={{ transform: 'rotate(-45deg)' }}
-                width={20}
-                height={10}
-              />
-            }
+            Icon={<Upload css={{ transform: 'rotate(-45deg)' }} />}
           />
         }
-        type={'text'}
+        type={'file'}
       />
       <TextButton
         text="Upload"
