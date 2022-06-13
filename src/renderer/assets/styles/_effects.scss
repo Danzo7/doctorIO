@@ -1,4 +1,5 @@
 @use '~styles/appColors' as *;
+@use '~styles/constants' as *;
 
 @mixin darken {
   box-shadow:inset 1000px 1000px 1px $darker;
@@ -10,4 +11,45 @@
 }
 @mixin fastTrans {
   transition: 0.2s;
+}
+
+@mixin shaking($color){
+  animation: shaky 2s forwards;
+  @keyframes shaky{
+    0% {
+      background-color: $color;
+      box-shadow: 0 0px 1px $bordercolor inset, 0 0 5px $color;
+
+      transform: translate(0,0);
+    }
+    2%{
+      transform: translate(1%,2%);
+    }
+    4%{
+      transform: translate(0.1%,1%);
+    }
+    6%{
+      transform: translate(0.5%,1%);
+    }
+    8%{
+      transform: translate(1%,1%);
+    }
+    10%{
+      transform: translate(0%,1%);
+    }
+    12%{
+      transform: translate(0.5%,0%);
+    }
+    14%{
+      transform: translate(0%,0%);
+    }
+    95%{
+      background-color: $color;
+      box-shadow: 0 0px 1px $bordercolor inset, 0 0 5px $color;  }
+    100%{
+      transform: translate(0,0);
+      outline: none;
+      box-shadow: none;
+    }
+  }
 }
