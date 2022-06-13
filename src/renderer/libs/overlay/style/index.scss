@@ -9,10 +9,11 @@
   align-items: center;
   pointer-events: none;
   z-index: 1;
+  padding: 2vh 1vw;
 
   >div{
     display: flex;
-    position: absolute;
+    position: relative;
     align-content: stretch;
     width: -webkit-fill-available;
     height: -webkit-fill-available;

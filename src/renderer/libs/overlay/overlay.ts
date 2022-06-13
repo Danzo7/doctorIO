@@ -6,10 +6,10 @@ import { OverlayOptions } from '.';
 export class Overlay {
   private static _root?: Root;
 
-  static _ref: HTMLDivElement;
+  static entryElement: HTMLDivElement;
 
   static setRenderer(ref: HTMLDivElement) {
-    this._ref = ref;
+    this.entryElement = ref;
   }
 
   static killRoot = () => {
@@ -18,10 +18,10 @@ export class Overlay {
   };
 
   static open(target: ReactNode, props: OverlayOptions) {
-    if (this._ref) {
+    if (this.entryElement) {
       this.killRoot();
       const el = document.createElement('div');
-      this._ref.appendChild(el);
+      this.entryElement.appendChild(el);
       this._root = createRoot(el);
       this._root.render(OverlayItem({ children: target, ...props }));
     } else
@@ -31,14 +31,14 @@ export class Overlay {
   }
 
   static push(target: ReactNode, props: OverlayOptions) {
-    if (this._ref) {
+    if (this.entryElement) {
       const layer = document.createElement('div');
-      layer.setAttribute('id', 'overlay-' + this._ref.children.length);
+      layer.setAttribute('id', 'overlay-' + this.entryElement.children.length);
       layer.setAttribute(
         'style',
-        'z-index:' + 10 + Overlay._ref.children.length,
+        'z-index:' + 10 + Overlay.entryElement.children.length,
       );
-      this._ref.appendChild(layer);
+      this.entryElement.appendChild(layer);
       this._root = createRoot(layer);
       this._root.render(OverlayItem({ children: target, ...props }));
     } else
@@ -48,9 +48,9 @@ export class Overlay {
   }
 
   static pop() {
-    if (this._ref) {
-      this._ref.lastChild?.remove();
-      if (this._ref.children.length == 0) this.close();
+    if (this.entryElement) {
+      this.entryElement.lastChild?.remove();
+      if (this.entryElement.children.length == 0) this.close();
     } else
       throw Error(
         'You have to setRenderer first. Call seRenderer(Element) on your overlay component.',
@@ -58,8 +58,8 @@ export class Overlay {
   }
 
   static close() {
-    if (this._ref) {
-      this._ref.replaceChildren();
+    if (this.entryElement) {
+      this.entryElement.replaceChildren();
       this.killRoot();
     } else
       throw Error(

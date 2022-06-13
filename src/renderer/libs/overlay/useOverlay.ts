@@ -15,26 +15,26 @@ export function useOverlay() {
     root.current = undefined;
   }, []);
   const close = useCallback(() => {
-    if (Overlay._ref == undefined)
+    if (Overlay.entryElement == undefined)
       throw Error(
         'No overlay reference found,please create `<OverlayContainer></OverlayContainer> or you have to setRenderer first. Call seRenderer(Element) on your overlay component`',
       );
-    Overlay._ref.removeChild(layer);
+    Overlay.entryElement.removeChild(layer);
     if (root) {
       killRoot();
     }
   }, [killRoot, layer, root]);
   const open = useCallback(
     (target: ReactNode, props: OverlayOptions) => {
-      if (Overlay._ref == undefined)
+      if (Overlay.entryElement == undefined)
         throw Error(
           'No overlay reference found,please create `<OverlayContainer></OverlayContainer>`',
         );
 
-      Overlay._ref.appendChild(layer);
+      Overlay.entryElement.appendChild(layer);
       layer.setAttribute(
         'style',
-        'z-index:' + 10 + Overlay._ref.children.length,
+        'z-index:' + 10 + Overlay.entryElement.children.length,
       );
       killRoot();
       root.current = createRoot(layer);

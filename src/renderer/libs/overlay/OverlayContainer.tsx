@@ -1,25 +1,30 @@
 import { Overlay } from './overlay';
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode } from 'react';
 import './style/index.scss';
 import SquareIconButton from '@components/buttons/square_icon_button';
 import { css } from '@emotion/react';
-import { createPopper } from '@popperjs/core';
+import { createPopper, Modifier, OptionsGeneric } from '@popperjs/core';
 interface OverlayContainerProps {}
 
 export function OverlayContainer({}: OverlayContainerProps) {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (overlayRef.current) Overlay.setRenderer(overlayRef.current);
-    return () => {};
-  }, [overlayRef]);
-
-  return <div className="overlay-container" ref={overlayRef}></div>;
+  return (
+    <div
+      className="overlay-container"
+      ref={(e) => {
+        if (e != null) Overlay.setRenderer(e);
+      }}
+    ></div>
+  );
 }
 type Position = {
   top?: number | string;
   bottom?: number | string;
   left?: number | string;
   right?: number | string;
+};
+type PopperTargetType = {
+  target: HTMLElement;
+  options: Partial<OptionsGeneric<Partial<Modifier<any, any>>>>;
 };
 export interface OverlayOptions {
   isDimmed?: boolean;
@@ -31,14 +36,13 @@ export interface OverlayOptions {
   onClose?: () => void;
   width?: number | string;
   height?: number | string;
-  popperTarget?: HTMLElement;
+  popperTarget?: HTMLElement | PopperTargetType;
   closeMethod?: () => void;
   //draggable?: boolean;
   closeBtn?: {
     placement: 'inner' | 'outer' | 'above';
     component?: ReactNode;
   };
-  //draggable,
 }
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
@@ -106,7 +110,13 @@ export function OverlayItem({
           e?.focus();
           if (e != null) {
             if (popperTarget)
-              createPopper(popperTarget, e, { placement: 'auto-end' });
+              createPopper(
+                (popperTarget as PopperTargetType)?.target ?? popperTarget,
+                e,
+                (popperTarget as PopperTargetType)?.options ?? {
+                  placement: 'auto-end',
+                },
+              );
           }
         }}
       >
