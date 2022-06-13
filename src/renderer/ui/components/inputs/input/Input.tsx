@@ -4,7 +4,6 @@ import {
   InternalFieldName,
   UseFormRegisterReturn,
 } from 'react-hook-form';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '../select';
 import InputContainer from '../input_container';
@@ -34,7 +33,7 @@ type SelectInput = {
 
 type DateTimeInput = {
   type: 'datetime';
-  date: Date;
+  date?: Date;
 };
 interface InputProps {
   type: SelectInput | DateTimeInput | NumericInput | HTMLInputTypeAttribute;
@@ -58,6 +57,7 @@ export default forwardRef(function Input(
     trailing,
     children,
     fillContainer,
+
     ...others
   }: InputProps & FormHookProps,
   ref: any,
@@ -99,10 +99,6 @@ export default forwardRef(function Input(
                       placeholder={placeholder}
                       {...others}
                     />
-                  );
-                else if ((type as DateTimeInput).type == 'datetime')
-                  return (
-                    <DatePicker selected={new Date()} onChange={() => {}} />
                   );
                 else if (typeof type === 'string')
                   return (

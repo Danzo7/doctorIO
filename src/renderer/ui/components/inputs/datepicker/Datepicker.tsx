@@ -4,13 +4,14 @@ import DatePickerReact from 'react-datepicker';
 import { ComponentProps } from 'react';
 import InputWrapper from '../input_wrapper';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
+import Calendar from 'toSvg/calendar.svg?icon';
 import Arrow from 'toSvg/arrow.svg?icon';
 export default function Datepicker({
   onChange,
   ...props
 }: ComponentProps<typeof DatePickerReact>) {
   return (
-    <InputWrapper>
+    <InputWrapper trailing={<Calendar />}>
       <DatePickerReact
         calendarContainer={({ children }) => (
           <div className="datepicker">{children}</div>
