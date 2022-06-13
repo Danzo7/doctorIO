@@ -1,14 +1,19 @@
-import MultiOptionSwitcher from '@components/buttons/multi_option_switcher';
+import { ReactNode } from 'react';
 import './style/index.scss';
 interface SnakeBarProps {
   description: string;
-  actionList: string[];
+  type?: 'error' | 'info' | 'warning';
+  children?: ReactNode;
 }
-export default function SnakeBar({ description, actionList }: SnakeBarProps) {
+export default function SnakeBar({
+  description,
+  children,
+  type = 'error',
+}: SnakeBarProps) {
   return (
-    <div className="snake-bar">
+    <div className={`snake-bar ${type}`}>
       <span>{description}</span>
-      <MultiOptionSwitcher textList={actionList} noBorder={true} noSep={true} />
+      {children}
     </div>
   );
 }
