@@ -28,15 +28,7 @@ export default function SessionParameter({}: SessionParameterProps) {
         onChange={onDateChange}
         dateFormat="EEEE, dd MMM"
       />
-      <Input
-        trailing={<Calendar />}
-        type={{
-          type: 'datetime',
-          date: new Date(),
-        }}
-        {...{ dateFormat: 'EEEE, dd MMM', selected: selectedDate }}
-        onChangeDate={onDateChange}
-      />
+
       <div className="payment-container">
         <Header
           title="Payment"

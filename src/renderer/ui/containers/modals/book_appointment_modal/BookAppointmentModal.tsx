@@ -8,6 +8,7 @@ import './style/index.scss';
 import TextButton, { PressHandler } from '@components/buttons/text_button';
 import color from '@assets/styles/color';
 import { useState } from 'react';
+import Datepicker from '@components/inputs/datepicker';
 interface BookAppointmentModalProps {
   patientName: string;
   id: string;
@@ -30,11 +31,10 @@ export default function BookAppointmentModal({
       <div className="book-appointment-info">
         <TextPair first={patientName} second={`#${id}`} />
         <BorderSeparator direction="vertical" />
-        <Input
-          trailing={<Calendar />}
-          type={{ type: 'datetime', date: new Date() }}
-          {...{ dateFormat: 'EEEE, dd MMM', selected: selectedDate }}
-          onChangeDate={onDateChange}
+        <Datepicker
+          selected={selectedDate}
+          onChange={onDateChange}
+          dateFormat="EEEE, dd MMM"
         />
       </div>
       <TextButton
