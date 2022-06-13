@@ -3,7 +3,6 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import TextButton from '@components/buttons/text_button';
 import Header from '@components/header';
 import Input from '@components/inputs/input';
-import { min } from 'date-fns';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './style/index.scss';
 
