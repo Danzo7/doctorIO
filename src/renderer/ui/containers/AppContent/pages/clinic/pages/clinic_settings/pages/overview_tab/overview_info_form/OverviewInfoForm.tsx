@@ -1,7 +1,9 @@
 import Input from '@components/inputs/input';
 import './style/index.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import usePrompt from '@libs/History';
+import usePrompt from '@libs/HistoryBlocker';
+import TextButton from '@components/buttons/text_button';
+import { color } from '@assets/styles/color';
 
 type Inputs = {
   name: string;
@@ -19,7 +21,20 @@ export default function OverviewInfoForm({}: OverviewInfoFormProps) {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData);
-  usePrompt('are you stupid', isDirty);
+  usePrompt(
+    'are you stupid',
+    ({ closeOVerlay, dismiss }) => (
+      <TextButton
+        text="dismiss"
+        afterBgColor={color.darker}
+        onPress={() => {
+          closeOVerlay();
+          dismiss();
+        }}
+      />
+    ),
+    isDirty,
+  );
 
   return (
     <div className="overview-info-form">
