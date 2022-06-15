@@ -30,10 +30,12 @@ export class Overlay {
       );
   }
 
-  static push(target: ReactNode, props: OverlayOptions) {
+  static push(id: string, target: ReactNode, props: OverlayOptions) {
     if (this.entryElement) {
-      const layer = document.createElement('div');
-      layer.setAttribute('id', 'overlay-' + this.entryElement.children.length);
+      const layer =
+        document.querySelector('#overlay-' + id) ||
+        document.createElement('div');
+      layer.setAttribute('id', 'overlay-' + id);
       layer.setAttribute(
         'style',
         'z-index:' + 10 + Overlay.entryElement.children.length,
@@ -47,9 +49,11 @@ export class Overlay {
       );
   }
 
-  static pop() {
+  static pop(id: string) {
     if (this.entryElement) {
-      this.entryElement.lastChild?.remove();
+      if (document.querySelector('#overlay-' + id))
+        document.querySelector('#overlay-' + id)?.remove();
+      else this.entryElement.lastChild?.remove();
       if (this.entryElement.children.length == 0) this.close();
     } else
       throw Error(
