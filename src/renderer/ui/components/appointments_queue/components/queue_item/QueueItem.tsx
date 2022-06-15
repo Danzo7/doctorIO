@@ -47,7 +47,7 @@ function QueueItem({
             state={state}
             number={number}
             timeAgo={timeAgo}
-            btnOnclick={() => {
+            onClose={() => {
               onClose?.();
               setopen(false);
             }}
