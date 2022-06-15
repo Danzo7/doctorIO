@@ -5,13 +5,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
+    gap:10px;
     padding: 20px 30px;
-    box-sizing: border-box;
-    max-width: 715px;
     background: $lighterbackground;
     border: 1px solid $bordercolor;
     border-radius: 7px;
-    box-shadow: 1px 1px 5px $goodblack;
     > span {
         font-weight: 600;
         font-size: 17px;
