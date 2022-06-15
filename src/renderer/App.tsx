@@ -3,6 +3,8 @@ import AppMenu from '@containers/AppMenu';
 import AppContent from '@containers/AppContent';
 import AppSidebar from '@containers/AppSidebar';
 import { OverlayContainer } from '@libs/overlay';
+import { Route, Routes } from 'react-router-dom';
+import MedicalSession from '@components/medical_session';
 
 interface AppProps {}
 
@@ -10,9 +12,19 @@ function App({}: AppProps) {
   return (
     <>
       <div className="app-container">
-        <AppMenu />
-        <AppContent />
-        <AppSidebar />
+        <Routes>
+          <Route path="session" element={<MedicalSession />} />
+          <Route
+            path="*"
+            element={
+              <>
+                <AppMenu />
+                <AppContent />
+                <AppSidebar />
+              </>
+            }
+          />
+        </Routes>
       </div>
       <OverlayContainer />
     </>
