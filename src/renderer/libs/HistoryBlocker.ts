@@ -1,16 +1,14 @@
-import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import TextButton from '@components/buttons/text_button';
 import SnakeBar from '@containers/modals/snake_bar';
 import { History, Transition } from 'history';
-import { useCallback, useContext, useEffect } from 'react';
+import { ReactNode, useCallback, useContext, useEffect } from 'react';
 import {
   UNSAFE_NavigationContext as NavigationContext,
   Navigator as IncorrectType,
 } from 'react-router-dom';
-import { Overlay } from './overlay';
-
+import { useOverlay } from './overlay/useOverlay';
+type TransitionD = Transition & { dismiss: () => void };
 type Navigator = IncorrectType & Pick<History, 'block'>;
-export function useBlocker(blocker: (tx: Transition) => void, when = true) {
+export function useBlocker(blocker: (tx: TransitionD) => void, when = true) {
   const { navigator } = useContext(NavigationContext) as unknown as {
     navigator: Navigator;
   };
@@ -21,12 +19,14 @@ export function useBlocker(blocker: (tx: Transition) => void, when = true) {
     const unblock = navigator.block((tx) => {
       const autoUnblockingTx = {
         ...tx,
+        dismiss() {
+          unblock();
+        },
         retry() {
           unblock();
           tx.retry();
         },
       };
-
       blocker(autoUnblockingTx);
     });
 
@@ -34,26 +34,35 @@ export function useBlocker(blocker: (tx: Transition) => void, when = true) {
   }, [navigator, blocker, when]);
 }
 
-export default function usePrompt(message: string, when = true) {
+export default function usePrompt(
+  message: string,
+  actionList: ({
+    closeOVerlay,
+    retry,
+    dismiss,
+  }: {
+    closeOVerlay: () => void;
+    dismiss: () => void;
+    retry: () => void;
+  }) => ReactNode,
+  when = true,
+) {
+  const { open, close } = useOverlay();
   const blocker = useCallback(
-    (tx: Transition) => {
-      Overlay.open(
+    (tx: TransitionD) => {
+      open(
         SnakeBar({
-          description:
-            'This is a messsage that apear cause you did something that is not very ',
-          children: DarkLightCornerButton({
-            title: 'dismis',
-            onPress: () => {
-              Overlay.pop();
-              tx.retry();
-            },
+          description: message,
+          children: actionList({
+            closeOVerlay: close,
+            dismiss: tx.dismiss,
+            retry: tx.retry,
           }),
         }),
         { closeOnClickOutside: true, position: { top: 0 } },
       );
-      // tx.retry();
     },
-    [message],
+    [open, message, actionList, close],
   );
 
   useBlocker(blocker, when);
