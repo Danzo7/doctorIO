@@ -10,9 +10,18 @@ interface Inputs {
   [label: string]: string;
 }
 interface DiagnosisModalProps {
-  inputArray: any[];
+  inputArray?: any[];
 }
-export default function DiagnosisModal({ inputArray }: DiagnosisModalProps) {
+export default function DiagnosisModal({
+  inputArray = [
+    { label: 'weight', type: 'number' },
+    { label: 'Tall', type: 'number' },
+    { label: 'Blood pressure', type: 'text' },
+    { label: 'Input', type: 'number' },
+    { label: 'Input', type: 'text' },
+    { label: 'Input', type: 'text' },
+  ],
+}: DiagnosisModalProps) {
   const {
     register,
     handleSubmit,
