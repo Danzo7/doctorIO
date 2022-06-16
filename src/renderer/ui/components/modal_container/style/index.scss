@@ -1,0 +1,24 @@
+@use '~styles/appColors' as *;
+.modal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 15px;
+    background: $secondarycolor;
+    border-radius: 7px;
+    gap: 20px;
+
+    > .inputs-container {
+        flex-grow: 1;
+        align-self: stretch;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+    }
+    >.control{
+        display: flex;
+        gap: 10px;
+        justify-content: center;    }
+}
