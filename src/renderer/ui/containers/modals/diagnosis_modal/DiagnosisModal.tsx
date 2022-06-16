@@ -31,7 +31,7 @@ export default function DiagnosisModal({
   console.log(errors);
   return (
     <div className="diagnosis-modal">
-      <Header title="Diagnosis" buttonNode={<SquareIconButton />} />
+      <Header title="Diagnosis" />
       <div className="diagnosis-inputs-container">
         {inputArray.map(({ label, type }, index) => (
           <div className="input-width" key={index}>
