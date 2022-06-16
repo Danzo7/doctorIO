@@ -4,11 +4,11 @@ import { ClassAttributes, FormHTMLAttributes, ReactNode } from 'react';
 import './style/index.scss';
 
 interface ModalContainerProps {
-  title: string;
+  title?: string;
 
   onSubmit?: React.FormEventHandler<HTMLFormElement>;
   controls?: ReactNode;
-  children: ReactNode;
+  children?: ReactNode;
 }
 const Form = (
   props: ClassAttributes<HTMLFormElement> &
