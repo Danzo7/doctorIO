@@ -6,12 +6,13 @@ import InputWrapper from '../input_wrapper';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import Calendar from 'toSvg/calendar.svg?icon';
 import Arrow from 'toSvg/arrow.svg?icon';
+import Input from '../input';
 export default function Datepicker({
   onChange,
   ...props
 }: ComponentProps<typeof DatePickerReact>) {
   return (
-    <InputWrapper trailing={<Calendar />}>
+    <Input type={'text'} trailing={<Calendar />}>
       <DatePickerReact
         calendarContainer={({ children }) => (
           <div className="datepicker">{children}</div>
@@ -47,6 +48,6 @@ export default function Datepicker({
         }}
         {...props}
       />
-    </InputWrapper>
+    </Input>
   );
 }
