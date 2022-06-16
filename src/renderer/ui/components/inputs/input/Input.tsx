@@ -45,7 +45,8 @@ interface InputProps {
   children?: ReactNode;
   placeholder?: string;
   fillContainer?: true;
-  grow?: true;
+  inputFill?: true;
+  grow?: boolean;
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
 }
 export default forwardRef(function Input(
@@ -59,6 +60,7 @@ export default forwardRef(function Input(
     trailing,
     children,
     fillContainer,
+    inputFill,
     grow = true,
     hintAlignment,
 
@@ -79,7 +81,7 @@ export default forwardRef(function Input(
     >
       {(type as NumericInput)?.type == 'numeric' ? (
         <NumberInput
-          fillContainer={fillContainer}
+          fillContainer={inputFill ?? fillContainer}
           errorMessage={errorMsg}
           step={(type as NumericInput)?.step}
           unit={(type as NumericInput)?.unit}
