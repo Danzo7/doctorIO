@@ -15,7 +15,16 @@ export default function RecentAppsItem({ fullName, age }: RecentAppsItemProps) {
         text="Run diagnosis..."
         backgroundColor={color.cold_blue}
         radius={7}
-        onPress={() => open(<DiagnosisModal />, {})}
+        onPress={() =>
+          open(<DiagnosisModal />, {
+            closeOnClickOutside: true,
+            isDimmed: true,
+            clickThrough: false,
+            position: { top: '30%' },
+            width: '30%',
+            closeBtn: 'inner',
+          })
+        }
       />
       <TextButton text="Add" backgroundColor={color.good_green} radius={7} />
     </PresentationItem>

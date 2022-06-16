@@ -27,7 +27,8 @@ export default function SearchProfile({ imgSrc }: SearchProfileProps) {
               isDimmed: true,
               clickThrough: false,
               position: { top: '30%' },
-              width: '50%',
+              width: '30%',
+              closeBtn: 'inner',
             })
           }
         />
