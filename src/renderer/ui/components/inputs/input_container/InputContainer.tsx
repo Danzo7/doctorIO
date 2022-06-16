@@ -6,6 +6,7 @@ interface InputContainerProps {
   errorMessage?: string;
   hint?: string;
   fillContainer?: true;
+  grow?: true;
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
 }
 export default function InputContainer({
@@ -15,10 +16,11 @@ export default function InputContainer({
   children,
   fillContainer,
   hintAlignment,
+  grow,
 }: InputContainerProps) {
   return (
     <div
-      css={{ width: fillContainer ? '100%' : undefined }}
+      css={{ width: fillContainer ? '100%' : undefined, flexGrow: grow && 1 }}
       className={`input-container${errorMessage ? ' error' : ''}`}
     >
       <>
