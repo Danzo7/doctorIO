@@ -8,22 +8,7 @@
   border-radius: 7px;
   gap: 20px;
 
-  > .diagnosis-header {
-    display: flex;
-    flex-direction: row;
-    align-content: stretch;
-    justify-content: space-between;
-    flex-grow: 1;
-    align-self: stretch;
-
-    > span {
-      font-weight: 500;
-      font-size: 21px;
-      color: $white;
-    }
-  }
-
-  > .diagnosis-inputs-container {
+  > .container {
     flex-grow: 1;
     align-self: stretch;
     display: flex;
@@ -31,10 +16,5 @@
     flex-wrap: wrap;
     gap: 15px;
     justify-content: center;
-
-    > .input-width {
-      width: 30%;
-      min-width: 200px;
-    }
   }
 }
