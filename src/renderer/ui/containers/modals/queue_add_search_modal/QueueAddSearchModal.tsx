@@ -72,7 +72,6 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
               closeOnClickOutside: true,
               isDimmed: true,
               clickThrough: false,
-              position: { top: '30%' },
               width: '30%',
               closeBtn: 'inner',
             });

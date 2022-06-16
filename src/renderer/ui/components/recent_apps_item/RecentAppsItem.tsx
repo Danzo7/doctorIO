@@ -20,7 +20,6 @@ export default function RecentAppsItem({ fullName, age }: RecentAppsItemProps) {
             closeOnClickOutside: true,
             isDimmed: true,
             clickThrough: false,
-            position: { top: '30%' },
             width: '30%',
             closeBtn: 'inner',
           })
