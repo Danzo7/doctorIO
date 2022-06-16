@@ -1,6 +1,6 @@
 import AppointmentHistoryPanel from '@components/appointment_history_panel';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import MedicalHistory from '@components/medical_session/medical_session_side_bar/medical_history';
+import MedicalHistory from '@components/medical_history';
 import PreviewInfo from '@components/preview_info';
 import './style/index.scss';
 

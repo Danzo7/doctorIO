@@ -1,6 +1,5 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import Header from '@components/header';
-import TableDemo from '@components/table_demo';
 import MedicamentTable from './medicament_table';
 
 import './style/index.scss';

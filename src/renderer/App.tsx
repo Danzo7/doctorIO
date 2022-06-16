@@ -4,7 +4,7 @@ import AppContent from '@containers/AppContent';
 import AppSidebar from '@containers/AppSidebar';
 import { OverlayContainer } from '@libs/overlay';
 import { Route, Routes } from 'react-router-dom';
-import MedicalSession from '@components/medical_session';
+import MedicalSession from '@layers/medical_session';
 
 interface AppProps {}
 

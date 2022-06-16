@@ -7,7 +7,7 @@ import './style/index.scss';
 import Input from '@components/inputs/input';
 import Header from '@components/header';
 import useSearchPatient from '@libs/hooks/useSearchPatient';
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 interface QueueAddSearchModalProps {}
 interface SearchInput {

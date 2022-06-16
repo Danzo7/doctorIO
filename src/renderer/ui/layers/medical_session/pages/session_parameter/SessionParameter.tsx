@@ -4,7 +4,6 @@ import TextButton from '@components/buttons/text_button';
 import ToggleButton from '@components/buttons/toggle_button';
 import Header from '@components/header';
 import Datepicker from '@components/inputs/datepicker';
-import Calendar from 'toSvg/calendar.svg?icon';
 import Input from '@components/inputs/input';
 import MultipleCheckGroup from '@components/inputs/multiple_check_group';
 import { useState } from 'react';

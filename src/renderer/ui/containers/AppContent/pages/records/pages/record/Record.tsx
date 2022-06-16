@@ -1,10 +1,10 @@
 import BookingTimeline from '@components/booking_timeline';
 import DocumentPreviewPanel from '@components/document_preview_panel';
 import Input from '@components/inputs/input';
-import MedicalHistory from '@components/medical_session/medical_session_side_bar/medical_history';
 import PatientCard from '@components/patient_card';
 import MiniPatientCard from '@components/patient_card/mini_patient_card';
 import RecordInfoItem from '@components/record_info_item';
+import MedicalHistory from '@components/medical_history';
 import useNavigation from '@libs/hooks/useNavigation';
 import useSearchPatient from '@libs/hooks/useSearchPatient';
 import { useForm } from 'react-hook-form';
