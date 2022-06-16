@@ -5,20 +5,51 @@ import Svg from '@libs/svg';
 import { IconType, PressHandler } from '@components/buttons/text_button';
 import TooltipItem from '@components/poppers/tooltip/tooltip_item';
 import { color } from '@assets/styles/color';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 interface AddRoleTooltipProps {
-  actionList: ActionProps[];
+  actionList: RoleProps[];
 }
-type ActionProps = {
+interface SearchInput {
+  searchField: string;
+}
+type RoleProps = {
   text: string;
   Icon?: IconType;
   onPress?: PressHandler;
 };
 export default function AddRoleTooltip({ actionList }: AddRoleTooltipProps) {
+  const { register, watch } = useForm<SearchInput>();
+  const watchSearch = watch('searchField', '');
+  const searchRoles = () => {
+    let matches: any[] = [];
+    if (
+      watchSearch &&
+      watchSearch.length > 0 &&
+      watchSearch.trim().length > 0
+    ) {
+      matches = actionList?.filter((role) => {
+        const regex = new RegExp(`${watchSearch}`, 'gi');
+        if (role.text.match(regex)) return role;
+      });
+      return matches;
+    } else return actionList;
+  };
+
   return (
     <div className="add-role-tooltip">
-      <Input trailing={<Svg>{search}</Svg>} type={'search'} />
-      {actionList?.map(({ text, Icon, onPress }, index) => (
+      <Input
+        {...register('searchField')}
+        trailing={<Svg>{search}</Svg>}
+        type={'search'}
+        hint={
+          watchSearch.length > 0 && searchRoles().length == 0
+            ? 'Role not found'
+            : undefined
+        }
+      />
+      {searchRoles()?.map(({ text, Icon, onPress }, index) => (
         <TooltipItem
           key={index}
           text={text}
