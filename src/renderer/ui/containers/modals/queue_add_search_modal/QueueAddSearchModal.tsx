@@ -1,4 +1,3 @@
-import SquareIconButton from '@components/buttons/square_icon_button';
 import RecentAppsItem from '@components/recent_apps_item';
 import Svg from '@libs/svg';
 import search from 'toSvg/search.svg?icon';
@@ -42,8 +41,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
 
   return (
     <div className="queue-add-search-modal">
-      <Header buttonNode={<SquareIconButton />} />
-      <span>Add a Patient to appointment queue</span>
+      <Header title="Add a Patient to appointment queue" />
       <form>
         <Input
           hint={
@@ -59,12 +57,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
         />
       </form>
 
-      <div className="suggestions-container">
-        {matches?.map(({ fullName, age }, index) => (
-          <RecentAppsItem fullName={fullName} age={age} key={index} />
-        ))}
-      </div>
-      {matches?.length == 0 && (
+      {matches?.length == 0 ? (
         <TextButton
           text="Add new patient"
           backgroundColor={color.lighter_background}
@@ -73,6 +66,12 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
           fontWeight={700}
           borderColor={color.border_color}
         />
+      ) : (
+        <div className="suggestions-container">
+          {matches?.map(({ fullName, age }, index) => (
+            <RecentAppsItem fullName={fullName} age={age} key={index} />
+          ))}
+        </div>
       )}
     </div>
   );
