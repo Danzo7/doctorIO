@@ -8,6 +8,8 @@ import Header from '@components/header';
 import useSearchPatient from '@libs/hooks/useSearchPatient';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import AddPatientModal from '../add_patient_modal';
 interface QueueAddSearchModalProps {}
 interface SearchInput {
   searchField: string;
@@ -38,7 +40,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const { register, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField', '');
   const matches = useSearchPatient(watchSearch, usersData, true);
-
+  const { open } = useOverlay();
   return (
     <div className="queue-add-search-modal">
       <Header title="Add a Patient to appointment queue" />
@@ -65,6 +67,16 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
           fontSize={13}
           fontWeight={700}
           borderColor={color.border_color}
+          onPress={() => {
+            open(<AddPatientModal />, {
+              closeOnClickOutside: true,
+              isDimmed: true,
+              clickThrough: false,
+              position: { top: '30%' },
+              width: '30%',
+              closeBtn: 'inner',
+            });
+          }}
         />
       ) : (
         <div className="suggestions-container">
