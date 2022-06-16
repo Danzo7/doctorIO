@@ -39,10 +39,14 @@ export interface OverlayOptions {
   popperTarget?: HTMLElement | PopperTargetType;
   closeMethod?: () => void;
   //draggable?: boolean;
-  closeBtn?: {
-    placement: 'inner' | 'outer' | 'above';
-    component?: ReactNode;
-  };
+  closeBtn?:
+    | 'inner'
+    | 'outer'
+    | 'above'
+    | {
+        placement: 'inner' | 'outer' | 'above';
+        component: ReactNode;
+      };
   transition?: 'zoom' | 'appear-right' | 'appear-left' | 'appear-top';
 }
 type OverlayItemProps = OverlayOptions & {
@@ -124,9 +128,15 @@ export function OverlayItem({
         }}
       >
         {closeBtn && (
-          <div className={`close-btn ${closeBtn.placement}`}>
-            {closeBtn.component ?? (
+          <div
+            className={`close-btn ${
+              typeof closeBtn == 'string' ? closeBtn : closeBtn.placement
+            }`}
+          >
+            {typeof closeBtn == 'string' ? (
               <SquareIconButton onPress={() => closeOverlay()} />
+            ) : (
+              closeBtn.placement
             )}
           </div>
         )}
