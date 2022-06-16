@@ -1,0 +1,51 @@
+@use '~styles/appColors' as *;
+.member-big-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    background: $secondarycolor;
+    border: 1px solid $bordercolor;
+    border-radius: 7px;
+    max-width: 300px;
+
+    > .fullName-id-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        > span {
+            font-weight: 700;
+            font-size: 18px;
+            color: $white;
+        }
+    }
+    > .role-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        > span {
+            font-weight: 600;
+            font-size: 15px;
+            color:$textgray
+        }
+        > .role-array {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            max-width: 180px;
+        }
+    }
+    > .bottom-controls  {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1vw;
+    }
+}

@@ -1,7 +1,6 @@
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import Header from '@components/header';
 import Input from '@components/inputs/input';
-import RecentAppsItem from '@components/recent_apps_item';
 import useSearchPatient from '@libs/hooks/useSearchPatient';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';

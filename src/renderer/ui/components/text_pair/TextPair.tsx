@@ -3,14 +3,21 @@ interface TextPairProps {
   first: string | { text: string; fontSize: number; fontColor?: string };
   second: string | { text: string; fontSize: number; fontColor?: string };
   reversed?: true;
+  alignItems?: 'flex-start' | 'flex-end' | 'center';
 }
-export default function TextPair({ first, second, reversed }: TextPairProps) {
+export default function TextPair({
+  first,
+  second,
+  reversed,
+  alignItems,
+}: TextPairProps) {
   return (
     <div
       css={{
         display: 'flex',
         gap: 5,
         flexDirection: reversed ? 'column-reverse' : 'column',
+        alignItems: alignItems,
       }}
     >
       <span
