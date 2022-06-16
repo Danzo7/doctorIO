@@ -1,0 +1,18 @@
+@use '~styles/appColors' as *;
+.add-selected-to-queue-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    padding: 10px 20px 20px;
+    background: $secondarycolor;
+    border-radius: 7px;
+    gap: 10px;
+    max-width: 500px;
+
+    > span {
+        font-weight: 600;
+        font-size: 21px;
+        align-self: flex-start;
+    }
+}
