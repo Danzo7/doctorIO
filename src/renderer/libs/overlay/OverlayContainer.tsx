@@ -43,6 +43,7 @@ export interface OverlayOptions {
     placement: 'inner' | 'outer' | 'above';
     component?: ReactNode;
   };
+  transition?: 'zoom' | 'appear-right' | 'appear-left' | 'appear-top';
 }
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
@@ -60,6 +61,7 @@ export function OverlayItem({
   closeOnBlur,
   closeMethod,
   position,
+  transition = 'zoom',
 }: OverlayItemProps) {
   const closeOverlay = () => (closeMethod ? closeMethod() : Overlay.close());
 
@@ -90,6 +92,7 @@ export function OverlayItem({
           bottom: position?.bottom,
           left: position?.left,
           right: position?.right,
+          animation: transition && `${transition} .1s forwards ease-out`,
         }}
         tabIndex={-1}
         onBlur={

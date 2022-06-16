@@ -31,7 +31,6 @@
       align-items: center;
     }
     > .layer {
-      padding: 2vh 1vw;
       display: flex;
       flex-direction: column;
       z-index: 1;
@@ -49,6 +48,30 @@
           position: static;
           margin-right: -25px;
         }
+      }
+      @keyframes appear-top {
+        0% {
+          transform: translate(0,-50vh);
+        }
+        100% { transform: translate(0,0); }
+      }
+      @keyframes appear-left {
+        0% {
+          transform: translate(-50vw,0);
+        }
+        100% { transform: translate(0,0); }
+      }
+      @keyframes appear-right {
+        0% {
+          transform: translate(50vw,0);
+        }
+        100% { transform: translate(0,0); }
+      }
+      @keyframes zoom {
+        0% {
+          transform: scale(0);
+        }
+        100% { transform: translate(1); }
       }
     }
   }
