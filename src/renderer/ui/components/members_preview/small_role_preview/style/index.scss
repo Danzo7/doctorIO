@@ -2,13 +2,15 @@
 .small-roll {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   background: $darkerseccolor;
   border: 1px solid $bordercolor;
   border-radius: 5px;
   width: fit-content;
   height: fit-content;
   padding: 5px;
+  gap: 10px;
+  cursor: pointer;
 
   > span {
     font-style: normal;
@@ -16,5 +18,15 @@
     line-height: 11px;
     font-size: 11px;
     color: $textgray;
+  }
+  > svg {
+    visibility: hidden;
+  }
+
+  &:hover {
+
+    > svg {
+      visibility: visible;
+    }
   }
 }
