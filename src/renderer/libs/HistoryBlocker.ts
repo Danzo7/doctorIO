@@ -59,7 +59,11 @@ export default function usePrompt(
             retry: tx.retry,
           }),
         }),
-        { closeOnClickOutside: true, position: { top: 0 } },
+        {
+          closeOnClickOutside: true,
+          position: { top: 10 },
+          transition: 'appear-top',
+        },
       );
     },
     [open, message, actionList, close],
