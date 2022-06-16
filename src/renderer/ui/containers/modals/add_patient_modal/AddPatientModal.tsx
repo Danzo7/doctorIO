@@ -22,7 +22,7 @@ export default function AddPatientModal({}: AddPatientModalProps) {
   const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData); //TODO? form submit
   return (
     <div className="add-patient-modal">
-      <Header title="New patient" buttonNode={<SquareIconButton />} />
+      <Header title="New patient" />
       <form onSubmit={handleSubmit(onSubmit)} className="inputs-container">
         <div className="input-width">
           <Input
