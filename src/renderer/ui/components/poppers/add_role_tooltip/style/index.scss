@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+.add-role-tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 5px;
+    gap: 10px;
+    background: $goodblack;
+    border-radius: 7px;
+}
