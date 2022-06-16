@@ -13,6 +13,7 @@
     align-self: stretch;
     align-items: center;
     justify-content: center;
+
     input{
       align-self: stretch;
       color: $white;
@@ -23,6 +24,9 @@
       font-size: 14px;
       &::placeholder{ color: $textgray; }
       width: 100%;
+    }
+    input[type=file] {
+      align-self: center;
     }
 
     >*:first-child>.date-content div{
