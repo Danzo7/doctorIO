@@ -1,5 +1,3 @@
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import Header from '@components/header';
 import Input from '@components/inputs/input';
 import useSearchPatient from '@libs/hooks/useSearchPatient';
 import { useForm } from 'react-hook-form';
@@ -8,7 +6,8 @@ import Svg from '@libs/svg';
 import search from 'toSvg/search.svg?icon';
 import PresentationItem from '@components/presentation_item';
 import TextButton from '@components/buttons/text_button';
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
+import ModalContainer from '@components/modal_container';
 
 interface SearchInput {
   searchField: string;
@@ -41,42 +40,41 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
   const watchSearch = watch('searchField', '');
   const matches = useSearchPatient(watchSearch, usersData, false);
   return (
-    <div className="add-search-to-booked">
-      <Header buttonNode={<SquareIconButton />} />
-      <span>Select a patient</span>
-      <form>
-        <Input
-          hint={
-            matches?.length == 0
-              ? 'Can’t find any patient with the same name'
-              : undefined
-          }
-          hintAlignment="center"
-          fillContainer
-          placeholder="search for a patient"
-          trailing={<Svg>{search}</Svg>}
-          type="search"
-          {...register('searchField')}
-        />
-      </form>
-
-      <div className="suggestions-container">
-        {matches?.map(({ fullName, age }, index) => (
-          <PresentationItem
-            primaryText={fullName}
-            secondaryText={age}
-            key={index}
-          >
-            <TextButton
-              text="Select"
-              backgroundColor={color.cold_blue}
-              padding="5px 10px"
-              fontSize={13}
-              fontWeight={600}
-            />
-          </PresentationItem>
-        ))}
+    <ModalContainer title="Select a patient">
+      <div className="add-search-to-booked">
+        <form>
+          <Input
+            hint={
+              matches?.length == 0
+                ? 'Can’t find any patient with the same name'
+                : undefined
+            }
+            hintAlignment="center"
+            fillContainer
+            placeholder="search for a patient"
+            trailing={<Svg>{search}</Svg>}
+            type="search"
+            {...register('searchField')}
+          />
+        </form>
+        <div className="suggestions-container">
+          {matches?.map(({ fullName, age }, index) => (
+            <PresentationItem
+              primaryText={fullName}
+              secondaryText={age}
+              key={index}
+            >
+              <TextButton
+                text="Select"
+                backgroundColor={color.cold_blue}
+                padding="5px 10px"
+                fontSize={13}
+                fontWeight={600}
+              />
+            </PresentationItem>
+          ))}
+        </div>
       </div>
-    </div>
+    </ModalContainer>
   );
 }

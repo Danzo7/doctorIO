@@ -4,14 +4,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    padding: 10px 20px 20px;
     gap: 10px;
-    max-width: 450px;
-    background: $secondarycolor;
-    border-radius: 7px;
-
-    > span {
-        font-weight: 500;
-        font-size: 21px;
-    }
+    align-self: stretch;
+    flex-grow: 1;
 }
