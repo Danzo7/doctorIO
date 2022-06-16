@@ -3,7 +3,6 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ModalContainer from '@components/modal_container';
-import './style/index.scss';
 
 interface Inputs {
   [label: string]: string;
