@@ -18,50 +18,13 @@ type Data = {
   comment: string;
   id: number;
 };
-interface MedicamentTableProps {}
+interface MedicamentTableProps {
+  editable?: true;
+  dataList?: Data[];
+}
 const table = createTable().setRowType<Data>();
-export default function MedicamentTable({}: MedicamentTableProps) {
-  const [sorting, setSorting] = useState<SortingState>([]);
-
-  const columns = useMemo(
-    () => [
-      table.createDataColumn('name', {
-        header: 'Name',
-        footer: (props) => props.column.id,
-      }),
-      table.createDataColumn('qts', {
-        header: 'Qts',
-        footer: (props) => props.column.id,
-      }),
-
-      table.createDataColumn('dose', {
-        header: 'Dose',
-        cell: ({ getValue }) => (getValue() ?? '*') + '/day',
-      }),
-      table.createDataColumn('duration', {
-        header: 'Duration',
-        footer: (props) => props.column.id,
-      }),
-
-      table.createDataColumn('comment', {
-        header: 'Comment',
-        footer: (props) => props.column.id,
-      }),
-
-      table.createDataColumn('id', {
-        header: '',
-        id: 'skip',
-        size: 1,
-        cell: ({ getValue }) => (
-          <div css={{ float: 'right' }}>
-            <DarkLightCornerButton title="Edit" isActive={true} />
-          </div>
-        ),
-      }),
-    ],
-    [],
-  );
-  const [data, setData] = useState<Data[]>([
+export default function MedicamentTable({
+  dataList = [
     {
       name: 'aymen',
       qts: 15,
@@ -118,7 +81,57 @@ export default function MedicamentTable({}: MedicamentTableProps) {
       comment: 'dont die',
       id: 3,
     },
-  ]);
+  ],
+  editable,
+}: MedicamentTableProps) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const columns = useMemo(
+    () =>
+      [
+        table.createDataColumn('name', {
+          header: 'Name',
+          footer: (props) => props.column.id,
+        }),
+        table.createDataColumn('qts', {
+          header: 'Qts',
+          footer: (props) => props.column.id,
+        }),
+
+        table.createDataColumn('dose', {
+          header: 'Dose',
+          cell: ({ getValue }) => (getValue() ?? '*') + '/day',
+        }),
+        table.createDataColumn('duration', {
+          header: 'Duration',
+          footer: (props) => props.column.id,
+        }),
+
+        table.createDataColumn('comment', {
+          header: 'Comment',
+          footer: (props) => props.column.id,
+        }),
+
+        !!editable &&
+          table.createDataColumn('id', {
+            header: '',
+            id: 'skip',
+            size: 1,
+            cell: ({ getValue }) => (
+              <div css={{ float: 'right' }}>
+                <DarkLightCornerButton
+                  title="Edit"
+                  isActive={true}
+                  onPress={() => {
+                    //todo:Open editDrugModal(getValue())
+                  }}
+                />
+              </div>
+            ),
+          }),
+      ].filter(Boolean) as any,
+    [editable],
+  );
+  const [data, setData] = useState<Data[]>(dataList);
   const instance = useTableInstance(table, {
     data,
     columns,
