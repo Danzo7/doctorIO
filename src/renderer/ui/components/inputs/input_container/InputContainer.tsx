@@ -6,6 +6,7 @@ interface InputContainerProps {
   errorMessage?: string;
   hint?: string;
   fillContainer?: true;
+  hintAlignment?: 'flex-end' | 'flex-start' | 'center';
 }
 export default function InputContainer({
   label,
@@ -13,6 +14,7 @@ export default function InputContainer({
   hint,
   children,
   fillContainer,
+  hintAlignment,
 }: InputContainerProps) {
   return (
     <div
@@ -25,7 +27,7 @@ export default function InputContainer({
         {errorMessage ? (
           <span>{errorMessage}</span>
         ) : (
-          hint && <span>{hint}</span>
+          hint && <span css={{ alignSelf: hintAlignment }}>{hint}</span>
         )}
       </>
     </div>

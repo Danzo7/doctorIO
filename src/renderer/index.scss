@@ -15,10 +15,16 @@
 li {
   list-style-type: none;
 }
+// removed stuff from Input
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+input[type=file]::-webkit-file-upload-button {
+  display: none;
+}
+
 :root {
   --cold-red: #ff4b59;
   --background: #23315e;

@@ -45,6 +45,7 @@ interface InputProps {
   children?: ReactNode;
   placeholder?: string;
   fillContainer?: true;
+  hintAlignment?: 'flex-end' | 'flex-start' | 'center';
 }
 export default forwardRef(function Input(
   {
@@ -57,6 +58,7 @@ export default forwardRef(function Input(
     trailing,
     children,
     fillContainer,
+    hintAlignment,
 
     ...others
   }: InputProps & FormHookProps,
@@ -69,6 +71,7 @@ export default forwardRef(function Input(
       fillContainer={fillContainer}
       errorMessage={errorMsg}
       hint={hint}
+      hintAlignment={hintAlignment}
       label={label}
     >
       {(type as NumericInput)?.type == 'numeric' ? (
