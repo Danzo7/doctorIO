@@ -9,8 +9,8 @@
   width: fit-content;
   height: fit-content;
   padding: 5px;
-  gap: 10px;
   cursor: pointer;
+  gap:2px;
 
   > span {
     font-style: normal;
@@ -24,7 +24,11 @@
   }
 
   &:hover {
+    background: $hotred;
 
+    >span{
+      color: $white;
+    }
     > svg {
       visibility: visible;
     }
