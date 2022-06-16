@@ -2,7 +2,6 @@
 .medical-session {
     display: flex;
     flex-direction: row;
-    padding: 20px;
     align-self: stretch;
     gap: 30px;
     flex-grow: 1;
@@ -14,10 +13,11 @@
         gap: 20px;
         align-self: stretch;
         flex-grow: 1;
+        overflow-y: auto;
 
         > span {
             font-weight: 600;
-            font-size: 21px;
+            font-size: 20px;
             color: $white;
         }
     }
