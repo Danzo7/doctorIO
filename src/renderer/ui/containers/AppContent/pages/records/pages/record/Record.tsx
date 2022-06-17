@@ -158,6 +158,7 @@ export default function Record({}: RecordProps) {
         trailing={<Search />}
         type={'search'}
         {...register('searchField')}
+        grow={false}
       />
       {matches ? (
         matches.length > 0 ? (
