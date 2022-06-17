@@ -40,23 +40,9 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
   const watchSearch = watch('searchField', '');
   const matches = useSearchPatient(watchSearch, usersData, false);
   return (
-    <ModalContainer title="Select a patient">
-      <div className="add-search-to-booked">
-        <form>
-          <Input
-            hint={
-              matches?.length == 0
-                ? 'Can’t find any patient with the same name'
-                : undefined
-            }
-            hintAlignment="center"
-            fillContainer
-            placeholder="search for a patient"
-            trailing={<Svg>{search}</Svg>}
-            type="search"
-            {...register('searchField')}
-          />
-        </form>
+    <ModalContainer
+      title="Select a patient"
+      controls={
         <div className="suggestions-container">
           {matches?.map(({ fullName, age }, index) => (
             <PresentationItem
@@ -74,7 +60,21 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
             </PresentationItem>
           ))}
         </div>
-      </div>
+      }
+    >
+      <Input
+        hint={
+          matches?.length == 0
+            ? 'Can’t find any patient with the same name'
+            : undefined
+        }
+        hintAlignment="center"
+        fillContainer
+        placeholder="search for a patient"
+        trailing={<Svg>{search}</Svg>}
+        type="search"
+        {...register('searchField')}
+      />
     </ModalContainer>
   );
 }

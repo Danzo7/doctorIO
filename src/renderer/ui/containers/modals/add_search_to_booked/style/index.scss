@@ -1,8 +1,8 @@
 @use '~styles/appColors' as *;
-.add-search-to-booked {
+
+.suggestions-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: stretch;
     gap: 10px;
     align-self: stretch;
