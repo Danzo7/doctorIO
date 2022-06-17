@@ -9,6 +9,7 @@ interface ModalContainerProps {
   onSubmit?: React.FormEventHandler<HTMLFormElement>;
   controls?: ReactNode;
   children?: ReactNode;
+  gap?: number;
 }
 const Form = (
   props: ClassAttributes<HTMLFormElement> &
@@ -28,11 +29,16 @@ export default function ModalContainer({
   children,
   onSubmit,
   controls,
+  gap = 20,
 }: ModalContainerProps) {
   const Container = onSubmit ? Form : Div;
 
   return (
-    <Container className="modal-container" onSubmit={onSubmit as any}>
+    <Container
+      className="modal-container"
+      css={{ gap: gap }}
+      onSubmit={onSubmit as any}
+    >
       <Header title={title} />
       <div className="inputs-container">{children}</div>
       {controls && <div className="control">{controls}</div>}
