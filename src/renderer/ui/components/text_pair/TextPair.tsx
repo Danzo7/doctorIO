@@ -3,7 +3,7 @@ interface TextPairProps {
   first: string | { text: string; fontSize: number; fontColor?: string };
   second:
     | string
-    | { text: string; fontSize: number; fontColor?: string; border?: string };
+    | { text: string; fontSize: number; fontColor?: string; border?: boolean };
   reversed?: true;
   alignItems?: 'flex-start' | 'flex-end' | 'center';
   flexGrow?: true;
@@ -44,11 +44,13 @@ export default function TextPair({
           color:
             typeof second != 'string' ? second?.fontColor : color.text_gray,
           border:
-            typeof second != 'string'
+            typeof second != 'string' && second.border
               ? `1px solid ${color.border_color}`
               : undefined,
-          padding: typeof second != 'string' ? '5px 10px' : undefined,
-          borderRadius: typeof second != 'string' ? 7 : undefined,
+          padding:
+            typeof second != 'string' && second.border ? '5px 10px' : undefined,
+          borderRadius:
+            typeof second != 'string' && second.border ? 7 : undefined,
         }}
       >
         {typeof second == 'string' ? second : second.text}

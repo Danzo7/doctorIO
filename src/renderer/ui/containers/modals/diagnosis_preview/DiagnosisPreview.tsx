@@ -26,6 +26,7 @@ export default function DiagnosisPreview({ data }: DiagnosisPreviewProps) {
               text: secondText,
               fontSize: 15,
               fontColor: color.text_gray,
+              border: true,
             }}
             flexGrow
             minWidth={150}
