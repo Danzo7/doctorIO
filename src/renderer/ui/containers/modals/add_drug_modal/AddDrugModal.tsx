@@ -44,13 +44,11 @@ export default function AddDrugModal({ onAdd }: AddDrugModalProps) {
         {...register('duration')}
         label="Duration"
         type={{ type: 'numeric', min: 1, step: 1, unit: 'Day' }}
-        inputFill
       />
       <Input
         {...register('qts')}
         label="Qts"
         type={{ type: 'numeric', min: 1, step: 1, unit: '' }}
-        inputFill
       />
       <Input
         {...register('comment', {})}

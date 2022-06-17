@@ -2,7 +2,6 @@ import './style/index.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePickerReact from 'react-datepicker';
 import { ComponentProps } from 'react';
-import InputWrapper from '../input_wrapper';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import Calendar from 'toSvg/calendar.svg?icon';
 import Arrow from 'toSvg/arrow.svg?icon';
