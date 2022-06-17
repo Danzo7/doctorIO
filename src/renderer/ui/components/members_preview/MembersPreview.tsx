@@ -30,6 +30,11 @@ function MembersPreview({
       return [...prev, text];
     });
   };
+  const deleteRole = (text: string) => {
+    setRoles((prev) => {
+      return prev.filter((roleText) => roleText != text);
+    });
+  };
   return (
     <div
       className={`preview-container${
@@ -47,7 +52,13 @@ function MembersPreview({
           <span>{fullName}</span>
           <div className="roll-container">
             {roles.map((rollName, index) => (
-              <SmallRolePreview roleName={rollName} key={index} />
+              <SmallRolePreview
+                roleName={rollName}
+                key={index}
+                onClick={() => {
+                  deleteRole(rollName);
+                }}
+              />
             ))}
 
             <DarkAddButton
