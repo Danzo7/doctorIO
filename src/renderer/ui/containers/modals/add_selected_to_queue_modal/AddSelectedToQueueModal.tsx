@@ -1,5 +1,4 @@
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import Header from '@components/header';
+import ModalContainer from '@components/modal_container';
 import RecentAppsItem from '@components/recent_apps_item';
 import './style/index.scss';
 interface AddSelectedToQueueModalProps {
@@ -11,10 +10,10 @@ export default function AddSelectedToQueueModal({
   age,
 }: AddSelectedToQueueModalProps) {
   return (
-    <div className="add-selected-to-queue-modal">
-      <Header buttonNode={<SquareIconButton />} />
-      <span>Add a Patient to appointment queue</span>
-      <RecentAppsItem fullName={fullName} age={age} />
-    </div>
+    <ModalContainer
+      gap={10}
+      title="Add a Patient to appointment queue"
+      controls={<RecentAppsItem fullName={fullName} age={age} />}
+    ></ModalContainer>
   );
 }
