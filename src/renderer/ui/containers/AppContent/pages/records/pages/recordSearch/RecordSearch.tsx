@@ -45,6 +45,7 @@ export default function RecordSearch({}: RecordSearchProps) {
         type={'search'}
         hint="You have to select a patient by fullName or Id to access to his medical records"
         {...register('searchField', { min: 5 })}
+        grow={false}
       />
       <div className="records-suggestions-container">
         {matches?.map(({ fullName, id }, index) => (
