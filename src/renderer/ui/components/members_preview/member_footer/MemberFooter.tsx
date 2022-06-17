@@ -31,7 +31,7 @@ function MemberFooter({ memberID, status }: MemberFooterProps) {
           afterBgColor={colors.secondary_color}
           width={40}
           iconSize={15}
-          onPress={(e) => {
+          onPress={() => {
             open(
               <MemberBigCard
                 fullName="Aymen Daouadji"
@@ -48,10 +48,9 @@ function MemberFooter({ memberID, status }: MemberFooterProps) {
               />,
               {
                 closeOnClickOutside: true,
+                isDimmed: true,
                 clickThrough: false,
-                width: '30%',
-                closeOnBlur: true,
-                popperTarget: e?.currentTarget,
+                closeBtn: 'inner',
               },
             );
           }}
