@@ -9,7 +9,7 @@ import Tooltip from '@components/poppers/tooltip';
 interface BookedItemProps {
   name: string;
   bookTime: string;
-  state: 'panding' | 'in queue'; //This will force ts to accept only those values with their types.
+  state: 'panding' | 'in queue';
 }
 function BookedItem({ name, bookTime, state }: BookedItemProps) {
   const { open } = useOverlay();
