@@ -1,5 +1,3 @@
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import Header from '@components/header';
 import ModalContainer from '@components/modal_container';
 import { ReactNode } from 'react';
 import './style/index.scss';
