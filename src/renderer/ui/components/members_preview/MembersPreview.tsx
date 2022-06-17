@@ -5,6 +5,8 @@ import UpArrow from 'toSvg/arrow.svg?icon';
 import SmallRolePreview from './small_role_preview';
 import MemberFooter from './member_footer';
 import DarkAddButton from '@components/buttons/dark_add_button';
+import AddRoleTooltip from '@components/poppers/add_role_tooltip';
+import { useOverlay } from '@libs/overlay/useOverlay';
 interface MembersPreviewProps {
   fullName: string;
   memberID: string;
@@ -20,7 +22,14 @@ function MembersPreview({
   roleArray,
 }: MembersPreviewProps) {
   const [hideFooter, setHideFooter] = useState(true);
-  const addRole = () => {};
+  const { open } = useOverlay();
+  const [roles, setRoles] = useState(roleArray);
+
+  const addRole = (text: string) => {
+    setRoles((prev) => {
+      return [...prev, text];
+    });
+  };
   return (
     <div
       className={`preview-container${
@@ -37,11 +46,42 @@ function MembersPreview({
         <div className="info-container">
           <span>{fullName}</span>
           <div className="roll-container">
-            {roleArray.map((rollName, index) => (
+            {roles.map((rollName, index) => (
               <SmallRolePreview roleName={rollName} key={index} />
             ))}
 
-            <DarkAddButton />
+            <DarkAddButton
+              onPress={(e) => {
+                open(
+                  <AddRoleTooltip
+                    actionList={[
+                      {
+                        text: 'Cool',
+                        onPress: addRole,
+                      },
+                      {
+                        text: 'Owener',
+                        onPress: addRole,
+                      },
+                      {
+                        text: 'Support',
+                        onPress: addRole,
+                      },
+                      {
+                        text: 'Pan Legends',
+                        onPress: addRole,
+                      },
+                    ]}
+                  />,
+                  {
+                    closeOnClickOutside: true,
+                    clickThrough: true,
+                    closeOnBlur: true,
+                    popperTarget: e?.currentTarget,
+                  },
+                );
+              }}
+            />
           </div>
         </div>
         <div
