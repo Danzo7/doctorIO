@@ -1,25 +1,13 @@
 @use '~styles/appColors' as *;
-.book-appointment-modal {
+.book-appointment-info {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     align-items: stretch;
-    padding: 10px 20px;
+    flex-grow: 1;
+    border-right: 1px solid $bordercolor;
+    border: 1px solid $bordercolor;
+    border-radius: 17px;
+    box-sizing: border-box;
+    padding: 10px;
     gap: 10px;
-    background:$secondarycolor;
-    border-radius: 7px;
-    max-width: 375px;
-
-    > .book-appointment-info {
-        display: flex;
-        flex-direction: row;
-        align-items: stretch;
-        justify-content: space-between;
-        flex-grow: 1;
-        border-right: 1px solid $bordercolor;
-        border: 1px solid $bordercolor;
-        border-radius: 17px;
-        box-sizing: border-box;
-        padding: 10px;
-    }
 }

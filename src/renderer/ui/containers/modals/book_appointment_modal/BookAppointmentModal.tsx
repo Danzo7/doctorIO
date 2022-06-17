@@ -1,14 +1,11 @@
 import BorderSeparator from '@components/border_separator';
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import Header from '@components/header';
-import Calendar from 'toSvg/calendar.svg?icon';
-import Input from '@components/inputs/input';
 import TextPair from '@components/text_pair/TextPair';
 import './style/index.scss';
 import TextButton, { PressHandler } from '@components/buttons/text_button';
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import { useState } from 'react';
 import Datepicker from '@components/inputs/datepicker';
+import ModalContainer from '@components/modal_container';
 interface BookAppointmentModalProps {
   patientName: string;
   id: string;
@@ -26,8 +23,20 @@ export default function BookAppointmentModal({
   };
 
   return (
-    <div className="book-appointment-modal">
-      <Header title="Book an appointment" buttonNode={<SquareIconButton />} />
+    <ModalContainer
+      title="Book an appointment"
+      controls={
+        <TextButton
+          text="Create"
+          backgroundColor={color.good_green}
+          width="fit-content"
+          alignSelf="center"
+          padding={'5px 10px'}
+          fontSize={12}
+          onPress={onCreate}
+        />
+      }
+    >
       <div className="book-appointment-info">
         <TextPair first={patientName} second={`#${id}`} />
         <BorderSeparator direction="vertical" />
@@ -37,15 +46,6 @@ export default function BookAppointmentModal({
           dateFormat="EEEE, dd MMM"
         />
       </div>
-      <TextButton
-        text="Create"
-        backgroundColor={color.good_green}
-        width="fit-content"
-        alignSelf="center"
-        padding={'5px 10px'}
-        fontSize={12}
-        onPress={onCreate}
-      />
-    </div>
+    </ModalContainer>
   );
 }
