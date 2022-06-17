@@ -12,7 +12,6 @@ export default function DarkAddButton({ onPress }: DarkAddButtonProps) {
       padding={5}
       width={'fit-content'}
       borderColor={color.border_color}
-      backgroundColor={color.darkersec_color}
       Icon={<Add height={11} />}
       onPress={onPress}
     />
