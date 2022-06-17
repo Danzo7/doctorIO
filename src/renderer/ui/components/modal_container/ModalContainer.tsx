@@ -35,7 +35,7 @@ export default function ModalContainer({
     <Container className="modal-container" onSubmit={onSubmit as any}>
       <Header title={title} />
       <div className="inputs-container">{children}</div>
-      <div className="control">{controls}</div>
+      {controls && <div className="control">{controls}</div>}
     </Container>
   );
 }
