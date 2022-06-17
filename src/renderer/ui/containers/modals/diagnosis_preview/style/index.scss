@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+
+.info-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    flex-grow: 1;
+    align-self: stretch;
+}
