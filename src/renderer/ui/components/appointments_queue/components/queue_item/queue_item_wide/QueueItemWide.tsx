@@ -7,6 +7,8 @@ import colors from '@colors';
 import invite from 'toSvg/enter.svg?icon';
 import view from 'toSvg/view_test.svg?icon';
 import TextIconButton from '@components/buttons/text_icon_button';
+import DiagnosisPreview from '@containers/modals/diagnosis_preview';
+import { useOverlay } from '@libs/overlay/useOverlay';
 interface QueueItemWideProps {
   name: string;
   timeAgo: string;
@@ -24,6 +26,7 @@ function QueueItemWide({
   state,
   width,
 }: QueueItemWideProps) {
+  const { open } = useOverlay();
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
   return (
     <div className="queue-item-wide" css={{ width: width }} onClick={onClose}>
@@ -49,6 +52,27 @@ function QueueItemWide({
             Icon={view}
             text="View tests"
             color={colors.cold_blue}
+            onPress={() => {
+              open(
+                <DiagnosisPreview
+                  data={[
+                    { firstText: 'something', secondText: '11' },
+                    { firstText: 'something', secondText: '11' },
+                    { firstText: 'something', secondText: '11' },
+                    { firstText: 'something', secondText: '11' },
+                    { firstText: 'something', secondText: '11' },
+                    { firstText: 'something', secondText: '11' },
+                  ]}
+                />,
+                {
+                  closeOnClickOutside: true,
+                  isDimmed: true,
+                  clickThrough: false,
+                  width: '30%',
+                  closeBtn: 'inner',
+                },
+              );
+            }}
           />
         </div>
       </div>
