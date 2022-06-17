@@ -2,7 +2,9 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
+import { useOverlay } from '@libs/overlay/useOverlay';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import DiagnosisModal from '../diagnosis_modal';
 
 type Inputs = {
   name: string;
@@ -18,6 +20,7 @@ export default function AddPatientModal({}: AddPatientModalProps) {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData); //TODO? form submit
+  const { open } = useOverlay();
   return (
     <ModalContainer
       title="New patient"
@@ -32,7 +35,15 @@ export default function AddPatientModal({}: AddPatientModalProps) {
             width={'40%'}
             type="button"
             onPress={
-              () => {} //todo:open diagnosisModal
+              () => {
+                open(<DiagnosisModal />, {
+                  closeOnClickOutside: true,
+                  isDimmed: true,
+                  clickThrough: false,
+                  width: '30%',
+                  closeBtn: 'inner',
+                });
+              } //todo:open diagnosisModal
             }
           />
           <TextButton
