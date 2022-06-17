@@ -1,18 +1,30 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import IconicButton from '@components/buttons/iconic_button';
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import TextButton from '@components/buttons/text_button';
-import Header from '@components/header';
 import Input from '@components/inputs/input';
+import ModalContainer from '@components/modal_container';
 import Upload from 'toSvg/link.svg?icon';
-import './style/index.scss';
+
 interface UploadFileModalProps {
   onUpload?: () => void;
 }
 export default function UploadFileModal({ onUpload }: UploadFileModalProps) {
   return (
-    <div className="upload-file-modal">
-      <Header title="Upload a document" buttonNode={<SquareIconButton />} />
+    <ModalContainer
+      title="Upload a document"
+      gap={10}
+      controls={
+        <TextButton
+          text="Upload"
+          backgroundColor={color.good_green}
+          width="fit-content"
+          alignSelf="center"
+          padding={'5px 10px'}
+          fontSize={12}
+          onPress={onUpload} //TODO? upload function
+        />
+      }
+    >
       <Input
         trailing={
           <IconicButton
@@ -25,15 +37,6 @@ export default function UploadFileModal({ onUpload }: UploadFileModalProps) {
         }
         type={'file'}
       />
-      <TextButton
-        text="Upload"
-        backgroundColor={color.good_green}
-        width="fit-content"
-        alignSelf="center"
-        padding={'5px 10px'}
-        fontSize={12}
-        onPress={onUpload} //TODO? upload function
-      />
-    </div>
+    </ModalContainer>
   );
 }
