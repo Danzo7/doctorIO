@@ -4,7 +4,6 @@ import InQueue from 'toSvg/in_queue.svg';
 import threeDots from 'toSvg/threedots.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { color } from '@assets/styles/color';
 import Tooltip from '@components/poppers/tooltip';
 
 interface BookedItemProps {

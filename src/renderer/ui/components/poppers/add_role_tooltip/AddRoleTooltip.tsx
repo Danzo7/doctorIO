@@ -2,10 +2,9 @@ import Input from '@components/inputs/input';
 import './style/index.scss';
 import search from 'toSvg/search.svg?icon';
 import Svg from '@libs/svg';
-import { IconType, PressHandler } from '@components/buttons/text_button';
+import { IconType } from '@components/buttons/text_button';
 import TooltipItem from '@components/poppers/tooltip/tooltip_item';
 import { color } from '@assets/styles/color';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface AddRoleTooltipProps {
@@ -17,7 +16,7 @@ interface SearchInput {
 type RoleProps = {
   text: string;
   Icon?: IconType;
-  onPress?: PressHandler;
+  onPress?: (e: any) => void;
 };
 export default function AddRoleTooltip({ actionList }: AddRoleTooltipProps) {
   const { register, watch } = useForm<SearchInput>();
@@ -55,7 +54,9 @@ export default function AddRoleTooltip({ actionList }: AddRoleTooltipProps) {
           text={text}
           selectedColor={color.secondary_color}
           Icon={Icon}
-          onPress={onPress}
+          onPress={() => {
+            onPress(text);
+          }}
           type={'normal'}
         />
       ))}

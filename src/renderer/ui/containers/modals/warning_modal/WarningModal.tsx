@@ -1,5 +1,4 @@
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import Header from '@components/header';
+import ModalContainer from '@components/modal_container';
 import { ReactNode } from 'react';
 import './style/index.scss';
 interface WarningModalProps {
@@ -13,10 +12,12 @@ export default function WarningModal({
   children,
 }: WarningModalProps) {
   return (
-    <div className="warning-modal">
-      <Header title={warningTitle} buttonNode={<SquareIconButton />} />
-      <span>{warningDescription}</span>
-      <div className="warning-controls">{children}</div>
-    </div>
+    <ModalContainer
+      gap={10}
+      title={warningTitle}
+      controls={<div className="warning-controls">{children}</div>}
+    >
+      <span className="warning-description">{warningDescription}</span>
+    </ModalContainer>
   );
 }

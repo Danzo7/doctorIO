@@ -1,15 +1,21 @@
 import { color } from '@assets/styles/color';
 interface TextPairProps {
   first: string | { text: string; fontSize: number; fontColor?: string };
-  second: string | { text: string; fontSize: number; fontColor?: string };
+  second:
+    | string
+    | { text: string; fontSize: number; fontColor?: string; border?: boolean };
   reversed?: true;
   alignItems?: 'flex-start' | 'flex-end' | 'center';
+  flexGrow?: true;
+  minWidth?: number | string;
 }
 export default function TextPair({
   first,
   second,
   reversed,
   alignItems,
+  flexGrow,
+  minWidth,
 }: TextPairProps) {
   return (
     <div
@@ -18,6 +24,8 @@ export default function TextPair({
         gap: 5,
         flexDirection: reversed ? 'column-reverse' : 'column',
         alignItems: alignItems,
+        flexGrow: flexGrow ? 1 : 0,
+        minWidth: minWidth,
       }}
     >
       <span
@@ -35,6 +43,14 @@ export default function TextPair({
           fontWeight: 500,
           color:
             typeof second != 'string' ? second?.fontColor : color.text_gray,
+          border:
+            typeof second != 'string' && second.border
+              ? `1px solid ${color.border_color}`
+              : undefined,
+          padding:
+            typeof second != 'string' && second.border ? '5px 10px' : undefined,
+          borderRadius:
+            typeof second != 'string' && second.border ? 7 : undefined,
         }}
       >
         {typeof second == 'string' ? second : second.text}

@@ -10,6 +10,7 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import AddPatientModal from '../add_patient_modal';
+import ModalContainer from '@components/modal_container';
 interface QueueAddSearchModalProps {}
 interface SearchInput {
   searchField: string;
@@ -42,48 +43,48 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const matches = useSearchPatient(watchSearch, usersData, true);
   const { open } = useOverlay();
   return (
-    <div className="queue-add-search-modal">
-      <Header title="Add a Patient to appointment queue" />
-      <form>
-        <Input
-          hint={
-            matches?.length == 0
-              ? 'Can’t find any patient with the same name'
-              : undefined
-          }
-          fillContainer
-          placeholder="search for a patient"
-          trailing={<Svg>{search}</Svg>}
-          type="search"
-          {...register('searchField')}
-        />
-      </form>
-
-      {matches?.length == 0 ? (
-        <TextButton
-          text="Add new patient"
-          backgroundColor={color.lighter_background}
-          padding="10px 15px"
-          fontSize={13}
-          fontWeight={700}
-          borderColor={color.border_color}
-          onPress={() => {
-            open(<AddPatientModal />, {
-              closeOnClickOutside: true,
-              isDimmed: true,
-              clickThrough: false,
-              width: '30%',
-              closeBtn: 'inner',
-            });
-          }}
-        />
-      ) : (
-        <div className="suggestions-container">
-          {matches?.map(({ fullName, age }, index) => (
-            <RecentAppsItem fullName={fullName} age={age} key={index} />
-          ))}
-        </div>
-      )}
-    </div>
+    <ModalContainer
+      title="Add a Patient to appointment queue"
+      controls={
+        matches?.length == 0 ? (
+          <TextButton
+            text="Add new patient"
+            backgroundColor={color.lighter_background}
+            padding="10px 15px"
+            fontSize={13}
+            fontWeight={700}
+            borderColor={color.border_color}
+            onPress={() => {
+              open(<AddPatientModal />, {
+                closeOnClickOutside: true,
+                isDimmed: true,
+                clickThrough: false,
+                width: '30%',
+                closeBtn: 'inner',
+              });
+            }}
+          />
+        ) : (
+          <div className="suggestions-container">
+            {matches?.map(({ fullName, age }, index) => (
+              <RecentAppsItem fullName={fullName} age={age} key={index} />
+            ))}
+          </div>
+        )
+      }
+    >
+      <Input
+        hint={
+          matches?.length == 0
+            ? 'Can’t find any patient with the same name'
+            : undefined
+        }
+        fillContainer
+        placeholder="search for a patient"
+        trailing={<Svg>{search}</Svg>}
+        type="search"
+        {...register('searchField')}
+      />
+    </ModalContainer>
   );
 }
