@@ -1,9 +1,8 @@
 import { color } from '@assets/styles/color';
-import DarkAddButton from '@components/buttons/dark_add_button';
-import SmallRolePreview from '@components/members_preview/small_role_preview';
 import TextPair from '@components/text_pair/TextPair';
 import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
+import SmallRoleList from '@components/members_preview/small_role_list';
 import MemberActionControls from '@components/member_action_controls';
 
 interface MemberBigCardProps {
@@ -99,13 +98,7 @@ export default function MemberBigCard({
       />
       <div className="role-container">
         <span>Role</span>
-        <div className="role-array">
-          {roleArray.map((rollName, index) => (
-            <SmallRolePreview roleName={rollName} key={index} />
-          ))}
-
-          <DarkAddButton />
-        </div>
+        <SmallRoleList roleList={roleArray} />
       </div>
       <MemberActionControls memberID={id} />
     </div>
