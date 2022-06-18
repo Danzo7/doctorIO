@@ -4,7 +4,6 @@ import InQueue from 'toSvg/in_queue.svg';
 import threeDots from 'toSvg/threedots.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import Tooltip from '@components/poppers/tooltip';
 
 interface BookedItemProps {
   name: string;
@@ -12,7 +11,7 @@ interface BookedItemProps {
   state: 'panding' | 'in queue';
 }
 function BookedItem({ name, bookTime, state }: BookedItemProps) {
-  const { open } = useOverlay();
+  const { openTooltip } = useOverlay();
   return (
     <div className="booked-item">
       <div className="right-container">
@@ -36,9 +35,9 @@ function BookedItem({ name, bookTime, state }: BookedItemProps) {
       <SquareIconButton
         svg={threeDots}
         onPress={(e) => {
-          open(
-            <Tooltip
-              actionList={[
+          if (e)
+            openTooltip(
+              [
                 {
                   text: 'Add to queue',
                 },
@@ -49,15 +48,10 @@ function BookedItem({ name, bookTime, state }: BookedItemProps) {
                   text: 'Remove',
                   type: 'warning',
                 },
-              ]}
-            />,
-            {
-              closeOnClickOutside: true,
-              clickThrough: true,
-              closeOnBlur: true,
-              popperTarget: e?.currentTarget,
-            },
-          );
+              ],
+              e?.currentTarget,
+              true,
+            );
         }}
       />
     </div>
