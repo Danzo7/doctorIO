@@ -8,6 +8,7 @@ interface TabMenuProps {
   onChanged?: ({ item, index }: { item: string; index: number }) => void;
   borderBottom?: boolean;
   children?: ReactNode[];
+  menuItemsAlignment?: 'flex-start' | 'flex-end' | 'center';
 }
 export default function TabMenu({
   items,
@@ -15,6 +16,7 @@ export default function TabMenu({
   onChanged,
   borderBottom = true,
   children,
+  menuItemsAlignment = 'flex-start',
 }: TabMenuProps) {
   const [selected, setSelected] = useState(defaultSelected);
   function setTab(index: number) {
@@ -31,7 +33,10 @@ export default function TabMenu({
             : undefined
         }
       >
-        <div className="menu-items">
+        <div
+          css={{ justifyContent: menuItemsAlignment }}
+          className="menu-items"
+        >
           {items.map((text, index) => (
             <DarkLightCornerButton
               key={index}
