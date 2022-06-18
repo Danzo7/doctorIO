@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+.session-preview-modal {
+}
+
+.tab-menu-container {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    flex-grow: 1;
+}
