@@ -28,7 +28,7 @@ export function useOverlay() {
     (target: ReactNode, props: OverlayOptions) => {
       if (Overlay.entryElement == undefined)
         throw Error(
-          'No overlay reference found,please create `<OverlayContainer></OverlayContainer>`',
+          'No overlay reference found! ¨Please add `<OverlayContainer/>`to your component tree',
         );
 
       Overlay.entryElement.appendChild(layer);
@@ -62,7 +62,7 @@ export function useOverlay() {
       // root.current = createRoot(layer);
       if (Overlay.entryElement == undefined)
         throw Error(
-          'No overlay reference found,please create `<OverlayContainer></OverlayContainer>`',
+          'No overlay reference found! ¨Please add `<OverlayContainer/>`to your component tree',
         );
 
       Overlay.entryElement.appendChild(layer);

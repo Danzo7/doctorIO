@@ -26,7 +26,7 @@ export class Overlay {
       this._root.render(OverlayItem({ children: target, ...props }));
     } else
       throw Error(
-        'You have to setRenderer first. Call seRenderer(Element) on your overlay component.',
+        'No overlay reference found! ¨Please add `<OverlayContainer/>`to your component tree',
       );
   }
 
@@ -49,7 +49,7 @@ export class Overlay {
       this._root.render(OverlayItem({ children: target, ...props }));
     } else
       throw Error(
-        'You have to setRenderer first. Call seRenderer(Element) on your overlay component.',
+        'No overlay reference found! ¨Please add `<OverlayContainer/>`to your component tree',
       );
   }
 
@@ -61,7 +61,7 @@ export class Overlay {
       if (this.entryElement.children.length == 0) this.close();
     } else
       throw Error(
-        'You have to setRenderer first. Call seRenderer(Element) on your overlay component.',
+        'No overlay reference found! ¨Please add `<OverlayContainer/>`to your component tree',
       );
   }
 
@@ -71,7 +71,7 @@ export class Overlay {
       this.killRoot();
     } else
       throw Error(
-        'You have to setRenderer first. Call seRenderer(Element) on your overlay component.',
+        'No overlay reference found! ¨Please add `<OverlayContainer/>`to your component tree',
       );
   }
 }
