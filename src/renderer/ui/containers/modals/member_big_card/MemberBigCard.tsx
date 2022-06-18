@@ -4,10 +4,7 @@ import SmallRolePreview from '@components/members_preview/small_role_preview';
 import TextPair from '@components/text_pair/TextPair';
 import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
-import IdCard from 'toSvg/id_card.svg?icon';
-import Messages from 'toSvg/messages_small.svg?icon';
-import Call_Icon from 'toSvg/phone.svg?icon';
-import IconicButton from '@components/buttons/iconic_button';
+import MemberActionControls from '@components/member_action_controls';
 
 interface MemberBigCardProps {
   imgSrc: string;
@@ -110,26 +107,7 @@ export default function MemberBigCard({
           <DarkAddButton />
         </div>
       </div>
-      <div className="bottom-controls">
-        <IconicButton
-          Icon={IdCard}
-          afterBgColor={color.secondary_color}
-          width={40}
-          iconSize={15}
-        />
-        <IconicButton
-          Icon={Messages}
-          afterBgColor={color.secondary_color}
-          width={40}
-          iconSize={15}
-        />
-        <IconicButton
-          Icon={Call_Icon}
-          afterBgColor={color.good_green}
-          width={40}
-          iconSize={15}
-        />
-      </div>
+      <MemberActionControls memberID={id} />
     </div>
   );
 }
