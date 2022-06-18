@@ -1,3 +1,5 @@
+const webpackDefault = require('../webpack.config')();
+
 module.exports = {
   /**
    * This is the main entry point for your application, it's the first file
@@ -38,9 +40,7 @@ module.exports = {
       },
     ],
   },
-  resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
-  },
+  resolve: webpackDefault.resolve,
   // devServer:webpackDefault.devServer,
   // devtool:webpackDefault.devtool,
   // target:webpackDefault.target
