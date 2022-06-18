@@ -11,9 +11,11 @@ import './style/index.scss';
 
 interface MemberActionControlsProps {
   memberID: string;
+  messagesRoutePath?: string;
 }
 export default function MemberActionControls({
   memberID,
+  messagesRoutePath = 'messages/@clinic/',
 }: MemberActionControlsProps) {
   const { open } = useOverlay();
   const { navigate } = useNavigation();
@@ -55,7 +57,7 @@ export default function MemberActionControls({
         width={40}
         iconSize={15}
         onPress={() => {
-          //  navigate(`messages/@clinic/${memberID}`);//
+          navigate(`${messagesRoutePath + memberID}`);
         }}
       />
       <IconicButton
