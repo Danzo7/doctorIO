@@ -15,7 +15,6 @@ export default function BookedAppointmentPanel({
             BookedInDate={BookedInDate}
             BookedByFullName={BookedByFullName}
             key={BookedInDate}
-            onAssign={() => {}}
           />
         ),
       )}

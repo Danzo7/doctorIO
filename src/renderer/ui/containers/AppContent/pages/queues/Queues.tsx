@@ -12,29 +12,29 @@ const bookedAppointmentData = [
     BookedByFullName: 'brahim aymen',
   },
   {
-    patientFullName: 'John Doe',
+    patientFullName: 'Ghanou abdou',
     BookedInDate: '29 Feb 2021',
-    BookedByFullName: 'brahim aymen',
+    BookedByFullName: 'John Doe',
   },
   {
-    patientFullName: 'John Doe',
+    patientFullName: 'Brahim Aymen',
+    BookedInDate: '02 Feb 2021',
+    BookedByFullName: 'Aymen Daouadji',
+  },
+  {
+    patientFullName: 'Aymen Daouadji',
     BookedInDate: '02 Feb 2021',
     BookedByFullName: 'brahim aymen',
   },
   {
-    patientFullName: 'John Doe',
+    patientFullName: 'Amine ben aissa',
     BookedInDate: '02 Feb 2021',
-    BookedByFullName: 'brahim aymen',
+    BookedByFullName: 'Amine Bouraoua',
   },
   {
     patientFullName: 'John Doe',
     BookedInDate: '02 Feb 2021',
-    BookedByFullName: 'brahim aymen',
-  },
-  {
-    patientFullName: 'John Doe',
-    BookedInDate: '02 Feb 2021',
-    BookedByFullName: 'brahim aymen',
+    BookedByFullName: 'Robert Livandoski',
   },
   {
     patientFullName: 'John Doe',

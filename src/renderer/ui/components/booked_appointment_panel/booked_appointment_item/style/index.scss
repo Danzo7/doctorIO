@@ -9,12 +9,12 @@
     border-radius: 7px;
     background: $lighterbackground;
     z-index: 1;
-    width: fit-content;
 
     >.booked-appointment-item-info {
         display: flex;
         flex-direction: column;
         gap: 5px;
+        width: 100px;
 
         > span {
             font-weight: 700;
@@ -32,6 +32,7 @@
         display: flex;
         flex-direction: column;
         gap: 5px;
+        width: 120px;
 
         > span {
             font-weight: 600;
@@ -44,10 +45,5 @@
                 color: $white;
             }
         }
-    }
-
-    > .booked-appointment-item-sep {
-        border-right: 1px solid $bordercolor;
-        align-self: stretch;
     }
 }
