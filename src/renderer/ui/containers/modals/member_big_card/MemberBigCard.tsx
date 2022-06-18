@@ -8,6 +8,7 @@ import IdCard from 'toSvg/id_card.svg?icon';
 import Messages from 'toSvg/messages_small.svg?icon';
 import Call_Icon from 'toSvg/phone.svg?icon';
 import IconicButton from '@components/buttons/iconic_button';
+import SmallRoleList from '@components/members_preview/small_role_list';
 
 interface MemberBigCardProps {
   imgSrc: string;
@@ -102,13 +103,7 @@ export default function MemberBigCard({
       />
       <div className="role-container">
         <span>Role</span>
-        <div className="role-array">
-          {roleArray.map((rollName, index) => (
-            <SmallRolePreview roleName={rollName} key={index} />
-          ))}
-
-          <DarkAddButton />
-        </div>
+        <SmallRoleList roleList={roleArray} />
       </div>
       <div className="bottom-controls">
         <IconicButton

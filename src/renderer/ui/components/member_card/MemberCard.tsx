@@ -1,12 +1,11 @@
-import DarkAddButton from '@components/buttons/dark_add_button';
 import IconicButton from '@components/buttons/iconic_button';
-import SmallRolePreview from '@components/members_preview/small_role_preview';
 import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import IdCard from 'toSvg/id_card.svg?icon';
 import Messages from 'toSvg/messages_small.svg?icon';
 import Call_Icon from 'toSvg/phone.svg?icon';
 import { color } from '@assets/styles/color';
+import SmallRoleList from '@components/members_preview/small_role_list';
 
 interface MemberCardProps {
   fullName: string;
@@ -29,13 +28,7 @@ export default function MemberCard({
         />
         <div className="member-card-roles">
           <span>{fullName}</span>
-          <div className="roll-container">
-            {roleArray.map((rollName, index) => (
-              <SmallRolePreview roleName={rollName} key={index} />
-            ))}
-
-            <DarkAddButton />
-          </div>
+          <SmallRoleList roleList={roleArray} />
         </div>
       </div>
       <div className="member-card-controls">

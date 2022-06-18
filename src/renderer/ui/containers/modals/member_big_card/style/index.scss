@@ -32,14 +32,6 @@
             font-size: 15px;
             color:$textgray
         }
-        > .role-array {
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-            align-items: center;
-            gap: 5px;
-            max-width: 180px;
-        }
     }
     > .bottom-controls  {
         display: flex;
