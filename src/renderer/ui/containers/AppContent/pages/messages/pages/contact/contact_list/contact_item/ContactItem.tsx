@@ -6,6 +6,7 @@ import Messages from 'toSvg/messages_small.svg?icon';
 import Call_Icon from 'toSvg/phone.svg?icon';
 import IconicButton from '@components/buttons/iconic_button';
 import { NavLink } from 'react-router-dom';
+import MemberActionControls from '@components/member_action_controls';
 interface ContactItemProps {
   status: boolean;
   imgSrc: string;
@@ -20,30 +21,7 @@ function ContactItem({ status, imgSrc, fullName, cId }: ContactItemProps) {
         <span>{fullName}</span>
       </div>
       <div className="avatars-container">
-        <IconicButton
-          Icon={IdCard}
-          afterBgColor={colors.secondary_color}
-          width={40}
-          iconSize={15}
-          type="button"
-          onPress={() => {}}
-        />
-        <IconicButton
-          Icon={Messages}
-          afterBgColor={colors.secondary_color}
-          width={40}
-          iconSize={15}
-          type="button"
-          onPress={() => {}}
-        />
-        <IconicButton
-          Icon={Call_Icon}
-          afterBgColor={colors.good_green}
-          width={40}
-          iconSize={15}
-          type="button"
-          onPress={() => {}}
-        />
+        <MemberActionControls memberID={cId} messagesRoutePath="" />
       </div>
     </NavLink>
   );
