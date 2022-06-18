@@ -1,8 +1,8 @@
-import { createPopper } from '@popperjs/core';
 import { ReactNode, useCallback, useId, useRef } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 import { Overlay } from './overlay';
 import { OverlayItem, OverlayOptions } from './OverlayContainer';
+import Tooltip, { ActionProps } from '@components/poppers/tooltip';
 
 export function useOverlay() {
   const id = 'l' + useId() + 'ov';
@@ -50,23 +50,38 @@ export function useOverlay() {
   );
 
   //unstable
-  const openTooltipTest = useCallback(
+  const openTooltip = useCallback(
     (
-      target: ReactNode,
-      {
-        popperTarget,
-        ...props
-      }: OverlayOptions & { popperTarget: HTMLElement },
+      actionList: ActionProps[],
+      popperTarget: HTMLElement,
+      autoClose: true | undefined,
     ) => {
-      killRoot();
-      (popperTarget.parentElement || popperTarget).appendChild(layer);
-      createPopper(popperTarget, layer, { placement: 'right' });
+      // killRoot();
+      // (popperTarget.parentElement || popperTarget).appendChild(layer);
+      // createPopper(popperTarget, layer, { placement: 'right' });
+      // root.current = createRoot(layer);
+      if (Overlay.entryElement == undefined)
+        throw Error(
+          'No overlay reference found,please create `<OverlayContainer></OverlayContainer>`',
+        );
 
+      Overlay.entryElement.appendChild(layer);
+      layer.setAttribute(
+        'style',
+        'z-index:' + 10 + Overlay.entryElement.children.length,
+      );
+      killRoot();
       root.current = createRoot(layer);
       root.current.render(
         OverlayItem({
-          children: target,
-          ...props,
+          children: Tooltip({
+            actionList: actionList,
+            closeOnSelect: autoClose && close,
+          }),
+          clickThrough: true,
+          closeOnClickOutside: true,
+          closeOnBlur: true,
+          popperTarget,
           closeMethod: close,
         }),
       );
@@ -74,5 +89,5 @@ export function useOverlay() {
     [close, killRoot, layer],
   );
 
-  return { open, close, openTooltipTest, root };
+  return { open, close, openTooltip, root };
 }
