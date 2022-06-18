@@ -1,5 +1,5 @@
 import { Overlay } from './overlay';
-import { ReactNode } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import './style/index.scss';
 import SquareIconButton from '@components/buttons/square_icon_button';
 import { css } from '@emotion/react';
@@ -7,13 +7,37 @@ import { createPopper, Modifier, OptionsGeneric } from '@popperjs/core';
 interface OverlayContainerProps {}
 
 export function OverlayContainer({}: OverlayContainerProps) {
+  const [render, setrender] = useState<React.ReactPortal[]>([]);
+  const addPortal = useCallback(
+    (portal?: React.ReactPortal) => {
+      if (portal) {
+        setrender([...render, portal]);
+      } else setrender([]);
+    },
+    [render],
+  );
+  const removePortal = useCallback(
+    (portal?: React.ReactPortal) => {
+      if (portal) {
+        setrender(render.filter((item) => item !== portal));
+      }
+    },
+    [render],
+  );
+  useEffect(() => {
+    Overlay.update = addPortal;
+    Overlay.removePortal = removePortal;
+  }, [addPortal, removePortal]);
+
   return (
     <div
       className="overlay-container"
       ref={(e) => {
         if (e != null) Overlay.setRenderer(e);
       }}
-    ></div>
+    >
+      {render}
+    </div>
   );
 }
 type Position = {
