@@ -1,0 +1,8 @@
+@use '~styles/appColors' as *;
+.member-action-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
