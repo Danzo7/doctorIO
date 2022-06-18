@@ -6,15 +6,15 @@ import { color } from '@assets/styles/color';
 import { useState } from 'react';
 import Datepicker from '@components/inputs/datepicker';
 import ModalContainer from '@components/modal_container';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import { Overlay } from '@libs/overlay';
 interface BookAppointmentModalProps {
   patientName: string;
   id: string;
-  onCreate: PressHandler;
 }
 export default function BookAppointmentModal({
   patientName,
   id,
-  onCreate,
 }: BookAppointmentModalProps) {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -33,7 +33,9 @@ export default function BookAppointmentModal({
           alignSelf="center"
           padding={'5px 10px'}
           fontSize={12}
-          onPress={onCreate}
+          onPress={() => {
+            Overlay.close();
+          }}
         />
       }
     >
