@@ -1,17 +1,18 @@
 import { IconType, PressHandler } from '@components/buttons/text_button';
 import './style/index.scss';
 import TooltipItem from './tooltip_item';
-interface TooltipProps {
+export interface TooltipProps {
   actionList: ActionProps[];
+  closeOnSelect?: () => void;
 }
-type ActionProps = {
+export type ActionProps = {
   text: string;
   Icon?: IconType;
   type?: 'warning' | 'normal';
   afterColor?: string;
   onPress?: PressHandler;
 };
-export default function Tooltip({ actionList }: TooltipProps) {
+export default function Tooltip({ actionList, closeOnSelect }: TooltipProps) {
   return (
     <div className="tooltip">
       {actionList?.map(({ text, Icon, onPress, type, afterColor }, index) => (
@@ -20,7 +21,10 @@ export default function Tooltip({ actionList }: TooltipProps) {
           text={text}
           selectedColor={afterColor}
           Icon={Icon}
-          onPress={onPress}
+          onPress={() => {
+            closeOnSelect?.();
+            onPress?.();
+          }}
           type={type}
         />
       ))}
