@@ -30,7 +30,11 @@ export class Overlay {
       );
   }
 
-  static push(id: string, target: ReactNode, props: OverlayOptions) {
+  static push(
+    target: ReactNode,
+    props: OverlayOptions,
+    id = this.entryElement.children.length.toString(),
+  ) {
     if (this.entryElement) {
       const layer =
         document.querySelector('#overlay-' + id) ||
@@ -49,7 +53,7 @@ export class Overlay {
       );
   }
 
-  static pop(id: string) {
+  static pop(id = this.entryElement.children.length.toString()) {
     if (this.entryElement) {
       if (document.querySelector('#overlay-' + id))
         document.querySelector('#overlay-' + id)?.remove();
