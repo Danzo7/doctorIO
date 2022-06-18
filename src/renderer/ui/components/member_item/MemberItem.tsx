@@ -2,9 +2,8 @@ import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import IsOwner from 'toSvg/host.svg';
 import threeDots from 'toSvg/threedots.svg?icon';
-import SmallRolePreview from '@components/members_preview/small_role_preview';
-import AddButton from '@components/buttons/dark_add_button';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
+import SmallRoleList from '@components/members_preview/small_role_list';
 interface MemberItemProps {
   memberImgSrc: string;
   memberStatus: boolean;
@@ -21,7 +20,6 @@ export default function MemberItem({
   roleArray = [],
   timeAdded,
 }: MemberItemProps) {
-  const addRole = () => {};
   return (
     <div className="member-item">
       <div className="item-container">
@@ -41,19 +39,7 @@ export default function MemberItem({
         <div className="date-container">
           <span>{timeAdded}</span>
         </div>
-        <div className="roles-container">
-          {roleArray.length > 0 &&
-            roleArray.map((rollName, index) => (
-              <SmallRolePreview
-                roleName={rollName}
-                //todo RoleID
-                key={index}
-              />
-            ))}
-          <div onClick={addRole} className="add-btn-container">
-            <AddButton />
-          </div>
-        </div>
+        <SmallRoleList roleList={roleArray} />
       </div>
 
       <div className="option-menu">
