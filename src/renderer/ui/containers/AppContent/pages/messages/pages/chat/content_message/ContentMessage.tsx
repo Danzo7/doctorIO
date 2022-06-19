@@ -32,7 +32,7 @@ function ContentMessage({
         <div className="title-container">
           <span
             onClick={(e) => {
-              Overlay.open(
+              open(
                 <MemberCard
                   imgSrc={imgSrc}
                   fullName={messengerName}
@@ -40,8 +40,7 @@ function ContentMessage({
                 />,
                 {
                   popperTarget: e.currentTarget,
-                  closeOnBlur: true,
-                  clickThrough: true,
+                  closeOnClickOutside: true,
                 },
               );
             }}

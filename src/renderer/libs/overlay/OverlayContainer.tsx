@@ -127,13 +127,11 @@ export function OverlayItem({
           closeOnBlur
             ? (event) => {
                 if (
-                  !(
-                    event.relatedTarget == event.currentTarget ||
-                    event.relatedTarget == event.currentTarget ||
-                    event.currentTarget.contains(event.relatedTarget)
-                  )
-                )
+                  event.relatedTarget != event.currentTarget &&
+                  !event.currentTarget.contains(event.relatedTarget)
+                ) {
                   closeOverlay();
+                }
               }
             : undefined
         }
