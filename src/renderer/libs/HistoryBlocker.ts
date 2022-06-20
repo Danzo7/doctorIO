@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { useOverlay } from './overlay/useOverlay';
 type TransitionD = Transition & { dismiss: () => void };
-type Navigator = IncorrectType & Pick<History, 'block'>;
+type Navigator = IncorrectType & Pick<History, 'block' | 'listen'>;
 export function useBlocker(blocker: (tx: TransitionD) => void, when = true) {
   const { navigator } = useContext(NavigationContext) as unknown as {
     navigator: Navigator;
@@ -33,7 +33,15 @@ export function useBlocker(blocker: (tx: TransitionD) => void, when = true) {
     return unblock;
   }, [navigator, blocker, when]);
 }
+export function useRouteChange(change: () => void) {
+  const { navigator } = useContext(NavigationContext) as unknown as {
+    navigator: Navigator;
+  };
 
+  navigator.listen(() => {
+    change();
+  });
+}
 export default function usePrompt(
   message: string,
   actionList: ({
@@ -61,6 +69,7 @@ export default function usePrompt(
         }),
         {
           closeOnClickOutside: true,
+          clickThrough: true,
           position: { top: 10 },
           transition: 'appear-top',
         },
