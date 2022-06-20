@@ -1,41 +1,38 @@
 import { Overlay } from './overlay';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import './style/index.scss';
 import SquareIconButton from '@components/buttons/square_icon_button';
 import { css } from '@emotion/react';
 import { createPopper, Modifier, OptionsGeneric } from '@popperjs/core';
+import { useRouteChange } from '@libs/HistoryBlocker';
 interface OverlayContainerProps {}
 
 export function OverlayContainer({}: OverlayContainerProps) {
   const [render, setrender] = useState<React.ReactPortal[]>([]);
-  const addPortal = useCallback(
-    (portal?: React.ReactPortal) => {
-      if (portal) {
-        setrender([...render, portal]);
-      } else setrender([]);
+  const update = useCallback(
+    (state?: (portals: React.ReactPortal[]) => React.ReactPortal[]) => {
+      if (state) setrender((old) => state(old));
+      else setrender([]);
     },
-    [render],
+    [],
   );
-  const removePortal = useCallback(
-    (portal?: React.ReactPortal) => {
-      if (portal) {
-        setrender(render.filter((item) => item !== portal));
-      }
-    },
-    [render],
-  );
+  const overlayRef = useRef(null);
+
+  useRouteChange(() => Overlay.close());
+
+  const removePortal = useCallback((portal?: React.ReactPortal) => {
+    if (portal) {
+      setrender((old) => old.filter((item) => item !== portal));
+    }
+  }, []);
   useEffect(() => {
-    Overlay.update = addPortal;
+    if (overlayRef.current) Overlay.setRenderer(overlayRef.current);
+    Overlay.update = update;
     Overlay.removePortal = removePortal;
-  }, [addPortal, removePortal]);
+  }, [update, removePortal]);
 
   return (
-    <div
-      className="overlay-container"
-      ref={(e) => {
-        if (e != null) Overlay.setRenderer(e);
-      }}
-    >
+    <div className="overlay-container" ref={overlayRef}>
       {render}
     </div>
   );
@@ -53,7 +50,7 @@ type PopperTargetType = {
 export interface OverlayOptions {
   isDimmed?: boolean;
   clickThrough?: boolean;
-  backdropColor?: string;
+  backdropColor?: string | false;
   closeOnClickOutside?: true;
   position?: Position;
   closeOnBlur?: true;
@@ -95,21 +92,25 @@ export function OverlayItem({
 
   return (
     <>
-      <div
-        className="backdrop"
-        css={css({
-          backgroundColor: isDimmed ? backdropColor ?? '#000000d9' : undefined,
-          pointerEvents: clickThrough ? 'none' : 'all',
-        })}
-        onClick={
-          closeOnClickOutside
-            ? (e) => {
-                closeOverlay();
-                e.stopPropagation();
-              }
-            : undefined
-        }
-      ></div>
+      {backdropColor !== false && (
+        <div
+          className="backdrop"
+          css={css({
+            backgroundColor: isDimmed
+              ? backdropColor ?? '#000000d9'
+              : undefined,
+            pointerEvents: clickThrough ? 'none' : 'all',
+          })}
+          onClick={
+            closeOnClickOutside
+              ? (e) => {
+                  closeOverlay();
+                  e.stopPropagation();
+                }
+              : undefined
+          }
+        ></div>
+      )}
       <div
         className="layer"
         css={{
@@ -126,11 +127,10 @@ export function OverlayItem({
         onBlur={
           closeOnBlur
             ? (event) => {
-                if (
-                  event.relatedTarget != event.currentTarget &&
-                  !event.currentTarget.contains(event.relatedTarget)
-                ) {
+                if (!event.currentTarget.contains(event.relatedTarget)) {
                   closeOverlay();
+                } else {
+                  event.currentTarget.focus();
                 }
               }
             : undefined
