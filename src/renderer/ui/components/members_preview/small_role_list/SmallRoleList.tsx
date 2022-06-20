@@ -36,34 +36,35 @@ export default function SmallRoleList({ roleList }: SmallRoleListProps) {
 
       <DarkAddButton
         onPress={(e) => {
-          open(
-            <AddRoleTooltip
-              actionList={[
-                {
-                  text: 'Cool',
-                  onPress: addRole,
-                },
-                {
-                  text: 'Owener',
-                  onPress: addRole,
-                },
-                {
-                  text: 'Support',
-                  onPress: addRole,
-                },
-                {
-                  text: 'Pan Legends',
-                  onPress: addRole,
-                },
-              ]}
-            />,
-            {
-              closeOnClickOutside: true,
-              clickThrough: true,
-              closeOnBlur: true,
-              popperTarget: e?.currentTarget,
-            },
-          );
+          if (e)
+            open(
+              <AddRoleTooltip
+                actionList={[
+                  {
+                    text: 'Cool',
+                    onPress: addRole,
+                  },
+                  {
+                    text: 'Owener',
+                    onPress: addRole,
+                  },
+                  {
+                    text: 'Support',
+                    onPress: addRole,
+                  },
+                  {
+                    text: 'Pan Legends',
+                    onPress: addRole,
+                  },
+                ]}
+              />,
+              {
+                closeOnClickOutside: true,
+                clickThrough: true,
+                closeOnBlur: true,
+                popperTarget: e.currentTarget,
+              },
+            );
         }}
       />
     </div>
