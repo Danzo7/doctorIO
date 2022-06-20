@@ -24,7 +24,7 @@ export default function MemberActionControls({
     <div className="member-action-controls">
       <IconicButton
         Icon={IdCard}
-        afterBgColor={colors.secondary_color}
+        afterBgColor={colors.light}
         width={40}
         iconSize={15}
         onPress={() => {
@@ -53,7 +53,7 @@ export default function MemberActionControls({
       />
       <IconicButton
         Icon={Messages}
-        afterBgColor={colors.secondary_color}
+        afterBgColor={colors.light}
         width={40}
         iconSize={15}
         onPress={() => {
