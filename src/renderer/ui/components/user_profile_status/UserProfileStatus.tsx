@@ -1,16 +1,19 @@
 import CircleAvatar from '@components/avatars/circle_avatar/CircleAvatar';
+import { MouseEventHandler } from 'react';
 import './style/index.scss';
 interface UserProfileStatusProps {
   imgSrc: string;
   status: boolean;
   width?: number;
   avatarRadius?: number;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 function UserProfileStatus({
   imgSrc,
   status,
   width = 42,
   avatarRadius,
+  onClick,
 }: UserProfileStatusProps) {
   return (
     <div className="user-profile-status">
@@ -27,6 +30,7 @@ function UserProfileStatus({
         width={width}
         alt="profile image"
         radius={avatarRadius}
+        onClick={onClick}
       />
     </div>
   );

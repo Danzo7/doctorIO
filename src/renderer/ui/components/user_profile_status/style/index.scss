@@ -2,11 +2,11 @@
 .user-profile-status {
   display: flex;
   border-radius: 100%;
-
+  position: relative;
   > .dot {
-    position: relative;
+    position: absolute;
     border-radius: 100%;
-
+    left:0;
     &.online {
       background-color: $goodgreen;
     }
