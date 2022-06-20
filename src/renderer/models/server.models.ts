@@ -1,18 +1,18 @@
 interface Member {
   name: string;
-  memberId: string;
-  userId: string;
-  token: string;
+  memberId: number;
+  userId: number; //"machineId"
+  accessKey: string;
   roles: Role[];
 }
 interface Role {
-  roleID: string;
+  roleId: number;
   roleName: string;
   roleDesc: string;
 }
 interface Permission {}
 interface Clinic {
-  clinicId: string;
+  clinicId: number;
   description: string;
   serverLocation: string;
   members: Member[];

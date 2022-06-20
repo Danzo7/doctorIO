@@ -1,7 +1,23 @@
-interface Appointment {}
-interface BookedAppointment {}
+interface AppointmentQueueItem {
+  patientId: number;
+  patientName: string;
+  date: Date;
+  diagnosis?: Diagnosis;
+}
+interface Diagnosis {
+  diagnosisId: number;
+}
+interface BookedAppointment {
+  appointmentId: number;
+  patientId: number;
+  date: Date;
+}
+interface AppointmentQueue {
+  roleId: number;
+  list: AppointmentQueueItem[];
+}
 interface Patient {
-  patId: string;
+  patId: number;
   firstName: string;
   lastName: string;
   birthDate: string;
@@ -10,10 +26,38 @@ interface Patient {
   testResult: TestResult;
   medicalDocuments: MedicalDocument[];
   medicalHistory: MedicalHistory[];
-  session: Session[];
+  session: Appointment[];
 }
-interface Session {}
-interface MedicalDocument {}
+interface Session {
+  sessionId: number;
+  patientId: number;
+  memberId: number;
+  date: Date;
+  notice: string;
+  prescriptionId: number;
+}
+interface Appointment {
+  status: 'done' | 'upcoming' | 'missed';
+  dateGiving: Date;
+  sessionId?: string;
+  subject?: string;
+  session: Session;
+  doctorId: number;
+  assistantId: number;
+}
+
+interface MedicalDocument {
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  filePath: string;
+}
 interface MedicalHistory {}
 interface TestResult {}
-export type { Appointment, BookedAppointment, Patient };
+export type {
+  Appointment,
+  BookedAppointment,
+  Patient,
+  AppointmentQueueItem,
+  AppointmentQueue,
+};

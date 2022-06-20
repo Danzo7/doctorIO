@@ -1,6 +1,11 @@
+interface AppLocalPreferences {
+  language: string;
+  theme: string;
+  welcomeDismissed: Date;
+}
 interface User {
-  userId: string;
-  machineId: string;
+  userId: number; //"machineId"
+  machineId: number;
   username: string;
   password: string;
   email: string;
@@ -10,24 +15,25 @@ interface User {
   avatar: string;
   privateKey: string;
   publicKey: string;
-  clinic: ClinicLocal[];
+  clinic: LocalClinicData[];
 }
 
 interface DirectMessage {
-  dmId: string;
-  userId: string;
+  dmId: number;
+  userId: number; //"contactId"
+  dmAvatar: string;
   messages: Message[];
 }
 interface Message {
   text: string;
   date: Date;
-  userId: string;
-  dmId: string;
+  seen: boolean;
 }
-interface ClinicLocal {
-  clinicId: string;
-  description: string;
+interface LocalClinicData {
+  clinicId: number;
+  name: string;
   serverLocation: string;
+  accessKey: string;
 }
 
-export type { DirectMessage, Message, User };
+export type { DirectMessage, Message, User, LocalClinicData };
