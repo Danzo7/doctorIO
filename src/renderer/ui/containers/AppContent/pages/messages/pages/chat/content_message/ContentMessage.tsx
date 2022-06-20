@@ -25,7 +25,24 @@ function ContentMessage({
       } `}
     >
       <div>
-        <CircleAvatar src={imgSrc} width={40} />
+        <CircleAvatar
+          src={imgSrc}
+          width={40}
+          onClick={(e) => {
+            open(
+              <MemberCard
+                imgSrc={imgSrc}
+                fullName={messengerName}
+                roleArray={['a', 'b']}
+              />,
+              {
+                popperTarget: e.currentTarget,
+                clickThrough: true,
+                closeOnBlur: true,
+              },
+            );
+          }}
+        />
       </div>
 
       <div className="info-container">
@@ -40,7 +57,8 @@ function ContentMessage({
                 />,
                 {
                   popperTarget: e.currentTarget,
-                  closeOnClickOutside: true,
+                  clickThrough: true,
+                  closeOnBlur: true,
                 },
               );
             }}
