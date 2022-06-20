@@ -49,6 +49,9 @@
           margin-right: -25px;
         }
       }
+      &:focus{
+        outline: none;
+      }
       @keyframes appear-top {
         0% {
           transform: translate(0,-50vh);

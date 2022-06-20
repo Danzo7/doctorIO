@@ -5,7 +5,8 @@ import Tooltip, { ActionProps } from '@components/poppers/tooltip';
 import { createPortal } from 'react-dom';
 import { createPopper } from '@popperjs/core';
 export const OverlayContext = createContext(Overlay);
-
+//Known issues:
+//When open overlay with closeOnBlur = true, on top of overlay with closeOnBlur the first one will be closed due to blur event.
 export function useOverlay() {
   const layer = useRef(document.createElement('div'));
   const id = 'l' + useId() + 'ov';
