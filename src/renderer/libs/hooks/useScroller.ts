@@ -29,7 +29,7 @@ export function useScroller(gap: number) {
     const scroll = ref?.current as unknown as HTMLDivElement;
     let scrollX: any = 0;
     for (let i = 0; i < scroll.children.length; i++) {
-      scrollX += scroll.children[i].clientWidth + gap;
+      scrollX += (scroll.children[i] as HTMLElement).offsetWidth + gap;
       if (scrollX > scroll.scrollLeft) {
         scroll.scrollTo({ left: scrollX, top: 0, behavior: 'smooth' });
 
