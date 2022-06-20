@@ -4,4 +4,10 @@
   overflow: hidden;
   width: fit-content;
   height: fit-content;
+  &.clickable{
+    cursor: pointer;
+    &:active{
+      transform: translate(0,2px);
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react';
 import './style/index.scss';
 interface CircleAvatarProps {
   src: string;
@@ -5,6 +6,7 @@ interface CircleAvatarProps {
   alt?: string;
   radius?: number | string;
   border?: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }
 function CircleAvatar({
   src,
@@ -12,14 +14,16 @@ function CircleAvatar({
   alt,
   radius = '100%',
   border,
+  onClick,
 }: CircleAvatarProps) {
   return (
     <div
-      className="circle-avatar"
+      className={`circle-avatar ${onClick ? 'clickable' : ''}`}
       css={{
         borderRadius: radius,
         border: border,
       }}
+      onClick={onClick}
     >
       <img
         css={{
