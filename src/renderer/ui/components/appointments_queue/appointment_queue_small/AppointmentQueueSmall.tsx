@@ -2,12 +2,10 @@
 import QueueItem from '@components/appointments_queue/components/queue_item';
 import { useState } from 'react';
 import './style/index.scss';
-import NextIcon from 'toSvg/next.svg?icon';
-import PauseIcon from 'toSvg/pause.svg?icon';
 import ScrollView from '@components/scroll_view';
-import IconicButton from '@components/buttons/iconic_button';
-import colors from '@assets/styles/color';
+
 import { useScroller } from '@libs/hooks/useScroller';
+import QueueControls from '@components/queue_controls';
 
 interface AppointmentQueueSmallProps {}
 
@@ -87,27 +85,19 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
     <div className="appointment-queue-small">
       <div className="header">
         <span>Appointment</span>
-        <div className="control">
-          <IconicButton
-            Icon={NextIcon}
-            backgroundColor={colors.cold_blue}
-            width={25}
-            radius={7}
-            iconSize={10}
-            onPress={() => {
-              setItems(items.slice(1, items.length));
-              setSelected(-1);
-              gotoFrom(0, selected);
-            }}
-          />
-          <IconicButton
-            Icon={PauseIcon}
-            backgroundColor={colors.hot_red}
-            width={25}
-            radius={7}
-            iconSize={10}
-          />
-        </div>
+
+        <QueueControls
+          role={{
+            roleName: 'owner',
+            roleProps: {
+              onCallNext: () => {
+                setItems(items.slice(1, items.length));
+                setSelected(-1);
+                gotoFrom(0, selected);
+              },
+            },
+          }}
+        />
       </div>
       <div className="queue-items">
         {items.length > 0 ? (
