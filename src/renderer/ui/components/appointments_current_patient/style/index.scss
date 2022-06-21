@@ -9,6 +9,7 @@
     border: 1px solid $bordercolor;
     border-radius: 17px;
     box-sizing: border-box;
+    flex-grow: 1;
 
     > .patient-info {
         display: flex;
