@@ -1,0 +1,9 @@
+@use '~styles/appColors' as *;
+
+.next-patient-controls {
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    align-items: stretch;
+    gap: 10px;
+}
