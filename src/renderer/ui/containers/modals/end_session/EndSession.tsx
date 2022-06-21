@@ -1,15 +1,15 @@
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import './style/index.scss';
 import Print from 'toSvg/print.svg?icon';
 import IconicButton from '@components/buttons/iconic_button';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
-interface EndSessionProps {
-  onConfirm: () => void;
-  onPrint: () => void;
-}
-export default function EndSession({ onConfirm, onPrint }: EndSessionProps) {
+import { useOverlay } from '@libs/overlay/useOverlay';
+import useNavigation from '@libs/hooks/useNavigation';
+interface EndSessionProps {}
+export default function EndSession({}: EndSessionProps) {
+  const { openTooltip } = useOverlay();
+  const { navigate } = useNavigation();
   return (
     <ModalContainer
       title="End the session?"
@@ -22,7 +22,24 @@ export default function EndSession({ onConfirm, onPrint }: EndSessionProps) {
             radius={7}
             iconSize={14}
             width={30}
-            onPress={onPrint}
+            onPress={(e) => {
+              if (e)
+                openTooltip(
+                  [
+                    {
+                      text: 'Notice',
+                    },
+                    {
+                      text: 'Prescription',
+                    },
+                    {
+                      text: 'Both',
+                    },
+                  ],
+                  e?.currentTarget,
+                  true,
+                );
+            }}
           />
           <TextButton
             text="Confirm"
@@ -32,7 +49,10 @@ export default function EndSession({ onConfirm, onPrint }: EndSessionProps) {
             backgroundColor={color.good_green}
             padding=" 5px 15px"
             width={'100%'}
-            onPress={onConfirm}
+            onPress={() => {
+              //TODO (session object is saved locally(clientSide) if not confirmed session will stay open and auto redirect in case of refresh/force close//
+              navigate('/');
+            }}
           />
         </div>
       }
