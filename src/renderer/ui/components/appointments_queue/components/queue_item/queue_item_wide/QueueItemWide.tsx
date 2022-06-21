@@ -9,6 +9,7 @@ import view from 'toSvg/view_test.svg?icon';
 import TextIconButton from '@components/buttons/text_icon_button';
 import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import NextPatient from '@containers/modals/next_patient';
 interface QueueItemWideProps {
   name: string;
   timeAgo: string;
@@ -46,6 +47,22 @@ function QueueItemWide({
             Icon={invite}
             text="invite in"
             color={colors.good_green}
+            onPress={() => {
+              open(
+                <NextPatient
+                  patientName={name}
+                  patientNumber={number}
+                  appointmentDuration={timeAgo}
+                />,
+                {
+                  width: '30%',
+                  closeOnClickOutside: true,
+                  isDimmed: true,
+                  clickThrough: false,
+                  closeBtn: 'inner',
+                },
+              );
+            }}
           />
           <TextIconButton
             //onMouseOver={setActive}
