@@ -16,7 +16,7 @@ type Data = {
   drugName: string;
   qts: number;
   dose?: number;
-  duration: string;
+  duration: number;
   comment: string;
   id: number;
 };
@@ -24,6 +24,7 @@ interface MedicamentTableProps {
   editable?: true;
   dataList?: Data[];
 }
+
 const table = createTable().setRowType<Data>();
 export default function MedicamentTable({
   editable,
