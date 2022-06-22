@@ -4,6 +4,8 @@ import TextPair from '@components/text_pair';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import View from 'toSvg/view_test.svg?icon';
 import { color } from '@assets/styles/color';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import SessionPreviewModal from '@containers/modals/session_preview_modal';
 type TimeLineData = {
   done?: true;
   date: string;
@@ -24,6 +26,7 @@ export default function TimelineItem({ type }: TimelineItemProps) {
       : (type as TimeLineData).done
       ? color.good_green
       : color.cold_blue;
+  const { open } = useOverlay();
   return (
     <div className="timeline-item">
       <div
@@ -52,7 +55,18 @@ export default function TimelineItem({ type }: TimelineItemProps) {
               second="Assistance"
               reversed
             />
-            <SquareIconButton svg={View} />
+            <SquareIconButton
+              svg={View}
+              onPress={() => {
+                open(<SessionPreviewModal />, {
+                  closeOnClickOutside: true,
+                  isDimmed: true,
+                  clickThrough: false,
+                  closeBtn: 'inner',
+                  width: '50%',
+                });
+              }}
+            />
           </WideCard>
         )}
 
