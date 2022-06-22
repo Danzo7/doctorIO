@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import MemberBigCard from './MemberBigCard';
-import profile from '@assets/pictures/test.png';
 
 export default {
   title: 'Modals/MemberBigCard',
@@ -12,7 +11,6 @@ const Template: Story<ComponentProps<typeof MemberBigCard>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  imgSrc: profile,
   status: true,
   fullName: 'John White',
   id: '123456789',

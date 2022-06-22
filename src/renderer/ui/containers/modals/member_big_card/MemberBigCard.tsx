@@ -6,30 +6,30 @@ import SmallRoleList from '@components/members_preview/small_role_list';
 import MemberActionControls from '@components/member_action_controls';
 
 interface MemberBigCardProps {
-  imgSrc: string;
-  status: boolean;
-  fullName: string;
-  id: string;
-  age: number;
-  gender: 'Female' | 'Men';
-  PhoneNumber: string;
-  Address: string;
-  JoinDate: string;
-  AddedBy: string;
-  roleArray: string[];
+  imgSrc?: string;
+  status?: boolean;
+  fullName?: string;
+  id?: string;
+  age?: number;
+  gender?: 'Female' | 'Men';
+  PhoneNumber?: string;
+  Address?: string;
+  JoinDate?: string;
+  AddedBy?: string;
+  roleArray?: string[];
 }
 export default function MemberBigCard({
   imgSrc,
-  status,
-  fullName,
-  id,
-  age,
-  gender,
-  PhoneNumber,
-  Address,
-  JoinDate,
-  AddedBy,
-  roleArray,
+  status = true,
+  fullName = 'John White',
+  id = '123456789',
+  age = 19,
+  gender = 'Men',
+  PhoneNumber = '0545967318',
+  Address = 'Blida',
+  JoinDate = '02/02/2022',
+  AddedBy = 'Brahim Aymen',
+  roleArray = ['Gamer', 'Cool', 'Assistant'],
 }: MemberBigCardProps) {
   return (
     <div className="member-big-card">
