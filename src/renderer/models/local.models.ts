@@ -36,4 +36,10 @@ interface LocalClinicData {
   accessKey: string;
 }
 
-export type { DirectMessage, Message, User, LocalClinicData };
+export type {
+  DirectMessage,
+  Message,
+  User,
+  LocalClinicData,
+  AppLocalPreferences,
+};

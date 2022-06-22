@@ -1,12 +1,11 @@
 import BorderSeparator from '@components/border_separator';
 import TextPair from '@components/text_pair/TextPair';
 import './style/index.scss';
-import TextButton, { PressHandler } from '@components/buttons/text_button';
+import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import { useState } from 'react';
 import Datepicker from '@components/inputs/datepicker';
 import ModalContainer from '@components/modal_container';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { Overlay } from '@libs/overlay';
 interface BookAppointmentModalProps {
   patientName: string;
