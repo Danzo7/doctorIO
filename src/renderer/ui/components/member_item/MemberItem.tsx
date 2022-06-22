@@ -4,6 +4,9 @@ import IsOwner from 'toSvg/host.svg';
 import threeDots from 'toSvg/threedots.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import SmallRoleList from '@components/members_preview/small_role_list';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import MemberBigCard from '@containers/modals/member_big_card';
+import { FIT_MODAL } from '@libs/overlay';
 interface MemberItemProps {
   memberImgSrc: string;
   memberStatus: boolean;
@@ -20,6 +23,8 @@ export default function MemberItem({
   roleArray = [],
   timeAdded,
 }: MemberItemProps) {
+  const { openTooltip, open } = useOverlay();
+
   return (
     <div className="member-item">
       <div className="item-container">
@@ -43,7 +48,24 @@ export default function MemberItem({
       </div>
 
       <div className="option-menu">
-        <SquareIconButton svg={threeDots} />
+        <SquareIconButton
+          svg={threeDots}
+          onPress={(e) => {
+            if (e)
+              openTooltip(
+                [
+                  {
+                    text: 'show profile',
+                    onPress: () => {
+                      open(<MemberBigCard />, FIT_MODAL);
+                    },
+                  },
+                ],
+                e?.currentTarget,
+                true,
+              );
+          }}
+        />
       </div>
     </div>
   );
