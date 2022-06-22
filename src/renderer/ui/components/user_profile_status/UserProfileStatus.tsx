@@ -1,8 +1,9 @@
 import CircleAvatar from '@components/avatars/circle_avatar/CircleAvatar';
 import { MouseEventHandler } from 'react';
 import './style/index.scss';
+
 interface UserProfileStatusProps {
-  imgSrc: string;
+  imgSrc?: string;
   status: boolean;
   width?: number;
   avatarRadius?: number;

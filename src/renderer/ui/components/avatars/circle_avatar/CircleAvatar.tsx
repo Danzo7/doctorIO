@@ -1,7 +1,9 @@
 import { MouseEventHandler } from 'react';
 import './style/index.scss';
+import imgDefault from '@assets/pictures/test.png';
+
 interface CircleAvatarProps {
-  src: string;
+  src?: string;
   width: number;
   alt?: string;
   radius?: number | string;
@@ -9,7 +11,7 @@ interface CircleAvatarProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 function CircleAvatar({
-  src,
+  src = imgDefault,
   width,
   alt,
   radius = '100%',
