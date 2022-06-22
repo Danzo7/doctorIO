@@ -16,7 +16,7 @@ type Data = {
   drugName: string;
   qts: number;
   dose?: number;
-  duration: string;
+  duration: number;
   comment: string;
   id: number;
 };
@@ -49,7 +49,8 @@ export default function MedicamentTable({
         }),
         table.createDataColumn('duration', {
           header: 'Duration',
-          footer: (props) => props.column.id,
+          cell: ({ getValue }) =>
+            (getValue() ?? '*') + `${getValue() > 1 ? ' days' : ' day'}`,
         }),
 
         table.createDataColumn('comment', {
@@ -72,12 +73,13 @@ export default function MedicamentTable({
                       <AddDrugModal
                         defaultValues={{
                           drugName: row.getValue('drugName'),
-                          duration: row.getValue('duration'),
                           qts: row.getValue('qts'),
+                          dose: row.getValue('dose'),
+                          duration: row.getValue('duration'),
                           comment: row.getValue('comment'),
                         }}
-                        onAdd={(formData) => {
-                          console.log(formData);
+                        onSubmitPress={(formData) => {
+                          console.log(formData); //TODO : implement Edit data function
                         }}
                       />,
                       {

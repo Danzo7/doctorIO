@@ -11,7 +11,7 @@ const dataList = [
     drugName: 'aymen',
     qts: 15,
     dose: 3,
-    duration: '5 days',
+    duration: 5,
     comment: 'dont die',
     id: 1,
   },
@@ -19,7 +19,7 @@ const dataList = [
     drugName: 'aymen',
     qts: 10,
     dose: 3,
-    duration: '5 days',
+    duration: 6,
     comment: 'dont die',
     id: 2,
   },
@@ -27,7 +27,7 @@ const dataList = [
     drugName: 'aymen',
     qts: 5,
     dose: 3,
-    duration: '5 days',
+    duration: 2,
     comment: 'dont die',
     id: 3,
   },
@@ -35,7 +35,7 @@ const dataList = [
     drugName: 'aymen',
     qts: 5,
     dose: 3,
-    duration: '5 days',
+    duration: 4,
     comment: 'dont die',
     id: 3,
   },
@@ -43,7 +43,7 @@ const dataList = [
     drugName: 'aymen',
     qts: 5,
     dose: 3,
-    duration: '5 days',
+    duration: 5,
     comment: 'dont die',
     id: 3,
   },
@@ -64,7 +64,7 @@ export default function PrescriptionTab({}: PrescriptionTabProps) {
             onPress={() => {
               open(
                 <AddDrugModal
-                  onAdd={(formData) => {
+                  onSubmitPress={(formData) => {
                     console.log(formData);
                     setData((prev) => {
                       return [
@@ -72,7 +72,7 @@ export default function PrescriptionTab({}: PrescriptionTabProps) {
                         {
                           drugName: formData.drugName,
                           qts: formData.qts,
-                          dose: 1, //TODO  we need to add input field to Add Drug for dose value
+                          dose: formData.dose,
                           comment: formData.comment,
                           duration: formData.duration,
                           id: Math.random() * 10,
