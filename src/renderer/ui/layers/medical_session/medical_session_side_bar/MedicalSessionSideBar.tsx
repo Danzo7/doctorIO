@@ -71,10 +71,7 @@ export default function MedicalSessionSideBar({}: MedicalSessionSideBarProps) {
             <DarkLightCornerButton title="preview" onPress={() => {}} blend />
           }
         />
-        <MedicalHistory
-          medicalHistoryList={medicalHistoryList}
-          onAdd={() => {}}
-        />
+        <MedicalHistory medicalHistoryList={medicalHistoryList} />
         <AppointmentHistoryPanel
           historyList={historyList}
           onViewAll={() => {}}
