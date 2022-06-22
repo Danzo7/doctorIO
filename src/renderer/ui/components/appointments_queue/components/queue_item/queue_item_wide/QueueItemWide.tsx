@@ -10,9 +10,10 @@ import TextIconButton from '@components/buttons/text_icon_button';
 import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
+import { formatDistance } from 'date-fns';
 interface QueueItemWideProps {
   name: string;
-  timeAgo: string;
+  timeAgo: Date;
   number: number;
   state?: string;
   width?: number;
@@ -39,7 +40,7 @@ function QueueItemWide({
       <div className="content">
         <div className="pat-info">
           <span>{name}</span>
-          <span>{timeAgo}</span>
+          <span>{formatDistance(timeAgo, new Date())} ago</span>
         </div>
         <div className="buttons-hover-lock">
           <TextIconButton
@@ -51,8 +52,8 @@ function QueueItemWide({
               open(
                 <NextPatient
                   patientName={name}
-                  patientNumber={number}
-                  appointmentDuration={timeAgo}
+                  position={number}
+                  arrivalTime={timeAgo}
                 />,
                 {
                   width: '30%',

@@ -24,5 +24,5 @@ export const Primary = Template.bind({});
 Primary.args = {
   name: 'adam smith',
   number: 1,
-  timeAgo: 'created 1h ago',
+  timeAgo: new Date('2022-06-22T19:39:40.000Z'),
 };

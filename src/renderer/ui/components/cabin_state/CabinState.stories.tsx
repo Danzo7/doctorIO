@@ -12,6 +12,6 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   state: 'paused',
   patientName: 'Aymen daouadji',
-  patientNumber: 19,
-  duration: '1 hour ago',
+  position: 19,
+  arrivalTime: new Date('2022-06-22T19:39:40.000Z'),
 };

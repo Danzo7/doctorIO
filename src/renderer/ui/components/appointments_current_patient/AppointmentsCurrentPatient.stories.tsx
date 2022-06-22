@@ -11,6 +11,6 @@ const Template: Story<ComponentProps<typeof AppointmentsCurrentPatient>> = (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   patientName: 'John doe',
-  duration: '5min ago',
-  patientNumber: 50,
+  arrivalTime: new Date('2022-06-22T19:39:40.000Z'),
+  position: 50,
 };

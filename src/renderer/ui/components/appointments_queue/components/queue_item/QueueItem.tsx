@@ -6,7 +6,7 @@ import QueueItemWide from './queue_item_wide';
 interface QueueItemProps {
   name: string;
   number: number;
-  timeAgo: string;
+  timeAgo: Date;
   state?: string;
   itemId?: number;
   opened?: boolean;

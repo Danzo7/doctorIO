@@ -1,26 +1,24 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import AppointmentsCurrentPatient from '@components/appointments_current_patient';
+import { ComponentProps } from 'react';
 import './style/index.scss';
 
 interface CabinStateProps {
   state: 'inProgress' | 'paused' | 'waiting';
-  patientName?: string;
-  patientNumber?: number;
-  duration?: string;
 }
 export default function CabinState({
   state,
   patientName,
-  patientNumber,
-  duration,
-}: CabinStateProps) {
+  position,
+  arrivalTime,
+}: CabinStateProps & ComponentProps<typeof AppointmentsCurrentPatient>) {
   return (
     <div className="cabin-state">
       <span>Status</span>
       {(state == 'inProgress' || state == 'waiting') &&
         patientName &&
-        patientNumber &&
-        duration && (
+        position &&
+        arrivalTime && (
           <>
             <div className="In-progress-div">
               {state == 'inProgress' && (
@@ -32,8 +30,8 @@ export default function CabinState({
             </div>
             <AppointmentsCurrentPatient
               patientName={patientName}
-              patientNumber={patientNumber}
-              duration={duration}
+              position={position}
+              arrivalTime={arrivalTime}
             />
           </>
         )}

@@ -6,72 +6,36 @@ import ScrollView from '@components/scroll_view';
 
 import { useScroller } from '@libs/hooks/useScroller';
 import QueueControls from '@components/queue_controls';
+import { subDays } from 'date-fns';
 
 interface AppointmentQueueSmallProps {}
-
 const itemsL = [
   {
     name: 'adam smith',
-    timeAgo: 'created 1h ago',
+    timeAgo: subDays(new Date(), 3),
     number: 20,
   },
   {
     name: 'adam smith',
-    timeAgo: 'created 1h ago',
-    number: 20,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: 'created 1h ago',
+    timeAgo: subDays(new Date(), 3),
     number: 21,
   },
   {
     name: 'adam smith',
-    timeAgo: 'created 1h ago',
+    timeAgo: subDays(new Date(), 3),
     number: 22,
   },
   {
     name: 'adam smith',
-    timeAgo: 'created 1h ago',
+    timeAgo: subDays(new Date(), 2),
     number: 23,
   },
   {
     name: 'adam smith',
-    timeAgo: 'created 1h ago',
+    timeAgo: subDays(new Date(), 1),
     number: 24,
   },
-  {
-    name: 'adam smith',
-    timeAgo: 'created 1h ago',
-    number: 25,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: 'created 1h ago',
-    number: 26,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: 'created 1h ago',
-    number: 27,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: 'created 1h ago',
-    number: 28,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: 'created 1h ago',
-    number: 29,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: 'created 1h ago',
-    number: 30,
-  },
 ];
-
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [selected, setSelected] = useState(-1);
   const [items, setItems] = useState(itemsL);

@@ -35,20 +35,13 @@ export default function QueueControls({ role }: QueueControlsProps) {
             radius={7}
             iconSize={10}
             onPress={() => {
-              open(
-                <NextPatient
-                  patientName="Aymen Daouadji"
-                  patientNumber={15}
-                  appointmentDuration="5 min ago"
-                />,
-                {
-                  width: '30%',
-                  closeOnClickOutside: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                  closeBtn: 'inner',
-                },
-              );
+              open(<NextPatient patientName="Aymen Daouadji" position={15} />, {
+                width: '30%',
+                closeOnClickOutside: true,
+                isDimmed: true,
+                clickThrough: false,
+                closeBtn: 'inner',
+              });
               if (role.roleProps.onCallNext) role.roleProps?.onCallNext();
             }}
           />

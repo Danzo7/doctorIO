@@ -4,17 +4,13 @@ import AppointmentsCurrentPatient from '@components/appointments_current_patient
 import './style/index.scss';
 import ModalContainer from '@components/modal_container';
 import useNavigation from '@libs/hooks/useNavigation';
-import { useState } from 'react';
-interface NextPatientProps {
-  patientName: string;
-  appointmentDuration: string;
-  patientNumber: number;
-}
+import { ComponentProps, useState } from 'react';
+
 export default function NextPatient({
   patientName,
-  appointmentDuration,
-  patientNumber,
-}: NextPatientProps) {
+  arrivalTime,
+  position,
+}: ComponentProps<typeof AppointmentsCurrentPatient>) {
   const { navigate } = useNavigation();
   const [notified, setNotified] = useState(false);
   return (
@@ -50,8 +46,8 @@ export default function NextPatient({
     >
       <AppointmentsCurrentPatient
         patientName={patientName}
-        duration={appointmentDuration}
-        patientNumber={patientNumber}
+        arrivalTime={arrivalTime}
+        position={position}
       />
     </ModalContainer>
   );
