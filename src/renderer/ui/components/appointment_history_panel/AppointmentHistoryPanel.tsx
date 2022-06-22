@@ -4,30 +4,23 @@ import AppointmentHistoryItem from './appointment_history_item';
 import './style/index.scss';
 interface AppointmentHistoryPanelProps {
   historyList: any[];
-  onViewAll: () => void;
 }
 export default function AppointmentHistoryPanel({
   historyList = [],
-  onViewAll,
 }: AppointmentHistoryPanelProps) {
   return (
     <PreviewList
       title="Post appointment"
-      buttonNode={
-        <DarkLightCornerButton title="View all" onPress={onViewAll} blend />
-      }
+      buttonNode={<DarkLightCornerButton title="View all" blend />} //TODO implement View All function
       notScrollable
     >
-      {historyList.map(
-        ({ appointmentDate, appointmentDescription, onPressHistory }) => (
-          <AppointmentHistoryItem
-            appointmentDate={appointmentDate}
-            appointmentDescription={appointmentDescription}
-            onPressHistory={onPressHistory}
-            key={Math.random() * 10}
-          />
-        ),
-      )}
+      {historyList.map(({ appointmentDate, appointmentDescription }) => (
+        <AppointmentHistoryItem
+          appointmentDate={appointmentDate}
+          appointmentDescription={appointmentDescription}
+          key={Math.random() * 10}
+        />
+      ))}
     </PreviewList>
   );
 }

@@ -4,6 +4,7 @@ import InQueue from 'toSvg/in_queue.svg';
 import threeDots from 'toSvg/threedots.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
 
 interface BookedItemProps {
   name: string;
@@ -11,7 +12,7 @@ interface BookedItemProps {
   state: 'panding' | 'in queue';
 }
 function BookedItem({ name, bookTime, state }: BookedItemProps) {
-  const { openTooltip } = useOverlay();
+  const { openTooltip, open } = useOverlay();
   return (
     <div className="booked-item">
       <div className="right-container">
@@ -40,6 +41,15 @@ function BookedItem({ name, bookTime, state }: BookedItemProps) {
               [
                 {
                   text: 'Add to queue',
+                  onPress: () => {
+                    open(<AddSelectedToQueueModal fullName={name} age={18} />, {
+                      closeOnClickOutside: true,
+                      isDimmed: true,
+                      clickThrough: false,
+                      closeBtn: 'inner',
+                      width: '30%',
+                    });
+                  },
                 },
                 {
                   text: 'View records',

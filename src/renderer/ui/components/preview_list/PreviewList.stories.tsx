@@ -21,17 +21,14 @@ FirstStory.args = {
       <AppointmentHistoryItem
         appointmentDate="28 Feb 2021"
         appointmentDescription="sick from the nose"
-        onPressHistory={() => {}}
       />
       <AppointmentHistoryItem
         appointmentDate="28 Feb 2021"
         appointmentDescription="sick from the nose"
-        onPressHistory={() => {}}
       />
       <AppointmentHistoryItem
         appointmentDate="28 Feb 2021"
         appointmentDescription="sick from the nose"
-        onPressHistory={() => {}}
       />
     </>
   ),

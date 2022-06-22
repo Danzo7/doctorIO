@@ -2,6 +2,8 @@ import AppointmentHistoryPanel from '@components/appointment_history_panel';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import MedicalHistory from '@components/medical_history';
 import PreviewInfo from '@components/preview_info';
+import DiagnosisPreview from '@containers/modals/diagnosis_preview';
+import { useOverlay } from '@libs/overlay/useOverlay';
 import './style/index.scss';
 
 const historyList = [
@@ -61,6 +63,7 @@ const diagnosisData = {
 
 interface MedicalSessionSideBarProps {}
 export default function MedicalSessionSideBar({}: MedicalSessionSideBarProps) {
+  const { open } = useOverlay();
   return (
     <div className="medical-session-side-bar">
       <div className="medical-session-side-bar-content">
@@ -68,14 +71,35 @@ export default function MedicalSessionSideBar({}: MedicalSessionSideBarProps) {
           title="Diagnosis"
           data={diagnosisData}
           buttonNode={
-            <DarkLightCornerButton title="preview" onPress={() => {}} blend />
+            <DarkLightCornerButton
+              title="preview"
+              blend
+              onPress={() => {
+                open(
+                  <DiagnosisPreview
+                    data={[
+                      { firstText: 'something', secondText: '11' },
+                      { firstText: 'something', secondText: '11' },
+                      { firstText: 'something', secondText: '11' },
+                      { firstText: 'something', secondText: '11' },
+                      { firstText: 'something', secondText: '11' },
+                      { firstText: 'something', secondText: '11' },
+                    ]}
+                  />,
+                  {
+                    closeOnClickOutside: true,
+                    isDimmed: true,
+                    clickThrough: false,
+                    closeBtn: 'inner',
+                    width: '30%',
+                  },
+                );
+              }}
+            />
           }
         />
         <MedicalHistory medicalHistoryList={medicalHistoryList} />
-        <AppointmentHistoryPanel
-          historyList={historyList}
-          onViewAll={() => {}}
-        />
+        <AppointmentHistoryPanel historyList={historyList} />
       </div>
     </div>
   );

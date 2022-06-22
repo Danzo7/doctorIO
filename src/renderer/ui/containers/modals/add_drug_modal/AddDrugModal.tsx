@@ -8,16 +8,17 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 type Inputs = {
   drugName: string;
-  duration: number;
   qts: number;
+  dose: number;
+  duration: number;
   comment: string;
 };
 interface AddDrugModalProps {
-  onAdd: (data: any) => void;
+  onSubmitPress: (data: any) => void;
   defaultValues?: Inputs;
 }
 export default function AddDrugModal({
-  onAdd,
+  onSubmitPress,
   defaultValues,
 }: AddDrugModalProps) {
   const {
@@ -28,7 +29,7 @@ export default function AddDrugModal({
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     if (!defaultValues) {
-      onAdd(formData);
+      onSubmitPress(formData);
     }
 
     Overlay.close();
@@ -68,15 +69,6 @@ export default function AddDrugModal({
         fillContainer
       />
       <Input
-        {...register('duration', {
-          min: { value: 1, message: 'min value is 1 ' },
-          required: { value: true, message: 'duration is required' },
-        })}
-        label="Duration"
-        errorMsg={errors.duration?.message}
-        type={{ type: 'numeric', min: 1, step: 1, unit: 'Day' }}
-      />
-      <Input
         {...register('qts', {
           min: { value: 1, message: 'min value is 1 ' },
           required: { value: true, message: 'qts is required' },
@@ -84,6 +76,24 @@ export default function AddDrugModal({
         label="Qts"
         errorMsg={errors.qts?.message}
         type={{ type: 'numeric', min: 1, step: 1, unit: '' }}
+      />
+      <Input
+        {...register('dose', {
+          min: { value: 1, message: 'min value is 1 ' },
+          required: { value: true, message: 'dose is required' },
+        })}
+        label="dose"
+        errorMsg={errors.dose?.message}
+        type={{ type: 'numeric', min: 1, step: 1, unit: '' }}
+      />
+      <Input
+        {...register('duration', {
+          min: { value: 1, message: 'min value is 1 ' },
+          required: { value: true, message: 'duration is required' },
+        })}
+        label="Duration"
+        errorMsg={errors.duration?.message}
+        type={{ type: 'numeric', min: 1, step: 1, unit: 'Day' }}
       />
       <Input
         {...register('comment', {})}
