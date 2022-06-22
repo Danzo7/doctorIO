@@ -1,11 +1,32 @@
 import { Overlay } from './overlay';
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import './style/index.scss';
 import SquareIconButton from '@components/buttons/square_icon_button';
 import { css } from '@emotion/react';
 import { createPopper, Modifier, OptionsGeneric } from '@popperjs/core';
 import { useRouteChange } from '@libs/HistoryBlocker';
+import { ActionProps } from '@components/poppers/tooltip';
 interface OverlayContainerProps {}
+export const OverlayContext = createContext<{
+  open?: (target: ReactNode, props: OverlayOptions) => void;
+  close?: () => void;
+  openTooltip?: (
+    actionList: ActionProps[],
+    popperTarget: HTMLElement,
+    autoClose: true | undefined,
+  ) => void;
+}>({
+  open: Overlay?.open,
+  close: Overlay?.close,
+  openTooltip: Overlay?.openTooltip,
+});
 
 export function OverlayContainer({}: OverlayContainerProps) {
   const [render, setrender] = useState<React.ReactPortal[]>([]);

@@ -1,4 +1,4 @@
-//import { OverlayItem } from '@components/overlay_container/OverlayContainer';
+import Tooltip, { ActionProps } from '@components/poppers/tooltip';
 import { OverlayItem } from '@libs/overlay/OverlayContainer';
 import React, { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
@@ -78,6 +78,34 @@ export class Overlay {
         'No overlay reference found! ¨Please add `<OverlayContainer/>`to your component tree',
       );
   }
+
+  static openTooltip = (
+    actionList: ActionProps[],
+    popperTarget: HTMLElement,
+    autoClose: true | undefined,
+  ) => {
+    if (Overlay.entryElement == undefined)
+      throw Error(
+        'No overlay reference found,please create `<OverlayContainer></OverlayContainer> or you have to setRenderer first. Call seRenderer(Element) on your overlay component`',
+      );
+    // killRoot();
+    // (popperTarget.parentElement || popperTarget).appendChild(layer);
+    // createPopper(popperTarget, layer, { placement: 'right' });
+    // root.current = createRoot(layer);
+    Overlay.open(
+      Tooltip({
+        actionList: actionList,
+        closeOnSelect: autoClose && close,
+      }),
+      {
+        clickThrough: true,
+        closeOnClickOutside: true,
+        closeOnBlur: true,
+        popperTarget,
+        closeMethod: close,
+      },
+    );
+  };
 
   static close() {
     if (this.entryElement) {
