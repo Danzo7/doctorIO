@@ -24,6 +24,7 @@ interface MedicamentTableProps {
   editable?: true;
   dataList?: Data[];
 }
+
 const table = createTable().setRowType<Data>();
 export default function MedicamentTable({
   editable,

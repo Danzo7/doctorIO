@@ -37,7 +37,7 @@ const dataList = [
     dose: 3,
     duration: 4,
     comment: 'dont die',
-    id: 3,
+    id: 4,
   },
   {
     drugName: 'aymen',
@@ -45,7 +45,7 @@ const dataList = [
     dose: 3,
     duration: 5,
     comment: 'dont die',
-    id: 3,
+    id: 5,
   },
 ];
 
