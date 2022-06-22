@@ -72,7 +72,7 @@ export default function SessionPreviewModal({}: SessionPreviewModalProps) {
           menuItemsAlignment="center"
         >
           <MedicamentTable dataList={dataList} />
-          <NoticeTab />
+          <NoticeTab defaultValue="you are sick because you didn't take your health seriously , you should do some workout and fitness and eat  healthy food  " />
         </TabMenu>
       </div>
     </ModalContainer>

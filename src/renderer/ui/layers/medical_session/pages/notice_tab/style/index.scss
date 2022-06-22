@@ -5,4 +5,17 @@
     align-items: stretch;
     flex-grow: 1;
     align-self: stretch;
+
+    > .defaultValue-container {
+        background-color: $darkerseccolor;
+        padding: 10px;
+        overflow: hidden;
+        border-radius: 7px;
+
+        > span {
+            font-weight: 400;
+            font-size: 15px;
+            color: $textgray;
+        }
+    }
 }
