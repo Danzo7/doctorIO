@@ -5,6 +5,50 @@ import TabMenu from '@components/tab_menu';
 import NoticeTab from '@layers/medical_session/pages/notice_tab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
 import './style/index.scss';
+
+const dataList = [
+  {
+    drugName: 'aymen',
+    qts: 15,
+    dose: 3,
+    duration: '5 days',
+    comment: 'dont die',
+    id: 1,
+  },
+  {
+    drugName: 'aymen',
+    qts: 10,
+    dose: 3,
+    duration: '5 days',
+    comment: 'dont die',
+    id: 2,
+  },
+  {
+    drugName: 'aymen',
+    qts: 5,
+    dose: 3,
+    duration: '5 days',
+    comment: 'dont die',
+    id: 3,
+  },
+  {
+    drugName: 'aymen',
+    qts: 5,
+    dose: 3,
+    duration: '5 days',
+    comment: 'dont die',
+    id: 3,
+  },
+  {
+    drugName: 'aymen',
+    qts: 5,
+    dose: 3,
+    duration: '5 days',
+    comment: 'dont die',
+    id: 3,
+  },
+];
+
 interface SessionPreviewModalProps {}
 export default function SessionPreviewModal({}: SessionPreviewModalProps) {
   return (
@@ -27,7 +71,7 @@ export default function SessionPreviewModal({}: SessionPreviewModalProps) {
           borderBottom={false}
           menuItemsAlignment="center"
         >
-          <MedicamentTable />
+          <MedicamentTable dataList={dataList} />
           <NoticeTab />
         </TabMenu>
       </div>
