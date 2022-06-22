@@ -7,6 +7,8 @@ import { useScroller } from '@libs/hooks/useScroller';
 import Arrow from 'toSvg/arrow.svg?icon';
 import './style/index.scss';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
+import Header from '@components/header';
+import QueueControls from '@components/queue_controls';
 interface AppointmentsQueueProps {
   cabinState: 'inProgress' | 'paused';
 }
@@ -79,10 +81,10 @@ export default function AppointmentsQueue({
 
   return (
     <div className="appointments-queue">
-      <div className="appointments-queue-header">
-        <span>Queue list</span>
-        <DarkLightCornerButton title="Add ..." textColor={colors.white} />
-      </div>
+      <Header
+        title="Queue list"
+        buttonNode={<QueueControls role={{ roleName: 'owner' }} />}
+      />
       <div className="appointments-queue-content">
         <CabinState
           state={cabinState}
