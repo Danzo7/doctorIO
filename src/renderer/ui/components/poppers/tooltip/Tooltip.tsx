@@ -22,8 +22,9 @@ export default function Tooltip({ actionList, closeOnSelect }: TooltipProps) {
           selectedColor={afterColor}
           Icon={Icon}
           onPress={() => {
-            closeOnSelect?.();
-            onPress?.();
+            if (onPress) {
+              onPress();
+            } else closeOnSelect?.();
           }}
           type={type}
         />
