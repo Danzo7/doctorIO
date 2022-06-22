@@ -19,7 +19,7 @@ interface AssistanceRoleProps {
 }
 interface QueueControlsProps {
   role:
-    | { roleName: 'owner'; roleProps: OwnerRoleProps }
+    | { roleName: 'owner'; roleProps?: OwnerRoleProps }
     | { roleName: 'assistance'; roleProps?: AssistanceRoleProps };
 }
 export default function QueueControls({ role }: QueueControlsProps) {
@@ -49,7 +49,7 @@ export default function QueueControls({ role }: QueueControlsProps) {
                   closeBtn: 'inner',
                 },
               );
-              if (role.roleProps.onCallNext) role.roleProps?.onCallNext();
+              if (role.roleProps?.onCallNext) role.roleProps?.onCallNext();
             }}
           />
           <IconicButton
@@ -80,7 +80,7 @@ export default function QueueControls({ role }: QueueControlsProps) {
                   closeBtn: 'inner',
                 },
               );
-              if (role.roleProps.onPause) role.roleProps?.onPause();
+              if (role.roleProps?.onPause) role.roleProps?.onPause();
             }}
           />
         </div>
