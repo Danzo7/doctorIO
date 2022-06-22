@@ -1,10 +1,13 @@
 import { color } from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import PreviewList from '@components/preview_list';
+import BookAppointmentModal from '@containers/modals/book_appointment_modal';
+import { useOverlay } from '@libs/overlay/useOverlay';
 import './style/index.scss';
 import TimelineItem from './timeline_item';
 interface BookingTimelineProps {}
 export default function BookingTimeline({}: BookingTimelineProps) {
+  const { open } = useOverlay();
   return (
     <div className="booking-timeline">
       <div
@@ -19,7 +22,23 @@ export default function BookingTimeline({}: BookingTimelineProps) {
       />
       <PreviewList
         title="Appointment"
-        buttonNode={<DarkLightCornerButton title="Book appointment" />}
+        buttonNode={
+          <DarkLightCornerButton
+            title="Book appointment"
+            onPress={() => {
+              open(
+                <BookAppointmentModal id="123456789" patientName="john Doe" />,
+                {
+                  closeOnClickOutside: true,
+                  isDimmed: true,
+                  clickThrough: false,
+                  closeBtn: 'inner',
+                  width: '30%',
+                },
+              );
+            }}
+          />
+        }
         gap={10}
         noBorder
       >

@@ -23,7 +23,7 @@ interface QueueControlsProps {
     | { roleName: 'assistance'; roleProps?: AssistanceRoleProps };
 }
 export default function QueueControls({ role }: QueueControlsProps) {
-  const { open } = useOverlay();
+  const { open, close } = useOverlay();
   return (
     <>
       {role.roleName == 'owner' ? (
@@ -68,6 +68,9 @@ export default function QueueControls({ role }: QueueControlsProps) {
                     text="Confirm"
                     backgroundColor={color.hot_red}
                     width="100%"
+                    onPress={() => {
+                      close();
+                    }}
                   />
                 </WarningModal>,
                 {

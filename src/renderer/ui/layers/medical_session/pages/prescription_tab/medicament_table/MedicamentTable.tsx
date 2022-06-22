@@ -9,9 +9,11 @@ import {
   useTableInstance,
 } from '@tanstack/react-table';
 import './style/index.scss';
+import AddDrugModal from '@containers/modals/add_drug_modal';
+import { useOverlay } from '@libs/overlay/useOverlay';
 
 type Data = {
-  name: string;
+  drugName: string;
   qts: number;
   dose?: number;
   duration: string;
@@ -24,71 +26,15 @@ interface MedicamentTableProps {
 }
 const table = createTable().setRowType<Data>();
 export default function MedicamentTable({
-  dataList = [
-    {
-      name: 'aymen',
-      qts: 15,
-      dose: 3,
-      duration: '5 days',
-      comment: 'dont die',
-      id: 1,
-    },
-    {
-      name: 'aymen',
-      qts: 10,
-      dose: 3,
-      duration: '5 days',
-      comment: 'dont die',
-      id: 2,
-    },
-    {
-      name: 'aymen',
-      qts: 5,
-      dose: 3,
-      duration: '5 days',
-      comment: 'dont die',
-      id: 3,
-    },
-    {
-      name: 'aymen',
-      qts: 5,
-      dose: 3,
-      duration: '5 days',
-      comment: 'dont die',
-      id: 3,
-    },
-    {
-      name: 'aymen',
-      qts: 5,
-      dose: 3,
-      duration: '5 days',
-      comment: 'dont die',
-      id: 3,
-    },
-    {
-      name: 'aymen',
-      qts: 5,
-      dose: 3,
-      duration: '5 days',
-      comment: 'dont die',
-      id: 3,
-    },
-    {
-      name: 'aymen',
-      qts: 5,
-      dose: 3,
-      duration: '5 days',
-      comment: 'dont die',
-      id: 3,
-    },
-  ],
   editable,
+  dataList = [],
 }: MedicamentTableProps) {
+  const { open } = useOverlay();
   const [sorting, setSorting] = useState<SortingState>([]);
   const columns = useMemo(
     () =>
       [
-        table.createDataColumn('name', {
+        table.createDataColumn('drugName', {
           header: 'Name',
           footer: (props) => props.column.id,
         }),
@@ -116,13 +62,33 @@ export default function MedicamentTable({
             header: '',
             id: 'skip',
             size: 1,
-            cell: ({ getValue }) => (
+            cell: ({ getValue, row }) => (
               <div css={{ float: 'right' }}>
                 <DarkLightCornerButton
                   title="Edit"
                   isActive={true}
                   onPress={() => {
-                    //todo:Open editDrugModal(getValue())
+                    open(
+                      <AddDrugModal
+                        defaultValues={{
+                          drugName: row.getValue('drugName'),
+                          duration: row.getValue('duration'),
+                          qts: row.getValue('qts'),
+                          comment: row.getValue('comment'),
+                        }}
+                        onAdd={(formData) => {
+                          console.log(formData);
+                        }}
+                      />,
+                      {
+                        closeOnClickOutside: true,
+                        isDimmed: true,
+                        clickThrough: false,
+                        position: { top: '30%' },
+                        width: '30%',
+                        closeBtn: 'inner',
+                      },
+                    );
                   }}
                 />
               </div>
@@ -131,9 +97,9 @@ export default function MedicamentTable({
       ].filter(Boolean) as any,
     [editable],
   );
-  const [data, setData] = useState<Data[]>(dataList);
+
   const instance = useTableInstance(table, {
-    data,
+    data: dataList,
     columns,
     state: {
       sorting,

@@ -3,12 +3,11 @@ import IconicButton from '@components/buttons/iconic_button';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
+import { Overlay } from '@libs/overlay';
 import Upload from 'toSvg/link.svg?icon';
 
-interface UploadFileModalProps {
-  onUpload?: () => void;
-}
-export default function UploadFileModal({ onUpload }: UploadFileModalProps) {
+interface UploadFileModalProps {}
+export default function UploadFileModal({}: UploadFileModalProps) {
   return (
     <ModalContainer
       title="Upload a document"
@@ -21,7 +20,9 @@ export default function UploadFileModal({ onUpload }: UploadFileModalProps) {
           alignSelf="center"
           padding={'5px 10px'}
           fontSize={12}
-          onPress={onUpload} //TODO? upload function
+          onPress={() => {
+            Overlay.close();
+          }} //TODO? upload function
         />
       }
     >
