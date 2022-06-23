@@ -19,16 +19,19 @@ FirstStory.args = {
   children: (
     <>
       <AppointmentHistoryItem
-        appointmentDate="28 Feb 2021"
-        appointmentDescription="sick from the nose"
+        date={new Date('2022-05-01')}
+        description="sick from the nose"
+        id="1"
       />
       <AppointmentHistoryItem
-        appointmentDate="28 Feb 2021"
-        appointmentDescription="sick from the nose"
+        date={new Date('2022-05-02')}
+        description="sick from the nose"
+        id="2"
       />
       <AppointmentHistoryItem
-        appointmentDate="28 Feb 2021"
-        appointmentDescription="sick from the nose"
+        date={new Date('2022-05-03')}
+        description="sick from the nose"
+        id="3"
       />
     </>
   ),

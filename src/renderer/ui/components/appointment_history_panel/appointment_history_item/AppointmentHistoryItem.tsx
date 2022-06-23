@@ -1,21 +1,24 @@
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import PreviewWithControls from '@components/preview_with_controls';
+import { DATE_ONLY } from '@constants/data_format';
 import SessionPreviewModal from '@containers/modals/session_preview_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import { format } from 'date-fns';
 import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 interface AppointmentHistoryItemProps {
-  appointmentDate: string;
-  appointmentDescription: string;
+  date: Date;
+  description: string;
+  id: string;
 }
 export default function AppointmentHistoryItem({
-  appointmentDate,
-  appointmentDescription,
+  date,
+  description,
 }: AppointmentHistoryItemProps) {
   const { open } = useOverlay();
   return (
     <PreviewWithControls
-      primaryText={appointmentDate}
-      secondaryText={appointmentDescription}
+      primaryText={format(date, DATE_ONLY)}
+      secondaryText={description}
     >
       <SquareIconButton
         svg={AppointmentHistoryIcon}

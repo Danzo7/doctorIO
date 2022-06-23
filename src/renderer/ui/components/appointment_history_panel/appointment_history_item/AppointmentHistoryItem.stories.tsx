@@ -10,6 +10,6 @@ const Template: Story<ComponentProps<typeof AppointmentHistoryItem>> = (
 ) => <AppointmentHistoryItem {...args} />;
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  appointmentDate: '28 Feb 2021',
-  appointmentDescription: 'Sick from eating flesh',
+  date: new Date('2022-05-01'),
+  description: 'Sick from eating flesh',
 };

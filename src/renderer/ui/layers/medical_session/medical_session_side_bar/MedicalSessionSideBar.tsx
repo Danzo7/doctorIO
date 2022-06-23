@@ -8,39 +8,24 @@ import './style/index.scss';
 
 const historyList = [
   {
-    appointmentDate: '28 Feb 2021',
-    appointmentDescription: 'Sick from eating flesh',
-    onPressHistory: () => {},
+    date: new Date('2022-05-01'),
+    description: 'Sickness for the day',
+    id: '1',
   },
   {
-    appointmentDate: '21 Feb 2021',
-    appointmentDescription: 'Sick from eating flesh',
-    onPressHistory: () => {},
+    date: new Date('2022-05-02'),
+    description: 'dead inside',
+    id: '2',
   },
   {
-    appointmentDate: '29 Feb 2021',
-    appointmentDescription: 'Sick from eating flesh',
-    onPressHistory: () => {},
+    date: new Date('2022-05-03'),
+    description: 'good health',
+    id: '3',
   },
   {
-    appointmentDate: '22 Feb 2021',
-    appointmentDescription: 'Sick from eating flesh',
-    onPressHistory: () => {},
-  },
-  {
-    appointmentDate: '22 Feb 2021',
-    appointmentDescription: 'Sick from eating flesh',
-    onPressHistory: () => {},
-  },
-  {
-    appointmentDate: '22 Feb 2021',
-    appointmentDescription: 'Sick from eating flesh',
-    onPressHistory: () => {},
-  },
-  {
-    appointmentDate: '22 Feb 2021',
-    appointmentDescription: 'Sick from eating flesh',
-    onPressHistory: () => {},
+    date: new Date('2022-05-04'),
+    description: 'good health',
+    id: '4',
   },
 ];
 
@@ -99,7 +84,7 @@ export default function MedicalSessionSideBar({}: MedicalSessionSideBarProps) {
           }
         />
         <MedicalHistory medicalHistoryList={medicalHistoryList} />
-        <AppointmentHistoryPanel historyList={historyList} />
+        <AppointmentHistoryPanel list={historyList} />
       </div>
     </div>
   );

@@ -1,12 +1,16 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import PreviewList from '@components/preview_list';
+import { ComponentProps } from 'react';
 import AppointmentHistoryItem from './appointment_history_item';
 import './style/index.scss';
+export type AppointmentHistoryList = ComponentProps<
+  typeof AppointmentHistoryItem
+>[];
 interface AppointmentHistoryPanelProps {
-  historyList: any[];
+  list: AppointmentHistoryList;
 }
 export default function AppointmentHistoryPanel({
-  historyList = [],
+  list: historyList = [],
 }: AppointmentHistoryPanelProps) {
   return (
     <PreviewList
@@ -14,11 +18,12 @@ export default function AppointmentHistoryPanel({
       buttonNode={<DarkLightCornerButton title="View all" blend />} //TODO implement View All function
       notScrollable
     >
-      {historyList.map(({ appointmentDate, appointmentDescription }) => (
+      {historyList.map(({ date, description, id }, index) => (
         <AppointmentHistoryItem
-          appointmentDate={appointmentDate}
-          appointmentDescription={appointmentDescription}
-          key={Math.random() * 10}
+          date={date}
+          description={description}
+          id={id}
+          key={id + index}
         />
       ))}
     </PreviewList>
