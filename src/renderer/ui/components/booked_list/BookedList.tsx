@@ -24,18 +24,23 @@ export default function BookedList({}: BookedListProps) {
       }
     >
       <BookedItem
-        name="John Doe"
-        bookTime="booked  20 days ago"
+        patientName="John Doe"
+        bookTime={new Date('2022-05-01')}
         state="panding"
       />
       <BookedItem
-        name="John Doe"
-        bookTime="booked  20 days ago"
+        patientName="John Doe"
+        bookTime={new Date('2022-05-01')}
         state="panding"
       />
       <BookedItem
-        name="John Doe"
-        bookTime="booked  20 days ago"
+        patientName="John Doe"
+        bookTime={new Date('2022-05-01')}
+        state="panding"
+      />
+      <BookedItem
+        patientName="John Doe"
+        bookTime={new Date('2022-05-01')}
         state="panding"
       />
     </PreviewList>

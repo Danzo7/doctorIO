@@ -1,13 +1,19 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import PreviewList from '@components/preview_list';
 import AddSearchToBooked from '@containers/modals/add_search_to_booked';
+import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import { ComponentProps } from 'react';
 import BookedAppointmentItem from './booked_appointment_item';
+export type BookedAppointmentList = ComponentProps<
+  typeof BookedAppointmentItem
+>[];
+
 interface BookedAppointmentPanelProps {
-  bookedAppointmentData: any[];
+  list: BookedAppointmentList;
 }
 export default function BookedAppointmentPanel({
-  bookedAppointmentData = [],
+  list,
 }: BookedAppointmentPanelProps) {
   const { open } = useOverlay();
   return (
@@ -17,29 +23,16 @@ export default function BookedAppointmentPanel({
         <DarkLightCornerButton
           title="Add"
           onPress={() => {
-            open(<AddSearchToBooked />, {
-              closeOnClickOutside: true,
-              isDimmed: true,
-              clickThrough: false,
-              width: '30%',
-              closeBtn: 'inner',
-            });
+            open(<AddSearchToBooked />, DEFAULT_MODAL);
           }}
         />
       }
       noBorder
       maxHeight={400}
     >
-      {bookedAppointmentData.map(
-        ({ BookedByFullName, patientFullName, BookedInDate }) => (
-          <BookedAppointmentItem
-            patientFullName={patientFullName}
-            BookedInDate={BookedInDate}
-            BookedByFullName={BookedByFullName}
-            key={BookedInDate}
-          />
-        ),
-      )}
+      {list.map((props, index) => (
+        <BookedAppointmentItem {...props} key={index} />
+      ))}
     </PreviewList>
   );
 }

@@ -7,44 +7,68 @@ import './style/index.scss';
 
 const bookedAppointmentData = [
   {
-    patientFullName: 'John Doe',
-    BookedInDate: '28 Feb 2021',
-    BookedByFullName: 'brahim aymen',
+    bookTime: new Date('2022-05-01'),
+    id: '1',
+    memberId: '1',
+    memberName: 'John Doe',
+    patientId: '1',
+    patientName: 'John cruze',
   },
   {
-    patientFullName: 'Ghanou abdou',
-    BookedInDate: '29 Feb 2021',
-    BookedByFullName: 'John Doe',
+    bookTime: new Date('2022-05-01'),
+    id: '2',
+    memberId: '1',
+    memberName: 'John Doe',
+    patientId: '1',
+    patientName: 'John cruze',
   },
   {
-    patientFullName: 'Brahim Aymen',
-    BookedInDate: '02 Feb 2021',
-    BookedByFullName: 'Aymen Daouadji',
+    bookTime: new Date('2022-05-01'),
+    id: '3',
+    memberId: '1',
+    memberName: 'John Doe',
+    patientId: '1',
+    patientName: 'John cruze',
   },
   {
-    patientFullName: 'Aymen Daouadji',
-    BookedInDate: '02 Feb 2021',
-    BookedByFullName: 'brahim aymen',
+    bookTime: new Date('2022-05-01'),
+    id: '4',
+    memberId: '1',
+    memberName: 'John Doe',
+    patientId: '1',
+    patientName: 'John cruze',
   },
   {
-    patientFullName: 'Amine ben aissa',
-    BookedInDate: '02 Feb 2021',
-    BookedByFullName: 'Amine Bouraoua',
+    bookTime: new Date('2022-05-01'),
+    id: '5',
+    memberId: '1',
+    memberName: 'John Doe',
+    patientId: '1',
+    patientName: 'John cruze',
   },
   {
-    patientFullName: 'John Doe',
-    BookedInDate: '02 Feb 2021',
-    BookedByFullName: 'Robert Livandoski',
+    bookTime: new Date('2022-05-01'),
+    id: '6',
+    memberId: '1',
+    memberName: 'John Doe',
+    patientId: '1',
+    patientName: 'John cruze',
   },
   {
-    patientFullName: 'John Doe',
-    BookedInDate: '02 Feb 2021',
-    BookedByFullName: 'brahim aymen',
+    bookTime: new Date('2022-05-01'),
+    id: '7',
+    memberId: '1',
+    memberName: 'John Doe',
+    patientId: '1',
+    patientName: 'John cruze',
   },
   {
-    patientFullName: 'John Doe',
-    BookedInDate: '02 Feb 2021',
-    BookedByFullName: 'brahim aymen',
+    bookTime: new Date('2022-05-01'),
+    id: '8',
+    memberId: '1',
+    memberName: 'John Doe',
+    patientId: '1',
+    patientName: 'John cruze',
   },
 ];
 
@@ -57,7 +81,7 @@ export default function Queues({}: QueuesProps) {
       <AppointmentsQueue cabinState="inProgress" />
       <PaymentQueue />
       <div className="queues-footer">
-        <BookedAppointmentPanel bookedAppointmentData={bookedAppointmentData} />
+        <BookedAppointmentPanel list={bookedAppointmentData} />
         <SmallClinicStatus />
       </div>
     </div>

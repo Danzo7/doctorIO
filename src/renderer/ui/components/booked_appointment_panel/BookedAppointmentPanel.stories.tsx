@@ -10,21 +10,30 @@ const Template: Story<ComponentProps<typeof BookedAppointmentPanel>> = (
 ) => <BookedAppointmentPanel {...args} />;
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  bookedAppointmentData: [
+  list: [
     {
-      patientFullName: 'John Doe',
-      BookedInDate: '28 Feb 2021',
-      BookedByFullName: 'brahim aymen',
+      bookTime: new Date('2022-05-01'),
+      id: '1',
+      memberId: '1',
+      memberName: 'John Doe',
+      patientId: '1',
+      patientName: 'John cruze',
     },
     {
-      patientFullName: 'John Doe',
-      BookedInDate: '29 Feb 2021',
-      BookedByFullName: 'brahim aymen',
+      bookTime: new Date('2022-05-01'),
+      id: '2',
+      memberId: '1',
+      memberName: 'John Doe',
+      patientId: '1',
+      patientName: 'John cruze',
     },
     {
-      patientFullName: 'John Doe',
-      BookedInDate: '02 Feb 2021',
-      BookedByFullName: 'brahim aymen',
+      bookTime: new Date('2022-05-01'),
+      id: '3',
+      memberId: '1',
+      memberName: 'John Doe',
+      patientId: '1',
+      patientName: 'John cruze',
     },
   ],
 };

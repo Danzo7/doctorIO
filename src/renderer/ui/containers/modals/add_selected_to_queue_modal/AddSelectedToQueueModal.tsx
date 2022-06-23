@@ -3,6 +3,7 @@ import RecentAppsItem from '@components/recent_apps_item';
 import './style/index.scss';
 interface AddSelectedToQueueModalProps {
   fullName: string;
+  id?: number;
   age: number;
 }
 export default function AddSelectedToQueueModal({

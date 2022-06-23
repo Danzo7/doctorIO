@@ -10,7 +10,10 @@ const Template: Story<ComponentProps<typeof BookedAppointmentItem>> = (
 ) => <BookedAppointmentItem {...args} />;
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  patientFullName: 'John Doe',
-  BookedInDate: '28 Feb 2021',
-  BookedByFullName: 'brahim aymen',
+  bookTime: new Date('2022-05-01'),
+  id: '1',
+  memberId: '1',
+  memberName: 'John Doe',
+  patientId: '1',
+  patientName: 'John cruze',
 };

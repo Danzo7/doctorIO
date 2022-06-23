@@ -14,7 +14,7 @@ const Template: Story<ComponentProps<typeof BookedItem>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  name: 'John Doe',
-  bookTime: 'booked  20 days ago',
+  patientName: 'John Doe',
+  bookTime: new Date('2022-05-01'),
   state: 'panding',
 };
