@@ -37,11 +37,13 @@ interface Session {
   prescriptionId: number;
 }
 interface Appointment {
+  id: number;
   status: 'done' | 'upcoming' | 'missed';
   dateGiving: Date;
+  date?: Date;
   sessionId?: string;
   subject?: string;
-  session: Session;
+  session?: Session;
   doctorId: number;
   assistantId: number;
 }
@@ -52,7 +54,11 @@ interface MedicalDocument {
   fileSize: number;
   filePath: string;
 }
-interface MedicalHistory {}
+interface MedicalHistory {
+  id: string;
+  description: string;
+  date: Date;
+}
 interface TestResult {}
 export type {
   Appointment,
@@ -60,4 +66,8 @@ export type {
   Patient,
   AppointmentQueueItem,
   AppointmentQueue,
+  Session,
+  MedicalDocument,
+  MedicalHistory,
+  TestResult,
 };
