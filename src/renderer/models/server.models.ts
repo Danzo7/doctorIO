@@ -14,8 +14,12 @@ interface Permission {}
 interface Clinic {
   clinicId: number;
   description: string;
-  serverLocation: string;
-  members: Member[];
+  clinicName: string;
+  serviceStatus: string;
+  memberCount: number;
+  clinicAddress: string;
+  connectionCount: number;
+  patientCount: number;
 }
 
 export type { Clinic, Member, Permission, Role };
