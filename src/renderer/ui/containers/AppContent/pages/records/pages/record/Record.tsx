@@ -1,7 +1,10 @@
 import BookingTimeline from '@components/booking_timeline';
 import DocumentPreviewPanel from '@components/document_preview_panel';
 import Input from '@components/inputs/input';
-import PatientCard from '@components/patient_card';
+import {
+  PatientInfoCard,
+  PatientSpecificsCard,
+} from '@components/patient_card';
 import MiniPatientCard from '@components/patient_card/mini_patient_card';
 import RecordInfoItem from '@components/record_info_item';
 import MedicalHistory from '@components/medical_history';
@@ -10,10 +13,15 @@ import useSearchPatient from '@libs/hooks/useSearchPatient';
 import { useForm } from 'react-hook-form';
 import Search from 'toSvg/search.svg?icon';
 import './style/index.scss';
+import { Patient } from '@models/instance.model';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import BookAppointmentModal from '@containers/modals/book_appointment_modal';
+import { DEFAULT_MODAL } from '@libs/overlay';
 
 interface SearchInput {
   searchField: string;
 }
+
 const usersData = [
   {
     fullName: 'brahim aymen',
@@ -145,12 +153,140 @@ const usersData = [
   },
 ];
 
+const patient: Patient = {
+  patId: 1,
+  gender: 'male',
+  appointments: [
+    {
+      assistantId: 2,
+      doctorId: 1,
+      doctorName: 'John Doe',
+      assistantName: 'Michel paradox',
+      id: 2,
+      state: 'upcoming',
+      bookDate: new Date('2022-01-01'),
+    },
+    {
+      doctorName: 'John Doe',
+      assistantName: 'Michel paradox',
+      assistantId: 2,
+      doctorId: 1,
+      id: 1,
+      state: 'done-booked',
+      bookDate: new Date('2022-01-01'),
+      date: new Date('2022-01-01'),
+      sessionId: 1,
+      subject: 'Inner bleed',
+    },
+    {
+      doctorName: 'John Doe',
+      assistantName: 'Michel paradox',
+      assistantId: 2,
+      doctorId: 1,
+      id: 2,
+      state: 'done',
+      date: new Date('2022-01-01'),
+      sessionId: 4,
+      subject: 'Inner bleed',
+    },
+    {
+      doctorName: 'John Doe',
+      assistantName: 'Michel paradox',
+      assistantId: 2,
+      doctorId: 1,
+      id: 2,
+      state: 'missed',
+      bookDate: new Date('2022-02-01'),
+    },
+    {
+      doctorName: 'John Doe',
+      assistantName: 'Michel paradox',
+      assistantId: 2,
+      doctorId: 1,
+      id: 2,
+      state: 'done',
+      date: new Date('2022-04-04'),
+      sessionId: 1,
+      subject: 'Inner bleed',
+    },
+  ],
+  medicalHistory: [
+    {
+      id: 1,
+      description: 'had a noise pain',
+      date: new Date('2022-01-01'),
+    },
+    {
+      id: 2,
+      description: 'had a noise pain',
+      date: new Date('2022-01-01'),
+    },
+    {
+      id: 3,
+      description: 'had a noise pain',
+      date: new Date('2022-01-01'),
+    },
+    {
+      id: 4,
+      description: 'had a noise pain',
+      date: new Date('2022-01-01'),
+    },
+  ],
+  status: 'active',
+  medicalDocuments: [
+    {
+      fileId: 1,
+      fileName: 'file1.pdf',
+      fileType: 'pdf',
+      date: new Date('2022-01-01'),
+      filePath: '',
+      fileSize: 3000,
+    },
+    {
+      fileId: 2,
+      fileName: 'file1.pdf',
+      fileType: 'pdf',
+      date: new Date('2022-01-01'),
+      filePath: '',
+      fileSize: 3000,
+    },
+    {
+      fileId: 3,
+      fileName: 'file1.pdf',
+      fileType: 'pdf',
+      date: new Date('2022-01-01'),
+      filePath: '',
+      fileSize: 3000,
+    },
+    {
+      fileId: 4,
+      fileName: 'file1.pdf',
+      fileType: 'pdf',
+      date: new Date('2022-01-01'),
+      filePath: '',
+      fileSize: 3000,
+    },
+  ],
+  registerDate: new Date('2022-01-01'),
+  firstName: 'John',
+  lastName: 'Doe',
+  birthDate: new Date('2022-01-01'),
+  age: 18,
+  testResult: {
+    height: 1.75,
+    weight: 107,
+    bloodPressure: 1,
+    bloodType: 'A',
+  },
+};
+
 interface RecordProps {}
 export default function Record({}: RecordProps) {
   const { register, watch, setValue } = useForm<SearchInput>();
   const watchSearch = watch('searchField');
   const matches = useSearchPatient(watchSearch, usersData);
   const { navigate } = useNavigation();
+  const { open } = useOverlay();
   return (
     <div className="record">
       <Input
@@ -166,7 +302,7 @@ export default function Record({}: RecordProps) {
             {matches?.map(({ fullName, id }, index) => (
               <RecordInfoItem
                 fullName={fullName}
-                id={id}
+                patientId={id}
                 key={index}
                 onViewRecord={() => {
                   setValue('searchField', '');
@@ -183,25 +319,38 @@ export default function Record({}: RecordProps) {
       ) : (
         <div className="record-content">
           <div className="record-infos">
-            <PatientCard
-              data={usersData[0].recordData}
+            <PatientInfoCard
+              birthDate={patient.birthDate}
+              activeStatus={patient.status}
+              registerDate={patient.registerDate}
+              gender={patient.gender}
               LeftComp={
                 <MiniPatientCard
-                  patientFullName="John Doe"
-                  patientId="#123468"
-                  numPostAppointment={18}
-                  nextAppointmentDate="25 jan 2028"
+                  patientFullName={patient.firstName + ' ' + patient.lastName}
+                  patientId={'#' + patient.patId}
+                  numPostAppointment={patient.appointments.length}
+                  nextAppointmentDate={patient.nextAppointment}
                 />
               }
             />
-            <PatientCard data={usersData[0].recordData} />
-            <BookingTimeline />
+            <PatientSpecificsCard data={patient.testResult} />
+            <BookingTimeline
+              appointments={patient.appointments}
+              patientId={patient.patId}
+              onPress={() => {
+                open(
+                  <BookAppointmentModal
+                    id={patient.patId}
+                    patientName={patient.firstName + ' ' + patient.lastName}
+                  />,
+                  DEFAULT_MODAL,
+                );
+              }}
+            />
           </div>
           <div className="record-side-info">
-            <MedicalHistory
-              medicalHistoryList={usersData[0].medicalHistoryList}
-            />
-            <DocumentPreviewPanel documentList={usersData[0].documentList} />
+            <MedicalHistory list={patient.medicalHistory} />
+            <DocumentPreviewPanel list={patient.medicalDocuments} />
           </div>
         </div>
       )}

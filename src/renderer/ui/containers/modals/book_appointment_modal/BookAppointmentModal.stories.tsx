@@ -11,5 +11,5 @@ const Template: Story<ComponentProps<typeof BookAppointmentModal>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   patientName: 'John Doe',
-  id: '123456789',
+  id: 123456789,
 };

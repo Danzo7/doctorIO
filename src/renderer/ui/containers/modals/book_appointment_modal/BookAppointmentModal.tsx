@@ -9,7 +9,7 @@ import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
 interface BookAppointmentModalProps {
   patientName: string;
-  id: string;
+  id: number;
 }
 export default function BookAppointmentModal({
   patientName,

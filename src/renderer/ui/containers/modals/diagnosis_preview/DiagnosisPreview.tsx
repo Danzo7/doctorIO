@@ -1,29 +1,27 @@
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import TextPair from '@components/text_pair/TextPair';
+import { TestResult } from '@models/instance.model';
 import './style/index.scss';
 
-type textData = {
-  firstText: string;
-  secondText: string;
-};
 interface DiagnosisPreviewProps {
-  data: textData[];
+  data: TestResult;
+  patId?: number;
 }
 export default function DiagnosisPreview({ data }: DiagnosisPreviewProps) {
   return (
     <ModalContainer title="Diagnosis preview">
       <div className="info-wrapper">
-        {data?.map(({ firstText, secondText }, index) => (
+        {Object.entries(data).map(([key, value], index) => (
           <TextPair
             key={index}
             first={{
-              text: firstText,
+              text: key,
               fontSize: 15,
               fontColor: color.text_gray,
             }}
             second={{
-              text: secondText,
+              text: value.toString(),
               fontSize: 15,
               fontColor: color.text_gray,
               border: true,

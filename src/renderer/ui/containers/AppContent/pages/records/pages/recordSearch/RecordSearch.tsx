@@ -51,7 +51,7 @@ export default function RecordSearch({}: RecordSearchProps) {
         {matches?.map(({ fullName, id }, index) => (
           <RecordInfoItem
             fullName={fullName}
-            id={id}
+            patientId={id}
             key={index}
             onViewRecord={() => {
               navigate(`/records/${id}`);

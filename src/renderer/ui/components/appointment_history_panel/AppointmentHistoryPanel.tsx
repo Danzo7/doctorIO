@@ -10,7 +10,7 @@ interface AppointmentHistoryPanelProps {
   list: AppointmentHistoryList;
 }
 export default function AppointmentHistoryPanel({
-  list: historyList = [],
+  list,
 }: AppointmentHistoryPanelProps) {
   return (
     <PreviewList
@@ -18,10 +18,10 @@ export default function AppointmentHistoryPanel({
       buttonNode={<DarkLightCornerButton title="View all" blend />} //TODO implement View All function
       notScrollable
     >
-      {historyList.map(({ date, description, id }, index) => (
+      {list.map(({ date, subject, id }, index) => (
         <AppointmentHistoryItem
           date={date}
-          description={description}
+          subject={subject}
           id={id}
           key={id + index}
         />

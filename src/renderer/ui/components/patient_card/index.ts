@@ -1,2 +1,2 @@
-import PatientCard from './PatientCard';
-export default PatientCard;
+import { PatientInfoCard, PatientSpecificsCard } from './PatientCard';
+export { PatientInfoCard, PatientSpecificsCard };

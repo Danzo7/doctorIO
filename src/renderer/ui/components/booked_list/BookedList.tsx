@@ -3,8 +3,11 @@ import PreviewList from '@components/preview_list';
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import useNavigation from '@libs/hooks/useNavigation';
-interface BookedListProps {}
-export default function BookedList({}: BookedListProps) {
+import { ComponentProps } from 'react';
+interface BookedListProps {
+  list: ComponentProps<typeof BookedItem>[];
+}
+export default function BookedList({ list }: BookedListProps) {
   const { navigate } = useNavigation();
 
   return (
@@ -23,26 +26,9 @@ export default function BookedList({}: BookedListProps) {
         />
       }
     >
-      <BookedItem
-        patientName="John Doe"
-        bookTime={new Date('2022-05-01')}
-        state="panding"
-      />
-      <BookedItem
-        patientName="John Doe"
-        bookTime={new Date('2022-05-01')}
-        state="panding"
-      />
-      <BookedItem
-        patientName="John Doe"
-        bookTime={new Date('2022-05-01')}
-        state="panding"
-      />
-      <BookedItem
-        patientName="John Doe"
-        bookTime={new Date('2022-05-01')}
-        state="panding"
-      />
+      {list.map((props, index) => (
+        <BookedItem {...props} key={props.id.toString() + index} />
+      ))}
     </PreviewList>
   );
 }

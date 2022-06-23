@@ -13,7 +13,7 @@ function App({}: AppProps) {
     <>
       <div className="app-container">
         <Routes>
-          <Route path="session" element={<MedicalSession />} />
+          <Route path="session" element={<MedicalSession patId={1} />} />
           <Route
             path="*"
             element={

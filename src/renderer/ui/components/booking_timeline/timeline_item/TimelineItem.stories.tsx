@@ -10,10 +10,10 @@ const Template: Story<ComponentProps<typeof TimelineItem>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
+  date: new Date('2022-01-01'),
+  assistantName: 'carl joghn',
+  doctorName: 'carl joghn',
   type: {
-    date: '',
-    assistant: 'John',
-    doctor: 'John Doe',
     subject: 'Inner bleed',
   },
 };

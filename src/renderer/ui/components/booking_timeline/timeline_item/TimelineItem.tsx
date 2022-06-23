@@ -6,24 +6,37 @@ import View from 'toSvg/view_test.svg?icon';
 import { color } from '@assets/styles/color';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import SessionPreviewModal from '@containers/modals/session_preview_modal';
+import { format } from 'date-fns';
+import { DATE_ONLY, TIME_ONLY } from '@constants/data_format';
 type TimeLineData = {
-  done?: true;
-  date: string;
+  booked?: true;
   subject: string;
-  doctor: string; //{doctorId}
-  assistant: string;
 };
 interface TimelineItemProps {
-  type: 'Missed' | 'Upcoming' | TimeLineData;
+  sessionId?: number;
+  doctorName: string;
+  assistantName: string;
+  doctorId: number;
+  assistantId: number;
+  type: 'missed' | 'upcoming' | TimeLineData;
+  date: Date;
 }
 
-export default function TimelineItem({ type }: TimelineItemProps) {
+export default function TimelineItem({
+  type,
+  date,
+  doctorName,
+  assistantName,
+  assistantId,
+  doctorId,
+  sessionId,
+}: TimelineItemProps) {
   const selectedColor =
     typeof type == 'string'
-      ? type == 'Upcoming'
+      ? type == 'upcoming'
         ? color.warm_orange
         : color.cold_red
-      : (type as TimeLineData).done
+      : (type as TimeLineData).booked
       ? color.good_green
       : color.cold_blue;
   const { open } = useOverlay();
@@ -37,24 +50,19 @@ export default function TimelineItem({ type }: TimelineItemProps) {
         }}
       />
       <div className="event">
-        {(type as TimeLineData)?.doctor && (
+        {(type as TimeLineData)?.subject && (
           <WideCard borderColor={selectedColor}>
-            <TextPair first="28 Feb 2021" second="09:30 - 09:56" />
+            <TextPair
+              first={format(date, DATE_ONLY)}
+              second={format(date, TIME_ONLY)}
+            />
             <TextPair
               first={(type as TimeLineData)?.subject}
               second="Subject"
               reversed
             />
-            <TextPair
-              first={(type as TimeLineData).doctor}
-              second="Doctor"
-              reversed
-            />
-            <TextPair
-              first={(type as TimeLineData).assistant}
-              second="Assistance"
-              reversed
-            />
+            <TextPair first={doctorName} second="Doctor" reversed />
+            <TextPair first={assistantName} second="Assistance" reversed />
             <SquareIconButton
               svg={View}
               onPress={() => {
@@ -70,7 +78,7 @@ export default function TimelineItem({ type }: TimelineItemProps) {
           </WideCard>
         )}
 
-        {(type as TimeLineData)?.done && (
+        {(type as TimeLineData)?.booked && (
           <div
             css={{
               borderLeft: `3px solid ${selectedColor}`,
@@ -79,9 +87,12 @@ export default function TimelineItem({ type }: TimelineItemProps) {
             }}
           />
         )}
-        {(typeof type == 'string' || (type as TimeLineData)?.done) && (
+        {(typeof type == 'string' || (type as TimeLineData)?.booked) && (
           <WideCard borderColor={selectedColor}>
-            <TextPair first="Booked appointment" second="28 Feb 2021" />
+            <TextPair
+              first="Booked appointment"
+              second={format(date, DATE_ONLY)}
+            />
             <TextPair
               second="status"
               first={typeof type == 'string' ? type : 'Done'}

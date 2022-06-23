@@ -10,12 +10,10 @@ const Template: Story<ComponentProps<typeof DiagnosisPreview>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  data: [
-    { firstText: 'something', secondText: '11' },
-    { firstText: 'something', secondText: '11' },
-    { firstText: 'something', secondText: '11' },
-    { firstText: 'something', secondText: '11' },
-    { firstText: 'something', secondText: '11' },
-    { firstText: 'something', secondText: '11' },
-  ],
+  data: {
+    height: 175,
+    weight: 107,
+    bloodPressure: 1,
+    bloodType: 'A',
+  },
 };

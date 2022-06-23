@@ -4,87 +4,48 @@ import MedicalHistory from '@components/medical_history';
 import PreviewInfo from '@components/preview_info';
 import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import { Patient } from '@models/instance.model';
 import './style/index.scss';
 
-const historyList = [
-  {
-    date: new Date('2022-05-01'),
-    description: 'Sickness for the day',
-    id: '1',
-  },
-  {
-    date: new Date('2022-05-02'),
-    description: 'dead inside',
-    id: '2',
-  },
-  {
-    date: new Date('2022-05-03'),
-    description: 'good health',
-    id: '3',
-  },
-  {
-    date: new Date('2022-05-04'),
-    description: 'good health',
-    id: '4',
-  },
-];
-
-const medicalHistoryList = [
-  {
-    medicalDescription: '22 Feb 2021',
-    descriptionDate: 'Sick from eating flesh',
-  },
-  {
-    medicalDescription: '22 Feb 2021',
-    descriptionDate: 'Sick from eating flesh',
-  },
-];
-
-const diagnosisData = {
-  'Weight(kg)': '105',
-  'height(cm)': '150',
-  DPI: '1600',
-};
-
-interface MedicalSessionSideBarProps {}
-export default function MedicalSessionSideBar({}: MedicalSessionSideBarProps) {
+interface MedicalSessionSideBarProps {
+  patient: Patient;
+}
+export default function MedicalSessionSideBar({
+  patient,
+}: MedicalSessionSideBarProps) {
   const { open } = useOverlay();
   return (
     <div className="medical-session-side-bar">
       <div className="medical-session-side-bar-content">
         <PreviewInfo
           title="Diagnosis"
-          data={diagnosisData}
+          data={patient.testResult}
           buttonNode={
             <DarkLightCornerButton
               title="preview"
               blend
               onPress={() => {
-                open(
-                  <DiagnosisPreview
-                    data={[
-                      { firstText: 'something', secondText: '11' },
-                      { firstText: 'something', secondText: '11' },
-                      { firstText: 'something', secondText: '11' },
-                      { firstText: 'something', secondText: '11' },
-                      { firstText: 'something', secondText: '11' },
-                      { firstText: 'something', secondText: '11' },
-                    ]}
-                  />,
-                  {
-                    closeOnClickOutside: true,
-                    isDimmed: true,
-                    clickThrough: false,
-                    closeBtn: 'inner',
-                    width: '30%',
-                  },
-                );
+                open(<DiagnosisPreview data={patient.testResult} />, {
+                  closeOnClickOutside: true,
+                  isDimmed: true,
+                  clickThrough: false,
+                  closeBtn: 'inner',
+                  width: '30%',
+                });
               }}
             />
           }
         />
-        <MedicalHistory medicalHistoryList={medicalHistoryList} />
-        <AppointmentHistoryPanel list={historyList} />
+        <MedicalHistory list={patient.medicalHistory} />
+        <AppointmentHistoryPanel
+          list={
+            patient.appointments.filter(
+              (appointments) =>
+                appointments.state == 'done' ||
+                appointments.state == 'done-booked',
+            ) as any
+          }
+        />
       </div>
     </div>
   );

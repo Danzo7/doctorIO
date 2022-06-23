@@ -4,12 +4,12 @@ import PresentationItem from '@components/presentation_item';
 import './style/index.scss';
 interface RecordInfoItemProps {
   fullName: string;
-  id: string;
+  patientId: string;
   onViewRecord?: () => void;
 }
 export default function RecordInfoItem({
   fullName,
-  id,
+  patientId: id,
   onViewRecord,
 }: RecordInfoItemProps) {
   return (

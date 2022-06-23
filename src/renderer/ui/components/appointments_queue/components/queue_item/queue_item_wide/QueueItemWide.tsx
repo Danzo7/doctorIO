@@ -73,14 +73,12 @@ function QueueItemWide({
             onPress={() => {
               open(
                 <DiagnosisPreview
-                  data={[
-                    { firstText: 'something', secondText: '11' },
-                    { firstText: 'something', secondText: '11' },
-                    { firstText: 'something', secondText: '11' },
-                    { firstText: 'something', secondText: '11' },
-                    { firstText: 'something', secondText: '11' },
-                    { firstText: 'something', secondText: '11' },
-                  ]}
+                  data={{
+                    height: 175,
+                    weight: 107,
+                    bloodPressure: 1,
+                    bloodType: 'A',
+                  }}
                 />,
                 {
                   closeOnClickOutside: true,

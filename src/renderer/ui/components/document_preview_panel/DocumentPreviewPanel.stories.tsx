@@ -10,24 +10,30 @@ const Template: Story<ComponentProps<typeof DocumentPreviewPanel>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  documentList: [
+  list: [
     {
-      documentName: 'Scanner1.pdf',
-      publishDate: '28 Feb 2021',
-      onPressHistory: () => {},
-      onDelete: () => {},
+      fileId: 1,
+      fileName: 'file1.pdf',
+      fileType: 'pdf',
+      date: new Date('2022-01-01'),
+      filePath: '',
+      fileSize: 3000,
     },
     {
-      documentName: 'Scanner2.pdf',
-      publishDate: '28 Feb 2021',
-      onPressHistory: () => {},
-      onDelete: () => {},
+      fileId: 2,
+      fileName: 'file1.pdf',
+      fileType: 'pdf',
+      date: new Date('2022-01-01'),
+      filePath: '',
+      fileSize: 3000,
     },
     {
-      documentName: 'Scanner3.pdf',
-      publishDate: '28 Feb 2021',
-      onPressHistory: () => {},
-      onDelete: () => {},
+      fileId: 3,
+      fileName: 'file1.pdf',
+      fileType: 'pdf',
+      date: new Date('2022-01-01'),
+      filePath: '',
+      fileSize: 3000,
     },
   ],
 };

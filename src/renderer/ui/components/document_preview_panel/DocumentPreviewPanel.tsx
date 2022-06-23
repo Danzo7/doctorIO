@@ -2,12 +2,13 @@ import DarkLightCornerButton from '@components/buttons/dark_light_corner_button'
 import PreviewList from '@components/preview_list';
 import UploadFileModal from '@containers/modals/upload_file_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import { MedicalDocument } from '@models/instance.model';
 import DocumentPreviewItem from './document_preview_item';
 interface DocumentPreviewPanelProps {
-  documentList: any[];
+  list: MedicalDocument[];
 }
 export default function DocumentPreviewPanel({
-  documentList = [],
+  list,
 }: DocumentPreviewPanelProps) {
   const { open } = useOverlay();
   return (
@@ -29,17 +30,9 @@ export default function DocumentPreviewPanel({
         />
       }
     >
-      {documentList.map(
-        ({ documentName, publishDate, onDelete, onPressHistory }) => (
-          <DocumentPreviewItem
-            documentName={documentName}
-            publishDate={publishDate}
-            onDelete={onDelete}
-            onPressHistory={onPressHistory}
-            key={documentName}
-          />
-        ),
-      )}
+      {list.map((props, index) => (
+        <DocumentPreviewItem {...props} key={props.fileId.toString() + index} />
+      ))}
     </PreviewList>
   );
 }

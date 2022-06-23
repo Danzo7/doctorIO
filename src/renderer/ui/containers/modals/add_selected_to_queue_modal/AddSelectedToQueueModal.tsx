@@ -3,18 +3,17 @@ import RecentAppsItem from '@components/recent_apps_item';
 import './style/index.scss';
 interface AddSelectedToQueueModalProps {
   fullName: string;
-  id?: number;
-  age: number;
+  id: number;
 }
 export default function AddSelectedToQueueModal({
   fullName,
-  age,
+  id,
 }: AddSelectedToQueueModalProps) {
   return (
     <ModalContainer
       gap={10}
       title="Add a Patient to appointment queue"
-      controls={<RecentAppsItem fullName={fullName} age={age} />}
+      controls={<RecentAppsItem fullName={fullName} id={id} />}
     ></ModalContainer>
   );
 }

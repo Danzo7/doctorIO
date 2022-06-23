@@ -13,23 +13,23 @@ FirstStory.args = {
   list: [
     {
       date: new Date('2022-05-01'),
-      description: 'Sickness for the day',
-      id: '1',
+      subject: 'Sickness for the day',
+      id: 1,
     },
     {
       date: new Date('2022-05-02'),
-      description: 'dead inside',
-      id: '2',
+      subject: 'dead inside',
+      id: 2,
     },
     {
       date: new Date('2022-05-03'),
-      description: 'good health',
-      id: '3',
+      subject: 'good health',
+      id: 3,
     },
     {
       date: new Date('2022-05-04'),
-      description: 'good health',
-      id: '4',
+      subject: 'good health',
+      id: 4,
     },
   ],
 };

@@ -5,12 +5,12 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import DiagnosisModal from '@containers/modals/diagnosis_modal';
 interface RecentAppsItemProps {
   fullName: string;
-  age: number;
+  id: number;
 }
-export default function RecentAppsItem({ fullName, age }: RecentAppsItemProps) {
+export default function RecentAppsItem({ fullName, id }: RecentAppsItemProps) {
   const { open } = useOverlay();
   return (
-    <PresentationItem primaryText={fullName} secondaryText={`Age ${age}`}>
+    <PresentationItem primaryText={fullName} secondaryText={`# ${id}`}>
       <TextButton
         text="Run diagnosis..."
         backgroundColor={color.cold_blue}

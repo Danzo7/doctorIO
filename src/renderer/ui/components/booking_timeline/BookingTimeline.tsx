@@ -1,13 +1,32 @@
 import { color } from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import PreviewList from '@components/preview_list';
-import BookAppointmentModal from '@containers/modals/book_appointment_modal';
-import { useOverlay } from '@libs/overlay/useOverlay';
+import { Appointment } from '@models/instance.model';
 import './style/index.scss';
 import TimelineItem from './timeline_item';
-interface BookingTimelineProps {}
-export default function BookingTimeline({}: BookingTimelineProps) {
-  const { open } = useOverlay();
+interface BookedItem {
+  id: number;
+  state: 'done' | 'done-booked' | 'upcoming' | 'missed';
+  bookDate?: Date;
+  date?: Date;
+  sessionId?: number;
+  subject?: string;
+  doctorId: number;
+  assistantId: number;
+  doctorName: string;
+  assistantName: string;
+}
+interface BookingTimelineProps {
+  patientId: number;
+  appointments: Appointment[];
+  onPress?: () => void;
+}
+
+export default function BookingTimeline({
+  appointments,
+  patientId,
+  onPress,
+}: BookingTimelineProps) {
   return (
     <div className="booking-timeline">
       <div
@@ -20,58 +39,54 @@ export default function BookingTimeline({}: BookingTimelineProps) {
           top: 48,
         }}
       />
+
       <PreviewList
         title="Appointment"
         buttonNode={
-          <DarkLightCornerButton
-            title="Book appointment"
-            onPress={() => {
-              open(
-                <BookAppointmentModal id="123456789" patientName="john Doe" />,
-                {
-                  closeOnClickOutside: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                  closeBtn: 'inner',
-                  width: '30%',
-                },
-              );
-            }}
-          />
+          <DarkLightCornerButton title="Book appointment" onPress={onPress} />
         }
         gap={10}
         noBorder
       >
-        <TimelineItem type="Upcoming" />
-        <TimelineItem type="Missed" />
-        <TimelineItem
-          type={{
-            date: '',
-            assistant: 'John',
-            doctor: 'John Doe',
-            subject: 'Inner bleed',
-          }}
-        />
-        <TimelineItem
-          type={{
-            done: true,
-            date: '',
-            assistant: 'John',
-            doctor: 'John Doe',
-            subject: 'Inner bleed',
-          }}
-        />
-        <TimelineItem
-          type={{
-            done: true,
-
-            date: '',
-            assistant: 'John',
-            doctor: 'John Doe',
-            subject: 'Inner bleed',
-          }}
-        />
-        <TimelineItem type="Missed" />
+        {appointments.map(
+          (
+            {
+              assistantId,
+              doctorId,
+              id,
+              state,
+              bookDate,
+              date,
+              sessionId,
+              subject,
+              assistantName,
+              doctorName,
+            }: BookedItem,
+            index,
+          ) => (
+            <TimelineItem
+              sessionId={sessionId}
+              date={date ?? bookDate ?? new Date()}
+              assistantId={assistantId}
+              doctorId={doctorId}
+              doctorName={doctorName}
+              assistantName={assistantName}
+              type={
+                state == 'done-booked'
+                  ? {
+                      subject: subject as string,
+                      booked: true,
+                    }
+                  : state == 'done'
+                  ? {
+                      subject: subject as string,
+                    }
+                  : state
+              }
+              key={id.toString() + index}
+            />
+          ),
+        )}
       </PreviewList>
     </div>
   );

@@ -13,5 +13,5 @@ FirstStory.args = {
   patientFullName: 'John Brown',
   patientId: '#12345678',
   numPostAppointment: 16,
-  nextAppointmentDate: '28 Feb 2021',
+  nextAppointmentDate: new Date('2022-12-10'),
 };

@@ -6,21 +6,14 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import { useOverlay } from '@libs/overlay/useOverlay';
 import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
 import { formatDistance } from 'date-fns';
+import { BookedAppointment } from '@models/instance.model';
 
-interface BookedItemProps {
-  patientName: string;
-  id?: number;
-  patientId?: number;
-  bookTime: Date;
-  state: 'panding' | 'in queue';
-}
 function BookedItem({
   patientName,
   bookTime,
   state,
-  id,
   patientId,
-}: BookedItemProps) {
+}: BookedAppointment) {
   const { openTooltip, open } = useOverlay();
   return (
     <div className="booked-item">
@@ -56,8 +49,7 @@ function BookedItem({
                     open(
                       <AddSelectedToQueueModal
                         fullName={patientName}
-                        id={id}
-                        age={18}
+                        id={patientId}
                       />,
                       {
                         closeOnClickOutside: true,

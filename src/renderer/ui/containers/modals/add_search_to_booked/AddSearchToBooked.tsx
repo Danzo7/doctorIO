@@ -10,7 +10,7 @@ import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '../book_appointment_modal';
-import { Overlay } from '@libs/overlay';
+import { DEFAULT_MODAL } from '@libs/overlay';
 
 interface SearchInput {
   searchField: string;
@@ -42,7 +42,7 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
   const { register, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField', '');
   const matches = useSearchPatient(watchSearch, usersData, false);
-  const { open, close } = useOverlay();
+  const { open } = useOverlay();
   return (
     <ModalContainer
       title="Select a patient"
@@ -62,17 +62,8 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
                 fontWeight={600}
                 onPress={() => {
                   open(
-                    <BookAppointmentModal
-                      patientName={fullName}
-                      id={'12346789'}
-                    />,
-                    {
-                      closeOnClickOutside: true,
-                      isDimmed: true,
-                      clickThrough: false,
-                      width: '30%',
-                      closeBtn: 'inner',
-                    },
+                    <BookAppointmentModal patientName={fullName} id={123467} />,
+                    DEFAULT_MODAL,
                   );
                 }}
               />

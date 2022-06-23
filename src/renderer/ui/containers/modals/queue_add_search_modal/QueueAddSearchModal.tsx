@@ -66,7 +66,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
         ) : (
           <div className="suggestions-container">
             {matches?.map(({ fullName, age }, index) => (
-              <RecentAppsItem fullName={fullName} age={age} key={index} />
+              <RecentAppsItem fullName={fullName} id={age} key={index} />
             ))}
           </div>
         )

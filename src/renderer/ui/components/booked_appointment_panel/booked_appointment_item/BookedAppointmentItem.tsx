@@ -49,7 +49,7 @@ export default function BookedAppointmentItem({
         padding="5px 10px"
         onPress={() => {
           open(
-            <AddSelectedToQueueModal fullName={patientName} age={20} />,
+            <AddSelectedToQueueModal fullName={patientName} id={20} />,
             DEFAULT_MODAL,
           );
         }}

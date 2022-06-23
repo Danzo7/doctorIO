@@ -1,9 +1,11 @@
+import { DATE_ONLY } from '@constants/data_format';
+import { format } from 'date-fns';
 import './style/index.scss';
 interface MiniPatientCardProps {
   patientFullName: string;
   patientId: string;
   numPostAppointment: number;
-  nextAppointmentDate: string;
+  nextAppointmentDate?: Date;
 }
 export default function MiniPatientCard({
   patientFullName,
@@ -22,7 +24,11 @@ export default function MiniPatientCard({
         </div>
         <div className="bottom-info-sep" />
         <div className="bottom-info">
-          <span>{nextAppointmentDate}</span>
+          <span>
+            {nextAppointmentDate
+              ? format(nextAppointmentDate, DATE_ONLY)
+              : 'No'}
+          </span>
           <span>Upcoming</span>
         </div>
       </div>

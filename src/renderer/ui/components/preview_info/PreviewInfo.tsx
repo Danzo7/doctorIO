@@ -4,7 +4,7 @@ import './style/index.scss';
 interface PreviewInfoProps {
   title: string;
   buttonNode?: ReactNode;
-  data: { [key: string]: string };
+  data: { [key: string]: any };
 }
 export default function PreviewInfo({
   title,

@@ -7,18 +7,18 @@ import { format } from 'date-fns';
 import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 interface AppointmentHistoryItemProps {
   date: Date;
-  description: string;
-  id: string;
+  subject: string;
+  id: number;
 }
 export default function AppointmentHistoryItem({
   date,
-  description,
+  subject,
 }: AppointmentHistoryItemProps) {
   const { open } = useOverlay();
   return (
     <PreviewWithControls
       primaryText={format(date, DATE_ONLY)}
-      secondaryText={description}
+      secondaryText={subject}
     >
       <SquareIconButton
         svg={AppointmentHistoryIcon}

@@ -10,8 +10,10 @@ const Template: Story<ComponentProps<typeof DocumentPreviewItem>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  documentName: 'Scanner.pdf',
-  publishDate: '28 Feb 2021',
-  onPressHistory: () => {},
-  onDelete: () => {},
+  fileId: 4,
+  fileName: 'file1.pdf',
+  fileType: 'pdf',
+  date: new Date('2022-01-01'),
+  filePath: '',
+  fileSize: 3000,
 };
