@@ -14,6 +14,8 @@
       "@layers/*": ["src/renderer/ui/layers/*"],
       "@assets/*": ["src/renderer/assets/*"],
       "@libs/*": ["src/renderer/libs/*"],
+      "@constants/*": ["src/renderer/utils/constants/*"],
+      "@helpers/*": ["src/renderer/utils/helpers/*"],
       "@models/*": ["src/renderer/models/*"],
       "toSvg/*": ["src/renderer/assets/svg/*"],
       "toPng/*": ["src/renderer/assets/pictures/*"],
