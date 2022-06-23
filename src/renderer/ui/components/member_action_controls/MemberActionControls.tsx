@@ -5,59 +5,48 @@ import Messages from 'toSvg/messages_small.svg?icon';
 import Call_Icon from 'toSvg/phone.svg?icon';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import MemberBigCard from '@containers/modals/member_big_card';
-import profile from '@assets/pictures/test.png';
 import useNavigation from '@libs/hooks/useNavigation';
 import './style/index.scss';
+import { Member } from '@models/server.models';
 
 interface MemberActionControlsProps {
-  memberID: string;
+  member: Member;
   messagesRoutePath?: string;
+  showCard?: boolean;
 }
 export default function MemberActionControls({
-  memberID,
+  member,
   messagesRoutePath = 'messages/@clinic/',
+  showCard = true,
 }: MemberActionControlsProps) {
   const { open } = useOverlay();
   const { navigate } = useNavigation();
 
   return (
     <div className="member-action-controls">
-      <IconicButton
-        Icon={IdCard}
-        afterBgColor={colors.light}
-        width={40}
-        iconSize={15}
-        onPress={() => {
-          open(
-            <MemberBigCard
-              fullName="Aymen Daouadji"
-              age={23}
-              AddedBy="Brahim Aymen"
-              Address="Blida"
-              JoinDate="02/02/1999"
-              PhoneNumber="051549726"
-              id={memberID}
-              imgSrc={profile}
-              gender="Men"
-              status={true}
-              roleArray={['Gamer', 'Cool', 'Assistant']}
-            />,
-            {
+      {showCard && (
+        <IconicButton
+          Icon={IdCard}
+          afterBgColor={colors.light}
+          width={40}
+          iconSize={15}
+          onPress={() => {
+            open(<MemberBigCard {...member} />, {
               closeOnClickOutside: true,
               isDimmed: true,
               clickThrough: false,
               closeBtn: 'inner',
-            },
-          );
-        }}
-      />
+            });
+          }}
+        />
+      )}
       <IconicButton
         Icon={Messages}
         afterBgColor={colors.light}
         width={40}
         iconSize={15}
         onPress={() => {
-          navigate(`${messagesRoutePath + memberID}`);
+          navigate(`${messagesRoutePath + member.memberId}`);
         }}
       />
       <IconicButton
