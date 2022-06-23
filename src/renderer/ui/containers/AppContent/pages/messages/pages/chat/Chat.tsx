@@ -7,7 +7,6 @@ import ChatAddButton from '@components/buttons/chat_add_button';
 import ContentMessage from './content_message';
 import client from '@assets/pictures/test.png';
 import { useParams } from 'react-router-dom';
-import Input from '@components/inputs/input';
 import InputWrapper from '@components/inputs/input_wrapper';
 
 interface ChatProps {}
@@ -61,6 +60,7 @@ export default function Chat({}: ChatProps) {
             ({ messengerName, imgSrc, messageTime, messageContent }, index) => (
               <ContentMessage
                 //todo:messageId
+                messengerId={123456789}
                 key={index.toString() + messageContent}
                 isLastMessageSent={
                   index == sepPos && sepPos != messagesArray.length

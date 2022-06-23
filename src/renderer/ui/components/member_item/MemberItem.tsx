@@ -7,44 +7,43 @@ import SmallRoleList from '@components/members_preview/small_role_list';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import MemberBigCard from '@containers/modals/member_big_card';
 import { FIT_MODAL } from '@libs/overlay';
-interface MemberItemProps {
-  memberImgSrc: string;
-  memberStatus: boolean;
-  memberFullName: string;
-  memberID: string;
-  roleArray: string[];
-  timeAdded: string;
-}
+import { Member } from '@models/server.models';
+import { format } from 'date-fns';
+import { DATE_ONLY } from '@constants/data_format';
+
 export default function MemberItem({
-  memberImgSrc,
+  avatar,
   memberStatus,
-  memberFullName,
-  memberID,
-  roleArray = [],
-  timeAdded,
-}: MemberItemProps) {
+  name,
+  age,
+  gender,
+  phoneNumber,
+  address,
+  joinDate,
+  addedBy,
+  memberId,
+  roles,
+  userId,
+  accessKey,
+}: Member) {
   const { openTooltip, open } = useOverlay();
 
   return (
     <div className="member-item">
       <div className="item-container">
         <div className="member-Info">
-          <UserProfileStatus
-            imgSrc={memberImgSrc}
-            status={memberStatus}
-            width={30}
-          />
+          <UserProfileStatus imgSrc={avatar} status={memberStatus} width={30} />
           <div className="id-container">
-            <span>{memberFullName}</span>
-            <span>{memberID}</span>
+            <span>{name}</span>
+            <span>{memberId}</span>
           </div>
           <IsOwner />
         </div>
 
         <div className="date-container">
-          <span>{timeAdded}</span>
+          <span>{format(joinDate, DATE_ONLY)}</span>
         </div>
-        <SmallRoleList roleList={roleArray} />
+        <SmallRoleList roleList={roles} />
       </div>
 
       <div className="option-menu">
@@ -57,7 +56,26 @@ export default function MemberItem({
                   {
                     text: 'show profile',
                     onPress: () => {
-                      open(<MemberBigCard />, FIT_MODAL);
+                      open(
+                        <MemberBigCard
+                          {...{
+                            avatar,
+                            memberStatus,
+                            name,
+                            age,
+                            gender,
+                            phoneNumber,
+                            address,
+                            joinDate,
+                            addedBy,
+                            memberId,
+                            roles,
+                            userId,
+                            accessKey,
+                          }}
+                        />,
+                        FIT_MODAL,
+                      );
                     },
                   },
                 ],

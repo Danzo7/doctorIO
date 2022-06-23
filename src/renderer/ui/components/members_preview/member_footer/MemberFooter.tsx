@@ -1,21 +1,24 @@
 import './style/index.scss';
 import MemberActionControls from '@components/member_action_controls';
+import { Member } from '@models/server.models';
 interface MemberFooterProps {
-  memberID: string;
-  status: string;
+  member: Member;
 }
-function MemberFooter({ memberID, status }: MemberFooterProps) {
+function MemberFooter({ member }: MemberFooterProps) {
+  const { memberId, memberStatus } = member;
   return (
     <div className="member-footer">
       <div className="member-container">
         <span>Member ID</span>
-        <span className="member-span">{memberID}</span>
+        <span className="member-span">{memberId}</span>
       </div>
       <div className="member-container">
         <span>Status</span>
-        <span className="member-span">{status}</span>
+        <span className="member-span">
+          {memberStatus ? 'Online' : 'Offline'}
+        </span>
       </div>
-      <MemberActionControls memberID="123456789" />
+      <MemberActionControls member={member} />
     </div>
   );
 }

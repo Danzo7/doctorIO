@@ -11,19 +11,10 @@ const Template: Story<ComponentProps<typeof MemberItem>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  memberImgSrc: test,
+  avatar: test,
   memberStatus: true,
-  memberFullName: 'Aymen Daouadji',
-  memberID: '@mohamed#2000',
-  roleArray: [
-    'Gamer',
-    'Assistant',
-    'Assistant',
-    'Assistant',
-    'Assistant',
-    'Assistant',
-    'Assistant',
-    'Assistant',
-  ],
-  timeAdded: '28 Feb 2021',
+  name: 'Aymen Daouadji',
+  memberId: 123456789,
+  roles: [{ roleId: 1, roleName: 'gamer', roleDesc: 'gaming' }],
+  joinDate: new Date('2022-01-01'),
 };

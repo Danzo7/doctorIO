@@ -10,7 +10,8 @@ const Template: Story<ComponentProps<typeof RoleMembers>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
+  roleId: 1236,
   roleName: 'Support',
-  description:
+  roleDesc:
     'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh brahim aymen hhhhhhhhhhhhhhhhhhhhhhhhhhhh daouadji aymen',
 };

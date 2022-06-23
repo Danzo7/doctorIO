@@ -1,19 +1,19 @@
 import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import MemberActionControls from '@components/member_action_controls';
+import { Member } from '@models/server.models';
 
 interface MemberCardProps {
-  fullName: string;
-  imgSrc: string;
-  roleArray: string[];
+  member: Member;
 }
-export default function MemberCard({ fullName, imgSrc }: MemberCardProps) {
+export default function MemberCard({ member }: MemberCardProps) {
+  const { name, avatar } = member;
   return (
     <div className="member-card">
-      <UserProfileStatus imgSrc={imgSrc} status width={60} avatarRadius={17} />
-      <span>{fullName}</span>
+      <UserProfileStatus imgSrc={avatar} status width={60} avatarRadius={17} />
+      <span>{name}</span>
       <div className="member-card-controls">
-        <MemberActionControls memberID="123456789" />
+        <MemberActionControls member={member} />
       </div>
     </div>
   );
