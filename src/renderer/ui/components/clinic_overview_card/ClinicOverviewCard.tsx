@@ -1,22 +1,17 @@
 import LogoChanger from '@components/logo_changer';
 import './style/index.scss';
 import profile from '@assets/pictures/test.png';
-interface ClinicOverviewCardProps {
-  clinicName: string;
-  clinicAddress: string;
-  serviceStatus: string;
-  numOfCurrentConnections: number;
-  numOfPatients: number;
-  numOfMembers: number;
-}
+import { Clinic } from '@models/server.models';
+
 export default function ClinicOverviewCard({
+  clinicId,
   clinicName,
   clinicAddress,
   serviceStatus,
-  numOfCurrentConnections,
-  numOfPatients,
-  numOfMembers,
-}: ClinicOverviewCardProps) {
+  connectionCount,
+  patientCount,
+  memberCount,
+}: Clinic) {
   return (
     <div className="clinic-overview-card">
       <LogoChanger src={profile} width={100} />
@@ -31,16 +26,16 @@ export default function ClinicOverviewCard({
       </div>
       <div>
         <span>Current Connections</span>
-        <span>{numOfCurrentConnections}</span>
+        <span>{connectionCount}</span>
       </div>
       <div className="clinic-info-bottom-div">
         <div>
           <span>Patients</span>
-          <span>{numOfPatients}</span>
+          <span>{patientCount}</span>
         </div>
         <div>
           <span>Members</span>
-          <span>{numOfMembers}</span>
+          <span>{memberCount}</span>
         </div>
       </div>
     </div>

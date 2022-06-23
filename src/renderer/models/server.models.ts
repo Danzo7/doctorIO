@@ -13,7 +13,7 @@ interface Role {
 interface Permission {}
 interface Clinic {
   clinicId: number;
-  description: string;
+  description?: string;
   clinicName: string;
   serviceStatus: string;
   memberCount: number;

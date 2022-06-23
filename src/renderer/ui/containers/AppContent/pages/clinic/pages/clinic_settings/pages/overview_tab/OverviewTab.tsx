@@ -6,12 +6,13 @@ export default function OverviewTab({}: OverviewTabProps) {
   return (
     <div className="overview-tab">
       <ClinicOverviewCard
+        clinicId={123456789}
         clinicName="PAN"
         clinicAddress="192.168.1.1"
         serviceStatus="Good"
-        numOfCurrentConnections={18}
-        numOfMembers={995}
-        numOfPatients={5}
+        connectionCount={18}
+        memberCount={995}
+        patientCount={5}
       />
       <div className="overview-tab-sep" />
       <OverviewInfoForm />

@@ -10,10 +10,11 @@ const Template: Story<ComponentProps<typeof ClinicOverviewCard>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  clinicName: 'KillLersSSs',
+  clinicId: 123456789,
+  clinicName: 'PAN',
   clinicAddress: '192.168.1.1',
-  numOfCurrentConnections: 13,
-  serviceStatus: 'BAD',
-  numOfMembers: 18,
-  numOfPatients: 14,
+  serviceStatus: 'Good',
+  connectionCount: 18,
+  memberCount: 99,
+  patientCount: 5,
 };
