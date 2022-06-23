@@ -41,11 +41,7 @@ export default function BookAppointmentModal({
       <div className="book-appointment-info">
         <TextPair first={patientName} second={`#${id}`} />
         <BorderSeparator direction="vertical" />
-        <Datepicker
-          selected={selectedDate}
-          onChange={onDateChange}
-          dateFormat="EEEE, dd MMM"
-        />
+        <Datepicker selected={selectedDate} onChange={onDateChange} />
       </div>
     </ModalContainer>
   );

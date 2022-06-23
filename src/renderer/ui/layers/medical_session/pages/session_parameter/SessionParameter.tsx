@@ -34,11 +34,7 @@ export default function SessionParameter({}: SessionParameterProps) {
         buttonNode={<ToggleButton isChecked={true} />}
       />
 
-      <Datepicker
-        selected={selectedDate}
-        onChange={onDateChange}
-        dateFormat="EEEE, dd MMM"
-      />
+      <Datepicker selected={selectedDate} onChange={onDateChange} />
 
       <div className="payment-container">
         <Header

@@ -6,6 +6,7 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import Calendar from 'toSvg/calendar.svg?icon';
 import Arrow from 'toSvg/arrow.svg?icon';
 import Input from '../input';
+import { DATE_NO_YEAR } from '@constants/data_format';
 export default function Datepicker({
   onChange,
   ...props
@@ -45,6 +46,7 @@ export default function Datepicker({
           event?.stopPropagation();
           onChange(date, event);
         }}
+        dateFormat={DATE_NO_YEAR}
         {...props}
       />
     </Input>

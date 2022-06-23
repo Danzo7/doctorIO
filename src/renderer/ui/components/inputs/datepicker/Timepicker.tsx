@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Clock from 'toSvg/clock.svg?icon';
 
 import Input from '../input';
+import { TIME_ONLY } from '@constants/data_format';
 interface TimepickerProps {}
 
 export default function Timepicker({}: TimepickerProps) {
@@ -26,7 +27,7 @@ export default function Timepicker({}: TimepickerProps) {
         showTimeSelectOnly
         timeIntervals={15}
         timeCaption="Time"
-        dateFormat="h:mm aa"
+        dateFormat={TIME_ONLY}
         preventOpenOnFocus
         customInput={<Input type={'text'} trailing={<Clock />} />}
       />
