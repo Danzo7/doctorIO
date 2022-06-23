@@ -1,35 +1,38 @@
 import DarkAddButton from '@components/buttons/dark_add_button';
 import AddRoleTooltip from '@components/poppers/add_role_tooltip';
+import { Overlay } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import { Role } from '@models/server.models';
 import { useState } from 'react';
 import SmallRolePreview from '../small_role_preview';
 import './style/index.scss';
 interface SmallRoleListProps {
-  roleList: string[];
+  roleList: Role[];
   //todo:memberObject
 }
 export default function SmallRoleList({ roleList }: SmallRoleListProps) {
   const [roles, setRoles] = useState(roleList);
-  const { open } = useOverlay();
+  const { open, close } = useOverlay();
 
-  const addRole = (text: string) => {
+  const addRole = (newRole: Role) => {
     setRoles((prev) => {
-      return [...prev, text];
+      close();
+      return [...prev, newRole];
     });
   };
-  const deleteRole = (text: string) => {
+  const deleteRole = (deletedRole: Role) => {
     setRoles((prev) => {
-      return prev.filter((roleText) => roleText != text);
+      return prev.filter((role) => role.roleName != deletedRole.roleName);
     });
   };
   return (
     <div className="role-list-small">
-      {roles.map((rollName, index) => (
+      {roles.map((role, index) => (
         <SmallRolePreview
-          roleName={rollName}
-          key={index}
+          roleName={role.roleName}
+          key={role.roleId + index}
           onClick={() => {
-            deleteRole(rollName);
+            deleteRole(role);
           }}
         />
       ))}
@@ -41,19 +44,35 @@ export default function SmallRoleList({ roleList }: SmallRoleListProps) {
               <AddRoleTooltip
                 actionList={[
                   {
-                    text: 'Cool',
+                    role: {
+                      roleName: 'Cool',
+                      roleId: 1,
+                      roleDesc: 'cool Role',
+                    },
                     onPress: addRole,
                   },
                   {
-                    text: 'Owener',
+                    role: {
+                      roleName: 'Gamer',
+                      roleId: 2,
+                      roleDesc: 'Gamer Role',
+                    },
                     onPress: addRole,
                   },
                   {
-                    text: 'Support',
+                    role: {
+                      roleName: 'Cool',
+                      roleId: 3,
+                      roleDesc: 'cool Role',
+                    },
                     onPress: addRole,
                   },
                   {
-                    text: 'Pan Legends',
+                    role: {
+                      roleName: 'Support',
+                      roleId: 1,
+                      roleDesc: 'Support  Role',
+                    },
                     onPress: addRole,
                   },
                 ]}
