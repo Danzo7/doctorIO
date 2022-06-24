@@ -45,15 +45,6 @@ function QueueItemWide({
                 openTooltip(
                   [
                     {
-                      text: 'Add to queue',
-                      onPress: () => {
-                        open(
-                          <AddSelectedToQueueModal fullName={name} id={id} />,
-                          DEFAULT_MODAL,
-                        );
-                      },
-                    },
-                    {
                       text: 'View records',
                     },
                     {
