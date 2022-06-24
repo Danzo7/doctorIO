@@ -1,30 +1,30 @@
 import './style/index.scss';
-import Clinic from 'toSvg/clinic.svg?icon';
+import ClinicIcon from 'toSvg/clinic.svg?icon';
 import MedicalAssistant from 'toSvg/nurse_icon.svg';
 import Patient from 'toSvg/patient.svg';
 import ServerState from 'toSvg/server_state.svg';
 import { color } from '@colors';
 import TextButton from '@components/buttons/text_button';
+import { format } from 'date-fns/esm';
+import { TIME_ONLY } from '@constants/data_format';
+import { Clinic } from '@models/server.models';
 
 interface ClinicItemProps {
+  clinicInfo: Clinic;
   selected: boolean;
-  timeToClose: string;
-  numOfAssistants: number;
-  numOfPatients: number;
   onClick?: () => void;
   isHost?: boolean;
 }
 export default function ClinicItem({
   selected,
-  timeToClose,
-  numOfAssistants,
-  numOfPatients,
+  clinicInfo,
   isHost = false,
   onClick,
 }: ClinicItemProps) {
+  const { timeToClose, memberCount, patientCount } = clinicInfo;
   return (
     <div className="clinic-item">
-      {selected && <span>Current</span>}
+      <span css={{ visibility: selected ? 'visible' : 'hidden' }}>Current</span>
       <div className="backdrop">
         <TextButton
           text={selected ? 'Setting' : 'Join...'}
@@ -37,14 +37,14 @@ export default function ClinicItem({
         />
       </div>
       <div className="time-container">
-        <Clinic />
+        <ClinicIcon />
         <span>Time to close</span>
-        <span>{timeToClose}</span>
+        <span>{format(timeToClose, TIME_ONLY)}</span>
       </div>
       <div className="stats-container">
         <div className="info-container">
           <MedicalAssistant />
-          <span>{numOfAssistants}</span>
+          <span>{memberCount}</span>
           <span>Online</span>
         </div>
         {isHost && (
@@ -52,7 +52,7 @@ export default function ClinicItem({
         )}
         <div className="info-container">
           <Patient />
-          <span>{numOfPatients}</span>
+          <span>{patientCount}</span>
           <span>In queue</span>
         </div>
       </div>

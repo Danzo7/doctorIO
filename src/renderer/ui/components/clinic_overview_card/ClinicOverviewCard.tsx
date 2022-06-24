@@ -1,20 +1,20 @@
 import LogoChanger from '@components/logo_changer';
 import './style/index.scss';
-import profile from '@assets/pictures/test.png';
 import { Clinic } from '@models/server.models';
 
-export default function ClinicOverviewCard({
-  clinicId,
-  clinicName,
-  clinicAddress,
-  serviceStatus,
-  connectionCount,
-  patientCount,
-  memberCount,
-}: Clinic) {
+export default function ClinicOverviewCard(clinicInfo: Clinic) {
+  const {
+    clinicName,
+    clinicAddress,
+    serviceStatus,
+    connectionCount,
+    patientCount,
+    memberCount,
+    avatar,
+  } = clinicInfo;
   return (
     <div className="clinic-overview-card">
-      <LogoChanger src={profile} width={100} />
+      <LogoChanger src={avatar} width={100} />
       <span>{clinicName}</span>
       <div>
         <span>Address</span>
