@@ -1,6 +1,8 @@
+import { generateTime } from '@containers/AppContent/pages/clinic/pages/clinics/Clinics';
 import { Appointment, Patient } from '@models/instance.model';
 import { User } from '@models/local.models';
-import { Member } from '@models/server.models';
+import { Clinic, Member } from '@models/server.models';
+import profile from '@assets/pictures/test.png';
 
 export const firstUser: User = {
   avatar: '/assets/9b4caf44c40506a102ec.png',
@@ -288,5 +290,41 @@ export const members: Member[] = [
     memberId: 50505050,
     roles: [{ roleId: 1, roleName: 'Support', roleDesc: 'Dev' }],
     joinDate: new Date('2022-01-01'),
+  },
+];
+export const clinicsArray: Clinic[] = [
+  {
+    clinicName: 'PAN',
+    clinicId: 0,
+    clinicAddress: 'Blida',
+    connectionCount: 20,
+    serviceStatus: 'Good',
+    patientCount: 18,
+    memberCount: 20,
+    timeToClose: generateTime(12, 0),
+    avatar: profile,
+  },
+  {
+    clinicName: 'DRS',
+    clinicId: 0,
+    clinicAddress: 'Blida',
+    connectionCount: 20,
+    serviceStatus: 'Good',
+    patientCount: 18,
+    memberCount: 20,
+    timeToClose: generateTime(12, 0),
+    avatar: profile,
+  },
+
+  {
+    clinicName: 'IYI',
+    clinicId: 0,
+    clinicAddress: 'Blida',
+    connectionCount: 20,
+    serviceStatus: 'Good',
+    patientCount: 18,
+    memberCount: 20,
+    timeToClose: generateTime(12, 0),
+    avatar: profile,
   },
 ];
