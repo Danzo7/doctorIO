@@ -28,6 +28,8 @@ interface Clinic {
   clinicAddress: string;
   connectionCount: number;
   patientCount: number;
+  timeToClose: Date;
+  avatar: string;
 }
 
 export type { Clinic, Member, Permission, Role };
