@@ -43,7 +43,7 @@ function BookedItem({
           if (e)
             openTooltip(
               [
-                {
+                state == 'panding' && {
                   text: 'Add to queue',
                   onPress: () => {
                     open(
@@ -68,7 +68,7 @@ function BookedItem({
                   text: 'Remove',
                   type: 'warning',
                 },
-              ],
+              ].filter(Boolean) as any,
               e?.currentTarget,
               true,
             );
