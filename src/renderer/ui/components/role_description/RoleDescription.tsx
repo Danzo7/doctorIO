@@ -1,7 +1,7 @@
 import './style/index.scss';
 interface RoleDescriptionProps {
   roleName: string;
-  description: string;
+  description?: string;
 }
 export default function RoleDescription({
   roleName,
@@ -13,7 +13,7 @@ export default function RoleDescription({
         <span className="roleName">{roleName}</span>
       </div>
       <div className="description-container">
-        <span>{description}</span>
+        {description && <span>{description}</span>}
       </div>
     </div>
   );

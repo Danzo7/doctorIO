@@ -4,7 +4,7 @@ import RoleDescription from '@components/role_description';
 import { Role } from '@models/server.models';
 import './style/index.scss';
 
-export default function RoleMembers({ roleName, roleDesc, roleId }: Role) {
+export default function RoleMembers({ roleName, roleDesc }: Role) {
   return (
     <div className="role-members">
       <RoleDescription roleName={roleName} description={roleDesc} />

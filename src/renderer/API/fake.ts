@@ -1,7 +1,7 @@
 import { generateTime } from '@containers/AppContent/pages/clinic/pages/clinics/Clinics';
 import { Appointment, Patient } from '@models/instance.model';
 import { User } from '@models/local.models';
-import { Clinic, Member } from '@models/server.models';
+import { Clinic, Member, Role } from '@models/server.models';
 import profile from '@assets/pictures/test.png';
 
 export const firstUser: User = {
@@ -12,14 +12,30 @@ export const firstUser: User = {
       name: 'clinic',
       serverLocation: '127.0.0.1:1004',
       accessKey: '123',
+      memberId: 2,
     },
     {
       clinicId: 1,
       name: 'graze',
       serverLocation: '127.0.0.1:1004',
       accessKey: 'bb4da',
+      memberId: 1,
+    },
+    {
+      clinicId: 1,
+      name: 'graze',
+      serverLocation: '127.0.0.1:1004',
+      accessKey: 'bb4da',
+      memberId: 1,
     },
   ],
+  selectedClinic: {
+    clinicId: 2,
+    name: 'clinic',
+    serverLocation: '127.0.0.1:1004',
+    accessKey: '123',
+    memberId: 2,
+  },
   email: 'aymenmiro@gmail.com',
   firstName: 'carlo',
   lastName: 'badi',
@@ -30,6 +46,21 @@ export const firstUser: User = {
   userId: 2123,
   username: 'killerDz',
   userPreferences: { language: 'en', theme: 'Nighty' },
+};
+export const currentMember: Member = {
+  name: 'danzo ku',
+  avatar: '/assets/9b4caf44c40506a102ec.png',
+  memberStatus: true,
+  accessKey: '12346678',
+  addedBy: 'Brahim aymen',
+  age: 18,
+  gender: 'Men',
+  address: 'blida',
+  userId: 12346789,
+  phoneNumber: '054681349',
+  memberId: 2,
+  roles: [{ roleId: 1, roleName: 'gamer', roleDesc: 'gaming' }],
+  joinDate: new Date('2022-01-01'),
 };
 export const appointmentQueue: Appointment[] = [
   {
@@ -214,6 +245,33 @@ export const patients: Patient[] = [
   },
 ];
 
+export const roleMember: Role[] = [
+  {
+    roleId: 1,
+    roleName: 'Support',
+    roleDesc:
+      'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh brahim aymen hhhhhhhhhhhhhhhhhhhhhhhhhhhh daouadji aymen',
+  },
+  {
+    roleId: 2,
+    roleName: 'Doctor',
+    roleDesc:
+      'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh brahim aymen hhhhhhhhhhhhhhhhhhhhhhhhhhhh daouadji aymen',
+  },
+  {
+    roleId: 3,
+    roleName: 'helper',
+    roleDesc:
+      'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh brahim aymen hhhhhhhhhhhhhhhhhhhhhhhhhhhh daouadji aymen',
+  },
+  {
+    roleId: 4,
+    roleName: 'Patient',
+    roleDesc:
+      'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh brahim aymen hhhhhhhhhhhhhhhhhhhhhhhhhhhh daouadji aymen',
+  },
+];
+
 export const members: Member[] = [
   {
     name: 'Aymen Daouadji',
@@ -273,7 +331,7 @@ export const members: Member[] = [
     userId: 50505050,
     phoneNumber: '071345911',
     memberId: 1122334455,
-    roles: [{ roleId: 1, roleName: 'Streamer', roleDesc: 'gaming' }],
+    roles: [{ roleId: 1, roleName: 'Streamer' }],
     joinDate: new Date('2023-01-01'),
   },
   {
@@ -288,7 +346,7 @@ export const members: Member[] = [
     userId: 55221133,
     phoneNumber: '054445688',
     memberId: 50505050,
-    roles: [{ roleId: 1, roleName: 'Support', roleDesc: 'Dev' }],
+    roles: [{ roleId: 1, roleName: 'Support' }],
     joinDate: new Date('2022-01-01'),
   },
 ];

@@ -14,6 +14,7 @@ interface BookedAppointment {
   bookTime: Date;
   state: 'panding' | 'in queue';
 }
+
 interface AppointmentQueue {
   roleId: number;
   list: AppointmentQueueItem[];
@@ -38,6 +39,11 @@ interface PatientSpecification {
   weight: number;
   height: number;
   bloodType: 'A' | 'B' | 'AB' | 'O';
+  allergies: string;
+  diseases: string;
+  medications: string;
+  surgeries: string;
+  other: string;
 }
 interface Session {
   sessionId: number;
@@ -45,7 +51,7 @@ interface Session {
   memberId: number;
   date: Date;
   notice: string;
-  prescriptionId: number;
+  prescription: Prescription;
 }
 
 type Appointment = {
@@ -77,6 +83,18 @@ interface MedicalDocument {
   fileSize: number;
   filePath: string;
   date: Date;
+}
+interface Prescription {
+  id: number;
+  drugs: Drug[];
+}
+interface Drug {
+  id: number;
+  name: string;
+  description: string;
+  dosage: string;
+  duration: string;
+  endDate: Date;
 }
 interface MedicalHistory {
   id: number;

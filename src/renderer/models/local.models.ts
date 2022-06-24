@@ -18,7 +18,25 @@ interface User {
   selectedClinic?: LocalClinicData;
   userPreferences: AppLocalPreferences;
 }
-
+interface MedicalSessionLocal {
+  sessionId: number;
+  patientId: number;
+  memberId: number;
+  notice: string;
+  prescription: Prescription;
+}
+interface Prescription {
+  id: number;
+  drugs: Drug[];
+}
+interface Drug {
+  id: number;
+  name: string;
+  description: string;
+  dosage: string;
+  duration: string;
+  endDate: Date;
+}
 interface DirectMessage {
   dmId: number;
   userId: number; //"contactId"
@@ -35,6 +53,7 @@ interface LocalClinicData {
   name: string;
   serverLocation: string;
   accessKey: string;
+  memberId: number;
 }
 
 export type {
@@ -43,4 +62,5 @@ export type {
   User,
   LocalClinicData,
   AppLocalPreferences,
+  MedicalSessionLocal,
 };

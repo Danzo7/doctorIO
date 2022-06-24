@@ -1,6 +1,5 @@
 import DarkAddButton from '@components/buttons/dark_add_button';
 import AddRoleTooltip from '@components/poppers/add_role_tooltip';
-import { Overlay } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { Role } from '@models/server.models';
 import { useState } from 'react';
