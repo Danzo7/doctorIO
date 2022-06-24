@@ -1,8 +1,10 @@
 import MemberItem from '@components/member_item';
 import './style/index.scss';
-import test from 'toPng/test.png';
-interface MembersTableProps {}
-export default function MembersTable({}: MembersTableProps) {
+import { Member } from '@models/server.models';
+interface MembersTableProps {
+  list: Member[];
+}
+export default function MembersTable({ list }: MembersTableProps) {
   return (
     <div className="members-table">
       <div className="table-header">
@@ -17,94 +19,9 @@ export default function MembersTable({}: MembersTableProps) {
         </div>
       </div>
       <div className="table-content">
-        <MemberItem
-          memberFullName="Mahmoud Benaissafhfhfhfhfhfhfhfhfhf"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000fgfgfgfgfgfgfg"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
-        <MemberItem
-          memberFullName="Mahmoud Benaissa"
-          memberID="@mohamed#2000"
-          memberImgSrc={test}
-          roleArray={['Gamer', 'Assistant']}
-          memberStatus={true}
-          timeAdded="28 Feb 2021"
-        />
+        {list.map((member, index) => (
+          <MemberItem {...member} key={index} />
+        ))}
       </div>
     </div>
   );

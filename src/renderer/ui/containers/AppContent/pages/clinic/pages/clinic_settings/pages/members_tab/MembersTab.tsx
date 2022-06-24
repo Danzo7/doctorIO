@@ -1,25 +1,30 @@
+import { Role } from '@models/server.models';
 import RoleMembers from './role_members';
 import './style/index.scss';
 
-const members = [
+const roleMember: Role[] = [
   {
+    roleId: 1,
     roleName: 'Support',
-    description:
+    roleDesc:
       'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh brahim aymen hhhhhhhhhhhhhhhhhhhhhhhhhhhh daouadji aymen',
   },
   {
+    roleId: 2,
     roleName: 'Doctor',
-    description:
+    roleDesc:
       'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh brahim aymen hhhhhhhhhhhhhhhhhhhhhhhhhhhh daouadji aymen',
   },
   {
+    roleId: 3,
     roleName: 'helper',
-    description:
+    roleDesc:
       'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh brahim aymen hhhhhhhhhhhhhhhhhhhhhhhhhhhh daouadji aymen',
   },
   {
+    roleId: 4,
     roleName: 'Patient',
-    description:
+    roleDesc:
       'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh brahim aymen hhhhhhhhhhhhhhhhhhhhhhhhhhhh daouadji aymen',
   },
 ];
@@ -28,11 +33,12 @@ interface MembersTabProps {}
 export default function MembersTab({}: MembersTabProps) {
   return (
     <div className="members-tab">
-      {members.map(({ roleName, description }, index) => (
+      {roleMember.map(({ roleId, roleName, roleDesc }, index) => (
         <RoleMembers
           roleName={roleName}
           key={index}
-          description={description}
+          roleDesc={roleDesc}
+          roleId={roleId}
         />
       ))}
     </div>

@@ -12,16 +12,32 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   actionList: [
     {
-      text: 'Cool',
+      role: {
+        roleName: 'Cool',
+        roleId: 1,
+        roleDesc: 'cool Role',
+      },
     },
     {
-      text: 'Owener',
+      role: {
+        roleName: 'Gamer',
+        roleId: 2,
+        roleDesc: 'Gamer Role',
+      },
     },
     {
-      text: 'Support',
+      role: {
+        roleName: 'Cool',
+        roleId: 3,
+        roleDesc: 'cool Role',
+      },
     },
     {
-      text: 'Pan Legends',
+      role: {
+        roleName: 'Support',
+        roleId: 1,
+        roleDesc: 'Support  Role',
+      },
     },
   ],
 };

@@ -4,20 +4,23 @@ import './style/index.scss';
 import UpArrow from 'toSvg/arrow.svg?icon';
 import MemberFooter from './member_footer';
 import SmallRoleList from './small_role_list';
-interface MembersPreviewProps {
-  fullName: string;
-  memberID: string;
-  status: string;
-  imgSrc: string;
-  roleArray: Array<string>;
-}
+import { Member } from '@models/server.models';
+
 function MembersPreview({
-  fullName,
-  memberID,
-  status,
-  imgSrc,
-  roleArray,
-}: MembersPreviewProps) {
+  name,
+  memberId,
+  age,
+  gender,
+  joinDate,
+  addedBy,
+  userId,
+  accessKey,
+  address,
+  phoneNumber,
+  memberStatus,
+  avatar,
+  roles,
+}: Member) {
   const [hideFooter, setHideFooter] = useState(true);
 
   return (
@@ -28,14 +31,14 @@ function MembersPreview({
     >
       <div className="members-preview">
         <UserProfileStatus
-          imgSrc={imgSrc}
+          imgSrc={avatar}
           status
           width={60}
           avatarRadius={17}
         />
         <div className="info-container">
-          <span>{fullName}</span>
-          {<SmallRoleList roleList={roleArray} />}
+          <span>{name}</span>
+          {<SmallRoleList roleList={roles} />}
         </div>
         <div
           className={`arrow-container`}
@@ -44,7 +47,23 @@ function MembersPreview({
           <UpArrow width={15} />
         </div>
       </div>
-      <MemberFooter memberID={memberID} status={status} />
+      <MemberFooter
+        member={{
+          name,
+          memberId,
+          age,
+          gender,
+          joinDate,
+          addedBy,
+          userId,
+          accessKey,
+          address,
+          phoneNumber,
+          memberStatus,
+          avatar,
+          roles,
+        }}
+      />
     </div>
   );
 }
