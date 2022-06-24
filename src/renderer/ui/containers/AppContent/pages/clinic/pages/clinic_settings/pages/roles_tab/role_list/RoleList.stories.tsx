@@ -9,19 +9,4 @@ const Template: Story<ComponentProps<typeof RoleList>> = (args) => (
   <RoleList {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = {
-  roleList: [
-    { roleName: 'Doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Support', linked: '@doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Support', linked: '@doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Support', linked: '@doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-  ],
-};
+FirstStory.args = {};

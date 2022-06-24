@@ -6,25 +6,10 @@ interface RolesTabProps {
   permissionArray?: any[];
 }
 
-export default function RolesTab({
-  roleList = [
-    { roleName: 'Doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Support', linked: '@doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Support', linked: '@doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-    { roleName: 'Support', linked: '@doctor' },
-    { roleName: 'paramedic', linked: '@doctor' },
-  ],
-}: RolesTabProps) {
+export default function RolesTab({}: RolesTabProps) {
   return (
     <div className="roles-tab">
-      <RoleList roleList={roleList} height="100%" />
+      <RoleList height="100%" />
       <RoleSetting />
     </div>
   );

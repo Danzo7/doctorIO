@@ -1,4 +1,4 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import add from 'toSvg/add.svg?icon';
 interface NewRoleProps {}
