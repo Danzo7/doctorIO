@@ -176,7 +176,8 @@ export const members: Member[] = [
   },
   {
     name: 'True Dragon',
-    avatar: '/assets/9b4caf44c40506a102ec.png',
+    avatar:
+      'https://cdn.discordapp.com/avatars/214902885396250625/565b20de8bd33d2c7d5714ba599ff9ff.webp?size=128',
     memberStatus: false,
     accessKey: '12346678',
     addedBy: 'Acosta',
