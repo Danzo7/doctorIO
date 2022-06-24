@@ -19,6 +19,7 @@
       "@models/*": ["src/renderer/models/*"],
       "toSvg/*": ["src/renderer/assets/svg/*"],
       "toPng/*": ["src/renderer/assets/pictures/*"],
+      "@api/*": ["src/renderer/API/*"],
       "@colors": ["src/renderer/assets/styles/color.ts"]
     },
     "noEmit": false,
