@@ -2,7 +2,6 @@ import AppointmentsQueue from '@components/appointments_queue';
 import BookedAppointmentPanel from '@components/booked_appointment_panel';
 import PaymentQueue from '@components/payment_queue';
 import SmallClinicStatus from '@components/small_clinic_status';
-import { NavTabMenu } from '@components/tab_menu';
 import './style/index.scss';
 
 const bookedAppointmentData = [
@@ -77,7 +76,6 @@ export default function Queues({}: QueuesProps) {
   return (
     <div className="queues">
       <span>Appointment Queue</span>
-      <NavTabMenu items={['Doctor', 'test']} />
       <AppointmentsQueue cabinState="inProgress" />
       <PaymentQueue />
       <div className="queues-footer">
