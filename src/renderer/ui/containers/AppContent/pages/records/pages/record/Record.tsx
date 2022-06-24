@@ -61,44 +61,30 @@ const usersData = [
       {
         documentName: 'Scanner.pdf',
         publishDate: '28 Jan 2018',
-        onDelete: () => {},
-        onPressHistory: () => {},
       },
       {
         documentName: 'Scanner.pdf',
         publishDate: '28 Jan 2018',
-        onDelete: () => {},
-        onPressHistory: () => {},
       },
       {
         documentName: 'Scanner.pdf',
         publishDate: '28 Jan 2018',
-        onDelete: () => {},
-        onPressHistory: () => {},
       },
       {
         documentName: 'Scanner.pdf',
         publishDate: '28 Jan 2018',
-        onDelete: () => {},
-        onPressHistory: () => {},
       },
       {
         documentName: 'Scanner.pdf',
         publishDate: '28 Jan 2018',
-        onDelete: () => {},
-        onPressHistory: () => {},
       },
       {
         documentName: 'Scanner.pdf',
         publishDate: '28 Jan 2018',
-        onDelete: () => {},
-        onPressHistory: () => {},
       },
       {
         documentName: 'Scanner.pdf',
         publishDate: '28 Jan 2018',
-        onDelete: () => {},
-        onPressHistory: () => {},
       },
     ],
     recordData: {
