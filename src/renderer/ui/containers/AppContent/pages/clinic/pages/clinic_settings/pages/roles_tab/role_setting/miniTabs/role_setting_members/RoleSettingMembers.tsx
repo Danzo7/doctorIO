@@ -1,7 +1,7 @@
 import { members } from '@api/fake';
 import MembersTable from '@components/members_table';
 import { Member } from '@models/server.models';
-
+import './style/index.scss';
 const memberList: Member[] = members;
 
 interface RoleSettingMembersProps {}
