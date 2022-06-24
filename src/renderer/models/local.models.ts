@@ -1,21 +1,22 @@
 interface AppLocalPreferences {
-  language: string;
-  theme: string;
-  welcomeDismissed: Date;
+  language: 'en';
+  theme: 'Nighty';
+  welcomeDismissedIn?: Date;
 }
 interface User {
   userId: number; //"machineId"
-  machineId: number;
   username: string;
   password: string;
   email: string;
   firstName: string;
   lastName: string;
-  phoneN: string;
+  phoneNumber: string;
   avatar: string;
   privateKey: string;
   publicKey: string;
   clinic: LocalClinicData[];
+  selectedClinic?: LocalClinicData;
+  userPreferences: AppLocalPreferences;
 }
 
 interface DirectMessage {

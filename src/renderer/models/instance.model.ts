@@ -50,6 +50,7 @@ interface Session {
 
 type Appointment = {
   id: number;
+  patId?: number; //foreign
   doctorId: number;
   assistantId: number;
   doctorName: string;
