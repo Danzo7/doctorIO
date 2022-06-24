@@ -4,6 +4,7 @@ import QueueItemSmall from './queue_item_small';
 import QueueItemWide from './queue_item_wide';
 
 interface QueueItemProps {
+  id: number;
   name: string;
   number: number;
   timeAgo: Date;
@@ -14,6 +15,7 @@ interface QueueItemProps {
   onClose?: () => void;
 }
 function QueueItem({
+  id,
   name,
   number,
   state,
@@ -43,6 +45,7 @@ function QueueItem({
       {isOpen && (
         <div>
           <QueueItemWide
+            id={id}
             name={name}
             state={state}
             number={number}

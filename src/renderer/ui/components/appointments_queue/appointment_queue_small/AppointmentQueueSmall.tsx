@@ -10,31 +10,11 @@ import { subDays } from 'date-fns';
 
 interface AppointmentQueueSmallProps {}
 const itemsL = [
-  {
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 3),
-    number: 20,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 3),
-    number: 21,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 3),
-    number: 22,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 2),
-    number: 23,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 1),
-    number: 24,
-  },
+  { id: 1, name: 'adam smith', timeAgo: subDays(new Date(), 3), number: 20 },
+  { id: 2, name: 'adam smith', timeAgo: subDays(new Date(), 3), number: 21 },
+  { id: 3, name: 'adam smith', timeAgo: subDays(new Date(), 3), number: 22 },
+  { id: 4, name: 'adam smith', timeAgo: subDays(new Date(), 2), number: 23 },
+  { id: 5, name: 'adam smith', timeAgo: subDays(new Date(), 1), number: 24 },
 ];
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [selected, setSelected] = useState(-1);
@@ -66,9 +46,10 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       <div className="queue-items">
         {items.length > 0 ? (
           <ScrollView refs={ref} gap={10}>
-            {items.map(({ name, timeAgo, number }, index) => (
+            {items.map(({ id, name, timeAgo, number }, index) => (
               <li key={name + index}>
                 <QueueItem
+                  id={id}
                   name={name}
                   number={number}
                   timeAgo={timeAgo}

@@ -11,7 +11,10 @@ import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
 import { formatDistance } from 'date-fns';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
 interface QueueItemWideProps {
+  id: number;
   name: string;
   timeAgo: Date;
   number: number;
@@ -21,6 +24,7 @@ interface QueueItemWideProps {
 }
 
 function QueueItemWide({
+  id,
   name,
   timeAgo,
   number,
@@ -28,13 +32,40 @@ function QueueItemWide({
   state,
   width,
 }: QueueItemWideProps) {
-  const { open } = useOverlay();
+  const { open, openTooltip } = useOverlay();
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
   return (
     <div className="queue-item-wide" css={{ width: width }} onClick={onClose}>
       <div className="back-container">
         <div className="back">
-          <SquareIconButton svg={threeDots} />
+          <SquareIconButton
+            svg={threeDots}
+            onPress={(e) => {
+              if (e)
+                openTooltip(
+                  [
+                    {
+                      text: 'Add to queue',
+                      onPress: () => {
+                        open(
+                          <AddSelectedToQueueModal fullName={name} id={id} />,
+                          DEFAULT_MODAL,
+                        );
+                      },
+                    },
+                    {
+                      text: 'View records',
+                    },
+                    {
+                      text: 'Remove',
+                      type: 'warning',
+                    },
+                  ],
+                  e?.currentTarget,
+                  true,
+                );
+            }}
+          />
         </div>
       </div>
       <div className="content">

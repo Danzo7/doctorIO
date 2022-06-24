@@ -7,6 +7,7 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
 import { formatDistance } from 'date-fns';
 import { BookedAppointment } from '@models/instance.model';
+import { DEFAULT_MODAL } from '@libs/overlay';
 
 function BookedItem({
   patientName,
@@ -51,13 +52,7 @@ function BookedItem({
                         fullName={patientName}
                         id={patientId}
                       />,
-                      {
-                        closeOnClickOutside: true,
-                        isDimmed: true,
-                        clickThrough: false,
-                        closeBtn: 'inner',
-                        width: '30%',
-                      },
+                      DEFAULT_MODAL,
                     );
                   },
                 },

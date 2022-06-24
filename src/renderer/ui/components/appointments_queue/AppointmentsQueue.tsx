@@ -14,30 +14,15 @@ interface AppointmentsQueueProps {
 }
 const items = [
   {
+    id: 1,
     name: 'adam smith',
     timeAgo: subDays(new Date(), 3),
     number: 20,
   },
-  {
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 3),
-    number: 21,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 3),
-    number: 22,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 2),
-    number: 23,
-  },
-  {
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 1),
-    number: 24,
-  },
+  { id: 2, name: 'adam smith', timeAgo: subDays(new Date(), 3), number: 21 },
+  { id: 3, name: 'adam smith', timeAgo: subDays(new Date(), 3), number: 22 },
+  { id: 4, name: 'adam smith', timeAgo: subDays(new Date(), 2), number: 23 },
+  { id: 5, name: 'adam smith', timeAgo: subDays(new Date(), 1), number: 24 },
 ];
 export default function AppointmentsQueue({
   cabinState,
@@ -69,9 +54,10 @@ export default function AppointmentsQueue({
           </TextButton>
           {items.length > 0 ? (
             <ScrollView refs={ref} gap={10}>
-              {items.map(({ name, timeAgo, number }, index) => (
+              {items.map(({ name, id, timeAgo, number }, index) => (
                 <li key={name + index}>
                   <QueueItemWide
+                    id={id}
                     name={name}
                     number={number}
                     timeAgo={timeAgo}
