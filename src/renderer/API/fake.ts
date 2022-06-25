@@ -109,8 +109,7 @@ export const members: Member[] = [
   },
   {
     name: 'True Dragon',
-    avatar:
-      'https://cdn.discordapp.com/avatars/214902885396250625/565b20de8bd33d2c7d5714ba599ff9ff.webp?size=128',
+    avatar: faker.image.avatar(),
     memberStatus: false,
     accessKey: '12346678',
     addedBy: 'Acosta',
