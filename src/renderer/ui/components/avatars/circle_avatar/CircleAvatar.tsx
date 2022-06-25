@@ -1,6 +1,6 @@
+import { AVATAR_DEFAULT } from '@constants/resources';
 import { MouseEventHandler } from 'react';
 import './style/index.scss';
-import imgDefault from '@assets/pictures/test.png';
 
 interface CircleAvatarProps {
   src?: string;
@@ -11,7 +11,7 @@ interface CircleAvatarProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 function CircleAvatar({
-  src = imgDefault,
+  src = AVATAR_DEFAULT,
   width,
   alt,
   radius = '100%',

@@ -1,5 +1,4 @@
 import Search from 'toSvg/search.svg?icon';
-import colors from '@assets/styles/color';
 import Input from '@components/inputs/input';
 
 interface ConversationSearchProps {}
@@ -11,6 +10,7 @@ export default function ConversationSearch({}: ConversationSearchProps) {
       placeholder="search"
       type={'search'}
       leading={<Search></Search>}
+      grow={false}
     />
   );
 }
