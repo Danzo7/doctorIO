@@ -2,7 +2,7 @@ interface Member {
   name: string;
   memberId: number;
   age: number;
-  gender: 'Female' | 'Men';
+  gender: 'Female' | 'male';
   userId: number; //"machineId"
   accessKey?: string;
   roles: Role[];
@@ -22,18 +22,18 @@ type Role = {
   members?: Member[];
 };
 interface RolePermissions {
-  isAdmin: boolean;
-  canAddMember: boolean;
-  canManageRole: boolean;
-  canAddPatients: boolean;
-  canHaveQueue: boolean;
-  canAddDrugs: boolean;
-  canViewClinicInsight: boolean;
-  canManageDataCollection: boolean;
-  canViewMedicalRecords: boolean;
-  canManageMembers: boolean;
-  canManageClinic: boolean;
-  canUseMessages: boolean;
+  isAdmin?: true;
+  canAddMember?: true;
+  canManageRole?: true;
+  canAddPatients?: true;
+  canHaveQueue?: true;
+  canAddDrugs?: true;
+  canViewClinicInsight?: true;
+  canManageDataCollection?: true;
+  canViewMedicalRecords?: true;
+  canManageMembers?: true;
+  canManageClinic?: true;
+  canUseMessages?: true;
 }
 interface Permission {
   permissionName: string;

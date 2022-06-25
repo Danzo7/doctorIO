@@ -57,10 +57,8 @@ interface Session {
 type Appointment = {
   id: number;
   patId?: number; //foreign
-  doctorId: number;
-  assistantId: number;
-  doctorName: string;
-  assistantName: string;
+  member: { memberId: number; memberName: string };
+  assignedBy: { memberId: number; memberName: string };
 } & (
   | ({ state: 'done' } & {
       date: Date;

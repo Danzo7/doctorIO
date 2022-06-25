@@ -15,7 +15,7 @@ interface User {
   privateKey: string;
   publicKey: string;
   clinic: LocalClinicData[];
-  selectedClinic?: LocalClinicData;
+  selectedClinic?: number;
   userPreferences: AppLocalPreferences;
 }
 interface MedicalSessionLocal {
@@ -54,6 +54,8 @@ interface LocalClinicData {
   serverLocation: string;
   accessKey: string;
   memberId: number;
+  memberCount?: number;
+  patientCount?: number;
 }
 
 export type {
