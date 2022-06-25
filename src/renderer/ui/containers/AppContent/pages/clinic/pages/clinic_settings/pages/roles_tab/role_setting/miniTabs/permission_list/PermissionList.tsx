@@ -1,21 +1,20 @@
-import { Permission } from '@models/server.models';
+import { RolePermissions } from '@models/server.models';
 import PermissionItem from './Permission_item';
+import { PERMISSIONS } from '@constants/permissions';
 import './style/index.scss';
 interface PermissionListProps {
-  list: Permission[];
+  permissions: RolePermissions;
 }
-export default function PermissionList({
-  list: permissionArray,
-}: PermissionListProps) {
+export default function PermissionList({ permissions }: PermissionListProps) {
   return (
     <div className="permission-list">
-      {permissionArray.map(({ description, permKey, name }) => (
+      {PERMISSIONS.map(({ description, permKey, name }) => (
         <PermissionItem
+          isChecked={permissions[permKey]}
           name={name}
           description={description}
           editable={true}
           key={permKey}
-          permKey={permKey}
         />
       ))}
     </div>

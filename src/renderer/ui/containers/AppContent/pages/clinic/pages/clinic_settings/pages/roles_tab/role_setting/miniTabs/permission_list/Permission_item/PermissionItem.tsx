@@ -8,14 +8,15 @@ import './style/index.scss';
 interface PermissionItemProps {
   linkedPermission?: string;
   editable?: boolean;
+  isChecked?: true;
 }
 export default function PermissionItem({
   name,
   description,
   linkedPermission,
-  permKey,
   editable = true,
-}: PermissionItemProps & Permission) {
+  isChecked,
+}: PermissionItemProps & Omit<Permission, 'permKey'>) {
   return (
     <div
       className="permission-item"
@@ -25,7 +26,7 @@ export default function PermissionItem({
         primaryText={name}
         secondaryText={description}
         editable={editable}
-        isChecked={selectedRole.rolePermissions?.[permKey]}
+        isChecked={isChecked}
       />
       {linkedPermission && (
         <div

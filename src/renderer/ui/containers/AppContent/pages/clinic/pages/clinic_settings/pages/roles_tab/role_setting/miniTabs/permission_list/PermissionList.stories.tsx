@@ -9,6 +9,4 @@ const Template: Story<ComponentProps<typeof PermissionList>> = (args) => (
   <PermissionList {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = {
-  list: [],
-};
+FirstStory.args = {};

@@ -3,71 +3,19 @@ import RoleItem from './role_item';
 import { useState } from 'react';
 import './style/index.scss';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Role } from '@models/server.models';
+import { roles } from '@api/fake';
+import { useSearchParams } from 'react-router-dom';
 
-//TODO! we need to redefine the Role type with linked
-const roleList: RoleType[] = [
-  {
-    role: { roleId: 1, roleName: 'Support', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-  {
-    role: { roleId: 2, roleName: 'Doctor', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-  {
-    role: { roleId: 3, roleName: 'Gamer', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-  {
-    role: { roleId: 4, roleName: 'Assistance', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-  {
-    role: { roleId: 5, roleName: 'Sub', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-  {
-    role: { roleId: 6, roleName: 'Support', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-  {
-    role: { roleId: 7, roleName: 'Doctor', roleDesc: 'Dev' },
-    linked: '@Support',
-  },
-  {
-    role: { roleId: 8, roleName: 'Gamer', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-  {
-    role: { roleId: 9, roleName: 'Helper', roleDesc: 'Dev' },
-    linked: '@Pharmacist',
-  },
-  {
-    role: { roleId: 10, roleName: 'Support', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-  {
-    role: { roleId: 11, roleName: 'Pharmacist', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-  {
-    role: { roleId: 12, roleName: 'Pharmacist', roleDesc: 'Dev' },
-    linked: '@doctor',
-  },
-];
-interface RoleType {
-  role: Role;
-  linked?: string;
-}
 interface RoleListProps {
   selected?: number;
   height: number | string;
   defaultSelected?: number;
 }
 export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
-  const [selectedRole, setSelectedRole] = useState(defaultSelected);
-  const [itemList, setItemList] = useState(roleList);
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams.get('roleId'));
+  // TODO? fetch roles
+  const [itemList, setItemList] = useState(roles);
 
   const handleDrop = (droppedItem: any) => {
     // Ignore drop outside droppable container
@@ -88,10 +36,10 @@ export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
         <Droppable droppableId="content-list">
           {({ droppableProps, innerRef, placeholder }) => (
             <div className="content-list" {...droppableProps} ref={innerRef}>
-              {itemList.map((item, index) => (
+              {itemList.map((role, index) => (
                 <Draggable
-                  key={item.role.roleId + index}
-                  draggableId={item.role.roleName + index}
+                  key={role.roleId + index}
+                  draggableId={role.roleName + index}
                   index={index}
                 >
                   {(props) => (
@@ -101,12 +49,13 @@ export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
                       {...props.draggableProps}
                     >
                       <RoleItem
-                        onClick={() => {
-                          setSelectedRole(index);
-                        }}
-                        roleName={item.role.roleName}
-                        selected={index == selectedRole}
-                        linked={item.linked}
+                        roleId={role.roleId}
+                        roleName={role.roleName}
+                        selected={
+                          role.roleId.toString() ==
+                          (searchParams.get('roleId') ?? '1')
+                        }
+                        linkedRole={role.linkedRole}
                         key={index}
                       />
                     </div>
