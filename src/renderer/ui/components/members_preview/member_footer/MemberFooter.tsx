@@ -1,11 +1,18 @@
 import './style/index.scss';
 import MemberActionControls from '@components/member_action_controls';
 import { Member } from '@models/server.models';
-interface MemberFooterProps {
-  member: Member;
-}
-function MemberFooter({ member }: MemberFooterProps) {
-  const { memberId, memberStatus } = member;
+import { DMs, members } from '@api/fake';
+
+function MemberFooter({
+  memberId,
+  memberStatus,
+}: Pick<Member, 'memberId' | 'memberStatus'>) {
+  //todo:search for DM for current memberUD
+  const dm = DMs.filter(
+    ({ userId }) =>
+      userId ==
+      members.filter(({ memberId: id }) => memberId === id)?.[0]?.userId,
+  )?.[0];
   return (
     <div className="member-footer">
       <div className="member-container">
@@ -18,7 +25,11 @@ function MemberFooter({ member }: MemberFooterProps) {
           {memberStatus ? 'Online' : 'Offline'}
         </span>
       </div>
-      <MemberActionControls member={member} />
+      <MemberActionControls
+        memberId={memberId}
+        dmId={dm?.dmId}
+        notFriend={dm?.dmId == undefined}
+      />
     </div>
   );
 }

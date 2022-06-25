@@ -7,22 +7,22 @@ import MemberActionControls from '@components/member_action_controls';
 import { Member } from '@models/server.models';
 import { format } from 'date-fns';
 import { DATE_ONLY } from '@constants/data_format';
+import { members } from '@api/fake';
 
-export default function MemberBigCard({
-  avatar,
-  memberStatus,
-  name,
-  memberId,
-  age,
-  gender,
-  phoneNumber,
-  address,
-  joinDate: JoinDate,
-  addedBy,
-  roles,
-  userId,
-  accessKey,
-}: Member) {
+export default function MemberBigCard({ memberId }: Pick<Member, 'memberId'>) {
+  //todo:redux fetch
+  const {
+    avatar,
+    memberStatus,
+    name,
+    age,
+    gender,
+    phoneNumber,
+    address,
+    joinDate: JoinDate,
+    addedBy,
+    roles,
+  } = members.filter(({ memberId: id }) => id == memberId)[0];
   return (
     <div className="member-big-card">
       <UserProfileStatus imgSrc={avatar} status={memberStatus} width={100} />
@@ -96,24 +96,7 @@ export default function MemberBigCard({
         <span>Role</span>
         <SmallRoleList roleList={roles} />
       </div>
-      <MemberActionControls
-        showCard={false}
-        member={{
-          avatar,
-          memberStatus,
-          name,
-          memberId,
-          age,
-          gender,
-          phoneNumber,
-          address,
-          joinDate: JoinDate,
-          addedBy,
-          roles,
-          userId,
-          accessKey,
-        }}
-      />
+      <MemberActionControls showCard={false} memberId={memberId} />
     </div>
   );
 }

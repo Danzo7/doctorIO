@@ -4,7 +4,7 @@ import './style/index.scss';
 
 interface UserProfileStatusProps {
   imgSrc?: string;
-  status: boolean;
+  status?: boolean;
   width?: number;
   avatarRadius?: number;
   onClick?: MouseEventHandler<HTMLDivElement>;
@@ -18,14 +18,16 @@ function UserProfileStatus({
 }: UserProfileStatusProps) {
   return (
     <div className="user-profile-status">
-      <div
-        className={`dot ${status ? 'online' : 'offline'}`}
-        css={{
-          width: width / 4,
-          height: width / 4,
-          left: width / 4.2,
-        }}
-      />
+      {status && (
+        <div
+          className={`dot ${status ? 'online' : 'offline'}`}
+          css={{
+            width: width / 4,
+            height: width / 4,
+            left: width / 4.2,
+          }}
+        />
+      )}
       <CircleAvatar
         src={imgSrc}
         width={width}

@@ -5,8 +5,8 @@ import Arrow from 'toSvg/arrow.svg?icon';
 import { Transition } from 'react-transition-group';
 import './index.scss';
 import SearchProfile from '@components/search_profile';
-import test from 'toPng/test.png';
 import { BookedAppointment } from '@models/instance.model';
+import { currentMember } from '@api/fake';
 
 interface AppSidebarProps {}
 //todo redux
@@ -51,7 +51,7 @@ function AppSidebar({}: AppSidebarProps) {
             {state != 'exited' && (
               <div className="sidebar">
                 <div className={`content ${state}`}>
-                  <SearchProfile imgSrc={test} />
+                  <SearchProfile avatar={currentMember.avatar} />
                   <AppointmentQueueSmall></AppointmentQueueSmall>
                   <BookedList list={BookedAppointmentList} />
                 </div>

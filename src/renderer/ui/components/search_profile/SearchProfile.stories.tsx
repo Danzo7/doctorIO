@@ -12,5 +12,5 @@ const Template: Story<ComponentProps<typeof SearchProfile>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  imgSrc: test,
+  avatar: test,
 };

@@ -11,5 +11,7 @@ const Template: Story<ComponentProps<typeof MemberCard>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  member: members[0],
+  memberId: members[0].memberId,
+  avatar: members[0].avatar,
+  name: members[0].name,
 };

@@ -9,18 +9,10 @@ import { Member } from '@models/server.models';
 function MembersPreview({
   name,
   memberId,
-  age,
-  gender,
-  joinDate,
-  addedBy,
-  userId,
-  accessKey,
-  address,
-  phoneNumber,
   memberStatus,
   avatar,
   roles,
-}: Member) {
+}: Pick<Member, 'name' | 'avatar' | 'memberId' | 'roles' | 'memberStatus'>) {
   const [hideFooter, setHideFooter] = useState(true);
 
   return (
@@ -47,23 +39,7 @@ function MembersPreview({
           <UpArrow width={15} />
         </div>
       </div>
-      <MemberFooter
-        member={{
-          name,
-          memberId,
-          age,
-          gender,
-          joinDate,
-          addedBy,
-          userId,
-          accessKey,
-          address,
-          phoneNumber,
-          memberStatus,
-          avatar,
-          roles,
-        }}
-      />
+      <MemberFooter memberId={memberId} memberStatus={memberStatus} />
     </div>
   );
 }
