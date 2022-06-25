@@ -1,30 +1,31 @@
+import { selectedRole } from '@api/fake';
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import ToggleButton from '@components/buttons/toggle_button';
 import CheckboxTile from '@components/checkbox_tile';
+import { Permission } from '@models/server.models';
 import Icon from 'toSvg/link.svg?icon';
 import './style/index.scss';
 interface PermissionItemProps {
-  permissionName: string;
-  permissionDescription: string;
   linkedPermission?: string;
   editable?: boolean;
 }
 export default function PermissionItem({
-  permissionName,
-  permissionDescription,
+  name,
+  description,
   linkedPermission,
+  permKey,
   editable = true,
-}: PermissionItemProps) {
+}: PermissionItemProps & Permission) {
   return (
     <div
       className="permission-item"
       css={editable ? null : { cursor: 'not-allowed' }}
     >
       <CheckboxTile
-        primaryText={permissionName}
-        secondaryText={permissionDescription}
+        primaryText={name}
+        secondaryText={description}
         editable={editable}
+        isChecked={selectedRole.rolePermissions?.[permKey]}
       />
       {linkedPermission && (
         <div

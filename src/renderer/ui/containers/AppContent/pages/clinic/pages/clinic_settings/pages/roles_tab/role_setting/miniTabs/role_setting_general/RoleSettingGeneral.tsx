@@ -12,10 +12,11 @@ export default function RoleSettingGeneral({}: RoleSettingGeneralProps) {
         <BorderSeparator direction="horizontal" />
       </div>
       <PermissionItem
-        permissionName="Assistants"
-        permissionDescription="Members with the below roles will be able to access and manage role personal queue List"
+        name="Assistants"
+        description="Members with the below roles will be able to access and manage role personal queue List"
         editable
         linkedPermission="Doctor"
+        permKey="isAdmin"
       />
     </div>
   );

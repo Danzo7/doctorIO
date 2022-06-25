@@ -4,11 +4,13 @@ interface CheckboxTileProps {
   editable?: boolean;
   primaryText: string;
   secondaryText: string;
+  isChecked?: true;
 }
 export default function CheckboxTile({
   editable = true,
   primaryText,
   secondaryText,
+  isChecked,
 }: CheckboxTileProps) {
   return (
     <div
@@ -20,7 +22,7 @@ export default function CheckboxTile({
         <span>{secondaryText}</span>
       </div>
       <div>
-        <ToggleButton disabled={!editable} isChecked={true} />
+        <ToggleButton disabled={!editable} isChecked={isChecked} />
       </div>
     </div>
   );

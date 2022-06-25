@@ -38,9 +38,9 @@ type PermKeys =
 
 type RolePermissions = Partial<Record<PermKeys, true>>;
 interface Permission {
-  permissionName: string;
-  permissionDesc: string;
-  key: PermKeys;
+  name: string;
+  description: string;
+  permKey: PermKeys;
 }
 interface Clinic {
   clinicId: number;
