@@ -10,8 +10,8 @@ const Template: Story<ComponentProps<typeof PermissionItem>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  permissionName: 'Assistant',
-  permissionDescription:
+  name: 'Assistant',
+  description:
     '   people with this role will assist another role, mean they can only access to the dependent role permission',
   editable: false,
   linkedPermission: ' @Rythm#3722',
