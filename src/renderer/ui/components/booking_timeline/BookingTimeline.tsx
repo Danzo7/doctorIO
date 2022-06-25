@@ -11,10 +11,8 @@ interface BookedItem {
   date?: Date;
   sessionId?: number;
   subject?: string;
-  doctorId: number;
-  assistantId: number;
-  doctorName: string;
-  assistantName: string;
+  member: { memberId: number; memberName: string };
+  assignedBy: { memberId: number; memberName: string };
 }
 interface BookingTimelineProps {
   patientId: number;
@@ -51,26 +49,24 @@ export default function BookingTimeline({
         {appointments.map(
           (
             {
-              assistantId,
-              doctorId,
+              assignedBy,
+              member,
               id,
               state,
               bookDate,
               date,
               sessionId,
               subject,
-              assistantName,
-              doctorName,
             }: BookedItem,
             index,
           ) => (
             <TimelineItem
               sessionId={sessionId}
               date={date ?? bookDate ?? new Date()}
-              assistantId={assistantId}
-              doctorId={doctorId}
-              doctorName={doctorName}
-              assistantName={assistantName}
+              assistantId={assignedBy.memberId}
+              doctorId={member.memberId}
+              doctorName={member.memberName}
+              assistantName={assignedBy.memberName}
               type={
                 state == 'done-booked'
                   ? {

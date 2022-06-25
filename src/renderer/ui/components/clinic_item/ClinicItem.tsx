@@ -7,10 +7,11 @@ import { color } from '@colors';
 import TextButton from '@components/buttons/text_button';
 import { format } from 'date-fns/esm';
 import { TIME_ONLY } from '@constants/data_format';
-import { Clinic } from '@models/server.models';
+import { LocalClinicData } from '@models/local.models';
+import { clinic } from '@api/fake';
 
 interface ClinicItemProps {
-  clinicInfo: Clinic;
+  clinicInfo: LocalClinicData;
   selected: boolean;
   onClick?: () => void;
   isHost?: boolean;
@@ -21,7 +22,8 @@ export default function ClinicItem({
   isHost = false,
   onClick,
 }: ClinicItemProps) {
-  const { timeToClose, memberCount, patientCount } = clinicInfo;
+  const { memberCount, patientCount, name } = clinicInfo;
+  //todo useEffect fetch Clinic data if selected
   return (
     <div className="clinic-item">
       <span css={{ visibility: selected ? 'visible' : 'hidden' }}>Current</span>
@@ -39,22 +41,26 @@ export default function ClinicItem({
       <div className="time-container">
         <ClinicIcon />
         <span>Time to close</span>
-        <span>{format(timeToClose, TIME_ONLY)}</span>
+        {<span>{format(clinic.timeToClose, TIME_ONLY)}</span>}
       </div>
       <div className="stats-container">
-        <div className="info-container">
-          <MedicalAssistant />
-          <span>{memberCount}</span>
-          <span>Online</span>
-        </div>
+        {memberCount && (
+          <div className="info-container">
+            <MedicalAssistant />
+            <span>{memberCount}</span>
+            <span>Online</span>
+          </div>
+        )}
         {isHost && (
           <ServerState css={{ '>path': { fill: color.good_green } }} />
         )}
-        <div className="info-container">
-          <Patient />
-          <span>{patientCount}</span>
-          <span>In queue</span>
-        </div>
+        {patientCount && (
+          <div className="info-container">
+            <Patient />
+            <span>{patientCount}</span>
+            <span>In queue</span>
+          </div>
+        )}
       </div>
     </div>
   );
