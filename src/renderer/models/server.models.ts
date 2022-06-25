@@ -21,23 +21,26 @@ type Role = {
   linkedRole?: { roleName: string; roleId: number };
   members?: Member[];
 };
-interface RolePermissions {
-  isAdmin?: true;
-  canAddMember?: true;
-  canManageRole?: true;
-  canAddPatients?: true;
-  canHaveQueue?: true;
-  canAddDrugs?: true;
-  canViewClinicInsight?: true;
-  canManageDataCollection?: true;
-  canViewMedicalRecords?: true;
-  canManageMembers?: true;
-  canManageClinic?: true;
-  canUseMessages?: true;
-}
+
+type PermKeys =
+  | 'isAdmin'
+  | 'canAddMember'
+  | 'canManageRole'
+  | 'canAddPatients'
+  | 'canHaveQueue'
+  | 'canAddDrugs'
+  | 'canViewClinicInsight'
+  | 'canManageDataCollection'
+  | 'canViewMedicalRecords'
+  | 'canManageMembers'
+  | 'canManageClinic'
+  | 'canUseMessages';
+
+type RolePermissions = Partial<Record<PermKeys, true>>;
 interface Permission {
   permissionName: string;
   permissionDesc: string;
+  key: PermKeys;
 }
 interface Clinic {
   clinicId: number;
