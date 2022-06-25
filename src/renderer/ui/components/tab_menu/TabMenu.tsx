@@ -24,30 +24,32 @@ export default function TabMenu({
     onChanged?.({ item: items[index], index: index });
   }
   return (
-    <div className="tab-menu">
-      <div
-        className="tab-menu-bar"
-        css={
-          borderBottom
-            ? { borderBottom: `1px solid ${colors.border_color}` }
-            : undefined
-        }
-      >
+    <>
+      <div className="tab-menu">
         <div
-          css={{ justifyContent: menuItemsAlignment }}
-          className="menu-items"
+          className="tab-menu-bar"
+          css={
+            borderBottom
+              ? { borderBottom: `1px solid ${colors.border_color}` }
+              : undefined
+          }
         >
-          {items.map((text, index) => (
-            <DarkLightCornerButton
-              key={index}
-              title={text}
-              isActive={selected == index}
-              onPress={() => setTab(index)}
-            />
-          ))}
+          <div
+            css={{ justifyContent: menuItemsAlignment }}
+            className="menu-items"
+          >
+            {items.map((text, index) => (
+              <DarkLightCornerButton
+                key={index}
+                title={text}
+                isActive={selected == index}
+                onPress={() => setTab(index)}
+              />
+            ))}
+          </div>
         </div>
       </div>
       {children?.find((child, index) => index == selected)}
-    </div>
+    </>
   );
 }
