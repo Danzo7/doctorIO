@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style/index.scss';
 import XMark from 'toSvg/x_mark.svg?icon';
 import GoodMark from 'toSvg/good_mark.svg?icon';
@@ -17,6 +17,9 @@ function ToggleButton({
   onChange,
 }: ToggleButtonProps) {
   const [checked, setChecked] = useState(isChecked ?? false);
+  useEffect(() => {
+    setChecked(isChecked ?? false);
+  }, [isChecked]);
 
   const Svg = checked ? GoodMark : XMark;
   const switchToggle = () => {
