@@ -26,13 +26,16 @@ type PermKeys =
   | 'isAdmin'
   | 'canAddMember'
   | 'canManageRole'
+  | 'canAccessPatientsList'
   | 'canAddPatients'
+  | 'canManagePatients'
   | 'canHaveQueue'
   | 'canAddDrugs'
   | 'canViewClinicInsight'
   | 'canManageDataCollection'
   | 'canViewMedicalRecords'
   | 'canManageMembers'
+  | 'canRemoveMember'
   | 'canManageClinic'
   | 'canUseMessages';
 

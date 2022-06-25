@@ -40,29 +40,19 @@ export const firstUser: User = {
   username: 'killerDz',
   userPreferences: { language: 'en', theme: 'Nighty' },
 };
-export const selectedRole: Role = {
-  roleId: 1,
-  roleName: 'Support',
-  roleDesc: '',
-  rolePermissions: {
-    canAddDrugs: true,
-    canAddMember: true,
-    canAddPatients: true,
-    canHaveQueue: true,
-  },
-};
 
 export const roles: Role[] = [
   {
     roleId: 1,
     roleName: 'Support',
-    roleDesc: '',
+    roleDesc: 'Technical support',
     rolePermissions: {
       canAddDrugs: true,
-      canAddMember: true,
       canAddPatients: true,
       canHaveQueue: true,
+      isAdmin: true,
     },
+    linkedRole: { roleId: 2, roleName: 'Doctor' },
   },
   {
     roleId: 2,
@@ -73,6 +63,7 @@ export const roles: Role[] = [
       canAddMember: true,
       canAddPatients: true,
       canHaveQueue: true,
+      canUseMessages: true,
     },
   },
   {
@@ -84,6 +75,7 @@ export const roles: Role[] = [
       canAddMember: true,
       canAddPatients: true,
       canHaveQueue: true,
+      canManagePatients: true,
     },
   },
   {
@@ -98,6 +90,8 @@ export const roles: Role[] = [
     },
   },
 ];
+export const selectedRole: Role = roles[0];
+
 export const rolesBrief: Role[] = roles.filter(({ roleName, roleId }) => {
   return { roleName, roleId };
 });
