@@ -5,47 +5,28 @@ import Call_Icon from 'toSvg/phone.svg?icon';
 import colors from '@assets/styles/color';
 import ChatAddButton from '@components/buttons/chat_add_button';
 import ContentMessage from './content_message';
-import client from '@assets/pictures/test.png';
 import { useParams } from 'react-router-dom';
 import InputWrapper from '@components/inputs/input_wrapper';
+import { currentMember, DMs, members } from '@api/fake';
 
 interface ChatProps {}
 export default function Chat({}: ChatProps) {
-  const messagesArray = [
-    {
-      imgSrc: client,
-      messengerName: 'Aymen',
-      messageTime: 'Today at 12:18AM',
-      messageContent: 'wach ',
-    },
-    {
-      imgSrc: client,
-      messengerName: 'brahim',
-      messageTime: 'Today at 12:18AM',
-      messageContent: 'wassap ',
-    },
-    {
-      imgSrc: client,
-      messengerName: 'Aymen',
-      messageTime: 'Today at 12:18AM',
-      messageContent:
-        'asma3 choflna khalek gadwa ki natl3o la fac 3la jal nifi bach najwaz ',
-    },
-    {
-      imgSrc: client,
-      messengerName: 'brahim',
-      messageTime: 'Today at 12:18AM',
-      messageContent: 'ok mor nhoto dossier ta3 la fac nrouho lih inchallh ',
-    },
-  ];
-  const sepPos = 2;
   const { dmId } = useParams();
-
+  //todo:fetch for selected dm
+  const dm = DMs.filter(
+    ({ dmId: id }) => id === Number.parseInt(dmId ?? '404'),
+  )[0];
+  //todo:fetch for contactMember
+  const contactMember = members.filter(({ userId }) => userId == dm.userId)[0];
+  //todo:fetch for currentMember
   return (
     <div className="chat">
       {dmId}
       <div className="chat-header">
-        <MemberStatus memberFullName={'John Doe'} status={true} />
+        <MemberStatus
+          memberFullName={contactMember.name}
+          status={contactMember.memberStatus}
+        />
         <IconicButton
           Icon={Call_Icon}
           backgroundColor={colors.secondary_color}
@@ -56,22 +37,18 @@ export default function Chat({}: ChatProps) {
       </div>
       <div className="chat-content">
         <div className="content-message-List">
-          {messagesArray.map(
-            ({ messengerName, imgSrc, messageTime, messageContent }, index) => (
-              <ContentMessage
-                //todo:messageId
-                messengerId={123456789}
-                key={index.toString() + messageContent}
-                isLastMessageSent={
-                  index == sepPos && sepPos != messagesArray.length
-                }
-                messengerName={messengerName}
-                imgSrc={imgSrc}
-                messageTime={messageTime}
-                messageContent={messageContent}
-              />
-            ),
-          )}
+          {dm.messages.map((message, index) => (
+            <ContentMessage
+              message={message}
+              key={index}
+              dmAvatar={message.sent ? currentMember.avatar : dm.dmAvatar}
+              dmId={dm.dmId}
+              dmName={message.sent ? currentMember.name : dm.dmName}
+              memberId={
+                message.sent ? currentMember.memberId : contactMember.memberId
+              }
+            />
+          ))}
         </div>
       </div>
       <InputWrapper

@@ -14,46 +14,5 @@ const Template: Story<ComponentProps<typeof DmHistory>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  lastDmMessage: [
-    {
-      imgSrc: client,
-      status: true,
-      lastMessage: 'hello there!',
-    },
-    {
-      imgSrc: client,
-      status: true,
-      lastMessage: 'hello there!',
-    },
-    {
-      imgSrc: client,
-      status: true,
-      lastMessage: 'hello there!',
-    },
-    {
-      imgSrc: client,
-      status: true,
-      lastMessage: 'hello there!',
-    },
-    {
-      imgSrc: client,
-      status: true,
-      lastMessage: 'hello there!',
-    },
-    {
-      imgSrc: client,
-      status: true,
-      lastMessage: 'hello there!',
-    },
-    {
-      imgSrc: client,
-      status: true,
-      lastMessage: 'hello there!',
-    },
-    {
-      imgSrc: client,
-      status: true,
-      lastMessage: 'hello there!',
-    },
-  ],
+  list: [],
 };

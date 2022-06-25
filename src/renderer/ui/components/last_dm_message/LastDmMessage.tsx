@@ -1,17 +1,21 @@
 import UserProfileStatus from '@components/user_profile_status';
+import { Message } from '@models/local.models';
 import { NavLink } from 'react-router-dom';
 import './style/index.scss';
+
 interface LastDmMessageProps {
-  imgSrc: string;
-  status: boolean;
-  lastMessage: string;
+  avatar?: string;
+  status?: boolean;
+  lastMessage: Message;
+  dmName: string;
   id: number;
 }
 export default function LastDmMessage({
-  imgSrc,
+  avatar,
   status,
   lastMessage,
   id,
+  dmName,
 }: LastDmMessageProps) {
   return (
     <NavLink
@@ -20,10 +24,10 @@ export default function LastDmMessage({
         ` last-dm-message${isActive ? ' selected' : ''}`
       }
     >
-      <UserProfileStatus imgSrc={imgSrc} status={status} width={35} />
+      <UserProfileStatus imgSrc={avatar} status={status} width={35} />
       <div className="info-container">
-        <span>Mahmoud Benaissa</span>
-        <span>{`You: ${lastMessage ? lastMessage : ''}`}</span>
+        <span>{dmName}</span>
+        <span>{`${lastMessage?.sent && 'you:'} ${lastMessage.text}`}</span>
       </div>
     </NavLink>
   );

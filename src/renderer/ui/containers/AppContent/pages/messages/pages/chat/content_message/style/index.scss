@@ -23,7 +23,7 @@
       font-size: 15px;
       word-break: break-word;
     }
-    .title-container {
+    >.title-container {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -34,6 +34,7 @@
         font-style: normal;
         font-weight: 500;
         font-size: 12px;
+        visibility: hidden;
       }
       > span:first-of-type {
         color: $white;
@@ -45,6 +46,12 @@
           text-decoration: underline;
         }
       }
+    }
+  }
+  &:hover{
+    background-color: $darker;
+    & > .info-container > .title-container > span:nth-of-type(2) {
+      visibility: visible;
     }
   }
 }

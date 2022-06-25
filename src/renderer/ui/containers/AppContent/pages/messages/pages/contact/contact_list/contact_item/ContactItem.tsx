@@ -2,31 +2,65 @@ import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import { NavLink } from 'react-router-dom';
 import MemberActionControls from '@components/member_action_controls';
-import { Member } from '@models/server.models';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import WarningModal from '@containers/modals/warning_modal';
+import { FIT_MODAL } from '@libs/overlay';
+import TextButton from '@components/buttons/text_button';
+import { color } from '@assets/styles/color';
+import useNavigation from '@libs/hooks/useNavigation';
 interface ContactItemProps {
   status: boolean;
-  imgSrc: string;
+  avatar?: string;
   fullName: string;
-  cId: number;
-  member: Member;
+  dmId?: number;
+  memberId: number;
 }
 function ContactItem({
   status,
-  imgSrc,
+  avatar,
   fullName,
-  cId,
-  member,
+  dmId,
+  memberId,
 }: ContactItemProps) {
+  const { open } = useOverlay();
+  const { navigate } = useNavigation();
   return (
-    <NavLink to={cId?.toString() ?? ''} className="contact-item">
+    <div
+      className="contact-item"
+      onClick={
+        dmId == undefined
+          ? () => {
+              open(
+                <WarningModal
+                  warningDescription="This is the first time you are messaging this user. You have to wait for them to accept your request."
+                  warningTitle="Start a conversasion"
+                >
+                  <TextButton
+                    text="Send a request"
+                    backgroundColor={color.good_green}
+                  />
+                </WarningModal>,
+                FIT_MODAL,
+              );
+            }
+          : () => {
+              navigate(dmId?.toString());
+            }
+      }
+    >
       <div className="info-container">
-        <UserProfileStatus status={status} imgSrc={imgSrc} />
+        <UserProfileStatus status={status} imgSrc={avatar} />
         <span>{fullName}</span>
       </div>
       <div className="avatars-container">
-        <MemberActionControls member={member} messagesRoutePath="" />
+        <MemberActionControls
+          dmId={dmId}
+          memberId={memberId}
+          messagesRoutePath=""
+          notFriend={dmId == undefined}
+        />
       </div>
-    </NavLink>
+    </div>
   );
 }
 

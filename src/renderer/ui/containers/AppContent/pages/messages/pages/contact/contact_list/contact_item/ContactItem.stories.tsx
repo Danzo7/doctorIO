@@ -13,6 +13,6 @@ const Template: Story<ComponentProps<typeof ContactItem>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   status: true,
-  imgSrc: profile,
+  avatar: profile,
   fullName: 'John Doe',
 };

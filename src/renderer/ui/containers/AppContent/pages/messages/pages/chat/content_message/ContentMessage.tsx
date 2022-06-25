@@ -1,53 +1,34 @@
 import CircleAvatar from '@components/avatars/circle_avatar';
 import MemberCard from '@components/member_card';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import { Message } from '@models/local.models';
+import { formatRelative } from 'date-fns';
 import './style/index.scss';
 interface ContentMessageProps {
-  messengerId: number;
-  imgSrc: string;
-  messengerName: string;
-  messageTime: string;
-  messageContent: string;
-  isLastMessageSent: boolean;
+  message: Message;
+  dmAvatar?: string;
+  dmName: string;
+  dmId: number;
+  memberId: number;
 }
 function ContentMessage({
-  messengerId,
-  messengerName,
-  messageTime,
-  messageContent,
-  imgSrc,
-  isLastMessageSent,
+  dmAvatar,
+  dmId,
+  dmName,
+  message,
 }: ContentMessageProps) {
   const { open } = useOverlay();
   return (
     <div
-      className={`content-message ${
-        isLastMessageSent ? 'last-message-sent' : ''
-      } `}
+      className={`content-message ${!message.seen ? 'last-message-sent' : ''} `}
     >
       <div>
         <CircleAvatar
-          src={imgSrc}
+          src={dmAvatar}
           width={40}
           onClick={(e) => {
             open(
-              <MemberCard
-                member={{
-                  name: 'Aymen Daouadji',
-                  avatar: 'build/renderer/assets/pictures/test.png',
-                  memberStatus: true,
-                  accessKey: '12346678',
-                  addedBy: 'Brahim aymen',
-                  age: 18,
-                  gender: 'male',
-                  address: 'blida',
-                  userId: 12346789,
-                  phoneNumber: '054681349',
-                  memberId: 123456789,
-                  roles: [{ roleId: 1, roleName: 'gamer', roleDesc: 'gaming' }],
-                  joinDate: new Date('2022-01-01'),
-                }}
-              />,
+              <MemberCard memberId={dmId} name={dmName} avatar={dmAvatar} />,
               {
                 popperTarget: e.currentTarget,
                 clickThrough: true,
@@ -63,25 +44,7 @@ function ContentMessage({
           <span
             onClick={(e) => {
               open(
-                <MemberCard
-                  member={{
-                    name: 'Aymen Daouadji',
-                    avatar: 'build/renderer/assets/pictures/test.png',
-                    memberStatus: true,
-                    accessKey: '12346678',
-                    addedBy: 'Brahim aymen',
-                    age: 18,
-                    gender: 'male',
-                    address: 'blida',
-                    userId: 12346789,
-                    phoneNumber: '054681349',
-                    memberId: 123456789,
-                    roles: [
-                      { roleId: 1, roleName: 'gamer', roleDesc: 'gaming' },
-                    ],
-                    joinDate: new Date('2022-01-01'),
-                  }}
-                />,
+                <MemberCard memberId={dmId} name={dmName} avatar={dmAvatar} />,
                 {
                   popperTarget: e.currentTarget,
                   clickThrough: true,
@@ -90,11 +53,11 @@ function ContentMessage({
               );
             }}
           >
-            {messengerName}
+            {dmName}
           </span>
-          <span>{messageTime}</span>
+          <span>{formatRelative(message.date, new Date())}</span>
         </div>
-        <span>{messageContent}</span>
+        <span>{message.text}</span>
       </div>
     </div>
   );
