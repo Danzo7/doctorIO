@@ -40,6 +40,17 @@ export const firstUser: User = {
   username: 'killerDz',
   userPreferences: { language: 'en', theme: 'Nighty' },
 };
+export const selectedRole: Role = {
+  roleId: 1,
+  roleName: 'Support',
+  roleDesc: '',
+  rolePermissions: {
+    canAddDrugs: true,
+    canAddMember: true,
+    canAddPatients: true,
+    canHaveQueue: true,
+  },
+};
 
 export const roles: Role[] = [
   {
