@@ -1,8 +1,7 @@
 import { generateTime } from '@containers/AppContent/pages/clinic/pages/clinics/Clinics';
 import { Appointment, Patient } from '@models/instance.model';
-import { User } from '@models/local.models';
+import { DirectMessage, User } from '@models/local.models';
 import { Clinic, Member, Role } from '@models/server.models';
-import profile from '@assets/pictures/test.png';
 import { faker } from '@faker-js/faker';
 export const firstUser: User = {
   avatar: '/assets/9b4caf44c40506a102ec.png',
@@ -37,7 +36,7 @@ export const firstUser: User = {
   phoneNumber: '0123456789',
   publicKey: 'key',
   privateKey: 'yek',
-  userId: 2123,
+  userId: 123,
   username: 'killerDz',
   userPreferences: { language: 'en', theme: 'Nighty' },
 };
@@ -91,6 +90,7 @@ export const roles: Role[] = [
 export const rolesBrief: Role[] = roles.filter(({ roleName, roleId }) => {
   return { roleName, roleId };
 });
+
 export const members: Member[] = [
   {
     name: 'Aymen Daouadji',
@@ -101,7 +101,7 @@ export const members: Member[] = [
     age: 18,
     gender: 'male',
     address: 'blida',
-    userId: 12346789,
+    userId: 150,
     phoneNumber: '054681349',
     memberId: 1,
     roles: [rolesBrief[0], rolesBrief[1]],
@@ -117,7 +117,7 @@ export const members: Member[] = [
     age: 25,
     gender: 'male',
     address: 'Alger',
-    userId: 12346789,
+    userId: 160,
     phoneNumber: '064681349',
     memberId: 2,
     roles: [rolesBrief[0]],
@@ -132,7 +132,7 @@ export const members: Member[] = [
     age: 22,
     gender: 'male',
     address: 'Oran',
-    userId: 12346789,
+    userId: 170,
     phoneNumber: '0546666349',
     memberId: 3,
     roles: [rolesBrief[1], rolesBrief[2]],
@@ -147,7 +147,7 @@ export const members: Member[] = [
     age: 30,
     gender: 'male',
     address: 'blida',
-    userId: 50505050,
+    userId: 180,
     phoneNumber: '071345911',
     memberId: 4,
     roles: [rolesBrief[3], rolesBrief[1]],
@@ -162,11 +162,38 @@ export const members: Member[] = [
     age: 24,
     gender: 'male',
     address: 'blida',
-    userId: 55221133,
+    userId: 190,
     phoneNumber: '054445688',
     memberId: 5,
     roles: [rolesBrief[0], rolesBrief[1]],
     joinDate: new Date('2022-01-01'),
+  },
+];
+export const DMs: DirectMessage[] = [
+  {
+    dmAvatar: members[0].avatar,
+    userId: members[0].userId,
+    dmName: members[0].name,
+    dmId: 1,
+    messages: [
+      { text: 'hello', date: new Date(), seen: true },
+      { text: 'hi', date: new Date(), seen: true, sent: true },
+      { text: 'how are you', date: new Date(), seen: true },
+      { text: 'i am fine', date: new Date(), seen: true, sent: true },
+    ],
+  },
+  {
+    dmAvatar: members[2].avatar,
+    userId: members[2].userId,
+    dmName: members[2].name,
+
+    dmId: 2,
+    messages: [
+      { text: 'hello', date: new Date(), seen: true },
+      { text: 'hi', date: new Date(), seen: true, sent: true },
+      { text: 'how are you', date: new Date(), seen: true },
+      { text: 'i am fine', date: new Date(), seen: true, sent: true },
+    ],
   },
 ];
 export const currentMember: Member = members[1];

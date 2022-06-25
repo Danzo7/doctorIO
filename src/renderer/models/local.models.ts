@@ -40,13 +40,15 @@ interface Drug {
 interface DirectMessage {
   dmId: number;
   userId: number; //"contactId"
-  dmAvatar: string;
+  dmAvatar?: string;
+  dmName: string; //contactName,update after get contact
   messages: Message[];
 }
 interface Message {
   text: string;
   date: Date;
   seen: boolean;
+  sent?: true;
 }
 interface LocalClinicData {
   clinicId: number;
