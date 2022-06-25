@@ -3,7 +3,6 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
-import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type Inputs = {
@@ -22,11 +21,10 @@ export default function AddDrugModal({
   defaultValues,
 }: AddDrugModalProps) {
   const {
-    reset,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({ defaultValues: defaultValues });
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     if (!defaultValues) {
       onSubmitPress(formData);
@@ -34,14 +32,6 @@ export default function AddDrugModal({
 
     Overlay.close();
   };
-
-  useEffect(() => {
-    if (defaultValues) {
-      console.log('default', defaultValues);
-      reset(defaultValues);
-    }
-    return () => {};
-  }, []);
 
   return (
     <ModalContainer
