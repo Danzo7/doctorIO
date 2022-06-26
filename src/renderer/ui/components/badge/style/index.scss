@@ -1,0 +1,8 @@
+@use '~styles/appColors' as *;
+.badge {
+    border-radius: 0.5em;
+    font-size: 0.7em;
+    font-weight: 600;
+    padding: 0.2em 0.5em;
+    width: fit-content;
+}
