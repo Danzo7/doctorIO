@@ -60,8 +60,9 @@ export default function useRouteMatch(
 
   //isFirstDescendent take a route(string) and return true if that route is the first child of the parent route of the current route stack
   const isFirstDescendent = useCallback(
-    (route: string) => {
+    (route: string, keepLevel?: boolean) => {
       if (!caseSensitive) route = route.toLowerCase();
+      if (route[0] == '/') route = route.substring(1);
       const splittedRoute = route.split('/');
       const sRoute = splittedRoute[0];
       const eRoute =
@@ -71,6 +72,7 @@ export default function useRouteMatch(
 
       return (
         route == parentRoute ||
+        (keepLevel && parentRoute == eRoute) ||
         (route.length == 0 && parentRoute == lastRoute) ||
         route == childRoute ||
         route == childRoute?.split('/')[0] ||
