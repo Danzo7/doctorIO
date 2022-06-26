@@ -20,6 +20,7 @@ export type IconType =
   | IconProps
   | ReactNode;
 interface TextButtonProps {
+  className?: string;
   text?: string;
   Icon?: IconType;
   children?: React.ReactNode;
@@ -61,6 +62,7 @@ interface TextButtonProps {
   blank?: true;
 }
 function TextButton({
+  className,
   text,
   Icon,
   fontColor,
@@ -120,9 +122,9 @@ function TextButton({
   return (
     <button
       type={type}
-      className={`text-button${isHold ? ' hold' : ''}`}
+      className={`text-button${isHold ? ' hold' : ''} ${className || ''}`}
       css={{
-        backgroundColor: !disabled ? backgroundColor : colors.silver_gray,
+        backgroundColor: !disabled ? backgroundColor : colors.light,
         border: `${borderColor} ${borderWidth}px solid`,
         justifyContent: alignment,
         flexDirection: itemsDirection,
@@ -132,6 +134,7 @@ function TextButton({
         width: width,
         height: height,
         cursor: disabled ? 'no-drop' : undefined,
+        opacity: disabled ? 0.5 : 1,
         '>svg>path': {
           stroke:
             (Icon as IconProps)?.iconType === 'stroke'
@@ -140,7 +143,7 @@ function TextButton({
                 : colors.text_gray
               : undefined,
           fill:
-            (Icon as IconProps)?.iconType === 'fill'
+            (Icon as IconProps)?.iconType !== 'stroke'
               ? !disabled
                 ? (Icon as IconProps)?.iconColor
                 : colors.text_gray
@@ -171,7 +174,7 @@ function TextButton({
                   : colors.text_gray
                 : undefined,
             fill:
-              (Icon as IconProps)?.iconType === 'fill'
+              (Icon as IconProps)?.iconType !== 'stroke'
                 ? !disabled
                   ? (Icon as IconProps)?.iconAfterColor
                   : colors.text_gray
