@@ -13,5 +13,4 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   Icon: Doctor,
   categoryName: 'Clinic',
-  selected: true,
 };

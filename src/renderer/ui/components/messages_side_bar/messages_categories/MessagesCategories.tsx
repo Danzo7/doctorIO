@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import MessagesCategoryItem from './messages_category_item';
 import Doctor from 'toSvg/doctor_icon.svg?icon';
 import Nurse from 'toSvg/nurse_icon.svg?icon';
@@ -16,18 +15,13 @@ export default function MessagesCategories({}: MessagesCategoriesProps) {
       categoryName: 'Public',
     },
   ];
-  const [selectedCategory, setSelectedCategory] = useState(0);
   return (
     <div className="messages-categories">
-      {categories.map(({ Icon, categoryName }, index) => (
+      {categories.map(({ Icon, categoryName }) => (
         <MessagesCategoryItem
-          selected={selectedCategory == index}
           Icon={Icon}
           categoryName={categoryName}
           key={categoryName}
-          onSelect={() => {
-            setSelectedCategory(index);
-          }}
         />
       ))}
     </div>
