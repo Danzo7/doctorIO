@@ -64,7 +64,7 @@ export default function TimelineItem({
             <TextPair first={doctorName} second="Doctor" reversed />
             <TextPair first={assistantName} second="Assistance" reversed />
             <SquareIconButton
-              svg={View}
+              Icon={View}
               onPress={() => {
                 open(<SessionPreviewModal />, {
                   closeOnClickOutside: true,

@@ -1,4 +1,3 @@
-import { selectedRole } from '@api/fake';
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import CheckboxTile from '@components/checkbox_tile';

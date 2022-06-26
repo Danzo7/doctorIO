@@ -60,7 +60,7 @@ export default function PrescriptionTab({}: PrescriptionTabProps) {
         title="Drug list"
         buttonNode={
           <DarkLightCornerButton
-            title="Add..."
+            text="Add..."
             onPress={() => {
               open(
                 <AddDrugModal

@@ -19,7 +19,7 @@ function MembersPanel({}: MembersPanelProps) {
             onPress={() => {
               navigate('/clinic/Members');
             }}
-            title="Members ..."
+            text="Members ..."
           />
         }
       />

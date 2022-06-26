@@ -18,12 +18,12 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
       <div className="clinic-settings-header">
         <span>Clinic Settings</span>
         <DarkLightCornerButton
-          title="view all"
+          text="view all"
           onPress={() => navigate('all', { replace: false })}
         />
         <DarkLightCornerButton
-          title="disconnect"
-          textColor={colors.hot_red}
+          text="disconnect"
+          fontColor={colors.hot_red}
           isActive={true}
         />
       </div>

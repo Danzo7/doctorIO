@@ -11,5 +11,5 @@ const Template: Story<ComponentProps<typeof SnakeBar>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  children: <DarkLightCornerButton title="close" />,
+  children: <DarkLightCornerButton text="close" />,
 };

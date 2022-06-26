@@ -18,7 +18,7 @@ export default function MedicalHistory({ list }: MedicalHistoryProps) {
       title="Medical history"
       buttonNode={
         <DarkLightCornerButton
-          title="Add"
+          text="Add"
           blend
           onPress={() => {
             open(<AddMedicalHistoryModal />, {

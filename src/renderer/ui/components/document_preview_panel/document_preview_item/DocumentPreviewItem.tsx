@@ -24,12 +24,12 @@ export default function DocumentPreviewItem({
       secondaryText={format(date, DATE_ONLY)}
     >
       <SquareIconButton
-        svg={
+        Icon={
           AppointmentHistoryIcon //todo preview file with id
         }
       />
       <SquareIconButton
-        svg={TrashCan}
+        Icon={TrashCan}
         onPress={() => {
           open(
             <WarningModal

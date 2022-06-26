@@ -11,5 +11,5 @@ const Template: Story<ComponentProps<typeof DarkLightCornerButton>> = (
 ) => <DarkLightCornerButton {...args} />;
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  title: 'text',
+  text: 'text',
 };

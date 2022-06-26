@@ -41,7 +41,7 @@ export default function TabMenu({
             {items.map((text, index) => (
               <DarkLightCornerButton
                 key={index}
-                title={text}
+                text={text}
                 isActive={selected == index}
                 onPress={() => setTab(index)}
               />

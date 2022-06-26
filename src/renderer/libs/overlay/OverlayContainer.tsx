@@ -1,4 +1,6 @@
 import { Overlay } from './overlay';
+import back from 'toSvg/arrow_line.svg?icon';
+
 import {
   createContext,
   ReactNode,
@@ -177,7 +179,7 @@ export function OverlayItem({
             }`}
           >
             {typeof closeBtn == 'string' ? (
-              <SquareIconButton onPress={() => closeOverlay()} />
+              <SquareIconButton onPress={() => closeOverlay()} Icon={back} />
             ) : (
               closeBtn.placement
             )}

@@ -17,7 +17,7 @@ export default function DocumentPreviewPanel({
       title="Documents"
       buttonNode={
         <DarkLightCornerButton
-          title="Upload"
+          text="Upload"
           onPress={() => {
             open(<UploadFileModal />, {
               closeOnClickOutside: true,

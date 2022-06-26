@@ -21,7 +21,7 @@ export default function AppointmentHistoryItem({
       secondaryText={subject}
     >
       <SquareIconButton
-        svg={AppointmentHistoryIcon}
+        Icon={AppointmentHistoryIcon}
         onPress={() => {
           open(<SessionPreviewModal />, {
             closeOnClickOutside: true,

@@ -2,8 +2,13 @@ import IconicButton from '@components/buttons/iconic_button';
 import './style/index.scss';
 import Add from 'toSvg/add.svg?icon';
 import { color } from '@assets/styles/color';
-interface ChatAddButtonProps {}
-export default function ChatAddButton({}: ChatAddButtonProps) {
+import { ComponentProps } from 'react';
+export default function ChatAddButton(
+  props: Omit<
+    ComponentProps<typeof IconicButton>,
+    'backgroundColor' | 'width' | 'padding' | 'radius' | 'Icon' | 'iconSize'
+  >,
+) {
   return (
     <div className="chat-add-button">
       <IconicButton
@@ -12,7 +17,7 @@ export default function ChatAddButton({}: ChatAddButtonProps) {
         radius={100}
         iconSize={10}
         width={25}
-        type={'submit'}
+        {...props}
       />
     </div>
   );

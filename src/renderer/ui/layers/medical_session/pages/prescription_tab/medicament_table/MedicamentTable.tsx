@@ -67,7 +67,7 @@ export default function MedicamentTable({
             cell: ({ getValue, row }) => (
               <div css={{ float: 'right' }}>
                 <DarkLightCornerButton
-                  title="Edit"
+                  text="Edit"
                   isActive={true}
                   onPress={() => {
                     open(

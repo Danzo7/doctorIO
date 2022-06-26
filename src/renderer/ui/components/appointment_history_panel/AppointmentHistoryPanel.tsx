@@ -15,7 +15,7 @@ export default function AppointmentHistoryPanel({
   return (
     <PreviewList
       title="Post appointment"
-      buttonNode={<DarkLightCornerButton title="View all" blend />} //TODO implement View All function
+      buttonNode={<DarkLightCornerButton text="View all" blend />} //TODO implement View All function
       notScrollable
     >
       {list.map(({ date, subject, id }, index) => (

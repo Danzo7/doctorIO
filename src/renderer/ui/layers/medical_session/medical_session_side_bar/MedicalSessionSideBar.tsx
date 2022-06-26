@@ -22,7 +22,7 @@ export default function MedicalSessionSideBar({
           data={patient.testResult}
           buttonNode={
             <DarkLightCornerButton
-              title="preview"
+              text="preview"
               blend
               onPress={() => {
                 open(<DiagnosisPreview data={patient.testResult} />, {

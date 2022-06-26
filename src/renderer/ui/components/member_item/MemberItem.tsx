@@ -48,7 +48,7 @@ export default function MemberItem({
 
       <div className="option-menu">
         <SquareIconButton
-          svg={threeDots}
+          Icon={threeDots}
           onPress={(e) => {
             if (e)
               openTooltip(

@@ -52,7 +52,7 @@ export default function SessionParameter({}: SessionParameterProps) {
       <div className="bottom-div">
         <div className="controls-div">
           <DarkLightCornerButton
-            title="Print..."
+            text="Print..."
             onPress={(e) => {
               if (e)
                 openTooltip(

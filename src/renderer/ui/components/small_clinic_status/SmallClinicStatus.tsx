@@ -23,7 +23,7 @@ export default function SmallClinicStatus({
         <Header
           buttonNode={
             <DarkLightCornerButton
-              title=" View clinic..."
+              text=" View clinic..."
               onPress={() => {
                 navigate('clinic/TimingAndSchedule');
               }}

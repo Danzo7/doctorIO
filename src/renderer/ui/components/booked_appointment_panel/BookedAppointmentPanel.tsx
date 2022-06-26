@@ -21,7 +21,7 @@ export default function BookedAppointmentPanel({
       title="Booked Appointment"
       buttonNode={
         <DarkLightCornerButton
-          title="Add"
+          text="Add"
           onPress={() => {
             open(<AddSearchToBooked />, DEFAULT_MODAL);
           }}

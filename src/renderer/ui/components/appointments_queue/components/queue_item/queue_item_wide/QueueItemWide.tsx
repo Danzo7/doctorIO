@@ -39,7 +39,7 @@ function QueueItemWide({
       <div className="back-container">
         <div className="back">
           <SquareIconButton
-            svg={threeDots}
+            Icon={threeDots}
             onPress={(e) => {
               if (e)
                 openTooltip(

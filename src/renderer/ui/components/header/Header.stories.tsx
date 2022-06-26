@@ -12,5 +12,5 @@ const Template: Story<ComponentProps<typeof Header>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   title: 'Header Title',
-  buttonNode: <DarkLightCornerButton title="Click" />,
+  buttonNode: <DarkLightCornerButton text="Click" />,
 };

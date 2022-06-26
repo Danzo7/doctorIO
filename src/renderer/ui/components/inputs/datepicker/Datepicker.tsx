@@ -23,7 +23,7 @@ export default function Datepicker({
           <div className="header">
             <SquareIconButton
               onPress={decreaseMonth}
-              svg={<Arrow css={{ transform: 'rotate(90deg)' }} />}
+              Icon={<Arrow css={{ transform: 'rotate(90deg)' }} />}
             />
 
             <span className="month">
@@ -34,7 +34,7 @@ export default function Datepicker({
             </span>
             <SquareIconButton
               onPress={increaseMonth}
-              svg={<Arrow css={{ transform: 'rotate(-90deg)' }} />}
+              Icon={<Arrow css={{ transform: 'rotate(-90deg)' }} />}
             />
           </div>
         )}

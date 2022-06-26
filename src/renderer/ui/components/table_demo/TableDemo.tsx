@@ -47,7 +47,7 @@ export default function TableDemo({}: TableDemoProps) {
         cell: ({ getValue }) => (
           <div css={{ float: 'right' }}>
             <DarkLightCornerButton
-              title={getValue().toString()}
+              text={getValue().toString()}
               isActive={true}
             />
           </div>

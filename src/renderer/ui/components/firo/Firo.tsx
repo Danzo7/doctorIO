@@ -97,7 +97,7 @@ export default function Firo() {
           endDate={endDate}
           selectsRange
         />
-        <DarkLightCornerButton type="submit" title="submit" blank />
+        <DarkLightCornerButton type="submit" text="submit" blank />
       </form>
     </>
   );

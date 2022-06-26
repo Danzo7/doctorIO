@@ -1,11 +1,14 @@
 import { color } from '@colors';
-import { PressHandler } from '../text_button';
 import Add from 'toSvg/add.svg?icon';
 import IconicButton from '../iconic_button';
-interface DarkAddButtonProps {
-  onPress?: PressHandler;
-}
-export default function DarkAddButton({ onPress }: DarkAddButtonProps) {
+import { ComponentProps } from 'react';
+
+export default function DarkAddButton(
+  props: Omit<
+    ComponentProps<typeof IconicButton>,
+    'backgroundColor' | 'borderColor' | 'width' | 'padding' | 'radius' | 'Icon'
+  >,
+) {
   return (
     <IconicButton
       radius={7}
@@ -13,7 +16,7 @@ export default function DarkAddButton({ onPress }: DarkAddButtonProps) {
       width={'fit-content'}
       borderColor={color.border_color}
       Icon={<Add height={11} />}
-      onPress={onPress}
+      {...props}
     />
   );
 }

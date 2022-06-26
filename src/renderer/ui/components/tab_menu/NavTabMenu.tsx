@@ -29,7 +29,7 @@ export default function NavTabMenu({
             <SmartLink to={(item as RouteDef)?.route ?? item} key={index}>
               {({ isMatch }) => (
                 <DarkLightCornerButton
-                  title={(item as RouteDef)?.name ?? item}
+                  text={(item as RouteDef)?.name ?? item}
                   isActive={isMatch}
                   blank
                 />

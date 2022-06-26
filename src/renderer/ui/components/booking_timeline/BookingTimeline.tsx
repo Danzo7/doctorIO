@@ -41,7 +41,7 @@ export default function BookingTimeline({
       <PreviewList
         title="Appointment"
         buttonNode={
-          <DarkLightCornerButton title="Book appointment" onPress={onPress} />
+          <DarkLightCornerButton text="Book appointment" onPress={onPress} />
         }
         gap={10}
         noBorder

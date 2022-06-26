@@ -14,7 +14,7 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   title: 'Medical history',
   buttonNode: (
-    <DarkLightCornerButton title="Add" isActive={true} onPress={() => {}} />
+    <DarkLightCornerButton text="Add" isActive={true} onPress={() => {}} />
   ),
   children: (
     <>

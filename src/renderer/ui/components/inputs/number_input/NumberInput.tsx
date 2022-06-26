@@ -77,8 +77,8 @@ export default forwardRef(function NumberInput(
         else increase();
         e.stopPropagation();
       }}
-      leading={<SquareIconButton svg={minus} onPress={decrease} blank />}
-      trailing={<SquareIconButton svg={add} onPress={increase} blank />}
+      leading={<SquareIconButton Icon={minus} onPress={decrease} blank />}
+      trailing={<SquareIconButton Icon={add} onPress={increase} blank />}
     >
       <AutoSizeInput
         css={{ textAlign: 'end' }}

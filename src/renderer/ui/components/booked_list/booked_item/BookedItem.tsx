@@ -39,7 +39,7 @@ function BookedItem({
         )}
       </div>
       <SquareIconButton
-        svg={threeDots}
+        Icon={threeDots}
         onPress={(e) => {
           if (e)
             openTooltip(
