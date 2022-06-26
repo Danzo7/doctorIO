@@ -1,5 +1,6 @@
+import TextButton from '@components/buttons/text_button';
 import useRouteMatch from '@libs/hooks/useRouteMatch';
-import { CSSProperties, ReactNode, useCallback } from 'react';
+import { ComponentProps, CSSProperties, ReactNode, useCallback } from 'react';
 import { Link, LinkProps, useNavigate } from 'react-router-dom';
 export type RouteExact = { route: string; exact: true };
 export type ToWithInclude = {
@@ -13,6 +14,7 @@ interface SmartLinkProps {
   to: ToRoute;
   caseSensitive?: boolean;
   end?: boolean;
+  keepLevel?: boolean;
   style?: CSSProperties | ((props: { isMatch: boolean }) => CSSProperties);
 }
 export default function SmartLink({
@@ -51,6 +53,7 @@ export default function SmartLink({
       ) != undefined
     );
   }, [isFirstDescendent, isOnlyDescendent, to]);
+  const isMatch = checkMatches();
   return (
     <Link
       to={
@@ -61,39 +64,42 @@ export default function SmartLink({
       className={
         typeof className == 'function'
           ? (className as (props: { isMatch: boolean }) => string)?.({
-              isMatch: checkMatches(),
+              isMatch: isMatch,
             })
           : (className as string)
       }
       style={
         typeof style == 'function'
           ? (style as (props: { isMatch: boolean }) => CSSProperties)?.({
-              isMatch: checkMatches(),
+              isMatch: isMatch,
             })
           : (style as CSSProperties)
       }
       {...others}
     >
       {typeof children == 'function'
-        ? children?.({ isMatch: checkMatches() })
+        ? children?.({ isMatch: isMatch })
         : children}
     </Link>
   );
 }
-export function SmartLinkWatch({
+export function NavButton({
   className,
-  style,
   children,
   to,
   caseSensitive = true,
-  ...others
-}: SmartLinkProps &
-  Omit<LinkProps, 'className' | 'style' | 'children' | 'to'> &
-  React.RefAttributes<HTMLAnchorElement>) {
+  keepLevel,
+  buttonProps,
+}: SmartLinkProps & {
+  buttonProps: (props: {
+    isMatch: boolean;
+  }) => Omit<ComponentProps<typeof TextButton>, 'onPress'>;
+}) {
+  const navigate = useNavigate();
   const { isFirstDescendent, isOnlyDescendent } = useRouteMatch({
     caseSensitive: caseSensitive,
   });
-  const navigate = useNavigate();
+
   const checkMatches = useCallback(() => {
     const matches = [
       ...(typeof to == 'string' || (to as RouteExact)?.route != undefined
@@ -109,42 +115,36 @@ export function SmartLinkWatch({
     return (
       (matches as (string | RouteExact)[]).find((route: string | RouteExact) =>
         typeof route == 'string'
-          ? isFirstDescendent(route as string)
+          ? isFirstDescendent(route as string, keepLevel)
           : route.exact
           ? isOnlyDescendent(route.route as string)
-          : isFirstDescendent(route.route as string),
+          : isFirstDescendent(route.route as string, keepLevel),
       ) != undefined
     );
-  }, [isFirstDescendent, isOnlyDescendent, to]);
+  }, [isFirstDescendent, isOnlyDescendent, keepLevel, to]);
+  const isMatch = checkMatches();
   return (
-    <a
-      css={{ cursor: 'pointer' }}
-      onClick={() =>
-        navigate(
-          typeof to == 'string'
-            ? to
-            : (to as RouteExact)?.route ?? (to as ToWithInclude).to,
-        )
-      }
+    <TextButton
+      onPress={() => {
+        if (!isMatch)
+          navigate(
+            typeof to == 'string'
+              ? to
+              : (to as RouteExact)?.route ?? (to as ToWithInclude).to,
+          );
+      }}
       className={
         typeof className == 'function'
           ? (className as (props: { isMatch: boolean }) => string)?.({
-              isMatch: checkMatches(),
+              isMatch: isMatch,
             })
           : (className as string)
       }
-      style={
-        typeof style == 'function'
-          ? (style as (props: { isMatch: boolean }) => CSSProperties)?.({
-              isMatch: checkMatches(),
-            })
-          : (style as CSSProperties)
-      }
-      {...others}
+      {...buttonProps({ isMatch: isMatch })}
     >
       {typeof children == 'function'
-        ? children?.({ isMatch: checkMatches() })
+        ? children?.({ isMatch: isMatch })
         : children}
-    </a>
+    </TextButton>
   );
 }
