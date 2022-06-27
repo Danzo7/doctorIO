@@ -433,4 +433,151 @@ export const patients: Patient[] = [
       bloodType: 'A',
     },
   },
+
+  {
+    patId: 2,
+    gender: 'female',
+    appointments: [
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 2,
+        state: 'upcoming',
+        bookDate: new Date('2022-07-01'),
+      },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 1,
+        state: 'done-booked',
+        bookDate: new Date('2022-05-24'),
+        date: new Date('2022-06-24'),
+        sessionId: 1,
+        subject: 'control',
+      },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 2,
+        state: 'done',
+        date: new Date('2022-03-01'),
+        sessionId: 4,
+        subject: 'illness',
+      },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 2,
+        state: 'missed',
+        bookDate: new Date('2022-02-01'),
+      },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 2,
+        state: 'done',
+        date: new Date('2022-01-01'),
+        sessionId: 1,
+        subject: 'Inner bleed',
+      },
+    ],
+    medicalHistory: [
+      {
+        id: 1,
+        description: 'kidney transplants',
+        date: new Date('2020-01-01'),
+      },
+      {
+        id: 2,
+        description: 'car accident',
+        date: new Date('2014-01-01'),
+      },
+      {
+        id: 3,
+        description: 'injury in the elbow',
+        date: new Date('2010-04-01'),
+      },
+      {
+        id: 4,
+        description: 'crack in the head',
+        date: new Date('2000-01-01'),
+      },
+    ],
+    status: 'active',
+    medicalDocuments: [
+      {
+        fileId: 1,
+        fileName: 'headScan.pdf',
+        fileType: 'pdf',
+        date: new Date('2022-01-01'),
+        filePath: '',
+        fileSize: 3000,
+      },
+      {
+        fileId: 2,
+        fileName: 'bloodTests.pdf',
+        fileType: 'pdf',
+        date: new Date('2022-01-01'),
+        filePath: '',
+        fileSize: 3000,
+      },
+      {
+        fileId: 3,
+        fileName: 'file.pdf',
+        fileType: 'pdf',
+        date: new Date('2022-01-01'),
+        filePath: '',
+        fileSize: 3000,
+      },
+      {
+        fileId: 4,
+        fileName: 'discord.pdf',
+        fileType: 'pdf',
+        date: new Date('2022-01-01'),
+        filePath: '',
+        fileSize: 3000,
+      },
+    ],
+    registerDate: new Date('2022-05-01'),
+    firstName: 'carl',
+    lastName: 'segane',
+    birthDate: new Date('2000-05-02'),
+    age: 26,
+    testResult: {
+      height: 1.75,
+      weight: 107,
+      bloodPressure: 1,
+      bloodType: 'A',
+    },
+  },
 ];
