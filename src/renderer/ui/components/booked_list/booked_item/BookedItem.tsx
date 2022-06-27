@@ -8,6 +8,7 @@ import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_mo
 import { formatDistance } from 'date-fns';
 import { BookedAppointment } from '@models/instance.model';
 import { DEFAULT_MODAL } from '@libs/overlay';
+import useNavigation from '@libs/hooks/useNavigation';
 
 function BookedItem({
   patientName,
@@ -16,6 +17,7 @@ function BookedItem({
   patientId,
 }: BookedAppointment) {
   const { openTooltip, open } = useOverlay();
+  const { navigate } = useNavigation();
   return (
     <div className="booked-item">
       <div className="right-container">
@@ -58,6 +60,9 @@ function BookedItem({
                 },
                 {
                   text: 'View records',
+                  onPress: () => {
+                    navigate('/records/' + patientId, { replace: true });
+                  },
                 },
                 {
                   text: 'Remove',

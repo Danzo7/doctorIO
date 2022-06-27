@@ -18,6 +18,7 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '@containers/modals/book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { patients } from '@api/fake';
+import { useParams } from 'react-router-dom';
 
 interface SearchInput {
   searchField: string;
@@ -140,7 +141,6 @@ const usersData = [
   },
 ];
 //todo fetch data from api
-const patient: Patient = patients[0];
 
 interface RecordProps {}
 export default function Record({}: RecordProps) {
@@ -149,6 +149,10 @@ export default function Record({}: RecordProps) {
   const matches = useSearchPatient(watchSearch, usersData);
   const { navigate } = useNavigation();
   const { open } = useOverlay();
+  const { patientId } = useParams();
+  const patient: Patient =
+    patients.find(({ patId }) => patId.toString() == patientId) ?? patients[0];
+
   return (
     <div className="record">
       <Input
