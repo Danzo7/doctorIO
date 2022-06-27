@@ -110,7 +110,11 @@ export class Overlay {
   static close() {
     if (this.entryElement) {
       this.update();
-      this.entryElement.replaceChildren();
+      try {
+        this.entryElement.replaceChildren();
+      } catch (e) {
+        return;
+      }
     } else
       throw Error(
         'No overlay reference found! ¨Please add `<OverlayContainer/>`to your component tree',
