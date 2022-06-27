@@ -1,3 +1,4 @@
+import { patients } from '@api/fake';
 import { useCallback, useEffect, useRef } from 'react';
 import Clinic from 'toSvg/clinic.svg?icon';
 import { RenderTimer } from './render_timer_canvas';
@@ -22,6 +23,7 @@ export default function Timer({ isActive }: TimerProps) {
       timeRatio: TimeRef.current.ratio,
       size,
       renderText: hoverRef.current,
+      pNum: patients.length,
     });
   }, [size]);
   const tick = useCallback(() => {
@@ -47,7 +49,7 @@ export default function Timer({ isActive }: TimerProps) {
       cancelAnimationFrame(requestIdRef.current ?? 0);
     };
   }, [isActive, size, tick]);
-
+  //TODO? fetch Time To Close prop
   return (
     <div
       className="timer"

@@ -18,6 +18,7 @@ import BookAppointmentModal from '@containers/modals/book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { patients } from '@api/fake';
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 interface SearchInput {
   searchField: string;
@@ -32,7 +33,10 @@ export default function Record({}: RecordProps) {
   const { navigate } = useNavigation();
   const { open } = useOverlay();
   const { patientId } = useParams();
-  const patient = patients.find(({ patId }) => patId.toString() == patientId);
+
+  const [patient] = useState<Patient | undefined>(
+    patients.find(({ patId }) => patId.toString() == patientId),
+  );
 
   const patientMatches = () => {
     let results: Patient[] = [];
