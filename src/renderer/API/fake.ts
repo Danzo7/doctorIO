@@ -422,8 +422,8 @@ export const patients: Patient[] = [
       },
     ],
     registerDate: new Date('2022-01-01'),
-    firstName: 'John',
-    lastName: 'Doe',
+    firstName: 'Amine',
+    lastName: 'Bouraoua',
     birthDate: new Date('1996-05-02'),
     age: 26,
     testResult: {
@@ -575,6 +575,152 @@ export const patients: Patient[] = [
     age: 26,
     testResult: {
       height: 1.75,
+      weight: 107,
+      bloodPressure: 1,
+      bloodType: 'A',
+    },
+  },
+  {
+    patId: 3,
+    gender: 'male',
+    appointments: [
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 3,
+        state: 'upcoming',
+        bookDate: new Date('2022-07-01'),
+      },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 1,
+        state: 'done-booked',
+        bookDate: new Date('2022-05-24'),
+        date: new Date('2022-06-24'),
+        sessionId: 1,
+        subject: 'control',
+      },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 2,
+        state: 'done',
+        date: new Date('2022-03-01'),
+        sessionId: 4,
+        subject: 'illness',
+      },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 2,
+        state: 'missed',
+        bookDate: new Date('2022-02-01'),
+      },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 2,
+        state: 'done',
+        date: new Date('2022-01-01'),
+        sessionId: 1,
+        subject: 'Inner bleed',
+      },
+    ],
+    medicalHistory: [
+      {
+        id: 1,
+        description: 'knee pain',
+        date: new Date('2022-01-01'),
+      },
+      {
+        id: 2,
+        description: 'broken noise',
+        date: new Date('2022-02-21'),
+      },
+      {
+        id: 3,
+        description: 'Noise surgery',
+        date: new Date('2022-04-16'),
+      },
+      {
+        id: 4,
+        description: 'CSF leak',
+        date: new Date('2022-06-01'),
+      },
+    ],
+    status: 'active',
+    medicalDocuments: [
+      {
+        fileId: 1,
+        fileName: 'headScan.pdf',
+        fileType: 'pdf',
+        date: new Date('2022-01-01'),
+        filePath: '',
+        fileSize: 3000,
+      },
+      {
+        fileId: 2,
+        fileName: 'bloodTests.pdf',
+        fileType: 'pdf',
+        date: new Date('2022-01-01'),
+        filePath: '',
+        fileSize: 3000,
+      },
+      {
+        fileId: 3,
+        fileName: 'file.pdf',
+        fileType: 'pdf',
+        date: new Date('2022-01-01'),
+        filePath: '',
+        fileSize: 3000,
+      },
+      {
+        fileId: 4,
+        fileName: 'MRI_Scan.pdf',
+        fileType: 'pdf',
+        date: new Date('2022-01-01'),
+        filePath: '',
+        fileSize: 3000,
+      },
+    ],
+    registerDate: new Date('2022-05-01'),
+    firstName: 'Aymen',
+    lastName: 'Daouadji',
+    birthDate: new Date('1999-02-05'),
+    age: 23,
+    testResult: {
+      height: 1.76,
       weight: 107,
       bloodPressure: 1,
       bloodType: 'A',
