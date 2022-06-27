@@ -15,9 +15,9 @@ export default function SmallRoleList({ roleList }: SmallRoleListProps) {
 
   const addRole = (newRole: Role) => {
     setRoles((prev) => {
-      close();
       return [...prev, newRole];
     });
+    close();
   };
   const deleteRole = (deletedRole: Role) => {
     setRoles((prev) => {
@@ -29,7 +29,7 @@ export default function SmallRoleList({ roleList }: SmallRoleListProps) {
       {roles.map((role, index) => (
         <SmallRolePreview
           roleName={role.roleName}
-          key={role.roleId + index}
+          key={role.roleId.toString() + index}
           onClick={() => {
             deleteRole(role);
           }}
