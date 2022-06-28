@@ -209,7 +209,7 @@ export const clinic: Clinic = {
   patientCount: 18,
   memberCount: 20,
   avatar: faker.image.avatar(),
-  clinicSettings: {
+  timing: {
     workingDays: [0, 2, 3, 4, 5, 6],
     timeToClose: '18:00',
     timeToOpen: '08:00',

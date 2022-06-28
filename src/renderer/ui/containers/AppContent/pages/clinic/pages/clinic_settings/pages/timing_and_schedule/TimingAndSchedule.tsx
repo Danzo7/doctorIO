@@ -17,8 +17,8 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
         <Header title="Timing" />
         <PeriodTimePicker
           title="Opening time"
-          startTime={clinic.clinicSettings.timeToOpen}
-          endTime={clinic.clinicSettings.timeToClose}
+          startTime={clinic.timing.timeToOpen}
+          endTime={clinic.timing.timeToClose}
           onChange={(data) => console.log(data)} //todo:update settings
         />
         <PeriodTimePicker
@@ -38,7 +38,7 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
             'friday',
             'saturday',
           ]}
-          value={clinic.clinicSettings.workingDays}
+          value={clinic.timing.workingDays}
         />
         <BorderSeparator direction="horizontal" />
         <div className="rules-container">
@@ -46,17 +46,14 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
           <CheckboxTile
             primaryText="Allow custom breaks"
             secondaryText="This is an example permission"
-            editable={true}
           />
           <CheckboxTile
             primaryText="Allow queue pausing"
             secondaryText="This is an example permission"
-            editable={true}
           />
           <CheckboxTile
             primaryText="Allow bypass closing time"
             secondaryText="This is an example permission"
-            editable={true}
           />
         </div>
       </div>

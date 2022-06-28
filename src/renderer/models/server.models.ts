@@ -55,9 +55,11 @@ interface Clinic {
   connectionCount: number;
   patientCount: number;
   avatar: string;
-  clinicSettings: ClinicSetttings;
+  timing: ClinicTiming;
+  preferences?: ClinicPreferences;
 }
-type ClinicSetttings = {
+interface ClinicPreferences {}
+type ClinicTiming = {
   timeToOpen: string;
   timeToClose: string;
   workingDays: DayAliased[];
