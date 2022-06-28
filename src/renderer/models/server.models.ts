@@ -54,8 +54,13 @@ interface Clinic {
   clinicAddress: string;
   connectionCount: number;
   patientCount: number;
-  timeToClose: Date;
   avatar: string;
+  clinicSettings: ClinicSetttings;
+}
+interface ClinicSetttings {
+  timeToOpen: string;
+  timeToClose: string;
+  workingDays: DayAliased[];
 }
 
 export type { Clinic, Member, Permission, Role, RolePermissions };

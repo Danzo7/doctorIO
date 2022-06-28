@@ -1,4 +1,3 @@
-import { generateTime } from '@containers/AppContent/pages/clinic/pages/clinics/Clinics';
 import { Appointment, Patient } from '@models/instance.model';
 import { DirectMessage, User } from '@models/local.models';
 import { Clinic, Member, Role } from '@models/server.models';
@@ -209,8 +208,12 @@ export const clinic: Clinic = {
   serviceStatus: 'Good',
   patientCount: 18,
   memberCount: 20,
-  timeToClose: generateTime(12, 0),
   avatar: faker.image.avatar(),
+  clinicSettings: {
+    workingDays: [0, 2, 3, 4, 5, 6],
+    timeToClose: '18:00',
+    timeToOpen: '08:00',
+  },
 };
 export const appointmentQueue: Appointment[] = [
   {
