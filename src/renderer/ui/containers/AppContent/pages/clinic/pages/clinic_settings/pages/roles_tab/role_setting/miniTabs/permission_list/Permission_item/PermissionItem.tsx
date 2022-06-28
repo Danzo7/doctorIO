@@ -1,7 +1,7 @@
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import CheckboxTile from '@components/checkbox_tile';
-import { Permission } from '@models/server.models';
+import { Permission, PermKeys } from '@models/server.models';
 import Icon from 'toSvg/link.svg?icon';
 import './style/index.scss';
 interface PermissionItemProps {
@@ -15,7 +15,7 @@ export default function PermissionItem({
   linkedPermission,
   editable = true,
   isChecked,
-}: PermissionItemProps & Omit<Permission, 'permKey'>) {
+}: PermissionItemProps & Omit<Permission<PermKeys>, 'permKey'>) {
   return (
     <div
       className="permission-item"
