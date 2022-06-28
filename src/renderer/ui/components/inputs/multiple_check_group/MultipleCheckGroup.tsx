@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import CheckGroupItem from './check_group_item';
 import './style/index.scss';
 interface MultipleCheckGroupProps {
   items: string[];
+  value?: number[];
 }
-export default function MultipleCheckGroup({ items }: MultipleCheckGroupProps) {
-  const [checkedItems, setCheckedItems] = useState<number[]>([]);
+export default forwardRef(function MultipleCheckGroup(
+  { items, value }: MultipleCheckGroupProps,
+  ref,
+) {
+  const [checkedItems, setCheckedItems] = useState<number[]>(value ?? []);
   const isChecked = (index: number) => {
     return checkedItems.find((item) => item === index) == undefined
       ? false
@@ -24,8 +28,9 @@ export default function MultipleCheckGroup({ items }: MultipleCheckGroupProps) {
     <div className="multiple-check-group">
       <input
         type={'hidden'}
-        value={checkedItems.join(',')}
+        value={checkedItems.toString()}
         onChange={() => {}}
+        ref={ref as any}
       />
 
       {items.map((text, index) => (
@@ -44,4 +49,4 @@ export default function MultipleCheckGroup({ items }: MultipleCheckGroupProps) {
       ))}
     </div>
   );
-}
+});
