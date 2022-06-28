@@ -1,6 +1,6 @@
-import { Permission } from '@models/server.models';
+import { Permission, PermKeys, Rulekeys } from '@models/server.models';
 
-export const PERMISSIONS: Permission[] = [
+export const PERMISSIONS: Permission<PermKeys>[] = [
   {
     permKey: 'isAdmin',
     name: 'Administrator',
@@ -76,5 +76,12 @@ export const PERMISSIONS: Permission[] = [
     permKey: 'canUseMessages',
     name: 'Use messages',
     description: 'allow member to send and receive messages ',
+  },
+];
+export const rules: Permission<Rulekeys>[] = [
+  {
+    permKey: 'canTakeBreak',
+    name: 'Allow custom breaks',
+    description: 'This is an example permission',
   },
 ];

@@ -40,10 +40,10 @@ type PermKeys =
   | 'canUseMessages';
 
 type RolePermissions = Partial<Record<PermKeys, true>>;
-interface Permission {
+interface Permission<T> {
   name: string;
-  description: string;
-  permKey: PermKeys;
+  description?: string;
+  permKey: T;
 }
 interface Clinic {
   clinicId: number;
@@ -57,10 +57,20 @@ interface Clinic {
   avatar: string;
   clinicSettings: ClinicSetttings;
 }
-interface ClinicSetttings {
+type ClinicSetttings = {
   timeToOpen: string;
   timeToClose: string;
   workingDays: DayAliased[];
-}
+} & Rules;
+type Rules = Partial<Record<Rulekeys, true>>;
 
-export type { Clinic, Member, Permission, Role, RolePermissions };
+type Rulekeys = 'canPauseQueue' | 'canTakeBreak' | 'canBypassClosing';
+export type {
+  Clinic,
+  Member,
+  Permission,
+  Role,
+  RolePermissions,
+  PermKeys,
+  Rulekeys,
+};
