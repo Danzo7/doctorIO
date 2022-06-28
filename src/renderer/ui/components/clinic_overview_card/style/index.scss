@@ -25,25 +25,23 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    width: fit-content;
-
+    flex-grow: 0.2;
     > span {
         font-weight: 600;
         font-size: 18px;
         color: $white;
     }
 
-    > div {
+    > div:not(:last-of-type) {
         @include clinic-info-div()
     }
-    > .clinic-info-bottom-div {
+    > div:last-of-type {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         gap: 5px;
-        min-width: 300px;
-
+        align-self: stretch;
         > div {
             @include clinic-info-div()
         }

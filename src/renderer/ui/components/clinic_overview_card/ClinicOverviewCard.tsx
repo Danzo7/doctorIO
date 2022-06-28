@@ -28,7 +28,7 @@ export default function ClinicOverviewCard(clinicInfo: Clinic) {
         <span>Current Connections</span>
         <span>{connectionCount}</span>
       </div>
-      <div className="clinic-info-bottom-div">
+      <div>
         <div>
           <span>Patients</span>
           <span>{patientCount}</span>
