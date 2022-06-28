@@ -20,6 +20,9 @@ function MembersPreview({
       className={`preview-container${
         hideFooter ? ' preview-container-hidden' : ''
       }`}
+      onClick={() => {
+        setHideFooter(!hideFooter);
+      }}
     >
       <div className="members-preview">
         <UserProfileStatus

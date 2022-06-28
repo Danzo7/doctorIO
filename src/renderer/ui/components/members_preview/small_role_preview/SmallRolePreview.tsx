@@ -1,5 +1,7 @@
 import './style/index.scss';
 import Close from 'toSvg/x_mark.svg?icon';
+import TextButton from '@components/buttons/text_button';
+import { color } from '@colors';
 interface SmallRolePreviewProps {
   roleName: string;
   onClick?: () => void;
@@ -7,10 +9,14 @@ interface SmallRolePreviewProps {
 
 function SmallRolePreview({ roleName, onClick }: SmallRolePreviewProps) {
   return (
-    <div onClick={onClick} className="small-roll">
+    <TextButton
+      borderColor={color.border_color}
+      onPress={onClick}
+      className="small-role"
+    >
       <span>{roleName}</span>
       <Close css={{ width: 7, height: 7 }} />
-    </div>
+    </TextButton>
   );
 }
 

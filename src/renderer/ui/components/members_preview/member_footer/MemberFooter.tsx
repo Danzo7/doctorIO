@@ -14,7 +14,12 @@ function MemberFooter({
       members.filter(({ memberId: id }) => memberId === id)?.[0]?.userId,
   )?.[0];
   return (
-    <div className="member-footer">
+    <div
+      className="member-footer"
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <div className="member-container">
         <span>Member ID</span>
         <span className="member-span">{memberId}</span>
