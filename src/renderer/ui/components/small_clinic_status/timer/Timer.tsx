@@ -1,18 +1,23 @@
 import { clinic, patients } from '@api/fake';
 import { timeToDate } from '@helpers/date.helper';
 import { differenceInSeconds } from 'date-fns';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Countdown from 'react-countdown';
 import Clinic from 'toSvg/clinic.svg?icon';
 import { RenderTimer } from './render_timer_canvas';
 import './style/index.scss';
 interface TimerProps {
-  isActive?: boolean;
+  active?: boolean;
+  pCount: number;
 }
 
-export default function Timer({ isActive }: TimerProps) {
+export default function Timer({ active, pCount }: TimerProps) {
   const size = 500;
   const hoverRef = useRef(false);
+  const [isActive, setIsActive] = useState(active);
+  useEffect(() => {
+    setIsActive(active);
+  }, [active]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestIdRef = useRef<number>();
@@ -30,13 +35,17 @@ export default function Timer({ isActive }: TimerProps) {
             100
         ).toPrecision(),
       );
+    else {
+      TimeRef.current.ratio = 100;
+      setIsActive(false);
+    }
     RenderTimer.call(canvasRef?.current?.getContext('2d'), {
       timeRatio: TimeRef.current.ratio,
       size,
       renderText: hoverRef.current,
-      pNum: patients.length,
+      pNum: pCount,
     });
-  }, [size]);
+  }, [pCount]);
   const tick = useCallback(() => {
     if (!canvasRef.current) return;
     renderFrame();
@@ -51,6 +60,7 @@ export default function Timer({ isActive }: TimerProps) {
         timeRatio: TimeRef.current.ratio,
         state: 'stopped',
         renderText: true,
+        pNum: pCount,
 
         size,
       });
@@ -59,7 +69,7 @@ export default function Timer({ isActive }: TimerProps) {
     return () => {
       cancelAnimationFrame(requestIdRef.current ?? 0);
     };
-  }, [isActive, size, tick]);
+  }, [isActive, pCount, size, tick]);
   //TODO? fetch Time To Close prop
   return (
     <div
@@ -74,7 +84,9 @@ export default function Timer({ isActive }: TimerProps) {
           <Countdown
             date={timeToDate(clinic.timing.timeToClose)}
             daysInHours={true}
-            //onComplete={()}end of the day
+            onComplete={() => {
+              setIsActive(false);
+            }}
           />
         </span>
       </div>

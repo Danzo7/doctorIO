@@ -32,7 +32,7 @@ export default function SmallClinicStatus({
         />
       )}
       <div className="content">
-        <Timer isActive={isAccept} />
+        <Timer active={isAccept} pCount={5} />
         <div className="switch">
           <ToggleButton
             isChecked={isAccept}
