@@ -5,10 +5,8 @@ import Patient from 'toSvg/patient.svg';
 import ServerState from 'toSvg/server_state.svg';
 import { color } from '@colors';
 import TextButton from '@components/buttons/text_button';
-import { format } from 'date-fns/esm';
-import { TIME_ONLY } from '@constants/data_format';
+
 import { LocalClinicData } from '@models/local.models';
-import { clinic } from '@api/fake';
 
 interface ClinicItemProps {
   clinicInfo: LocalClinicData;
@@ -40,8 +38,7 @@ export default function ClinicItem({
       </div>
       <div className="time-container">
         <ClinicIcon />
-        <span>Time to close</span>
-        {<span>{format(clinic.timeToClose, TIME_ONLY)}</span>}
+        <span>{clinicInfo.name}</span>
       </div>
       <div className="stats-container">
         {memberCount && (
