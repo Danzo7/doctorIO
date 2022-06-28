@@ -3,7 +3,7 @@ import './style/index.scss';
 interface CheckboxTileProps {
   editable?: boolean;
   primaryText: string;
-  secondaryText: string;
+  secondaryText?: string;
   isChecked?: true;
 }
 export default function CheckboxTile({
@@ -19,7 +19,7 @@ export default function CheckboxTile({
     >
       <div className="checkbox-tile-text-container">
         <span>{primaryText}</span>
-        <span>{secondaryText}</span>
+        {secondaryText && <span>{secondaryText}</span>}
       </div>
       <div>
         <ToggleButton disabled={!editable} isChecked={isChecked} />
