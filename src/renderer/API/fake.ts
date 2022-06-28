@@ -211,7 +211,7 @@ export const clinic: Clinic = {
   avatar: faker.image.avatar(),
   timing: {
     workingDays: [0, 2, 3, 4, 5, 6],
-    timeToClose: '18:00',
+    timeToClose: '23:14',
     timeToOpen: '08:00',
   },
 };
