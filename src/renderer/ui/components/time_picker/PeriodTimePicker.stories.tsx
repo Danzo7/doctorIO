@@ -10,5 +10,5 @@ const Template: Story<ComponentProps<typeof PeriodTimePicker>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  timePickerTitle: 'Opening time',
+  title: 'Opening time',
 };
