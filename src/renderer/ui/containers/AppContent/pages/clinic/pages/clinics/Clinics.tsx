@@ -8,12 +8,6 @@ import { FIT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import './style/index.scss';
 
-export const generateTime = (hour: number, min: number) => {
-  const time = new Date();
-  time.setHours(hour, min);
-  return time;
-};
-
 export default function Clinics() {
   const { toParent } = useNavigation();
   const { open } = useOverlay();

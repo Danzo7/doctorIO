@@ -1,4 +1,4 @@
-import color from '@assets/styles/color';
+import { clinic } from '@api/fake';
 import BorderSeparator from '@components/border_separator';
 import CheckboxTile from '@components/checkbox_tile';
 import Header from '@components/header';
@@ -15,18 +15,30 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
       <BorderSeparator direction="vertical" />
       <div className="timing-container">
         <Header title="Timing" />
-        <PeriodTimePicker timePickerTitle="Opening time" />
-        <PeriodTimePicker timePickerTitle="Break" />
+        <PeriodTimePicker
+          title="Opening time"
+          startTime={clinic.clinicSettings.timeToOpen}
+          endTime={clinic.clinicSettings.timeToClose}
+          onChange={(data) => console.log(data)} //todo:update settings
+        />
+        <PeriodTimePicker
+          title="Break"
+          startTime="10:04"
+          endTime="14:15"
+          onChange={(data) => console.log(data)} //todo:update settings
+        />
         <span>Working days</span>
         <MultipleCheckGroup
           items={[
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Tuesday',
-            'Friday',
+            'sunday',
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
           ]}
+          value={clinic.clinicSettings.workingDays}
         />
         <BorderSeparator direction="horizontal" />
         <div className="rules-container">
