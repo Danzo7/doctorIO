@@ -213,7 +213,9 @@ export const clinic: Clinic = {
     workingDays: [0, 2, 3, 4, 5, 6],
     timeToClose: '23:59',
     timeToOpen: '08:00',
+    canBypassClosing: true,
   },
+  preferences: { canCreateSession: true },
 };
 export const appointmentQueue: Appointment[] = [
   {
