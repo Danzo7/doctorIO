@@ -6,7 +6,7 @@ interface RolesTabProps {}
 export default function RolesTab({}: RolesTabProps) {
   return (
     <div className="roles-tab">
-      <RoleList height="100%" />
+      <RoleList />
       <RoleSetting />
     </div>
   );
