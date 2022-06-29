@@ -1,4 +1,4 @@
-import { Appointment, Patient } from '@models/instance.model';
+import { Appointment, AppointmentQueue, Patient } from '@models/instance.model';
 import { DirectMessage, User } from '@models/local.models';
 import { Clinic, Member, Role } from '@models/server.models';
 import { faker } from '@faker-js/faker';
@@ -732,3 +732,21 @@ export const patients: Patient[] = [
     },
   },
 ];
+export const appointmentQueueData: AppointmentQueue = {
+  roleId: 1,
+  state: 'inProgress',
+  appointments: [
+    {
+      position: 1,
+      patientId: patients[0].patId,
+      patientName: patients[0].firstName + ' ' + patients[0].lastName,
+      date: new Date('2022-05-01'),
+    },
+    {
+      position: 2,
+      patientId: patients[1].patId,
+      patientName: patients[1].firstName + ' ' + patients[1].lastName,
+      date: new Date('2022-05-01'),
+    },
+  ],
+};
