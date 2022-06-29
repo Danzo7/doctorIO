@@ -1,6 +1,6 @@
 import { Appointment, AppointmentQueue, Patient } from '@models/instance.model';
 import { DirectMessage, User } from '@models/local.models';
-import { Clinic, Member, Role } from '@models/server.models';
+import { Clinic, Member, Role, RolePermissions } from '@models/server.models';
 import { faker } from '@faker-js/faker';
 import { subMinutes } from 'date-fns';
 export const firstUser: User = {
@@ -201,6 +201,13 @@ export const DMs: DirectMessage[] = [
   },
 ];
 export const currentMember: Member = members[1];
+export const currentMemberPermissions: RolePermissions = {
+  canAddDrugs: true,
+  canAddMember: true,
+  canAddPatients: true,
+  canHaveQueue: true,
+  canManagePatients: true,
+};
 export const clinic: Clinic = {
   clinicName: 'PAN',
   clinicId: 0,
