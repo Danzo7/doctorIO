@@ -1,7 +1,7 @@
 @use '~styles/appColors' as *;
 .overlay-container {
   display: flex;
-  position: absolute;
+  position: fixed;
   align-content: stretch;
   width: -webkit-fill-available;
   height: -webkit-fill-available;
@@ -75,6 +75,12 @@
           transform: scale(0);
         }
         100% { transform: translate(1); }
+      }
+      @keyframes appear-bottom {
+        0% {
+          transform: translate(0,50vh);
+        }
+        100% { transform: translate(0,0); }
       }
     }
   }

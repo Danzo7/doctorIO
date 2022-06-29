@@ -3,6 +3,7 @@ import { Overlay } from './overlay';
 import { OverlayItem, OverlayOptions } from './OverlayContainer';
 import Tooltip, { ActionProps } from '@components/poppers/tooltip';
 import { createPortal } from 'react-dom';
+import { createPopper } from '@popperjs/core';
 //Known issues:
 //When open overlay with closeOnBlur = true, on top of overlay with closeOnBlur the first one will be closed due to blur event.
 export function useOverlay() {
@@ -84,7 +85,47 @@ export function useOverlay() {
     [close, open],
   );
 
-  return { open, close, openTooltip };
+  const openTest = useCallback(
+    (
+      target: ReactNode,
+      {
+        popperTarget,
+        closeOnBlur = true,
+        ...props
+      }: OverlayOptions & { popperTarget: HTMLElement },
+    ) => {
+      if (Overlay.entryElement == undefined)
+        throw Error(
+          'No overlay reference found,please create `<OverlayContainer></OverlayContainer> or you have to setRenderer first. Call seRenderer(Element) on your overlay component`',
+        );
+      if (isOpened.current) close();
+      layer.current = document.createElement('div');
+      layer.current.setAttribute('class', 'overlay ' + id);
+      layer.current.setAttribute('id', id);
+      layer.current.setAttribute(
+        'style',
+        'z-index:' + 10 + Overlay.entryElement.children.length,
+      );
+      popperTarget.appendChild(layer.current);
+      createPopper(popperTarget, layer.current, { placement: 'auto-end' });
+
+      portal.current = createPortal(
+        OverlayItem({
+          children: target,
+          closeOnBlur: closeOnBlur,
+          closeMethod: close,
+          backdropColor: false,
+          ...props,
+        }),
+        layer.current,
+      );
+      Overlay.addPortal(portal.current);
+      isOpened.current = true;
+    },
+    [close, id],
+  );
+
+  return { open, close, openTooltip, openTest };
 }
 // }unstable
 // export function usePopper() {

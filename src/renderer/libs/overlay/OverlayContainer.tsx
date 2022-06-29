@@ -91,7 +91,12 @@ export interface OverlayOptions {
         placement: 'inner' | 'outer' | 'above';
         component: ReactNode;
       };
-  transition?: 'zoom' | 'appear-right' | 'appear-left' | 'appear-top';
+  transition?:
+    | 'zoom'
+    | 'appear-right'
+    | 'appear-left'
+    | 'appear-top'
+    | 'appear-bottom';
 }
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
@@ -152,8 +157,6 @@ export function OverlayItem({
             ? (event) => {
                 if (!event.currentTarget.contains(event.relatedTarget)) {
                   closeOverlay();
-                } else {
-                  event.currentTarget.focus();
                 }
               }
             : undefined

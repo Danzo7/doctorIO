@@ -40,7 +40,7 @@ export default function MemberActionControls({
           onPress={() => {
             open(<MemberBigCard memberId={memberId} />, {
               ...DEFAULT_MODAL,
-              closeBtn: undefined,
+              width: '20%',
             });
           }}
         />

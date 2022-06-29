@@ -56,9 +56,9 @@ interface Clinic {
   patientCount: number;
   avatar: string;
   timing: ClinicTiming;
-  preferences?: ClinicPreferences;
+  preferences: ClinicPreferences;
 }
-interface ClinicPreferences {}
+type ClinicPreferences = Partial<Record<PrefKeys, true>>;
 type ClinicTiming = {
   timeToOpen: string;
   timeToClose: string;
