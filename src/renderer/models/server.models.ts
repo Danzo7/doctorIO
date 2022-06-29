@@ -67,6 +67,7 @@ type ClinicTiming = {
 type Rules = Partial<Record<Rulekeys, true>>;
 
 type Rulekeys = 'canPauseQueue' | 'canTakeBreak' | 'canBypassClosing';
+type PrefKeys = 'canCreateSession' | 'canMessageExternals';
 export type {
   Clinic,
   Member,
@@ -75,4 +76,5 @@ export type {
   RolePermissions,
   PermKeys,
   Rulekeys,
+  PrefKeys,
 };
