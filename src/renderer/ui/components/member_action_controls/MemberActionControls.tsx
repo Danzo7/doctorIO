@@ -9,7 +9,7 @@ import useNavigation from '@libs/hooks/useNavigation';
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
 import WarningModal from '@containers/modals/warning_modal';
-import { FIT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { IS_PREVIEW } from '@constants/env';
 
 interface MemberActionControlsProps {
@@ -39,10 +39,8 @@ export default function MemberActionControls({
           iconSize={15}
           onPress={() => {
             open(<MemberBigCard memberId={memberId} />, {
-              closeOnClickOutside: true,
-              isDimmed: true,
-              clickThrough: false,
-              closeBtn: 'inner',
+              ...DEFAULT_MODAL,
+              closeBtn: undefined,
             });
           }}
         />
