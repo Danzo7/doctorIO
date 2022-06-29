@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import usePrompt from '@libs/HistoryBlocker';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
+import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
 
 type Inputs = {
   name: string;
@@ -22,16 +23,27 @@ export default function OverviewInfoForm({}: OverviewInfoFormProps) {
 
   const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData);
   usePrompt(
-    'are you stupid',
+    'Careful : you have unsaved changes !',
     ({ closeOVerlay, dismiss }) => (
-      <TextButton
-        text="dismiss"
-        afterBgColor={color.darker}
-        onPress={() => {
-          closeOVerlay();
-          dismiss();
-        }}
-      />
+      <SnakeBarActionsControls>
+        <TextButton
+          text="dismiss"
+          afterBgColor={color.darker}
+          onPress={() => {
+            closeOVerlay();
+            dismiss();
+          }}
+        />
+        <TextButton
+          text="Save changes"
+          padding={'5px 10px'}
+          backgroundColor={color.good_green}
+          onPress={() => {
+            closeOVerlay();
+            dismiss();
+          }}
+        />
+      </SnakeBarActionsControls>
     ),
     isDirty,
   );
