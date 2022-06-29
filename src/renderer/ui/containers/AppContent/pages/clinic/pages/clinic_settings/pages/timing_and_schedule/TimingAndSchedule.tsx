@@ -5,6 +5,7 @@ import Header from '@components/header';
 import MultipleCheckGroup from '@components/inputs/multiple_check_group';
 import SmallClinicStatus from '@components/small_clinic_status';
 import PeriodTimePicker from '@components/time_picker';
+import { rules } from '@constants/permissions';
 import './style/index.scss';
 
 interface TimingAndScheduleProps {}
@@ -43,18 +44,13 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
         <BorderSeparator direction="horizontal" />
         <div className="rules-container">
           <span>Rules</span>
-          <CheckboxTile
-            primaryText="Allow custom breaks"
-            secondaryText="This is an example permission"
-          />
-          <CheckboxTile
-            primaryText="Allow queue pausing"
-            secondaryText="This is an example permission"
-          />
-          <CheckboxTile
-            primaryText="Allow bypass closing time"
-            secondaryText="This is an example permission"
-          />
+          {rules.map(({ name, description, permKey }) => (
+            <CheckboxTile
+              key={permKey}
+              primaryText={name}
+              secondaryText={description}
+            />
+          ))}
         </div>
       </div>
     </div>
