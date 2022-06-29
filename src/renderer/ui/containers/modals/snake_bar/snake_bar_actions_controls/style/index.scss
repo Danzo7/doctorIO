@@ -1,0 +1,7 @@
+@use '~styles/appColors' as *;
+.snake-bar-actions-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:15px
+}
