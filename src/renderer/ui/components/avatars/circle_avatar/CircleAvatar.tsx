@@ -30,6 +30,7 @@ function CircleAvatar({
       <img
         css={{
           width: width,
+          height: width,
         }}
         src={src}
         alt={alt}
