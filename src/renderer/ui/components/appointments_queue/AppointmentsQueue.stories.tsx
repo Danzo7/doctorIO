@@ -5,8 +5,8 @@ export default {
   title: 'AppointmentsQueue/AppointmentsQueue',
   component: AppointmentsQueue,
 };
-const Template: Story<ComponentProps<typeof AppointmentsQueue>> = (args) => (
-  <AppointmentsQueue {...args} />
+const Template: Story<ComponentProps<typeof AppointmentsQueue>> = () => (
+  <AppointmentsQueue />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {

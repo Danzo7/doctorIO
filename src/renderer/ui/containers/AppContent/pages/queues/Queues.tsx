@@ -76,7 +76,7 @@ export default function Queues({}: QueuesProps) {
   return (
     <div className="queues">
       <span>Appointment Queue</span>
-      <AppointmentsQueue cabinState="inProgress" />
+      <AppointmentsQueue />
       <PaymentQueue />
       <div className="queues-footer">
         <BookedAppointmentPanel list={bookedAppointmentData} />

@@ -9,24 +9,51 @@ import NextPatient from '@containers/modals/next_patient';
 import WarningModal from '@containers/modals/warning_modal';
 import TextButton from '@components/buttons/text_button';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
+import { appointmentQueueData } from '@api/fake';
 
-interface OwnerRoleProps {
-  onCallNext?: () => void;
-  onPause?: () => void;
-}
-interface AssistanceRoleProps {
-  onAdd?: () => void;
-}
 interface QueueControlsProps {
-  role:
-    | { roleName: 'owner'; roleProps?: OwnerRoleProps }
-    | { roleName: 'assistance'; roleProps?: AssistanceRoleProps };
+  isOwner?: boolean;
+  isPaused: boolean;
 }
-export default function QueueControls({ role }: QueueControlsProps) {
+export default function QueueControls({
+  isOwner,
+  isPaused,
+}: QueueControlsProps) {
   const { open, close } = useOverlay();
   return (
     <>
-      {role.roleName == 'owner' ? (
+      {isPaused ? (
+        <IconicButton
+          Icon={PauseIcon} //todo:resume icon
+          backgroundColor={color.cold_blue}
+          width={25}
+          radius={7}
+          iconSize={10}
+          onPress={() => {
+            open(
+              <WarningModal
+                warningTitle="You are going to resume the Queue"
+                warningDescription="Allowed members will be able to add to the Queue again"
+              >
+                <TextButton
+                  text="Resume"
+                  backgroundColor={color.good_green}
+                  width="100%"
+                  onPress={() => {
+                    close();
+                  }}
+                />
+              </WarningModal>,
+              {
+                closeOnClickOutside: true,
+                isDimmed: true,
+                clickThrough: false,
+                closeBtn: 'inner',
+              },
+            );
+          }}
+        />
+      ) : isOwner ? (
         <div className="queue-controls">
           <IconicButton
             Icon={NextIcon}
@@ -35,14 +62,19 @@ export default function QueueControls({ role }: QueueControlsProps) {
             radius={7}
             iconSize={10}
             onPress={() => {
-              open(<NextPatient patientName="Aymen Daouadji" position={15} />, {
-                width: '30%',
-                closeOnClickOutside: true,
-                isDimmed: true,
-                clickThrough: false,
-                closeBtn: 'inner',
-              });
-              if (role.roleProps?.onCallNext) role.roleProps?.onCallNext();
+              open(
+                <NextPatient
+                  patientName={appointmentQueueData.appointments[0].patientName}
+                  position={appointmentQueueData.appointments[0].position}
+                />,
+                {
+                  width: '30%',
+                  closeOnClickOutside: true,
+                  isDimmed: true,
+                  clickThrough: false,
+                  closeBtn: 'inner',
+                },
+              );
             }}
           />
           <IconicButton
@@ -73,7 +105,6 @@ export default function QueueControls({ role }: QueueControlsProps) {
                   closeBtn: 'inner',
                 },
               );
-              if (role.roleProps?.onPause) role.roleProps?.onPause();
             }}
           />
         </div>
