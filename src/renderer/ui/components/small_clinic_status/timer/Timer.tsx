@@ -26,7 +26,9 @@ export default function Timer({ active, pCount }: TimerProps) {
   const TimeRef = useRef({ ratio: 1 });
 
   const renderFrame = useCallback(() => {
-    if (TimeRef.current.ratio < 100)
+    if (differenceInSeconds(new Date(), openTimeRef.current) < 0) {
+      TimeRef.current.ratio = 0; //early
+    } else if (TimeRef.current.ratio < 100)
       TimeRef.current.ratio = Number.parseInt(
         (
           100 -
@@ -36,7 +38,7 @@ export default function Timer({ active, pCount }: TimerProps) {
         ).toPrecision(),
       );
     else {
-      TimeRef.current.ratio = 100;
+      TimeRef.current.ratio = 100; //late
       setIsActive(false);
     }
     RenderTimer.call(canvasRef?.current?.getContext('2d'), {
