@@ -1,4 +1,9 @@
-import { Permission, PermKeys, Rulekeys } from '@models/server.models';
+import {
+  Permission,
+  PermKeys,
+  PrefKeys,
+  Rulekeys,
+} from '@models/server.models';
 
 export const PERMISSIONS: Permission<PermKeys>[] = [
   {
@@ -82,6 +87,30 @@ export const rules: Permission<Rulekeys>[] = [
   {
     permKey: 'canTakeBreak',
     name: 'Allow custom breaks',
-    description: 'This is an example permission',
+    description: 'allow member to take custom breaks time during the work ',
+  },
+  {
+    permKey: 'canPauseQueue',
+    name: 'Allow queue pausing',
+    description: 'allow member to pause the queue ',
+  },
+  {
+    permKey: 'canBypassClosing',
+    name: 'Allow bypass closing time',
+    description:
+      'allow member to continue working after the closing time of the clinic',
+  },
+];
+export const preferences: Permission<PrefKeys>[] = [
+  {
+    permKey: 'canCreateSession',
+    name: 'Enable earning & growth',
+    description:
+      'by enabling this members that can create session or members linked to them will be able to determine a price for their services',
+  },
+  {
+    permKey: 'canMessageExternals',
+    name: 'Allow outside messaging',
+    description: 'Allow members to connect with externals over the internet',
   },
 ];
