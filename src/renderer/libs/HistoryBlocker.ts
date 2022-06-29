@@ -70,7 +70,7 @@ export default function usePrompt(
         {
           closeOnClickOutside: true,
           clickThrough: true,
-          position: { bottom: 10 },
+          position: { bottom: '2vh' },
           // transition: 'appear-bottom',
         },
       );

@@ -36,7 +36,6 @@ export default function OverviewInfoForm({}: OverviewInfoFormProps) {
         />
         <TextButton
           text="Save changes"
-          padding={'5px 10px'}
           backgroundColor={color.good_green}
           onPress={() => {
             closeOVerlay();
