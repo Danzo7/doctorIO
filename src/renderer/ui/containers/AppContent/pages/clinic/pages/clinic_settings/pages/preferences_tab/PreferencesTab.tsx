@@ -1,3 +1,4 @@
+import { clinic } from '@api/fake';
 import BorderSeparator from '@components/border_separator';
 import CheckboxTile from '@components/checkbox_tile';
 import { preferences } from '@constants/permissions';
@@ -13,6 +14,7 @@ export default function PreferencesTab({}: PreferencesTabProps) {
             editable
             primaryText={name}
             secondaryText={description}
+            isChecked={clinic.preferences[permKey]}
           />
           <BorderSeparator direction="horizontal" />
         </Fragment>

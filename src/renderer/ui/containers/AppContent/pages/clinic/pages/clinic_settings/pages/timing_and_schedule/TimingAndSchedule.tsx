@@ -49,6 +49,7 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
               key={permKey}
               primaryText={name}
               secondaryText={description}
+              isChecked={clinic.timing[permKey]}
             />
           ))}
         </div>
