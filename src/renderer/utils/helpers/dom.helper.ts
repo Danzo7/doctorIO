@@ -1,11 +1,8 @@
-export const blurWithin = (event: FocusEvent, callback: () => void) => {
-  if (
-    !(event.currentTarget as HTMLElement)?.contains(
-      event.relatedTarget as HTMLElement,
-    )
-  ) {
+export const blurWithin = (
+  event: React.FocusEvent<HTMLDivElement, Element>,
+  callback: () => void,
+) => {
+  if (!event.currentTarget?.contains(event.relatedTarget)) {
     callback();
-  } else {
-    (event.currentTarget as HTMLElement)?.focus();
   }
 };

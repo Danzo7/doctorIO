@@ -5,6 +5,7 @@ import UpArrow from 'toSvg/arrow.svg?icon';
 import MemberFooter from './member_footer';
 import SmallRoleList from './small_role_list';
 import { Member } from '@models/server.models';
+import { blurWithin } from '@helpers/dom.helper';
 
 function MembersPreview({
   name,
@@ -17,12 +18,16 @@ function MembersPreview({
 
   return (
     <div
+      tabIndex={-1}
       className={`preview-container${
         hideFooter ? ' preview-container-hidden' : ''
       }`}
-      onClick={() => {
+      onClick={(e) => {
         setHideFooter(!hideFooter);
+        e.currentTarget.focus();
       }}
+      onBlur={(event) => blurWithin(event, () => setHideFooter(true))}
+      // onFocus={() => setHideFooter(false)}
     >
       <div className="members-preview">
         <UserProfileStatus
@@ -35,14 +40,11 @@ function MembersPreview({
           <span>{name}</span>
           {<SmallRoleList roleList={roles} />}
         </div>
-        <div
-          className={`arrow-container`}
-          onClick={() => setHideFooter(!hideFooter)}
-        >
+        <div className={`arrow-container`}>
           <UpArrow width={15} />
         </div>
       </div>
-      <MemberFooter memberId={memberId} memberStatus={memberStatus} />
+      {<MemberFooter memberId={memberId} memberStatus={memberStatus} />}
     </div>
   );
 }
