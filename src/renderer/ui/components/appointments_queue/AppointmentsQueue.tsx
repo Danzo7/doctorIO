@@ -9,21 +9,11 @@ import './style/index.scss';
 import { subDays } from 'date-fns';
 import Header from '@components/header';
 import QueueControls from '@components/queue_controls';
+import { appointmentQueueData } from '@api/fake';
 interface AppointmentsQueueProps {
   cabinState: 'inProgress' | 'paused';
 }
-const items = [
-  {
-    id: 1,
-    name: 'adam smith',
-    timeAgo: subDays(new Date(), 3),
-    number: 20,
-  },
-  { id: 2, name: 'adam smith', timeAgo: subDays(new Date(), 3), number: 21 },
-  { id: 3, name: 'adam smith', timeAgo: subDays(new Date(), 3), number: 22 },
-  { id: 4, name: 'adam smith', timeAgo: subDays(new Date(), 2), number: 23 },
-  { id: 5, name: 'adam smith', timeAgo: subDays(new Date(), 1), number: 24 },
-];
+
 export default function AppointmentsQueue({
   cabinState,
 }: AppointmentsQueueProps) {
@@ -52,19 +42,25 @@ export default function AppointmentsQueue({
           >
             <Arrow css={{ transform: 'rotate(90deg)' }} />
           </TextButton>
-          {items.length > 0 ? (
+          {appointmentQueueData.appointments.length > 0 ? (
             <ScrollView refs={ref} gap={10}>
-              {items.map(({ name, id, timeAgo, number }, index) => (
-                <li key={name + index}>
-                  <QueueItemWide
-                    id={id}
-                    name={name}
-                    number={number}
-                    timeAgo={timeAgo}
-                    width={150}
-                  />
-                </li>
-              ))}
+              {appointmentQueueData.appointments.map(
+                (
+                  { date, patientId, patientName, diagnosis, position },
+                  index,
+                ) => (
+                  <li key={patientId.toString() + index}>
+                    <QueueItemWide
+                      id={patientId}
+                      name={patientName}
+                      number={position}
+                      timeAgo={date}
+                      width={150}
+                      diagnosis={diagnosis}
+                    />
+                  </li>
+                ),
+              )}
             </ScrollView>
           ) : (
             <span>nothing...</span>

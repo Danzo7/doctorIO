@@ -1,18 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style/index.scss';
 import QueueItemSmall from './queue_item_small';
 import QueueItemWide from './queue_item_wide';
+import { TestResult } from '@models/instance.model';
 
 interface QueueItemProps {
   id: number;
   name: string;
-  number: number;
   timeAgo: Date;
+  number: number;
   state?: string;
-  itemId?: number;
+  width?: number;
+  diagnosis?: TestResult;
   opened?: boolean;
-  onPress?: () => void;
-  onClose?: () => void;
 }
 function QueueItem({
   id,
@@ -21,20 +21,17 @@ function QueueItem({
   state,
   timeAgo,
   opened,
-  onPress,
-  onClose,
+  diagnosis,
+  width,
 }: QueueItemProps) {
   const [isOpen, open] = useState(opened ?? false);
-
-  if (opened != undefined && opened != isOpen) open(opened);
-  const setopen = (value: boolean) => {
-    open(value);
-    if (isOpen == false) onPress?.();
-  };
+  useEffect(() => {
+    open(opened ?? false);
+  }, [opened]);
   return (
     <div className={`queue-item ${isOpen ? 'wide' : ''}`}>
       {!isOpen && (
-        <div onClick={() => setopen(true)}>
+        <div onClick={() => open(true)}>
           <QueueItemSmall
             name={name}
             state={state}
@@ -43,18 +40,19 @@ function QueueItem({
         </div>
       )}
       {isOpen && (
-        <div>
+        <div onClick={() => open(false)}>
           <QueueItemWide
-            id={id}
-            name={name}
-            state={state}
-            number={number}
-            timeAgo={timeAgo}
-            onClose={() => {
-              onClose?.();
-              setopen(false);
+            {...{
+              id,
+              name,
+              number,
+              state,
+              timeAgo,
+              opened,
+              diagnosis,
+              width,
             }}
-          ></QueueItemWide>
+          />
         </div>
       )}
     </div>

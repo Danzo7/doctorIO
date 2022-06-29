@@ -11,8 +11,9 @@ import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
 import { formatDistance } from 'date-fns';
-import { DEFAULT_MODAL } from '@libs/overlay';
-import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
+import { TestResult } from '@models/instance.model';
+import DiagnosisModal from '@containers/modals/diagnosis_modal';
+import useNavigation from '@libs/hooks/useNavigation';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -20,7 +21,7 @@ interface QueueItemWideProps {
   number: number;
   state?: string;
   width?: number;
-  onClose?: () => void;
+  diagnosis?: TestResult;
 }
 
 function QueueItemWide({
@@ -28,14 +29,15 @@ function QueueItemWide({
   name,
   timeAgo,
   number,
-  onClose,
   state,
   width,
+  diagnosis,
 }: QueueItemWideProps) {
   const { open, openTooltip } = useOverlay();
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
+  const { navigate } = useNavigation();
   return (
-    <div className="queue-item-wide" css={{ width: width }} onClick={onClose}>
+    <div className="queue-item-wide" css={{ width: width }}>
       <div className="back-container">
         <div className="back">
           <SquareIconButton
@@ -46,6 +48,9 @@ function QueueItemWide({
                   [
                     {
                       text: 'View records',
+                      onPress: () => {
+                        navigate('/records/' + id, { replace: true });
+                      },
                     },
                     {
                       text: 'Remove',
@@ -90,18 +95,15 @@ function QueueItemWide({
           <TextIconButton
             //onMouseOver={setActive}
             Icon={view}
-            text="View tests"
+            text={diagnosis ? 'View tests' : 'Add tests'}
             color={colors.cold_blue}
             onPress={() => {
               open(
-                <DiagnosisPreview
-                  data={{
-                    height: 175,
-                    weight: 107,
-                    bloodPressure: 1,
-                    bloodType: 'A',
-                  }}
-                />,
+                diagnosis ? (
+                  <DiagnosisPreview data={diagnosis} />
+                ) : (
+                  <DiagnosisModal />
+                ),
                 {
                   closeOnClickOutside: true,
                   isDimmed: true,
