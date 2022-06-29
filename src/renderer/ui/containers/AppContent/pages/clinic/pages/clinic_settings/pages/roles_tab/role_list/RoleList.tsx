@@ -8,7 +8,6 @@ import { useSearchParams } from 'react-router-dom';
 
 interface RoleListProps {
   selected?: number;
-  height: number | string;
   defaultSelected?: number;
 }
 export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
