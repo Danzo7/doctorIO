@@ -85,7 +85,7 @@ export function useOverlay() {
     [close, open],
   );
 
-  const openTest = useCallback(
+  const openPopper = useCallback(
     (
       target: ReactNode,
       {
@@ -115,6 +115,7 @@ export function useOverlay() {
           closeOnBlur: closeOnBlur,
           closeMethod: close,
           backdropColor: false,
+
           ...props,
         }),
         layer.current,
@@ -125,7 +126,33 @@ export function useOverlay() {
     [close, id],
   );
 
-  return { open, close, openTooltip, openTest };
+  const openTooltip_unstable = useCallback(
+    (
+      actionList: ActionProps[],
+      popperTarget: HTMLElement,
+      autoClose: true | undefined,
+    ) => {
+      if (Overlay.entryElement == undefined)
+        throw Error(
+          'No overlay reference found,please create `<OverlayContainer></OverlayContainer> or you have to setRenderer first. Call seRenderer(Element) on your overlay component`',
+        );
+      openPopper(
+        Tooltip({
+          actionList: actionList,
+          closeOnSelect: autoClose && close,
+        }),
+        {
+          clickThrough: true,
+          closeOnClickOutside: true,
+          closeOnBlur: true,
+          popperTarget,
+          closeMethod: close,
+        },
+      );
+    },
+    [close, openPopper],
+  );
+  return { open, close, openTooltip, openPopper, openTooltip_unstable };
 }
 // }unstable
 // export function usePopper() {
