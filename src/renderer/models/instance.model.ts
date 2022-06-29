@@ -15,7 +15,9 @@ interface BookedAppointment {
 
 interface AppointmentQueue {
   roleId: number;
-  state: 'inProgress' | 'paused' | 'waiting';
+  state:
+    | 'paused'
+    | ({ state: 'inProgress' | 'waiting' } & AppointmentQueueItem);
   appointments: AppointmentQueueItem[];
 }
 interface Patient {

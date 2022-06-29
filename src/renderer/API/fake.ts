@@ -2,6 +2,7 @@ import { Appointment, AppointmentQueue, Patient } from '@models/instance.model';
 import { DirectMessage, User } from '@models/local.models';
 import { Clinic, Member, Role } from '@models/server.models';
 import { faker } from '@faker-js/faker';
+import { subMinutes } from 'date-fns';
 export const firstUser: User = {
   avatar: '/assets/9b4caf44c40506a102ec.png',
   clinic: [
@@ -734,19 +735,45 @@ export const patients: Patient[] = [
 ];
 export const appointmentQueueData: AppointmentQueue = {
   roleId: 1,
-  state: 'inProgress',
+  state: 'paused',
   appointments: [
     {
       position: 1,
       patientId: patients[0].patId,
       patientName: patients[0].firstName + ' ' + patients[0].lastName,
-      date: new Date('2022-05-01'),
+      date: subMinutes(new Date(), Number.parseInt(faker.random.numeric(2))),
     },
     {
       position: 2,
       patientId: patients[1].patId,
       patientName: patients[1].firstName + ' ' + patients[1].lastName,
-      date: new Date('2022-05-01'),
+      date: subMinutes(new Date(), Number.parseInt(faker.random.numeric(2))),
     },
+    {
+      position: 3,
+      patientId: patients[2].patId,
+      patientName: patients[2].firstName + ' ' + patients[2].lastName,
+      date: subMinutes(new Date(), Number.parseInt(faker.random.numeric(2))),
+      diagnosis: {
+        height: 1.76,
+        weight: 107,
+        bloodPressure: 1,
+        bloodType: 'A',
+      },
+    },
+    ...(() => {
+      const arr = [];
+      for (let i = 0; i < 10; i++)
+        arr.push({
+          position: i + 4,
+          patientId: patients[0].patId,
+          patientName: faker.name.firstName() + ' ' + faker.name.lastName(),
+          date: subMinutes(
+            new Date(),
+            Number.parseInt(faker.random.numeric(2)),
+          ),
+        });
+      return arr;
+    })(),
   ],
 };
