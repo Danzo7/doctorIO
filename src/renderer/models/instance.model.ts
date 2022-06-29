@@ -2,10 +2,8 @@ interface AppointmentQueueItem {
   patientId: number;
   patientName: string;
   date: Date;
-  diagnosis?: Diagnosis;
-}
-interface Diagnosis {
-  diagnosisId: number;
+  position: number;
+  diagnosis?: TestResult;
 }
 interface BookedAppointment {
   id: number;
@@ -17,7 +15,8 @@ interface BookedAppointment {
 
 interface AppointmentQueue {
   roleId: number;
-  list: AppointmentQueueItem[];
+  state: 'inProgress' | 'paused' | 'waiting';
+  appointments: AppointmentQueueItem[];
 }
 interface Patient {
   patId: number;
