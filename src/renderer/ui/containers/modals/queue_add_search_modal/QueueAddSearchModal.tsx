@@ -10,6 +10,7 @@ import TextButton from '@components/buttons/text_button';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
+import { DEFAULT_MODAL } from '@libs/overlay';
 interface QueueAddSearchModalProps {}
 interface SearchInput {
   searchField: string;
@@ -54,13 +55,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
             fontWeight={700}
             borderColor={color.border_color}
             onPress={() => {
-              open(<AddPatientModal />, {
-                closeOnClickOutside: true,
-                isDimmed: true,
-                clickThrough: false,
-                width: '30%',
-                closeBtn: 'inner',
-              });
+              open(<AddPatientModal />, DEFAULT_MODAL);
             }}
           />
         ) : (

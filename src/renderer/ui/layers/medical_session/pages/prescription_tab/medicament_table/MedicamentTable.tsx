@@ -11,6 +11,7 @@ import {
 import './style/index.scss';
 import AddDrugModal from '@containers/modals/add_drug_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import { DEFAULT_MODAL } from '@libs/overlay';
 
 type Data = {
   drugName: string;
@@ -83,14 +84,7 @@ export default function MedicamentTable({
                           console.log(formData); //TODO : implement Edit data function
                         }}
                       />,
-                      {
-                        closeOnClickOutside: true,
-                        isDimmed: true,
-                        clickThrough: false,
-                        position: { top: '30%' },
-                        width: '30%',
-                        closeBtn: 'inner',
-                      },
+                      DEFAULT_MODAL,
                     );
                   }}
                 />
