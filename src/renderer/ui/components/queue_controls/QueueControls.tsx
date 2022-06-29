@@ -22,7 +22,7 @@ export default function QueueControls({
   const { open, close } = useOverlay();
   return (
     <>
-      {isPaused ? (
+      {isPaused ? ( //todo:if is !owner dont show resume button
         <IconicButton
           Icon={PauseIcon} //todo:resume icon
           backgroundColor={color.cold_blue}
