@@ -3,6 +3,7 @@ import DarkLightCornerButton from '@components/buttons/dark_light_corner_button'
 import MedicalHistory from '@components/medical_history';
 import PreviewInfo from '@components/preview_info';
 import DiagnosisPreview from '@containers/modals/diagnosis_preview';
+import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { Patient } from '@models/instance.model';
 import './style/index.scss';
@@ -25,13 +26,10 @@ export default function MedicalSessionSideBar({
               text="preview"
               blend
               onPress={() => {
-                open(<DiagnosisPreview data={patient.testResult} />, {
-                  closeOnClickOutside: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                  closeBtn: 'inner',
-                  width: '30%',
-                });
+                open(
+                  <DiagnosisPreview data={patient.testResult} />,
+                  DEFAULT_MODAL,
+                );
               }}
             />
           }

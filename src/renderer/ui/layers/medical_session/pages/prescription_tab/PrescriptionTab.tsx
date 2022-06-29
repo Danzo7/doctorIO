@@ -1,6 +1,7 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import Header from '@components/header';
 import AddDrugModal from '@containers/modals/add_drug_modal';
+import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useState } from 'react';
 import MedicamentTable from './medicament_table';
@@ -82,14 +83,7 @@ export default function PrescriptionTab({}: PrescriptionTabProps) {
                     console.log(data);
                   }}
                 />,
-                {
-                  closeOnClickOutside: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                  position: { top: '30%' },
-                  width: '30%',
-                  closeBtn: 'inner',
-                },
+                DEFAULT_MODAL,
               );
             }}
           />

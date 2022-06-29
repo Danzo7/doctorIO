@@ -2,6 +2,7 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
+import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import DiagnosisModal from '../diagnosis_modal';
@@ -34,17 +35,9 @@ export default function AddPatientModal({}: AddPatientModalProps) {
             fontWeight={700}
             width={'40%'}
             type="button"
-            onPress={
-              () => {
-                open(<DiagnosisModal />, {
-                  closeOnClickOutside: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                  width: '30%',
-                  closeBtn: 'inner',
-                });
-              } //todo:open diagnosisModal
-            }
+            onPress={() => {
+              open(<DiagnosisModal />, DEFAULT_MODAL);
+            }}
           />
           <TextButton
             text="Add to queue"

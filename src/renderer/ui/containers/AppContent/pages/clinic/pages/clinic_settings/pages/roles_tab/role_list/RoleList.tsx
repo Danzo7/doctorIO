@@ -27,7 +27,7 @@ export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
     // Update State
     setItemList(updatedList);
   };
-  //TODO add new Role function //
+  //TODO? implement addNewRoleModal and   add new Role function //
   return (
     <div className={`role-list`}>
       <NewRole />
