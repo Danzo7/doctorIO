@@ -71,7 +71,7 @@ export default function usePrompt(
           closeOnClickOutside: true,
           clickThrough: true,
           position: { bottom: '2vh' },
-          // transition: 'appear-bottom',
+          transition: 'appear-bottom',
         },
       );
     },
