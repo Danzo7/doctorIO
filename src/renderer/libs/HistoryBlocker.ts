@@ -54,6 +54,7 @@ export default function usePrompt(
     retry: () => void;
   }) => ReactNode,
   when = true,
+  forceShow = false,
 ) {
   const { open, close } = useOverlay();
   const blocker = useCallback(
@@ -77,6 +78,25 @@ export default function usePrompt(
     },
     [open, message, actionList, close],
   );
+  if (forceShow) {
+    open(
+      SnakeBar({
+        description: message,
+        type: 'info',
+        children: actionList({
+          closeOVerlay: close,
+          dismiss: () => {},
+          retry: () => {},
+        }),
+      }),
+      {
+        closeOnClickOutside: true,
+        clickThrough: true,
+        position: { bottom: '2vh' },
+        transition: 'appear-bottom',
+      },
+    );
+  }
 
   useBlocker(blocker, when);
 }
