@@ -76,6 +76,12 @@
         }
         100% { transform: translate(1); }
       }
+      @keyframes appear-bottom {
+        0% {
+          transform: translate(0,50vh);
+        }
+        100% { transform: translate(0,0); }
+      }
     }
   }
 }

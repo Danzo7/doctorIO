@@ -91,7 +91,12 @@ export interface OverlayOptions {
         placement: 'inner' | 'outer' | 'above';
         component: ReactNode;
       };
-  transition?: 'zoom' | 'appear-right' | 'appear-left' | 'appear-top';
+  transition?:
+    | 'zoom'
+    | 'appear-right'
+    | 'appear-left'
+    | 'appear-top'
+    | 'appear-bottom';
 }
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
