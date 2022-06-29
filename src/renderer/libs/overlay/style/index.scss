@@ -1,7 +1,7 @@
 @use '~styles/appColors' as *;
 .overlay-container {
   display: flex;
-  position: absolute;
+  position: fixed;
   align-content: stretch;
   width: -webkit-fill-available;
   height: -webkit-fill-available;
