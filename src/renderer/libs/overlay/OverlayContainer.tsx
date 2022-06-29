@@ -157,8 +157,6 @@ export function OverlayItem({
             ? (event) => {
                 if (!event.currentTarget.contains(event.relatedTarget)) {
                   closeOverlay();
-                } else {
-                  event.currentTarget.focus();
                 }
               }
             : undefined
