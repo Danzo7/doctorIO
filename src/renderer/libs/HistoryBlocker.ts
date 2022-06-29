@@ -1,4 +1,3 @@
-import color from '@assets/styles/color';
 import SnakeBar from '@containers/modals/snake_bar';
 import { History, Transition } from 'history';
 import { ReactNode, useCallback, useContext, useEffect } from 'react';
@@ -62,7 +61,6 @@ export default function usePrompt(
       open(
         SnakeBar({
           description: message,
-          backgroundColor: color.good_black,
           children: actionList({
             closeOVerlay: close,
             dismiss: tx.dismiss,
@@ -73,7 +71,7 @@ export default function usePrompt(
           closeOnClickOutside: true,
           clickThrough: true,
           position: { bottom: 10 },
-          width: '40%',
+          // transition: 'appear-bottom',
         },
       );
     },
