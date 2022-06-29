@@ -9,7 +9,7 @@ import { BookedAppointment } from '@models/instance.model';
 import { currentMember } from '@api/fake';
 
 interface AppSidebarProps {}
-//todo redux
+//TODO redux
 const BookedAppointmentList: BookedAppointment[] = [
   {
     bookTime: new Date('2022-5-10'),

@@ -24,7 +24,7 @@ interface SearchInput {
   searchField: string;
 }
 
-//todo fetch data from api
+//TODO fetch data from api
 
 interface RecordProps {}
 export default function Record({}: RecordProps) {

@@ -23,7 +23,7 @@ export default function AppointmentsQueue() {
         }
       />
       <Backdrop
-        when={state == 'paused' ? 'blur' : undefined} //todo:choose between blur and true and fix backdropItemContent  //todo: if !isOwner dont show a button
+        when={state == 'paused' ? 'blur' : undefined} //TODO:choose between blur and true and fix backdropItemContent  //TODO: if !isOwner dont show a button
         backdropItems={
           <>
             <span>queue is paused</span>

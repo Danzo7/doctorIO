@@ -20,13 +20,13 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
           title="Opening time"
           startTime={clinic.timing.timeToOpen}
           endTime={clinic.timing.timeToClose}
-          onChange={(data) => console.log(data)} //todo:update settings
+          onChange={(data) => console.log(data)} //TODO:update settings
         />
         <PeriodTimePicker
           title="Break"
           startTime="10:04"
           endTime="14:15"
-          onChange={(data) => console.log(data)} //todo:update settings
+          onChange={(data) => console.log(data)} //TODO:update settings
         />
         <span>Working days</span>
         <MultipleCheckGroup

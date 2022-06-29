@@ -21,7 +21,7 @@ export default function ClinicItem({
   onClick,
 }: ClinicItemProps) {
   const { memberCount, patientCount, name } = clinicInfo;
-  //todo useEffect fetch Clinic data if selected
+  //TODO useEffect fetch Clinic data if selected
   return (
     <div className="clinic-item">
       <span css={{ visibility: selected ? 'visible' : 'hidden' }}>Current</span>

@@ -25,7 +25,7 @@ export default function DocumentPreviewItem({
     >
       <SquareIconButton
         Icon={
-          AppointmentHistoryIcon //todo preview file with id
+          AppointmentHistoryIcon //TODO preview file with id
         }
       />
       <SquareIconButton

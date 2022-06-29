@@ -7,7 +7,7 @@ function MemberFooter({
   memberId,
   memberStatus,
 }: Pick<Member, 'memberId' | 'memberStatus'>) {
-  //todo:search for DM for current memberUD
+  //TODO:search for DM for current memberUD
   const dm = DMs.filter(
     ({ userId }) =>
       userId ==

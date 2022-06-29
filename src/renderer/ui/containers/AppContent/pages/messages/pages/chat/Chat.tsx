@@ -12,13 +12,13 @@ import { currentMember, DMs, members } from '@api/fake';
 interface ChatProps {}
 export default function Chat({}: ChatProps) {
   const { dmId } = useParams();
-  //todo:fetch for selected dm
+  //TODO:fetch for selected dm
   const dm = DMs.filter(
     ({ dmId: id }) => id === Number.parseInt(dmId ?? '404'),
   )[0];
-  //todo:fetch for contactMember
+  //TODO:fetch for contactMember
   const contactMember = members.filter(({ userId }) => userId == dm.userId)[0];
-  //todo:fetch for currentMember
+  //TODO:fetch for currentMember
   return (
     <div className="chat">
       {dmId}
