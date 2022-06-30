@@ -21,7 +21,7 @@ export default function ClinicItem({
   onClick,
 }: ClinicItemProps) {
   const { memberCount, patientCount, name } = clinicInfo;
-  //FEATURE show  cliic server info if is connected
+  //FEATURE show clinic server info if is connected
   return (
     <div className="clinic-item">
       <span css={{ visibility: selected ? 'visible' : 'hidden' }}>Current</span>
