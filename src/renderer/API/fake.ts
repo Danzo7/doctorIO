@@ -1,4 +1,9 @@
-import { Appointment, AppointmentQueue, Patient } from '@models/instance.model';
+import {
+  Appointment,
+  AppointmentQueue,
+  BookedAppointment,
+  Patient,
+} from '@models/instance.model';
 import { DirectMessage, User } from '@models/local.models';
 import { Clinic, Member, Role, RolePermissions } from '@models/server.models';
 import { faker } from '@faker-js/faker';
@@ -785,3 +790,5 @@ export const appointmentQueueData: AppointmentQueue = {
     })(),
   ],
 };
+
+export const bookedAppointments: BookedAppointment[] = [];

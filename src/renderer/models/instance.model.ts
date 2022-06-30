@@ -6,10 +6,9 @@ interface AppointmentQueueItem {
   diagnosis?: TestResult;
 }
 interface BookedAppointment {
-  id: number;
-  patientName: string;
+  bookDate: Date;
   patientId: number;
-  bookTime: Date;
+  patientName: string;
   bookedBy: { memberId: number; memberName: string };
   state: 'panding' | 'in queue';
 }
