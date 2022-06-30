@@ -7,12 +7,12 @@ function MemberFooter({
   memberId,
   memberStatus,
 }: Pick<Member, 'memberId' | 'memberStatus'>) {
-  //TODO:search for DM for current memberUD
   const dm = DMs.filter(
+    //REDUX:getDMs
     ({ userId }) =>
       userId ==
       members.filter(({ memberId: id }) => memberId === id)?.[0]?.userId,
-  )?.[0];
+  )?.[0]; //REDUX
   return (
     <div
       className="member-footer"

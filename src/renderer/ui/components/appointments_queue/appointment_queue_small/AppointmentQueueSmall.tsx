@@ -27,7 +27,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
 
         <QueueControls
           isOwner={
-            true //TODO:roleId is in currentMemberRoles
+            true //REDUX:getCurrentMemberRoles and check if isOwner
           }
           isPaused={state === 'paused'}
         />
@@ -35,7 +35,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       <div className="queue-items">
         {appointments.length > 0 ? (
           <Backdrop
-            when={state == 'paused' ? 'blur' : undefined} //TODO:choose between blur and true and fix backdropItemContent
+            when={state == 'paused' ? 'blur' : undefined}
             backdropItems={
               <>
                 <span>queue is paused</span>

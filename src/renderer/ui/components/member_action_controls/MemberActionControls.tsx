@@ -77,7 +77,7 @@ export default function MemberActionControls({
         iconSize={15}
         disabled={IS_PREVIEW}
         onPress={() => {
-          //TODO? open(callModel)}//
+          //FEATURE open(callModel)}
         }}
       />
     </div>
