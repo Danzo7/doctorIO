@@ -742,13 +742,8 @@ export const patients: Patient[] = [
 ];
 export const appointmentQueueData: AppointmentQueue = {
   roleId: 1,
-  state: {
-    state: 'waiting',
-    position: 1,
-    patientId: patients[0].patId,
-    patientName: patients[0].firstName + ' ' + patients[0].lastName,
-    date: subMinutes(new Date(), Number.parseInt(faker.random.numeric(2))),
-  },
+  state: 'paused',
+  isOwner: false,
   appointments: [
     {
       position: 1,
