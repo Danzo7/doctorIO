@@ -20,18 +20,19 @@
         }
     }
 
-    .appointments-queue-content{
+    >.appointments-queue-content{
         display: flex;
         flex-direction: row;
         align-items: flex-start;
         gap: 10px;
 
-        >.queue-list{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 10px;
+        >.wrapper{
             overflow: hidden;
-        }
+            .queue-list{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+            }}
     }
 }

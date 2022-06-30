@@ -22,62 +22,64 @@ export default function AppointmentsQueue() {
           <QueueControls isOwner={true} isPaused={state === 'paused'} />
         }
       />
-      <Backdrop
-        when={state == 'paused' ? 'blur' : undefined} //TODO:choose between blur and true and fix backdropItemContent  //TODO: if !isOwner dont show a button
-        backdropItems={
-          <>
-            <span>queue is paused</span>
-            <TextButton text="resume" backgroundColor={color.good_green} />
-          </>
-        }
-      >
-        <div className="appointments-queue-content">
-          <CabinState state={state} />
-          <div className="queue-list">
-            <TextButton
-              borderColor={colors.border_color}
-              padding="30px 10px"
-              afterBgColor={colors.darkersec_color}
-              onPress={previous}
-              onHold={gotoFirst}
-            >
-              <Arrow css={{ transform: 'rotate(90deg)' }} />
-            </TextButton>
-            {appointments.length > 0 ? (
-              <ScrollView refs={ref} gap={10}>
-                {appointments.map(
-                  (
-                    { date, patientId, patientName, diagnosis, position },
-                    index,
-                  ) => (
-                    <li key={patientId.toString() + index}>
-                      <QueueItemWide
-                        id={patientId}
-                        name={patientName}
-                        number={position}
-                        timeAgo={date}
-                        width={150}
-                        diagnosis={diagnosis}
-                      />
-                    </li>
-                  ),
-                )}
-              </ScrollView>
-            ) : (
-              <span>nothing...</span>
-            )}
-            <TextButton
-              borderColor={colors.border_color}
-              padding="30px 10px"
-              afterBgColor={colors.darkersec_color}
-              onPress={next}
-              onHold={gotoLast}
-            >
-              <Arrow css={{ transform: 'rotate(-90deg)' }} />
-            </TextButton>
-          </div>
+      <div className="appointments-queue-content">
+        <CabinState state={state} />
+        <div className="wrapper">
+          <Backdrop
+            when={state == 'paused'} //REDUX:    if !isOwner dont show a button
+            backdropItems={
+              <>
+                <span>queue is paused</span>
+                <TextButton text="resume" backgroundColor={color.good_green} />
+              </>
+            }
+          >
+            <div className="queue-list">
+              <TextButton
+                borderColor={colors.border_color}
+                padding="30px 10px"
+                afterBgColor={colors.darkersec_color}
+                onPress={previous}
+                onHold={gotoFirst}
+              >
+                <Arrow css={{ transform: 'rotate(90deg)' }} />
+              </TextButton>
+              {appointments.length > 0 ? (
+                <ScrollView refs={ref} gap={10}>
+                  {appointments.map(
+                    (
+                      { date, patientId, patientName, diagnosis, position },
+                      index,
+                    ) => (
+                      <li key={patientId.toString() + index}>
+                        <QueueItemWide
+                          id={patientId}
+                          name={patientName}
+                          number={position}
+                          timeAgo={date}
+                          width={150}
+                          diagnosis={diagnosis}
+                        />
+                      </li>
+                    ),
+                  )}
+                </ScrollView>
+              ) : (
+                <span>nothing...</span>
+              )}
+              <TextButton
+                borderColor={colors.border_color}
+                padding="30px 10px"
+                afterBgColor={colors.darkersec_color}
+                onPress={next}
+                onHold={gotoLast}
+              >
+                <Arrow css={{ transform: 'rotate(-90deg)' }} />
+              </TextButton>
+            </div>
+          </Backdrop>
         </div>
-      </Backdrop>
+      </div>
     </div>
   );
 }
