@@ -21,12 +21,15 @@ export default function Backdrop({
             filter: when == true ? filter : undefined,
           },
         },
-        '&:hover >.backdrop': {
-          display: when == 'blur' ? 'flex' : undefined,
-          '+div': {
-            filter: when ? filter : undefined,
-          },
-        },
+        '&:hover >.backdrop':
+          when == 'blur'
+            ? {
+                display: 'flex',
+                '+div': {
+                  filter: filter,
+                },
+              }
+            : undefined,
       }}
     >
       {when && <div className="backdrop">{backdropItems}</div>}
