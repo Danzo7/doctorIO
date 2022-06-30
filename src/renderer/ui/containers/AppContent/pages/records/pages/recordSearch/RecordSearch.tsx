@@ -18,21 +18,18 @@ export default function RecordSearch({}: RecordSearchProps) {
   const watchSearch = watch('searchField');
   const { navigate } = useNavigation();
   const patientMatches = () => {
-    let results: Patient[] = [];
     if (
       watchSearch &&
       watchSearch.length > 0 &&
       watchSearch.trim().length > 0
     ) {
-      results = patients.filter(
+      return (patient = patients.find(
         (pat) =>
           pat.patId.toString() == watchSearch ||
           pat.firstName.toLowerCase() == watchSearch.toLowerCase() ||
           pat.lastName.toLowerCase() == watchSearch.toLowerCase(),
-      );
-      return results;
+      )); //FETCH searchPatientById&&
     }
-    return [];
   };
 
   return (
@@ -47,7 +44,7 @@ export default function RecordSearch({}: RecordSearchProps) {
         grow={false}
       />
       <div className="records-suggestions-container">
-        {patientMatches()?.map(({ firstName, lastName, patId }, index) => (
+        {patientMatches(({ firstName, lastName, patId }, index) => (
           <RecordInfoItem
             firstName={firstName}
             lastName={lastName}
