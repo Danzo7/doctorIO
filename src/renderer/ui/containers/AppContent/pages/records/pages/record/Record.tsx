@@ -18,7 +18,7 @@ import BookAppointmentModal from '@containers/modals/book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { patients } from '@api/fake';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface SearchInput {
   searchField: string;
@@ -34,27 +34,27 @@ export default function Record({}: RecordProps) {
   const { open } = useOverlay();
   const { patientId } = useParams();
 
-  const [patient] = useState<Patient | undefined>(
-    patients.find(({ patId }) => patId.toString() == patientId),
-  );
+  const [patient, setPatient] = useState<Patient | undefined>();
 
-  const patientMatches = () => {
-    let results: Patient[] = [];
+  const searchPatient = () => {
+    let result: Patient | undefined;
     if (
       watchSearch &&
       watchSearch.length > 0 &&
       watchSearch.trim().length > 0
     ) {
-      results = patients.filter(
+      result = patients.find(
         (pat) =>
           pat.patId.toString() == watchSearch ||
           pat.firstName.toLowerCase() == watchSearch.toLowerCase() ||
           pat.lastName.toLowerCase() == watchSearch.toLowerCase(),
       );
-      return results;
+      return result;
     }
-    return [];
   };
+  useEffect(() => {
+    setPatient(patients.find(({ patId }) => patId.toString() == patientId));
+  }, [patientId]);
 
   return (
     <div className="record">
@@ -66,21 +66,17 @@ export default function Record({}: RecordProps) {
         grow={false}
       />
       {watchSearch ? (
-        patientMatches()?.length > 0 ? (
-          <div className="records-suggestions-container">
-            {patientMatches()?.map(({ firstName, lastName, patId }, index) => (
-              <RecordInfoItem
-                firstName={firstName}
-                lastName={lastName}
-                patId={patId}
-                key={index}
-                onViewRecord={() => {
-                  setValue('searchField', '');
-                  navigate(`/records/${patId}`);
-                }}
-              />
-            ))}
-          </div>
+        searchPatient() ? (
+          <RecordInfoItem
+            firstName={searchPatient()?.firstName as string}
+            lastName={searchPatient()?.lastName as string}
+            patId={searchPatient()?.patId as number}
+            key={searchPatient()?.patId as number}
+            onViewRecord={() => {
+              setValue('searchField', '');
+              navigate(`/records/${searchPatient()?.patId}`);
+            }}
+          />
         ) : (
           <div className="not-found">
             <span>No patient found ! </span>
