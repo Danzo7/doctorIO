@@ -28,9 +28,8 @@ function MembersPanel({}: MembersPanelProps) {
           {membersList.length != 0 ? (
             membersList.map((member, index) => (
               <MembersPreview
-                //TODO unique memberId
                 {...member}
-                key={index}
+                key={member.memberId.toString() + index}
               />
             ))
           ) : (
