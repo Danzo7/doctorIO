@@ -35,7 +35,8 @@
     "TEST",
     "UI",
     "API",
-    "FEATURE"
+    "FEATURE",
+    "DOC"
   ],
 
   "todo-tree.highlights.customHighlight": {
@@ -92,6 +93,12 @@
       "foreground": "white",
       "iconColour": "darkturquoise",
       "icon": "database"
+    },
+    "DOC": {
+      "background": "darkturquoise",
+      "foreground": "white",
+      "iconColour": "darkturquoise",
+      "icon": "file"
     }
   }
 }
