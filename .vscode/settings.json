@@ -1,14 +1,6 @@
 {
-  "cSpell.words": [
-    "brahim",
-    "Datepicker",
-    "Panding",
-    "Scroller",
-    "vmin"
-  ],
-  "npm.exclude": [
-    "**/out/**"
-  ],
+  "cSpell.words": ["brahim", "Datepicker", "Panding", "Scroller", "vmin"],
+  "npm.exclude": ["**/out/**"],
   "npm-scripts.showStartNotification": false,
   "prettier.requireConfig": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -25,9 +17,81 @@
     }
   },
   "scss.lint.unknownAtRules": "ignore",
-  "stylelint.validate": [
-    "css",
-    "scss",
-    "sass"
-  ]
+  "stylelint.validate": ["css", "scss", "sass"],
+
+  "todo-tree.highlights.defaultHighlight": {
+    "type": "text-and-comment",
+    "foreground": "orange",
+    "iconColour": "green",
+    "gutterIcon": true
+  },
+  "todo-tree.general.tags": [
+    "TODO",
+    "REDUX",
+    "FETCH",
+    "FIXME",
+    "HACK",
+    "REFACTOR",
+    "TEST",
+    "UI",
+    "API",
+    "FEATURE"
+  ],
+
+  "todo-tree.highlights.customHighlight": {
+    "REDUX": {
+      "foreground": "white",
+      "background": "purple",
+      "iconColour": "magenta",
+      "icon": "flame"
+    },
+    "API": {
+      "background": "blue",
+      "foreground": "white",
+      "iconColour": "blue",
+      "icon": "rss"
+    },
+    "REFACTOR": {
+      "background": "orange",
+      "foreground": "white",
+      "iconColour": "orange",
+      "icon": "sync"
+    },
+    "TEST": {
+      "background": "yellow",
+      "foreground": "black",
+      "iconColour": "yellow",
+      "icon": "code"
+    },
+    "UI": {
+      "background": "brown",
+      "foreground": "white",
+      "iconColour": "brown",
+      "icon": "browser"
+    },
+    "FIXME": {
+      "background": "red",
+      "foreground": "white",
+      "iconColour": "red",
+      "icon": "tools"
+    },
+    "HACK": {
+      "background": "green",
+      "foreground": "white",
+      "iconColour": "green",
+      "icon": "telescope"
+    },
+    "FEATURE": {
+      "background": "cornflowerblue",
+      "foreground": "white",
+      "iconColour": "cornflowerblue",
+      "icon": "telescope"
+    },
+    "FETCH": {
+      "background": "darkturquoise",
+      "foreground": "white",
+      "iconColour": "darkturquoise",
+      "icon": "database"
+    }
+  }
 }
