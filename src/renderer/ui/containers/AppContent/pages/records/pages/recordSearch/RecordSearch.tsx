@@ -17,18 +17,20 @@ export default function RecordSearch({}: RecordSearchProps) {
   const { register, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField');
   const { navigate } = useNavigation();
-  const patientMatches = () => {
+  const searchPatient = () => {
+    let patient: Patient | undefined;
     if (
       watchSearch &&
       watchSearch.length > 0 &&
       watchSearch.trim().length > 0
     ) {
-      return (patient = patients.find(
+      patient = patients.find(
         (pat) =>
           pat.patId.toString() == watchSearch ||
           pat.firstName.toLowerCase() == watchSearch.toLowerCase() ||
           pat.lastName.toLowerCase() == watchSearch.toLowerCase(),
-      )); //FETCH searchPatientById&&
+      );
+      return patient;
     }
   };
 
@@ -43,19 +45,19 @@ export default function RecordSearch({}: RecordSearchProps) {
         {...register('searchField', { min: 5 })}
         grow={false}
       />
-      <div className="records-suggestions-container">
-        {patientMatches(({ firstName, lastName, patId }, index) => (
-          <RecordInfoItem
-            firstName={firstName}
-            lastName={lastName}
-            patId={patId}
-            key={index}
-            onViewRecord={() => {
-              navigate(`/records/${patId}`);
-            }}
-          />
-        ))}
-      </div>
+      {searchPatient() ? (
+        <RecordInfoItem
+          firstName={searchPatient()?.firstName as string}
+          lastName={searchPatient()?.lastName as string}
+          patId={searchPatient()?.patId as number}
+          key={searchPatient()?.patId as number}
+          onViewRecord={() => {
+            navigate(`/records/${searchPatient()?.patId}`);
+          }}
+        />
+      ) : (
+        watchSearch && <div className="not-found">No Patient found !</div>
+      )}
     </div>
   );
 }
