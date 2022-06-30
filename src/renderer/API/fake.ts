@@ -791,4 +791,40 @@ export const appointmentQueueData: AppointmentQueue = {
   ],
 };
 
-export const bookedAppointments: BookedAppointment[] = [];
+export const bookedAppointments: BookedAppointment[] = [
+  {
+    patientId: patients[0].patId,
+    patientName: patients[0].firstName + ' ' + patients[0].lastName,
+    bookDate: new Date('2022-05-24'),
+    bookedBy: {
+      memberId: members[0].memberId,
+      memberName: members[0].name,
+    },
+    state: 'panding',
+  },
+  {
+    patientId: patients[1].patId,
+    patientName: patients[1].firstName + ' ' + patients[1].lastName,
+    bookDate: new Date('2022-05-24'),
+    bookedBy: {
+      memberId: members[0].memberId,
+      memberName: members[0].name,
+    },
+    state: 'panding',
+  },
+  ...(() => {
+    const arr: BookedAppointment[] = [];
+    for (let i = 0; i < 10; i++)
+      arr.push({
+        patientId: patients[0].patId,
+        patientName: faker.name.firstName() + ' ' + faker.name.lastName(),
+        bookDate: new Date('2022-05-24'),
+        bookedBy: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        state: 'in queue',
+      });
+    return arr;
+  })(),
+];
