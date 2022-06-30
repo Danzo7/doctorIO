@@ -7,12 +7,12 @@ import SmallRolePreview from '../small_role_preview';
 import './style/index.scss';
 interface SmallRoleListProps {
   roleList: Role[];
-  //TODO:memberObject
+  //REFACTOR:add memberId
 }
 export default function SmallRoleList({ roleList }: SmallRoleListProps) {
   const [roles, setRoles] = useState(roleList);
   const { open, close } = useOverlay();
-
+  //REDUX RemoveRole(memberId,roleId)
   const addRole = (newRole: Role) => {
     setRoles((prev) => {
       return [...prev, newRole];

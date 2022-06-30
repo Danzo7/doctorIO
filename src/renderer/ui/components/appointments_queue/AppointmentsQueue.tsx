@@ -13,24 +13,29 @@ import Backdrop from '@components/backdrop';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
-  const { appointments, state, roleId } = appointmentQueueData;
+  const { appointments, state, isOwner } = appointmentQueueData; //REDUX getAppointmentQUeue
   return (
     <div className="appointments-queue">
       <Header
         title="Queue list"
         buttonNode={
-          <QueueControls isOwner={true} isPaused={state === 'paused'} />
+          <QueueControls isOwner={isOwner} isPaused={state === 'paused'} />
         }
       />
       <div className="appointments-queue-content">
         <CabinState state={state} />
         <div className="wrapper">
           <Backdrop
-            when={state == 'paused'} //REDUX:    if !isOwner dont show a button
+            when={state == 'paused'}
             backdropItems={
               <>
-                <span>queue is paused</span>
-                <TextButton text="resume" backgroundColor={color.good_green} />
+                <span>queue is paused {!isOwner && 'by owner'}</span>
+                {isOwner && (
+                  <TextButton
+                    text="resume"
+                    backgroundColor={color.good_green}
+                  />
+                )}
               </>
             }
           >

@@ -8,11 +8,11 @@ function MemberFooter({
   memberStatus,
 }: Pick<Member, 'memberId' | 'memberStatus'>) {
   const dm = DMs.filter(
-    //REDUX:getDMs
+    //REDUX:get DM List
     ({ userId }) =>
       userId ==
       members.filter(({ memberId: id }) => memberId === id)?.[0]?.userId,
-  )?.[0]; //REDUX
+  )?.[0]; //REDUX select target member
   return (
     <div
       className="member-footer"

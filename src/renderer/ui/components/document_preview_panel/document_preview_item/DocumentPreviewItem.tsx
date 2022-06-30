@@ -25,7 +25,7 @@ export default function DocumentPreviewItem({
     >
       <SquareIconButton
         Icon={
-          AppointmentHistoryIcon //TODO preview file with id
+          AppointmentHistoryIcon //FEATURE OpenFileInNewTab
         }
       />
       <SquareIconButton

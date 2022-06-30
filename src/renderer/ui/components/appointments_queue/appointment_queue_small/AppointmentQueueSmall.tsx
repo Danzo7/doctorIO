@@ -11,7 +11,7 @@ import TextButton from '@components/buttons/text_button';
 import Backdrop from '@components/backdrop';
 
 interface AppointmentQueueSmallProps {}
-const { appointments, state, roleId } = appointmentQueueData;
+const { appointments, state, isOwner } = appointmentQueueData; //REDUX getAppointmentQUeue
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);
@@ -25,21 +25,21 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       <div className="header">
         <span>Appointment</span>
 
-        <QueueControls
-          isOwner={
-            true //REDUX:getCurrentMemberRoles and check if isOwner
-          }
-          isPaused={state === 'paused'}
-        />
+        <QueueControls isOwner={isOwner} isPaused={state === 'paused'} />
       </div>
       <div className="queue-items">
         {appointments.length > 0 ? (
           <Backdrop
-            when={state == 'paused' ? 'blur' : undefined}
+            when={state === 'paused' ? (isOwner ? 'blur' : true) : false}
             backdropItems={
               <>
-                <span>queue is paused</span>
-                <TextButton text="resume" backgroundColor={color.good_green} />
+                <span>queue is paused {!isOwner && 'by owner'}</span>
+                {isOwner && (
+                  <TextButton
+                    text="resume"
+                    backgroundColor={color.good_green}
+                  />
+                )}
               </>
             }
           >
