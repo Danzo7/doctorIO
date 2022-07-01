@@ -10,6 +10,8 @@ interface PreviewListProps {
   gap?: number;
   maxHeight?: number;
   notScrollable?: true;
+  flexGrow?: true;
+  width?: number | string;
 }
 export default function PreviewList({
   title,
@@ -19,6 +21,8 @@ export default function PreviewList({
   gap = 5,
   maxHeight,
   notScrollable,
+  width,
+  flexGrow,
 }: PreviewListProps) {
   return (
     <div
@@ -29,6 +33,8 @@ export default function PreviewList({
         borderRadius: noBorder ? 0 : 15,
         overflow: notScrollable && 'visible',
         maxHeight: maxHeight ? maxHeight : undefined,
+        flexGrow: flexGrow ? 1 : 0,
+        width: width ? width : undefined,
       }}
     >
       <Header title={title} buttonNode={buttonNode} flexGrow={1} />

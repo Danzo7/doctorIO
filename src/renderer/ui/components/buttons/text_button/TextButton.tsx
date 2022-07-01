@@ -60,6 +60,14 @@ interface TextButtonProps {
     | 'start'
     | 'stretch';
   blank?: true;
+  cursor?:
+    | 'pointer'
+    | 'default'
+    | 'auto'
+    | 'text'
+    | 'wait'
+    | 'move'
+    | 'crosshair';
 }
 function TextButton({
   className,
@@ -88,6 +96,7 @@ function TextButton({
   alignSelf,
   itemsDirection,
   onHold,
+  cursor = 'pointer',
   blank,
 }: TextButtonProps) {
   const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
@@ -133,7 +142,7 @@ function TextButton({
         padding: padding,
         width: width,
         height: height,
-        cursor: disabled ? 'no-drop' : undefined,
+        cursor: disabled ? 'no-drop' : cursor,
         opacity: disabled ? 0.5 : 1,
         '>svg>path': {
           stroke:
