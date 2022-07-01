@@ -21,6 +21,7 @@ interface TextPairProps {
   alignItems?: 'flex-start' | 'flex-end' | 'center';
   flexGrow?: true;
   minWidth?: number | string;
+  maxWidth?: number | string;
 }
 export default function TextPair({
   first,
@@ -29,6 +30,7 @@ export default function TextPair({
   alignItems,
   flexGrow,
   minWidth,
+  maxWidth,
 }: TextPairProps) {
   return (
     <div
@@ -39,6 +41,7 @@ export default function TextPair({
         alignItems: alignItems,
         flexGrow: flexGrow ? 1 : 0,
         minWidth: minWidth,
+        maxWidth: maxWidth,
       }}
     >
       <span
@@ -46,6 +49,10 @@ export default function TextPair({
           fontSize: typeof first != 'string' ? first?.fontSize : 17,
           fontWeight: typeof first != 'string' ? first?.fontWeight : 600,
           color: typeof first != 'string' ? first?.fontColor : color.white,
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+          overflowWrap: 'anywhere',
         }}
       >
         {typeof first == 'string' ? first : first.text}
@@ -64,6 +71,9 @@ export default function TextPair({
             typeof second != 'string' && second.border ? '5px 10px' : undefined,
           borderRadius:
             typeof second != 'string' && second.border ? 7 : undefined,
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
         }}
       >
         {typeof second == 'string' ? second : second.text}
