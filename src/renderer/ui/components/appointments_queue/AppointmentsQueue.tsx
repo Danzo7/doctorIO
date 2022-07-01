@@ -29,7 +29,14 @@ export default function AppointmentsQueue() {
             when={state == 'paused'}
             backdropItems={
               <>
-                <span>queue is paused {!isOwner && 'by owner'}</span>
+                <span css={{ fontSize: 15 }}>
+                  Queue is paused
+                  {!isOwner && (
+                    <>
+                      {' by'} <span css={{ fontWeight: 600 }}>The owner</span>
+                    </>
+                  )}
+                </span>
                 {isOwner && (
                   <TextButton
                     text="resume"
