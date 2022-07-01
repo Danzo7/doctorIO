@@ -12,7 +12,7 @@ import useNavigation from '@libs/hooks/useNavigation';
 
 function BookedItem({
   patientName,
-  bookTime,
+  bookDate,
   state,
   patientId,
 }: BookedAppointment) {
@@ -24,7 +24,7 @@ function BookedItem({
         <div className="info-container">
           <span className="name">{patientName}</span>
           <span className="info">
-            {formatDistance(bookTime, new Date())} ago
+            {formatDistance(bookDate, new Date())} ago
           </span>
         </div>
         {state == 'panding' && (
@@ -51,8 +51,9 @@ function BookedItem({
                   onPress: () => {
                     open(
                       <AddSelectedToQueueModal
-                        fullName={patientName}
-                        id={patientId}
+                        firstName={patientName.split(' ')[0]}
+                        lastName={patientName.split(' ')[1]}
+                        patId={patientId}
                       />,
                       DEFAULT_MODAL,
                     );

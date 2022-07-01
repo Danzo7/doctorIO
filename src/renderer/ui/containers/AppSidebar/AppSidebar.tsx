@@ -5,41 +5,10 @@ import Arrow from 'toSvg/arrow.svg?icon';
 import { Transition } from 'react-transition-group';
 import './index.scss';
 import SearchProfile from '@components/search_profile';
-import { BookedAppointment } from '@models/instance.model';
 import { currentMember } from '@api/fake';
 
 interface AppSidebarProps {}
 //TODO redux
-const BookedAppointmentList: BookedAppointment[] = [
-  {
-    bookTime: new Date('2022-5-10'),
-    patientId: 1,
-    id: 1,
-    patientName: 'John doe',
-    state: 'in queue',
-  },
-  {
-    bookTime: new Date('2022-9-10'),
-    patientId: 2,
-    id: 2,
-    patientName: 'karl john',
-    state: 'panding',
-  },
-  {
-    bookTime: new Date('2022-5-10'),
-    patientId: 3,
-    id: 3,
-    patientName: 'John doe',
-    state: 'in queue',
-  },
-  {
-    bookTime: new Date('2022-5-10'),
-    patientId: 4,
-    id: 4,
-    patientName: 'John doe',
-    state: 'in queue',
-  },
-];
 
 function AppSidebar({}: AppSidebarProps) {
   const [isMini, setMini] = useState(false);
@@ -53,7 +22,7 @@ function AppSidebar({}: AppSidebarProps) {
                 <div className={`content ${state}`}>
                   <SearchProfile avatar={currentMember.avatar} />
                   <AppointmentQueueSmall></AppointmentQueueSmall>
-                  <BookedList list={BookedAppointmentList} />
+                  <BookedList />
                 </div>
               </div>
             )}

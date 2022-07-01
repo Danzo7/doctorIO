@@ -3,13 +3,11 @@ import PreviewList from '@components/preview_list';
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import useNavigation from '@libs/hooks/useNavigation';
-import { ComponentProps } from 'react';
-interface BookedListProps {
-  list: ComponentProps<typeof BookedItem>[];
-}
-export default function BookedList({ list }: BookedListProps) {
-  const { navigate } = useNavigation();
+import { bookedAppointments } from '@api/fake';
 
+export default function BookedList({}) {
+  const { navigate } = useNavigation();
+  //REDUX fetch bookedAppointments list
   return (
     <PreviewList
       title="Booked appointment"
@@ -26,8 +24,8 @@ export default function BookedList({ list }: BookedListProps) {
         />
       }
     >
-      {list.map((props, index) => (
-        <BookedItem {...props} key={props.id.toString() + index} />
+      {bookedAppointments.map((props, index) => (
+        <BookedItem {...props} key={index} />
       ))}
     </PreviewList>
   );

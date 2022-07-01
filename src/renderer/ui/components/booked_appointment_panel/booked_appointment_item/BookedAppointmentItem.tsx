@@ -5,24 +5,17 @@ import { DATE_ONLY } from '@constants/data_format';
 import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import { BookedAppointment } from '@models/instance.model';
 import { format } from 'date-fns';
 import './style/index.scss';
-interface BookedAppointmentItemProps {
-  id: string;
-  patientName: string;
-  bookTime: Date;
-  memberName: string;
-  memberId?: string;
-  patientId?: string;
-}
+
 export default function BookedAppointmentItem({
   patientName,
-  id,
-  bookTime,
-  memberName,
-  memberId,
+  bookDate,
+  bookedBy,
   patientId,
-}: BookedAppointmentItemProps) {
+  state,
+}: BookedAppointment) {
   const { open } = useOverlay();
   return (
     <div className="booked-appointment-item">
@@ -33,27 +26,35 @@ export default function BookedAppointmentItem({
       <BorderSeparator direction="vertical" />
       <div className="booked-appointment-item-info">
         <span>Booked in</span>
-        <span>{format(bookTime, DATE_ONLY)}</span>
+        <span>{format(bookDate, DATE_ONLY)}</span>
       </div>
       <BorderSeparator direction="vertical" />
       <div className="booked-appointment-item-info">
         <span>Booked by</span>
-        <span>{memberName}</span>
+        <span>{bookedBy.memberName}</span>
       </div>
       <BorderSeparator direction="vertical" />
-      <TextButton
-        text="Assign to queue"
-        backgroundColor={color.cold_blue}
-        fontColor={color.white}
-        fontSize={12}
-        padding="5px 10px"
-        onPress={() => {
-          open(
-            <AddSelectedToQueueModal fullName={patientName} id={20} />,
-            DEFAULT_MODAL,
-          );
-        }}
-      />
+      {state == 'panding' ? (
+        <TextButton
+          text="Assign to queue"
+          backgroundColor={color.cold_blue}
+          fontColor={color.white}
+          fontSize={12}
+          padding="5px 10px"
+          onPress={() => {
+            open(
+              <AddSelectedToQueueModal
+                firstName={patientName.split(' ')[0]}
+                lastName={patientName.split(' ')[1]}
+                patId={patientId}
+              />,
+              DEFAULT_MODAL,
+            );
+          }}
+        />
+      ) : (
+        <span>{state}</span>
+      )}
     </div>
   );
 }
