@@ -3,7 +3,6 @@ import Header from '@components/header';
 import Input from '@components/inputs/input';
 import RecordInfoItem from '@components/record_info_item';
 import useNavigation from '@libs/hooks/useNavigation';
-import { Patient } from '@models/instance.model';
 import { useForm } from 'react-hook-form';
 import Search from 'toSvg/search.svg?icon';
 import './style/index.scss';
@@ -18,22 +17,20 @@ export default function RecordSearch({}: RecordSearchProps) {
   const watchSearch = watch('searchField');
   const { navigate } = useNavigation();
   const searchPatient = () => {
-    let patient: Patient | undefined;
     if (
       watchSearch &&
       watchSearch.length > 0 &&
       watchSearch.trim().length > 0
     ) {
-      patient = patients.find(
+      return patients.find(
         (pat) =>
           pat.patId.toString() == watchSearch ||
           pat.firstName.toLowerCase() == watchSearch.toLowerCase() ||
           pat.lastName.toLowerCase() == watchSearch.toLowerCase(),
       );
-      return patient;
     }
   };
-
+  const selectedPatient = searchPatient();
   return (
     <div className="record-search">
       <Header title="Select a patient" titleFontWeight={500} />
@@ -45,12 +42,11 @@ export default function RecordSearch({}: RecordSearchProps) {
         {...register('searchField', { min: 5 })}
         grow={false}
       />
-      {searchPatient() ? (
+      {selectedPatient ? (
         <RecordInfoItem
-          firstName={searchPatient()?.firstName as string}
-          lastName={searchPatient()?.lastName as string}
-          patId={searchPatient()?.patId as number}
-          key={searchPatient()?.patId as number}
+          firstName={selectedPatient.firstName}
+          lastName={selectedPatient.lastName}
+          patId={selectedPatient.patId}
           onViewRecord={() => {
             navigate(`/records/${searchPatient()?.patId}`);
           }}

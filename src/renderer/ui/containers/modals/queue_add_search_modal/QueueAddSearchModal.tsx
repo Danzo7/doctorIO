@@ -4,49 +4,43 @@ import search from 'toSvg/search.svg?icon';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';
 import Input from '@components/inputs/input';
-import useSearchPatient from '@libs/hooks/useSearchPatient';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
+import { patients } from '@api/fake';
 interface QueueAddSearchModalProps {}
 interface SearchInput {
   searchField: string;
 }
-const usersData = [
-  {
-    fullName: 'brahim aymen',
-    id: '#123456789',
-    age: 24,
-  },
-  {
-    fullName: 'daouadji aymen',
-    age: 24,
-    id: '#1234546789',
-  },
-  {
-    fullName: 'amine bou',
-    age: 24,
-    id: '#223456789',
-  },
-  {
-    fullName: 'John Doe',
-    age: 24,
-    id: '#323456789',
-  },
-];
+
 export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const { register, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField', '');
-  const matches = useSearchPatient(watchSearch, usersData, true);
   const { open } = useOverlay();
+
+  const searchPatient = () => {
+    if (
+      watchSearch &&
+      watchSearch.length > 0 &&
+      watchSearch.trim().length > 0
+    ) {
+      return patients.find(
+        (pat) =>
+          pat.patId.toString() == watchSearch ||
+          pat.firstName.toLowerCase() == watchSearch.toLowerCase() ||
+          pat.lastName.toLowerCase() == watchSearch.toLowerCase(),
+      );
+    }
+  };
+  const selectedPatient = searchPatient();
   return (
     <ModalContainer
       title="Add a Patient to appointment queue"
       controls={
-        matches?.length == 0 ? (
+        selectedPatient == undefined ? (
           <TextButton
             text="Add new patient"
             backgroundColor={color.lighter_background}
@@ -59,17 +53,17 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
             }}
           />
         ) : (
-          <div className="suggestions-container">
-            {matches?.map(({ fullName, age }, index) => (
-              <RecentAppsItem fullName={fullName} id={age} key={index} />
-            ))}
-          </div>
+          <RecentAppsItem
+            firstName={selectedPatient.firstName}
+            lastName={selectedPatient.lastName}
+            patId={selectedPatient.patId}
+          />
         )
       }
     >
       <Input
         hint={
-          matches?.length == 0
+          watchSearch.length > 0 && selectedPatient == undefined
             ? 'Can’t find any patient with the same name'
             : undefined
         }

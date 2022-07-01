@@ -55,7 +55,7 @@ export default function Record({}: RecordProps) {
   useEffect(() => {
     setPatient(patients.find(({ patId }) => patId.toString() == patientId));
   }, [patientId]);
-
+  const selectedPatient = searchPatient();
   return (
     <div className="record">
       <Input
@@ -66,15 +66,14 @@ export default function Record({}: RecordProps) {
         grow={false}
       />
       {watchSearch ? (
-        searchPatient() ? (
+        selectedPatient ? (
           <RecordInfoItem
-            firstName={searchPatient()?.firstName as string}
-            lastName={searchPatient()?.lastName as string}
-            patId={searchPatient()?.patId as number}
-            key={searchPatient()?.patId as number}
+            firstName={selectedPatient.firstName}
+            lastName={selectedPatient.lastName}
+            patId={selectedPatient.patId}
             onViewRecord={() => {
               setValue('searchField', '');
-              navigate(`/records/${searchPatient()?.patId}`);
+              navigate(`/records/${selectedPatient.patId}`);
             }}
           />
         ) : (
