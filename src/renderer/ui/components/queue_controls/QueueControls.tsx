@@ -23,9 +23,9 @@ export default function QueueControls({
   return (
     <>
       {!(isPaused && !isOwner) &&
-        (isPaused ? ( //TODO:if is !owner dont show resume button
+        (isPaused ? (
           <IconicButton
-            Icon={PauseIcon} //TODO:resume icon
+            Icon={PauseIcon} //UI:resume icon
             backgroundColor={color.cold_blue}
             width={25}
             radius={7}

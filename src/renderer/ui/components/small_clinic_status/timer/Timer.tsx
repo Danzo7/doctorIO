@@ -72,7 +72,7 @@ export default function Timer({ active, pCount }: TimerProps) {
       cancelAnimationFrame(requestIdRef.current ?? 0);
     };
   }, [isActive, pCount, size, tick]);
-  //TODO? fetch Time To Close prop
+  //REDUX fetch Time To Close from clinic
   return (
     <div
       className="timer"

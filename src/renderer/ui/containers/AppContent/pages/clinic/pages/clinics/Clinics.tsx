@@ -20,7 +20,7 @@ export default function Clinics() {
             selected={firstUser.selectedClinic == index}
             key={clinicInfo.clinicId}
             //just for testing
-            isHost={index == 2} //TODO? set isHost Value
+            isHost={index == 2} //FEATURE check if clinic is localhost
             clinicInfo={clinicInfo}
             onClick={() => {
               if (firstUser.selectedClinic === index) toParent();

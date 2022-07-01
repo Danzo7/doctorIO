@@ -10,7 +10,7 @@ interface SearchProfileProps {
 }
 export default function SearchProfile({ avatar }: SearchProfileProps) {
   const { open } = useOverlay();
-  //TODO:remove imgSrc
+  //REFACTOR:remove imgSrc
   return (
     <div className="search-profile">
       <UserProfileStatus width={40} status={true} imgSrc={avatar} />

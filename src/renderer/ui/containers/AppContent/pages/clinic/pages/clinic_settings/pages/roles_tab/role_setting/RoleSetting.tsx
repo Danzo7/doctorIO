@@ -10,7 +10,7 @@ import './style/index.scss';
 interface RoleSettingProps {}
 export default function RoleSetting({}: RoleSettingProps) {
   const [searchParams] = useSearchParams();
-  //TODO fetch selected role
+  //REDUX fetch selected role
   const { roleName, linkedRole, rolePermissions, roleDesc } =
     roles.filter(
       ({ roleId }) => roleId.toString() == searchParams.get('roleId'),

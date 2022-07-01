@@ -20,7 +20,7 @@ export default function AddPatientModal({}: AddPatientModalProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData); //TODO? form submit
+  const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData); //API submit
   const { open } = useOverlay();
   return (
     <ModalContainer

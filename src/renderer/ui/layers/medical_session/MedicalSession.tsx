@@ -10,7 +10,7 @@ import './style/index.scss';
 interface MedicalSessionProps {
   patId: number;
 }
-//TODO:redux-fetch-data
+//REDUX:search patient by id
 export const patient: Patient = patients[0];
 export default function MedicalSession({ patId }: MedicalSessionProps) {
   return (

@@ -24,8 +24,6 @@ interface SearchInput {
   searchField: string;
 }
 
-//TODO fetch data from api
-
 interface RecordProps {}
 export default function Record({}: RecordProps) {
   const { register, watch, setValue } = useForm<SearchInput>();
@@ -35,7 +33,7 @@ export default function Record({}: RecordProps) {
   const { patientId } = useParams();
 
   const [patient, setPatient] = useState<Patient | undefined>();
-
+  //REDUX search patient by id/name
   const searchPatient = () => {
     let result: Patient | undefined;
     if (

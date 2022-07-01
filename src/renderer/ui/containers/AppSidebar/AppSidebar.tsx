@@ -8,7 +8,7 @@ import SearchProfile from '@components/search_profile';
 import { currentMember } from '@api/fake';
 
 interface AppSidebarProps {}
-//TODO redux
+//REDUX currentMember
 
 function AppSidebar({}: AppSidebarProps) {
   const [isMini, setMini] = useState(false);

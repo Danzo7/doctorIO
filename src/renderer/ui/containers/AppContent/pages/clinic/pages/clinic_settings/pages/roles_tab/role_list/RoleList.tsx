@@ -13,7 +13,7 @@ interface RoleListProps {
 export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   console.log(searchParams.get('roleId'));
-  // TODO? fetch roles
+  // REDUX fetch roles
   const [itemList, setItemList] = useState(roles);
 
   const handleDrop = (droppedItem: any) => {
@@ -27,7 +27,7 @@ export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
     // Update State
     setItemList(updatedList);
   };
-  //TODO? implement addNewRoleModal and   add new Role function //
+  //FEATURE implement addNewRoleModal and new Role function
   return (
     <div className={`role-list`}>
       <NewRole />

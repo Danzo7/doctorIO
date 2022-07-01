@@ -10,7 +10,7 @@ import { DATE_ONLY } from '@constants/data_format';
 import { members } from '@api/fake';
 
 export default function MemberBigCard({ memberId }: Pick<Member, 'memberId'>) {
-  //TODO:redux fetch
+  //REDUX fetch members
   const {
     avatar,
     memberStatus,
