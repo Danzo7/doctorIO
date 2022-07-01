@@ -9,6 +9,8 @@ import { formatDistance } from 'date-fns';
 import { BookedAppointment } from '@models/instance.model';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import useNavigation from '@libs/hooks/useNavigation';
+import TextPair from '@components/text_pair/TextPair';
+import { color } from '@assets/styles/color';
 
 function BookedItem({
   patientName,
@@ -20,13 +22,23 @@ function BookedItem({
   const { navigate } = useNavigation();
   return (
     <div className="booked-item">
-      <div className="right-container">
-        <div className="info-container">
-          <span className="name">{patientName}</span>
-          <span className="info">
-            {formatDistance(bookDate, new Date())} ago
-          </span>
-        </div>
+      <div className="left-container">
+        <TextPair
+          maxWidth={120}
+          first={{
+            text: patientName,
+            fontSize: 15,
+            fontWeight: '600',
+            fontColor: color.white,
+          }}
+          second={{
+            text: formatDistance(bookDate, new Date()) + ' ago',
+            fontSize: 12,
+            fontWeight: '400',
+            fontColor: color.text_gray,
+          }}
+        />
+
         {state == 'panding' && (
           <div className="state-container">
             <Panding></Panding>

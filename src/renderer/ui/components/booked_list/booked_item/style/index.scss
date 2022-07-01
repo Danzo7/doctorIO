@@ -3,41 +3,21 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
   padding: 10px;
   height: fit-content;
   border-radius: 10px;
 
   &:hover {
     background: $secondarycolor;
-    > .option-menu {
-      visibility: visible;
-    }
   }
-  > .right-container {
+  > .left-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     flex-grow: 1;
-    > .info-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 3px;
-      justify-content: center;
-      align-content: flex-start;
-      > .name {
-        font-weight: 600;
-        font-size: 15px;
-        color: $white;
-      }
-      > .info {
-        color: $textgray;
-        font-weight: 400;
-        font-size: 12px;
-      }
-    }
+
     > .state-container {
       align-self: center;
       display: flex;
@@ -53,13 +33,5 @@
         font-size: 11px;
       }
     }
-  }
-  > .option-menu {
-    visibility: hidden;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    cursor: pointer;
   }
 }
