@@ -1,19 +1,24 @@
 import ModalContainer from '@components/modal_container';
 import RecentAppsItem from '@components/recent_apps_item';
+import { Patient } from '@models/instance.model';
 import './style/index.scss';
-interface AddSelectedToQueueModalProps {
-  fullName: string;
-  id: number;
-}
+
 export default function AddSelectedToQueueModal({
-  fullName,
-  id,
-}: AddSelectedToQueueModalProps) {
+  firstName,
+  lastName,
+  patId,
+}: Pick<Patient, 'firstName' | 'lastName' | 'patId'>) {
   return (
     <ModalContainer
       gap={10}
       title="Add a Patient to appointment queue"
-      controls={<RecentAppsItem fullName={fullName} id={id} />}
+      controls={
+        <RecentAppsItem
+          firstName={firstName}
+          lastName={lastName}
+          patId={patId}
+        />
+      }
     ></ModalContainer>
   );
 }
