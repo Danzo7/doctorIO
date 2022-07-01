@@ -25,7 +25,7 @@ export default function QueueControls({
       {!(isPaused && !isOwner) &&
         (isPaused ? (
           <IconicButton
-            Icon={PauseIcon} //UI:resume icon
+            Icon={NextIcon}
             backgroundColor={color.cold_blue}
             width={25}
             radius={7}
@@ -41,6 +41,7 @@ export default function QueueControls({
                     backgroundColor={color.good_green}
                     width="100%"
                     onPress={() => {
+                      //REDUX change the state of isPaused to resume
                       close();
                     }}
                   />
