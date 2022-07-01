@@ -9,6 +9,7 @@ import { appointmentQueueData } from '@api/fake';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Backdrop from '@components/backdrop';
+import Header from '@components/header';
 
 interface AppointmentQueueSmallProps {}
 const { appointments, state, isOwner } = appointmentQueueData; //REDUX getAppointmentQUeue
@@ -22,11 +23,12 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   }
   return (
     <div className="appointment-queue-small">
-      <div className="header">
-        <span>Appointment</span>
-
-        <QueueControls isOwner={isOwner} isPaused={state === 'paused'} />
-      </div>
+      <Header
+        title="Queue list"
+        buttonNode={
+          <QueueControls isOwner={isOwner} isPaused={state === 'paused'} />
+        }
+      />
       <div className="queue-items">
         {appointments.length > 0 ? (
           <Backdrop
@@ -45,6 +47,9 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                   <TextButton
                     text="resume"
                     backgroundColor={color.good_green}
+                    onPress={() => {
+                      //REDUX change the state of queue
+                    }}
                   />
                 )}
               </>
@@ -77,7 +82,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
             </ScrollView>
           </Backdrop>
         ) : (
-          <span>nothing...</span>
+          <span>empty</span>
         )}
       </div>
     </div>

@@ -98,6 +98,7 @@ export default function QueueControls({
                       backgroundColor={color.hot_red}
                       width="100%"
                       onPress={() => {
+                        //REDUX  //REDUX change the state of queue (pause)
                         close();
                       }}
                     />
