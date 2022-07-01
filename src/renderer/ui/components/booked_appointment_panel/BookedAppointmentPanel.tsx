@@ -21,7 +21,6 @@ export default function BookedAppointmentPanel({}) {
         />
       }
       noBorder
-      maxHeight={400}
     >
       {bookedAppointments.map((props, index) => (
         <BookedAppointmentItem {...props} key={index} />
