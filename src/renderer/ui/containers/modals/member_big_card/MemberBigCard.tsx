@@ -94,7 +94,7 @@ export default function MemberBigCard({ memberId }: Pick<Member, 'memberId'>) {
       />
       <div className="role-container">
         <span>Role</span>
-        <SmallRoleList roleList={roles} />
+        <SmallRoleList roleList={roles} memberId={memberId} />
       </div>
       <MemberActionControls showCard={false} memberId={memberId} />
     </div>

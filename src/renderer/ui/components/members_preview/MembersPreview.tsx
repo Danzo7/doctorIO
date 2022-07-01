@@ -38,7 +38,7 @@ function MembersPreview({
         />
         <div className="info-container">
           <span>{name}</span>
-          {<SmallRoleList roleList={roles} />}
+          {<SmallRoleList roleList={roles} memberId={memberId} />}
         </div>
         <div className={`arrow-container`}>
           <UpArrow width={15} />

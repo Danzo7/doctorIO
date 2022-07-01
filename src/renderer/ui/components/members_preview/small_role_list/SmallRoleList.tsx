@@ -1,7 +1,7 @@
 import DarkAddButton from '@components/buttons/dark_add_button';
 import AddRoleTooltip from '@components/poppers/add_role_tooltip';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { Role } from '@models/server.models';
+import { Member, Role } from '@models/server.models';
 import { useState } from 'react';
 import SmallRolePreview from '../small_role_preview';
 import './style/index.scss';
@@ -9,7 +9,10 @@ interface SmallRoleListProps {
   roleList: Role[];
   //REFACTOR:add memberId
 }
-export default function SmallRoleList({ roleList }: SmallRoleListProps) {
+export default function SmallRoleList({
+  roleList,
+  memberId,
+}: SmallRoleListProps & Pick<Member, 'memberId'>) {
   const [roles, setRoles] = useState(roleList);
   const { open, close } = useOverlay();
   //REDUX RemoveRole(memberId,roleId)
