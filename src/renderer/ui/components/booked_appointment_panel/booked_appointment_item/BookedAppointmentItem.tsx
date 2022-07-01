@@ -1,6 +1,8 @@
 import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import TextButton from '@components/buttons/text_button';
+import NotAButton from '@components/not_a_button';
+import TextPair from '@components/text_pair/TextPair';
 import { DATE_ONLY } from '@constants/data_format';
 import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
@@ -19,20 +21,16 @@ export default function BookedAppointmentItem({
   const { open } = useOverlay();
   return (
     <div className="booked-appointment-item">
-      <div>
-        <span>Patient</span>
-        <span>{patientName}</span>
-      </div>
+      <TextPair second="Patient" first={patientName} reversed />
+
       <BorderSeparator direction="vertical" />
-      <div className="booked-appointment-item-info">
-        <span>Booked in</span>
-        <span>{format(bookDate, DATE_ONLY)}</span>
-      </div>
+      <TextPair
+        second="Booked in"
+        first={format(bookDate, DATE_ONLY)}
+        reversed
+      />
       <BorderSeparator direction="vertical" />
-      <div className="booked-appointment-item-info">
-        <span>Booked by</span>
-        <span>{bookedBy.memberName}</span>
-      </div>
+      <TextPair second="Booked by" first={bookedBy.memberName} reversed />
       <BorderSeparator direction="vertical" />
       {state == 'panding' ? (
         <TextButton
@@ -53,7 +51,7 @@ export default function BookedAppointmentItem({
           }}
         />
       ) : (
-        <span>{state}</span>
+        <NotAButton text={state} color={color.cold_blue} />
       )}
     </div>
   );

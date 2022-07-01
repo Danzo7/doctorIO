@@ -9,41 +9,12 @@
     border-radius: 7px;
     background: $lighterbackground;
     z-index: 1;
-
-    >.booked-appointment-item-info {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        width: 100px;
-
-        > span {
-            font-weight: 700;
-            font-size: 15px;
-            color: $white;
-            + span {
-                font-weight: 600;
-                font-size: 10px;
-                color: $white;
-            }
+    >*:nth-child(2n+1){
+        flex: 1 1 0;
+        width: 0;
+        >span{
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-    }
-
-    > div:first-of-type {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        width: 120px;
-
-        > span {
-            font-weight: 600;
-            font-size: 10px;
-            color: $textgray;
-
-            + span {
-                font-weight: 700;
-                font-size: 15px;
-                color: $white;
-            }
-        }
-    }
-}
+    }}

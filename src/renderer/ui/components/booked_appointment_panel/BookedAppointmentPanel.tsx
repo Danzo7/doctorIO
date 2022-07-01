@@ -10,6 +10,7 @@ export default function BookedAppointmentPanel({}) {
   const { open } = useOverlay();
   return (
     <PreviewList
+      flexGrow
       title="Booked Appointment"
       buttonNode={
         <DarkLightCornerButton
