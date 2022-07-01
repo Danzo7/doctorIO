@@ -103,3 +103,17 @@ input::-webkit-search-results-button,
 input::-webkit-search-results-decoration {
   display: none;
 }
+/*
+span {
+  overflow-wrap:anywhere;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}*/
+/*
+span {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}*/
