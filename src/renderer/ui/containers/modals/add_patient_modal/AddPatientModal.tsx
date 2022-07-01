@@ -49,6 +49,7 @@ export default function AddPatientModal({}: AddPatientModalProps) {
             type="submit"
           />
         </>
+        //REDUX add to queue
       }
     >
       <Input
