@@ -51,7 +51,7 @@ export default function BookedAppointmentItem({
           }}
         />
       ) : (
-        <NotAButton text={state} color={color.cold_blue} />
+        <NotAButton text={'In queue'} color={color.warm_orange} />
       )}
     </div>
   );
