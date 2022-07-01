@@ -3,14 +3,19 @@ import { color } from '@colors';
 import PresentationItem from '@components/presentation_item';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import DiagnosisModal from '@containers/modals/diagnosis_modal';
-interface RecentAppsItemProps {
-  fullName: string;
-  id: number;
-}
-export default function RecentAppsItem({ fullName, id }: RecentAppsItemProps) {
+import { Patient } from '@models/instance.model';
+
+export default function RecentAppsItem({
+  firstName,
+  lastName,
+  patId,
+}: Pick<Patient, 'firstName' | 'lastName' | 'patId'>) {
   const { open } = useOverlay();
   return (
-    <PresentationItem primaryText={fullName} secondaryText={`# ${id}`}>
+    <PresentationItem
+      primaryText={firstName + '' + lastName}
+      secondaryText={`# ${patId}`}
+    >
       <TextButton
         text="Run diagnosis..."
         backgroundColor={color.cold_blue}
@@ -27,5 +32,6 @@ export default function RecentAppsItem({ fullName, id }: RecentAppsItemProps) {
       />
       <TextButton text="Add" backgroundColor={color.good_green} radius={7} />
     </PresentationItem>
+    //REDUX add patient to Queue
   );
 }
