@@ -219,7 +219,12 @@ export const DMs: DirectMessage[] = [
       { text: 'hello', date: new Date(), seen: true },
       { text: 'hi', date: new Date(), seen: true, sent: true },
       { text: 'how are you', date: new Date(), seen: true },
-      { text: 'i am fine', date: new Date(), seen: true, sent: true },
+      {
+        text: 'i am fine , do you want to go outside ?',
+        date: new Date(),
+        seen: true,
+        sent: true,
+      },
     ],
   },
   {
@@ -471,7 +476,7 @@ export const patients: Patient[] = [
       },
     ],
     registerDate: new Date('2022-01-01'),
-    firstName: 'Amine',
+    firstName: 'Amine Mohamed',
     lastName: 'Bouraoua',
     birthDate: new Date('1996-05-02'),
     age: 26,
@@ -779,7 +784,7 @@ export const patients: Patient[] = [
 export const appointmentQueueData: AppointmentQueue = {
   roleId: 1,
   state: 'paused',
-  isOwner: false,
+  isOwner: true,
   appointments: [
     {
       position: 1,
