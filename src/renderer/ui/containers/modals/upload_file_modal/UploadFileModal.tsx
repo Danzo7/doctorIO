@@ -22,7 +22,7 @@ export default function UploadFileModal({}: UploadFileModalProps) {
           fontSize={12}
           onPress={() => {
             Overlay.close();
-          }} //FEATURE upload function
+          }} //FEATURE save file on the database function
         />
       }
     >

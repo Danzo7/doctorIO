@@ -33,6 +33,7 @@
     transform: rotate(90deg);
     flex-grow: 1;
     white-space: nowrap;
+    text-overflow: ellipsis;//UI fix text overflow
   }
 
   .index-section {
@@ -43,7 +44,7 @@
     display: flex;
     justify-content: center;
     > span {
-      font-family: Sarabun;
+      font-family: Sarabun;  //UI fix font family problem
       font-style: normal;
       font-weight: 800;
       font-size: 1em;
