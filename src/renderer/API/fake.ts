@@ -177,6 +177,37 @@ export const members: Member[] = [
     roles: [rolesBrief[0], rolesBrief[1]],
     joinDate: new Date('2022-01-01'),
   },
+  {
+    name: 'Harnan Mohamed',
+    avatar:
+      'https://cdn.discordapp.com/avatars/701069618256674926/587a49fcb0c2d43bcec69ab9f07dd50d.webp',
+    memberStatus: true,
+    accessKey: '1234116678',
+    addedBy: 'Aymen Daouadji',
+    age: 29,
+    gender: 'male',
+    address: 'Harrach',
+    userId: 190,
+    phoneNumber: '0658474279',
+    memberId: 6,
+    roles: [rolesBrief[0], rolesBrief[1]],
+    joinDate: new Date('2022-01-01'),
+  },
+  {
+    name: 'Hichem Lucid',
+    avatar: faker.image.avatar(),
+    memberStatus: true,
+    accessKey: '1234116678',
+    addedBy: 'Aymen Daouadji',
+    age: 20,
+    gender: 'male',
+    address: 'Baskra',
+    userId: 190,
+    phoneNumber: '0658474279',
+    memberId: 7,
+    roles: [rolesBrief[0], rolesBrief[1]],
+    joinDate: new Date('2022-01-01'),
+  },
 ];
 export const DMs: DirectMessage[] = [
   {
