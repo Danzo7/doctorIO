@@ -24,7 +24,6 @@ function BookedItem({
     <div className="booked-item">
       <div className="left-container">
         <TextPair
-          maxWidth={120}
           first={{
             text: patientName,
             fontSize: 15,

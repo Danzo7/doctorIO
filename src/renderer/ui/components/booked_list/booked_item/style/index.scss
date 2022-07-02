@@ -17,14 +17,17 @@
     justify-content: space-between;
     align-items: center;
     flex-grow: 1;
-
+    >div:first-of-type{
+      flex:1 0 0;
+      width: 0;
+    }
     > .state-container {
       align-self: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 10px;
+      padding: 3px;
 
       > span {
         color: $white;
