@@ -7,6 +7,15 @@ import messages from 'toSvg/messages.svg?icon';
 import settings from 'toSvg/settings.svg?icon';
 import stats from 'toSvg/stats.svg?icon';
 import queue from 'toSvg/queue.svg?icon';
+export type MenuKeys =
+  | 'home'
+  | 'clinic'
+  | 'records'
+  | 'messages'
+  | 'settings'
+  | 'stats'
+  | 'queue'
+  | 'database';
 export default {
   home,
   messages,
