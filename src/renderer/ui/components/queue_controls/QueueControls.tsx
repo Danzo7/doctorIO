@@ -11,6 +11,7 @@ import TextButton from '@components/buttons/text_button';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { appointmentQueueData } from '@api/fake';
 import playIcon from 'toSvg/play.svg?icon';
+import { FIT_MODAL } from '@libs/overlay';
 
 interface QueueControlsProps {
   isOwner?: boolean;
@@ -47,12 +48,7 @@ export default function QueueControls({
                     }}
                   />
                 </WarningModal>,
-                {
-                  closeOnClickOutside: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                  closeBtn: 'inner',
-                },
+                FIT_MODAL,
               );
             }}
           />
