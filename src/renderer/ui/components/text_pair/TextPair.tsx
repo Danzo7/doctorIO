@@ -42,6 +42,7 @@ export default function TextPair({
         flexGrow: flexGrow ? 1 : 0,
         minWidth: minWidth,
         maxWidth: maxWidth,
+        overflow: 'hidden',
       }}
     >
       <span

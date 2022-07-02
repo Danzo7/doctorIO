@@ -1,3 +1,6 @@
+import color from '@assets/styles/color';
+import BorderSeparator from '@components/border_separator';
+import TextPair from '@components/text_pair/TextPair';
 import { DATE_ONLY } from '@constants/data_format';
 import { format } from 'date-fns';
 import './style/index.scss';
@@ -15,22 +18,55 @@ export default function MiniPatientCard({
 }: MiniPatientCardProps) {
   return (
     <div className="mini-patient-card">
-      <span>{patientFullName}</span>
-      <span>{patientId} </span>
+      <TextPair
+        alignItems="center"
+        first={{
+          text: patientFullName,
+          fontSize: 15,
+          fontColor: color.white,
+          fontWeight: '600',
+        }}
+        second={{
+          text: patientId,
+          fontSize: 12,
+          fontColor: color.text_gray,
+          fontWeight: '600',
+        }}
+      />
       <div className="mini-patient-bottom-container">
-        <div className="bottom-info">
-          <span>{numPostAppointment}</span>
-          <span>Post Appointment</span>
-        </div>
-        <div className="bottom-info-sep" />
-        <div className="bottom-info">
-          <span>
-            {nextAppointmentDate
+        <TextPair
+          alignItems="center"
+          first={{
+            text: numPostAppointment.toString(),
+            fontSize: 15,
+            fontColor: color.white,
+            fontWeight: '700',
+          }}
+          second={{
+            text: 'Post Appointment',
+            fontSize: 13,
+            fontColor: color.text_gray,
+            fontWeight: '600',
+          }}
+        />
+        <BorderSeparator direction="vertical" />
+        <TextPair
+          alignItems="center"
+          first={{
+            text: nextAppointmentDate
               ? format(nextAppointmentDate, DATE_ONLY)
-              : 'No'}
-          </span>
-          <span>Upcoming</span>
-        </div>
+              : 'No',
+            fontSize: 15,
+            fontColor: color.white,
+            fontWeight: '700',
+          }}
+          second={{
+            text: 'Upcoming',
+            fontSize: 13,
+            fontColor: color.text_gray,
+            fontWeight: '600',
+          }}
+        />
       </div>
     </div>
   );
