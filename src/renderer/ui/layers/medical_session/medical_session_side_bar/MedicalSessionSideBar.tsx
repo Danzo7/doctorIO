@@ -15,6 +15,7 @@ export default function MedicalSessionSideBar({
   patient,
 }: MedicalSessionSideBarProps) {
   const { open } = useOverlay();
+
   return (
     <div className="medical-session-side-bar">
       <div className="medical-session-side-bar-content">
@@ -37,11 +38,13 @@ export default function MedicalSessionSideBar({
         <MedicalHistory list={patient.medicalHistory} />
         <AppointmentHistoryPanel
           list={
-            patient.appointments.filter(
-              (appointments) =>
-                appointments.state == 'done' ||
-                appointments.state == 'done-booked',
-            ) as any
+            patient.appointments
+              .filter(
+                (appointment) =>
+                  appointment.state == 'done' ||
+                  appointment.state == 'done-booked',
+              )
+              .slice(-3) as any
           }
         />
       </div>
