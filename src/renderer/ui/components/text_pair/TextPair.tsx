@@ -3,7 +3,7 @@ interface TextPairProps {
   first:
     | string
     | {
-        text: string;
+        text: string | number;
         fontSize: number;
         fontColor?: string;
         fontWeight?: string;
@@ -11,7 +11,7 @@ interface TextPairProps {
   second:
     | string
     | {
-        text: string;
+        text: string | number;
         fontSize: number;
         fontColor?: string;
         fontWeight?: string;
