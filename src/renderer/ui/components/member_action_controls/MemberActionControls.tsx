@@ -11,6 +11,8 @@ import TextButton from '@components/buttons/text_button';
 import WarningModal from '@containers/modals/warning_modal';
 import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { IS_PREVIEW } from '@constants/env';
+import { currentMemberPermissions } from '@api/fake';
+import { isAllowed } from '@helpers/permission.helper';
 
 interface MemberActionControlsProps {
   memberId: number;
@@ -28,7 +30,7 @@ export default function MemberActionControls({
 }: MemberActionControlsProps) {
   const { open } = useOverlay();
   const { navigate } = useNavigation();
-
+  const permissions = currentMemberPermissions; //REDUX getCurrentPermissions
   return (
     <div className="member-action-controls">
       {showCard && (
@@ -45,7 +47,7 @@ export default function MemberActionControls({
           }}
         />
       )}
-      {(dmId || notFriend) && (
+      {isAllowed('canUseMessages', permissions) && (dmId || notFriend) && (
         <IconicButton
           Icon={Messages}
           afterBgColor={notFriend ? colors.cold_red : colors.light}

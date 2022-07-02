@@ -8,7 +8,6 @@
   width: fit-content;
   height: fit-content;
   padding: 5px;
-  cursor: pointer;
   gap:2px;
 
   > span {
@@ -23,7 +22,6 @@
   }
 
   &:hover {
-    background: $hotred;
 
     >span{
       color: $white;

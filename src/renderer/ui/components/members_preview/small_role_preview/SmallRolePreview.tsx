@@ -5,17 +5,24 @@ import { color } from '@colors';
 interface SmallRolePreviewProps {
   roleName: string;
   onClick?: () => void;
+  canRemove?: boolean;
 }
 
-function SmallRolePreview({ roleName, onClick }: SmallRolePreviewProps) {
+function SmallRolePreview({
+  roleName,
+  onClick,
+  canRemove,
+}: SmallRolePreviewProps) {
   return (
     <TextButton
       borderColor={color.border_color}
-      onPress={onClick}
+      onPress={canRemove ? onClick : undefined}
+      cursor={canRemove ? 'pointer' : 'default'}
+      afterBgColor={canRemove ? color.hot_red : undefined}
       className="small-role"
     >
       <span>{roleName}</span>
-      <Close css={{ width: 7, height: 7 }} />
+      {canRemove && <Close css={{ width: 7, height: 7 }} />}
     </TextButton>
   );
 }
