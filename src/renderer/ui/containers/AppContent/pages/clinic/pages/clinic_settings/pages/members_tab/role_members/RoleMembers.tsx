@@ -4,11 +4,16 @@ import RoleDescription from '@components/role_description';
 import { Role } from '@models/server.models';
 import './style/index.scss';
 
-export default function RoleMembers({ roleName, roleDesc }: Role) {
+export default function RoleMembers({ roleName, roleDesc, roleId }: Role) {
   return (
     <div className="role-members">
       <RoleDescription roleName={roleName} description={roleDesc} />
-      <MembersTable list={members} />
+      <MembersTable
+        list={members.filter(
+          ({ roles }) =>
+            roles.find(({ roleId: id }) => id == roleId) != undefined,
+        )} //REDUX getMembers
+      />
     </div>
   );
 }
