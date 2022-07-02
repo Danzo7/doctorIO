@@ -54,6 +54,7 @@ interface Clinic {
   clinicAddress: string;
   connectionCount: number;
   patientCount: number;
+  phoneNumber?: string;
   avatar: string;
   timing: ClinicTiming;
   preferences: ClinicPreferences;
