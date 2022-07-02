@@ -18,11 +18,13 @@
     flex-direction: column;
     justify-content: flex-end;
     flex-grow: 1;
+    overflow:hidden;
     > .content-message-List {
       display: flex;
       flex-direction: column;
       gap: 20px;
       align-items: stretch;
+      overflow-y: auto;
     }
   }
 }

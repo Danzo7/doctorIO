@@ -20,7 +20,9 @@ function ContentMessage({
   const { open } = useOverlay();
   return (
     <div
-      className={`content-message ${!message.seen ? 'last-message-sent' : ''} `}
+      className={`content-message ${
+        message.seen && !message.seen ? 'last-message-sent' : ''
+      } `}
     >
       <div>
         <CircleAvatar
