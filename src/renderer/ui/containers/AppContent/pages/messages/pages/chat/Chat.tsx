@@ -10,6 +10,12 @@ import InputWrapper from '@components/inputs/input_wrapper';
 import { currentMember, DMs, members } from '@api/fake';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const schema = z.object({
+  message: z.string().trim().min(1),
+});
 
 interface ChatProps {}
 export default function Chat({}: ChatProps) {
@@ -22,7 +28,9 @@ export default function Chat({}: ChatProps) {
 
   const [currentMessagesList, setcurrentMessagesList] = useState(dm.messages); //REDUX update message list
 
-  const { register, handleSubmit, reset } = useForm<{ message: string }>();
+  const { register, handleSubmit, reset } = useForm<{ message: string }>({
+    resolver: zodResolver(schema),
+  });
   const onSubmit: SubmitHandler<{ message: string }> = (data) => {
     setcurrentMessagesList([
       ...currentMessagesList,
