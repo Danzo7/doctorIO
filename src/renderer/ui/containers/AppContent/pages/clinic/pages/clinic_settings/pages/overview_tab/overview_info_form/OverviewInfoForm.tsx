@@ -10,18 +10,22 @@ type Inputs = {
   name: string;
   description: string;
   location: string;
-  phoneNumber: number;
+  phoneNumber: string;
 };
 
 interface OverviewInfoFormProps {}
-export default function OverviewInfoForm({}: OverviewInfoFormProps) {
+export default function OverviewInfoForm(
+  props: OverviewInfoFormProps & Inputs,
+) {
   const {
     register,
     handleSubmit,
     formState: { isDirty },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    defaultValues: props,
+  });
 
-  const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData);
+  const onSubmit: SubmitHandler<Inputs> = (formData) => console.log(formData); //REDUX update clinic info
   usePrompt(
     'Careful : you have unsaved changes !',
     ({ closeOVerlay, dismiss }) => (
@@ -48,8 +52,8 @@ export default function OverviewInfoForm({}: OverviewInfoFormProps) {
   );
 
   return (
-    <div className="overview-info-form">
-      <span>Informations</span>
+    <form className="overview-info-form">
+      <span>Information</span>
       <Input {...register('name')} label="Name" type={'text'} />
       <Input {...register('description')} label="Description" type={'text'} />
       <Input {...register('location')} label="Location" type={'text'} />
@@ -58,6 +62,6 @@ export default function OverviewInfoForm({}: OverviewInfoFormProps) {
         label="Phone number"
         type={'number'}
       />
-    </div>
+    </form>
   );
 }
