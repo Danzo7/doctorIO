@@ -3,6 +3,7 @@ import {
   AppointmentQueue,
   BookedAppointment,
   Patient,
+  Drug,
 } from '@models/instance.model';
 import { DirectMessage, User } from '@models/local.models';
 import { Clinic, Member, Role, RolePermissions } from '@models/server.models';
@@ -422,16 +423,31 @@ export const patients: Patient[] = [
         sessionId: 1,
         subject: 'Inner bleed',
       },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 2,
+        state: 'done',
+        date: new Date('2022-06-25'),
+        sessionId: 1,
+        subject: 'Head Scan',
+      },
     ],
     medicalHistory: [
       {
         id: 1,
-        description: 'kidney transplants',
+        description: 'Heart operation',
         date: new Date('2020-01-01'),
       },
       {
         id: 2,
-        description: 'car accident',
+        description: 'car accident with i10',
         date: new Date('2014-01-01'),
       },
       {
@@ -715,6 +731,21 @@ export const patients: Patient[] = [
         sessionId: 1,
         subject: 'Inner bleed',
       },
+      {
+        member: {
+          memberId: members[0].memberId,
+          memberName: members[0].name,
+        },
+        assignedBy: {
+          memberId: members[1].memberId,
+          memberName: members[1].name,
+        },
+        id: 2,
+        state: 'done',
+        date: new Date('2022-06-25'),
+        sessionId: 1,
+        subject: 'Head Scan',
+      },
     ],
     medicalHistory: [
       {
@@ -788,7 +819,13 @@ export const patients: Patient[] = [
 ];
 export const appointmentQueueData: AppointmentQueue = {
   roleId: 1,
-  state: 'paused',
+  state: {
+    state: 'waiting',
+    position: 1,
+    patientId: patients[0].patId,
+    patientName: patients[0].firstName + ' ' + patients[0].lastName,
+    date: subMinutes(new Date(), Number.parseInt(faker.random.numeric(2))),
+  },
   isOwner: true,
   appointments: [
     {
@@ -868,4 +905,39 @@ export const bookedAppointments: BookedAppointment[] = [
       });
     return arr;
   })(),
+];
+
+export const drugList: Drug[] = [
+  {
+    id: 1,
+    name: 'doliprane',
+    description: 'for corona',
+    qts: 2,
+    dosage: 3,
+    duration: 10,
+  },
+  {
+    id: 2,
+    name: 'Nasacourt',
+    description: 'for corona',
+    qts: 4,
+    dosage: 2,
+    duration: 10,
+  },
+  {
+    id: 3,
+    name: 'Nasacourt',
+    description: 'for corona',
+    qts: 4,
+    dosage: 2,
+    duration: 10,
+  },
+  {
+    id: 4,
+    name: 'bioMax',
+    description: 'for face care',
+    qts: 1,
+    dosage: 2,
+    duration: 10,
+  },
 ];
