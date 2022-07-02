@@ -3,18 +3,15 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
+import { Drug } from '@models/instance.model';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-type Inputs = {
-  drugName: string;
-  qts: number;
-  dose: number;
-  duration: number;
-  comment: string;
-};
 interface AddDrugModalProps {
   onSubmitPress: (data: any) => void;
-  defaultValues?: Inputs;
+  defaultValues?: Pick<
+    Drug,
+    'name' | 'qts' | 'dosage' | 'duration' | 'description'
+  >;
 }
 export default function AddDrugModal({
   onSubmitPress,
@@ -24,8 +21,8 @@ export default function AddDrugModal({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({ defaultValues: defaultValues });
-  const onSubmit: SubmitHandler<Inputs> = (formData) => {
+  } = useForm<Drug>({ defaultValues: defaultValues });
+  const onSubmit: SubmitHandler<Drug> = (formData) => {
     if (!defaultValues) {
       onSubmitPress(formData);
     }
@@ -50,11 +47,11 @@ export default function AddDrugModal({
       }
     >
       <Input
-        {...register('drugName', {
+        {...register('name', {
           required: { value: true, message: 'Drug name is required' },
         })}
         label="Drug name"
-        errorMsg={errors.drugName?.message}
+        errorMsg={errors.name?.message}
         type={'text'}
         fillContainer
       />
@@ -68,12 +65,12 @@ export default function AddDrugModal({
         type={{ type: 'numeric', min: 1, step: 1, unit: '' }}
       />
       <Input
-        {...register('dose', {
+        {...register('dosage', {
           min: { value: 1, message: 'min value is 1 ' },
           required: { value: true, message: 'dose is required' },
         })}
         label="dose"
-        errorMsg={errors.dose?.message}
+        errorMsg={errors.dosage?.message}
         type={{ type: 'numeric', min: 1, step: 1, unit: '' }}
       />
       <Input
@@ -86,9 +83,9 @@ export default function AddDrugModal({
         type={{ type: 'numeric', min: 1, step: 1, unit: 'Day' }}
       />
       <Input
-        {...register('comment', {})}
-        label="Comment"
-        errorMsg={errors.comment?.message}
+        {...register('description', {})}
+        label="description"
+        errorMsg={errors.description?.message}
         type={'text'}
         fillContainer
       />

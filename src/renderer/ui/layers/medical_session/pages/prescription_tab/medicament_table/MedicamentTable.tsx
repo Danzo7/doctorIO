@@ -12,31 +12,24 @@ import './style/index.scss';
 import AddDrugModal from '@containers/modals/add_drug_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { DEFAULT_MODAL } from '@libs/overlay';
+import { Drug } from '@models/instance.model';
 
-type Data = {
-  drugName: string;
-  qts: number;
-  dose?: number;
-  duration: number;
-  comment: string;
-  id: number;
-};
 interface MedicamentTableProps {
   editable?: true;
-  dataList?: Data[];
+  drugList: Drug[];
 }
 
-const table = createTable().setRowType<Data>();
+const table = createTable().setRowType<Drug>();
 export default function MedicamentTable({
   editable,
-  dataList = [],
+  drugList,
 }: MedicamentTableProps) {
   const { open } = useOverlay();
   const [sorting, setSorting] = useState<SortingState>([]);
   const columns = useMemo(
     () =>
       [
-        table.createDataColumn('drugName', {
+        table.createDataColumn('name', {
           header: 'Name',
           footer: (props) => props.column.id,
         }),
@@ -45,7 +38,7 @@ export default function MedicamentTable({
           footer: (props) => props.column.id,
         }),
 
-        table.createDataColumn('dose', {
+        table.createDataColumn('dosage', {
           header: 'Dose',
           cell: ({ getValue }) => (getValue() ?? '*') + '/day',
         }),
@@ -55,8 +48,8 @@ export default function MedicamentTable({
             (getValue() ?? '*') + `${getValue() > 1 ? ' days' : ' day'}`,
         }),
 
-        table.createDataColumn('comment', {
-          header: 'Comment',
+        table.createDataColumn('description', {
+          header: 'description',
           footer: (props) => props.column.id,
         }),
 
@@ -74,11 +67,11 @@ export default function MedicamentTable({
                     open(
                       <AddDrugModal
                         defaultValues={{
-                          drugName: row.getValue('drugName'),
+                          name: row.getValue('name'),
                           qts: row.getValue('qts'),
-                          dose: row.getValue('dose'),
+                          dosage: row.getValue('dosage'),
                           duration: row.getValue('duration'),
-                          comment: row.getValue('comment'),
+                          description: row.getValue('description'),
                         }}
                         onSubmitPress={(formData) => {
                           console.log(formData); //TODO : implement Edit data function
@@ -96,7 +89,7 @@ export default function MedicamentTable({
   );
 
   const instance = useTableInstance(table, {
-    data: dataList,
+    data: drugList,
     columns,
     state: {
       sorting,

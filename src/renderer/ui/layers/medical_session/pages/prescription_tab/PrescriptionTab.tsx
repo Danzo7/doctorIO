@@ -1,59 +1,18 @@
+import { drugList } from '@api/fake';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import Header from '@components/header';
 import AddDrugModal from '@containers/modals/add_drug_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
+import { Drug } from '@models/instance.model';
 import { useState } from 'react';
 import MedicamentTable from './medicament_table';
 import './style/index.scss';
 
-const dataList = [
-  {
-    drugName: 'aymen',
-    qts: 15,
-    dose: 3,
-    duration: 5,
-    comment: 'dont die',
-    id: 1,
-  },
-  {
-    drugName: 'aymen',
-    qts: 10,
-    dose: 3,
-    duration: 6,
-    comment: 'dont die',
-    id: 2,
-  },
-  {
-    drugName: 'aymen',
-    qts: 5,
-    dose: 3,
-    duration: 2,
-    comment: 'dont die',
-    id: 3,
-  },
-  {
-    drugName: 'aymen',
-    qts: 5,
-    dose: 3,
-    duration: 4,
-    comment: 'dont die',
-    id: 4,
-  },
-  {
-    drugName: 'aymen',
-    qts: 5,
-    dose: 3,
-    duration: 5,
-    comment: 'dont die',
-    id: 5,
-  },
-];
-
 interface PrescriptionTabProps {}
 export default function PrescriptionTab({}: PrescriptionTabProps) {
   const { open } = useOverlay();
-  const [data, setData] = useState(dataList);
+  const [data, setData] = useState<Drug[]>(drugList);
 
   return (
     <div className="prescription-tab">
@@ -71,10 +30,10 @@ export default function PrescriptionTab({}: PrescriptionTabProps) {
                       return [
                         ...prev,
                         {
-                          drugName: formData.drugName,
+                          name: formData.name,
                           qts: formData.qts,
-                          dose: formData.dose,
-                          comment: formData.comment,
+                          dosage: formData.dose,
+                          description: formData.description,
                           duration: formData.duration,
                           id: Math.random() * 10,
                         },
@@ -89,7 +48,7 @@ export default function PrescriptionTab({}: PrescriptionTabProps) {
           />
         }
       />
-      <MedicamentTable editable dataList={data} />
+      <MedicamentTable editable drugList={data} />
     </div>
   );
 }

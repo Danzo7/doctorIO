@@ -1,3 +1,4 @@
+import { drugList } from '@api/fake';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
@@ -5,49 +6,6 @@ import TabMenu from '@components/tab_menu';
 import NoticeTab from '@layers/medical_session/pages/notice_tab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
 import './style/index.scss';
-
-const dataList = [
-  {
-    drugName: 'aymen',
-    qts: 15,
-    dose: 3,
-    duration: 5,
-    comment: 'dont die',
-    id: 1,
-  },
-  {
-    drugName: 'aymen',
-    qts: 10,
-    dose: 3,
-    duration: 5,
-    comment: 'dont die',
-    id: 2,
-  },
-  {
-    drugName: 'aymen',
-    qts: 5,
-    dose: 3,
-    duration: 5,
-    comment: 'dont die',
-    id: 3,
-  },
-  {
-    drugName: 'aymen',
-    qts: 5,
-    dose: 3,
-    duration: 5,
-    comment: 'dont die',
-    id: 3,
-  },
-  {
-    drugName: 'aymen',
-    qts: 5,
-    dose: 3,
-    duration: 5,
-    comment: 'dont die',
-    id: 3,
-  },
-];
 
 interface SessionPreviewModalProps {}
 export default function SessionPreviewModal({}: SessionPreviewModalProps) {
@@ -71,7 +29,7 @@ export default function SessionPreviewModal({}: SessionPreviewModalProps) {
           borderBottom={false}
           menuItemsAlignment="center"
         >
-          <MedicamentTable dataList={dataList} />
+          <MedicamentTable drugList={drugList} />
           <NoticeTab defaultValue="you are sick because you didn't take your health seriously , you should do some workout and fitness and eat  healthy food  " />
         </TabMenu>
       </div>
