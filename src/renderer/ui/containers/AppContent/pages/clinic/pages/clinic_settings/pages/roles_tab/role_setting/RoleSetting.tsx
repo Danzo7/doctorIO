@@ -20,7 +20,7 @@ export default function RoleSetting({}: RoleSettingProps) {
       <TabMenu items={['General', 'Permissions', 'Members']}>
         <RoleSettingGeneral {...{ roleName, roleDesc, linkedRole }} />
         <PermissionList permissions={rolePermissions as RolePermissions} />
-        <RoleSettingMembers />
+        <RoleSettingMembers roleId={defaultSelected.roleId} />
       </TabMenu>
     </div>
   );
