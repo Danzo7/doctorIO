@@ -247,7 +247,7 @@ export const DMs: DirectMessage[] = [
 ];
 export const currentMember: Member = members[1];
 export const currentMemberPermissions: RolePermissions = {
-  //isAdmin: true,
+  isAdmin: true, //this override all other permissions
   canAddDrugs: true,
   canAddMember: true,
   canAddPatients: true,
