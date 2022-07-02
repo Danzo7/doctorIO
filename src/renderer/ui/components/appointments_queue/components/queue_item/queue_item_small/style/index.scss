@@ -23,17 +23,20 @@
     }
   }
   .client-name {
+    display: inline;
     font-weight: 600;
     font-size: 13px;
-    line-height: 24px;
-    display: flex;
     align-items: center;
     letter-spacing: 0.15px;
     color: $white;
-    transform: rotate(90deg);
     flex-grow: 1;
     white-space: nowrap;
-    text-overflow: ellipsis;//UI fix text overflow
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex-basis: 0;
+    writing-mode: vertical-rl;
+    text-align: center;
+    padding: 1ch 0;
   }
 
   .index-section {
@@ -44,8 +47,6 @@
     display: flex;
     justify-content: center;
     > span {
-      font-family: Sarabun;  //UI fix font family problem
-      font-style: normal;
       font-weight: 800;
       font-size: 1em;
       white-space: nowrap;

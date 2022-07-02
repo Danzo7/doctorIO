@@ -12,7 +12,7 @@ function QueueItemSmall({ name, state, number }: QueueItemSmallProps) {
       <div className={'indicator ' + state}>
         <Indicator width={30} height={30} />
       </div>
-      <div className="client-name">{name}</div>
+      <span className="client-name">{name}</span>
       <div className="index-section">
         <span className="text">{number}</span>
       </div>
