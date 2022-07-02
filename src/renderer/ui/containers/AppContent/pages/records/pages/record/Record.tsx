@@ -19,6 +19,7 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import { patients } from '@api/fake';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { searchPatient } from '@helpers/search.helper';
 
 interface SearchInput {
   searchField: string;
@@ -34,26 +35,11 @@ export default function Record({}: RecordProps) {
 
   const [patient, setPatient] = useState<Patient | undefined>();
   //REDUX search patient by id/name
-  const searchPatient = () => {
-    let result: Patient | undefined;
-    if (
-      watchSearch &&
-      watchSearch.length > 0 &&
-      watchSearch.trim().length > 0
-    ) {
-      result = patients.find(
-        (pat) =>
-          pat.patId.toString() == watchSearch ||
-          pat.firstName.toLowerCase() == watchSearch.toLowerCase() ||
-          pat.lastName.toLowerCase() == watchSearch.toLowerCase(),
-      );
-      return result;
-    }
-  };
+
   useEffect(() => {
     setPatient(patients.find(({ patId }) => patId.toString() == patientId));
   }, [patientId]);
-  const selectedPatient = searchPatient();
+  const selectedPatient = searchPatient(watchSearch);
   return (
     <div className="record">
       <Input

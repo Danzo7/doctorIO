@@ -1,5 +1,4 @@
 import Input from '@components/inputs/input';
-import useSearchPatient from '@libs/hooks/useSearchPatient';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';
 import Svg from '@libs/svg';
@@ -11,48 +10,30 @@ import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '../book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
+import { searchPatient } from '@helpers/search.helper';
 
 interface SearchInput {
   searchField: string;
 }
-const usersData = [
-  {
-    fullName: 'brahim aymen',
-    id: '#123456789',
-    age: 24,
-  },
-  {
-    fullName: 'daouadji aymen',
-    age: 24,
-    id: '#1234546789',
-  },
-  {
-    fullName: 'amine bou',
-    age: 24,
-    id: '#223456789',
-  },
-  {
-    fullName: 'John Doe',
-    age: 24,
-    id: '#323456789',
-  },
-];
+
 interface AddSearchToBookedProps {}
 export default function AddSearchToBooked({}: AddSearchToBookedProps) {
   const { register, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField', '');
-  const matches = useSearchPatient(watchSearch, usersData, false);
+  const selectedPatient = searchPatient(watchSearch);
   const { open } = useOverlay();
   return (
     <ModalContainer
       title="Select a patient"
       controls={
         <div className="suggestions-container">
-          {matches?.map(({ fullName, age }, index) => (
+          {selectedPatient && (
             <PresentationItem
-              primaryText={fullName}
-              secondaryText={age}
-              key={index}
+              primaryText={
+                selectedPatient.firstName + ' ' + selectedPatient.lastName
+              }
+              secondaryText={selectedPatient.age.toString()}
+              key={selectedPatient.patId}
             >
               <TextButton
                 text="Select"
@@ -62,19 +43,26 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
                 fontWeight={600}
                 onPress={() => {
                   open(
-                    <BookAppointmentModal patientName={fullName} id={123467} />,
+                    <BookAppointmentModal
+                      patientName={
+                        selectedPatient.firstName +
+                        ' ' +
+                        selectedPatient.lastName
+                      }
+                      id={selectedPatient.patId}
+                    />,
                     DEFAULT_MODAL,
                   );
                 }}
               />
             </PresentationItem>
-          ))}
+          )}
         </div>
       }
     >
       <Input
         hint={
-          matches?.length == 0
+          watchSearch.length > 0 && selectedPatient == undefined
             ? 'Can’t find any patient with the same name'
             : undefined
         }

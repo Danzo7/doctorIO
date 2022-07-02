@@ -10,7 +10,7 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { patients } from '@api/fake';
+import { searchPatient } from '@helpers/search.helper';
 interface QueueAddSearchModalProps {}
 interface SearchInput {
   searchField: string;
@@ -21,21 +21,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const watchSearch = watch('searchField', '');
   const { open } = useOverlay();
 
-  const searchPatient = () => {
-    if (
-      watchSearch &&
-      watchSearch.length > 0 &&
-      watchSearch.trim().length > 0
-    ) {
-      return patients.find(
-        (pat) =>
-          pat.patId.toString() == watchSearch ||
-          pat.firstName.toLowerCase() == watchSearch.toLowerCase() ||
-          pat.lastName.toLowerCase() == watchSearch.toLowerCase(),
-      );
-    }
-  };
-  const selectedPatient = searchPatient();
+  const selectedPatient = searchPatient(watchSearch);
   return (
     <ModalContainer
       title="Add a Patient to appointment queue"
