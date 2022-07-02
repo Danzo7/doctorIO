@@ -47,7 +47,7 @@ interface DirectMessage {
 interface Message {
   text: string;
   date: Date;
-  seen: boolean;
+  seen?: boolean;
   sent?: true;
 }
 interface LocalClinicData {
