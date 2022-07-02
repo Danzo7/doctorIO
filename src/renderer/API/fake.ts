@@ -43,7 +43,11 @@ export const firstUser: User = {
   privateKey: 'yek',
   userId: 123,
   username: 'killerDz',
-  userPreferences: { language: 'en', theme: 'Nighty' },
+  userPreferences: {
+    language: 'en',
+    theme: 'Nighty',
+    welcomeDismissedIn: new Date('2020-01-01'),
+  },
 };
 
 export const roles: Role[] = [

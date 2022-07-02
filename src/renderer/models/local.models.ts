@@ -1,7 +1,7 @@
 interface AppLocalPreferences {
   language: 'en';
   theme: 'Nighty';
-  welcomeDismissedIn?: Date;
+  welcomeDismissedIn: Date;
 }
 interface User {
   userId: number; //"machineId"
