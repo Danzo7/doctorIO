@@ -10,6 +10,7 @@ import WarningModal from '@containers/modals/warning_modal';
 import TextButton from '@components/buttons/text_button';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { appointmentQueueData } from '@api/fake';
+import playIcon from 'toSvg/play.svg?icon';
 
 interface QueueControlsProps {
   isOwner?: boolean;
@@ -25,7 +26,7 @@ export default function QueueControls({
       {!(isPaused && !isOwner) &&
         (isPaused ? (
           <IconicButton
-            Icon={NextIcon}
+            Icon={playIcon}
             backgroundColor={color.cold_blue}
             width={25}
             radius={7}
