@@ -91,10 +91,10 @@ interface Prescription {
 interface Drug {
   id: number;
   name: string;
+  qts: number;
   description: string;
-  dosage: string;
-  duration: string;
-  endDate: Date;
+  dosage: number;
+  duration: number;
 }
 interface MedicalHistory {
   id: number;
@@ -117,4 +117,6 @@ export type {
   MedicalDocument,
   MedicalHistory,
   TestResult,
+  Drug,
+  Prescription,
 };
