@@ -26,8 +26,6 @@ export default function DiagnosisPreview({ data }: DiagnosisPreviewProps) {
               fontColor: color.text_gray,
               border: true,
             }}
-            flexGrow
-            minWidth={150}
           />
         ))}
       </div>
