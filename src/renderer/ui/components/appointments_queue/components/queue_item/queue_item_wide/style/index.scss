@@ -39,18 +39,17 @@
       align-items: flex-start;
       padding: 0px;
       > span {
-        font-style: normal;
         font-weight: 400;
         font-size: 17px;
+        overflow: hidden;
+        display: -webkit-box;
+        padding-right: 1ch;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         + span {
           color: $textgray;
           font-size: 10px;
         }
-        /* identical to box height, or 141% */
-
-        display: flex;
-        align-items: center;
-        letter-spacing: 0.15px;
       }
     }
   }
