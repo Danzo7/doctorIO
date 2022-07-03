@@ -32,24 +32,4 @@
             color: $white;
         }
     }
-
-    > .bottom-div {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        flex-grow: 1;
-        align-self: stretch;
-        position: fixed;
-        bottom: 20px;
-        right: 40px;
-
-        > .controls-div {
-            display: flex;
-            flex-direction: row;
-            gap: 10px;
-            align-items: baseline;
-            align-self: flex-end;
-            justify-content: flex-end;
-        }
-    }
 }
