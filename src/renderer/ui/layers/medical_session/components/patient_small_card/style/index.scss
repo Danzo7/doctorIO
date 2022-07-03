@@ -1,0 +1,16 @@
+@use '~styles/appColors' as *;
+.patient-small-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    gap: 15px;
+    border: 1px solid $bordercolor;
+    border-radius: 7px;
+    box-sizing: border-box;
+    width: fit-content;
+    >div:first-of-type{
+        flex: 1 0 0;
+        width: 0;
+    }
+}
