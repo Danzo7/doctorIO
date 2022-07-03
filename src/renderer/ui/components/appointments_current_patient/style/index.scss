@@ -10,4 +10,9 @@
     border-radius: 17px;
     box-sizing: border-box;
     flex-grow: 1;
+    min-width: 200px;
+    >div:first-of-type{
+        flex: 1 0 0;
+        width: 0;
+    }
 }

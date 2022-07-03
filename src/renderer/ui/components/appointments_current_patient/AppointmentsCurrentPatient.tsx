@@ -16,7 +16,6 @@ export default function AppointmentsCurrentPatient({
   return (
     <div className="appointments-current-patient">
       <TextPair
-        maxWidth={200}
         first={{
           text: patientName,
           fontColor: color.white,
