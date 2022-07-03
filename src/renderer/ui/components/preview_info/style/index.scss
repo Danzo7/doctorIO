@@ -12,11 +12,12 @@
 
         > span {
             font-weight: 600;
-            font-size: 18px;
+            font-size: 14px;
             color: $textgray;
 
             + span {
                 font-weight: 400;
+                color: $white;
             }
         }
     }
