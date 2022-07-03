@@ -20,8 +20,7 @@ interface TextPairProps {
   reversed?: true;
   alignItems?: 'flex-start' | 'flex-end' | 'center';
   flexGrow?: true;
-  minWidth?: number | string;
-  maxWidth?: number | string;
+  flexible?: true;
 }
 export default function TextPair({
   first,
@@ -29,8 +28,7 @@ export default function TextPair({
   reversed,
   alignItems,
   flexGrow,
-  minWidth,
-  maxWidth,
+  flexible,
 }: TextPairProps) {
   return (
     <div
@@ -40,8 +38,8 @@ export default function TextPair({
         flexDirection: reversed ? 'column-reverse' : 'column',
         alignItems: alignItems,
         flexGrow: flexGrow ? 1 : 0,
-        minWidth: minWidth,
-        maxWidth: maxWidth,
+        flex: flexible && '1 0 0',
+        width: flexible && 0,
         overflow: 'hidden',
       }}
     >
