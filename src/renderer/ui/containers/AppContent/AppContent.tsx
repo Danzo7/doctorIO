@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { currentMemberPermissions } from '@api/fake';
 import { isAllowed } from '@helpers/permission.helper';
+import LoadingSpinner from '@components/loading_spinner';
 const Messages = lazy(() => import('./pages/messages'));
 const Clinic = lazy(() => import('./pages/clinic'));
 const HomeContent = lazy(() => import('./pages/home'));
@@ -24,7 +25,7 @@ function AppContent({}: AppContentProps) {
           <Route
             path="/"
             element={
-              <Suspense fallback={<>Loading</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <HomeContent />
               </Suspense>
             }
@@ -34,7 +35,7 @@ function AppContent({}: AppContentProps) {
           <Route
             path="queue"
             element={
-              <Suspense fallback={<>Loading</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Queues />
               </Suspense>
             }
@@ -44,7 +45,7 @@ function AppContent({}: AppContentProps) {
           <Route
             path="records/*"
             element={
-              <Suspense fallback={<>Loading</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Records />
               </Suspense>
             }
@@ -54,7 +55,7 @@ function AppContent({}: AppContentProps) {
           <Route
             path="messages/:category/*"
             element={
-              <Suspense fallback={<>Loading</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Messages />
               </Suspense>
             }
@@ -64,7 +65,7 @@ function AppContent({}: AppContentProps) {
           <Route
             path="statistics"
             element={
-              <Suspense fallback={<>Loading</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Statistics />
               </Suspense>
             }
@@ -74,7 +75,7 @@ function AppContent({}: AppContentProps) {
           <Route
             path="data"
             element={
-              <Suspense fallback={<>Loading</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Records />
               </Suspense>
             }
@@ -84,7 +85,7 @@ function AppContent({}: AppContentProps) {
           <Route
             path="queue"
             element={
-              <Suspense fallback={<>Loading</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Data />
               </Suspense>
             }
@@ -94,7 +95,7 @@ function AppContent({}: AppContentProps) {
           <Route
             path="clinic/*"
             element={
-              <Suspense fallback={<>Loading</>}>
+              <Suspense fallback={<LoadingSpinner />}>
                 <Clinic />
               </Suspense>
             }
