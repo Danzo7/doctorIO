@@ -1,5 +1,12 @@
 {
-  "cSpell.words": ["brahim", "Datepicker", "Panding", "Scroller", "vmin"],
+  "cSpell.words": [
+    "brahim",
+    "Datepicker",
+    "Panding",
+    "reduxjs",
+    "Scroller",
+    "vmin"
+  ],
   "npm.exclude": ["**/out/**"],
   "npm-scripts.showStartNotification": false,
   "prettier.requireConfig": true,
