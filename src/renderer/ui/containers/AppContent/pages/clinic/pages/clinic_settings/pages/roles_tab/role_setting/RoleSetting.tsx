@@ -11,10 +11,13 @@ interface RoleSettingProps {}
 export default function RoleSetting({}: RoleSettingProps) {
   const [searchParams] = useSearchParams();
   //REDUX fetch selected role
-  const { roleName, linkedRole, rolePermissions, roleDesc } =
-    roles.filter(
-      ({ roleId }) => roleId.toString() == searchParams.get('roleId'),
-    )?.[0] ?? defaultSelected;
+  const roleIdParam = searchParams.get('roleId')
+    ? searchParams.get('roleId')
+    : defaultSelected.roleId;
+  const { roleName, linkedRole, rolePermissions, roleDesc } = roles.filter(
+    ({ roleId }) => roleId.toString() == roleIdParam,
+  )[0];
+
   return (
     <div className="role-setting">
       <TabMenu items={['General', 'Permissions', 'Members']}>
@@ -24,7 +27,7 @@ export default function RoleSetting({}: RoleSettingProps) {
           list={members.filter(
             ({ roles: memberRoles }) =>
               memberRoles.find(
-                ({ roleId: id }) => id.toString() == searchParams.get('roleId'),
+                ({ roleId: id }) => id.toString() == roleIdParam,
               ) != undefined,
           )}
         />
