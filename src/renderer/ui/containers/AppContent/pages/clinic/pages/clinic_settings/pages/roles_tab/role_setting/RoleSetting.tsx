@@ -1,7 +1,7 @@
-import { roles, selectedRole as defaultSelected } from '@api/fake';
-import TabMenu, { NavTabMenu } from '@components/tab_menu';
+import { members, roles, selectedRole as defaultSelected } from '@api/fake';
+import TabMenu from '@components/tab_menu';
 import { RolePermissions } from '@models/server.models';
-import { Route, Routes, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import PermissionList from './miniTabs/permission_list';
 import RoleSettingGeneral from './miniTabs/role_setting_general';
 import RoleSettingMembers from './miniTabs/role_setting_members';
@@ -20,7 +20,14 @@ export default function RoleSetting({}: RoleSettingProps) {
       <TabMenu items={['General', 'Permissions', 'Members']}>
         <RoleSettingGeneral {...{ roleName, roleDesc, linkedRole }} />
         <PermissionList permissions={rolePermissions as RolePermissions} />
-        <RoleSettingMembers roleId={defaultSelected.roleId} />
+        <RoleSettingMembers
+          list={members.filter(
+            ({ roles: memberRoles }) =>
+              memberRoles.find(
+                ({ roleId: id }) => id.toString() == searchParams.get('roleId'),
+              ) != undefined,
+          )}
+        />
       </TabMenu>
     </div>
   );
