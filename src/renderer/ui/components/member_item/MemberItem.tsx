@@ -35,7 +35,7 @@ export default function MemberItem({
           <UserProfileStatus imgSrc={avatar} status={memberStatus} width={30} />
           <div className="id-container">
             <span>{name}</span>
-            <span>{memberId}</span>
+            <span>#{memberId}</span>
           </div>
           <IsOwner />
         </div>
