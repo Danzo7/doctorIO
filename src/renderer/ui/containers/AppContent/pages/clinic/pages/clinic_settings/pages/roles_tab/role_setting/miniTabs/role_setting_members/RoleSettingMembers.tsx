@@ -1,22 +1,15 @@
-import { members } from '@api/fake';
 import MembersTable from '@components/members_table';
-import { useSearchParams } from 'react-router-dom';
+import { Member } from '@models/server.models';
+
 import './style/index.scss';
 
 interface RoleSettingMembersProps {
-  roleId: number;
+  list: Member[];
 }
-export default function RoleSettingMembers({
-  roleId,
-}: RoleSettingMembersProps) {
+export default function RoleSettingMembers({ list }: RoleSettingMembersProps) {
   return (
     <div className="role-setting-members">
-      <MembersTable
-        list={members.filter(
-          ({ roles }) =>
-            roles.find(({ roleId: id }) => id == roleId) != undefined,
-        )}
-      />
+      <MembersTable list={list} />
     </div>
   );
 }
