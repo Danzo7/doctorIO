@@ -4,6 +4,9 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import App from './App';
 import './index.scss';
+import { Provider } from 'react-redux';
+import { store } from '@redux/store';
+
 declare const ELECTRON_ROUTING: boolean;
 const app = document.getElementById('app-mount');
 const root = createRoot(app as HTMLElement);
@@ -11,9 +14,11 @@ const Routing = ELECTRON_ROUTING ? HashRouter : BrowserRouter;
 
 root.render(
   <StrictMode>
-    <Routing>
-      <App />
-    </Routing>
+    <Provider store={store}>
+      <Routing>
+        <App />
+      </Routing>
+    </Provider>
   </StrictMode>,
 );
 
