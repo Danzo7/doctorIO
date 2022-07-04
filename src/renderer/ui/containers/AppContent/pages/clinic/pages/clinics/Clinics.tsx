@@ -18,7 +18,7 @@ export default function Clinics() {
         {firstUser.clinic.map((clinicInfo, index) => (
           <ClinicItem
             selected={firstUser.selectedClinic == index}
-            key={clinicInfo.clinicId}
+            key={clinicInfo.clinicId.toString() + index}
             //just for testing
             isHost={index == 2} //FEATURE check if clinic is localhost
             clinicInfo={clinicInfo}
