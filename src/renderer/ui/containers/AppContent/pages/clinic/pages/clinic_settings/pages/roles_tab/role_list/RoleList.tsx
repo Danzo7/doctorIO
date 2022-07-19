@@ -1,8 +1,13 @@
 import NewRole from './new_role';
 import RoleItem from './role_item';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style/index.scss';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DroppableProps,
+} from 'react-beautiful-dnd';
 import { roles } from '@api/fake';
 import { useSearchParams } from 'react-router-dom';
 
@@ -10,6 +15,25 @@ interface RoleListProps {
   selected?: number;
   defaultSelected?: number;
 }
+const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const animation = requestAnimationFrame(() => setEnabled(true));
+
+    return () => {
+      cancelAnimationFrame(animation);
+      setEnabled(false);
+    };
+  }, []);
+
+  if (!enabled) {
+    return null;
+  }
+
+  return <Droppable {...props}>{children}</Droppable>;
+};
+
 export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   console.log(searchParams.get('roleId'));
@@ -32,7 +56,7 @@ export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
     <div className={`role-list`}>
       <NewRole />
       <DragDropContext onDragEnd={handleDrop}>
-        <Droppable droppableId="content-list">
+        <StrictModeDroppable droppableId="content-list">
           {({ droppableProps, innerRef, placeholder }) => (
             <div className="content-list" {...droppableProps} ref={innerRef}>
               {itemList.map((role, index) => (
@@ -64,7 +88,7 @@ export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
               {placeholder}
             </div>
           )}
-        </Droppable>
+        </StrictModeDroppable>
       </DragDropContext>
     </div>
   );
