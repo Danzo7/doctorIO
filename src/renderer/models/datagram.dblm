@@ -1,0 +1,193 @@
+/*core tables*/
+Table Member{
+  id integer [pk]
+  name varchar
+  age integer
+  gender varchar
+  userId integer [ref: - User.id]
+  accessKey varchar
+  addedBy integer [ref: - Member.id]
+  memberStatus boolean
+  joinDate Date
+  avatar varchar
+  address varchar
+  phoneNumber varchar
+  clinicId integer [ref: > Clinic.id]
+}
+
+table Member_Role{
+  id integer [pk]
+  memberId integer [ref: > Member.id]
+  roleId integer [ref: > Role.id]
+}
+table Role{
+  id integer [pk]
+  name varchar
+  description varchar
+  persId integer [ref: - PermissionSet.id]
+}
+table PermissionSet{
+  id integer [pk]
+  isAdmin bool
+  canAddMember bool
+  canManageRole bool
+  canAccessPatientsList bool
+  canAddPatients bool
+  canManagePatients bool
+  canHaveQueue bool
+  canAddDrugs bool
+  canViewClinicInsight bool
+  canManageDataCollection bool
+  canViewMedicalRecords bool
+  canManageMembers bool
+  canRemoveMember bool
+  canManageClinic bool
+  canUseMessages bool
+}
+table Clinic {
+  id integer [pk]
+  description varchar
+  name varchar
+  serviceStatus varchar
+  memberCount integer
+  address varchar
+  connectionCount integer
+  patientCount integer
+  phoneNumber varchar
+  avatar varchar
+  timingId integer [ref: - Timing.id]
+  preferencesId integer [ref: - Preferences.id]
+}
+table Timing{
+  id integer [pk]
+  timeToOpen varchar
+  timeToClose varchar
+  workingDays varchar 
+  canPauseQueue bool 
+  canStartBreak bool 
+  canBypassClosing bool
+}
+table Preferences{
+  id integer [pk]
+}
+/*instance tables*/
+table Patient{
+  id integer [pk]
+  firstName varchar
+  lastName varchar
+  birthDate Date
+  registerDate Date
+  sex varchar
+  TestResult TestResult
+  nextAppointegerment Date
+  status boolean
+}
+table MedicalRecord{
+  id integer [pk]
+  patientId integer [ref: - Patient.id]
+}
+table Session {
+  id integer [pk]
+  patientId integer [ref: > Patient.id]
+  memberId integer [ref: > Member.id]
+  date Date
+  diagnosis varchar
+}
+table Prescription{
+  id integer [pk]
+  sessionId integer [ref: - Session.id]
+  date Date
+  notice varchar
+}
+table Drug{
+  id integer [pk]
+  prescriptionId integer [ref: > Prescription.id]
+  name varchar
+  description varchar
+  dosage varchar
+  duration varchar
+  quantity varchar
+  instructions varchar
+}
+table Appointegerment{
+  id integer [pk]
+  patientId integer [ref: > Patient.id]
+  recordId integer [ref: > MedicalRecord.id]
+  memberId integer [ref: > Member.id]
+  assistId integer [ref: > Member.id]
+  state varchar
+  sessionId integer [ref: - Session.id]
+  subject varchar
+  bookDate Date
+  date Date
+
+}
+table MedicalHistory{
+  id integer [pk]
+  recordId integer [ref: > MedicalRecord.id]
+  description varchar
+  date Date
+}
+table MedicalDocument{
+id integer [pk]
+description varchar
+recordId integer [ref: > MedicalRecord.id]
+resourceId integer [ref: - Resource.id]
+}
+
+table Resource{
+  id integer [pk]
+  name varchar
+  type varchar
+  size number
+  path varchar
+  date Date
+}
+/*local tables*/
+table User{
+  id int [pk]
+  username varchar
+  password varchar
+  email varchar
+  phoneNumber varchar
+  firstName varchar
+  lastName varchar
+  avatar varchar
+  publicKey varchar
+  privateKey varchar
+  userPreferencesId integer [ref: - UserPreferences.id]
+  selectedClinicId integer [ref: - LocalClinic.id]
+}
+table UserPreferences{
+  id integer [pk]
+  language varchar
+  timeZone varchar
+  dateFormat varchar
+  timeFormat varchar
+  currency varchar
+  theme varchar
+}
+table LocalClinic{
+  id integer [pk]
+  clinicId integer [ref: - Clinic.id]
+  name varchar
+  address varchar
+  serverLocation varchar
+  accessKey varchar
+  memberId integer [ref: - Member.id]
+}
+table DirectMessage{
+  id integer [pk]
+  userId integer [ref: > User.id]
+  senderId integer [ref: - User.id]
+  dmAvatar varchar
+  dmName varchar
+}
+table Message{
+  id integer [pk]
+  date Date
+  text varchar
+  seen bool
+  sent bool [note: - if true, then it is a sent by me]
+  dmId integer [ref: > DirectMessage.id]
+}
