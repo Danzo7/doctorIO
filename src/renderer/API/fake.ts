@@ -852,7 +852,8 @@ export const appointmentQueueData: AppointmentQueue = {
         bloodType: 'A',
       },
     },
-    ...(() => {
+
+    /*  ...(() => {
       const arr = [];
       for (let i = 0; i < 10; i++)
         arr.push({
@@ -865,7 +866,7 @@ export const appointmentQueueData: AppointmentQueue = {
           ),
         });
       return arr;
-    })(),
+    })(),*/
   ],
 };
 
