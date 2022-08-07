@@ -5,6 +5,7 @@ import './style/index.scss';
 
 interface CabinStateProps {
   state:
+    | 'empty'
     | 'paused'
     | ({ state: 'inProgress' | 'waiting' } & AppointmentQueueItem);
 }
@@ -32,6 +33,11 @@ export default function CabinState({ state }: CabinStateProps) {
       {state == 'paused' && (
         <div className="paused-div">
           <span>Paused</span>
+        </div>
+      )}
+      {state == 'empty' && (
+        <div className="paused-div">
+          <span>Empty</span>
         </div>
       )}
     </div>

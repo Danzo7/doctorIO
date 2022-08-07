@@ -12,6 +12,11 @@ import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { appointmentQueueData } from '@api/fake';
 import playIcon from 'toSvg/play.svg?icon';
 import { FIT_MODAL } from '@libs/overlay';
+import { useDispatch } from 'react-redux';
+import {
+  pauseAppointmentQueue,
+  resumeAppointmentQueue,
+} from '@redux/instance/appointmentQueue/appointmentQueueSlice';
 
 interface QueueControlsProps {
   isOwner?: boolean;
@@ -22,6 +27,7 @@ export default function QueueControls({
   isPaused,
 }: QueueControlsProps) {
   const { open, close } = useOverlay();
+  const dispatch = useDispatch();
   return (
     <>
       {!(isPaused && !isOwner) &&
@@ -43,7 +49,7 @@ export default function QueueControls({
                     backgroundColor={color.good_green}
                     width="100%"
                     onPress={() => {
-                      //REDUX change the state of isPaused to resume
+                      dispatch(resumeAppointmentQueue());
                       close();
                     }}
                   />
@@ -96,6 +102,7 @@ export default function QueueControls({
                       width="100%"
                       onPress={() => {
                         //REDUX  //REDUX change the state of queue (pause)
+                        if (isOwner) dispatch(pauseAppointmentQueue());
                         close();
                       }}
                     />

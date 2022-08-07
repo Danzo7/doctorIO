@@ -14,6 +14,8 @@ import { formatDistance } from 'date-fns';
 import { TestResult } from '@models/instance.model';
 import DiagnosisModal from '@containers/modals/diagnosis_modal';
 import useNavigation from '@libs/hooks/useNavigation';
+import { useDispatch } from 'react-redux';
+import { removePatientFromQueueByID } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -33,7 +35,8 @@ function QueueItemWide({
   width,
   diagnosis,
 }: QueueItemWideProps) {
-  const { open, openTooltip } = useOverlay();
+  const { open, openTooltip, close } = useOverlay();
+  const dispatch = useDispatch();
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
   const { navigate } = useNavigation();
   return (
@@ -55,6 +58,10 @@ function QueueItemWide({
                     {
                       text: 'Remove',
                       type: 'warning',
+                      onPress: () => {
+                        dispatch(removePatientFromQueueByID(id));
+                        close();
+                      },
                     },
                   ],
                   e?.currentTarget,

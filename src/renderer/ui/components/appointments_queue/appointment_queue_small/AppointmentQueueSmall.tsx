@@ -5,15 +5,21 @@ import './style/index.scss';
 import ScrollView from '@components/scroll_view';
 import { useScroller } from '@libs/hooks/useScroller';
 import QueueControls from '@components/queue_controls';
-import { appointmentQueueData } from '@api/fake';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Backdrop from '@components/backdrop';
 import Header from '@components/header';
+import { useAppSelector } from '@store';
+import { resumeAppointmentQueue } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
+import { useDispatch } from 'react-redux';
 
 interface AppointmentQueueSmallProps {}
-const { appointments, state, isOwner } = appointmentQueueData; //REDUX getAppointmentQUeue
+
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
+  const dispatch = useDispatch();
+  const { appointments, state, isOwner } = useAppSelector(
+    (AppState) => AppState.appointmentQueue,
+  );
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);
   function goToSelection(index: number) {
@@ -48,7 +54,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                     text="resume"
                     backgroundColor={color.good_green}
                     onPress={() => {
-                      //REDUX change the state of queue
+                      dispatch(resumeAppointmentQueue());
                     }}
                   />
                 )}

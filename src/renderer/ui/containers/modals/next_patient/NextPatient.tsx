@@ -5,6 +5,8 @@ import './style/index.scss';
 import ModalContainer from '@components/modal_container';
 import useNavigation from '@libs/hooks/useNavigation';
 import { ComponentProps, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { startSession } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
 
 export default function NextPatient({
   patientName,
@@ -12,6 +14,7 @@ export default function NextPatient({
   position,
 }: ComponentProps<typeof AppointmentsCurrentPatient>) {
   const { navigate } = useNavigation();
+  const dispatch = useDispatch();
   const [notified, setNotified] = useState(false);
   return (
     <ModalContainer
@@ -38,6 +41,7 @@ export default function NextPatient({
             fontSize={13}
             fontWeight={700}
             onPress={() => {
+              dispatch(startSession());
               navigate('session');
             }}
           />

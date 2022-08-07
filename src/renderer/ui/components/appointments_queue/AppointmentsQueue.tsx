@@ -8,12 +8,17 @@ import Arrow from 'toSvg/arrow.svg?icon';
 import './style/index.scss';
 import Header from '@components/header';
 import QueueControls from '@components/queue_controls';
-import { appointmentQueueData } from '@api/fake';
 import Backdrop from '@components/backdrop';
+import { useAppSelector } from '@store';
+import { useDispatch } from 'react-redux';
+import { resumeAppointmentQueue } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
-  const { appointments, state, isOwner } = appointmentQueueData; //REDUX getAppointmentQUeue
+  const dispatch = useDispatch();
+  const { appointments, state, isOwner } = useAppSelector(
+    (AppState) => AppState.appointmentQueue,
+  );
   return (
     <div className="appointments-queue">
       <Header
@@ -41,6 +46,9 @@ export default function AppointmentsQueue() {
                   <TextButton
                     text="resume"
                     backgroundColor={color.good_green}
+                    onPress={() => {
+                      dispatch(resumeAppointmentQueue());
+                    }}
                   />
                 )}
               </>
