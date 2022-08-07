@@ -17,6 +17,7 @@ interface AppointmentQueue {
   roleId: number;
   isOwner: boolean;
   state:
+    | 'empty'
     | 'paused'
     | ({ state: 'inProgress' | 'waiting' } & AppointmentQueueItem);
   appointments: AppointmentQueueItem[];
