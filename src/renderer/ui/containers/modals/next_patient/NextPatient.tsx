@@ -41,7 +41,7 @@ export default function NextPatient({
             fontSize={13}
             fontWeight={700}
             onPress={() => {
-              dispatch(startSession());
+              dispatch(startSession(position));
               navigate('session');
             }}
           />

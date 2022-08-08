@@ -7,11 +7,15 @@ import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useDispatch } from 'react-redux';
-import { dequeuePatient } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
+import { removePatientFromQueueByID } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
+import { useAppSelector } from '@store';
 interface EndSessionProps {}
 export default function EndSession({}: EndSessionProps) {
   const { openTooltip } = useOverlay();
   const { navigate } = useNavigation();
+  const { state, selected } = useAppSelector(
+    (AppState) => AppState.appointmentQueue,
+  );
   const dispatch = useDispatch();
   return (
     <ModalContainer
@@ -53,7 +57,8 @@ export default function EndSession({}: EndSessionProps) {
             padding=" 5px 15px"
             width={'100%'}
             onPress={() => {
-              dispatch(dequeuePatient());
+              if (selected)
+                dispatch(removePatientFromQueueByID(selected?.patientId));
 
               //TODO (session object is saved locally(clientSide) if not confirmed session will stay open and auto redirect in case of refresh/force close//
               navigate('queue');
