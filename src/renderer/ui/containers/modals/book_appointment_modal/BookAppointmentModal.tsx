@@ -7,6 +7,9 @@ import { useState } from 'react';
 import Datepicker from '@components/inputs/datepicker';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
+import { BookedAppointment } from '@models/instance.model';
+import { useAppDispatch } from '@store';
+import { addBookedAppointment } from '@redux/instance/bookedAppointmentSlice';
 interface BookAppointmentModalProps {
   patientName: string;
   id: number;
@@ -16,6 +19,7 @@ export default function BookAppointmentModal({
   id,
 }: BookAppointmentModalProps) {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const dispatch = useAppDispatch();
 
   const onDateChange = (date: Date) => {
     setSelectedDate(date);
@@ -33,6 +37,14 @@ export default function BookAppointmentModal({
           padding={'5px 10px'}
           fontSize={12}
           onPress={() => {
+            const newBookApp: BookedAppointment = {
+              patientId: id,
+              patientName: patientName,
+              state: 'PANDING',
+              bookDate: selectedDate,
+            };
+            //REDUX add booked by in newBookApp
+            dispatch(addBookedAppointment(newBookApp));
             Overlay.close();
           }}
         />
