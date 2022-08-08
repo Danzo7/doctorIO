@@ -882,7 +882,17 @@ export const bookedAppointments: BookedAppointment[] = [
       memberId: members[0].memberId,
       memberName: members[0].name,
     },
-    state: 'panding',
+    state: 'PANDING',
+  },
+  {
+    patientId: patients[0].patId,
+    patientName: patients[0].firstName + ' ' + patients[0].lastName,
+    bookDate: new Date('2023-05-24'),
+    bookedBy: {
+      memberId: members[0].memberId,
+      memberName: members[0].name,
+    },
+    state: 'PANDING',
   },
   {
     patientId: patients[1].patId,
@@ -892,9 +902,9 @@ export const bookedAppointments: BookedAppointment[] = [
       memberId: members[0].memberId,
       memberName: members[0].name,
     },
-    state: 'panding',
+    state: 'PANDING',
   },
-  ...(() => {
+  /* ...(() => {
     const arr: BookedAppointment[] = [];
     for (let i = 0; i < 10; i++)
       arr.push({
@@ -905,10 +915,10 @@ export const bookedAppointments: BookedAppointment[] = [
           memberId: members[0].memberId,
           memberName: members[0].name,
         },
-        state: 'in queue',
+        state: 'IN_QUEUE',
       });
     return arr;
-  })(),
+  })(),*/
 ];
 
 export const drugList: Drug[] = [
