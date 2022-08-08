@@ -501,11 +501,12 @@ export const patients: Patient[] = [
     lastName: 'Bouraouahhhhhhhhhhhhhhhhhhh',
     birthDate: new Date('1996-05-02'),
     age: 26,
-    testResult: {
+    test: {
       height: 1.75,
       weight: 107,
       bloodPressure: 1,
       bloodType: 'A',
+      Rh: false,
     },
   },
 
@@ -648,11 +649,12 @@ export const patients: Patient[] = [
     lastName: 'segane',
     birthDate: new Date('2000-05-02'),
     age: 26,
-    testResult: {
+    test: {
       height: 1.75,
       weight: 107,
       bloodPressure: 1,
       bloodType: 'A',
+      Rh: false,
     },
   },
   {
@@ -809,24 +811,24 @@ export const patients: Patient[] = [
     lastName: 'Daouadji',
     birthDate: new Date('1999-02-05'),
     age: 23,
-    testResult: {
+    test: {
       height: 1.76,
       weight: 107,
       bloodPressure: 1,
       bloodType: 'A',
+      Rh: true,
     },
   },
 ];
 export const appointmentQueueData: AppointmentQueue = {
-  roleId: 1,
-  state: {
-    state: 'waiting',
+  isOwner: false,
+  state: 'WAITING',
+  selected: {
     position: 1,
     patientId: patients[0].patId,
     patientName: patients[0].firstName + ' ' + patients[0].lastName,
     date: subMinutes(new Date(), Number.parseInt(faker.random.numeric(2))),
   },
-  isOwner: true,
   appointments: [
     {
       position: 1,
@@ -845,11 +847,12 @@ export const appointmentQueueData: AppointmentQueue = {
       patientId: patients[2].patId,
       patientName: patients[2].firstName + ' ' + patients[2].lastName,
       date: subMinutes(new Date(), Number.parseInt(faker.random.numeric(2))),
-      diagnosis: {
+      test: {
         height: 1.76,
         weight: 107,
         bloodPressure: 1,
         bloodType: 'A',
+        Rh: false,
       },
     },
 
