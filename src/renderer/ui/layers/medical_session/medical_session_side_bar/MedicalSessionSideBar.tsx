@@ -21,16 +21,13 @@ export default function MedicalSessionSideBar({
       <div className="medical-session-side-bar-content">
         <PreviewInfo
           title="Diagnosis"
-          data={patient.testResult}
+          data={patient.test}
           buttonNode={
             <DarkLightCornerButton
               text="preview"
               blend
               onPress={() => {
-                open(
-                  <DiagnosisPreview data={patient.testResult} />,
-                  DEFAULT_MODAL,
-                );
+                open(<DiagnosisPreview data={patient.test} />, DEFAULT_MODAL);
               }}
             />
           }

@@ -1,11 +1,11 @@
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import TextPair from '@components/text_pair/TextPair';
-import { TestResult } from '@models/instance.model';
+import { Test } from '@models/instance.model';
 import './style/index.scss';
 
 interface DiagnosisPreviewProps {
-  data: TestResult;
+  data: Test;
   patId?: number;
 }
 export default function DiagnosisPreview({ data }: DiagnosisPreviewProps) {

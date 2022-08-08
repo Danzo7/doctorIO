@@ -15,5 +15,6 @@ FirstStory.args = {
     weight: 107,
     bloodPressure: 1,
     bloodType: 'A',
+    Rh: true,
   },
 };

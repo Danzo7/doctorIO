@@ -82,7 +82,7 @@ export default function Record({}: RecordProps) {
                 />
               }
             />
-            <PatientSpecificsCard data={patient.testResult} />
+            <PatientSpecificsCard data={patient.test} />
             <BookingTimeline
               appointments={patient.appointments}
               patientId={patient.patId}

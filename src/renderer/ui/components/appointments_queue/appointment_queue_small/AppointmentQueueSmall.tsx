@@ -29,16 +29,11 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   }
   return (
     <div className="appointment-queue-small">
-      <Header
-        title="Queue list"
-        buttonNode={
-          <QueueControls isOwner={isOwner} isPaused={state === 'paused'} />
-        }
-      />
+      <Header title="Queue list" buttonNode={<QueueControls />} />
       <div className="queue-items">
         {appointments.length > 0 ? (
           <Backdrop
-            when={state === 'paused' ? (isOwner ? 'blur' : true) : false}
+            when={state === 'PAUSED' ? (isOwner ? 'blur' : true) : false}
             backdropItems={
               <>
                 <span css={{ fontSize: 14 }}>
@@ -63,10 +58,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
           >
             <ScrollView refs={ref} gap={10}>
               {appointments.map(
-                (
-                  { date, patientId, patientName, diagnosis, position },
-                  index,
-                ) => (
+                ({ date, patientId, patientName, test, position }, index) => (
                   <div
                     key={patientId.toString() + index}
                     onClick={() => {
@@ -79,7 +71,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                       name={patientName}
                       number={position}
                       timeAgo={date}
-                      diagnosis={diagnosis}
+                      diagnosis={test}
                       opened={selected == index}
                     />
                   </div>

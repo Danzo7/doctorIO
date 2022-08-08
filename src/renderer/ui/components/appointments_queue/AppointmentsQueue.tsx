@@ -21,17 +21,12 @@ export default function AppointmentsQueue() {
   );
   return (
     <div className="appointments-queue">
-      <Header
-        title="Queue list"
-        buttonNode={
-          <QueueControls isOwner={isOwner} isPaused={state === 'paused'} />
-        }
-      />
+      <Header title="Queue list" buttonNode={<QueueControls />} />
       <div className="appointments-queue-content">
-        <CabinState state={state} />
+        <CabinState />
         <div className="wrapper">
           <Backdrop
-            when={state == 'paused'}
+            when={state == 'PAUSED'}
             backdropItems={
               <>
                 <span css={{ fontSize: 15 }}>
@@ -68,7 +63,7 @@ export default function AppointmentsQueue() {
                 <ScrollView refs={ref} gap={10}>
                   {appointments.map(
                     (
-                      { date, patientId, patientName, diagnosis, position },
+                      { date, patientId, patientName, test, position },
                       index,
                     ) => (
                       <li key={patientId.toString() + index}>
@@ -78,7 +73,7 @@ export default function AppointmentsQueue() {
                           number={position}
                           timeAgo={date}
                           width={150}
-                          diagnosis={diagnosis}
+                          diagnosis={test}
                         />
                       </li>
                     ),

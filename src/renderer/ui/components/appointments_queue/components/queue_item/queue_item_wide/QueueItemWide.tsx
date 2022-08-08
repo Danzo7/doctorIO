@@ -11,11 +11,12 @@ import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
 import { formatDistance } from 'date-fns';
-import { TestResult } from '@models/instance.model';
+import { Test } from '@models/instance.model';
 import DiagnosisModal from '@containers/modals/diagnosis_modal';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useDispatch } from 'react-redux';
 import { removePatientFromQueueByID } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
+import { useAppSelector } from '@store';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -23,7 +24,7 @@ interface QueueItemWideProps {
   number: number;
   state?: string;
   width?: number;
-  diagnosis?: TestResult;
+  diagnosis?: Test;
 }
 
 function QueueItemWide({
@@ -37,6 +38,7 @@ function QueueItemWide({
 }: QueueItemWideProps) {
   const { open, openTooltip, close } = useOverlay();
   const dispatch = useDispatch();
+  const { isOwner } = useAppSelector((AppState) => AppState.appointmentQueue);
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
   const { navigate } = useNavigation();
   return (
@@ -49,12 +51,16 @@ function QueueItemWide({
               if (e)
                 openTooltip(
                   [
-                    {
-                      text: 'View records',
-                      onPress: () => {
-                        navigate('/records/' + id, { replace: true });
-                      },
-                    },
+                    ...(isOwner
+                      ? [
+                          {
+                            text: 'View records',
+                            onPress: () => {
+                              navigate('/records/' + id, { replace: true });
+                            },
+                          },
+                        ]
+                      : []),
                     {
                       text: 'Remove',
                       type: 'warning',
@@ -77,28 +83,30 @@ function QueueItemWide({
           <span>{formatDistance(timeAgo, new Date())} ago</span>
         </div>
         <div className="buttons-hover-lock">
-          <TextIconButton
-            //onMouseOver={setActive}
-            Icon={invite}
-            text="invite in"
-            color={colors.good_green}
-            onPress={() => {
-              open(
-                <NextPatient
-                  patientName={name}
-                  position={number}
-                  arrivalTime={timeAgo}
-                />,
-                {
-                  width: '30%',
-                  closeOnClickOutside: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                  closeBtn: 'inner',
-                },
-              );
-            }}
-          />
+          {isOwner && (
+            <TextIconButton
+              //onMouseOver={setActive}
+              Icon={invite}
+              text="invite in"
+              color={colors.good_green}
+              onPress={() => {
+                open(
+                  <NextPatient
+                    patientName={name}
+                    position={number}
+                    arrivalTime={timeAgo}
+                  />,
+                  {
+                    width: '30%',
+                    closeOnClickOutside: true,
+                    isDimmed: true,
+                    clickThrough: false,
+                    closeBtn: 'inner',
+                  },
+                );
+              }}
+            />
+          )}
           <TextIconButton
             //onMouseOver={setActive}
             Icon={view}

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './style/index.scss';
 import QueueItemSmall from './queue_item_small';
 import QueueItemWide from './queue_item_wide';
-import { TestResult } from '@models/instance.model';
+import { Test } from '@models/instance.model';
 
 interface QueueItemProps {
   id: number;
@@ -11,7 +11,7 @@ interface QueueItemProps {
   number: number;
   state?: string;
   width?: number;
-  diagnosis?: TestResult;
+  diagnosis?: Test;
   opened?: boolean;
 }
 function QueueItem({
