@@ -142,7 +142,7 @@ export function OverlayItem({
       <div
         className="layer"
         css={{
-          width: width,
+          flexBasis: width,
           height: height,
           position: position && 'absolute',
           top: position?.top,
