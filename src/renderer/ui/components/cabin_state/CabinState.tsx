@@ -1,41 +1,41 @@
 import { color } from '@assets/styles/color';
 import AppointmentsCurrentPatient from '@components/appointments_current_patient';
-import { AppointmentQueueItem } from '@models/instance.model';
+import { useAppSelector } from '@store';
 import './style/index.scss';
 
-interface CabinStateProps {
-  state:
-    | 'empty'
-    | 'paused'
-    | ({ state: 'inProgress' | 'waiting' } & AppointmentQueueItem);
-}
-export default function CabinState({ state }: CabinStateProps) {
+interface CabinStateProps {}
+export default function CabinState({}: CabinStateProps) {
+  const { state, selected } = useAppSelector(
+    (AppState) => AppState.appointmentQueue,
+  );
   return (
     <div className="cabin-state">
       <span>Status</span>
-      {typeof state != 'string' && (
+
+      {selected && (state == 'IN_PROGRESS' || state == 'WAITING') && (
         <>
           <div className="In-progress-div">
-            {state.state == 'inProgress' && (
+            {state == 'IN_PROGRESS' && (
               <span css={{ color: color.cold_blue }}>In Progress</span>
             )}
-            {state.state == 'waiting' && (
+            {state == 'WAITING' && (
               <span css={{ color: color.warm_orange }}>Waiting</span>
             )}
           </div>
           <AppointmentsCurrentPatient
-            patientName={state.patientName}
-            position={state.position}
-            arrivalTime={state.date}
+            patientName={selected.patientName}
+            position={selected.position}
+            arrivalTime={selected.date}
           />
         </>
       )}
-      {state == 'paused' && (
+
+      {state == 'PAUSED' && (
         <div className="paused-div">
           <span>Paused</span>
         </div>
       )}
-      {state == 'empty' && (
+      {state == 'IDLE' && (
         <div className="paused-div">
           <span>Empty</span>
         </div>
