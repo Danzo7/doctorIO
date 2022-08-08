@@ -1,10 +1,3 @@
-interface AppointmentQueueItem {
-  patientId: number;
-  patientName: string;
-  date: Date;
-  position: number;
-  diagnosis?: TestResult;
-}
 interface BookedAppointment {
   bookDate: Date;
   patientId: number;
@@ -14,13 +7,17 @@ interface BookedAppointment {
 }
 
 interface AppointmentQueue {
-  roleId: number;
   isOwner: boolean;
-  state:
-    | 'empty'
-    | 'paused'
-    | ({ state: 'inProgress' | 'waiting' } & AppointmentQueueItem);
+  state: 'PAUSED' | 'IDLE' | 'IN_PROGRESS' | 'WAITING';
+  selected?: AppointmentQueueItem;
   appointments: AppointmentQueueItem[];
+}
+interface AppointmentQueueItem {
+  patientId: number;
+  patientName: string;
+  date: Date;
+  position: number;
+  test?: Test;
 }
 interface Patient {
   patId: number;
@@ -30,7 +27,7 @@ interface Patient {
   registerDate: Date;
   gender: 'male' | 'female';
   age: number;
-  testResult: TestResult;
+  test: Test;
   medicalDocuments: MedicalDocument[];
   medicalHistory: MedicalHistory[];
   appointments: Appointment[];
@@ -102,10 +99,11 @@ interface MedicalHistory {
   description: string;
   date: Date;
 }
-interface TestResult {
+interface Test {
   weight: number;
   height: number;
-  bloodType: 'A' | 'B';
+  bloodType: 'A' | 'B' | 'AB' | 'O';
+  Rh: boolean;
   bloodPressure: number;
 }
 export type {
@@ -117,7 +115,7 @@ export type {
   Session,
   MedicalDocument,
   MedicalHistory,
-  TestResult,
+  Test,
   Drug,
   Prescription,
 };
