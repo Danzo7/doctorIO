@@ -2,8 +2,8 @@ interface BookedAppointment {
   bookDate: Date;
   patientId: number;
   patientName: string;
-  bookedBy: { memberId: number; memberName: string };
-  state: 'panding' | 'in queue';
+  bookedBy?: { memberId: number; memberName: string };
+  state: 'IN_QUEUE' | 'PANDING';
 }
 
 interface AppointmentQueue {
