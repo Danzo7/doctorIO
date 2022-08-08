@@ -1,5 +1,5 @@
 import { appointmentQueueData } from '@api/fake';
-import { AppointmentQueue } from '@models/instance.model';
+import { AppointmentQueue, AppointmentQueueItem } from '@models/instance.model';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: AppointmentQueue = appointmentQueueData;
@@ -64,6 +64,12 @@ const appointmentQueueSlice = createSlice({
         (app) => app.position == action.payload,
       );
     },
+    addToQueue: (
+      appointmentQueueState: AppointmentQueue,
+      action: PayloadAction<AppointmentQueueItem>,
+    ) => {
+      appointmentQueueState.appointments.push(action.payload);
+    },
   },
 });
 
@@ -73,6 +79,7 @@ export const {
   resumeAppointmentQueue,
   removePatientFromQueueByID,
   startSession,
+  addToQueue,
 } = appointmentQueueSlice.actions;
 
 export default appointmentQueueSlice.reducer;
