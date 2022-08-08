@@ -9,7 +9,6 @@ import NextPatient from '@containers/modals/next_patient';
 import WarningModal from '@containers/modals/warning_modal';
 import TextButton from '@components/buttons/text_button';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
-import { appointmentQueueData } from '@api/fake';
 import playIcon from 'toSvg/play.svg?icon';
 import { FIT_MODAL } from '@libs/overlay';
 import { useDispatch } from 'react-redux';
@@ -17,21 +16,19 @@ import {
   pauseAppointmentQueue,
   resumeAppointmentQueue,
 } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
+import { useAppSelector } from '@store';
 
-interface QueueControlsProps {
-  isOwner?: boolean;
-  isPaused: boolean;
-}
-export default function QueueControls({
-  isOwner,
-  isPaused,
-}: QueueControlsProps) {
+interface QueueControlsProps {}
+export default function QueueControls({}: QueueControlsProps) {
   const { open, close } = useOverlay();
+  const { state, isOwner, selected } = useAppSelector(
+    (AppState) => AppState.appointmentQueue,
+  );
   const dispatch = useDispatch();
   return (
     <>
-      {!(isPaused && !isOwner) &&
-        (isPaused ? (
+      {!(state == 'PAUSED' && !isOwner) &&
+        (state == 'PAUSED' ? (
           <IconicButton
             Icon={playIcon}
             backgroundColor={color.cold_blue}
@@ -67,21 +64,41 @@ export default function QueueControls({
               radius={7}
               iconSize={10}
               onPress={() => {
-                open(
-                  <NextPatient
-                    patientName={
-                      appointmentQueueData.appointments[0].patientName
-                    }
-                    position={appointmentQueueData.appointments[0].position}
-                  />,
-                  {
-                    width: '30%',
-                    closeOnClickOutside: true,
-                    isDimmed: true,
-                    clickThrough: false,
-                    closeBtn: 'inner',
-                  },
-                );
+                if (selected)
+                  open(
+                    <NextPatient
+                      patientName={selected.patientName}
+                      position={selected.position}
+                    />,
+                    {
+                      width: '30%',
+                      closeOnClickOutside: true,
+                      isDimmed: true,
+                      clickThrough: false,
+                      closeBtn: 'inner',
+                    },
+                  );
+                else
+                  open(
+                    <WarningModal
+                      warningTitle="The queue is empty for now "
+                      warningDescription="You need to add patient to queue"
+                    >
+                      <TextButton
+                        text="Close"
+                        backgroundColor={color.cold_blue}
+                        width="100%"
+                        onPress={() => {
+                          close();
+                        }}
+                      />
+                    </WarningModal>,
+                    {
+                      closeOnClickOutside: true,
+                      isDimmed: true,
+                      clickThrough: false,
+                    },
+                  );
               }}
             />
             <IconicButton
@@ -101,7 +118,6 @@ export default function QueueControls({
                       backgroundColor={color.hot_red}
                       width="100%"
                       onPress={() => {
-                        //REDUX  //REDUX change the state of queue (pause)
                         if (isOwner) dispatch(pauseAppointmentQueue());
                         close();
                       }}
