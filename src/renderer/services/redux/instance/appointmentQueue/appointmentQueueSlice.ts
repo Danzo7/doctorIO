@@ -5,13 +5,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState: AppointmentQueue = appointmentQueueData;
 
 const updateQueue = (appointmentQueueState: AppointmentQueue) => {
-  appointmentQueueState.state = {
-    state: 'waiting',
+  appointmentQueueState.state = 'WAITING';
+  appointmentQueueState.selected = {
     position: appointmentQueueState.appointments[0].position,
     patientId: appointmentQueueState.appointments[0].patientId,
     patientName: appointmentQueueState.appointments[0].patientName,
     date: appointmentQueueState.appointments[0].date,
-    diagnosis: appointmentQueueState.appointments[0].diagnosis,
+    test: appointmentQueueState.appointments[0].test,
   };
 };
 
@@ -22,15 +22,19 @@ const appointmentQueueSlice = createSlice({
     clearAppointmentQueue: (appointmentQueueState: AppointmentQueue) => {
       /* this is just for testing */
       appointmentQueueState.appointments = [];
-      appointmentQueueState.state = 'empty';
+      appointmentQueueState.state = 'IDLE';
+      appointmentQueueState.selected = undefined;
     },
     pauseAppointmentQueue: (state: AppointmentQueue) => {
-      state.state = 'paused';
+      state.state = 'PAUSED';
     },
     resumeAppointmentQueue: (appointmentQueueState: AppointmentQueue) => {
       if (appointmentQueueState.appointments.length > 0)
         updateQueue(appointmentQueueState);
-      else appointmentQueueState.state = 'empty';
+      else {
+        appointmentQueueState.state = 'IDLE';
+        appointmentQueueState.selected = undefined;
+      }
     },
     removePatientFromQueueByID: (
       state: AppointmentQueue,
@@ -39,26 +43,26 @@ const appointmentQueueSlice = createSlice({
       if (state.appointments[0].patientId == action.payload) {
         state.appointments.splice(0, 1);
         if (state.appointments.length > 0) updateQueue(state);
-        else state.state = 'empty';
-      } else
+        else {
+          state.state = 'IDLE';
+          state.selected = undefined;
+        }
+      } else {
         state.appointments = state.appointments.filter(
           (app) => app.patientId != action.payload,
         );
-    },
-    dequeuePatient: (appointmentQueueState: AppointmentQueue) => {
-      appointmentQueueState.appointments.shift();
-      if (appointmentQueueState.appointments.length > 0)
-        updateQueue(appointmentQueueState);
-      else appointmentQueueState.state = 'empty';
-    },
-    startSession: (appointmentQueueState: AppointmentQueue) => {
-      if (typeof appointmentQueueState.state != 'string') {
-        const info = appointmentQueueState.state;
-        appointmentQueueState.state = {
-          ...info,
-          state: 'inProgress',
-        };
+        updateQueue(state);
       }
+    },
+
+    startSession: (
+      appointmentQueueState: AppointmentQueue,
+      action: PayloadAction<number>,
+    ) => {
+      appointmentQueueState.state = 'IN_PROGRESS';
+      appointmentQueueState.selected = appointmentQueueState.appointments.find(
+        (app) => app.position == action.payload,
+      );
     },
   },
 });
@@ -68,7 +72,6 @@ export const {
   pauseAppointmentQueue,
   resumeAppointmentQueue,
   removePatientFromQueueByID,
-  dequeuePatient,
   startSession,
 } = appointmentQueueSlice.actions;
 
