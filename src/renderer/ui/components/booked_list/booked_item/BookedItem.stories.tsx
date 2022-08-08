@@ -16,5 +16,5 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   patientName: 'John Doe',
   bookDate: new Date('2022-05-01'),
-  state: 'panding',
+  state: 'PANDING',
 };

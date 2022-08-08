@@ -3,11 +3,12 @@ import PreviewList from '@components/preview_list';
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import useNavigation from '@libs/hooks/useNavigation';
-import { bookedAppointments } from '@api/fake';
+import { useAppSelector } from '@store';
 
 export default function BookedList({}) {
+  const bookedAppointments = useAppSelector((state) => state.bookedAppointment);
   const { navigate } = useNavigation();
-  //REDUX fetch bookedAppointments list
+
   return (
     <PreviewList
       title="Booked appointment"

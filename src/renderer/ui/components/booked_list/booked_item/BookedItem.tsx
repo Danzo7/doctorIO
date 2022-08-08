@@ -11,6 +11,8 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import TextPair from '@components/text_pair/TextPair';
 import { color } from '@assets/styles/color';
+import { useDispatch } from 'react-redux';
+import { removeBookedAppointment } from '@redux/instance/bookedAppointmentSlice';
 
 function BookedItem({
   patientName,
@@ -20,6 +22,7 @@ function BookedItem({
 }: BookedAppointment) {
   const { openTooltip, open } = useOverlay();
   const { navigate } = useNavigation();
+  const dispatch = useDispatch();
   return (
     <div className="booked-item">
       <div className="left-container">
@@ -38,13 +41,13 @@ function BookedItem({
           }}
         />
 
-        {state == 'panding' && (
+        {state == 'PANDING' && (
           <div className="state-container">
             <Panding></Panding>
             <span>Panding</span>
           </div>
         )}
-        {state == 'in queue' && (
+        {state == 'IN_QUEUE' && (
           <div className="state-container">
             <InQueue></InQueue>
             <span>In queue</span>
@@ -57,7 +60,7 @@ function BookedItem({
           if (e)
             openTooltip(
               [
-                state == 'panding' && {
+                state == 'PANDING' && {
                   text: 'Add to queue',
                   onPress: () => {
                     open(
@@ -78,6 +81,14 @@ function BookedItem({
                 },
                 {
                   text: 'Remove',
+                  onPress: () => {
+                    dispatch(
+                      removeBookedAppointment({
+                        bookDate: bookDate,
+                        patientId: patientId,
+                      }),
+                    );
+                  },
                   type: 'warning',
                 },
               ].filter(Boolean) as any,

@@ -30,9 +30,11 @@ export default function BookedAppointmentItem({
         reversed
       />
       <BorderSeparator direction="vertical" />
-      <TextPair second="Booked by" first={bookedBy.memberName} reversed />
+      {bookedBy && (
+        <TextPair second="Booked by" first={bookedBy.memberName} reversed />
+      )}
       <BorderSeparator direction="vertical" />
-      {state == 'panding' ? (
+      {state == 'PANDING' ? (
         <TextButton
           text="Assign to queue"
           backgroundColor={color.cold_blue}
