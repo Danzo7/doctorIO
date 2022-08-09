@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { api as AppointmentQueueApi } from './instance/appointmentQueue/AppointmentQueueApi';
 import appointmentQueueSlice from './instance/appointmentQueue/appointmentQueueSlice';
 import bookedAppointmentSlice from './instance/bookedAppointmentSlice';
 //import userSlice from './local/userSlice';
@@ -6,6 +7,7 @@ export const store = configureStore({
   reducer: {
     appointmentQueue: appointmentQueueSlice,
     bookedAppointment: bookedAppointmentSlice,
+    [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
     //  counter: userSlice,
   },
 });

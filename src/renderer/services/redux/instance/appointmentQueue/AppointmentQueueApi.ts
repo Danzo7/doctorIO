@@ -1,7 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
-import { AppointmentQueueItem } from '../models/instance.model';
+import { AppointmentQueueItem } from '@models/instance.model';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const AppointmentQueueApi = createApi({
+export const api = createApi({
   reducerPath: 'AppointmentQueueApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'localhost:3000/queue' }),
   endpoints: (builder) => ({
@@ -42,3 +42,14 @@ export const AppointmentQueueApi = createApi({
     }),
   }),
 });
+
+export const {
+  useGetQueueInfoQuery,
+  useCreateQueueMutation,
+  useDeleteQueueMutation,
+  useGetAppointmentsQuery,
+  useAddAppointmentMutation,
+  useDeleteAppointmentMutation,
+  useGetQueueStateQuery,
+  useChangeQueueStateMutation,
+} = api;

@@ -12,6 +12,7 @@ import Backdrop from '@components/backdrop';
 import { useAppSelector } from '@store';
 import { useDispatch } from 'react-redux';
 import { resumeAppointmentQueue } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
+import { useGetQueueInfoQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
@@ -19,6 +20,7 @@ export default function AppointmentsQueue() {
   const { appointments, state, isOwner } = useAppSelector(
     (AppState) => AppState.appointmentQueue,
   );
+  console.log(useGetQueueInfoQuery(1));
   return (
     <div className="appointments-queue">
       <Header title="Queue list" buttonNode={<QueueControls />} />
