@@ -3,12 +3,12 @@
 .AppSidebar {
   flex-grow: 6;
   order: 2;
-  width: 25%;
   display: flex;
   flex-direction: row-reverse;
   align-items: stretch;
   max-width: 22%;
-  transition: max-width 0.2s;
+  min-width: 22%;
+  transition: max-width 0.2s,min-width 0.2s;
   > .control {
     animation: bubble2 0.3s reverse;
     background-color: $lighterbackground;
@@ -64,6 +64,7 @@
 
   &.minimize {
     max-width: 10px;
+    min-width: 10px;
     padding: 0;
     > .control {
       transition: padding 0.2s;
