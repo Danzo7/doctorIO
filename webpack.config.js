@@ -12,6 +12,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
   const isDevelopment = mode === 'development';
   const isProduction = mode === 'production';
   console.log(isDevelopment + ' and ' + isProduction);
+  process.env.mode = mode;
 
   return {
     mode: mode,
