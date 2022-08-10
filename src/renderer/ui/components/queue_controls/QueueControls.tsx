@@ -17,78 +17,117 @@ import {
   resumeAppointmentQueue,
 } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
 import { useAppSelector } from '@store';
+import { useGetQueueInfoQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { AppointmentQueue } from '@models/instance.model';
 
 interface QueueControlsProps {}
 export default function QueueControls({}: QueueControlsProps) {
   const { open, close } = useOverlay();
-  const { state, isOwner, selected } = useAppSelector(
-    (AppState) => AppState.appointmentQueue,
-  );
+  const { isLoading, data, isError, isSuccess } = useGetQueueInfoQuery(1);
   const dispatch = useDispatch();
-  return (
-    <>
-      {!(state == 'PAUSED' && !isOwner) &&
-        (state == 'PAUSED' ? (
-          <IconicButton
-            Icon={playIcon}
-            backgroundColor={color.cold_blue}
-            width={25}
-            radius={7}
-            iconSize={10}
-            onPress={() => {
-              open(
-                <WarningModal
-                  warningTitle="You are going to resume the Queue"
-                  warningDescription="Allowed members will be able to add to the Queue again"
-                >
-                  <TextButton
-                    text="Resume"
-                    backgroundColor={color.good_green}
-                    width="100%"
-                    onPress={() => {
-                      dispatch(resumeAppointmentQueue());
-                      close();
-                    }}
-                  />
-                </WarningModal>,
-                FIT_MODAL,
-              );
-            }}
-          />
-        ) : isOwner ? (
-          <div className="queue-controls">
+  console.log(data);
+  let isOwner: boolean;
+  let state;
+  if (isSuccess && data) {
+    isOwner = (data as AppointmentQueue).isOwner;
+    state = (data as AppointmentQueue).state;
+    return (
+      <>
+        {!(state == 'PAUSED' && !isOwner) &&
+          (state == 'PAUSED' ? (
             <IconicButton
-              Icon={NextIcon}
-              backgroundColor={color.good_green}
+              Icon={playIcon}
+              backgroundColor={color.cold_blue}
               width={25}
               radius={7}
               iconSize={10}
               onPress={() => {
-                if (selected)
-                  open(
-                    <NextPatient
-                      patientName={selected.patientName}
-                      position={selected.position}
-                    />,
-                    {
-                      width: '30%',
-                      closeOnClickOutside: true,
-                      isDimmed: true,
-                      clickThrough: false,
-                      closeBtn: 'inner',
-                    },
-                  );
-                else
+                open(
+                  <WarningModal
+                    warningTitle="You are going to resume the Queue"
+                    warningDescription="Allowed members will be able to add to the Queue again"
+                  >
+                    <TextButton
+                      text="Resume"
+                      backgroundColor={color.good_green}
+                      width="100%"
+                      onPress={() => {
+                        dispatch(resumeAppointmentQueue());
+                        close();
+                      }}
+                    />
+                  </WarningModal>,
+                  FIT_MODAL,
+                );
+              }}
+            />
+          ) : isOwner ? (
+            <div className="queue-controls">
+              <IconicButton
+                Icon={NextIcon}
+                backgroundColor={color.good_green}
+                width={25}
+                radius={7}
+                iconSize={10}
+                onPress={() => {
+                  let nextPatient:
+                    | { patientName: string; position: number }
+                    | undefined; //REDUX:use Query
+                  if (nextPatient)
+                    open(
+                      <NextPatient
+                        patientName={nextPatient.patientName}
+                        position={nextPatient.position}
+                      />,
+                      {
+                        width: '30%',
+                        closeOnClickOutside: true,
+                        isDimmed: true,
+                        clickThrough: false,
+                        closeBtn: 'inner',
+                      },
+                    );
+                  else
+                    open(
+                      <WarningModal
+                        warningTitle="The queue is empty for now "
+                        warningDescription="You need to add patient to queue"
+                      >
+                        <TextButton
+                          text="Close"
+                          backgroundColor={color.cold_blue}
+                          width="100%"
+                          onPress={() => {
+                            close();
+                          }}
+                        />
+                      </WarningModal>,
+                      {
+                        closeOnClickOutside: true,
+                        isDimmed: true,
+                        clickThrough: false,
+                      },
+                    );
+                }}
+              />
+              <IconicButton
+                Icon={PauseIcon}
+                backgroundColor={color.hot_red}
+                width={25}
+                radius={7}
+                iconSize={10}
+                onPress={() => {
                   open(
                     <WarningModal
-                      warningTitle="The queue is empty for now "
-                      warningDescription="You need to add patient to queue"
+                      warningTitle="Are you sure you want to pause?"
+                      warningDescription="By pausing the queue no more patient will be accepted"
                     >
                       <TextButton
-                        text="Close"
-                        backgroundColor={color.cold_blue}
+                        text="Confirm"
+                        backgroundColor={color.hot_red}
                         width="100%"
                         onPress={() => {
+                          if (isOwner) dispatch(pauseAppointmentQueue());
                           close();
                         }}
                       />
@@ -97,60 +136,31 @@ export default function QueueControls({}: QueueControlsProps) {
                       closeOnClickOutside: true,
                       isDimmed: true,
                       clickThrough: false,
+                      closeBtn: 'inner',
                     },
                   );
-              }}
-            />
+                }}
+              />
+            </div>
+          ) : (
             <IconicButton
-              Icon={PauseIcon}
-              backgroundColor={color.hot_red}
+              Icon={AddIcon}
+              backgroundColor={color.cold_blue}
               width={25}
               radius={7}
-              iconSize={10}
+              iconSize={11}
               onPress={() => {
-                open(
-                  <WarningModal
-                    warningTitle="Are you sure you want to pause?"
-                    warningDescription="By pausing the queue no more patient will be accepted"
-                  >
-                    <TextButton
-                      text="Confirm"
-                      backgroundColor={color.hot_red}
-                      width="100%"
-                      onPress={() => {
-                        if (isOwner) dispatch(pauseAppointmentQueue());
-                        close();
-                      }}
-                    />
-                  </WarningModal>,
-                  {
-                    closeOnClickOutside: true,
-                    isDimmed: true,
-                    clickThrough: false,
-                    closeBtn: 'inner',
-                  },
-                );
+                open(<QueueAddSearchModal />, {
+                  closeOnClickOutside: true,
+                  isDimmed: true,
+                  clickThrough: false,
+                  closeBtn: 'inner',
+                  width: '30%',
+                });
               }}
             />
-          </div>
-        ) : (
-          <IconicButton
-            Icon={AddIcon}
-            backgroundColor={color.cold_blue}
-            width={25}
-            radius={7}
-            iconSize={11}
-            onPress={() => {
-              open(<QueueAddSearchModal />, {
-                closeOnClickOutside: true,
-                isDimmed: true,
-                clickThrough: false,
-                closeBtn: 'inner',
-                width: '30%',
-              });
-            }}
-          />
-        ))}
-    </>
-  );
+          ))}
+      </>
+    );
+  } else return <div>error</div>;
 }
