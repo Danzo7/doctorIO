@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, Middleware } from '@reduxjs/toolkit';
 import { api as AppointmentQueueApi } from './instance/appointmentQueue/AppointmentQueueApi';
 import appointmentQueueSlice from './instance/appointmentQueue/appointmentQueueSlice';
 import bookedAppointmentSlice from './instance/bookedAppointmentSlice';
@@ -10,6 +10,8 @@ export const store = configureStore({
     [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
     //  counter: userSlice,
   },
+  middleware: (getDefaultMiddleware): Middleware[] =>
+    getDefaultMiddleware().concat(AppointmentQueueApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
