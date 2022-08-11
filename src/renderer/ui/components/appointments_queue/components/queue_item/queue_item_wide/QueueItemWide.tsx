@@ -11,12 +11,13 @@ import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
 import { formatDistance } from 'date-fns';
-import { Test } from '@models/instance.model';
+import { AppointmentQueue, Test } from '@models/instance.model';
 import DiagnosisModal from '@containers/modals/diagnosis_modal';
 import useNavigation from '@libs/hooks/useNavigation';
-import { useDispatch } from 'react-redux';
-import { removePatientFromQueueByID } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
-import { useAppSelector } from '@store';
+import {
+  useDeleteAppointmentMutation,
+  useGetQueueInfoQuery,
+} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -37,8 +38,10 @@ function QueueItemWide({
   diagnosis,
 }: QueueItemWideProps) {
   const { open, openTooltip, close } = useOverlay();
-  const dispatch = useDispatch();
-  const { isOwner } = useAppSelector((AppState) => AppState.appointmentQueue);
+  const { isLoading, data, isSuccess } = useGetQueueInfoQuery(1);
+  const { isOwner } = data as AppointmentQueue;
+  const [deleteAppointment] = useDeleteAppointmentMutation();
+
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
   const { navigate } = useNavigation();
   return (
@@ -65,7 +68,7 @@ function QueueItemWide({
                       text: 'Remove',
                       type: 'warning',
                       onPress: () => {
-                        dispatch(removePatientFromQueueByID(id));
+                        deleteAppointment({ roleId: 1, position: number });
                         close();
                       },
                     },
@@ -117,7 +120,7 @@ function QueueItemWide({
                 diagnosis ? (
                   <DiagnosisPreview data={diagnosis} />
                 ) : (
-                  <DiagnosisModal />
+                  <DiagnosisModal position={number} />
                 ),
                 {
                   closeOnClickOutside: true,
