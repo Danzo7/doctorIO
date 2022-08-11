@@ -10,8 +10,8 @@ import Header from '@components/header';
 import QueueControls from '@components/queue_controls';
 import Backdrop from '@components/backdrop';
 import {
-  useAddAppointmentMutation,
   useGetQueueInfoQuery,
+  useResumeQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { AppointmentQueue } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
@@ -20,20 +20,21 @@ import { parseISO } from 'date-fns';
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
 
-  const { isLoading, data, isError, isSuccess } = useGetQueueInfoQuery(1);
-  const [add, states] = useAddAppointmentMutation();
+  const { isLoading, data, isSuccess } = useGetQueueInfoQuery(1);
+  const [ResumeQueue] = useResumeQueueMutation();
 
   return isLoading ? (
     <LoadingSpinner />
   ) : isSuccess ? (
     (() => {
-      const { state, appointments, isOwner } = data as AppointmentQueue;
-      console.log(data);
+      const { state, appointments, isOwner, selected } =
+        data as AppointmentQueue;
+
       return (
         <div className="appointments-queue">
           <Header title="Queue list" buttonNode={<QueueControls />} />
           <div className="appointments-queue-content">
-            <CabinState />
+            <CabinState state={state} selected={selected} />
             <div className="wrapper">
               <Backdrop
                 when={state == 'PAUSED'}
@@ -53,7 +54,7 @@ export default function AppointmentsQueue() {
                         text="resume"
                         backgroundColor={color.good_green}
                         onPress={() => {
-                          // dispatch(resumeAppointmentQueue());
+                          ResumeQueue(1);
                         }}
                       />
                     )}
@@ -65,9 +66,6 @@ export default function AppointmentsQueue() {
                     borderColor={colors.border_color}
                     padding="30px 10px"
                     afterBgColor={colors.darkersec_color}
-                    onPress={() => {
-                      add({ roleId: 1, body: 15 });
-                    }}
                     onHold={gotoFirst}
                   >
                     <Arrow css={{ transform: 'rotate(90deg)' }} />
@@ -112,6 +110,6 @@ export default function AppointmentsQueue() {
       );
     })()
   ) : (
-    <div>erroor</div>
+    <div>Error</div>
   );
 }
