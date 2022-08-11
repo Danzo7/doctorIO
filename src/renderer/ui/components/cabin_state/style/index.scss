@@ -42,4 +42,12 @@
             color: $hotred;
         }
     }
+    > .idle-div {
+        @include commonStyle();
+        border: 1px solid $warmorange;
+
+        > span {
+            color: $warmorange;
+        }
+    }
 }
