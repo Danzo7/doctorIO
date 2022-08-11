@@ -1,4 +1,4 @@
-import { AppointmentQueueItem } from '@models/instance.model';
+import { AppointmentQueue, AppointmentQueueItem } from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const api = createApi({
@@ -14,7 +14,7 @@ export const api = createApi({
       query: (roleId: number) => ({ url: `/${roleId}`, method: 'DELETE' }),
       invalidatesTags: ['state', 'queue', 'item'],
     }),
-    getQueueInfo: builder.query({
+    getQueueInfo: builder.query<AppointmentQueue, number>({
       query: (roleId) => `/${roleId}`,
       providesTags: ['state', 'queue', 'item'],
     }),
@@ -32,7 +32,7 @@ export const api = createApi({
           body: { patientId: body },
         };
       },
-      invalidatesTags: ['item'],
+      invalidatesTags: ['state', 'item'],
     }),
     deleteAppointment: builder.mutation({
       query: (data: { roleId: number; body: AppointmentQueueItem }) => {
@@ -56,6 +56,28 @@ export const api = createApi({
       },
       invalidatesTags: ['state'],
     }),
+    pauseQueue: builder.mutation({
+      query: (roleId: number) => ({
+        url: `/${roleId}/state/pause`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['state'],
+    }),
+    resumeQueue: builder.mutation({
+      query: (roleId: number) => ({
+        url: `/${roleId}/state/idle`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['state'],
+    }),
+    notifyQueue: builder.mutation({
+      query: (data: { roleId: number; position: number }) => ({
+        url: `/${data.roleId}/state/notify`,
+        method: 'PATCH',
+        body: data.position,
+      }),
+      invalidatesTags: ['state'],
+    }),
   }),
 });
 
@@ -68,4 +90,7 @@ export const {
   useDeleteAppointmentMutation,
   useGetQueueStateQuery,
   useChangeQueueStateMutation,
+  usePauseQueueMutation,
+  useResumeQueueMutation,
+  useNotifyQueueMutation,
 } = api;
