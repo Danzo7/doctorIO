@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { useGetQueueInfoQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { AppointmentQueue } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
+import { parseISO } from 'date-fns';
 
 interface AppointmentQueueSmallProps {}
 
@@ -33,65 +34,68 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
         <div className="appointment-queue-small">
           <Header title="Queue list" buttonNode={<QueueControls />} />
           <div className="queue-items">
-            {state == 'PAUSED' && (
-              <Backdrop
-                when={state === 'PAUSED' ? (isOwner ? 'blur' : true) : false}
-                backdropItems={
-                  <>
-                    <span css={{ fontSize: 14 }}>
-                      Queue is paused
-                      {!isOwner && (
-                        <>
-                          {' by'}{' '}
-                          <span css={{ fontWeight: 600 }}>The owner</span>
-                        </>
-                      )}
-                    </span>
-                    {isOwner && (
-                      <TextButton
-                        text="resume"
-                        backgroundColor={color.good_green}
-                        onPress={() => {
-                          dispatch(resumeAppointmentQueue());
-                        }}
-                      />
-                    )}
-                  </>
-                }
-              >
-                <ScrollView refs={ref} gap={10}>
-                  {appointments &&
-                    appointments.map(
-                      (
-                        { date, patientId, patientName, test, position },
-                        index,
-                      ) => (
-                        <div
-                          key={patientId.toString() + index}
-                          onClick={() => {
-                            if (selected == index) setSelected(-1);
-                            else {
-                              if (selected > appointments.length - 1) return;
-                              gotoFrom(index, selected);
-                              setSelected(index);
-                            }
+            {
+              appointments.length > 0 ? (
+                <Backdrop
+                  when={state === 'PAUSED' ? (isOwner ? 'blur' : true) : false}
+                  backdropItems={
+                    <>
+                      <span css={{ fontSize: 14 }}>
+                        Queue is paused
+                        {!isOwner && (
+                          <>
+                            {' by'}{' '}
+                            <span css={{ fontWeight: 600 }}>The owner</span>
+                          </>
+                        )}
+                      </span>
+                      {isOwner && (
+                        <TextButton
+                          text="resume"
+                          backgroundColor={color.good_green}
+                          onPress={() => {
+                            dispatch(resumeAppointmentQueue());
                           }}
-                        >
-                          <QueueItem
-                            id={patientId}
-                            name={patientName}
-                            number={position}
-                            timeAgo={date}
-                            diagnosis={test}
-                            opened={selected == index}
-                          />
-                        </div>
-                      ),
-                    )}
-                </ScrollView>
-              </Backdrop>
-            )}
-            {state == 'IDLE' && <span>IDLE</span>}
+                        />
+                      )}
+                    </>
+                  }
+                >
+                  <ScrollView refs={ref} gap={10}>
+                    {appointments &&
+                      appointments.map(
+                        (
+                          { date, patientId, patientName, test, position },
+                          index,
+                        ) => (
+                          <div
+                            key={patientId.toString() + index}
+                            onClick={() => {
+                              if (selected == index) setSelected(-1);
+                              else {
+                                if (selected > appointments.length - 1) return;
+                                gotoFrom(index, selected);
+                                setSelected(index);
+                              }
+                            }}
+                          >
+                            <QueueItem
+                              id={patientId}
+                              name={patientName}
+                              number={position}
+                              timeAgo={parseISO(date as any as string)}
+                              diagnosis={test}
+                              opened={selected == index}
+                            />
+                          </div>
+                        ),
+                      )}
+                  </ScrollView>
+                </Backdrop>
+              ) : (
+                <span>IDLE</span>
+              ) //UI: add good comp
+            }
           </div>
         </div>
       );
