@@ -11,26 +11,27 @@ import TextButton from '@components/buttons/text_button';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import playIcon from 'toSvg/play.svg?icon';
 import { FIT_MODAL } from '@libs/overlay';
-import { useDispatch } from 'react-redux';
 import {
-  pauseAppointmentQueue,
-  resumeAppointmentQueue,
-} from '@redux/instance/appointmentQueue/appointmentQueueSlice';
-import { useAppSelector } from '@store';
-import { useGetQueueInfoQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { AppointmentQueue } from '@models/instance.model';
+  useGetQueueInfoQuery,
+  usePauseQueueMutation,
+  useResumeQueueMutation,
+} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { AppointmentQueue, AppointmentQueueItem } from '@models/instance.model';
 
 interface QueueControlsProps {}
 export default function QueueControls({}: QueueControlsProps) {
   const { open, close } = useOverlay();
-  const { isLoading, data, isError, isSuccess } = useGetQueueInfoQuery(1);
-  const dispatch = useDispatch();
-  console.log(data);
+  const { data, isSuccess } = useGetQueueInfoQuery(1);
+  const [PauseQueue] = usePauseQueueMutation();
+  const [ResumeQueue] = useResumeQueueMutation();
+
   let isOwner: boolean;
   let state;
+  let selected: AppointmentQueueItem | undefined;
   if (isSuccess && data) {
     isOwner = (data as AppointmentQueue).isOwner;
     state = (data as AppointmentQueue).state;
+    selected = (data as AppointmentQueue).selected;
     return (
       <>
         {!(state == 'PAUSED' && !isOwner) &&
@@ -52,7 +53,8 @@ export default function QueueControls({}: QueueControlsProps) {
                       backgroundColor={color.good_green}
                       width="100%"
                       onPress={() => {
-                        dispatch(resumeAppointmentQueue());
+                        //REDUX change the role id for the fetch
+                        ResumeQueue(1);
                         close();
                       }}
                     />
@@ -127,7 +129,8 @@ export default function QueueControls({}: QueueControlsProps) {
                         backgroundColor={color.hot_red}
                         width="100%"
                         onPress={() => {
-                          if (isOwner) dispatch(pauseAppointmentQueue());
+                          //REDUX change the role id for the fetch
+                          PauseQueue(1);
                           close();
                         }}
                       />
