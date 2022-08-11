@@ -24,7 +24,10 @@ export default function RecentAppsItem({
         text="Run diagnosis..."
         backgroundColor={color.cold_blue}
         radius={7}
-        onPress={() => open(<DiagnosisModal />, DEFAULT_MODAL)}
+        onPress={() => {
+          //REDUX change position by getting the value
+          open(<DiagnosisModal position={1} />, DEFAULT_MODAL);
+        }}
       />
       <TextButton
         text="Add"

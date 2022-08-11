@@ -35,7 +35,7 @@ export default function CabinState({
         </div>
       )}
       {state == 'IDLE' && (
-        <div className="paused-div">
+        <div className="idle-div">
           <span>IDLE</span>
         </div>
       )}

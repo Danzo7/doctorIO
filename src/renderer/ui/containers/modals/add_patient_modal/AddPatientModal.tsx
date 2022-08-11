@@ -36,7 +36,8 @@ export default function AddPatientModal({}: AddPatientModalProps) {
             width={'40%'}
             type="button"
             onPress={() => {
-              open(<DiagnosisModal />, DEFAULT_MODAL);
+              //REDUX change position by getting the value
+              open(<DiagnosisModal position={1} />, DEFAULT_MODAL);
             }}
           />
           <TextButton
