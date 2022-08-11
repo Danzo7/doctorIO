@@ -1,13 +1,12 @@
 import { color } from '@assets/styles/color';
 import AppointmentsCurrentPatient from '@components/appointments_current_patient';
-import { useAppSelector } from '@store';
+import { AppointmentQueue } from '@models/instance.model';
 import './style/index.scss';
 
-interface CabinStateProps {}
-export default function CabinState({}: CabinStateProps) {
-  const { state, selected } = useAppSelector(
-    (AppState) => AppState.appointmentQueue,
-  );
+export default function CabinState({
+  state,
+  selected,
+}: Pick<AppointmentQueue, 'selected' | 'state'>) {
   return (
     <div className="cabin-state">
       <span>Status</span>
@@ -37,7 +36,7 @@ export default function CabinState({}: CabinStateProps) {
       )}
       {state == 'IDLE' && (
         <div className="paused-div">
-          <span>Empty</span>
+          <span>IDLE</span>
         </div>
       )}
     </div>

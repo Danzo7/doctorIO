@@ -9,6 +9,4 @@ const Template: Story<ComponentProps<typeof CabinState>> = (args) => (
   <CabinState {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = {
-  state: 'paused',
-};
+FirstStory.args = {};
