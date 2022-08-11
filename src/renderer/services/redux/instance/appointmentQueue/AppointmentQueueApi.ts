@@ -1,4 +1,8 @@
-import { AppointmentQueue, AppointmentQueueItem } from '@models/instance.model';
+import {
+  AppointmentQueue,
+  AppointmentQueueItem,
+  Test,
+} from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const api = createApi({
@@ -35,12 +39,23 @@ export const api = createApi({
       invalidatesTags: ['state', 'item'],
     }),
     deleteAppointment: builder.mutation({
-      query: (data: { roleId: number; body: AppointmentQueueItem }) => {
-        const { roleId, body } = data;
+      query: (data: { roleId: number; position: number }) => {
+        const { roleId, position } = data;
         return {
           url: `/${roleId}/item`,
           method: 'DELETE',
-          body: body,
+          body: { position: position },
+        };
+      },
+      invalidatesTags: ['item'],
+    }),
+    updateTest: builder.mutation({
+      query: (data: { roleId: number; position: number; test: Test }) => {
+        const { roleId, position, test } = data;
+        return {
+          url: `/${roleId}/item`,
+          method: 'PATCH',
+          body: { position: position, ...test },
         };
       },
       invalidatesTags: ['item'],
@@ -87,6 +102,7 @@ export const {
   useDeleteQueueMutation,
   useGetAppointmentsQuery,
   useAddAppointmentMutation,
+  useUpdateTestMutation,
   useDeleteAppointmentMutation,
   useGetQueueStateQuery,
   useChangeQueueStateMutation,
