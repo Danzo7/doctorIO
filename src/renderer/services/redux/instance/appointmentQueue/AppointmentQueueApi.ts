@@ -32,7 +32,7 @@ export const api = createApi({
       AppointmentQueueItem[],
       {
         roleId: number;
-        body: { patientId: number } & Test;
+        body: { patientId: number } & Partial<Test>;
       }
     >({
       query: ({ roleId, body }) => {

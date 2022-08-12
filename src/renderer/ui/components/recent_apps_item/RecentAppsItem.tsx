@@ -35,7 +35,7 @@ export default function RecentAppsItem({
         radius={7}
         onPress={() => {
           //REDUX get the right roleId
-          AddAppointment({ roleId: 1, body: patId });
+          AddAppointment({ roleId: 1, body: { patientId: patId } });
           Overlay.close();
         }}
       />
