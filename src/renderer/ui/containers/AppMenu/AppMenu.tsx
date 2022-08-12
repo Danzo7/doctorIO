@@ -14,11 +14,11 @@ function AppMenu({}: AppMenuProps) {
     getItem('home'),
     isAllowed('canHaveQueue', permissions) && getItem('queue'),
     isAllowed('canUseMessages', permissions) && getItem('messages'),
-    isAllowed('canViewClinicInsight', permissions) && getItem('stats'),
+    //  isAllowed('canViewClinicInsight', permissions) && getItem('stats'),
     isAllowed('canViewMedicalRecords', permissions) && getItem('records'),
-    isAllowed('canManageDataCollection', permissions) && getItem('database'),
+    //    isAllowed('canManageDataCollection', permissions) && getItem('database'),
     isAllowed('canManageClinic', permissions) && getItem('clinic'),
-    getItem('settings'),
+    //  getItem('settings'),
   ].filter(Boolean) as { name: MenuKeys; svg: any }[];
 
   return (
