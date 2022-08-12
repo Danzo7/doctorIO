@@ -23,12 +23,9 @@ interface MedicalSessionLocal {
   patientId: number;
   memberId: number;
   notice: string;
-  prescription: Prescription;
+  prescription: Drug[];
 }
-interface Prescription {
-  id: number;
-  drugs: Drug[];
-}
+
 interface Drug {
   id: number;
   name: string;

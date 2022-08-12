@@ -48,12 +48,8 @@ interface PatientSpecification {
   other: string;
 }
 interface Session {
-  sessionId: number;
-  patientId: number;
-  memberId: number;
-  date: Date;
   notice: string;
-  prescription: Prescription;
+  prescription: Drug[];
 }
 
 type Appointment = {
@@ -84,10 +80,7 @@ interface MedicalDocument {
   filePath: string;
   date: Date;
 }
-interface Prescription {
-  id: number;
-  drugs: Drug[];
-}
+
 interface Drug {
   id: number;
   name: string;
@@ -119,6 +112,5 @@ export type {
   MedicalHistory,
   Test,
   Drug,
-  Prescription,
   QueueState,
 };
