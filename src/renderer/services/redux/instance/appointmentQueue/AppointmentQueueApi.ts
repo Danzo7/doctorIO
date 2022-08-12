@@ -14,16 +14,17 @@ export const api = createApi({
       query: (roleId: number) => ({ url: `/${roleId}`, method: 'POST' }),
       invalidatesTags: ['state', 'queue', 'item'],
     }),
-    deleteQueue: builder.mutation({
+    resetQueue: builder.mutation({
       query: (roleId: number) => ({ url: `/${roleId}`, method: 'DELETE' }),
       invalidatesTags: ['state', 'queue', 'item'],
     }),
+
     getQueueInfo: builder.query<AppointmentQueue, number>({
       query: (roleId) => `/${roleId}`,
       providesTags: ['state', 'queue', 'item'],
-    }),
+    }), //Avoid using this endpoint
 
-    getAppointments: builder.query({
+    getAppointments: builder.query<AppointmentQueueItem, number>({
       query: (roleId) => `/${roleId}/item`,
       providesTags: ['item'],
     }),
@@ -35,8 +36,8 @@ export const api = createApi({
           method: 'POST',
           body: { patientId: body },
         };
-      },
-      invalidatesTags: ['state', 'item'],
+      }, //TODO fix body type to createItemDto from backend
+      invalidatesTags: ['item'],
     }),
     deleteAppointment: builder.mutation({
       query: (data: { roleId: number; position: number }) => {
@@ -64,7 +65,7 @@ export const api = createApi({
       query: (roleId) => `/${roleId}/state`,
       providesTags: ['state'],
     }),
-    changeQueueState: builder.mutation({
+    updateQueueState: builder.mutation({
       query: (data: { roleId: number; body: any }) => {
         const { roleId, body } = data;
         return { url: `/${roleId}/state`, method: 'PATCH', body: body };
@@ -93,20 +94,44 @@ export const api = createApi({
       }),
       invalidatesTags: ['state'],
     }),
+    notifyNext: builder.mutation({
+      query: (roleId: number) => ({
+        url: `/${roleId}/state/notify/next`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['state'],
+    }),
+    startNext: builder.mutation({
+      query: (roleId: number) => ({
+        url: `/${roleId}/state/start/next`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['state'],
+    }),
+    endNext: builder.mutation({
+      query: (roleId: number) => ({
+        url: `/${roleId}/state/end/next`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['state'],
+    }),
   }),
 });
 
 export const {
   useGetQueueInfoQuery,
   useCreateQueueMutation,
-  useDeleteQueueMutation,
+  useResetQueueMutation,
   useGetAppointmentsQuery,
   useAddAppointmentMutation,
   useUpdateTestMutation,
   useDeleteAppointmentMutation,
   useGetQueueStateQuery,
-  useChangeQueueStateMutation,
+  useUpdateQueueStateMutation,
   usePauseQueueMutation,
   useResumeQueueMutation,
   useNotifyQueueMutation,
+  useNotifyNextMutation,
+  useStartNextMutation,
+  useEndNextMutation,
 } = api;
