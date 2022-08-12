@@ -6,11 +6,13 @@ interface BookedAppointment {
   state: 'IN_QUEUE' | 'PANDING';
 }
 
-interface AppointmentQueue {
+type AppointmentQueue = {
   isOwner: boolean;
+  appointments: AppointmentQueueItem[];
+} & QueueState;
+interface QueueState {
   state: 'PAUSED' | 'IDLE' | 'IN_PROGRESS' | 'WAITING';
   selected?: AppointmentQueueItem;
-  appointments: AppointmentQueueItem[];
 }
 interface AppointmentQueueItem {
   patientId: number;
@@ -118,4 +120,5 @@ export type {
   Test,
   Drug,
   Prescription,
+  QueueState,
 };
