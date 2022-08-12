@@ -1,37 +1,37 @@
 import TextArea from '@components/inputs/text_area';
+import { updateNotice } from '@redux/local/sessionSlice';
+import { useAppDispatch, useAppSelector } from '@store';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './style/index.scss';
-interface NoticeTabProps {
-  defaultValue?: string;
-}
+
 type Data = {
   notice: string;
 };
-export default function NoticeTab({ defaultValue }: NoticeTabProps) {
+export default function NoticeTab() {
+  const notice = useAppSelector((state) => state.session.notice);
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Data>({ mode: 'onChange' });
+  } = useForm<Data>({ mode: 'onChange', defaultValues: { notice: notice } });
 
-  const onSubmit: SubmitHandler<Data> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Data> = (data) => {
+    dispatch(updateNotice(data.notice));
+  };
 
   return (
     <div className="notice-tab">
-      {defaultValue ? (
-        <div className="defaultValue-container">
-          <span>{defaultValue}</span>
-        </div>
-      ) : (
+      {
         <TextArea
           fillContainer
           onSubmit={handleSubmit(onSubmit)}
           errorMessage={errors.notice?.message}
           {...register('notice', {
-            required: { value: true, message: 'dam Ass' },
+            required: { value: true, message: 'try again' },
           })}
         />
-      )}
+      }
     </div>
   );
 }

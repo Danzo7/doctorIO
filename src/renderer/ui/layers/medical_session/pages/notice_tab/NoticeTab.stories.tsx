@@ -6,7 +6,7 @@ export default {
   component: NoticeTab,
 };
 const Template: Story<ComponentProps<typeof NoticeTab>> = (args) => (
-  <NoticeTab {...args} />
+  <NoticeTab />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {};
