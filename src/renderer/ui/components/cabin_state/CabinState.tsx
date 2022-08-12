@@ -1,13 +1,11 @@
 import { color } from '@assets/styles/color';
 import AppointmentsCurrentPatient from '@components/appointments_current_patient';
-import { AppointmentQueue } from '@models/instance.model';
+import { QueueState } from '@models/instance.model';
 import { parseISO } from 'date-fns';
 import './style/index.scss';
 
-export default function CabinState({
-  state,
-  selected,
-}: Pick<AppointmentQueue, 'selected' | 'state'>) {
+export default function CabinState({ state, selected }: QueueState) {
+  console.log('selected : ', selected);
   return (
     <div className="cabin-state">
       <span>Status</span>
