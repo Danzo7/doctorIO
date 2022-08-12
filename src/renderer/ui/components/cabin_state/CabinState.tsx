@@ -1,6 +1,7 @@
 import { color } from '@assets/styles/color';
 import AppointmentsCurrentPatient from '@components/appointments_current_patient';
 import { AppointmentQueue } from '@models/instance.model';
+import { parseISO } from 'date-fns';
 import './style/index.scss';
 
 export default function CabinState({
@@ -24,7 +25,7 @@ export default function CabinState({
           <AppointmentsCurrentPatient
             patientName={selected.patientName}
             position={selected.position}
-            arrivalTime={selected.date}
+            arrivalTime={parseISO(selected.date as any as string)} //TODO remove when fixed in redux
           />
         </>
       )}
