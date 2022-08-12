@@ -1,4 +1,3 @@
-import { drugList } from '@api/fake';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
@@ -29,8 +28,8 @@ export default function SessionPreviewModal({}: SessionPreviewModalProps) {
           borderBottom={false}
           menuItemsAlignment="center"
         >
-          <MedicamentTable drugList={drugList} />
-          <NoticeTab defaultValue="you are sick because you didn't take your health seriously , you should do some workout and fitness and eat  healthy food  " />
+          <MedicamentTable />
+          <NoticeTab />
         </TabMenu>
       </div>
     </ModalContainer>
