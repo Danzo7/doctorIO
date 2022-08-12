@@ -4,27 +4,32 @@ import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
 import { Drug } from '@models/instance.model';
+import { addDrug, updatePrescription } from '@redux/local/sessionSlice';
+import { useAppDispatch, useAppSelector } from '@store';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface AddDrugModalProps {
-  onSubmitPress: (data: any) => void;
   defaultValues?: Pick<
     Drug,
     'name' | 'qts' | 'dosage' | 'duration' | 'description'
   >;
 }
-export default function AddDrugModal({
-  onSubmitPress,
-  defaultValues,
-}: AddDrugModalProps) {
+export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
+  const prescription = useAppSelector((state) => state.session.prescription);
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Drug>({ defaultValues: defaultValues });
-  const onSubmit: SubmitHandler<Drug> = (formData) => {
+  const onSubmit: SubmitHandler<Drug> = (formData: Drug) => {
     if (!defaultValues) {
-      onSubmitPress(formData);
+      dispatch(addDrug(formData));
+    } else {
+      const index = prescription.findIndex(
+        (drug) => drug.name == defaultValues.name,
+      );
+      dispatch(updatePrescription({ index: index, drug: formData }));
     }
 
     Overlay.close();
