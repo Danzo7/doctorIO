@@ -7,6 +7,10 @@ import useNavigation from '@libs/hooks/useNavigation';
 import { ComponentProps, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { startSession } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
+import {
+  useNotifyQueueMutation,
+  useStartNextMutation,
+} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 
 export default function NextPatient({
   patientName,
@@ -14,7 +18,8 @@ export default function NextPatient({
   position,
 }: ComponentProps<typeof AppointmentsCurrentPatient>) {
   const { navigate } = useNavigation();
-  const dispatch = useDispatch();
+  const [NotifyQueue] = useNotifyQueueMutation();
+  const [StartNext] = useStartNextMutation();
   const [notified, setNotified] = useState(false);
   return (
     <ModalContainer
@@ -28,8 +33,9 @@ export default function NextPatient({
             fontSize={13}
             fontWeight={700}
             onPress={() => {
+              //REDUX change the roleId to the correct one
+              NotifyQueue({ roleId: 1, position: position });
               setNotified(true);
-              //Todo?:  NotifyQueue(change queue state to waiting for “patientID”) //
             }}
           />
           <TextButton
@@ -41,7 +47,7 @@ export default function NextPatient({
             fontSize={13}
             fontWeight={700}
             onPress={() => {
-              dispatch(startSession(position));
+              StartNext(1);
               navigate('session');
             }}
           />
