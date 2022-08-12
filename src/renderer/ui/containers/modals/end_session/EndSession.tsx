@@ -6,17 +6,13 @@ import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
-import { useDispatch } from 'react-redux';
-import { removePatientFromQueueByID } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
-import { useAppSelector } from '@store';
+import { useEndNextMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 interface EndSessionProps {}
 export default function EndSession({}: EndSessionProps) {
   const { openTooltip } = useOverlay();
   const { navigate } = useNavigation();
-  const { state, selected } = useAppSelector(
-    (AppState) => AppState.appointmentQueue,
-  );
-  const dispatch = useDispatch();
+  const [EndNext] = useEndNextMutation();
+
   return (
     <ModalContainer
       title="End the session?"
@@ -57,9 +53,7 @@ export default function EndSession({}: EndSessionProps) {
             padding=" 5px 15px"
             width={'100%'}
             onPress={() => {
-              if (selected)
-                dispatch(removePatientFromQueueByID(selected?.patientId));
-
+              EndNext(1);
               //TODO (session object is saved locally(clientSide) if not confirmed session will stay open and auto redirect in case of refresh/force close//
               navigate('queue');
             }}
