@@ -498,7 +498,7 @@ export const patients: Patient[] = [
     ],
     registerDate: new Date('2022-01-01'),
     firstName: 'Amine Mohamed',
-    lastName: 'Bouraouahhhhhhhhhhhhhhhhhhh',
+    lastName: 'Bouraoua',
     birthDate: new Date('1996-05-02'),
     age: 26,
     test: {
