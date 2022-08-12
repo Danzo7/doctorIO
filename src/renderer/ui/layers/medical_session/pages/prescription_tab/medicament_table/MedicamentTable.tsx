@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Arrow from 'toSvg/arrow.svg?icon';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import {
@@ -13,17 +13,16 @@ import AddDrugModal from '@containers/modals/add_drug_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { Drug } from '@models/instance.model';
+import { useAppSelector } from '@store';
 
 interface MedicamentTableProps {
   editable?: true;
-  drugList: Drug[];
 }
 
 const table = createTable().setRowType<Drug>();
-export default function MedicamentTable({
-  editable,
-  drugList,
-}: MedicamentTableProps) {
+export default function MedicamentTable({ editable }: MedicamentTableProps) {
+  const prescription = useAppSelector((state) => state.session.prescription);
+
   const { open } = useOverlay();
   const [sorting, setSorting] = useState<SortingState>([]);
   const columns = useMemo(
@@ -40,7 +39,7 @@ export default function MedicamentTable({
 
         table.createDataColumn('dosage', {
           header: 'Dose',
-          cell: ({ getValue }) => (getValue() ?? '*') + '/day',
+          cell: ({ getValue }) => getValue() + '/day',
         }),
         table.createDataColumn('duration', {
           header: 'Duration',
@@ -73,9 +72,6 @@ export default function MedicamentTable({
                           duration: row.getValue('duration'),
                           description: row.getValue('description'),
                         }}
-                        onSubmitPress={(formData) => {
-                          console.log(formData); //TODO : implement Edit data function
-                        }}
                       />,
                       DEFAULT_MODAL,
                     );
@@ -89,7 +85,7 @@ export default function MedicamentTable({
   );
 
   const instance = useTableInstance(table, {
-    data: drugList,
+    data: prescription,
     columns,
     state: {
       sorting,
