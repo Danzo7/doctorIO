@@ -9,9 +9,10 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Backdrop from '@components/backdrop';
 import Header from '@components/header';
-import { resumeAppointmentQueue } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
-import { useDispatch } from 'react-redux';
-import { useGetQueueInfoQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import {
+  useGetQueueInfoQuery,
+  useResumeQueueMutation,
+} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { AppointmentQueue } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
 import { parseISO } from 'date-fns';
@@ -19,9 +20,8 @@ import { parseISO } from 'date-fns';
 interface AppointmentQueueSmallProps {}
 
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
-  const dispatch = useDispatch();
   const { isLoading, data, isError, isSuccess } = useGetQueueInfoQuery(1);
-
+  const [ResumeQueue] = useResumeQueueMutation();
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);
 
@@ -54,7 +54,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                           text="resume"
                           backgroundColor={color.good_green}
                           onPress={() => {
-                            dispatch(resumeAppointmentQueue());
+                            ResumeQueue(1);
                           }}
                         />
                       )}
