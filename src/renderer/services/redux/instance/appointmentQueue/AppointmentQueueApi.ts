@@ -24,24 +24,31 @@ export const api = createApi({
       providesTags: ['state', 'queue', 'item'],
     }), //Avoid using this endpoint
 
-    getAppointments: builder.query<AppointmentQueueItem, number>({
+    getAppointments: builder.query<AppointmentQueueItem[], number>({
       query: (roleId) => `/${roleId}/item`,
       providesTags: ['item'],
     }),
-    addAppointment: builder.mutation({
-      query: (data: { roleId: number; body: number }) => {
-        const { roleId, body } = data;
+    addAppointment: builder.mutation<
+      AppointmentQueueItem[],
+      {
+        roleId: number;
+        body: { patientId: number } & Test;
+      }
+    >({
+      query: ({ roleId, body }) => {
         return {
           url: `/${roleId}/item`,
           method: 'POST',
-          body: { patientId: body },
+          body: body,
         };
       }, //TODO fix body type to createItemDto from backend
       invalidatesTags: ['item'],
     }),
-    deleteAppointment: builder.mutation({
-      query: (data: { roleId: number; position: number }) => {
-        const { roleId, position } = data;
+    deleteAppointment: builder.mutation<
+      AppointmentQueueItem[],
+      { roleId: number; position: number }
+    >({
+      query: ({ roleId, position }) => {
         return {
           url: `/${roleId}/item`,
           method: 'DELETE',
