@@ -12,6 +12,7 @@ import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import playIcon from 'toSvg/play.svg?icon';
 import { FIT_MODAL } from '@libs/overlay';
 import {
+  useGetNextQueueItemQuery,
   useGetQueueInfoQuery,
   usePauseQueueMutation,
   useResumeQueueMutation,
@@ -22,6 +23,7 @@ interface QueueControlsProps {}
 export default function QueueControls({}: QueueControlsProps) {
   const { open, close } = useOverlay();
   const { data, isSuccess } = useGetQueueInfoQuery(1);
+  const NextQueueItemQuery = useGetNextQueueItemQuery(1);
   const [PauseQueue] = usePauseQueueMutation();
   const [ResumeQueue] = useResumeQueueMutation();
 
@@ -72,14 +74,35 @@ export default function QueueControls({}: QueueControlsProps) {
                 radius={7}
                 iconSize={10}
                 onPress={() => {
-                  let nextPatient:
-                    | { patientName: string; position: number }
-                    | undefined; //REDUX:use Query
-                  if (nextPatient)
+                  let nextPat: AppointmentQueueItem | undefined;
+                  if (NextQueueItemQuery.isSuccess) {
+                    nextPat = NextQueueItemQuery.data;
+                  } else
+                    open(
+                      <WarningModal
+                        warningTitle="Error "
+                        warningDescription="error occurs please try again!"
+                      >
+                        <TextButton
+                          text="Close"
+                          backgroundColor={color.cold_blue}
+                          width="100%"
+                          onPress={() => {
+                            close();
+                          }}
+                        />
+                      </WarningModal>,
+                      {
+                        closeOnClickOutside: true,
+                        isDimmed: true,
+                        clickThrough: false,
+                      },
+                    );
+                  if (nextPat)
                     open(
                       <NextPatient
-                        patientName={nextPatient.patientName}
-                        position={nextPatient.position}
+                        patientName={nextPat.patientName}
+                        position={nextPat.position}
                       />,
                       {
                         width: '30%',
