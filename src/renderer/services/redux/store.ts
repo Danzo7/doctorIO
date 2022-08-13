@@ -2,6 +2,7 @@ import { configureStore, Middleware } from '@reduxjs/toolkit';
 import { api as AppointmentQueueApi } from './instance/appointmentQueue/AppointmentQueueApi';
 import appointmentQueueSlice from './instance/appointmentQueue/appointmentQueueSlice';
 import bookedAppointmentSlice from './instance/bookedAppointmentSlice';
+import { api as recordApi } from './instance/record/recordApi';
 import sessionSlice from './local/sessionSlice';
 //import userSlice from './local/userSlice';
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     bookedAppointment: bookedAppointmentSlice,
     session: sessionSlice,
     [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
+    [recordApi.reducerPath]: recordApi.reducer,
     //  counter: userSlice,
   },
   middleware: (getDefaultMiddleware): Middleware[] =>
