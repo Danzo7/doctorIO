@@ -19,7 +19,7 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import { patients } from '@api/fake';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { searchPatient } from '@helpers/search.helper';
+import { useFindPatientByNameQuery } from '@redux/instance/record/recordApi';
 
 interface SearchInput {
   searchField: string;
@@ -28,7 +28,7 @@ interface SearchInput {
 interface RecordProps {}
 export default function Record({}: RecordProps) {
   const { register, watch, setValue } = useForm<SearchInput>();
-  const watchSearch = watch('searchField');
+  const watchSearch = watch('searchField', '');
   const { navigate } = useNavigation();
   const { open } = useOverlay();
   const { patientId } = useParams();
@@ -39,7 +39,10 @@ export default function Record({}: RecordProps) {
   useEffect(() => {
     setPatient(patients.find(({ patId }) => patId.toString() == patientId));
   }, [patientId]);
-  const selectedPatient = searchPatient(watchSearch);
+  const { data, isSuccess, isError, error } = useFindPatientByNameQuery(
+    watchSearch.toLowerCase(),
+  );
+  const selectedPatient = isSuccess && data ? data[0] : undefined;
   return (
     <div className="record">
       <Input
@@ -52,12 +55,12 @@ export default function Record({}: RecordProps) {
       {watchSearch ? (
         selectedPatient ? (
           <RecordInfoItem
-            firstName={selectedPatient.firstName}
-            lastName={selectedPatient.lastName}
-            patId={selectedPatient.patId}
+            firstName={selectedPatient.name.split(' ')[0]}
+            lastName={selectedPatient.name.split(' ')[1]}
+            patId={selectedPatient.id}
             onViewRecord={() => {
               setValue('searchField', '');
-              navigate(`/records/${selectedPatient.patId}`);
+              navigate(`/records/${selectedPatient.id}`);
             }}
           />
         ) : (
