@@ -37,6 +37,10 @@ interface Patient {
   status: 'active' | 'off';
   specification?: PatientSpecification;
 }
+interface PatientBrief {
+  id: number;
+  name: string;
+}
 interface PatientSpecification {
   weight: number;
   height: number;
@@ -105,6 +109,7 @@ export type {
   Appointment,
   BookedAppointment,
   Patient,
+  PatientBrief,
   AppointmentQueueItem,
   AppointmentQueue,
   Session,
