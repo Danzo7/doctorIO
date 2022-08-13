@@ -10,7 +10,8 @@ import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '../book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { searchPatient } from '@helpers/search.helper';
+import { useFindPatientByNameQuery } from '@redux/instance/record/recordApi';
+import LoadingSpinner from '@components/loading_spinner';
 
 interface SearchInput {
   searchField: string;
@@ -20,50 +21,52 @@ interface AddSearchToBookedProps {}
 export default function AddSearchToBooked({}: AddSearchToBookedProps) {
   const { register, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField', '');
-  const selectedPatient = searchPatient(watchSearch);
+  const { data, isSuccess, isError, error } = useFindPatientByNameQuery(
+    watchSearch.toLowerCase(),
+  );
+  const result = isSuccess && data ? data : undefined;
+
   const { open } = useOverlay();
   return (
     <ModalContainer
       title="Select a patient"
       controls={
         <div className="suggestions-container">
-          {selectedPatient && (
-            <PresentationItem
-              primaryText={
-                selectedPatient.firstName + ' ' + selectedPatient.lastName
-              }
-              secondaryText={selectedPatient.age.toString()}
-              key={selectedPatient.patId}
-            >
-              <TextButton
-                text="Select"
-                backgroundColor={color.cold_blue}
-                padding="5px 10px"
-                fontSize={13}
-                fontWeight={600}
-                onPress={() => {
-                  open(
-                    <BookAppointmentModal
-                      patientName={
-                        selectedPatient.firstName +
-                        ' ' +
-                        selectedPatient.lastName
-                      }
-                      id={selectedPatient.patId}
-                    />,
-                    DEFAULT_MODAL,
-                  );
-                }}
-              />
-            </PresentationItem>
-          )}
+          {result &&
+            isSuccess &&
+            result.map((pat) => (
+              <PresentationItem
+                primaryText={pat.name}
+                secondaryText={pat.id.toString()}
+                key={pat.id}
+              >
+                <TextButton
+                  text="Select"
+                  backgroundColor={color.cold_blue}
+                  padding="5px 10px"
+                  fontSize={13}
+                  fontWeight={600}
+                  onPress={() => {
+                    open(
+                      <BookAppointmentModal
+                        patientName={pat.name}
+                        id={pat.id}
+                      />,
+                      DEFAULT_MODAL,
+                    );
+                  }}
+                />
+              </PresentationItem>
+            ))}
         </div>
       }
     >
       <Input
         hint={
-          watchSearch.length > 0 && selectedPatient == undefined
-            ? 'Can’t find any patient with the same name'
+          watchSearch.length > 0
+            ? isError
+              ? 'error from server'
+              : undefined
             : undefined
         }
         hintAlignment="center"
