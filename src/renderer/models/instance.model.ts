@@ -105,7 +105,14 @@ interface Test {
   Rh: boolean;
   bloodPressure: number;
 }
+
+interface ServerError {
+  statusCode: number;
+  message: string[];
+  error: string;
+}
 export type {
+  ServerError,
   Appointment,
   BookedAppointment,
   Patient,
