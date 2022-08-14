@@ -12,6 +12,7 @@ import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useFindPatientByNameMutation } from '@redux/instance/record/recordApi';
 import { PatientBrief, ServerError } from '@models/instance.model';
+import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
 
 interface QueueAddSearchModalProps {}
@@ -20,21 +21,24 @@ interface SearchInput {
 }
 
 export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
-  const { register, getValues, handleSubmit } = useForm<SearchInput>({
+  const searchRef = useRef<string>('');
+
+  const { register, handleSubmit } = useForm<SearchInput>({
     mode: 'onSubmit',
+    defaultValues: { searchField: searchRef.current },
   });
   const { open } = useOverlay();
-
   const [FindPatientByName, result] = useFindPatientByNameMutation();
-  console.log('value: ', getValues('searchField'));
-  console.log('data: ', result.data);
+  const errorRef = useRef<ServerError>();
   const serverError: ServerError | undefined = (result.error as any)
     ?.data as ServerError;
+  if (result.isError || result.isSuccess) errorRef.current = serverError;
+
   return (
     <ModalContainer
       title="Add a Patient to appointment queue"
       controls={
-        serverError?.statusCode == 404 ? (
+        errorRef.current?.statusCode == 404 ? (
           <TextButton
             text="Add new patient"
             backgroundColor={color.lighter_background}
@@ -46,7 +50,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
               open(<AddPatientModal />, DEFAULT_MODAL);
             }}
           />
-        ) : result.isLoading ? (
+        ) : errorRef.current == undefined && result.isLoading ? (
           <LoadingSpinner />
         ) : (
           result.isSuccess &&
@@ -67,15 +71,18 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
       <form
         css={{ flexGrow: 1 }}
         onSubmit={handleSubmit((value) => {
-          result.reset();
-          FindPatientByName(value.searchField);
+          // result.reset();
+          if (searchRef.current != value.searchField) {
+            searchRef.current = value.searchField;
+            FindPatientByName(value.searchField);
+          }
         })}
       >
         <Input
           errorMsg={
-            serverError?.statusCode == 400
-              ? serverError.message[0]
-              : serverError?.statusCode == 404
+            errorRef.current?.statusCode == 400
+              ? errorRef.current.message[0]
+              : errorRef.current?.statusCode == 404
               ? 'No patient found'
               : undefined
           }
