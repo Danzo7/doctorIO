@@ -15,7 +15,9 @@ export const store = configureStore({
     //  counter: userSlice,
   },
   middleware: (getDefaultMiddleware): Middleware[] =>
-    getDefaultMiddleware().concat(AppointmentQueueApi.middleware),
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      AppointmentQueueApi.middleware,
+    ),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

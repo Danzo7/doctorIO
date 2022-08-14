@@ -11,9 +11,8 @@ import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useFindPatientByNameQuery } from '@redux/instance/record/recordApi';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import LoadingSpinner from '@components/loading_spinner';
-import { useEffect } from 'react';
+import { useState } from 'react';
+import { PatientBrief, ServerError } from '@models/instance.model';
 
 interface QueueAddSearchModalProps {}
 interface SearchInput {
@@ -21,24 +20,26 @@ interface SearchInput {
 }
 
 export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
-  const { register, watch } = useForm<SearchInput>();
-  const watchSearch = watch('searchField', '');
+  const { register, getValues, handleSubmit } = useForm<SearchInput>({
+    mode: 'onSubmit',
+  });
   const { open } = useOverlay();
-  const { data, isSuccess, isError, error } = useFindPatientByNameQuery(
-    watchSearch.toLowerCase(),
+  const [state, setstate] = useState(false);
+
+  const { isSuccess, error, currentData } = useFindPatientByNameQuery(
+    getValues().searchField,
+    {
+      skip: !getValues().searchField,
+    },
   );
-  //REDUX show error
-  //const inputError = isError ? (error as FetchBaseQueryError) : undefined;
 
-  const result = isSuccess && data ? data : undefined;
-  console.log('result :', result);
-  console.log('result :', result);
-
+  const serverError: ServerError | undefined = (error as any)
+    ?.data as ServerError;
   return (
     <ModalContainer
       title="Add a Patient to appointment queue"
       controls={
-        result == undefined ? (
+        serverError?.statusCode == 404 ? (
           <TextButton
             text="Add new patient"
             backgroundColor={color.lighter_background}
@@ -52,34 +53,41 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
           />
         ) : (
           isSuccess &&
-          result.length > 0 &&
-          result.map((pat) => (
-            <RecentAppsItem
-              key={pat.id}
-              firstName={pat.name.split(' ')[0]}
-              lastName={pat.name.split(' ')[1]}
-              patId={pat.id}
-            />
-          ))
+          (() => {
+            const result = currentData as PatientBrief[];
+            return result?.map((patient) => (
+              <RecentAppsItem
+                key={patient.id}
+                firstName={patient.name.split(' ')[0]}
+                lastName={patient.name.split(' ')[1]}
+                patId={patient.id}
+              />
+            ));
+          })()
         )
       }
     >
-      <Input
-        hint={
-          watchSearch.length > 0
-            ? isError
-              ? 'error from server'
-              : isSuccess
-              ? undefined
-              : 'error'
-            : 'Enter patient name'
-        }
-        fillContainer
-        placeholder="search for a patient"
-        trailing={<Svg>{search}</Svg>}
-        type="search"
-        {...register('searchField')}
-      />
+      <form
+        onSubmit={handleSubmit((value) => {
+          setstate(!state);
+          //refetch();
+        })}
+      >
+        <Input
+          errorMsg={
+            serverError?.statusCode == 400
+              ? serverError.message[0]
+              : serverError?.statusCode == 404
+              ? 'No patient found'
+              : undefined
+          }
+          fillContainer
+          placeholder="search for a patient"
+          trailing={<Svg>{search}</Svg>}
+          type="search"
+          {...register('searchField')}
+        />
+      </form>
     </ModalContainer>
   );
 }
