@@ -23,6 +23,20 @@ export const api = createApi({
       query: (patId) => `patient/detail?id=${patId}`,
     }),
     //POST
+    addPatient: builder.mutation<
+      Patient,
+      {
+        firstName: string;
+        lastName: string;
+        birthDate: Date;
+        registerDate: Date;
+        sex: 'male' | 'female';
+        age: number;
+      }
+    >({
+      query: (body) => ({ url: `/patient`, method: 'POST', body: body }),
+      invalidatesTags: ['patient'],
+    }),
   }),
 });
 export const {
