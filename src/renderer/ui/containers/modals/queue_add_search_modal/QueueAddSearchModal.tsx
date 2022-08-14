@@ -10,9 +10,9 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { useFindPatientByNameQuery } from '@redux/instance/record/recordApi';
-import { useState } from 'react';
+import { useFindPatientByNameMutation } from '@redux/instance/record/recordApi';
 import { PatientBrief, ServerError } from '@models/instance.model';
+import LoadingSpinner from '@components/loading_spinner';
 
 interface QueueAddSearchModalProps {}
 interface SearchInput {
@@ -24,16 +24,11 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
     mode: 'onSubmit',
   });
   const { open } = useOverlay();
-  const [state, setstate] = useState(false);
 
-  const { isSuccess, error, currentData } = useFindPatientByNameQuery(
-    getValues().searchField,
-    {
-      skip: !getValues().searchField,
-    },
-  );
-
-  const serverError: ServerError | undefined = (error as any)
+  const [FindPatientByName, result] = useFindPatientByNameMutation();
+  console.log('value: ', getValues('searchField'));
+  console.log('data: ', result.data);
+  const serverError: ServerError | undefined = (result.error as any)
     ?.data as ServerError;
   return (
     <ModalContainer
@@ -51,11 +46,13 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
               open(<AddPatientModal />, DEFAULT_MODAL);
             }}
           />
+        ) : result.isLoading ? (
+          <LoadingSpinner />
         ) : (
-          isSuccess &&
+          result.isSuccess &&
           (() => {
-            const result = currentData as PatientBrief[];
-            return result?.map((patient) => (
+            const patients = result.data as PatientBrief[];
+            return patients?.map((patient) => (
               <RecentAppsItem
                 key={patient.id}
                 firstName={patient.name.split(' ')[0]}
@@ -68,9 +65,10 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
       }
     >
       <form
+        css={{ flexGrow: 1 }}
         onSubmit={handleSubmit((value) => {
-          setstate(!state);
-          //refetch();
+          result.reset();
+          FindPatientByName(value.searchField);
         })}
       >
         <Input

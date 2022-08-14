@@ -16,9 +16,11 @@ export const api = createApi({
     getPatients: builder.query<PatientBrief, any>({
       query: () => `/patient`,
     }),
-    findPatientByName: builder.query<PatientBrief[], string>({
-      query: (name: string) => `/patient/find?name=${name}`,
-      keepUnusedDataFor: 0,
+    findPatientByName: builder.mutation<PatientBrief[], string>({
+      query: (name: string) => ({
+        url: `/patient/find?name=${name}`,
+        method: 'GET',
+      }),
     }),
     getPatientDetail: builder.query<Patient, number>({
       query: (patId) => `patient/detail?id=${patId}`,
@@ -44,6 +46,6 @@ export default api;
 export const {
   useGetPatientQuery,
   useGetPatientsQuery,
-  useFindPatientByNameQuery,
+  useFindPatientByNameMutation,
   useGetPatientDetailQuery,
 } = api;
