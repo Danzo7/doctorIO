@@ -15,6 +15,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware): Middleware[] =>
     getDefaultMiddleware({ serializableCheck: false }).concat(
       AppointmentQueueApi.middleware,
+      recordApi.middleware,
     ),
 });
 
