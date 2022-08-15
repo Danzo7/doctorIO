@@ -12,28 +12,30 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 
 export default function DocumentPreviewItem({
-  date,
   fileName,
-  fileId,
-  fileSize,
+  fileType,
+  id,
+  status,
 }: MedicalDocument) {
   const { open, close } = useOverlay();
   return (
-    <PreviewWithControls
-      primaryText={fileName}
-      secondaryText={format(date, DATE_ONLY)}
-    >
-      <SquareIconButton
-        Icon={
-          AppointmentHistoryIcon //FEATURE OpenFileInNewTab
-        }
-      />
+    <PreviewWithControls primaryText={fileName} secondaryText={'fix date'}>
+      {status == 'NORMAL' ? (
+        <SquareIconButton
+          Icon={AppointmentHistoryIcon}
+          onPress={() => {
+            //REDUX download file or preview
+          }}
+        />
+      ) : (
+        <span>{status}</span> //UI improve span
+      )}
       <SquareIconButton
         Icon={TrashCan}
         onPress={() => {
           open(
             <WarningModal
-              warningTitle={`You are about to delete ${fileName} (${fileSize}) ? `}
+              warningTitle={`You are about to delete ${fileName} (${fileType}) ? `}
               warningDescription="the file will no longer be available after this action "
             >
               <TextButton
@@ -41,6 +43,7 @@ export default function DocumentPreviewItem({
                 backgroundColor={color.hot_red}
                 width="100%"
                 onPress={() => {
+                  //REDUX delete file on the server
                   close();
                 }}
               />
