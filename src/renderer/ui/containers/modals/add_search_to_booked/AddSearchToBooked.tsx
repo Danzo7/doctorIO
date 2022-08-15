@@ -10,8 +10,10 @@ import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '../book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { useFindPatientByNameQuery } from '@redux/instance/record/recordApi';
+import { useFindPatientByNameMutation } from '@redux/instance/record/recordApi';
 import LoadingSpinner from '@components/loading_spinner';
+import { useRef } from 'react';
+import { PatientBrief, ServerError } from '@models/instance.model';
 
 interface SearchInput {
   searchField: string;
@@ -19,12 +21,17 @@ interface SearchInput {
 
 interface AddSearchToBookedProps {}
 export default function AddSearchToBooked({}: AddSearchToBookedProps) {
-  const { register, watch } = useForm<SearchInput>();
-  const watchSearch = watch('searchField', '');
-  const { data, isSuccess, isError, error } = useFindPatientByNameQuery(
-    watchSearch.toLowerCase(),
-  );
-  const result = isSuccess && data ? data : undefined;
+  const searchRef = useRef<string>('');
+
+  const { register, handleSubmit } = useForm<SearchInput>({
+    mode: 'onSubmit',
+    defaultValues: { searchField: searchRef.current },
+  });
+  const [FindPatientByName, result] = useFindPatientByNameMutation();
+  const errorRef = useRef<ServerError>();
+  const serverError: ServerError | undefined = (result.error as any)
+    ?.data as ServerError;
+  if (result.isError || result.isSuccess) errorRef.current = serverError;
 
   const { open } = useOverlay();
   return (
@@ -32,50 +39,67 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
       title="Select a patient"
       controls={
         <div className="suggestions-container">
-          {result &&
-            isSuccess &&
-            result.map((pat) => (
-              <PresentationItem
-                primaryText={pat.name}
-                secondaryText={pat.id.toString()}
-                key={pat.id}
-              >
-                <TextButton
-                  text="Select"
-                  backgroundColor={color.cold_blue}
-                  padding="5px 10px"
-                  fontSize={13}
-                  fontWeight={600}
-                  onPress={() => {
-                    open(
-                      <BookAppointmentModal
-                        patientName={pat.name}
-                        id={pat.id}
-                      />,
-                      DEFAULT_MODAL,
-                    );
-                  }}
-                />
-              </PresentationItem>
-            ))}
+          {errorRef.current == undefined && result.isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            result.isSuccess &&
+            (() => {
+              const patients = result.data as PatientBrief[];
+              return patients?.map((pat) => (
+                <PresentationItem
+                  primaryText={pat.name}
+                  secondaryText={pat.id.toString()}
+                  key={pat.id}
+                >
+                  <TextButton
+                    text="Select"
+                    backgroundColor={color.cold_blue}
+                    padding="5px 10px"
+                    fontSize={13}
+                    fontWeight={600}
+                    onPress={() => {
+                      open(
+                        <BookAppointmentModal
+                          patientName={pat.name}
+                          id={pat.id}
+                        />,
+                        DEFAULT_MODAL,
+                      );
+                    }}
+                  />
+                </PresentationItem>
+              ));
+            })()
+          )}
         </div>
       }
     >
-      <Input
-        hint={
-          watchSearch.length > 0
-            ? isError
-              ? 'error from server'
+      <form
+        css={{ flexGrow: 1 }}
+        onSubmit={handleSubmit((value) => {
+          // result.reset();
+          if (searchRef.current != value.searchField) {
+            searchRef.current = value.searchField.trim();
+            FindPatientByName(value.searchField);
+          }
+        })}
+      >
+        <Input
+          errorMsg={
+            errorRef.current?.statusCode == 400
+              ? errorRef.current.message[0]
+              : errorRef.current?.statusCode == 404
+              ? 'No patient found'
               : undefined
-            : undefined
-        }
-        hintAlignment="center"
-        fillContainer
-        placeholder="search for a patient"
-        trailing={<Svg>{search}</Svg>}
-        type="search"
-        {...register('searchField')}
-      />
+          }
+          hintAlignment="center"
+          fillContainer
+          placeholder="search for a patient"
+          trailing={<Svg>{search}</Svg>}
+          type="search"
+          {...register('searchField')}
+        />
+      </form>
     </ModalContainer>
   );
 }
