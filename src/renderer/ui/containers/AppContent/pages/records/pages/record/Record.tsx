@@ -127,13 +127,7 @@ export default function Record({}: RecordProps) {
             />
           </div>
           <div className="record-side-info">
-            <MedicalHistory
-              list={
-                selectedPatient.medicalHistory
-                  ? selectedPatient.medicalHistory
-                  : []
-              }
-            />
+            <MedicalHistory patientId={Number(patientId)} />
             <DocumentPreviewPanel
               list={
                 selectedPatient.medicalDocuments

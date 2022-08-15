@@ -1,16 +1,19 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
+import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
 import PreviewWithControls from '@components/preview_with_controls';
 import { DATE_ONLY } from '@constants/data_format';
 import AddMedicalHistoryModal from '@containers/modals/add_medical_history_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { MedicalHistory as MedicalHistoryModel } from '@models/instance.model';
+import { useGetMedicalHistoryQuery } from '@redux/instance/record/recordApi';
 import { format } from 'date-fns';
 
 interface MedicalHistoryProps {
-  list: MedicalHistoryModel[];
+  patientId: number;
 }
-export default function MedicalHistory({ list }: MedicalHistoryProps) {
+export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
+  const { isLoading, isSuccess, error, data, isFetching } =
+    useGetMedicalHistoryQuery(patientId);
   const { open } = useOverlay();
   return (
     <PreviewList
@@ -21,7 +24,7 @@ export default function MedicalHistory({ list }: MedicalHistoryProps) {
           text="Add"
           blend
           onPress={() => {
-            open(<AddMedicalHistoryModal />, {
+            open(<AddMedicalHistoryModal patientId={patientId} />, {
               closeOnClickOutside: true,
               isDimmed: true,
               clickThrough: false,
@@ -33,13 +36,19 @@ export default function MedicalHistory({ list }: MedicalHistoryProps) {
       }
       notScrollable
     >
-      {list.map(({ date, description, id }, index) => (
-        <PreviewWithControls
-          primaryText={description}
-          secondaryText={format(date, DATE_ONLY)}
-          key={id.toString() + index}
-        />
-      ))}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        isSuccess &&
+        !isFetching &&
+        data.map(({ date, description, id }, index) => (
+          <PreviewWithControls
+            primaryText={description}
+            secondaryText={format(date, DATE_ONLY)}
+            key={id.toString() + index}
+          />
+        ))
+      )}
     </PreviewList>
   );
 }
