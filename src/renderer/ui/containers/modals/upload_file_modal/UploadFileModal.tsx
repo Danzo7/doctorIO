@@ -4,10 +4,14 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
+import { useUploadFileMutation } from '@redux/instance/record/recordApi';
 import Upload from 'toSvg/link.svg?icon';
 
-interface UploadFileModalProps {}
-export default function UploadFileModal({}: UploadFileModalProps) {
+interface UploadFileModalProps {
+  patientId: number;
+}
+export default function UploadFileModal({ patientId }: UploadFileModalProps) {
+  const [uploadFile, result] = useUploadFileMutation();
   return (
     <ModalContainer
       title="Upload a document"
