@@ -1,4 +1,4 @@
-import { Patient, PatientBrief } from '@models/instance.model';
+import { MedicalHistory, Patient, PatientBrief } from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const api = createApi({
@@ -6,7 +6,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3000/record',
   }),
-  tagTypes: ['patient'],
+  tagTypes: ['patient', 'MedicalHistory'],
   endpoints: (builder) => ({
     //Patient
     //GET
@@ -15,6 +15,7 @@ export const api = createApi({
     }),
     getPatients: builder.query<PatientBrief, any>({
       query: () => `/patient`,
+      providesTags: ['patient'],
     }),
     findPatientByName: builder.mutation<PatientBrief[], string>({
       query: (name: string) => ({
@@ -43,6 +44,24 @@ export const api = createApi({
       query: (body) => ({ url: `/patient`, method: 'POST', body: body }),
       invalidatesTags: ['patient'],
     }),
+    //MedicalHistory
+    //GET
+    getMedicalHistory: builder.query<MedicalHistory[], number>({
+      query: (patId) => `/history?patientId=${patId}`,
+      providesTags: ['MedicalHistory'],
+    }),
+    //POST
+    addMedicalHistory: builder.mutation<
+      MedicalHistory[],
+      { patientId: number; body: { date: Date; description: string } }
+    >({
+      query: ({ patientId, body }) => ({
+        url: `/history?patientId=${patientId}`,
+        method: 'POST',
+        body: body,
+      }),
+      invalidatesTags: ['MedicalHistory'],
+    }),
   }),
 });
 export default api;
@@ -52,4 +71,8 @@ export const {
   useFindPatientByNameMutation,
   useGetPatientDetailQuery,
   useLazyFindPatientByName2Query,
+  useGetMedicalHistoryQuery,
+  useAddPatientMutation,
+  useAddMedicalHistoryMutation,
+  useFindPatientByName2Query,
 } = api;
