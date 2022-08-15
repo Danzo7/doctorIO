@@ -1,4 +1,9 @@
-import { MedicalHistory, Patient, PatientBrief } from '@models/instance.model';
+import {
+  MedicalDocument,
+  MedicalHistory,
+  Patient,
+  PatientBrief,
+} from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const api = createApi({
@@ -6,7 +11,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:3000/record',
   }),
-  tagTypes: ['patient', 'MedicalHistory'],
+  tagTypes: ['patient', 'MedicalHistory', 'MedicalDocument'],
   endpoints: (builder) => ({
     //Patient
     //GET
@@ -58,9 +63,27 @@ export const api = createApi({
       query: ({ patientId, body }) => ({
         url: `/history?patientId=${patientId}`,
         method: 'POST',
-        body: body,
+        body: { ...body },
       }),
       invalidatesTags: ['MedicalHistory'],
+    }),
+    //documentService
+    //GET
+    getMedicalDocuments: builder.query<
+      Pick<MedicalDocument, 'id' | 'fileName' | 'fileType' | 'status'>[],
+      number
+    >({
+      query: (patId) => `/document?patientId=${patId}`,
+      providesTags: ['MedicalDocument'],
+    }),
+    //POST
+    uploadFile: builder.mutation<boolean, { patientId: number; file: any }>({
+      query: ({ patientId, file }) => ({
+        url: `/document/upload?patientId=${patientId}`,
+        method: 'POST',
+        body: { ...file },
+      }),
+      invalidatesTags: ['MedicalDocument'],
     }),
   }),
 });
@@ -75,4 +98,6 @@ export const {
   useAddPatientMutation,
   useAddMedicalHistoryMutation,
   useFindPatientByName2Query,
+  useGetMedicalDocumentsQuery,
+  useUploadFileMutation,
 } = api;
