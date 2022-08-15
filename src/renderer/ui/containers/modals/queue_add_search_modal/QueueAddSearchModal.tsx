@@ -10,7 +10,10 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { useFindPatientByNameMutation } from '@redux/instance/record/recordApi';
+import {
+  useFindPatientByNameMutation,
+  useLazyFindPatientByName2Query,
+} from '@redux/instance/record/recordApi';
 import { PatientBrief, ServerError } from '@models/instance.model';
 import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
@@ -38,7 +41,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
     mode: 'onSubmit',
   });
   const { open } = useOverlay();
-  const [FindPatientByName, result] = useFindPatientByNameMutation();
+  const [trigger, result] = useLazyFindPatientByName2Query();
   const errorRef = useRef<ServerError>();
   const serverError: ServerError | undefined = (result.error as any)
     ?.data as ServerError;
@@ -83,7 +86,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
           // result.reset();
           if (searchRef.current != value.searchField) {
             searchRef.current = value.searchField;
-            FindPatientByName(searchRef.current);
+            trigger(searchRef.current, false);
           }
         })}
       >
