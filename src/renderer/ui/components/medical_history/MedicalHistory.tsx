@@ -15,6 +15,7 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
   const { isLoading, isSuccess, error, data, isFetching } =
     useGetMedicalHistoryQuery(patientId);
   const { open } = useOverlay();
+
   return (
     <PreviewList
       maxHeight={300}
@@ -40,12 +41,11 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
         <LoadingSpinner />
       ) : (
         isSuccess &&
-        !isFetching &&
-        data.map(({ date, description, id }, index) => (
+        data.map((med, index) => (
           <PreviewWithControls
-            primaryText={description}
-            secondaryText={format(date, DATE_ONLY)}
-            key={id.toString() + index}
+            primaryText={med.description}
+            secondaryText={'fix date'}
+            key={index}
           />
         ))
       )}

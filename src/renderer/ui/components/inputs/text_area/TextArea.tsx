@@ -10,7 +10,7 @@ interface TextAreaProps {
   errorMessage?: string;
   hint?: string;
   fillContainer?: true;
-  onSubmit?: any;
+  onSubmit?: () => void;
 }
 export default forwardRef(function TextArea(
   {
