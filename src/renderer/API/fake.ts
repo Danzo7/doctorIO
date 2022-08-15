@@ -346,7 +346,7 @@ export const appointmentQueue: Appointment[] = [
     subject: 'Inner bleed',
   },
 ];
-export const patients: Patient[] = [
+/* export const patients: Patient[] = [
   {
     patId: 1,
     gender: 'male',
@@ -820,6 +820,7 @@ export const patients: Patient[] = [
     },
   },
 ];
+
 export const appointmentQueueData: AppointmentQueue = {
   isOwner: false,
   state: 'WAITING',
@@ -869,14 +870,14 @@ export const appointmentQueueData: AppointmentQueue = {
           ),
         });
       return arr;
-    })(),*/
+    })(),
   ],
 };
-
+*/
 export const bookedAppointments: BookedAppointment[] = [
   {
-    patientId: patients[0].patId,
-    patientName: patients[0].firstName + ' ' + patients[0].lastName,
+    patientId: 1,
+    patientName: 'aymen' + ' ' + 'daouadji',
     bookDate: new Date('2022-05-24'),
     bookedBy: {
       memberId: members[0].memberId,
@@ -885,8 +886,8 @@ export const bookedAppointments: BookedAppointment[] = [
     state: 'PANDING',
   },
   {
-    patientId: patients[0].patId,
-    patientName: patients[0].firstName + ' ' + patients[0].lastName,
+    patientId: 2,
+    patientName: 'aymen' + ' ' + 'daouadji',
     bookDate: new Date('2023-05-24'),
     bookedBy: {
       memberId: members[0].memberId,
@@ -895,8 +896,8 @@ export const bookedAppointments: BookedAppointment[] = [
     state: 'PANDING',
   },
   {
-    patientId: patients[1].patId,
-    patientName: patients[1].firstName + ' ' + patients[1].lastName,
+    patientId: 3,
+    patientName: 'aymen' + ' ' + 'daouadji',
     bookDate: new Date('2022-05-24'),
     bookedBy: {
       memberId: members[0].memberId,
