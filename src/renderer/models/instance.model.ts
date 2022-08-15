@@ -22,20 +22,18 @@ interface AppointmentQueueItem {
   test?: Test;
 }
 interface Patient {
-  patId: number;
   firstName: string;
   lastName: string;
   birthDate: Date;
   registerDate: Date;
   gender: 'male' | 'female';
   age: number;
-  test: Test;
-  medicalDocuments: MedicalDocument[];
-  medicalHistory: MedicalHistory[];
-  appointments: Appointment[];
+  test?: Test;
+  medicalDocuments?: MedicalDocument[];
+  medicalHistory?: MedicalHistory[];
+  appointments?: Appointment[];
   nextAppointment?: Date;
-  status: 'active' | 'off';
-  specification?: PatientSpecification;
+  status: boolean;
 }
 interface PatientBrief {
   id: number;
@@ -55,7 +53,17 @@ interface Session {
   notice: string;
   prescription: Drug[];
 }
-
+// eslint-disable-next-line @typescript-eslint/naming-convention
+interface Appointment_v2 {
+  member?: { memberId: number; memberName: string }; //
+  assignedBy: { memberId: number; memberName: string };
+  subject: string;
+  state: 'done' | 'missed' | 'upcoming';
+  bookedDate: Date; //if date!=bookDate, then it is booked
+  date?: Date;
+  session?: Session;
+  diagnosis?: string;
+}
 type Appointment = {
   id: number;
   patId?: number; //foreign
@@ -125,4 +133,5 @@ export type {
   Test,
   Drug,
   QueueState,
+  Appointment_v2,
 };
