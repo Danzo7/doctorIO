@@ -4,12 +4,21 @@ import LoadingSpinner from '@components/loading_spinner';
 import RecordInfoItem from '@components/record_info_item';
 import useNavigation from '@libs/hooks/useNavigation';
 import { PatientBrief, ServerError } from '@models/instance.model';
-import { useFindPatientByNameMutation } from '@redux/instance/record/recordApi';
+import { useLazyFindPatientByName2Query } from '@redux/instance/record/recordApi';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Search from 'toSvg/search.svg?icon';
 import './style/index.scss';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
+const schema = z.object({
+  searchField: z.preprocess(
+    (value) =>
+      typeof value !== 'string' ? value : value.trim().replace(/\s\s+/g, ' '),
+    z.string().min(1),
+  ),
+});
 interface SearchInput {
   searchField: string;
 }
@@ -20,9 +29,9 @@ export default function RecordSearch({}: RecordSearchProps) {
 
   const { register, handleSubmit } = useForm<SearchInput>({
     mode: 'onSubmit',
-    defaultValues: { searchField: searchRef.current },
+    resolver: zodResolver(schema),
   });
-  const [FindPatientByName, result] = useFindPatientByNameMutation();
+  const [trigger, result] = useLazyFindPatientByName2Query();
   const errorRef = useRef<ServerError>();
   const serverError: ServerError | undefined = (result.error as any)
     ?.data as ServerError;
@@ -36,12 +45,19 @@ export default function RecordSearch({}: RecordSearchProps) {
         onSubmit={handleSubmit((value) => {
           // result.reset();
           if (searchRef.current != value.searchField) {
-            searchRef.current = value.searchField.trim();
-            FindPatientByName(value.searchField);
+            searchRef.current = value.searchField;
+            trigger(searchRef.current, false);
           }
         })}
       >
         <Input
+          errorMsg={
+            errorRef.current?.statusCode == 400
+              ? errorRef.current.message[0]
+              : errorRef.current?.statusCode == 404
+              ? 'No patient found'
+              : undefined
+          }
           placeholder="Enter patient Id"
           trailing={<Search />}
           type={'search'}
@@ -52,7 +68,7 @@ export default function RecordSearch({}: RecordSearchProps) {
       </form>
       {errorRef.current?.statusCode == 404 ? (
         <div className="not-found">No Patient found !</div>
-      ) : errorRef.current == undefined && result.isLoading ? (
+      ) : errorRef.current == undefined && result.isFetching ? (
         <LoadingSpinner />
       ) : (
         result.isSuccess &&
