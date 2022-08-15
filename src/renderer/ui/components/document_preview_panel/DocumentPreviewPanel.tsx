@@ -1,15 +1,19 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
+import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
 import UploadFileModal from '@containers/modals/upload_file_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { MedicalDocument } from '@models/instance.model';
+import { useGetMedicalDocumentsQuery } from '@redux/instance/record/recordApi';
 import DocumentPreviewItem from './document_preview_item';
 interface DocumentPreviewPanelProps {
-  list: MedicalDocument[];
+  patientId: number;
 }
 export default function DocumentPreviewPanel({
-  list,
+  patientId,
 }: DocumentPreviewPanelProps) {
+  const { isSuccess, isError, isLoading, data, isFetching } =
+    useGetMedicalDocumentsQuery(patientId);
   const { open } = useOverlay();
   return (
     <PreviewList
@@ -19,7 +23,7 @@ export default function DocumentPreviewPanel({
         <DarkLightCornerButton
           text="Upload"
           onPress={() => {
-            open(<UploadFileModal />, {
+            open(<UploadFileModal patientId={patientId} />, {
               closeOnClickOutside: true,
               isDimmed: true,
               clickThrough: false,
@@ -30,9 +34,22 @@ export default function DocumentPreviewPanel({
         />
       }
     >
-      {list.map((props, index) => (
-        <DocumentPreviewItem {...props} key={props.fileId.toString() + index} />
-      ))}
+      {isError ? (
+        <div>error</div>
+      ) : isLoading || isFetching ? (
+        <LoadingSpinner />
+      ) : (
+        isSuccess &&
+        data.map(({ id, fileName, fileType, status }, index) => (
+          <DocumentPreviewItem
+            id={id}
+            fileName={fileName}
+            fileType={fileType}
+            status={status}
+            key={id + index}
+          />
+        ))
+      )}
     </PreviewList>
   );
 }
