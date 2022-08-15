@@ -12,14 +12,17 @@ import useNavigation from '@libs/hooks/useNavigation';
 import { useForm } from 'react-hook-form';
 import Search from 'toSvg/search.svg?icon';
 import './style/index.scss';
-import { Patient } from '@models/instance.model';
+import { Patient, PatientBrief } from '@models/instance.model';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '@containers/modals/book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { patients } from '@api/fake';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useFindPatientByNameQuery } from '@redux/instance/record/recordApi';
+import { useEffect, useRef } from 'react';
+import {
+  useGetPatientDetailQuery,
+  useLazyFindPatientByName2Query,
+} from '@redux/instance/record/recordApi';
+import LoadingSpinner from '@components/loading_spinner';
 
 interface SearchInput {
   searchField: string;
@@ -27,73 +30,96 @@ interface SearchInput {
 
 interface RecordProps {}
 export default function Record({}: RecordProps) {
-  const { register, watch, setValue } = useForm<SearchInput>();
+  const { register, handleSubmit, watch, setValue } = useForm<SearchInput>({
+    mode: 'onSubmit',
+    defaultValues: { searchField: '' },
+  });
   const watchSearch = watch('searchField', '');
   const { navigate } = useNavigation();
   const { open } = useOverlay();
   const { patientId } = useParams();
+  const [trigger, result2, lastPromiseInfo] = useLazyFindPatientByName2Query();
 
-  const [patient, setPatient] = useState<Patient | undefined>();
-  //REDUX search patient by id/name
+  const { isError, error, isLoading, isSuccess, data, currentData } =
+    useGetPatientDetailQuery(Number(patientId));
 
-  useEffect(() => {
-    setPatient(patients.find(({ patId }) => patId.toString() == patientId));
-  }, [patientId]);
-  const { data, isSuccess, isError, error } = useFindPatientByNameQuery(
-    watchSearch.toLowerCase(),
-  );
-  const selectedPatient = isSuccess && data ? data[0] : undefined;
+  const selectedPatient = isSuccess && data ? data : undefined;
+  useEffect(() => {}, [patientId]);
+
   return (
     <div className="record">
-      <Input
-        placeholder="Enter patient Id"
-        trailing={<Search />}
-        type={'search'}
-        {...register('searchField')}
-        grow={false}
-      />
+      <form
+        onSubmit={handleSubmit((value) => {
+          // result.reset();
+          trigger(value.searchField.trim(), false);
+        })}
+      >
+        <Input
+          placeholder="Enter patient Id"
+          trailing={<Search />}
+          type={'search'}
+          {...register('searchField')}
+          grow={false}
+        />
+      </form>
       {watchSearch ? (
-        selectedPatient ? (
-          <RecordInfoItem
-            firstName={selectedPatient.name.split(' ')[0]}
-            lastName={selectedPatient.name.split(' ')[1]}
-            patId={selectedPatient.id}
-            onViewRecord={() => {
-              setValue('searchField', '');
-              navigate(`/records/${selectedPatient.id}`);
-            }}
-          />
+        result2.isLoading ? (
+          <LoadingSpinner />
+        ) : result2.isSuccess && !result2.isFetching ? (
+          result2.data.map((pat) => (
+            <RecordInfoItem
+              key={pat.id}
+              id={pat.id}
+              name={pat.name}
+              onViewRecord={() => {
+                setValue('searchField', '');
+                navigate(`/records/${pat.id}`);
+              }}
+            />
+          ))
         ) : (
           <div className="not-found">
             <span>No patient found ! </span>
           </div>
         )
-      ) : patient ? (
+      ) : selectedPatient ? (
         <div className="record-content">
           <div className="record-infos">
             <PatientInfoCard
-              birthDate={patient.birthDate}
-              activeStatus={patient.status}
-              registerDate={patient.registerDate}
-              gender={patient.gender}
+              birthDate={new Date()}
+              activeStatus={selectedPatient.status}
+              registerDate={new Date()}
+              gender={selectedPatient.gender}
               LeftComp={
                 <MiniPatientCard
-                  patientFullName={patient.firstName + ' ' + patient.lastName}
-                  patientId={'#' + patient.patId}
-                  numPostAppointment={patient.appointments.length}
-                  nextAppointmentDate={patient.nextAppointment}
+                  patientFullName={
+                    selectedPatient.firstName + ' ' + selectedPatient.lastName
+                  }
+                  patientId={'#' + patientId}
+                  numPostAppointment={
+                    selectedPatient.appointments
+                      ? selectedPatient.appointments.length
+                      : 0
+                  }
+                  nextAppointmentDate={selectedPatient.nextAppointment}
                 />
               }
             />
-            <PatientSpecificsCard data={patient.test} />
+            <PatientSpecificsCard
+              data={selectedPatient.test ? selectedPatient.test : []}
+            />
             <BookingTimeline
-              appointments={patient.appointments}
-              patientId={patient.patId}
+              appointments={
+                selectedPatient.appointments ? selectedPatient.appointments : []
+              }
+              patientId={Number(patientId)}
               onPress={() => {
                 open(
                   <BookAppointmentModal
-                    id={patient.patId}
-                    patientName={patient.firstName + ' ' + patient.lastName}
+                    id={Number(patientId)}
+                    patientName={
+                      selectedPatient.firstName + ' ' + selectedPatient.lastName
+                    }
                   />,
                   DEFAULT_MODAL,
                 );
@@ -101,8 +127,20 @@ export default function Record({}: RecordProps) {
             />
           </div>
           <div className="record-side-info">
-            <MedicalHistory list={patient.medicalHistory} />
-            <DocumentPreviewPanel list={patient.medicalDocuments} />
+            <MedicalHistory
+              list={
+                selectedPatient.medicalHistory
+                  ? selectedPatient.medicalHistory
+                  : []
+              }
+            />
+            <DocumentPreviewPanel
+              list={
+                selectedPatient.medicalDocuments
+                  ? selectedPatient.medicalDocuments
+                  : []
+              }
+            />
           </div>
         </div>
       ) : (
