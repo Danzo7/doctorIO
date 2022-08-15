@@ -1,4 +1,4 @@
-import { clinic, patients } from '@api/fake';
+import { clinic } from '@api/fake';
 import { timeToDate } from '@helpers/date.helper';
 import { differenceInSeconds } from 'date-fns';
 import { useCallback, useEffect, useRef, useState } from 'react';

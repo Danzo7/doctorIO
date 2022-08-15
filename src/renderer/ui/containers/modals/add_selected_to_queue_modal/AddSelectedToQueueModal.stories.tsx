@@ -10,7 +10,6 @@ const Template: Story<ComponentProps<typeof AddSelectedToQueueModal>> = (
 ) => <AddSelectedToQueueModal {...args} />;
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  firstName: 'John',
-  lastName: 'Doe',
-  patId: 18,
+  id: 1,
+  name: 'aymen daouadji',
 };

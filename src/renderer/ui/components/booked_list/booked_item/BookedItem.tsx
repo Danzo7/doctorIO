@@ -65,9 +65,8 @@ function BookedItem({
                   onPress: () => {
                     open(
                       <AddSelectedToQueueModal
-                        firstName={patientName.split(' ')[0]}
-                        lastName={patientName.split(' ')[1]}
-                        patId={patientId}
+                        id={patientId}
+                        name={patientName}
                       />,
                       DEFAULT_MODAL,
                     );

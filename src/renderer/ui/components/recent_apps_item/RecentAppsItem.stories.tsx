@@ -10,7 +10,6 @@ const Template: Story<ComponentProps<typeof RecentAppsItem>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  firstName: 'John',
-  lastName: 'Doe',
-  patId: 18,
+  id: 123456789,
+  name: 'john doe',
 };

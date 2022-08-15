@@ -9,4 +9,4 @@ const Template: Story<ComponentProps<typeof RecordInfoItem>> = (args) => (
   <RecordInfoItem {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = { firstName: 'John', patId: 12345679, lastName: 'Doe' };
+FirstStory.args = { name: 'John doe', id: 12345679 };

@@ -5,8 +5,7 @@ import './style/index.scss';
 import ModalContainer from '@components/modal_container';
 import useNavigation from '@libs/hooks/useNavigation';
 import { ComponentProps, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { startSession } from '@redux/instance/appointmentQueue/appointmentQueueSlice';
+
 import {
   useNotifyQueueMutation,
   useStartNextMutation,

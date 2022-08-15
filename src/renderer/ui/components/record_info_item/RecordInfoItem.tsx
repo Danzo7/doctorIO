@@ -1,22 +1,18 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import PresentationItem from '@components/presentation_item';
-import { Patient } from '@models/instance.model';
+import { PatientBrief } from '@models/instance.model';
 import './style/index.scss';
 interface RecordInfoItemProps {
   onViewRecord?: () => void;
 }
 export default function RecordInfoItem({
-  firstName,
-  lastName,
-  patId,
+  name,
+  id,
   onViewRecord,
-}: Pick<Patient, 'patId' | 'firstName' | 'lastName'> & RecordInfoItemProps) {
+}: PatientBrief & RecordInfoItemProps) {
   return (
-    <PresentationItem
-      primaryText={firstName + ' ' + lastName}
-      secondaryText={`#${patId}`}
-    >
+    <PresentationItem primaryText={name} secondaryText={`#${id}`}>
       <TextButton
         text="View record"
         backgroundColor={color.cold_blue}
