@@ -18,7 +18,7 @@ function App({}: AppProps) {
           user ? (
             user.selectedClinic ? ( //FEATURE try to connect to selected clinic
               <Routes>
-                <Route path="session" element={<MedicalSession patId={1} />} />
+                <Route path="session" element={<MedicalSession />} />
                 <Route path="*" element={<MainLayer />} />
               </Routes>
             ) : (

@@ -5,21 +5,20 @@ import PreviewInfo from '@components/preview_info';
 import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { Patient } from '@models/instance.model';
 import './style/index.scss';
 
 interface MedicalSessionSideBarProps {
-  patient: Patient;
+  patientId: number;
 }
 export default function MedicalSessionSideBar({
-  patient,
+  patientId,
 }: MedicalSessionSideBarProps) {
   const { open } = useOverlay();
 
   return (
     <div className="medical-session-side-bar">
       <div className="medical-session-side-bar-content">
-        <PreviewInfo
+        {/*    <PreviewInfo
           title="Diagnosis"
           data={patient.test}
           buttonNode={
@@ -31,9 +30,9 @@ export default function MedicalSessionSideBar({
               }}
             />
           }
-        />
-        <MedicalHistory list={patient.medicalHistory} />
-        <AppointmentHistoryPanel
+        />   */}
+        <MedicalHistory patientId={patientId} />
+        {/*   <AppointmentHistoryPanel
           list={
             patient.appointments
               .filter(
@@ -43,7 +42,7 @@ export default function MedicalSessionSideBar({
               )
               .slice(-3) as any
           }
-        />
+        />  */}
       </div>
     </div>
   );
