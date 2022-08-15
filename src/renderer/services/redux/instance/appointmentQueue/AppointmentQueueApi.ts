@@ -1,6 +1,7 @@
 import {
   AppointmentQueue,
   AppointmentQueueItem,
+  QueueState,
   Test,
 } from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
@@ -19,7 +20,7 @@ export const api = createApi({
       query: (roleId) => `/${roleId}/item`,
       providesTags: ['item'],
     }),
-    getQueueState: builder.query({
+    getQueueState: builder.query<QueueState, number>({
       query: (roleId) => `/${roleId}/state`,
       providesTags: ['state'],
     }),
@@ -87,6 +88,14 @@ export const api = createApi({
     notifyQueue: builder.mutation({
       query: (data: { roleId: number; position: number }) => ({
         url: `/${data.roleId}/state/notify`,
+        method: 'PATCH',
+        body: { position: data.position },
+      }),
+      invalidatesTags: ['state'],
+    }),
+    progressQueueState: builder.mutation({
+      query: (data: { roleId: number; position: number }) => ({
+        url: `/${data.roleId}/state/progress`,
         method: 'PATCH',
         body: { position: data.position },
       }),
