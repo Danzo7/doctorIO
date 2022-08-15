@@ -44,7 +44,7 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
         data.map((med, index) => (
           <PreviewWithControls
             primaryText={med.description}
-            secondaryText={'fix date'}
+            secondaryText={format(med.date, DATE_ONLY)}
             key={index}
           />
         ))

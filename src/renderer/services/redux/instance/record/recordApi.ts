@@ -5,6 +5,7 @@ import {
   PatientBrief,
 } from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { parseISO } from 'date-fns';
 
 export const api = createApi({
   reducerPath: 'recordApi',
@@ -52,6 +53,17 @@ export const api = createApi({
     //MedicalHistory
     //GET
     getMedicalHistory: builder.query<MedicalHistory[], number>({
+      transformResponse: (
+        response: (Omit<MedicalHistory, 'date'> & { date: string })[],
+      ) => {
+        return response.map((item) => {
+          return {
+            ...item,
+            date: parseISO(item.date),
+          };
+        });
+      },
+
       query: (patId) => `/history?patientId=${patId}`,
       providesTags: ['MedicalHistory'],
     }),
