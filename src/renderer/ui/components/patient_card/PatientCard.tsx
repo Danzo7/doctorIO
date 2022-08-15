@@ -9,7 +9,7 @@ interface PatientSpecificProps {
 interface PatientInfoProps {
   birthDate: Date;
   registerDate: Date;
-  activeStatus: 'active' | 'off';
+  activeStatus: boolean;
   gender: 'male' | 'female';
 
   LeftComp?: ReactNode;
@@ -53,7 +53,7 @@ export function PatientInfoCard({
         />
         <KeyValueItem
           primaryText={'Status'}
-          secondaryText={activeStatus}
+          secondaryText={activeStatus ? 'active' : 'off'}
           width="50%"
         />
       </div>
