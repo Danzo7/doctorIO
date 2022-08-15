@@ -22,6 +22,9 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    findPatientByName2: builder.query<PatientBrief[], string>({
+      query: (name: string) => `/patient/find?name=${name}`,
+    }),
     getPatientDetail: builder.query<Patient, number>({
       query: (patId) => `patient/detail?id=${patId}`,
     }),
@@ -48,4 +51,5 @@ export const {
   useGetPatientsQuery,
   useFindPatientByNameMutation,
   useGetPatientDetailQuery,
+  useLazyFindPatientByName2Query,
 } = api;
