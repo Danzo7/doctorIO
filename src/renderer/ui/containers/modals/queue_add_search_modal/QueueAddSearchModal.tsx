@@ -10,13 +10,20 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import {
-  useFindPatientByNameMutation,
-  useLazyFindPatientByName2Query,
-} from '@redux/instance/record/recordApi';
+import { useFindPatientByNameMutation } from '@redux/instance/record/recordApi';
 import { PatientBrief, ServerError } from '@models/instance.model';
 import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const schema = z.object({
+  searchField: z.preprocess(
+    (value) =>
+      typeof value !== 'string' ? value : value.trim().replace(/\s\s+/g, ' '),
+    z.string().min(1),
+  ),
+});
 
 interface QueueAddSearchModalProps {}
 interface SearchInput {
@@ -24,13 +31,14 @@ interface SearchInput {
 }
 
 export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
-  const { register, handleSubmit, getValues } = useForm<SearchInput>({
+  const searchRef = useRef<string>('');
+
+  const { register, handleSubmit } = useForm<SearchInput>({
+    resolver: zodResolver(schema),
     mode: 'onSubmit',
-    defaultValues: { searchField: '' },
   });
   const { open } = useOverlay();
-  const [trigger, result, lastPromiseInfo] = useLazyFindPatientByName2Query();
-
+  const [FindPatientByName, result] = useFindPatientByNameMutation();
   const errorRef = useRef<ServerError>();
   const serverError: ServerError | undefined = (result.error as any)
     ?.data as ServerError;
@@ -56,14 +64,13 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
           <LoadingSpinner />
         ) : (
           result.isSuccess &&
-          !result.isFetching &&
           (() => {
             const patients = result.data as PatientBrief[];
             return patients?.map((patient) => (
               <RecentAppsItem
                 key={patient.id}
-                id={patient.id}
                 name={patient.name}
+                id={patient.id}
               />
             ));
           })()
@@ -73,17 +80,19 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
       <form
         css={{ flexGrow: 1 }}
         onSubmit={handleSubmit((value) => {
-          trigger(value.searchField.trim(), false);
+          // result.reset();
+          if (searchRef.current != value.searchField) {
+            searchRef.current = value.searchField;
+            FindPatientByName(searchRef.current);
+          }
         })}
       >
         <Input
           errorMsg={
-            getValues('searchField').length > 0
-              ? errorRef.current?.statusCode == 400
-                ? errorRef.current.message[0]
-                : errorRef.current?.statusCode == 404
-                ? 'No patient found'
-                : undefined
+            errorRef.current?.statusCode == 400
+              ? errorRef.current.message[0]
+              : errorRef.current?.statusCode == 404
+              ? 'No patient found'
               : undefined
           }
           fillContainer
