@@ -23,6 +23,9 @@ export const api = createApi({
       query: (roleId) => `/${roleId}/state`,
       providesTags: ['state'],
     }),
+    getIsQueueOwner: builder.query<boolean, number>({
+      query: (roleId) => `/${roleId}/ownership`,
+    }),
     getNextQueueItem: builder.query({
       query: (roleId) => `/${roleId}/item/next`,
       providesTags: ['state', 'item'],
@@ -148,4 +151,5 @@ export const {
   useNotifyNextMutation,
   useStartNextMutation,
   useEndNextMutation,
+  useGetIsQueueOwnerQuery,
 } = api;
