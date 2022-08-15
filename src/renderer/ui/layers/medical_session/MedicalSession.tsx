@@ -1,4 +1,4 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import TextButton from '@components/buttons/text_button';
@@ -7,7 +7,6 @@ import LoadingSpinner from '@components/loading_spinner';
 import TabMenu from '@components/tab_menu';
 import EndSession from '@containers/modals/end_session';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { Patient } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/recordApi';
 import PatientSmallCard from './components/patient_small_card';
 import MedicalSessionSideBar from './medical_session_side_bar';
@@ -38,7 +37,7 @@ export default function MedicalSession({ patId }: MedicalSessionProps) {
   ) : (
     patient && isSuccess && (
       <div className="medical-session">
-        <MedicalSessionSideBar patient={patient} />
+        <MedicalSessionSideBar patientId={patId} />
         <div className="content-container">
           <Header
             title="Session"
