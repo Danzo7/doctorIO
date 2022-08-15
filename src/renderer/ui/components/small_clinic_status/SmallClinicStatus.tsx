@@ -1,9 +1,12 @@
-import { appointmentQueueData } from '@api/fake';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import ToggleButton from '@components/buttons/toggle_button';
 import Header from '@components/header';
 import Timer from '@components/small_clinic_status/timer';
 import useNavigation from '@libs/hooks/useNavigation';
+import {
+  useGetAppointmentsQuery,
+  useGetIsQueueOwnerQuery,
+} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useState } from 'react';
 import './style/index.scss';
 interface SmallClinicStatusProps {
@@ -16,8 +19,11 @@ export default function SmallClinicStatus({
   const [isAccept, setIsAccept] = useState(true); //FEATURE set queue state to paused
 
   const { navigate } = useNavigation();
-  const count = appointmentQueueData.appointments.length; //REDUX getAppointmentQueue count
-  const isOwner = appointmentQueueData.isOwner;
+  const ownershipData = useGetIsQueueOwnerQuery(1);
+  //REDUX getAppointmentQueue count
+  const appointmentsQuery = useGetAppointmentsQuery(1);
+  const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
+  const isOwner = ownershipData.isSuccess ? ownershipData.data : undefined;
   return (
     <div
       css={{ padding: !hasViewClinic ? '20px 0' : '' }}
