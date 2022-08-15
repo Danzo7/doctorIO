@@ -63,7 +63,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
               open(<AddPatientModal />, DEFAULT_MODAL);
             }}
           />
-        ) : errorRef.current == undefined && result.isLoading ? (
+        ) : errorRef.current == undefined && result.isFetching ? (
           <LoadingSpinner />
         ) : (
           result.isSuccess &&
