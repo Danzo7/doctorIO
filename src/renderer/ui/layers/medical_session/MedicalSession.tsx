@@ -9,7 +9,9 @@ import EndSession from '@containers/modals/end_session';
 import WarningModal from '@containers/modals/warning_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { Patient } from '@models/instance.model';
+import { useGetQueueStateQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useGetPatientDetailQuery } from '@redux/instance/record/recordApi';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
 import PatientSmallCard from './components/patient_small_card';
 import MedicalSessionSideBar from './medical_session_side_bar';
 import NoticeTab from './pages/notice_tab';
@@ -17,13 +19,18 @@ import PrescriptionTab from './pages/prescription_tab';
 import SessionParameter from './pages/session_parameter';
 import './style/index.scss';
 
-interface MedicalSessionProps {
-  patId: number;
-}
+interface MedicalSessionProps {}
 
-export default function MedicalSession({ patId }: MedicalSessionProps) {
-  const { isLoading, data, isSuccess, isError, error } =
-    useGetPatientDetailQuery(patId);
+export default function MedicalSession({}: MedicalSessionProps) {
+  const stateQuery = useGetQueueStateQuery(1);
+  const patId =
+    stateQuery.isSuccess &&
+    stateQuery.data.selected &&
+    stateQuery.data.state == 'IN_PROGRESS'
+      ? stateQuery.data.selected.patientId
+      : undefined;
+  const { isLoading, data, isSuccess, isError, error, isFetching } =
+    useGetPatientDetailQuery(patId ? patId : skipToken);
   const { open, openTooltip } = useOverlay();
   const openEndSessionModal = () => {
     open(<EndSession />, {
@@ -35,18 +42,17 @@ export default function MedicalSession({ patId }: MedicalSessionProps) {
       closeBtn: 'inner',
     });
   };
-  return isLoading ? (
+  return isLoading ||
+    isFetching ||
+    stateQuery.isFetching ||
+    stateQuery.isLoading ? (
     <LoadingSpinner />
-  ) : isError ? (
-    <WarningModal
-      warningTitle="Error"
-      warningDescription={'Something went wrong'}
-    />
-  ) : (
+  ) : isSuccess && patId ? (
     (() => {
       const patient = data as Patient;
       return (
         <div className="medical-session">
+          <MedicalSessionSideBar patientId={patId} />
           <div className="content-container">
             <Header
               title="Session"
@@ -100,5 +106,10 @@ export default function MedicalSession({ patId }: MedicalSessionProps) {
         </div>
       );
     })()
+  ) : (
+    <WarningModal
+      warningTitle="Error"
+      warningDescription={'Something went wrong'}
+    />
   );
 }
