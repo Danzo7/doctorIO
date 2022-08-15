@@ -4,7 +4,7 @@ import './style/index.scss';
 interface WarningModalProps {
   warningTitle: string;
   warningDescription: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 export default function WarningModal({
   warningTitle,
