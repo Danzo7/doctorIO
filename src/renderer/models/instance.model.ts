@@ -85,14 +85,12 @@ type Appointment = {
 );
 
 interface MedicalDocument {
-  fileId: number;
+  id: string;
   fileName: string;
   fileType: string;
-  fileSize: number;
-  filePath: string;
-  date: Date;
+  status: 'NORMAL' | 'LOST' | 'CORRUPTED';
+  date?: Date;
 }
-
 interface Drug {
   id: number;
   name: string;
