@@ -19,6 +19,7 @@ interface InputWrapperProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
   noFocus?: true;
   height?: number | string;
+  disabled?: boolean;
 }
 
 export default function InputWrapper({
@@ -34,6 +35,7 @@ export default function InputWrapper({
   onClick,
   onWheel,
   maxWidth,
+  disabled,
   fillContainer,
   noFocus,
   height = 40,
@@ -58,7 +60,9 @@ export default function InputWrapper({
   );
   return (
     <div
-      className={`input-wrapper${errorMessage ? ' error' : ''}`}
+      className={`input-wrapper${errorMessage ? ' error' : ''}${
+        disabled ? ' disabled' : ''
+      }`}
       onClick={(e) => {
         if (!noFocus) e.currentTarget?.querySelector('input')?.focus();
         onClick?.(e);

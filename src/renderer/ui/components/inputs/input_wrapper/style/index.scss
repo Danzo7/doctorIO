@@ -59,4 +59,10 @@
       @include bad;
     }
   }
+  &.disabled{
+    opacity: 0.5;
+    filter: blur(1px);
+    cursor: no-drop;
+    pointer-events: none;
+  }
 }

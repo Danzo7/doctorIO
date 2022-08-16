@@ -47,6 +47,7 @@ interface InputProps {
   fillContainer?: true;
   grow?: boolean;
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
+  disabled?: boolean;
 }
 export default forwardRef(function Input(
   {
@@ -61,7 +62,7 @@ export default forwardRef(function Input(
     fillContainer,
     grow = true,
     hintAlignment,
-
+    disabled,
     ...others
   }: InputProps & FormHookProps,
   ref: any,
@@ -76,6 +77,7 @@ export default forwardRef(function Input(
       hintAlignment={hintAlignment}
       label={label}
       grow={grow}
+      disabled={disabled}
     >
       {(type as NumericInput)?.type == 'numeric' ? (
         <NumberInput
@@ -93,6 +95,7 @@ export default forwardRef(function Input(
           leading={leading}
           trailing={trailing}
           fillContainer
+          disabled={disabled}
         >
           {children
             ? children
@@ -113,6 +116,7 @@ export default forwardRef(function Input(
                       type={type as HTMLInputTypeAttribute}
                       {...others}
                       ref={ref}
+                      disabled={disabled}
                     ></input>
                   );
               })()}
