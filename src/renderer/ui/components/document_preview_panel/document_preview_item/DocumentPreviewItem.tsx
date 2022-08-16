@@ -16,10 +16,14 @@ export default function DocumentPreviewItem({
   fileType,
   id,
   status,
+  date,
 }: MedicalDocument) {
   const { open, close } = useOverlay();
   return (
-    <PreviewWithControls primaryText={fileName} secondaryText={'fix date'}>
+    <PreviewWithControls
+      primaryText={fileName}
+      secondaryText={format(date, DATE_ONLY)}
+    >
       {status == 'NORMAL' ? (
         <SquareIconButton
           Icon={AppointmentHistoryIcon}

@@ -89,7 +89,7 @@ interface MedicalDocument {
   fileName: string;
   fileType: string;
   status: 'NORMAL' | 'LOST' | 'CORRUPTED';
-  date?: Date;
+  date: Date;
 }
 interface Drug {
   id: number;

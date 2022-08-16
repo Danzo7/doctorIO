@@ -3,7 +3,6 @@ import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
 import UploadFileModal from '@containers/modals/upload_file_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { MedicalDocument } from '@models/instance.model';
 import { useGetMedicalDocumentsQuery } from '@redux/instance/record/recordApi';
 import DocumentPreviewItem from './document_preview_item';
 interface DocumentPreviewPanelProps {
@@ -40,13 +39,14 @@ export default function DocumentPreviewPanel({
         <LoadingSpinner />
       ) : (
         isSuccess &&
-        data.map(({ id, fileName, fileType, status }, index) => (
+        data.map(({ id, fileName, fileType, status, date }, index) => (
           <DocumentPreviewItem
             id={id}
             fileName={fileName}
             fileType={fileType}
             status={status}
             key={id + index}
+            date={date}
           />
         ))
       )}
