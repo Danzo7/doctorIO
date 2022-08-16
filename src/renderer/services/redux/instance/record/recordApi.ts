@@ -89,11 +89,15 @@ export const api = createApi({
       providesTags: ['MedicalDocument'],
     }),
     //POST
-    uploadFile: builder.mutation<boolean, { patientId: number; file: any }>({
-      query: ({ patientId, file }) => ({
+
+    uploadFile: builder.mutation<
+      boolean,
+      { patientId: number; data: FormData }
+    >({
+      query: ({ patientId, data }) => ({
         url: `/document/upload?patientId=${patientId}`,
         method: 'POST',
-        body: { ...file },
+        body: data,
       }),
       invalidatesTags: ['MedicalDocument'],
     }),
