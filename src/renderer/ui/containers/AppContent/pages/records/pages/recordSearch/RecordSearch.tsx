@@ -62,7 +62,7 @@ export default function RecordSearch({}: RecordSearchProps) {
           trailing={<Search />}
           type={'search'}
           hint="You have to select a patient by fullName or Id to access to his medical records"
-          {...register('searchField', { min: 5 })}
+          {...register('searchField')}
           grow={false}
         />
       </form>

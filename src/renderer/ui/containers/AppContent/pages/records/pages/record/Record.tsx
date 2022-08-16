@@ -12,7 +12,7 @@ import useNavigation from '@libs/hooks/useNavigation';
 import { useForm } from 'react-hook-form';
 import Search from 'toSvg/search.svg?icon';
 import './style/index.scss';
-import { Patient, PatientBrief } from '@models/instance.model';
+import { Patient, PatientBrief, ServerError } from '@models/instance.model';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '@containers/modals/book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
@@ -23,6 +23,16 @@ import {
   useLazyFindPatientByName2Query,
 } from '@redux/instance/record/recordApi';
 import LoadingSpinner from '@components/loading_spinner';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+const schema = z.object({
+  searchField: z.preprocess(
+    (value) =>
+      typeof value !== 'string' ? value : value.trim().replace(/\s\s+/g, ' '),
+    z.string().min(1),
+  ),
+});
 
 interface SearchInput {
   searchField: string;
@@ -30,31 +40,49 @@ interface SearchInput {
 
 interface RecordProps {}
 export default function Record({}: RecordProps) {
-  const { register, handleSubmit, watch, setValue } = useForm<SearchInput>({
+  const searchRef = useRef<string>('');
+  const { register, handleSubmit, setValue, watch } = useForm<SearchInput>({
     mode: 'onSubmit',
-    defaultValues: { searchField: '' },
+    resolver: zodResolver(schema),
   });
-  const watchSearch = watch('searchField', '');
+  const isDirty = useRef(false);
+  const watchSearchField = watch('searchField');
   const { navigate } = useNavigation();
   const { open } = useOverlay();
   const { patientId } = useParams();
-  const [trigger, result2, lastPromiseInfo] = useLazyFindPatientByName2Query();
-
-  const { isError, error, isLoading, isSuccess, data, currentData } =
+  const [trigger, result, lastPromiseInfo] = useLazyFindPatientByName2Query();
+  const errorRef = useRef<ServerError>();
+  const serverError: ServerError | undefined = (result.error as any)
+    ?.data as ServerError;
+  if (result.isError || result.isSuccess) errorRef.current = serverError;
+  const { isError, error, isFetching, isSuccess, data, currentData } =
     useGetPatientDetailQuery(Number(patientId));
-
-  const selectedPatient = isSuccess && data ? data : undefined;
-  useEffect(() => {}, [patientId]);
-
+  if (watchSearchField !== searchRef.current) {
+    isDirty.current = true;
+    searchRef.current = '';
+  }
   return (
     <div className="record">
       <form
         onSubmit={handleSubmit((value) => {
-          // result.reset();
-          trigger(value.searchField.trim(), false);
+          if (searchRef.current != value.searchField) {
+            searchRef.current = value.searchField;
+            isDirty.current = false;
+            trigger(searchRef.current, false);
+          }
         })}
       >
         <Input
+          disabled={result.isFetching}
+          errorMsg={
+            isDirty.current
+              ? undefined
+              : errorRef.current?.statusCode == 400
+              ? errorRef.current.message[0]
+              : errorRef.current?.statusCode == 404
+              ? 'No patient found'
+              : undefined
+          }
           placeholder="Enter patient Id"
           trailing={<Search />}
           type={'search'}
@@ -62,79 +90,92 @@ export default function Record({}: RecordProps) {
           grow={false}
         />
       </form>
-      {watchSearch ? (
-        result2.isLoading ? (
-          <LoadingSpinner />
-        ) : result2.isSuccess && !result2.isFetching ? (
-          result2.data.map((pat) => (
-            <RecordInfoItem
-              key={pat.id}
-              id={pat.id}
-              name={pat.name}
-              onViewRecord={() => {
-                setValue('searchField', '');
-                navigate(`/records/${pat.id}`);
-              }}
-            />
-          ))
-        ) : (
-          <div className="not-found">
-            <span>No patient found ! </span>
-          </div>
+
+      {result.isSuccess &&
+      !result.isFetching &&
+      !isDirty.current &&
+      result.data.filter(
+        (patient: PatientBrief) => patient.id == Number(patientId),
+      ).length == 0 ? (
+        result.data.map(
+          (pat) =>
+            pat.id != Number(patientId) && (
+              <RecordInfoItem
+                key={pat.id}
+                id={pat.id}
+                name={pat.name}
+                onViewRecord={() => {
+                  setValue('searchField', '');
+                  navigate(`/records/${pat.id}`);
+                }}
+              />
+            ),
         )
-      ) : selectedPatient ? (
-        <div className="record-content">
-          <div className="record-infos">
-            <PatientInfoCard
-              birthDate={new Date()}
-              activeStatus={selectedPatient.status}
-              registerDate={new Date()}
-              gender={selectedPatient.gender}
-              LeftComp={
-                <MiniPatientCard
-                  patientFullName={
-                    selectedPatient.firstName + ' ' + selectedPatient.lastName
+      ) : isSuccess ? (
+        (() => {
+          const selectedPatient = data as Patient;
+
+          return (
+            <div className="record-content">
+              <div className="record-infos">
+                <PatientInfoCard
+                  birthDate={new Date()}
+                  activeStatus={selectedPatient.status}
+                  registerDate={new Date()}
+                  gender={selectedPatient.gender}
+                  LeftComp={
+                    <MiniPatientCard
+                      patientFullName={
+                        selectedPatient.firstName +
+                        ' ' +
+                        selectedPatient.lastName
+                      }
+                      patientId={'#' + patientId}
+                      numPostAppointment={
+                        selectedPatient.appointments
+                          ? selectedPatient.appointments.length
+                          : 0
+                      }
+                      nextAppointmentDate={selectedPatient.nextAppointment}
+                    />
                   }
-                  patientId={'#' + patientId}
-                  numPostAppointment={
-                    selectedPatient.appointments
-                      ? selectedPatient.appointments.length
-                      : 0
-                  }
-                  nextAppointmentDate={selectedPatient.nextAppointment}
                 />
-              }
-            />
-            <PatientSpecificsCard
-              data={selectedPatient.test ? selectedPatient.test : []}
-            />
-            <BookingTimeline
-              appointments={
-                selectedPatient.appointments ? selectedPatient.appointments : []
-              }
-              patientId={Number(patientId)}
-              onPress={() => {
-                open(
-                  <BookAppointmentModal
-                    id={Number(patientId)}
-                    patientName={
-                      selectedPatient.firstName + ' ' + selectedPatient.lastName
-                    }
-                  />,
-                  DEFAULT_MODAL,
-                );
-              }}
-            />
-          </div>
-          <div className="record-side-info">
-            <MedicalHistory patientId={Number(patientId)} />
-            <DocumentPreviewPanel patientId={Number(patientId)} />
-          </div>
-        </div>
+                <PatientSpecificsCard
+                  data={selectedPatient.test ? selectedPatient.test : []}
+                />
+                <BookingTimeline
+                  appointments={
+                    selectedPatient.appointments
+                      ? selectedPatient.appointments
+                      : []
+                  }
+                  patientId={Number(patientId)}
+                  onPress={() => {
+                    open(
+                      <BookAppointmentModal
+                        id={Number(patientId)}
+                        patientName={
+                          selectedPatient.firstName +
+                          ' ' +
+                          selectedPatient.lastName
+                        }
+                      />,
+                      DEFAULT_MODAL,
+                    );
+                  }}
+                />
+              </div>
+              <div className="record-side-info">
+                <MedicalHistory patientId={Number(patientId)} />
+                <DocumentPreviewPanel patientId={Number(patientId)} />
+              </div>
+            </div>
+          );
+        })()
+      ) : isFetching ? (
+        <LoadingSpinner />
       ) : (
-        <div className="not-found">
-          <span>No patient with this id ! </span>
-        </div>
+        <div>Something went wrong</div>
       )}
     </div>
   );
