@@ -81,10 +81,17 @@ export const api = createApi({
     }),
     //documentService
     //GET
-    getMedicalDocuments: builder.query<
-      Pick<MedicalDocument, 'id' | 'fileName' | 'fileType' | 'status'>[],
-      number
-    >({
+    getMedicalDocuments: builder.query<MedicalDocument[], number>({
+      transformResponse: (
+        response: (Omit<MedicalDocument, 'date'> & { date: string })[],
+      ) => {
+        return response.map((item) => {
+          return {
+            ...item,
+            date: parseISO(item.date),
+          };
+        });
+      },
       query: (patId) => `/document?patientId=${patId}`,
       providesTags: ['MedicalDocument'],
     }),
