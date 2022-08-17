@@ -126,7 +126,13 @@ export const api = createApi({
       },
     }),
     //POST
-
+    deleteDocument: builder.mutation<any, { id: string }>({
+      query: ({ id }) => ({
+        url: `/document?id=${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['MedicalDocument'],
+    }),
     uploadFile: builder.mutation<
       boolean,
       { patientId: number; data: FormData }
@@ -154,4 +160,5 @@ export const {
   useGetMedicalDocumentsQuery,
   useUploadFileMutation,
   useDownloadDocumentMutation,
+  useDeleteDocumentMutation,
 } = api;
