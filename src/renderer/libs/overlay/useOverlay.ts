@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import { createPopper } from '@popperjs/core';
 //Known issues:
 //When open overlay with closeOnBlur = true, on top of overlay with closeOnBlur the first one will be closed due to blur event.
-export function useOverlay() {
+export function useOverlay(args?: { closeToOpen?: boolean }) {
   const layer = useRef<HTMLDivElement>();
   const id = 'l' + useId() + 'ov';
   const isOpened = useRef(false);
@@ -19,7 +19,7 @@ export function useOverlay() {
     try {
       layer.current?.remove();
     } catch (e) {
-      return;
+      //do nothing
     }
     layer.current = undefined;
 
@@ -34,28 +34,37 @@ export function useOverlay() {
         throw Error(
           'No overlay reference found,please create `<OverlayContainer></OverlayContainer> or you have to setRenderer first. Call seRenderer(Element) on your overlay component`',
         );
-      if (isOpened.current) close();
-      layer.current = document.createElement('div');
-      layer.current.setAttribute('class', 'overlay ' + id);
-      layer.current.setAttribute('id', id);
-      layer.current.setAttribute(
-        'style',
-        'z-index:' + 10 + Overlay.entryElement.children.length,
-      );
-      Overlay.entryElement.appendChild(layer.current);
+      if (isOpened.current)
+        if (args?.closeToOpen) {
+          return;
+        } else {
+          close();
+          open(target, props);
+          return;
+        }
+      else {
+        layer.current = document.createElement('div');
+        layer.current.setAttribute('class', 'overlay ' + id);
+        layer.current.setAttribute('id', id);
+        layer.current.setAttribute(
+          'style',
+          'z-index:' + 10 + Overlay.entryElement.children.length,
+        );
+        Overlay.entryElement.appendChild(layer.current);
 
-      portal.current = createPortal(
-        OverlayItem({
-          children: target,
-          closeMethod: close,
-          ...props,
-        }),
-        layer.current as HTMLDivElement,
-      );
-      Overlay.addPortal(portal.current);
-      isOpened.current = true;
+        portal.current = createPortal(
+          OverlayItem({
+            children: target,
+            closeMethod: close,
+            ...props,
+          }),
+          layer.current as HTMLDivElement,
+        );
+        Overlay.addPortal(portal.current);
+        isOpened.current = true;
+      }
     },
-    [close, id],
+    [args?.closeToOpen, close, id],
   );
 
   const openTooltip = useCallback(
