@@ -17,7 +17,7 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '@containers/modals/book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useParams } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import {
   useGetPatientDetailQuery,
   useLazyFindPatientByName2Query,
@@ -50,13 +50,14 @@ export default function Record({}: RecordProps) {
   const { navigate } = useNavigation();
   const { open } = useOverlay();
   const { patientId } = useParams();
-  const [trigger, result, lastPromiseInfo] = useLazyFindPatientByName2Query();
+  const [trigger, result] = useLazyFindPatientByName2Query();
   const errorRef = useRef<ServerError>();
   const serverError: ServerError | undefined = (result.error as any)
     ?.data as ServerError;
   if (result.isError || result.isSuccess) errorRef.current = serverError;
-  const { isError, error, isFetching, isSuccess, data, currentData } =
-    useGetPatientDetailQuery(Number(patientId));
+  const { isFetching, isSuccess, data } = useGetPatientDetailQuery(
+    Number(patientId),
+  ); //FIXME Handle errors
   if (watchSearchField !== searchRef.current) {
     isDirty.current = true;
     searchRef.current = '';
