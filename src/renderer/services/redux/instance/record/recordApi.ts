@@ -4,7 +4,11 @@ import {
   Patient,
   PatientBrief,
 } from '@models/instance.model';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  createApi,
+  fetchBaseQuery,
+  FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
 
 export const api = createApi({
@@ -95,6 +99,32 @@ export const api = createApi({
       query: (patId) => `/document?patientId=${patId}`,
       providesTags: ['MedicalDocument'],
     }),
+    downloadDocument: builder.mutation<any, { id: string; name: string }>({
+      queryFn: async ({ id, name }, _, __, baseQuery) => {
+        const result = await baseQuery({
+          mode: 'cors',
+          url: `/document/download?id=${id}`,
+          responseHandler: async (response) => {
+            if (response.ok) {
+              const blob = await response.blob();
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = name;
+              a.click();
+              a.remove();
+              window.URL.revokeObjectURL(url);
+              return null;
+            } else {
+              const error = await response.json();
+              return error;
+            }
+          },
+        });
+        if (result === null) return { data: null };
+        else return { error: result as FetchBaseQueryError };
+      },
+    }),
     //POST
 
     uploadFile: builder.mutation<
@@ -123,4 +153,5 @@ export const {
   useFindPatientByName2Query,
   useGetMedicalDocumentsQuery,
   useUploadFileMutation,
+  useDownloadDocumentMutation,
 } = api;
