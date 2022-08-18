@@ -5,6 +5,7 @@ import {
   Test,
 } from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { parseISO } from 'date-fns';
 
 export const api = createApi({
   reducerPath: 'AppointmentQueueApi',
@@ -15,10 +16,29 @@ export const api = createApi({
     getQueueInfo: builder.query<AppointmentQueue, number>({
       query: (roleId) => `/${roleId}`,
       providesTags: ['state', 'queue', 'item'],
+      transformResponse: (
+        response: Omit<AppointmentQueue, 'appointments'> & {
+          appointments: (Omit<AppointmentQueueItem, 'date'> & {
+            date: string;
+          })[];
+        },
+      ) => {
+        const transformedApp = response.appointments.map((item) => ({
+          ...item,
+          date: parseISO(item.date),
+        }));
+
+        return { ...response, appointments: transformedApp };
+      },
     }), //Avoid using this endpoint
     getAppointments: builder.query<AppointmentQueueItem[], number>({
       query: (roleId) => `/${roleId}/item`,
       providesTags: ['item'],
+      transformResponse: (
+        response: (Omit<AppointmentQueueItem, 'date'> & { date: string })[],
+      ) => {
+        return response.map((item) => ({ ...item, date: parseISO(item.date) }));
+      },
     }),
     getQueueState: builder.query<QueueState, number>({
       query: (roleId) => `/${roleId}/state`,
