@@ -46,9 +46,7 @@ export const api = createApi({
         firstName: string;
         lastName: string;
         birthDate: Date;
-        registerDate: Date;
         sex: 'male' | 'female';
-        age: number;
       }
     >({
       query: (body) => ({ url: `/patient`, method: 'POST', body: body }),
