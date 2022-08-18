@@ -39,7 +39,6 @@ const DeleteDocumentModal = ({
         disabled={isLoading}
         width="100%"
         onPress={() => {
-          //REDUX delete file on the server
           deleting({ id }).then(() => {
             onSucceed?.();
           });

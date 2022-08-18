@@ -6,18 +6,11 @@ import InputContainer from '@components/inputs/input_container';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import {
-  useAddAppointmentMutation,
-  useGetAppointmentsQuery,
-} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import {
-  useAddPatientMutation,
-  useLazyFindPatientByName2Query,
-} from '@redux/instance/record/recordApi';
-import { skipToken } from '@reduxjs/toolkit/dist/query';
+import {} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { useAddPatientMutation } from '@redux/instance/record/recordApi';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import MedicalTestModal from '../Medical_Test_Modal';
+import AddSelectedToQueueModal from '../add_selected_to_queue_modal';
 
 type Inputs = {
   firstName: string;
@@ -49,10 +42,6 @@ export default function AddPatientModal({}: AddPatientModalProps) {
     }
   };
   const [addPatient] = useAddPatientMutation();
-  const [AddAppointment] = useAddAppointmentMutation();
-  const [trigger] = useLazyFindPatientByName2Query();
-  const [patientId, setPatientId] = useState<number>();
-  const appointmentsQuery = useGetAppointmentsQuery(1);
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     // console.log(formData);
     const { firstName, lastName, gender, birthDate } = formData;
@@ -64,16 +53,10 @@ export default function AddPatientModal({}: AddPatientModalProps) {
     })
       .unwrap()
       .then((patient) => {
-        return trigger(patient.firstName + ' ' + patient.lastName, false);
-      })
-      .then((searchRes) => {
-        if (searchRes?.isSuccess) {
-          setPatientId(searchRes.data[0].id);
-          AddAppointment({
-            roleId: 1,
-            body: { patientId: searchRes.data[0].id },
-          });
-        }
+        open(
+          <AddSelectedToQueueModal id={patient.id} name={patient.name} />,
+          DEFAULT_MODAL,
+        );
       });
   };
 
@@ -83,7 +66,7 @@ export default function AddPatientModal({}: AddPatientModalProps) {
       onSubmit={handleSubmit(onSubmit)}
       controls={
         <>
-          <TextButton
+          {/* <TextButton
             text="Run Test..."
             backgroundColor={color.cold_blue}
             fontSize={14}
@@ -100,18 +83,17 @@ export default function AddPatientModal({}: AddPatientModalProps) {
                   open(<MedicalTestModal position={position} />, DEFAULT_MODAL);
               }
             }}
-          />
+          /> */}
           <TextButton
-            text="Add to queue"
+            text="Add patient"
             backgroundColor={color.good_green}
             fontSize={14}
             fontWeight={700}
-            width={'60%'}
+            width={'100%'}
             blank
             type="submit"
           />
         </>
-        //REDUX add to queue
       }
     >
       <Input

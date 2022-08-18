@@ -34,7 +34,7 @@ export default forwardRef(function Select(
     others.onChange?.(options[index] as any);
 
     setOpen(false);
-    // field.current?.blur();
+    field.current?.blur();
   }
   const paddedLeading = (
     <div
