@@ -9,6 +9,7 @@ interface SelectProps {
   icon?: ReactNode;
   padding?: number;
   width?: number | string;
+  defaultSelected?: string;
 }
 
 export default forwardRef(function Select(
@@ -18,17 +19,22 @@ export default forwardRef(function Select(
     icon,
     padding = 10,
     width,
+    defaultSelected,
     ...others
   }: SelectProps & FormHookProps,
   ref: any,
 ) {
   const field = useRef<HTMLDivElement>(null);
   const [isOpen, setOpen] = useState(false);
-  const [selected, setSelected] = useState(-1);
+  const [selected, setSelected] = useState({
+    selected: defaultSelected ? defaultSelected : '',
+  });
   function changeSelected(index: number) {
-    setSelected(index);
+    setSelected({ selected: options[index] });
+    others.onChange?.(options[index] as any);
+
     setOpen(false);
-    field.current?.blur();
+    // field.current?.blur();
   }
   const paddedLeading = (
     <div
@@ -51,7 +57,7 @@ export default forwardRef(function Select(
   return (
     <div
       className={`select-input${isOpen ? ' open' : ''}${
-        selected != -1 ? ' select' : ''
+        selected.selected != '' ? ' select' : ''
       }`}
       tabIndex={0}
       onFocus={() => setOpen(true)}
@@ -64,7 +70,10 @@ export default forwardRef(function Select(
     >
       <div className="select">
         {paddedLeading}
-        <span> {selected < 0 ? placeholder : options[selected]}</span>{' '}
+        <span>
+          {' '}
+          {selected.selected == '' ? placeholder : selected.selected}
+        </span>{' '}
         {paddedTrailing}
       </div>
       <div className="options">
@@ -75,12 +84,7 @@ export default forwardRef(function Select(
             </span>
           ))}
       </div>
-      <input
-        ref={ref}
-        {...others}
-        value={options ? options[selected] : undefined}
-        type="hidden"
-      />
+      <input ref={ref} {...others} value={selected.selected} type="hidden" />
     </div>
   );
 });
