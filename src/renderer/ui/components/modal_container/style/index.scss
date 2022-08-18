@@ -8,12 +8,18 @@
     border-radius: 7px;
 
     > .inputs-container {
+        display: flex;
         flex-grow: 1;
         align-self: stretch;
-        display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         gap: 15px;
+
+        > div {
+            flex-basis: 40%;
+            flex-grow: 1;
+            min-width: 150px;
+        }
     }
     >.control{
         display: flex;
