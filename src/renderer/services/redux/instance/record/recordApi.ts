@@ -41,7 +41,7 @@ export const api = createApi({
     }),
     //POST
     addPatient: builder.mutation<
-      Patient,
+      PatientBrief,
       {
         firstName: string;
         lastName: string;
