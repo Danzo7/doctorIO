@@ -60,7 +60,7 @@ export const api = createApi({
       AppointmentQueueItem[],
       {
         roleId: number;
-        body: { patientId: number } & Partial<Test>;
+        body: { patientId: number; test?: Partial<Test> };
       }
     >({
       query: ({ roleId, body }) => {
