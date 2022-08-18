@@ -1,12 +1,12 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
-import DiagnosisModal from './DiagnosisModal';
+import MedicalTestModal from './MedicalTestModal';
 export default {
-  title: 'Modals/DiagnosisModal',
-  component: DiagnosisModal,
+  title: 'Modals/MedicalTestModal',
+  component: MedicalTestModal,
 };
-const Template: Story<ComponentProps<typeof DiagnosisModal>> = (args) => (
-  <DiagnosisModal {...args} />
+const Template: Story<ComponentProps<typeof MedicalTestModal>> = (args) => (
+  <MedicalTestModal {...args} />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {

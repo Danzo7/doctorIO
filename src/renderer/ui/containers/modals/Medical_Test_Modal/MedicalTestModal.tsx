@@ -9,12 +9,12 @@ import { Overlay } from '@libs/overlay';
 interface Inputs {
   [label: string]: string;
 }
-interface DiagnosisModalProps {
+interface MedicalTestModalProps {
   inputArray?: any[];
   position: number;
 }
 
-export default function DiagnosisModal({
+export default function MedicalTestModal({
   position,
   inputArray = [
     { label: 'weight', type: 'float' },
@@ -23,7 +23,7 @@ export default function DiagnosisModal({
     { label: 'bloodType', type: 'text' },
     { label: 'RH', type: 'number' },
   ],
-}: DiagnosisModalProps) {
+}: MedicalTestModalProps) {
   const [updateTest] = useUpdateTestMutation();
   const {
     register,
@@ -45,7 +45,7 @@ export default function DiagnosisModal({
   console.log(errors);
   return (
     <ModalContainer
-      title="Diagnosis"
+      title="Medical test"
       onSubmit={handleSubmit(onSubmit)}
       controls={
         <>

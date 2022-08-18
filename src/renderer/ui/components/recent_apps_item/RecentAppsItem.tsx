@@ -2,7 +2,7 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@colors';
 import PresentationItem from '@components/presentation_item';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import DiagnosisModal from '@containers/modals/diagnosis_modal';
+import MedicalTestModal from '@containers/modals/Medical_Test_Modal';
 import { PatientBrief } from '@models/instance.model';
 import { DEFAULT_MODAL, Overlay } from '@libs/overlay';
 import { useAddAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
@@ -19,7 +19,7 @@ export default function RecentAppsItem({ id, name }: PatientBrief) {
         radius={7}
         onPress={() => {
           //REDUX change position by getting the value
-          open(<DiagnosisModal position={1} />, DEFAULT_MODAL);
+          open(<MedicalTestModal position={1} />, DEFAULT_MODAL);
         }}
       />
       <TextButton

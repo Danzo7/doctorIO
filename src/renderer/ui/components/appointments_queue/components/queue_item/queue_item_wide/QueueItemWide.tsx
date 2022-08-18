@@ -12,7 +12,7 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
 import { formatDistance } from 'date-fns';
 import { AppointmentQueue, Test } from '@models/instance.model';
-import DiagnosisModal from '@containers/modals/diagnosis_modal';
+import MedicalTestModal from '@containers/modals/Medical_Test_Modal';
 import useNavigation from '@libs/hooks/useNavigation';
 import {
   useDeleteAppointmentMutation,
@@ -120,7 +120,7 @@ function QueueItemWide({
                 diagnosis ? (
                   <DiagnosisPreview data={diagnosis} />
                 ) : (
-                  <DiagnosisModal position={number} />
+                  <MedicalTestModal position={number} />
                 ),
                 {
                   closeOnClickOutside: true,
