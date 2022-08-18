@@ -29,6 +29,7 @@ type NumericInput = {
 type SelectInput = {
   type: 'select';
   options: string[];
+  defaultSelected?: string;
 };
 
 type DateTimeInput = {
@@ -43,6 +44,7 @@ interface InputProps {
   leading?: ReactNode;
   trailing?: ReactNode;
   children?: ReactNode;
+
   placeholder?: string;
   fillContainer?: true;
   grow?: boolean;
@@ -62,6 +64,7 @@ export default forwardRef(function Input(
     fillContainer,
     grow = true,
     hintAlignment,
+
     disabled,
     ...others
   }: InputProps & FormHookProps,
@@ -105,6 +108,8 @@ export default forwardRef(function Input(
                     <Select
                       options={(type as SelectInput)?.options}
                       icon={trailing}
+                      ref={ref}
+                      defaultSelected={(type as SelectInput)?.defaultSelected}
                       placeholder={placeholder}
                       {...others}
                     />
