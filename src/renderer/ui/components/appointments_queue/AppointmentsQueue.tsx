@@ -82,7 +82,7 @@ export default function AppointmentsQueue() {
                               id={patientId}
                               name={patientName}
                               number={position}
-                              timeAgo={parseISO(date as any as string)}
+                              timeAgo={date}
                               width={150}
                               diagnosis={test}
                             />

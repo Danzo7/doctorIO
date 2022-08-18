@@ -15,7 +15,6 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { AppointmentQueue } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
-import { parseISO } from 'date-fns';
 
 interface AppointmentQueueSmallProps {}
 
@@ -83,7 +82,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                               id={patientId}
                               name={patientName}
                               number={position}
-                              timeAgo={parseISO(date as any as string)}
+                              timeAgo={date}
                               diagnosis={test}
                               opened={selected == index}
                             />
