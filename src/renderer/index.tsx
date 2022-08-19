@@ -5,7 +5,8 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import App from './App';
 import './index.scss';
 import { Provider } from 'react-redux';
-import { store } from '@redux/store';
+import { persistor, store } from '@redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 declare const ELECTRON_ROUTING: boolean;
 const app = document.getElementById('app-mount');
@@ -15,9 +16,11 @@ const Routing = ELECTRON_ROUTING ? HashRouter : BrowserRouter;
 root.render(
   <StrictMode>
     <Provider store={store}>
-      <Routing>
-        <App />
-      </Routing>
+      <PersistGate loading={null} persistor={persistor}>
+        <Routing>
+          <App />
+        </Routing>
+      </PersistGate>
     </Provider>
   </StrictMode>,
 );
