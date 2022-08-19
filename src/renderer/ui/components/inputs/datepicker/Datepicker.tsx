@@ -7,10 +7,14 @@ import Calendar from 'toSvg/calendar.svg?icon';
 import Arrow from 'toSvg/arrow.svg?icon';
 import Input from '../input';
 import { DATE_NO_YEAR } from '@constants/data_format';
+interface DatepickerProps {
+  yearControl?: boolean;
+}
 export default function Datepicker({
+  yearControl = false,
   onChange,
   ...props
-}: ComponentProps<typeof DatePickerReact>) {
+}: ComponentProps<typeof DatePickerReact> & DatepickerProps) {
   return (
     <Input type={'text'} trailing={<Calendar />}>
       <DatePickerReact
@@ -19,8 +23,20 @@ export default function Datepicker({
         )}
         weekDayClassName={() => 'day-name'}
         dayClassName={() => 'days'}
-        renderCustomHeader={({ monthDate, decreaseMonth, increaseMonth }) => (
+        renderCustomHeader={({
+          monthDate,
+          decreaseMonth,
+          increaseMonth,
+          decreaseYear,
+          increaseYear,
+        }) => (
           <div className="header">
+            {yearControl && (
+              <SquareIconButton
+                onPress={decreaseYear}
+                Icon={<Arrow css={{ transform: 'rotate(90deg)' }} />}
+              />
+            )}
             <SquareIconButton
               onPress={decreaseMonth}
               Icon={<Arrow css={{ transform: 'rotate(90deg)' }} />}
@@ -36,6 +52,12 @@ export default function Datepicker({
               onPress={increaseMonth}
               Icon={<Arrow css={{ transform: 'rotate(-90deg)' }} />}
             />
+            {yearControl && (
+              <SquareIconButton
+                onPress={increaseYear}
+                Icon={<Arrow css={{ transform: 'rotate(-90deg)' }} />}
+              />
+            )}
           </div>
         )}
         wrapperClassName="date-content"
@@ -46,7 +68,7 @@ export default function Datepicker({
           event?.stopPropagation();
           onChange(date, event);
         }}
-        dateFormat={DATE_NO_YEAR}
+        dateFormat={props?.dateFormat ?? DATE_NO_YEAR}
         {...props}
       />
     </Input>
