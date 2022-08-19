@@ -20,6 +20,7 @@ interface AppointmentQueueItem {
   date: Date;
   position: number;
   test?: Test;
+  appointmentId: number;
 }
 interface Patient {
   firstName: string;

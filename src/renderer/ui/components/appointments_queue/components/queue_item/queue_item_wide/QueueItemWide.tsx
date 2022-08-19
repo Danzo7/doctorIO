@@ -26,6 +26,7 @@ interface QueueItemWideProps {
   state?: string;
   width?: number;
   test?: Test;
+  appointmentId: number;
 }
 
 function QueueItemWide({
@@ -35,6 +36,7 @@ function QueueItemWide({
   number,
   state,
   width,
+  appointmentId,
   test,
 }: QueueItemWideProps) {
   const { open, openTooltip, close } = useOverlay();
@@ -68,7 +70,10 @@ function QueueItemWide({
                       text: 'Remove',
                       type: 'warning',
                       onPress: () => {
-                        deleteAppointment({ roleId: 1, position: number });
+                        deleteAppointment({
+                          roleId: 1,
+                          appointmentId,
+                        });
                         close();
                       },
                     },

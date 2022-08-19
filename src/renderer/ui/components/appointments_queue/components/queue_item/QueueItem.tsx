@@ -13,6 +13,7 @@ interface QueueItemProps {
   width?: number;
   diagnosis?: Test;
   opened?: boolean;
+  appointmentId: number;
 }
 function QueueItem({
   id,
@@ -23,6 +24,7 @@ function QueueItem({
   opened,
   diagnosis,
   width,
+  appointmentId,
 }: QueueItemProps) {
   const [isOpen, open] = useState(opened ?? false);
   useEffect(() => {
@@ -51,6 +53,7 @@ function QueueItem({
               opened,
               diagnosis,
               width,
+              appointmentId,
             }}
           />
         </div>

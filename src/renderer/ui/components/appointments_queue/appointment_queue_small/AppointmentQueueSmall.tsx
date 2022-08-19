@@ -64,7 +64,14 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                     {appointments &&
                       appointments.map(
                         (
-                          { date, patientId, patientName, test, position },
+                          {
+                            date,
+                            patientId,
+                            patientName,
+                            test,
+                            position,
+                            appointmentId,
+                          },
                           index,
                         ) => (
                           <div
@@ -85,6 +92,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                               timeAgo={date}
                               diagnosis={test}
                               opened={selected == index}
+                              appointmentId={appointmentId}
                             />
                           </div>
                         ),

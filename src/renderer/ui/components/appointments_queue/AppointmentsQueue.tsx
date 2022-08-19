@@ -73,7 +73,14 @@ export default function AppointmentsQueue() {
                     <ScrollView refs={ref} gap={10}>
                       {appointments.map(
                         (
-                          { date, patientId, patientName, test, position },
+                          {
+                            date,
+                            patientId,
+                            patientName,
+                            test,
+                            position,
+                            appointmentId,
+                          },
                           index,
                         ) => (
                           <li key={patientId.toString() + index}>
@@ -84,6 +91,7 @@ export default function AppointmentsQueue() {
                               timeAgo={date}
                               width={150}
                               test={test}
+                              appointmentId={appointmentId}
                             />
                           </li>
                         ),
