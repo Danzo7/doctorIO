@@ -3,7 +3,7 @@ import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
 import UploadFileModal from '@containers/modals/upload_file_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { useGetMedicalDocumentsQuery } from '@redux/instance/record/recordApi';
+import { useGetMedicalDocumentsQuery } from '@redux/instance/record/medical_document_api';
 import DocumentPreviewItem from './document_preview_item';
 interface DocumentPreviewPanelProps {
   patientId: number;

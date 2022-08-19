@@ -8,7 +8,7 @@ import { DATE_ONLY } from '@constants/data_format';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import {} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { useAddPatientMutation } from '@redux/instance/record/recordApi';
+import { useAddPatientMutation } from '@redux/instance/record/patient_api';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AddSelectedToQueueModal from '../add_selected_to_queue_modal';

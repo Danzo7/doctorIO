@@ -11,11 +11,12 @@ import WarningModal from '@containers/modals/warning_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
+
+import { useRef } from 'react';
 import {
   useDeleteDocumentMutation,
   useDownloadDocumentMutation,
-} from '@redux/instance/record/recordApi';
-import { useRef } from 'react';
+} from '@redux/instance/record/medical_document_api';
 //TODO move to file
 const DeleteDocumentModal = ({
   fileName,

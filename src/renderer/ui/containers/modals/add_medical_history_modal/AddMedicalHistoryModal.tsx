@@ -4,7 +4,7 @@ import Datepicker from '@components/inputs/datepicker';
 import TextArea from '@components/inputs/text_area';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
-import { useAddMedicalHistoryMutation } from '@redux/instance/record/recordApi';
+import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './style/index.scss';

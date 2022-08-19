@@ -1,6 +1,6 @@
 import { firstUser } from '@api/fake';
 import { User } from '@models/local.models';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface UserType {
   user: User | undefined;
@@ -10,7 +10,7 @@ const initialState: UserType = {
   user: undefined,
 };
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
@@ -21,4 +21,4 @@ export const userSlice = createSlice({
 });
 export const { setUser } = userSlice.actions;
 
-export default userSlice.reducer;
+export default userSlice;

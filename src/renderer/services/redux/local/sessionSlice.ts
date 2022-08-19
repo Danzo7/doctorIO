@@ -26,4 +26,4 @@ const sessionSlice = createSlice({
 export const { updateNotice, addDrug, clearPrescription, updatePrescription } =
   sessionSlice.actions;
 
-export default sessionSlice.reducer;
+export default sessionSlice;

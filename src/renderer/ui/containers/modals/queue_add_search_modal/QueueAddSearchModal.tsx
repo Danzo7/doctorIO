@@ -13,7 +13,7 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import {
   useFindPatientByNameMutation,
   useLazyFindPatientByName2Query,
-} from '@redux/instance/record/recordApi';
+} from '@redux/instance/record/patient_api';
 import { PatientBrief, ServerError } from '@models/instance.model';
 import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';

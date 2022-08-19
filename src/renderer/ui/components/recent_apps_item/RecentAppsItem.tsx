@@ -6,7 +6,6 @@ import MedicalTestModal from '@containers/modals/Medical_Test_Modal';
 import { PatientBrief } from '@models/instance.model';
 import { DEFAULT_MODAL, Overlay } from '@libs/overlay';
 import { useAddAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { useGetPatientDetailQuery } from '@redux/instance/record/recordApi';
 
 export default function RecentAppsItem({ id, name }: PatientBrief) {
   const [AddAppointment] = useAddAppointmentMutation();

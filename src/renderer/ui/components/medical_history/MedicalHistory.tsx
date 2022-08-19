@@ -5,7 +5,7 @@ import PreviewWithControls from '@components/preview_with_controls';
 import { DATE_ONLY } from '@constants/data_format';
 import AddMedicalHistoryModal from '@containers/modals/add_medical_history_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { useGetMedicalHistoryQuery } from '@redux/instance/record/recordApi';
+import { useGetMedicalHistoryQuery } from '@redux/instance/record/medical_history_api';
 import { format } from 'date-fns';
 
 interface MedicalHistoryProps {

@@ -4,7 +4,7 @@ import LoadingSpinner from '@components/loading_spinner';
 import RecordInfoItem from '@components/record_info_item';
 import useNavigation from '@libs/hooks/useNavigation';
 import { PatientBrief, ServerError } from '@models/instance.model';
-import { useLazyFindPatientByName2Query } from '@redux/instance/record/recordApi';
+import { useLazyFindPatientByName2Query } from '@redux/instance/record/patient_api';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import Search from 'toSvg/search.svg?icon';

@@ -10,7 +10,7 @@ import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '../book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { useFindPatientByNameMutation } from '@redux/instance/record/recordApi';
+import { useFindPatientByNameMutation } from '@redux/instance/record/patient_api';
 import LoadingSpinner from '@components/loading_spinner';
 import { useRef } from 'react';
 import { PatientBrief, ServerError } from '@models/instance.model';

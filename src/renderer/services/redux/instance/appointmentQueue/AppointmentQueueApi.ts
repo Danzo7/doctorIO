@@ -7,7 +7,7 @@ import {
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
 
-export const api = createApi({
+const appointmentQueueApi = createApi({
   reducerPath: 'AppointmentQueueApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/queue' }),
   tagTypes: ['state', 'queue', 'item'],
@@ -167,7 +167,7 @@ export const api = createApi({
     }),
   }),
 });
-
+export default appointmentQueueApi;
 export const {
   useGetQueueInfoQuery,
   useGetNextQueueItemQuery,
@@ -186,4 +186,4 @@ export const {
   useStartNextMutation,
   useEndNextMutation,
   useGetIsQueueOwnerQuery,
-} = api;
+} = appointmentQueueApi;

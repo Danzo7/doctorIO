@@ -1,7 +1,7 @@
 import { configureStore, Middleware } from '@reduxjs/toolkit';
-import { api as AppointmentQueueApi } from './instance/appointmentQueue/AppointmentQueueApi';
+import AppointmentQueueApi from './instance/appointmentQueue/AppointmentQueueApi';
 import bookedAppointmentSlice from './instance/bookedAppointmentSlice';
-import { api as recordApi } from './instance/record/recordApi';
+import patientApi from './instance/record/patient_api';
 import sessionSlice from './local/sessionSlice';
 import {
   persistStore,
@@ -15,27 +15,36 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userSlice from './local/user/userSlice';
+import medicalDocumentApi from './instance/record/medical_document_api';
+import medicalHistoryApi from './instance/record/medical_history_api';
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: [AppointmentQueueApi.reducerPath, recordApi.reducerPath],
+  whitelist: [userSlice.name],
 };
 
-const persistedUser = persistReducer(persistConfig, userSlice);
+const persistedUser = persistReducer(persistConfig, userSlice.reducer);
 
 export const store = configureStore({
   reducer: {
     bookedAppointment: bookedAppointmentSlice,
-    session: sessionSlice,
-    user: persistedUser,
+    [sessionSlice.name]: sessionSlice.reducer,
+    [userSlice.name]: persistedUser,
     [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
-    [recordApi.reducerPath]: recordApi.reducer,
+    [patientApi.reducerPath]: patientApi.reducer,
+    [medicalDocumentApi.reducerPath]: medicalDocumentApi.reducer,
+    [medicalHistoryApi.reducerPath]: medicalHistoryApi.reducer,
   },
   middleware: (getDefaultMiddleware): Middleware[] =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(AppointmentQueueApi.middleware, recordApi.middleware),
+    }).concat(
+      AppointmentQueueApi.middleware,
+      patientApi.middleware,
+      medicalDocumentApi.middleware,
+      medicalHistoryApi.middleware,
+    ),
 });
 export const persistor = persistStore(store);
 

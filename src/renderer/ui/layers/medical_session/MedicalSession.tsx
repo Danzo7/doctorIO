@@ -10,7 +10,7 @@ import WarningModal from '@containers/modals/warning_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { Patient } from '@models/instance.model';
 import { useGetQueueStateQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { useGetPatientDetailQuery } from '@redux/instance/record/recordApi';
+import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import PatientSmallCard from './components/patient_small_card';
 import MedicalSessionSideBar from './medical_session_side_bar';

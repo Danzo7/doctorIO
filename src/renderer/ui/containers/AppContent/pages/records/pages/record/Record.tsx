@@ -21,7 +21,7 @@ import { useRef } from 'react';
 import {
   useGetPatientDetailQuery,
   useLazyFindPatientByName2Query,
-} from '@redux/instance/record/recordApi';
+} from '@redux/instance/record/patient_api';
 import LoadingSpinner from '@components/loading_spinner';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';

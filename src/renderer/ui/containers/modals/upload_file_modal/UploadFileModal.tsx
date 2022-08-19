@@ -4,7 +4,7 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { ServerError } from '@models/instance.model';
-import { useUploadFileMutation } from '@redux/instance/record/recordApi';
+import { useUploadFileMutation } from '@redux/instance/record/medical_document_api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Upload from 'toSvg/link.svg?icon';
 import { z, TypeOf } from 'zod';
