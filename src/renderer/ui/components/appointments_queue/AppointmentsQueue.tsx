@@ -15,7 +15,6 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { AppointmentQueue } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
-import { parseISO } from 'date-fns';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
@@ -84,7 +83,7 @@ export default function AppointmentsQueue() {
                               number={position}
                               timeAgo={date}
                               width={150}
-                              diagnosis={test}
+                              test={test}
                             />
                           </li>
                         ),

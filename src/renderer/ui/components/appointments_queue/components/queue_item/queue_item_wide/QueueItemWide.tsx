@@ -25,7 +25,7 @@ interface QueueItemWideProps {
   number: number;
   state?: string;
   width?: number;
-  diagnosis?: Test;
+  test?: Test;
 }
 
 function QueueItemWide({
@@ -35,7 +35,7 @@ function QueueItemWide({
   number,
   state,
   width,
-  diagnosis,
+  test,
 }: QueueItemWideProps) {
   const { open, openTooltip, close } = useOverlay();
   const { isLoading, data, isSuccess } = useGetQueueInfoQuery(1);
@@ -113,12 +113,12 @@ function QueueItemWide({
           <TextIconButton
             //onMouseOver={setActive}
             Icon={view}
-            text={diagnosis ? 'View tests' : 'Add tests'}
+            text={test ? 'View tests' : 'Add tests'}
             color={colors.cold_blue}
             onPress={() => {
               open(
-                diagnosis ? (
-                  <DiagnosisPreview data={diagnosis} />
+                test ? (
+                  <DiagnosisPreview data={test} />
                 ) : (
                   <MedicalTestModal position={number} />
                 ),

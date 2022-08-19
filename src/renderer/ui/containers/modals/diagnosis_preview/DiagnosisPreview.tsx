@@ -21,7 +21,12 @@ export default function DiagnosisPreview({ data }: DiagnosisPreviewProps) {
               fontColor: color.text_gray,
             }}
             second={{
-              text: value.toString(),
+              text:
+                key == 'Rh'
+                  ? value == true
+                    ? 'Positive'
+                    : 'Negative'
+                  : value.toString(),
               fontSize: 15,
               fontColor: color.text_gray,
               border: true,

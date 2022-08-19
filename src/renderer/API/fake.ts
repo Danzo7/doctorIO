@@ -1,14 +1,8 @@
-import {
-  Appointment,
-  AppointmentQueue,
-  BookedAppointment,
-  Patient,
-  Drug,
-} from '@models/instance.model';
+import { Appointment, BookedAppointment, Drug } from '@models/instance.model';
 import { DirectMessage, User } from '@models/local.models';
 import { Clinic, Member, Role, RolePermissions } from '@models/server.models';
 import { faker } from '@faker-js/faker';
-import { subMinutes } from 'date-fns';
+
 export const firstUser: User = {
   avatar: '/assets/9b4caf44c40506a102ec.png',
   clinic: [

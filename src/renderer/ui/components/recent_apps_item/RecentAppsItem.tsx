@@ -6,20 +6,22 @@ import MedicalTestModal from '@containers/modals/Medical_Test_Modal';
 import { PatientBrief } from '@models/instance.model';
 import { DEFAULT_MODAL, Overlay } from '@libs/overlay';
 import { useAddAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { useGetPatientDetailQuery } from '@redux/instance/record/recordApi';
 
 export default function RecentAppsItem({ id, name }: PatientBrief) {
   const [AddAppointment] = useAddAppointmentMutation();
+  // const { isSuccess, data, isFetching, error } = useGetPatientDetailQuery(id);
+  // console.log('error', error);
 
   const { open } = useOverlay();
   return (
     <PresentationItem primaryText={name} secondaryText={`# ${id}`}>
       <TextButton
-        text="Run diagnosis..."
+        text={'Run diagnosis...'} //REDUX change it to dynamic text
         backgroundColor={color.cold_blue}
         radius={7}
         onPress={() => {
-          //REDUX change position by getting the value
-          open(<MedicalTestModal position={1} />, DEFAULT_MODAL);
+          open(<MedicalTestModal patientId={id} />, DEFAULT_MODAL);
         }}
       />
       <TextButton
