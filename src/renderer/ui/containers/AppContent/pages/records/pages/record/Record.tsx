@@ -25,6 +25,7 @@ import {
 import LoadingSpinner from '@components/loading_spinner';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useGetPatientAppointmentsQuery } from '@redux/instance/Appointment/AppointmentApi';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -58,6 +59,7 @@ export default function Record({}: RecordProps) {
   const { isFetching, isSuccess, data } = useGetPatientDetailQuery(
     Number(patientId),
   ); //FIXME Handle errors
+  const res = useGetPatientAppointmentsQuery(Number(patientId));
   if (watchSearchField !== searchRef.current) {
     isDirty.current = true;
     searchRef.current = '';
@@ -132,7 +134,7 @@ export default function Record({}: RecordProps) {
                         selectedPatient.lastName
                       }
                       patientId={'#' + patientId}
-                      numPostAppointment={0}
+                      numPostAppointment={res.data?.length ?? 0}
                       nextAppointmentDate={selectedPatient.nextAppointment}
                     />
                   }
@@ -141,7 +143,7 @@ export default function Record({}: RecordProps) {
                   data={selectedPatient.test ? selectedPatient.test : []}
                 />
                 <BookingTimeline
-                  appointments={[]}
+                  appointments={res.data ?? []}
                   patientId={Number(patientId)}
                   onPress={() => {
                     open(

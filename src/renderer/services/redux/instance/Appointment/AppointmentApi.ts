@@ -24,6 +24,19 @@ const appointmentApi = createApi({
         }));
       },
     }),
+    getPatientAppointments: builder.query<Appointment[], number>({
+      query: (patientId: number) => `?patientId=${patientId}`,
+      transformResponse: (response: Appointment[]) => {
+        return response.map(({ bookedFor, date, bookedIn, ...other }) => ({
+          ...other,
+          bookedFor: bookedFor
+            ? parseISO(bookedFor as any as string)
+            : undefined,
+          date: date ? parseISO(date as any as string) : undefined,
+          bookedIn: parseISO(bookedIn as any as string),
+        }));
+      },
+    }),
     bookAppointment: builder.mutation<
       Appointment,
       { patientId: number; body: { date: Date; subject?: string } }
@@ -43,5 +56,8 @@ const appointmentApi = createApi({
 });
 
 export default appointmentApi;
-export const { useGetBookedAppointmentQuery, useBookAppointmentMutation } =
-  appointmentApi;
+export const {
+  useGetBookedAppointmentQuery,
+  useBookAppointmentMutation,
+  useGetPatientAppointmentsQuery,
+} = appointmentApi;
