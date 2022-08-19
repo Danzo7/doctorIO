@@ -7,11 +7,14 @@ import LoadingSpinner from '@components/loading_spinner';
 import TabMenu from '@components/tab_menu';
 import EndSession from '@containers/modals/end_session';
 import WarningModal from '@containers/modals/warning_modal';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import { ModalPortal } from '@libs/overlay/OverlayContainer';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { Patient } from '@models/instance.model';
 import { useGetQueueStateQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { useNavigate } from 'react-router-dom';
 import PatientSmallCard from './components/patient_small_card';
 import MedicalSessionSideBar from './medical_session_side_bar';
 import NoticeTab from './pages/notice_tab';
@@ -22,15 +25,24 @@ import './style/index.scss';
 interface MedicalSessionProps {}
 
 export default function MedicalSession({}: MedicalSessionProps) {
-  const stateQuery = useGetQueueStateQuery(1);
-  const patId =
-    stateQuery.isSuccess &&
-    stateQuery.data.selected &&
-    stateQuery.data.state == 'IN_PROGRESS'
-      ? stateQuery.data.selected.patientId
+  const {
+    data: state,
+    isError: isErrorState,
+    isLoading: isLoadingState,
+    isSuccess: isSuccessState,
+    isFetching: isFetchingState,
+    error: errorState,
+  } = useGetQueueStateQuery(1);
+  const navigate = useNavigate();
+  const queueState = state;
+  const patientId =
+    queueState &&
+    queueState.selected?.patientId &&
+    queueState.state == 'IN_PROGRESS'
+      ? queueState.selected.patientId
       : undefined;
   const { isLoading, data, isSuccess, isError, error, isFetching } =
-    useGetPatientDetailQuery(patId ? patId : skipToken);
+    useGetPatientDetailQuery(patientId ?? skipToken);
   const { open, openTooltip } = useOverlay();
   const openEndSessionModal = () => {
     open(<EndSession />, {
@@ -42,17 +54,15 @@ export default function MedicalSession({}: MedicalSessionProps) {
       closeBtn: 'inner',
     });
   };
-  return isLoading ||
-    isFetching ||
-    stateQuery.isFetching ||
-    stateQuery.isLoading ? (
+
+  return isLoading || isFetching || isFetchingState || isLoadingState ? (
     <LoadingSpinner />
-  ) : isSuccess && patId ? (
+  ) : isSuccess && patientId ? (
     (() => {
       const patient = data as Patient;
       return (
         <div className="medical-session">
-          <MedicalSessionSideBar patientId={patId} />
+          <MedicalSessionSideBar patientId={patientId} />
           <div className="content-container">
             <Header
               title="Session"
@@ -63,7 +73,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
                   age={patient.age}
                   firstName={patient.firstName}
                   lastName={patient.lastName}
-                  patId={patId}
+                  patId={patientId}
                 />
               }
             />
@@ -107,9 +117,15 @@ export default function MedicalSession({}: MedicalSessionProps) {
       );
     })()
   ) : (
-    <WarningModal
-      warningTitle="Error"
-      warningDescription={'Something went wrong'}
-    />
+    <ModalPortal onClose={() => navigate('/')} {...DEFAULT_MODAL}>
+      <WarningModal
+        warningTitle="Error"
+        warningDescription={
+          queueState?.state !== 'IN_PROGRESS'
+            ? 'No queue item is selected'
+            : 'Something went wrong'
+        }
+      />
+    </ModalPortal>
   );
 }
