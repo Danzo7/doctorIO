@@ -1,4 +1,4 @@
-import { Appointment, BookedAppointment } from '@models/instance.model';
+import { Appointment, BookedAppointment, Drug } from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
 
@@ -38,7 +38,7 @@ const appointmentApi = createApi({
       },
     }),
     bookAppointment: builder.mutation<
-      Appointment,
+      any,
       { patientId: number; body: { date: Date; subject?: string } }
     >({
       query: ({ patientId, body }) => {
@@ -51,7 +51,21 @@ const appointmentApi = createApi({
       invalidatesTags: ['BookAppointment'],
     }),
     //PATCH
-    // setAppointmentDone :builder.mutation<>
+    setAppointmentDone: builder.mutation<
+      Appointment,
+      {
+        appointmentId: number;
+        body: { diagnosis: string; subject?: string; prescription: Drug[] };
+      }
+    >({
+      query: ({ appointmentId, body }) => {
+        return {
+          url: `?id=${appointmentId}`,
+          body: { ...body },
+          method: 'PATCH',
+        };
+      },
+    }),
   }),
 });
 
@@ -60,4 +74,5 @@ export const {
   useGetBookedAppointmentQuery,
   useBookAppointmentMutation,
   useGetPatientAppointmentsQuery,
+  useSetAppointmentDoneMutation,
 } = appointmentApi;

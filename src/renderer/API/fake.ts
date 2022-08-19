@@ -844,37 +844,33 @@ export const bookedAppointments: BookedAppointment[] = [
   })(),*/
 ];
 
-export const drugList: Drug[] = [
-  {
-    id: 1,
-    name: 'doliprane',
-    description: 'for corona',
-    qts: 2,
-    dosage: 3,
-    duration: 10,
-  },
-  {
-    id: 2,
-    name: 'Nasacourt',
-    description: 'for corona',
-    qts: 4,
-    dosage: 2,
-    duration: 10,
-  },
-  {
-    id: 3,
-    name: 'Nasacourt',
-    description: 'for corona',
-    qts: 4,
-    dosage: 2,
-    duration: 10,
-  },
-  {
-    id: 4,
-    name: 'bioMax',
-    description: 'for face care',
-    qts: 1,
-    dosage: 2,
-    duration: 10,
-  },
-];
+// export const drugList: Drug[] = [
+//   {
+//     name: 'doliprane',
+//     description: 'for corona',
+//     qts: 2,
+//     dosage: 3,
+//     duration: 10,
+//   },
+//   {
+//     name: 'Nasacourt',
+//     description: 'for corona',
+//     qts: 4,
+//     dosage: 2,
+//     duration: 10,
+//   },
+//   {
+//     name: 'Nasacourt',
+//     description: 'for corona',
+//     qts: 4,
+//     dosage: 2,
+//     duration: 10,
+//   },
+//   {
+//     name: 'bioMax',
+//     description: 'for face care',
+//     qts: 1,
+//     dosage: 2,
+//     duration: 10,
+//   },
+// ];
