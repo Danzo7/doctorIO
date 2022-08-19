@@ -1,11 +1,10 @@
 import './App.scss';
-import { OverlayContainer } from '@libs/overlay';
+import { OverlayContainer, PortalContainer } from '@libs/overlay';
 import { Route, Routes } from 'react-router-dom';
 import MedicalSession from '@layers/medical_session';
 import MainLayer from '@layers/main_layer';
 import Clinic from '@containers/AppContent/pages/clinic';
 import { useAppDispatch, useAppSelector } from '@store';
-import { User } from '@models/local.models';
 import { setUser } from '@redux/local/user/userSlice';
 import TextButton from '@components/buttons/text_button';
 
@@ -42,6 +41,7 @@ function App({}: AppProps) {
         }
       </div>
       <OverlayContainer />
+      <PortalContainer />
     </>
   );
 }

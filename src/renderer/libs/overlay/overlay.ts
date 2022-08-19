@@ -6,6 +6,8 @@ import { OverlayOptions } from '.';
 export class Overlay {
   static entryElement: HTMLDivElement;
 
+  static portalEntry: HTMLDivElement;
+
   static update: (
     state?: (portals: React.ReactPortal[]) => React.ReactPortal[],
   ) => void;

@@ -15,6 +15,7 @@ import { css } from '@emotion/react';
 import { createPopper, Modifier, OptionsGeneric } from '@popperjs/core';
 import { useRouteChange } from '@libs/HistoryBlocker';
 import { ActionProps } from '@components/poppers/tooltip';
+import { createPortal } from 'react-dom';
 interface OverlayContainerProps {}
 export const OverlayContext = createContext<{
   open?: (target: ReactNode, props: OverlayOptions) => void;
@@ -82,6 +83,7 @@ export interface OverlayOptions {
   height?: number | string;
   popperTarget?: HTMLElement | PopperTargetType;
   closeMethod?: () => void;
+  defaultCloseFallback?: boolean;
   //draggable?: boolean;
   closeBtn?:
     | 'inner'
@@ -101,6 +103,7 @@ export interface OverlayOptions {
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
 };
+
 export function OverlayItem({
   children,
   isDimmed = false,
@@ -115,8 +118,14 @@ export function OverlayItem({
   closeMethod,
   position,
   transition = 'zoom',
+  onClose,
+  defaultCloseFallback = true,
 }: OverlayItemProps) {
-  const closeOverlay = () => (closeMethod ? closeMethod() : Overlay.close());
+  const closeOverlay = () => {
+    onClose?.();
+    if (closeMethod) closeMethod();
+    else if (defaultCloseFallback) Overlay.close();
+  };
 
   return (
     <>
@@ -192,5 +201,30 @@ export function OverlayItem({
         {children}
       </div>
     </>
+  );
+}
+export function PortalContainer({}: OverlayContainerProps) {
+  return (
+    <div
+      className="overlay-container"
+      ref={(e) => {
+        Overlay.portalEntry = e as HTMLDivElement;
+      }}
+    />
+  );
+}
+export function ModalPortal({
+  children,
+  ...options
+}: OverlayOptions & { onClose: () => void } & {
+  children: ReactNode;
+}): React.ReactPortal {
+  return createPortal(
+    <div>
+      <OverlayItem defaultCloseFallback={false} {...options}>
+        {children}
+      </OverlayItem>
+    </div>,
+    Overlay.portalEntry,
   );
 }
