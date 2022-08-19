@@ -3,7 +3,6 @@ import Header from '@components/header';
 import AddDrugModal from '@containers/modals/add_drug_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { useAppDispatch } from '@store';
 import MedicamentTable from './medicament_table';
 import './style/index.scss';
 

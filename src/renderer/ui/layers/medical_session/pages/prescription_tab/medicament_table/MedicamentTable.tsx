@@ -19,7 +19,7 @@ interface MedicamentTableProps {
   editable?: true;
 }
 
-const table = createTable().setRowType<Drug & { id: number }>();
+const table = createTable().setRowType<Drug>();
 export default function MedicamentTable({ editable }: MedicamentTableProps) {
   const prescription = useAppSelector((state) => state.session.prescription);
   const data = prescription.map((prec, index) => ({ ...prec, id: index }));
@@ -72,6 +72,7 @@ export default function MedicamentTable({ editable }: MedicamentTableProps) {
                           dosage: row.getValue('dosage'),
                           duration: row.getValue('duration'),
                           description: row.getValue('description'),
+                          id: row.getValue('id'),
                         }}
                       />,
                       DEFAULT_MODAL,
@@ -82,7 +83,7 @@ export default function MedicamentTable({ editable }: MedicamentTableProps) {
             ),
           }),
       ].filter(Boolean) as any,
-    [editable],
+    [editable, open],
   );
 
   const instance = useTableInstance(table, {
