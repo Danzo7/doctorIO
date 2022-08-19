@@ -62,7 +62,7 @@ export default function MedicalTestModal({
     if (v == 'A' || v == 'B' || v == 'AB' || v == 'O') {
       setValue('bloodType', v);
     }
-  };
+  }; //FIXME:use actual validation with zod
   return (
     <ModalContainer
       title="Medical test"
