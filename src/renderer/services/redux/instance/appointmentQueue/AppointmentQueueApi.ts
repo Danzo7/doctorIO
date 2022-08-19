@@ -23,10 +23,12 @@ export const api = createApi({
           })[];
         },
       ) => {
-        const transformedApp = response.appointments.map((item) => ({
-          ...item,
-          date: parseISO(item.date),
-        }));
+        const transformedApp = response.appointments.map(
+          ({ date, ...other }) => ({
+            ...other,
+            date: parseISO(date),
+          }),
+        );
 
         return { ...response, appointments: transformedApp };
       },
@@ -37,7 +39,10 @@ export const api = createApi({
       transformResponse: (
         response: (Omit<AppointmentQueueItem, 'date'> & { date: string })[],
       ) => {
-        return response.map((item) => ({ ...item, date: parseISO(item.date) }));
+        return response.map(({ date, ...other }) => ({
+          ...other,
+          date: parseISO(date),
+        }));
       },
     }),
     getQueueState: builder.query<QueueState, number>({
@@ -69,7 +74,7 @@ export const api = createApi({
           method: 'POST',
           body: body,
         };
-      }, //TODO fix body type to createItemDto from backend
+      },
       invalidatesTags: ['item'],
     }),
     //PATCH
