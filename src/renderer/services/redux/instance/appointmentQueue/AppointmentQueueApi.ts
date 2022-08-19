@@ -154,13 +154,12 @@ const appointmentQueueApi = createApi({
     }),
     deleteAppointment: builder.mutation<
       AppointmentQueueItem[],
-      { roleId: number; position: number }
+      { roleId: number; appointmentId: number }
     >({
-      query: ({ roleId, position }) => {
+      query: ({ roleId, appointmentId }) => {
         return {
-          url: `/${roleId}/item`,
+          url: `/${roleId}/item?appointmentId=${appointmentId}`,
           method: 'DELETE',
-          body: { position: position },
         };
       },
       invalidatesTags: ['item'],
