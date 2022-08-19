@@ -8,36 +8,25 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import SessionPreviewModal from '@containers/modals/session_preview_modal';
 import { format } from 'date-fns';
 import { DATE_ONLY, TIME_ONLY } from '@constants/data_format';
-type TimeLineData = {
-  booked?: true;
-  subject: string;
-};
-interface TimelineItemProps {
-  sessionId?: number;
-  doctorName: string;
-  assistantName: string;
-  doctorId: number;
-  assistantId: number;
-  type: 'missed' | 'upcoming' | TimeLineData;
-  date: Date;
-}
+import { Appointment } from '@models/instance.model';
 
 export default function TimelineItem({
-  type,
+  bookedIn,
+  state,
+  subject,
+  assignedBy,
+  member,
+  bookedFor,
   date,
-  doctorName,
-  assistantName,
-  assistantId,
-  doctorId,
-  sessionId,
-}: TimelineItemProps) {
+  session,
+}: Appointment) {
   const selectedColor =
-    typeof type == 'string'
-      ? type == 'upcoming'
-        ? color.warm_orange
-        : color.cold_red
-      : (type as TimeLineData).booked
+    state == 'done-booked'
       ? color.good_green
+      : state == 'missed' || state == 'canceled'
+      ? color.cold_red
+      : state == 'upcoming' || state == 'opened'
+      ? color.warm_orange
       : color.cold_blue;
   const { open } = useOverlay();
   return (
@@ -50,23 +39,41 @@ export default function TimelineItem({
         }}
       />
       <div className="event">
-        {(type as TimeLineData)?.subject && (
-          <WideCard borderColor={selectedColor}>
-            <TextPair
-              first={format(date, DATE_ONLY)}
-              second={format(date, TIME_ONLY)}
-            />
-            <TextPair
-              first={(type as TimeLineData)?.subject}
-              second="Subject"
-              reversed
-            />
-            <TextPair first={doctorName} second="Doctor" reversed />
-            <TextPair first={assistantName} second="Assistance" reversed />
+        <WideCard borderColor={selectedColor}>
+          <TextPair
+            first={
+              state == 'canceled'
+                ? 'Unprogrammed appointment'
+                : date
+                ? format(date, DATE_ONLY)
+                : state == 'opened'
+                ? 'Unprogrammed appointment'
+                : 'Booked appointment'
+            }
+            second={
+              date
+                ? format(date, TIME_ONLY)
+                : bookedFor
+                ? format(bookedFor, DATE_ONLY)
+                : 'Not programed'
+            }
+          />
+
+          {subject && <TextPair first={subject} second="Subject" reversed />}
+          {member && (
+            <TextPair first={member?.memberName} second="Treated by" reversed />
+          )}
+          <TextPair
+            first={assignedBy?.memberName}
+            second="Assigned by"
+            reversed
+          />
+          {session && (
             <SquareIconButton
               Icon={View}
               onPress={() => {
                 open(<SessionPreviewModal />, {
+                  //TODO update session preview modal to take session object
                   closeOnClickOutside: true,
                   isDimmed: true,
                   clickThrough: false,
@@ -75,30 +82,29 @@ export default function TimelineItem({
                 });
               }}
             />
-          </WideCard>
-        )}
+          )}
+          {state != 'done' && state != 'done-booked' && (
+            <TextPair second="State" first={state} reversed />
+          )}
+        </WideCard>
 
-        {(type as TimeLineData)?.booked && (
-          <div
-            css={{
-              borderLeft: `3px solid ${selectedColor}`,
-              height: 5,
-              marginLeft: 10,
-            }}
-          />
-        )}
-        {(typeof type == 'string' || (type as TimeLineData)?.booked) && (
-          <WideCard borderColor={selectedColor}>
-            <TextPair
-              first="Booked appointment"
-              second={format(date, DATE_ONLY)}
+        {state == 'done-booked' && (
+          <>
+            <div
+              css={{
+                borderLeft: `3px solid ${selectedColor}`,
+                height: 5,
+                marginLeft: 10,
+              }}
             />
-            <TextPair
-              second="status"
-              first={typeof type == 'string' ? type : 'Done'}
-              reversed
-            />
-          </WideCard>
+            <WideCard borderColor={selectedColor}>
+              <TextPair
+                first="Booked appointment"
+                second={format(bookedIn, DATE_ONLY)}
+              />
+              <TextPair second="State" first={state} reversed />
+            </WideCard>
+          </>
         )}
       </div>
     </div>
