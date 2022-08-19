@@ -869,6 +869,7 @@ export const appointmentQueueData: AppointmentQueue = {
 };
 */
 export const bookedAppointments: BookedAppointment[] = [
+  /*
   {
     patientId: 1,
     patientName: 'aymen' + ' ' + 'daouadji',
