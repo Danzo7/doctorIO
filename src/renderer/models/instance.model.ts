@@ -30,9 +30,6 @@ interface Patient {
   gender: 'male' | 'female';
   age: number;
   test?: Test;
-  medicalDocuments?: MedicalDocument[];
-  medicalHistory?: MedicalHistory[];
-  appointments?: Appointment[];
   nextAppointment?: Date;
   status: boolean;
 }
@@ -40,50 +37,23 @@ interface PatientBrief {
   id: number;
   name: string;
 }
-interface PatientSpecification {
-  weight: number;
-  height: number;
-  bloodType: 'A' | 'B' | 'AB' | 'O';
-  allergies: string;
-  diseases: string;
-  medications: string;
-  surgeries: string;
-  other: string;
-}
+
 interface Session {
   notice: string;
   prescription: Drug[];
 }
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface Appointment_v2 {
-  member?: { memberId: number; memberName: string }; //
   assignedBy: { memberId: number; memberName: string };
+  member?: { memberId: number; memberName: string };
   subject: string;
-  state: 'done' | 'missed' | 'upcoming';
-  bookedDate: Date; //if date!=bookDate, then it is booked
+  bookedFor?: Date;
+  bookedIn: Date;
   date?: Date;
   session?: Session;
   diagnosis?: string;
+  state: 'done' | 'done-booked' | 'missed' | 'upcoming' | 'opened' | 'canceled';
 }
-type Appointment = {
-  id: number;
-  patId?: number; //foreign
-  member: { memberId: number; memberName: string };
-  assignedBy: { memberId: number; memberName: string };
-} & (
-  | ({ state: 'done' } & {
-      date: Date;
-      sessionId: number;
-      subject: string;
-    })
-  | ({ state: 'done-booked' } & {
-      date: Date;
-      bookDate: Date;
-      sessionId: number;
-      subject: string;
-    })
-  | ({ state: 'missed' | 'upcoming' } & { bookDate?: Date })
-);
 
 interface MedicalDocument {
   id: string;
@@ -120,7 +90,6 @@ interface ServerError {
 }
 export type {
   ServerError,
-  Appointment,
   BookedAppointment,
   Patient,
   PatientBrief,
@@ -132,5 +101,5 @@ export type {
   Test,
   Drug,
   QueueState,
-  Appointment_v2,
+  Appointment_v2 as Appointment,
 };

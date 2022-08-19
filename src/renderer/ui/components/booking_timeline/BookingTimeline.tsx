@@ -46,43 +46,9 @@ export default function BookingTimeline({
         gap={10}
         noBorder
       >
-        {appointments.map(
-          (
-            {
-              assignedBy,
-              member,
-              id,
-              state,
-              bookDate,
-              date,
-              sessionId,
-              subject,
-            }: BookedItem,
-            index,
-          ) => (
-            <TimelineItem
-              sessionId={sessionId}
-              date={date ?? bookDate ?? new Date()}
-              assistantId={assignedBy.memberId}
-              doctorId={member.memberId}
-              doctorName={member.memberName}
-              assistantName={assignedBy.memberName}
-              type={
-                state == 'done-booked'
-                  ? {
-                      subject: subject as string,
-                      booked: true,
-                    }
-                  : state == 'done'
-                  ? {
-                      subject: subject as string,
-                    }
-                  : state
-              }
-              key={id.toString() + index}
-            />
-          ),
-        )}
+        {appointments.map((app, index) => (
+          <TimelineItem key={index} {...app} />
+        ))}
       </PreviewList>
     </div>
   );
