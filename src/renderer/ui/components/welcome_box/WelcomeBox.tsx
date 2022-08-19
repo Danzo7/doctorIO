@@ -3,15 +3,17 @@ import './style/index.scss';
 import Svg from 'toSvg/doctor_figure.svg?icon';
 import Arrow from 'toSvg/arrow.svg';
 import Pattern from 'toSvg/pattern.svg';
-import { firstUser } from '@api/fake';
 import { differenceInHours } from 'date-fns/esm';
+import { useAppSelector } from '@store';
 interface WelcomeBoxProps {
   message: string;
 }
 function WelcomeBox({ message }: WelcomeBoxProps) {
-  const { userPreferences } = firstUser; //REDUX fetch current user from local storage
+  const { user } = useAppSelector((state) => state.user);
+
   const isDismised =
-    differenceInHours(new Date(), userPreferences.welcomeDismissedIn) < 24;
+    user &&
+    differenceInHours(new Date(), user.userPreferences.welcomeDismissedIn) < 24;
   const [close, setCloseState] = useState({
     isHidding: isDismised,
     isHidden: isDismised,
