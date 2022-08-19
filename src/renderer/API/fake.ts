@@ -919,7 +919,6 @@ export const bookedAppointments: BookedAppointment[] = [
 
 export const drugList: Drug[] = [
   {
-    id: 1,
     name: 'doliprane',
     description: 'for corona',
     qts: 2,
@@ -927,7 +926,6 @@ export const drugList: Drug[] = [
     duration: 10,
   },
   {
-    id: 2,
     name: 'Nasacourt',
     description: 'for corona',
     qts: 4,
@@ -935,7 +933,6 @@ export const drugList: Drug[] = [
     duration: 10,
   },
   {
-    id: 3,
     name: 'Nasacourt',
     description: 'for corona',
     qts: 4,
@@ -943,7 +940,6 @@ export const drugList: Drug[] = [
     duration: 10,
   },
   {
-    id: 4,
     name: 'bioMax',
     description: 'for face care',
     qts: 1,
