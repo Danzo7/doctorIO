@@ -17,14 +17,16 @@ export default function WideCard({ borderColor, children }: WideCardProps) {
       ${borderColor}`,
       }}
     >
-      {children.map((child, index) => (
-        <Fragment key={index}>
-          {child}
-          {index != children.length - 1 && (
-            <BorderSeparator color={borderColor} direction="vertical" />
-          )}
-        </Fragment>
-      ))}
+      {children
+        .filter((c) => c != undefined)
+        .map((child, index, arr) => (
+          <Fragment key={index}>
+            {child}
+            {index != arr.length - 1 && (
+              <BorderSeparator color={borderColor} direction="vertical" />
+            )}
+          </Fragment>
+        ))}
     </div>
   );
 }
