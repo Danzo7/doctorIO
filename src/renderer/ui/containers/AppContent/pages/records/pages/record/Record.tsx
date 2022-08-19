@@ -132,11 +132,7 @@ export default function Record({}: RecordProps) {
                         selectedPatient.lastName
                       }
                       patientId={'#' + patientId}
-                      numPostAppointment={
-                        selectedPatient.appointments
-                          ? selectedPatient.appointments.length
-                          : 0
-                      }
+                      numPostAppointment={0}
                       nextAppointmentDate={selectedPatient.nextAppointment}
                     />
                   }
@@ -145,11 +141,7 @@ export default function Record({}: RecordProps) {
                   data={selectedPatient.test ? selectedPatient.test : []}
                 />
                 <BookingTimeline
-                  appointments={
-                    selectedPatient.appointments
-                      ? selectedPatient.appointments
-                      : []
-                  }
+                  appointments={[]}
                   patientId={Number(patientId)}
                   onPress={() => {
                     open(
