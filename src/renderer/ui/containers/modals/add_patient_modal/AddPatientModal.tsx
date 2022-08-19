@@ -4,6 +4,7 @@ import Datepicker from '@components/inputs/datepicker';
 import Input from '@components/inputs/input';
 import InputContainer from '@components/inputs/input_container';
 import ModalContainer from '@components/modal_container';
+import { DATE_ONLY } from '@constants/data_format';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import {
@@ -150,7 +151,15 @@ export default function AddPatientModal({}: AddPatientModalProps) {
         //     setValue={changeGender}
       />
       <InputContainer label="Birthday">
-        <Datepicker selected={selectedDate} onChange={onDateChange} />
+        <Datepicker
+          selected={selectedDate}
+          onChange={onDateChange}
+          showYearDropdown
+          dateFormat={DATE_ONLY}
+          yearDropdownItemNumber={15}
+          scrollableYearDropdown
+          yearControl
+        />
       </InputContainer>
     </ModalContainer>
   );
