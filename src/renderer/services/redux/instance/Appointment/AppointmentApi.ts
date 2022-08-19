@@ -1,4 +1,4 @@
-import { Appointment_v2, BookedAppointment } from '@models/instance.model';
+import { Appointment, BookedAppointment } from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
 
@@ -25,7 +25,7 @@ const appointmentApi = createApi({
       },
     }),
     bookAppointment: builder.mutation<
-      Appointment_v2,
+      Appointment,
       { patientId: number; body: { date: Date; subject?: string } }
     >({
       query: ({ patientId, body }) => {
