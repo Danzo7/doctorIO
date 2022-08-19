@@ -1,11 +1,11 @@
 interface BookedAppointment {
-  bookDate: Date;
+  id: number;
+  bookedFor: Date;
   patientId: number;
   patientName: string;
-  bookedBy?: { memberId: number; memberName: string };
+  bookedBy: { memberId: number; memberName: string };
   state: 'IN_QUEUE' | 'PANDING';
 }
-
 type AppointmentQueue = {
   isOwner: boolean;
   appointments: AppointmentQueueItem[];
