@@ -170,7 +170,13 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
       nodeEnv: mode,
       splitChunks: {
-        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
       },
     },
   };
