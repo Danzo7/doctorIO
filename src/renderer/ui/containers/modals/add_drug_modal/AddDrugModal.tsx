@@ -18,7 +18,7 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Drug>({
+  } = useForm<Omit<Drug, 'id'>>({
     defaultValues: {
       description: defaultValues?.description,
       dosage: defaultValues?.dosage,
@@ -27,7 +27,9 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
       qts: defaultValues?.qts,
     },
   });
-  const onSubmit: SubmitHandler<Drug> = (formData: Omit<Drug, 'id'>) => {
+  const onSubmit: SubmitHandler<Omit<Drug, 'id'>> = (
+    formData: Omit<Drug, 'id'>,
+  ) => {
     if (!defaultValues) {
       const parsedData = {
         id: Date.now(),

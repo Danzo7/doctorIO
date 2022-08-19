@@ -21,8 +21,7 @@ interface MedicamentTableProps {
 
 const table = createTable().setRowType<Drug>();
 export default function MedicamentTable({ editable }: MedicamentTableProps) {
-  const prescription = useAppSelector((state) => state.session.prescription);
-  const data = prescription.map((prec, index) => ({ ...prec, id: index }));
+  const data = useAppSelector((state) => state.session.prescription);
 
   const { open } = useOverlay();
   const [sorting, setSorting] = useState<SortingState>([]);
