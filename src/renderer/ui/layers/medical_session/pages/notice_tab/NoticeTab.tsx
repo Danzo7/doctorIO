@@ -1,5 +1,5 @@
 import TextArea from '@components/inputs/text_area';
-import { updateNotice } from '@redux/local/sessionSlice';
+import { updateNotice } from '@redux/local/session/sessionSlice';
 import { useAppDispatch, useAppSelector } from '@store';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './style/index.scss';

@@ -4,7 +4,7 @@ import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
 import { Drug } from '@models/instance.model';
-import { addDrug, updatePrescription } from '@redux/local/sessionSlice';
+import { addDrug, updatePrescription } from '@redux/local/session/sessionSlice';
 import { useAppDispatch, useAppSelector } from '@store';
 import { SubmitHandler, useForm } from 'react-hook-form';
 

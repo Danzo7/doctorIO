@@ -3,10 +3,10 @@ import PreviewList from '@components/preview_list';
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import useNavigation from '@libs/hooks/useNavigation';
-import { useAppSelector } from '@store';
+import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/AppointmentApi';
 
 export default function BookedList({}) {
-  const bookedAppointments = useAppSelector((state) => state.bookedAppointment);
+  const { data, isSuccess } = useGetBookedAppointmentQuery(null);
   const { navigate } = useNavigation();
 
   return (
@@ -25,9 +25,8 @@ export default function BookedList({}) {
         />
       }
     >
-      {bookedAppointments.map((props, index) => (
-        <BookedItem {...props} key={index} />
-      ))}
+      {isSuccess &&
+        data.map((props, index) => <BookedItem {...props} key={index} />)}
     </PreviewList>
   );
 }

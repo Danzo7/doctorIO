@@ -13,7 +13,8 @@ import './style/index.scss';
 
 export default function BookedAppointmentItem({
   patientName,
-  bookDate,
+  bookedFor,
+  id,
   bookedBy,
   patientId,
   state,
@@ -26,7 +27,7 @@ export default function BookedAppointmentItem({
       <BorderSeparator direction="vertical" />
       <TextPair
         second="Booked in"
-        first={format(bookDate, DATE_ONLY)}
+        first={format(bookedFor, DATE_ONLY)}
         reversed
       />
       <BorderSeparator direction="vertical" />

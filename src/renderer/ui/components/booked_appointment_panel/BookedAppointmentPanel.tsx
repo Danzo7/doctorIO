@@ -3,11 +3,11 @@ import PreviewList from '@components/preview_list';
 import AddSearchToBooked from '@containers/modals/add_search_to_booked';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { useAppSelector } from '@store';
+import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/AppointmentApi';
 import BookedAppointmentItem from './booked_appointment_item';
 
 export default function BookedAppointmentPanel({}) {
-  const bookedAppointments = useAppSelector((state) => state.bookedAppointment);
+  const { data, isSuccess } = useGetBookedAppointmentQuery(null);
   const { open } = useOverlay();
   return (
     <PreviewList
@@ -23,9 +23,10 @@ export default function BookedAppointmentPanel({}) {
       }
       noBorder
     >
-      {bookedAppointments.map((props, index) => (
-        <BookedAppointmentItem {...props} key={index} />
-      ))}
+      {isSuccess &&
+        data.map((props, index) => (
+          <BookedAppointmentItem {...props} key={index} />
+        ))}
     </PreviewList>
   );
 }

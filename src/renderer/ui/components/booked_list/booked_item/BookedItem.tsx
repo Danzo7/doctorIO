@@ -12,11 +12,12 @@ import useNavigation from '@libs/hooks/useNavigation';
 import TextPair from '@components/text_pair/TextPair';
 import { color } from '@assets/styles/color';
 import { useDispatch } from 'react-redux';
-import { removeBookedAppointment } from '@redux/instance/bookedAppointmentSlice';
 
 function BookedItem({
   patientName,
-  bookDate,
+  id,
+  bookedBy,
+  bookedFor,
   state,
   patientId,
 }: BookedAppointment) {
@@ -34,7 +35,7 @@ function BookedItem({
             fontColor: color.white,
           }}
           second={{
-            text: formatDistance(bookDate, new Date()) + ' ago',
+            text: formatDistance(bookedFor, new Date()) + ' ago',
             fontSize: 12,
             fontWeight: '400',
             fontColor: color.text_gray,
@@ -81,12 +82,7 @@ function BookedItem({
                 {
                   text: 'Remove',
                   onPress: () => {
-                    dispatch(
-                      removeBookedAppointment({
-                        bookDate: bookDate,
-                        patientId: patientId,
-                      }),
-                    );
+                    //REDUX REMOVE Booked app;
                   },
                   type: 'warning',
                 },
