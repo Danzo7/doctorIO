@@ -83,7 +83,8 @@ export default function TimelineItem({
               }}
             />
           )}
-          {state != 'done' && state != 'done-booked' && (
+          {((state == 'done' && !bookedFor) ||
+            (state != 'done' && state != 'done-booked')) && (
             <TextPair second="State" first={state} reversed />
           )}
         </WideCard>
