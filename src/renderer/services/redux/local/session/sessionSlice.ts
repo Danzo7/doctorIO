@@ -1,15 +1,19 @@
 import { Drug, Session } from '@models/instance.model';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: Session = { notice: '', prescription: [] };
+const initialState: Session = { diagnosis: '', prescription: [] };
 const sessionSlice = createSlice({
   name: 'session',
   initialState: initialState,
   reducers: {
     updateNotice: (state: Session, action: PayloadAction<string>) => {
-      state.notice = action.payload;
+      state.diagnosis = action.payload;
     },
     clearPrescription: (state: Session) => {
+      state.prescription = [];
+    },
+    resetSession: (state: Session) => {
+      state.diagnosis = '';
       state.prescription = [];
     },
     addDrug: (state: Session, action: PayloadAction<Drug>) => {
@@ -23,7 +27,12 @@ const sessionSlice = createSlice({
     },
   },
 });
-export const { updateNotice, addDrug, clearPrescription, updatePrescription } =
-  sessionSlice.actions;
+export const {
+  updateNotice,
+  addDrug,
+  clearPrescription,
+  updatePrescription,
+  resetSession,
+} = sessionSlice.actions;
 
 export default sessionSlice;
