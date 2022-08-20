@@ -6,8 +6,10 @@ import useNavigation from '@libs/hooks/useNavigation';
 import {
   useGetQueueAppointmentsQuery,
   useGetIsQueueOwnerQuery,
+  useResumeQueueMutation,
+  usePauseQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style/index.scss';
 interface SmallClinicStatusProps {
   hasViewClinic?: true;
@@ -16,14 +18,19 @@ interface SmallClinicStatusProps {
 export default function SmallClinicStatus({
   hasViewClinic,
 }: SmallClinicStatusProps) {
-  const [isAccept, setIsAccept] = useState(true); //FEATURE set queue state to paused
-
+  const [isAccept, setIsAccept] = useState(true);
+  const [ResumeQueue] = useResumeQueueMutation();
+  const [PauseQueue] = usePauseQueueMutation();
   const { navigate } = useNavigation();
   const ownershipData = useGetIsQueueOwnerQuery(1);
-  //REDUX getAppointmentQueue count
   const appointmentsQuery = useGetQueueAppointmentsQuery(1);
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const isOwner = ownershipData.isSuccess ? ownershipData.data : undefined;
+  useEffect(() => {
+    if (isAccept) ResumeQueue(1);
+    else PauseQueue(1);
+  }, [isAccept]);
+
   return (
     <div
       css={{ padding: !hasViewClinic ? '20px 0' : '' }}

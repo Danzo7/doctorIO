@@ -105,7 +105,7 @@ const appointmentQueueApi = createApi({
           body: { position: position, ...test },
         };
       },
-      invalidatesTags: ['item'], //REDUX update test on both comp of queue item wide
+      invalidatesTags: ['item'],
     }),
     updateQueueState: builder.mutation({
       query: (data: { roleId: number; body: any }) => {
