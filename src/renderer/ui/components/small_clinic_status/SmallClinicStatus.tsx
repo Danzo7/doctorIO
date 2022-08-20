@@ -4,7 +4,7 @@ import Header from '@components/header';
 import Timer from '@components/small_clinic_status/timer';
 import useNavigation from '@libs/hooks/useNavigation';
 import {
-  useGetAppointmentsQuery,
+  useGetQueueAppointmentsQuery,
   useGetIsQueueOwnerQuery,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useState } from 'react';
@@ -21,7 +21,7 @@ export default function SmallClinicStatus({
   const { navigate } = useNavigation();
   const ownershipData = useGetIsQueueOwnerQuery(1);
   //REDUX getAppointmentQueue count
-  const appointmentsQuery = useGetAppointmentsQuery(1);
+  const appointmentsQuery = useGetQueueAppointmentsQuery(1);
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const isOwner = ownershipData.isSuccess ? ownershipData.data : undefined;
   return (
