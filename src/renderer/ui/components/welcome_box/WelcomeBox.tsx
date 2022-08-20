@@ -5,6 +5,7 @@ import Arrow from 'toSvg/arrow.svg';
 import Pattern from 'toSvg/pattern.svg';
 import { differenceInHours } from 'date-fns/esm';
 import { useAppSelector } from '@store';
+import { parseISO } from 'date-fns';
 interface WelcomeBoxProps {
   message: string;
 }
@@ -13,7 +14,10 @@ function WelcomeBox({ message }: WelcomeBoxProps) {
 
   const isDismised =
     user &&
-    differenceInHours(new Date(), user.userPreferences.welcomeDismissedIn) < 24;
+    differenceInHours(
+      new Date(),
+      parseISO(user.userPreferences.welcomeDismissedIn),
+    ) < 24;
   const [close, setCloseState] = useState({
     isHidding: isDismised,
     isHidden: isDismised,

@@ -41,7 +41,7 @@ export const firstUser: User = {
   userPreferences: {
     language: 'en',
     theme: 'Nighty',
-    welcomeDismissedIn: new Date('2020-01-01'),
+    welcomeDismissedIn: new Date('2020-01-01').toISOString(),
   },
 };
 
