@@ -9,6 +9,7 @@ interface TextAreaProps {
   label?: string;
   errorMessage?: string;
   hint?: string;
+  defaultValue?: string;
   fillContainer?: true;
   onSubmit?: () => void;
 }
@@ -17,6 +18,7 @@ export default forwardRef(function TextArea(
     label,
     errorMessage,
     hint,
+    defaultValue,
     fillContainer,
     onChange,
     onSubmit,
@@ -39,6 +41,7 @@ export default forwardRef(function TextArea(
       >
         <div className="text-area">
           <textarea
+            defaultValue={defaultValue}
             placeholder="write something..."
             {...others}
             onChange={(e) => {
