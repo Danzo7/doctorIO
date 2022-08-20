@@ -1,6 +1,7 @@
 import { firstUser } from '@api/fake';
 import { User } from '@models/local.models';
 import { createSlice } from '@reduxjs/toolkit';
+import { parseISO } from 'date-fns';
 
 interface UserType {
   user: User | undefined;
@@ -17,8 +18,16 @@ const userSlice = createSlice({
     setUser: (state: UserType) => {
       state.user = firstUser;
     },
+    resetWelcomeDismissedIn: (state: UserType) => {
+      if (state.user) {
+        state.user.userPreferences = {
+          ...state.user.userPreferences,
+          welcomeDismissedIn: new Date().toISOString(),
+        };
+      }
+    },
   },
 });
-export const { setUser } = userSlice.actions;
+export const { setUser, resetWelcomeDismissedIn } = userSlice.actions;
 
 export default userSlice;
