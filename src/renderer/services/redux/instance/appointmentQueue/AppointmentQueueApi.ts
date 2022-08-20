@@ -7,6 +7,7 @@ import {
 } from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
+import appointmentApi from '../Appointment/AppointmentApi';
 
 const appointmentQueueApi = createApi({
   reducerPath: 'AppointmentQueueApi',
@@ -34,7 +35,7 @@ const appointmentQueueApi = createApi({
         return { ...response, appointments: transformedApp };
       },
     }), //Avoid using this endpoint
-    getAppointments: builder.query<AppointmentQueueItem[], number>({
+    getQueueAppointments: builder.query<AppointmentQueueItem[], number>({
       query: (roleId) => `/${roleId}/item`,
       providesTags: ['item'],
       transformResponse: (
@@ -67,7 +68,7 @@ const appointmentQueueApi = createApi({
       query: (roleId: number) => ({ url: `/${roleId}`, method: 'POST' }),
       invalidatesTags: ['state', 'queue', 'item'],
     }),
-    addAppointment: builder.mutation<
+    addQueueAppointment: builder.mutation<
       AppointmentQueueItem[],
       {
         roleId: number;
@@ -93,7 +94,7 @@ const appointmentQueueApi = createApi({
           body: { position: position, ...test },
         };
       },
-      invalidatesTags: ['item'],
+      invalidatesTags: ['item'], //REDUX update test on both comp of queue item wide
     }),
     updateQueueState: builder.mutation({
       query: (data: { roleId: number; body: any }) => {
@@ -180,6 +181,14 @@ const appointmentQueueApi = createApi({
         };
       },
       invalidatesTags: ['item'],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(appointmentApi.util.invalidateTags(['BookAppointment']));
+        } catch (err) {
+          console.log(err);
+        }
+      },
     }),
   }),
 });
@@ -189,8 +198,8 @@ export const {
   useGetNextQueueItemQuery,
   useCreateQueueMutation,
   useResetQueueMutation,
-  useGetAppointmentsQuery,
-  useAddAppointmentMutation,
+  useGetQueueAppointmentsQuery,
+  useAddQueueAppointmentMutation,
   useUpdateTestMutation,
   useDeleteAppointmentMutation,
   useGetQueueStateQuery,
