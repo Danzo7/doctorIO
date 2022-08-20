@@ -23,7 +23,7 @@ interface QueueControlsProps {}
 export default function QueueControls({}: QueueControlsProps) {
   const { open, close } = useOverlay();
   const { data, isSuccess } = useGetQueueInfoQuery(1);
-  const NextQueueItemQuery = useGetNextQueueItemQuery(1);
+  // const NextQueueItemQuery = useGetNextQueueItemQuery(1);
   const [PauseQueue] = usePauseQueueMutation();
   const [ResumeQueue] = useResumeQueueMutation();
 
@@ -74,65 +74,13 @@ export default function QueueControls({}: QueueControlsProps) {
                 radius={7}
                 iconSize={10}
                 onPress={() => {
-                  let nextPat: AppointmentQueueItem | undefined;
-                  if (NextQueueItemQuery.isSuccess) {
-                    nextPat = NextQueueItemQuery.data;
-                  } else
-                    open(
-                      <WarningModal
-                        warningTitle="Error "
-                        warningDescription="error occurs please try again!"
-                      >
-                        <TextButton
-                          text="Close"
-                          backgroundColor={color.cold_blue}
-                          width="100%"
-                          onPress={() => {
-                            close();
-                          }}
-                        />
-                      </WarningModal>,
-                      {
-                        closeOnClickOutside: true,
-                        isDimmed: true,
-                        clickThrough: false,
-                      },
-                    );
-                  if (nextPat)
-                    open(
-                      <NextPatient
-                        patientName={nextPat.patientName}
-                        position={nextPat.position}
-                      />,
-                      {
-                        width: '30%',
-                        closeOnClickOutside: true,
-                        isDimmed: true,
-                        clickThrough: false,
-                        closeBtn: 'inner',
-                      },
-                    );
-                  else
-                    open(
-                      <WarningModal
-                        warningTitle="The queue is empty for now "
-                        warningDescription="You need to add patient to queue"
-                      >
-                        <TextButton
-                          text="Close"
-                          backgroundColor={color.cold_blue}
-                          width="100%"
-                          onPress={() => {
-                            close();
-                          }}
-                        />
-                      </WarningModal>,
-                      {
-                        closeOnClickOutside: true,
-                        isDimmed: true,
-                        clickThrough: false,
-                      },
-                    );
+                  open(<NextPatient />, {
+                    width: '30%',
+                    closeOnClickOutside: true,
+                    isDimmed: true,
+                    clickThrough: false,
+                    closeBtn: 'inner',
+                  });
                 }}
               />
               <IconicButton

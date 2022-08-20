@@ -100,9 +100,11 @@ function QueueItemWide({
               onPress={() => {
                 open(
                   <NextPatient
-                    patientName={name}
-                    position={number}
-                    arrivalTime={timeAgo}
+                    invitedPatient={{
+                      patientName: name,
+                      position: number,
+                      arrivalTime: timeAgo,
+                    }}
                   />,
                   {
                     width: '30%',

@@ -1,28 +1,39 @@
-import colors from '@colors';
+import colors, { color } from '@colors';
 import TextButton from '@components/buttons/text_button';
 import AppointmentsCurrentPatient from '@components/appointments_current_patient';
 import './style/index.scss';
 import ModalContainer from '@components/modal_container';
 import useNavigation from '@libs/hooks/useNavigation';
-import { ComponentProps, useState } from 'react';
+import { useState } from 'react';
 
 import {
+  useGetNextQueueItemQuery,
   useNotifyQueueMutation,
+  useProgressQueueStateMutation,
   useStartNextMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import LoadingSpinner from '@components/loading_spinner';
+import WarningModal from '../warning_modal';
+import { Overlay } from '@libs/overlay';
 
-export default function NextPatient({
-  patientName,
-  arrivalTime,
-  position,
-}: ComponentProps<typeof AppointmentsCurrentPatient>) {
+interface NextPatientProps {
+  invitedPatient?: { patientName: string; arrivalTime: Date; position: number };
+}
+
+export default function NextPatient({ invitedPatient }: NextPatientProps) {
   const { navigate } = useNavigation();
   const [NotifyQueue] = useNotifyQueueMutation();
   const [StartNext] = useStartNextMutation();
   const [notified, setNotified] = useState(false);
-  return (
+  const { data, isSuccess, isError, error, isFetching, isLoading } =
+    useGetNextQueueItemQuery(1);
+  const [ProgressQueueState] = useProgressQueueStateMutation();
+
+  return isLoading && isFetching ? (
+    <LoadingSpinner />
+  ) : isSuccess ? (
     <ModalContainer
-      title="Next patient"
+      title={invitedPatient?.position ? 'Invite patient' : 'Next patient'}
       controls={
         <div className="next-patient-controls">
           <TextButton
@@ -33,7 +44,12 @@ export default function NextPatient({
             fontWeight={700}
             onPress={() => {
               //REDUX change the roleId to the correct one
-              NotifyQueue({ roleId: 1, position: position });
+              NotifyQueue({
+                roleId: 1,
+                position: invitedPatient
+                  ? invitedPatient.position
+                  : data.position,
+              });
               setNotified(true);
             }}
           />
@@ -46,18 +62,43 @@ export default function NextPatient({
             fontSize={13}
             fontWeight={700}
             onPress={() => {
-              StartNext(1);
+              if (invitedPatient) {
+                ProgressQueueState({
+                  roleId: 1,
+                  position: invitedPatient?.position,
+                });
+              } else {
+                StartNext(1);
+              }
               navigate('session');
             }}
           />
         </div>
       }
     >
-      <AppointmentsCurrentPatient
-        patientName={patientName}
-        arrivalTime={arrivalTime}
-        position={position}
-      />
+      {
+        <AppointmentsCurrentPatient
+          patientName={
+            invitedPatient ? invitedPatient?.patientName : data.patientName
+          }
+          arrivalTime={invitedPatient ? invitedPatient?.arrivalTime : data.date}
+          position={invitedPatient ? invitedPatient?.position : data.position}
+        />
+      }
     </ModalContainer>
+  ) : (
+    <WarningModal
+      warningTitle="The queue is empty for now "
+      warningDescription="You need to add patient to queue"
+    >
+      <TextButton
+        text="Close"
+        backgroundColor={color.cold_blue}
+        width="100%"
+        onPress={() => {
+          Overlay.close();
+        }}
+      />
+    </WarningModal>
   );
 }
