@@ -3,15 +3,12 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ModalContainer from '@components/modal_container';
-import {
-  useAddAppointmentMutation,
-  useUpdateTestMutation,
-} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { Test } from '../../../../models/instance.model';
 import { Overlay } from '@libs/overlay';
 import MultiOptionSwitcher from '@components/buttons/multi_option_switcher';
-import ToggleButton from '@components/buttons/toggle_button';
 import InputContainer from '@components/inputs/input_container';
+import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment/AppointmentApi';
 interface InputsArray {
   [label: string]: string;
 }
@@ -23,16 +20,16 @@ interface Inputs {
   RH: boolean;
 }
 interface MedicalTestModalProps {
-  position?: number;
-  patientId?: number;
+  patientId: number;
+  appointmentId?: number;
 }
 
 export default function MedicalTestModal({
-  position,
   patientId,
+  appointmentId,
 }: MedicalTestModalProps) {
-  const [updateTest] = useUpdateTestMutation();
-  const [addAppointment] = useAddAppointmentMutation();
+  const [addAppointment] = useAddQueueAppointmentMutation();
+  const [AssignAppointmentToQueue] = useAssignAppointmentToQueueMutation();
   const RhOptions = ['Positive', 'Negative'];
   const {
     setValue,
@@ -49,8 +46,10 @@ export default function MedicalTestModal({
       bloodType: formData.bloodType,
       Rh: formData.RH,
     };
-    if (position) updateTest({ roleId: 1, test: newTest, position: position });
-    else if (patientId) {
+
+    if (appointmentId) {
+      AssignAppointmentToQueue({ appointmentId: appointmentId, test: newTest });
+    } else {
       addAppointment({
         roleId: 1,
         body: { patientId: patientId, test: newTest },
@@ -70,7 +69,7 @@ export default function MedicalTestModal({
       controls={
         <>
           <TextButton
-            text={position ? 'Add Test' : 'Add to queue'}
+            text={'Add to queue'}
             backgroundColor={colors.good_green}
             radius={7}
             fontSize={14}
@@ -119,7 +118,6 @@ export default function MedicalTestModal({
           },
         )}
         onChange={changeBloodType as any}
-        //     setValue={changeGender}
       />
       {/* <InputContainer label="RH" grow>
         <ToggleButton
