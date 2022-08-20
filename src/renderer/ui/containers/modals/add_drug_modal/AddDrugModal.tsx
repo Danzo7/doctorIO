@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '@store';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface AddDrugModalProps {
-  defaultValues?: Drug;
+  defaultValues?: Omit<Drug, 'id'>;
 }
 export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
   const prescription = useAppSelector((state) => state.session.prescription);
@@ -18,36 +18,21 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Omit<Drug, 'id'>>({
-    defaultValues: {
-      description: defaultValues?.description,
-      dosage: defaultValues?.dosage,
-      duration: defaultValues?.duration,
-      name: defaultValues?.name,
-      qts: defaultValues?.qts,
-    },
+  } = useForm<Drug>({
+    defaultValues: defaultValues,
   });
-  const onSubmit: SubmitHandler<Omit<Drug, 'id'>> = (
-    formData: Omit<Drug, 'id'>,
-  ) => {
+  const onSubmit: SubmitHandler<Drug> = (formData: Drug) => {
     if (!defaultValues) {
-      const parsedData = {
-        id: Date.now(),
-        ...formData,
-      };
-      dispatch(addDrug(parsedData));
+      dispatch(addDrug(formData));
     } else {
-      dispatch(
-        updatePrescription({
-          index: prescription.findIndex(({ id }) => id == defaultValues.id),
-          drug: { id: defaultValues.id, ...formData },
-        }),
+      const index = prescription.findIndex(
+        (drug) => drug.name == defaultValues.name,
       );
+      dispatch(updatePrescription({ index: index, drug: formData }));
     }
 
     Overlay.close();
   };
-
   return (
     <ModalContainer
       title={defaultValues ? 'Edit drug' : ' Add drug'}
