@@ -17,11 +17,17 @@ import { useAppSelector } from '@store';
 
 interface MedicamentTableProps {
   editable?: true;
+  prescriptionList?: Drug[];
 }
 
 const table = createTable().setRowType<Drug>();
-export default function MedicamentTable({ editable }: MedicamentTableProps) {
-  const data = useAppSelector((state) => state.session.prescription);
+export default function MedicamentTable({
+  editable,
+  prescriptionList,
+}: MedicamentTableProps) {
+  const data = useAppSelector((state) => {
+    return prescriptionList ? prescriptionList : state.session.prescription;
+  });
 
   const { open } = useOverlay();
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -57,7 +63,7 @@ export default function MedicamentTable({ editable }: MedicamentTableProps) {
             header: '',
             id: 'skip',
             size: 1,
-            cell: ({ getValue, row }) => (
+            cell: ({ row }) => (
               <div css={{ float: 'right' }}>
                 <DarkLightCornerButton
                   text="Edit"
@@ -71,7 +77,6 @@ export default function MedicamentTable({ editable }: MedicamentTableProps) {
                           dosage: row.getValue('dosage'),
                           duration: row.getValue('duration'),
                           description: row.getValue('description'),
-                          id: row.getValue('id'),
                         }}
                       />,
                       DEFAULT_MODAL,
