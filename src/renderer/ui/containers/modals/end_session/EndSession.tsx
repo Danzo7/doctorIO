@@ -69,10 +69,10 @@ export default function EndSession({}: EndSessionProps) {
                   ),
                 },
               })
+                .then(() => navigate('queue'))
                 .then(() => {
                   dispatch(resetSession());
                 })
-                .then(() => navigate('queue'))
                 .catch((error) => console.log(error));
             }}
           />
