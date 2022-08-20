@@ -39,7 +39,7 @@ interface PatientBrief {
 }
 
 interface Session {
-  notice: string;
+  diagnosis: string;
   prescription: Drug[];
 }
 // eslint-disable-next-line @typescript-eslint/naming-convention
