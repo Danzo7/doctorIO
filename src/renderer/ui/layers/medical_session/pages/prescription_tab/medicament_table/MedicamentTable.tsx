@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import Arrow from 'toSvg/arrow.svg?icon';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import {
@@ -63,7 +63,7 @@ export default function MedicamentTable({
             header: '',
             id: 'skip',
             size: 1,
-            cell: ({ row }) => (
+            cell: ({ row, getValue }) => (
               <div css={{ float: 'right' }}>
                 <DarkLightCornerButton
                   text="Edit"
@@ -77,6 +77,7 @@ export default function MedicamentTable({
                           dosage: row.getValue('dosage'),
                           duration: row.getValue('duration'),
                           description: row.getValue('description'),
+                          id: getValue(),
                         }}
                       />,
                       DEFAULT_MODAL,
