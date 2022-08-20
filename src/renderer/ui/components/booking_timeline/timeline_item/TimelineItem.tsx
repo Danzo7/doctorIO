@@ -73,7 +73,6 @@ export default function TimelineItem({
               Icon={View}
               onPress={() => {
                 open(<SessionPreviewModal session={session} />, {
-                  //TODO update session preview modal to take session object
                   closeOnClickOutside: true,
                   isDimmed: true,
                   clickThrough: false,

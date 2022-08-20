@@ -23,7 +23,7 @@ export default function CabinState({ state, selected }: QueueState) {
           <AppointmentsCurrentPatient
             patientName={selected.patientName}
             position={selected.position}
-            arrivalTime={parseISO(selected.date as any as string)} //TODO remove when fixed in redux
+            arrivalTime={selected.date}
           />
         </>
       )}
