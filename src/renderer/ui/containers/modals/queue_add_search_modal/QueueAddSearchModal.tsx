@@ -10,15 +10,13 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import {
-  useFindPatientByNameMutation,
-  useLazyFindPatientByName2Query,
-} from '@redux/instance/record/patient_api';
+import { useLazyFindPatientByName2Query } from '@redux/instance/record/patient_api';
 import { PatientBrief, ServerError } from '@models/instance.model';
 import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -42,6 +40,8 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   });
   const { open } = useOverlay();
   const [trigger, result] = useLazyFindPatientByName2Query();
+  const [AddAppointment] = useAddQueueAppointmentMutation();
+
   const errorRef = useRef<ServerError>();
   const serverError: ServerError | undefined = (result.error as any)
     ?.data as ServerError;
@@ -74,6 +74,13 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
                 key={patient.id}
                 name={patient.name}
                 id={patient.id}
+                onAdd={() => {
+                  //REDUX get the right roleId
+                  AddAppointment({
+                    roleId: 1,
+                    body: { patientId: patient.id },
+                  });
+                }}
               />
             ));
           })()
