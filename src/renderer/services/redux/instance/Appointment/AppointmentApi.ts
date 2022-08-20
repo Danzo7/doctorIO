@@ -1,6 +1,12 @@
-import { Appointment, BookedAppointment, Drug } from '@models/instance.model';
+import {
+  Appointment,
+  BookedAppointment,
+  Drug,
+  Test,
+} from '@models/instance.model';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
+import appointmentQueueApi from '../appointmentQueue/AppointmentQueueApi';
 
 const appointmentApi = createApi({
   reducerPath: 'AppointmentApi',
@@ -69,6 +75,38 @@ const appointmentApi = createApi({
           method: 'PATCH',
         };
       },
+      invalidatesTags: ['BookAppointment'],
+    }),
+    AssignAppointmentToQueue: builder.mutation<
+      Appointment,
+      { appointmentId: number; test?: Test }
+    >({
+      query: ({ appointmentId, test }) => {
+        return {
+          url: `/assign?id=${appointmentId}`,
+          method: 'PATCH',
+          body: { ...test },
+        };
+      },
+      invalidatesTags: ['BookAppointment'],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          dispatch(appointmentQueueApi.util.invalidateTags(['item']));
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    }),
+    cancelAppointment: builder.mutation<Appointment, number>({
+      query: (appointmentId) => {
+        return {
+          url: `/cancel?id=${appointmentId}`,
+          method: 'PATCH',
+        };
+      },
+      invalidatesTags: ['BookAppointment'],
     }),
   }),
 });
@@ -79,4 +117,6 @@ export const {
   useBookAppointmentMutation,
   useGetPatientAppointmentsQuery,
   useSetAppointmentDoneMutation,
+  useAssignAppointmentToQueueMutation,
+  useCancelAppointmentMutation,
 } = appointmentApi;
