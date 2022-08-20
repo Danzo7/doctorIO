@@ -55,7 +55,11 @@ const appointmentApi = createApi({
       Appointment,
       {
         appointmentId: number;
-        body: { diagnosis: string; subject?: string; prescription: Drug[] };
+        body: {
+          diagnosis: string;
+          subject?: string;
+          prescription: Omit<Drug, 'id'>[];
+        };
       }
     >({
       query: ({ appointmentId, body }) => {
