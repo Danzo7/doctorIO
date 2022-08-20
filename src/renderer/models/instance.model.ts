@@ -63,7 +63,7 @@ interface MedicalDocument {
   date: Date;
 }
 interface Drug {
-  id: number;
+  id: string;
   name: string;
   qts: number;
   description: string;

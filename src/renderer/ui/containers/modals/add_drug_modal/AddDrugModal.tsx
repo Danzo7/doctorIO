@@ -31,16 +31,12 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
     formData: Omit<Drug, 'id'>,
   ) => {
     if (!defaultValues) {
-      const parsedData = {
-        id: Date.now(),
-        ...formData,
-      };
-      dispatch(addDrug(parsedData));
+      dispatch(addDrug(formData));
     } else {
       dispatch(
         updatePrescription({
           index: prescription.findIndex(({ id }) => id == defaultValues.id),
-          drug: { id: defaultValues.id, ...formData },
+          drug: formData,
         }),
       );
     }

@@ -1,5 +1,5 @@
 import { Drug, Session } from '@models/instance.model';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: Session = { diagnosis: '', prescription: [] };
 const sessionSlice = createSlice({
@@ -16,14 +16,17 @@ const sessionSlice = createSlice({
       state.diagnosis = '';
       state.prescription = [];
     },
-    addDrug: (state: Session, action: PayloadAction<Drug>) => {
-      state.prescription.push(action.payload);
+    addDrug: (state: Session, action: PayloadAction<Omit<Drug, 'id'>>) => {
+      state.prescription.push({ id: nanoid(), ...action.payload });
     },
     updatePrescription: (
       state: Session,
-      action: PayloadAction<{ index: number; drug: Drug }>,
+      action: PayloadAction<{ index: number; drug: Omit<Drug, 'id'> }>,
     ) => {
-      state.prescription[action.payload.index] = action.payload.drug;
+      state.prescription[action.payload.index] = {
+        id: state.prescription[action.payload.index].id,
+        ...action.payload.drug,
+      };
     },
   },
 });
