@@ -7,7 +7,7 @@ import ModalContainer from '@components/modal_container';
 import { DATE_ONLY } from '@constants/data_format';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import {} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAddPatientMutation } from '@redux/instance/record/patient_api';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -22,6 +22,7 @@ type Inputs = {
 interface AddPatientModalProps {}
 export default function AddPatientModal({}: AddPatientModalProps) {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [AddQueueAppointment] = useAddQueueAppointmentMutation();
   const {
     setValue,
     register,
@@ -55,7 +56,16 @@ export default function AddPatientModal({}: AddPatientModalProps) {
       .unwrap()
       .then((patient) => {
         open(
-          <AddSelectedToQueueModal id={patient.id} name={patient.name} />,
+          <AddSelectedToQueueModal
+            id={patient.id}
+            name={patient.name}
+            onAdd={() => {
+              AddQueueAppointment({
+                roleId: 1,
+                body: { patientId: patient.id },
+              });
+            }}
+          />,
           DEFAULT_MODAL,
         );
       });
