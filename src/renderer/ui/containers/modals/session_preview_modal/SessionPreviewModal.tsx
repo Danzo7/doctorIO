@@ -3,11 +3,17 @@ import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
 import TabMenu from '@components/tab_menu';
 import NoticeTab from '@layers/medical_session/pages/notice_tab';
+import { TimelineNotice } from '@layers/medical_session/pages/notice_tab/NoticeTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
+import { Session } from '@models/instance.model';
 import './style/index.scss';
 
-interface SessionPreviewModalProps {}
-export default function SessionPreviewModal({}: SessionPreviewModalProps) {
+interface SessionPreviewModalProps {
+  session: Session;
+}
+export default function SessionPreviewModal({
+  session,
+}: SessionPreviewModalProps) {
   return (
     <ModalContainer
       title="Session preview"
@@ -28,8 +34,8 @@ export default function SessionPreviewModal({}: SessionPreviewModalProps) {
           borderBottom={false}
           menuItemsAlignment="center"
         >
-          <MedicamentTable />
-          <NoticeTab />
+          <MedicamentTable prescriptionList={session.prescription} />
+          <TimelineNotice diagnosis={session.diagnosis} />
         </TabMenu>
       </div>
     </ModalContainer>

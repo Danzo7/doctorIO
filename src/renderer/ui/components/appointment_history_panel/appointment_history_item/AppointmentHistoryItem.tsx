@@ -23,13 +23,18 @@ export default function AppointmentHistoryItem({
       <SquareIconButton
         Icon={AppointmentHistoryIcon}
         onPress={() => {
-          open(<SessionPreviewModal />, {
-            closeOnClickOutside: true,
-            isDimmed: true,
-            clickThrough: false,
-            closeBtn: 'inner',
-            width: '30%',
-          });
+          open(
+            <SessionPreviewModal
+              session={{ diagnosis: 'test', prescription: [] }}
+            />,
+            {
+              closeOnClickOutside: true,
+              isDimmed: true,
+              clickThrough: false,
+              closeBtn: 'inner',
+              width: '30%',
+            },
+          );
         }}
       />
     </PreviewWithControls>

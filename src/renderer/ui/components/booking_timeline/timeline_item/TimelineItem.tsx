@@ -72,7 +72,7 @@ export default function TimelineItem({
             <SquareIconButton
               Icon={View}
               onPress={() => {
-                open(<SessionPreviewModal />, {
+                open(<SessionPreviewModal session={session} />, {
                   //TODO update session preview modal to take session object
                   closeOnClickOutside: true,
                   isDimmed: true,
