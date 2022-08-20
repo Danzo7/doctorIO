@@ -7,12 +7,19 @@ import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useEndNextMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { useAppDispatch, useAppSelector } from '@store';
+import {
+  clearPrescription,
+  resetSession,
+} from '@redux/local/session/sessionSlice';
 interface EndSessionProps {}
 export default function EndSession({}: EndSessionProps) {
   const { openTooltip } = useOverlay();
   const { navigate } = useNavigation();
   const [EndNext] = useEndNextMutation();
-
+  const session = useAppSelector((state) => state.session);
+  const currentSession = session;
+  const dispatch = useAppDispatch();
   return (
     <ModalContainer
       title="End the session?"
@@ -53,9 +60,20 @@ export default function EndSession({}: EndSessionProps) {
             padding=" 5px 15px"
             width={'100%'}
             onPress={() => {
-              EndNext(1);
-              //TODO (session object is saved locally(clientSide) if not confirmed session will stay open and auto redirect in case of refresh/force close//
-              navigate('queue');
+              EndNext({
+                roleId: 1,
+                body: {
+                  diagnosis: currentSession.diagnosis,
+                  prescription: currentSession.prescription.map(
+                    ({ id, ...other }) => other,
+                  ),
+                },
+              })
+                .then(() => {
+                  dispatch(resetSession());
+                })
+                .then(() => navigate('queue'))
+                .catch((error) => console.log(error));
             }}
           />
         </div>
