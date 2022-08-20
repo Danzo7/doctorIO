@@ -18,6 +18,7 @@ import {
   useDeleteAppointmentMutation,
   useGetQueueInfoQuery,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -127,7 +128,7 @@ function QueueItemWide({
                 test ? (
                   <DiagnosisPreview data={test} />
                 ) : (
-                  <MedicalTestModal position={number} />
+                  <AddMedicalTestModal position={number} />
                 ),
                 {
                   closeOnClickOutside: true,
