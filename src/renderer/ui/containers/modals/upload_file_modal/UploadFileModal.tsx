@@ -63,6 +63,7 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
         errorMsg={serverError?.message as string}
         type={'file'}
         {...register('files')}
+        disabled={isLoading}
         trailing={
           <IconicButton
             blank
