@@ -19,12 +19,19 @@ const appointmentQueueApi = createApi({
       query: (roleId) => `/${roleId}`,
       providesTags: ['state', 'queue', 'item'],
       transformResponse: (
-        response: Omit<AppointmentQueue, 'appointments'> & {
+        response: Omit<AppointmentQueue, 'appointments' | 'selected'> & {
+          selected?: Omit<AppointmentQueueItem, 'date'> & { date: string };
           appointments: (Omit<AppointmentQueueItem, 'date'> & {
             date: string;
           })[];
         },
       ) => {
+        const transformedSelected = response.selected
+          ? {
+              ...response.selected,
+              date: parseISO(response.selected?.date),
+            }
+          : undefined;
         const transformedApp = response.appointments.map(
           ({ date, ...other }) => ({
             ...other,
@@ -32,7 +39,11 @@ const appointmentQueueApi = createApi({
           }),
         );
 
-        return { ...response, appointments: transformedApp };
+        return {
+          ...response,
+          appointments: transformedApp,
+          selected: transformedSelected,
+        };
       },
     }), //Avoid using this endpoint
     getQueueAppointments: builder.query<AppointmentQueueItem[], number>({
