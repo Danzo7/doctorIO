@@ -11,7 +11,8 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import TextPair from '@components/text_pair/TextPair';
 import { color } from '@assets/styles/color';
-import { useDispatch } from 'react-redux';
+import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment/AppointmentApi';
+import { useAppDispatch } from '@store';
 
 function BookedItem({
   patientName,
@@ -23,7 +24,9 @@ function BookedItem({
 }: BookedAppointment) {
   const { openTooltip, open } = useOverlay();
   const { navigate } = useNavigation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const [AssignAppointmentToQueue] = useAssignAppointmentToQueueMutation();
+
   return (
     <div className="booked-item">
       <div className="left-container">
@@ -68,6 +71,10 @@ function BookedItem({
                       <AddSelectedToQueueModal
                         id={patientId}
                         name={patientName}
+                        appointmentId={id}
+                        onAdd={() => {
+                          AssignAppointmentToQueue({ appointmentId: id });
+                        }}
                       />,
                       DEFAULT_MODAL,
                     );

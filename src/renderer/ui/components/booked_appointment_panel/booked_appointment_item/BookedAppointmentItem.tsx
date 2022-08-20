@@ -8,6 +8,8 @@ import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_mo
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { BookedAppointment } from '@models/instance.model';
+import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment/AppointmentApi';
+
 import { format } from 'date-fns';
 import './style/index.scss';
 
@@ -20,6 +22,8 @@ export default function BookedAppointmentItem({
   state,
 }: BookedAppointment) {
   const { open } = useOverlay();
+  const [AssignAppointmentToQueue] = useAssignAppointmentToQueueMutation();
+
   return (
     <div className="booked-appointment-item">
       <TextPair second="Patient" first={patientName} reversed />
@@ -44,7 +48,14 @@ export default function BookedAppointmentItem({
           padding="5px 10px"
           onPress={() => {
             open(
-              <AddSelectedToQueueModal id={patientId} name={patientName} />,
+              <AddSelectedToQueueModal
+                id={patientId}
+                name={patientName}
+                appointmentId={id}
+                onAdd={() => {
+                  AssignAppointmentToQueue({ appointmentId: id });
+                }}
+              />,
               DEFAULT_MODAL,
             );
           }}
