@@ -136,11 +136,8 @@ export default function AddPatientModal({}: AddPatientModalProps) {
         <Datepicker
           selected={selectedDate}
           onChange={onDateChange}
-          showYearDropdown
-          dateFormat={DATE_ONLY}
-          yearDropdownItemNumber={15}
-          scrollableYearDropdown
           yearControl
+          dateFormat={DATE_ONLY}
         />
       </InputContainer>
     </ModalContainer>

@@ -3,6 +3,7 @@ import TextButton from '@components/buttons/text_button';
 import Datepicker from '@components/inputs/datepicker';
 import TextArea from '@components/inputs/text_area';
 import ModalContainer from '@components/modal_container';
+import { DATE_ONLY } from '@constants/data_format';
 import { Overlay } from '@libs/overlay';
 import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
 import { useState } from 'react';
@@ -67,7 +68,12 @@ export default function AddMedicalHistoryModal({
           })}
         />
         <span>Choose a date</span>
-        <Datepicker selected={selectedDate} onChange={onDateChange} />
+        <Datepicker
+          selected={selectedDate}
+          onChange={onDateChange}
+          yearControl
+          dateFormat={DATE_ONLY}
+        />
       </div>
     </ModalContainer>
   );
