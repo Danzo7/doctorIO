@@ -5,19 +5,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import './style/index.scss';
 
 type Data = {
-  notice: string;
+  diagnosis: string;
 };
 export default function NoticeTab() {
-  const notice = useAppSelector((state) => state.session.notice);
+  const notice = useAppSelector((state) => state.session.diagnosis);
   const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Data>({ mode: 'onChange', defaultValues: { notice: notice } });
+  } = useForm<Data>({ mode: 'onChange', defaultValues: { diagnosis: notice } });
 
   const onSubmit: SubmitHandler<Data> = (data) => {
-    dispatch(updateNotice(data.notice));
+    dispatch(updateNotice(data.diagnosis));
   };
 
   return (
@@ -26,12 +26,19 @@ export default function NoticeTab() {
         <TextArea
           fillContainer
           onSubmit={handleSubmit(onSubmit)}
-          errorMessage={errors.notice?.message}
-          {...register('notice', {
+          errorMessage={errors.diagnosis?.message}
+          {...register('diagnosis', {
             required: { value: true, message: 'try again' },
           })}
         />
       }
+    </div>
+  );
+}
+export function TimelineNotice({ diagnosis: notice }: Data) {
+  return (
+    <div className="notice-tab">
+      {<TextArea disabled fillContainer defaultValue={notice} />}
     </div>
   );
 }
