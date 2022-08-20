@@ -1,6 +1,7 @@
 import {
   AppointmentQueue,
   AppointmentQueueItem,
+  Drug,
   QueueState,
   Test,
 } from '@models/instance.model';
@@ -52,9 +53,14 @@ const appointmentQueueApi = createApi({
     getIsQueueOwner: builder.query<boolean, number>({
       query: (roleId) => `/${roleId}/ownership`,
     }),
-    getNextQueueItem: builder.query({
+    getNextQueueItem: builder.query<AppointmentQueueItem, number>({
       query: (roleId) => `/${roleId}/item/next`,
       providesTags: ['state', 'item'],
+      transformResponse: (
+        response: Omit<AppointmentQueueItem, 'date'> & { date: string },
+      ) => {
+        return { ...response, date: parseISO(response.date) };
+      },
     }),
     //POST
     createQueue: builder.mutation<AppointmentQueue, number>({
@@ -140,12 +146,23 @@ const appointmentQueueApi = createApi({
       }),
       invalidatesTags: ['state'],
     }),
-    endNext: builder.mutation({
-      query: (roleId: number) => ({
+    endNext: builder.mutation<
+      QueueState,
+      {
+        roleId: number;
+        body: {
+          diagnosis: string;
+          subject?: string;
+          prescription: Omit<Drug, 'id'>[];
+        };
+      }
+    >({
+      query: ({ roleId, body }) => ({
         url: `/${roleId}/state/end/next`,
         method: 'PATCH',
+        body: { ...body },
       }),
-      invalidatesTags: ['state'],
+      invalidatesTags: ['state', 'item'],
     }),
     //DELETE
     resetQueue: builder.mutation<AppointmentQueue, number>({
@@ -185,4 +202,5 @@ export const {
   useStartNextMutation,
   useEndNextMutation,
   useGetIsQueueOwnerQuery,
+  useProgressQueueStateMutation,
 } = appointmentQueueApi;
