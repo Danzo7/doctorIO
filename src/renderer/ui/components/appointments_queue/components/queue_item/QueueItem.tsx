@@ -11,7 +11,7 @@ interface QueueItemProps {
   number: number;
   state?: string;
   width?: number;
-  diagnosis?: Test;
+  test?: Test;
   opened?: boolean;
   appointmentId: number;
 }
@@ -22,7 +22,7 @@ function QueueItem({
   state,
   timeAgo,
   opened,
-  diagnosis,
+  test,
   width,
   appointmentId,
 }: QueueItemProps) {
@@ -44,17 +44,14 @@ function QueueItem({
       {isOpen && (
         <div onClick={() => open(false)}>
           <QueueItemWide
-            {...{
-              id,
-              name,
-              number,
-              state,
-              timeAgo,
-              opened,
-              diagnosis,
-              width,
-              appointmentId,
-            }}
+            id={id}
+            name={name}
+            number={number}
+            timeAgo={timeAgo}
+            width={150}
+            test={test}
+            appointmentId={appointmentId}
+            state={state}
           />
         </div>
       )}
