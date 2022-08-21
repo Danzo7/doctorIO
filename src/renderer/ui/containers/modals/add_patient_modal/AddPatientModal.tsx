@@ -2,6 +2,7 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Datepicker from '@components/inputs/datepicker';
 import Input from '@components/inputs/input';
+import { InputControllerContext } from '@components/inputs/input/Input';
 import InputContainer from '@components/inputs/input_container';
 import ModalContainer from '@components/modal_container';
 import { DATE_ONLY } from '@constants/data_format';
@@ -21,31 +22,15 @@ type Inputs = {
 };
 interface AddPatientModalProps {}
 export default function AddPatientModal({}: AddPatientModalProps) {
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [AddQueueAppointment] = useAddQueueAppointmentMutation();
-  const {
-    setValue,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
+  const { setValue, control, handleSubmit } = useForm<Inputs>({
     mode: 'onChange',
-    defaultValues: { birthDate: selectedDate, gender: 'male' },
+    defaultValues: { birthDate: new Date(), gender: 'male' },
   });
 
   const { open } = useOverlay();
-  const onDateChange = (date: Date) => {
-    setSelectedDate(date);
-    setValue('birthDate', date);
-  };
-  const changeGender = (v: string) => {
-    if (v == 'male' || v == 'female') {
-      setValue('gender', v);
-    }
-  };
   const [addPatient] = useAddPatientMutation();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    // console.log(formData);
     const { firstName, lastName, gender, birthDate } = formData;
     addPatient({
       firstName: firstName,
@@ -77,24 +62,6 @@ export default function AddPatientModal({}: AddPatientModalProps) {
       onSubmit={handleSubmit(onSubmit)}
       controls={
         <>
-          {/* <TextButton
-            text="Run Test..."
-            backgroundColor={color.cold_blue}
-            fontSize={14}
-            fontWeight={700}
-            width={'40%'}
-            type="button"
-            onPress={() => {
-              console.log(patientId);
-              if (appointmentsQuery.isSuccess && patientId) {
-                const position = appointmentsQuery.data.find(
-                  (app) => app.patientId == patientId,
-                )?.position;
-                if (position)
-                  open(<MedicalTestModal position={position} />, DEFAULT_MODAL);
-              }
-            }}
-          /> */}
           <TextButton
             text="Add patient"
             backgroundColor={color.good_green}
@@ -107,49 +74,20 @@ export default function AddPatientModal({}: AddPatientModalProps) {
         </>
       }
     >
-      <Input
-        errorMsg={errors.firstName?.message}
-        type="text"
-        label="First name"
-        {...register('firstName', {
-          required: { value: true, message: 'first name is required' },
-        })}
-      />
-      <Input
-        errorMsg={errors.lastName?.message}
-        type="text"
-        label="Last name"
-        {...register('lastName', {
-          required: { value: true, message: 'last name is required' },
-        })}
-      />
+      <InputControllerContext.Provider value={control}>
+        <Input type="text" label="First name" name="firstName" />
+        <Input type="text" label="Last name" name="lastName" />
 
-      <Input
-        errorMsg={errors.gender?.message}
-        type={{
-          type: 'select',
-          options: ['male', 'female'],
-          defaultSelected: 'male',
-        }}
-        label="Gender"
-        {...register(
-          'gender',
-
-          {
-            required: { value: true, message: 'Gender is required' },
-          },
-        )}
-        onChange={changeGender as any}
-        //     setValue={changeGender}
-      />
-      <InputContainer label="Birthday">
-        <Datepicker
-          selected={selectedDate}
-          onChange={onDateChange}
-          yearControl
-          dateFormat={DATE_ONLY}
+        <Input
+          type={{
+            type: 'select',
+            options: ['male', 'female'],
+          }}
+          label="Gender"
+          name="gender"
         />
-      </InputContainer>
+        <Input type="text" label="Birthday" name="birthDate" />
+      </InputControllerContext.Provider>
     </ModalContainer>
   );
 }

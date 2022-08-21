@@ -23,7 +23,7 @@ interface AddSearchToBookedProps {}
 export default function AddSearchToBooked({}: AddSearchToBookedProps) {
   const searchRef = useRef<string>('');
 
-  const { register, handleSubmit } = useForm<SearchInput>({
+  const { control, handleSubmit } = useForm<SearchInput>({
     mode: 'onSubmit',
     defaultValues: { searchField: searchRef.current },
   });
@@ -85,7 +85,7 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
         })}
       >
         <Input
-          errorMsg={
+          errorMessage={
             errorRef.current?.statusCode == 400
               ? errorRef.current.message[0]
               : errorRef.current?.statusCode == 404
@@ -97,7 +97,8 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
           placeholder="search for a patient"
           trailing={<Svg>{search}</Svg>}
           type="search"
-          {...register('searchField')}
+          name="searchField"
+          control={control}
         />
       </form>
     </ModalContainer>
