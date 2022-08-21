@@ -3,17 +3,16 @@ import TextPair from '@components/text_pair/TextPair';
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
-import { useState } from 'react';
-import Datepicker from '@components/inputs/datepicker';
+
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
 import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import Input from '@components/inputs/input';
-import { useForm } from 'react-hook-form';
-import InputContainer from '@components/inputs/input_container';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 type Inputs = {
   subject: string;
+  date: Date;
 };
 interface BookAppointmentModalProps {
   patientName: string;
@@ -23,23 +22,23 @@ export default function BookAppointmentModal({
   patientName,
   id,
 }: BookAppointmentModalProps) {
-  const [BookAppointment, result] = useBookAppointmentMutation();
-  const {
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm<Inputs>({
+  const [BookAppointment, _] = useBookAppointmentMutation();
+  const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onSubmit',
   });
+  const onSubmit: SubmitHandler<Inputs> = ({ date, subject }) => {
+    BookAppointment({
+      patientId: id,
+      body: { date: date, subject: subject },
+    });
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const onDateChange = (date: Date) => {
-    setSelectedDate(date);
+    Overlay.close();
   };
 
   return (
     <ModalContainer
       title="Book an appointment"
+      onSubmit={handleSubmit(onSubmit)}
       controls={
         <TextButton
           text="Create"
@@ -48,27 +47,14 @@ export default function BookAppointmentModal({
           alignSelf="center"
           padding={'5px 10px'}
           fontSize={12}
-          onPress={() => {
-            BookAppointment({
-              patientId: id,
-              body: { date: selectedDate, subject: getValues('subject') },
-            });
-            Overlay.close();
-          }}
+          blank
         />
       }
     >
       <div className="book-appointment-info">
         <TextPair first={patientName} second={`#${id}`} />
-        <Input
-          errorMsg={errors.subject?.message}
-          type="text"
-          label="Subject"
-          {...register('subject', {})}
-        />
-        <InputContainer label="Choose a date" grow>
-          <Datepicker selected={selectedDate} onChange={onDateChange} />
-        </InputContainer>
+        <Input type="text" label="Subject" control={control} name={'subject'} />
+        <Input type="text" label="Subject" control={control} name={'date'} />
       </div>
     </ModalContainer>
   );
