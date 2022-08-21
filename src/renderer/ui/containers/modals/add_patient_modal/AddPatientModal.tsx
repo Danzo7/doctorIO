@@ -1,16 +1,13 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import Datepicker from '@components/inputs/datepicker';
 import Input from '@components/inputs/input';
 import { InputControllerContext } from '@components/inputs/input/Input';
-import InputContainer from '@components/inputs/input_container';
 import ModalContainer from '@components/modal_container';
 import { DATE_ONLY } from '@constants/data_format';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAddPatientMutation } from '@redux/instance/record/patient_api';
-import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AddSelectedToQueueModal from '../add_selected_to_queue_modal';
 
@@ -23,7 +20,7 @@ type Inputs = {
 interface AddPatientModalProps {}
 export default function AddPatientModal({}: AddPatientModalProps) {
   const [AddQueueAppointment] = useAddQueueAppointmentMutation();
-  const { setValue, control, handleSubmit } = useForm<Inputs>({
+  const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onChange',
     defaultValues: { birthDate: new Date(), gender: 'male' },
   });
@@ -86,7 +83,7 @@ export default function AddPatientModal({}: AddPatientModalProps) {
           label="Gender"
           name="gender"
         />
-        <Input type="text" label="Birthday" name="birthDate" />
+        <Input type="text" label="Birthday" name="date" />
       </InputControllerContext.Provider>
     </ModalContainer>
   );
