@@ -34,7 +34,7 @@ interface SearchInput {
 export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const searchRef = useRef<string>('');
 
-  const { register, handleSubmit } = useForm<SearchInput>({
+  const { control, handleSubmit } = useForm<SearchInput>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
   });
@@ -98,7 +98,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
         })}
       >
         <Input
-          errorMsg={
+          errorMessage={
             errorRef.current?.statusCode == 400
               ? errorRef.current.message[0]
               : errorRef.current?.statusCode == 404
@@ -109,7 +109,8 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
           placeholder="search for a patient"
           trailing={<Svg>{search}</Svg>}
           type="search"
-          {...register('searchField')}
+          control={control}
+          name="searchField"
         />
       </form>
     </ModalContainer>

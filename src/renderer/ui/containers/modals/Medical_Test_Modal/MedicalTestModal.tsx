@@ -6,9 +6,17 @@ import ModalContainer from '@components/modal_container';
 import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { Test } from '../../../../models/instance.model';
 import { Overlay } from '@libs/overlay';
-import MultiOptionSwitcher from '@components/buttons/multi_option_switcher';
-import InputContainer from '@components/inputs/input_container';
 import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment/AppointmentApi';
+import { InputControllerContext } from '@components/inputs/input/Input';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+const InputSchema = z.object({
+  weight: z.number(),
+  height: z.number(),
+  BloodPressure: z.number(),
+  bloodType: z.enum(['A', 'B', 'AB', 'O']),
+  RH: z.boolean(),
+});
 interface InputsArray {
   [label: string]: string;
 }
@@ -30,13 +38,13 @@ export default function MedicalTestModal({
 }: MedicalTestModalProps) {
   const [addAppointment] = useAddQueueAppointmentMutation();
   const [AssignAppointmentToQueue] = useAssignAppointmentToQueueMutation();
-  const RhOptions = ['Positive', 'Negative'];
   const {
-    setValue,
-    register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    resolver: zodResolver(InputSchema),
+  });
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     console.log(formData);
     const newTest: Test = {
@@ -57,11 +65,6 @@ export default function MedicalTestModal({
     }
     Overlay.close();
   };
-  const changeBloodType = (v: string) => {
-    if (v == 'A' || v == 'B' || v == 'AB' || v == 'O') {
-      setValue('bloodType', v);
-    }
-  }; //FIXME:use actual validation with zod
   return (
     <ModalContainer
       title="Medical test"
@@ -79,63 +82,53 @@ export default function MedicalTestModal({
         </>
       }
     >
-      <Input
-        errorMsg={errors.weight?.message}
-        type="number"
-        label="Weight"
-        {...register('weight', {
-          required: { value: true, message: 'weight is required' },
-        })}
-      />
-      <Input
-        errorMsg={errors.height?.message}
-        type="number"
-        label="Height"
-        {...register('height', {
-          required: { value: true, message: 'height is required' },
-        })}
-      />
-      <Input
-        errorMsg={errors.BloodPressure?.message}
-        type="number"
-        label="Blood pressure"
-        {...register('BloodPressure', {
-          required: { value: true, message: 'Blood pressure is required' },
-        })}
-      />
-      <Input
-        errorMsg={errors.bloodType?.message}
-        type={{
-          type: 'select',
-          options: ['A', 'B', 'AB', 'O'],
-        }}
-        label="Blood type"
-        {...register(
-          'bloodType',
-
-          {
-            required: { value: true, message: 'Blood type is required' },
-          },
-        )}
-        onChange={changeBloodType as any}
-      />
-      {/* <InputContainer label="RH" grow>
+      <InputControllerContext.Provider value={control}>
+        <Input
+          errorMessage={errors.weight?.message}
+          type="number"
+          label="Weight"
+          name="weight"
+        />
+        <Input
+          errorMessage={errors.height?.message}
+          type="number"
+          label="Height"
+          name="height"
+        />
+        <Input
+          errorMessage={errors.BloodPressure?.message}
+          type="number"
+          label="Blood pressure"
+          name="BloodPressure"
+        />
+        <Input
+          errorMessage={errors.bloodType?.message}
+          type={{
+            type: 'select',
+            options: ['A', 'B', 'AB', 'O'],
+          }}
+          label="Blood type"
+          name="bloodType"
+        />
+        {/* <InputContainer label="RH" grow>
         <ToggleButton
           onChange={(checked) => {
             setValue('RH', checked);
           }}
         />
         </InputContainer>  */}
-      {
-        <InputContainer label="RH" grow>
-          <MultiOptionSwitcher
-            textList={RhOptions}
-            onChange={(selected) => {
-              setValue('RH', RhOptions[selected] == 'Positive');
-            }}
-          />
-        </InputContainer>
-      }
+        {/* {
+          <InputContainer label="RH" grow>
+            <MultiOptionSwitcher
+              textList={RhOptions}
+              onChange={(selected) => {
+                setValue('RH', RhOptions[selected] == 'Positive');
+              }}
+            />//TODO add multiOptionSwitcher to input component
+          </InputContainer>
+        } */}
+        <Input type="checkbox" label="RH" name="RH" />
+      </InputControllerContext.Provider>
     </ModalContainer>
   );
 }
