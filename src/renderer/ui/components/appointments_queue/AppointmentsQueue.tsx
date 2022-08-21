@@ -10,24 +10,34 @@ import Header from '@components/header';
 import QueueControls from '@components/queue_controls';
 import Backdrop from '@components/backdrop';
 import {
-  useGetQueueInfoQuery,
+  useGetIsQueueOwnerQuery,
+  useGetQueueAppointmentsQuery,
+  useGetQueueStateQuery,
   useResumeQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { AppointmentQueue } from '@models/instance.model';
+import { QueueState } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
 
 export default function AppointmentsQueue() {
-  const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
+  const { ref, gotoFirst, gotoLast, next } = useScroller(10);
 
-  const { isLoading, data, isSuccess } = useGetQueueInfoQuery(1);
+  const queueStateQuery = useGetQueueStateQuery(1);
+  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(1, {
+    skip: !queueStateQuery.isSuccess,
+  });
+  const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(1, {
+    skip: !isQueueOwnerQuery.isSuccess,
+  });
   const [ResumeQueue] = useResumeQueueMutation();
 
-  return isLoading ? (
+  return getQueueAppointmentsQuery.isLoading &&
+    getQueueAppointmentsQuery.isFetching ? (
     <LoadingSpinner />
-  ) : isSuccess ? (
+  ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
-      const { state, appointments, isOwner, selected } =
-        data as AppointmentQueue;
+      const { state, selected } = queueStateQuery.data as QueueState;
+      const isOwner = isQueueOwnerQuery.data;
+      const appointments = getQueueAppointmentsQuery.data;
 
       return (
         <div className="appointments-queue">

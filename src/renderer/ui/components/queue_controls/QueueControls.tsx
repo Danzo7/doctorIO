@@ -12,28 +12,27 @@ import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import playIcon from 'toSvg/play.svg?icon';
 import { FIT_MODAL } from '@libs/overlay';
 import {
-  useGetNextQueueItemQuery,
-  useGetQueueInfoQuery,
+  useGetIsQueueOwnerQuery,
+  useGetQueueStateQuery,
   usePauseQueueMutation,
   useResumeQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { AppointmentQueue, AppointmentQueueItem } from '@models/instance.model';
+import { AppointmentQueue } from '@models/instance.model';
 
 interface QueueControlsProps {}
 export default function QueueControls({}: QueueControlsProps) {
   const { open, close } = useOverlay();
-  const { data, isSuccess } = useGetQueueInfoQuery(1);
-  // const NextQueueItemQuery = useGetNextQueueItemQuery(1);
+  const queueStateQuery = useGetQueueStateQuery(1);
+  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(1);
   const [PauseQueue] = usePauseQueueMutation();
   const [ResumeQueue] = useResumeQueueMutation();
 
   let isOwner: boolean;
   let state;
-  let selected: AppointmentQueueItem | undefined;
-  if (isSuccess && data) {
-    isOwner = (data as AppointmentQueue).isOwner;
-    state = (data as AppointmentQueue).state;
-    selected = (data as AppointmentQueue).selected;
+  if (queueStateQuery.isSuccess && isQueueOwnerQuery.isSuccess) {
+    isOwner = isQueueOwnerQuery.data;
+    state = (queueStateQuery.data as AppointmentQueue).state;
+
     return (
       <>
         {!(state == 'PAUSED' && !isOwner) &&
@@ -138,3 +137,4 @@ export default function QueueControls({}: QueueControlsProps) {
     );
   } else return <div>error</div>;
 }
+//UI provide good comp for error

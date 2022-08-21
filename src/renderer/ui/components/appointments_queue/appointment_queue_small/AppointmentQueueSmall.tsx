@@ -10,25 +10,36 @@ import TextButton from '@components/buttons/text_button';
 import Backdrop from '@components/backdrop';
 import Header from '@components/header';
 import {
-  useGetQueueInfoQuery,
+  useGetIsQueueOwnerQuery,
+  useGetQueueAppointmentsQuery,
+  useGetQueueStateQuery,
   useResumeQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { AppointmentQueue } from '@models/instance.model';
+import { QueueState } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
 
 interface AppointmentQueueSmallProps {}
 
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
-  const { isLoading, data, isError, isSuccess } = useGetQueueInfoQuery(1);
+  const queueStateQuery = useGetQueueStateQuery(1);
+  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(1, {
+    skip: !queueStateQuery.isSuccess,
+  });
+  const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(1, {
+    skip: !isQueueOwnerQuery.isSuccess,
+  });
   const [ResumeQueue] = useResumeQueueMutation();
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);
 
-  return isLoading ? (
+  return getQueueAppointmentsQuery.isLoading &&
+    getQueueAppointmentsQuery.isFetching ? (
     <LoadingSpinner />
-  ) : isSuccess ? (
+  ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
-      const { state, appointments, isOwner } = data as AppointmentQueue;
+      const { state } = queueStateQuery.data as QueueState;
+      const isOwner = isQueueOwnerQuery.data;
+      const appointments = getQueueAppointmentsQuery.data;
       return (
         <div className="appointment-queue-small">
           <Header title="Queue list" buttonNode={<QueueControls />} />
