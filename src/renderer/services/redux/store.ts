@@ -17,6 +17,7 @@ import userSlice from './local/user/userSlice';
 import medicalDocumentApi from './instance/record/medical_document_api';
 import medicalHistoryApi from './instance/record/medical_history_api';
 import appointmentApi from './instance/Appointment/AppointmentApi';
+import { rtkQueryErrorLogger } from './middlewares/error.middleware';
 
 const persistConfig = {
   key: 'root',
@@ -45,6 +46,7 @@ export const store = configureStore({
       medicalDocumentApi.middleware,
       medicalHistoryApi.middleware,
       appointmentApi.middleware,
+      rtkQueryErrorLogger,
     ),
 });
 export const persistor = persistStore(store);
