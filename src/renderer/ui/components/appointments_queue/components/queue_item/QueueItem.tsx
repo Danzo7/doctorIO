@@ -48,7 +48,7 @@ function QueueItem({
             name={name}
             number={number}
             timeAgo={timeAgo}
-            width={150}
+            width={width}
             test={test}
             appointmentId={appointmentId}
             state={state}
