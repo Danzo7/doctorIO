@@ -14,7 +14,7 @@ interface Inputs {
   payOutside: boolean;
 }
 export default function SessionParameter({}: SessionParameterProps) {
-  const { control, handleSubmit } = useForm<Inputs>({
+  const { control, handleSubmit, watch } = useForm<Inputs>({
     defaultValues: {
       bookAppointment: false,
       bookDate: new Date(),
@@ -22,8 +22,7 @@ export default function SessionParameter({}: SessionParameterProps) {
       payOutside: false,
     },
   });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data); //FEATURE save to redux
-
+  console.log(watch());
   return (
     <div className="session-parameter">
       <Header

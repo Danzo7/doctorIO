@@ -18,7 +18,7 @@ interface UploadFileModalProps {
   patientId: number;
 }
 export default function UploadFileModal({ patientId }: UploadFileModalProps) {
-  const { register, handleSubmit, reset, watch } = useForm<IFile>({
+  const { control, handleSubmit, reset, watch } = useForm<IFile>({
     //  resolver: zodResolver(schema),
   });
   const [uploadFile, { isLoading, isSuccess, error }] = useUploadFileMutation();
@@ -60,9 +60,10 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
       }
     >
       <Input
-        errorMsg={serverError?.message as string}
+        errorMessage={serverError?.message as string}
         type={'file'}
-        {...register('files')}
+        control={control}
+        name="files"
         disabled={isLoading}
         trailing={
           <IconicButton

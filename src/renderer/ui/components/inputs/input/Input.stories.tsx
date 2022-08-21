@@ -26,5 +26,5 @@ FirstStory.args = {
       iconSize={10}
     />
   ),
-  trailing: <Select options={['.exe', '.svg']} placeholder="type" width={80} />,
+  //trailing: <Input type={ options={['.exe', '.svg']} placeholder="type" width={80} />,
 };

@@ -2,6 +2,7 @@ import './style/index.scss';
 import PreviewList from '@components/preview_list';
 import LogItem from '@components/log_item';
 import Input from '@components/inputs/input';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 const logsData = [
   {
@@ -96,9 +97,14 @@ const logsData = [
     actionTo: 'Professor#12346566',
   },
 ];
-
+interface Inputs {
+  actions: string;
+  member: string;
+}
 interface AuditLogTabProps {}
 export default function AuditLogTab({}: AuditLogTabProps) {
+  const { control, watch } = useForm<Inputs>();
+
   return (
     <div className="audit-log-tab">
       <PreviewList
@@ -116,10 +122,14 @@ export default function AuditLogTab({}: AuditLogTabProps) {
             }}
           >
             <Input
+              control={control}
+              name="actions"
               placeholder="Actions"
               type={{ type: 'select', options: ['add', 'delete', 'edit'] }}
             />
             <Input
+              control={control}
+              name="member"
               placeholder="Members"
               type={{ type: 'select', options: ['add', 'delete', 'edit'] }}
             />

@@ -27,7 +27,7 @@ interface RecordSearchProps {}
 export default function RecordSearch({}: RecordSearchProps) {
   const searchRef = useRef<string>('');
 
-  const { register, handleSubmit } = useForm<SearchInput>({
+  const { control, handleSubmit } = useForm<SearchInput>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
   });
@@ -51,7 +51,7 @@ export default function RecordSearch({}: RecordSearchProps) {
         })}
       >
         <Input
-          errorMsg={
+          errorMessage={
             errorRef.current?.statusCode == 400
               ? errorRef.current.message[0]
               : errorRef.current?.statusCode == 404
@@ -62,7 +62,8 @@ export default function RecordSearch({}: RecordSearchProps) {
           trailing={<Search />}
           type={'search'}
           hint="You have to select a patient by fullName or Id to access to his medical records"
-          {...register('searchField')}
+          control={control}
+          name={'searchField'}
           grow={false}
         />
       </form>

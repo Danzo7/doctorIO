@@ -42,7 +42,7 @@ interface SearchInput {
 interface RecordProps {}
 export default function Record({}: RecordProps) {
   const searchRef = useRef<string>('');
-  const { register, handleSubmit, setValue, watch } = useForm<SearchInput>({
+  const { control, handleSubmit, setValue, watch } = useForm<SearchInput>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
   });
@@ -77,7 +77,7 @@ export default function Record({}: RecordProps) {
       >
         <Input
           disabled={result.isFetching}
-          errorMsg={
+          errorMessage={
             isDirty.current
               ? undefined
               : errorRef.current?.statusCode == 400
@@ -89,7 +89,8 @@ export default function Record({}: RecordProps) {
           placeholder="Enter patient Id"
           trailing={<Search />}
           type={'search'}
-          {...register('searchField')}
+          name="searchField"
+          control={control}
           grow={false}
         />
       </form>
