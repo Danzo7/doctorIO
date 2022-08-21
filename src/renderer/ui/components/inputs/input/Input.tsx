@@ -21,7 +21,7 @@ import InputWrapper from '../input_wrapper';
 import NumberInput from '../number_input';
 import './style/index.scss';
 import Checkbox from '../checkbox';
-import Datepicker from '../datepicker';
+import Datepicker, { Timepicker } from '../datepicker';
 import TextArea from '../text_area';
 export const InputControllerContext = createContext<Control<any> | null>(null);
 
@@ -156,6 +156,7 @@ export default function Input<T extends FieldValues = FieldValues>({
                   );
                 else if (typeof type === 'string')
                   if (type == 'date') return <Datepicker field={field} />;
+                if (type == 'time') return <Timepicker field={field} />;
                 if (type == 'textarea')
                   return (
                     <TextArea
