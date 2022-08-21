@@ -1,41 +1,22 @@
-import { forwardRef, ReactNode, useRef, useState } from 'react';
+import { forwardRef, ReactNode, useState } from 'react';
 import './style/index.scss';
 import Arrow from 'toSvg/arrow.svg?icon';
-import { FormHookProps } from '../input';
+import { ControllerProps } from '../input';
 
-interface SelectProps {
+interface SelectProps extends ControllerProps {
   options: string[];
   placeholder?: string;
   icon?: ReactNode;
   padding?: number;
   width?: number | string;
-  defaultSelected?: string;
 }
 
 export default forwardRef(function Select(
-  {
-    options,
-    placeholder = '',
-    icon,
-    padding = 10,
-    width,
-    defaultSelected,
-    ...others
-  }: SelectProps & FormHookProps,
+  { options, placeholder = '', icon, padding = 10, width, field }: SelectProps,
   ref: any,
 ) {
-  const field = useRef<HTMLDivElement>(null);
   const [isOpen, setOpen] = useState(false);
-  const [selected, setSelected] = useState({
-    selected: defaultSelected ? defaultSelected : '',
-  });
-  function changeSelected(index: number) {
-    setSelected({ selected: options[index] });
-    others.onChange?.(options[index] as any);
 
-    setOpen(false);
-    field.current?.blur();
-  }
   const paddedLeading = (
     <div
       css={{
@@ -57,34 +38,37 @@ export default forwardRef(function Select(
   return (
     <div
       className={`select-input${isOpen ? ' open' : ''}${
-        selected.selected != '' ? ' select' : ''
+        field.value != '' ? ' select' : ''
       }`}
       tabIndex={0}
-      onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
-      ref={field}
+      ref={ref}
       onClick={(e) => {
+        setOpen(!isOpen);
         e.stopPropagation();
       }}
       css={{ width: width }}
     >
       <div className="select">
         {paddedLeading}
-        <span>
-          {' '}
-          {selected.selected == '' ? placeholder : selected.selected}
-        </span>{' '}
+        <span>{field.value == '' ? placeholder : field.value}</span>
         {paddedTrailing}
       </div>
       <div className="options">
         {options &&
           options.map((e, index) => (
-            <span key={e + index} onClick={() => changeSelected(index)}>
+            <span
+              key={e + index}
+              onClick={() => {
+                field.onChange(options[index]);
+                setOpen(false);
+              }}
+            >
               {e}
             </span>
           ))}
       </div>
-      <input ref={ref} {...others} value={selected.selected} type="hidden" />
+      <input {...field} type="hidden" />
     </div>
   );
 });

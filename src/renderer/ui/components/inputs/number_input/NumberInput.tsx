@@ -5,9 +5,9 @@ import InputWrapper from '../input_wrapper/InputWrapper';
 import { forwardRef, useState } from 'react';
 import AutoSizeInput from '../auto_size_input';
 import { color } from '@assets/styles/color';
-import { FormHookProps } from '../input/Input';
+import { ControllerProps } from '../input';
 
-interface NumberInputProps {
+interface NumberInputProps extends ControllerProps {
   placeholder?: string;
   padding?: number;
   fillContainer?: true;
@@ -19,28 +19,32 @@ interface NumberInputProps {
 }
 export default forwardRef(function NumberInput(
   {
-    errorMessage,
     padding,
     fillContainer,
     inputAlignment,
     placeholder,
     step = 0.1,
-    max = 1000,
-    min = 0,
     unit = 'kg',
     width = 'fit-content',
-    maxLength = 4,
-    onChange,
-    ...others
-  }: NumberInputProps & FormHookProps,
+    field,
+    fieldState,
+    rules = { max: 100, min: 0, maxLength: 1000 },
+  }: NumberInputProps,
   ref: any,
 ) {
-  const [value, changeValue] = useState(min.toString());
-  const setValue = (v: string, external?: boolean) => {
-    if (Number(v) <= max && (external || Number(v) >= min)) changeValue(v);
-    else if (Number(v) > max) changeValue(max.toString());
-    else if (Number(v) < min) changeValue(min.toString());
+  const { onChange, value, ...others } = field;
+  const checkValue = (v: string, external?: boolean) => {
+    if (
+      Number(v) <= (rules?.max ?? Infinity) &&
+      (external || Number(v) >= (rules?.min ?? 0))
+    ) {
+      return v;
+    } else if (rules.max && Number(v) > rules.max) return rules.max.toString();
+    else if (rules.min && Number(v) < rules.min) return rules.min.toString();
   };
+  const setValue = (vs: string, external?: boolean) =>
+    onChange(checkValue(vs, external));
+
   const increase = () => {
     setValue(
       (Number(value) + step).toFixed(
@@ -58,7 +62,7 @@ export default forwardRef(function NumberInput(
   return (
     <InputWrapper
       maxWidth={width}
-      errorMessage={errorMessage}
+      errorMessage={fieldState?.error?.message}
       padding={padding}
       fillContainer={fillContainer}
       inputAlignment={inputAlignment}
@@ -90,7 +94,6 @@ export default forwardRef(function NumberInput(
           e.stopPropagation();
         }}
         type="text"
-        value={value}
         onWheel={(e) => {
           e.preventDefault();
           const direction = e.deltaY > 0 ? -1 < 0 : 0;
@@ -99,7 +102,6 @@ export default forwardRef(function NumberInput(
           e.stopPropagation();
         }}
         onChange={(event) => {
-          onChange?.(event);
           let v = event.target.value;
           v = v.startsWith('.')
             ? '0.' + v
@@ -118,8 +120,9 @@ export default forwardRef(function NumberInput(
           if (!Number.isNaN(Number(res))) setValue(res, true);
         }}
         {...others}
+        value={value}
         ref={ref}
-        maxLength={maxLength}
+        maxLength={rules?.maxLength as number}
         placeholder={placeholder}
       />
       {unit && (

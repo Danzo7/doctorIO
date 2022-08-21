@@ -1,16 +1,16 @@
 import { forwardRef } from 'react';
-import { FormHookProps } from '../input';
+import { ControllerProps } from '../input';
 import './style/index.scss';
-interface CheckboxProps {
+interface CheckboxProps extends ControllerProps {
   label?: string;
 }
 export default forwardRef(function Checkbox(
-  { label, ...other }: CheckboxProps & FormHookProps,
-  ref: any,
+  { label, field }: CheckboxProps,
+  ref,
 ) {
   return (
     <div className="checkbox">
-      <input type={'checkbox'} ref={ref} {...other} />
+      <input type={'checkbox'} {...field} ref={ref as any} />
       <span>{label}</span>
     </div>
   );

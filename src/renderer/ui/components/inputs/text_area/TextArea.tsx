@@ -1,72 +1,46 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import { forwardRef, useState } from 'react';
-import { FormHookProps } from '../input';
+import { useEffect, forwardRef, useState } from 'react';
+
+import { ControllerProps } from '../input';
 import InputContainer from '../input_container';
 import InputWrapper from '../input_wrapper';
 import './style/index.scss';
-interface TextAreaProps {
-  label?: string;
-  errorMessage?: string;
-  hint?: string;
+interface TextAreaProps extends ControllerProps {
   defaultValue?: string;
-  fillContainer?: true;
   onSubmit?: () => void;
+  placeholder?: string;
 }
 export default forwardRef(function TextArea(
-  {
-    label,
-    errorMessage,
-    hint,
-    defaultValue,
-    fillContainer,
-    onChange,
-    onSubmit,
-    ...others
-  }: TextAreaProps & FormHookProps,
+  { defaultValue, fieldState, field, placeholder }: TextAreaProps,
   ref,
 ) {
-  const [changed, setChanged] = useState(false);
-  return (
-    <InputContainer
-      label={label}
-      errorMessage={errorMessage}
-      hint={hint}
-      fillContainer={fillContainer}
-    >
-      <InputWrapper
-        height={'fit-content'}
-        errorMessage={errorMessage}
-        fillContainer={fillContainer}
-      >
-        <div className="text-area">
-          <textarea
-            defaultValue={defaultValue}
-            placeholder="write something..."
-            {...others}
-            onChange={(e) => {
-              onChange?.(e);
-              setChanged(true);
-            }}
-            ref={ref as any}
-          />
+  //const [changed, setChanged] = useState(false);
+  const { onChange, ...others } = field;
 
-          {changed && (
-            <div className="save-btn-wrapper">
-              <TextButton
-                text="Save"
-                backgroundColor={color.secondary_color}
-                fontSize={14}
-                disabled={!!errorMessage}
-                onPress={() => {
-                  onSubmit?.();
-                  if (!errorMessage) setChanged(false);
-                }}
-              />
-            </div>
-          )}
+  return (
+    <div className="text-area">
+      <textarea
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        onChange={(e) => {
+          onChange?.(e);
+          // setChanged(true);
+        }}
+        {...others}
+        ref={ref as any}
+      />
+
+      {/* {changed && (
+        <div className="save-btn-wrapper">
+          <TextButton
+            text="Save"
+            backgroundColor={color.secondary_color}
+            fontSize={14}
+            disabled={fieldState?.error}
+          />
         </div>
-      </InputWrapper>
-    </InputContainer>
+      )} */}
+    </div>
   );
 });

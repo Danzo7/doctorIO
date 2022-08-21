@@ -1,8 +1,19 @@
-import { forwardRef, HTMLInputTypeAttribute, ReactNode } from 'react';
 import {
-  ChangeHandler,
-  InternalFieldName,
-  UseFormRegisterReturn,
+  createContext,
+  HTMLInputTypeAttribute,
+  ReactNode,
+  useContext,
+} from 'react';
+import {
+  Control,
+  Controller,
+  ControllerFieldState,
+  ControllerRenderProps,
+  FieldPath,
+  FieldPathValue,
+  FieldValues,
+  RegisterOptions,
+  useController,
 } from 'react-hook-form';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '../select';
@@ -11,71 +22,96 @@ import InputWrapper from '../input_wrapper';
 import NumberInput from '../number_input';
 import './style/index.scss';
 import Checkbox from '../checkbox';
-export type FormHookProps = Omit<
-  UseFormRegisterReturn,
-  'onChange' | 'onBlur' | 'ref' | 'name'
-> & {
-  onChange?: ChangeHandler;
-  onBlur?: ChangeHandler;
-  name?: InternalFieldName;
-};
+import Datepicker from '../datepicker';
+import TextArea from '../text_area';
+export const InputControllerContext = createContext<Control<any> | null>(null);
+
+export interface ControllerProps {
+  field: Omit<ControllerRenderProps, 'ref'>;
+  fieldState?: ControllerFieldState;
+  rules?: Omit<
+    RegisterOptions,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
+}
 type NumericInput = {
   type: 'numeric';
-  min?: number;
-  max?: number;
   step?: number;
   unit?: string;
 };
 type SelectInput = {
   type: 'select';
   options: string[];
-  defaultSelected?: string;
 };
 
-type DateTimeInput = {
-  type: 'datetime';
-  date?: Date;
-};
-interface InputProps {
-  type: SelectInput | DateTimeInput | NumericInput | HTMLInputTypeAttribute;
-  errorMsg?: string;
+type InputProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = {
+  type:
+    | SelectInput
+    | NumericInput
+    | 'toggle'
+    | 'textarea'
+    | HTMLInputTypeAttribute;
   hint?: string;
   label?: string;
   leading?: ReactNode;
   trailing?: ReactNode;
   children?: ReactNode;
-
   placeholder?: string;
   fillContainer?: true;
   grow?: boolean;
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
   disabled?: boolean;
-}
-export default forwardRef(function Input(
-  {
-    type = 'text',
-    errorMsg,
-    hint,
-    label,
-    placeholder,
-    leading,
-    trailing,
-    children,
-    fillContainer,
-    grow = true,
-    hintAlignment,
-
-    disabled,
-    ...others
-  }: InputProps & FormHookProps,
-  ref: any,
-) {
-  return (type as string) == 'checkbox' ? (
-    <Checkbox label={label} ref={ref} {...others} />
+  name: TName;
+  control?: Control<TFieldValues>;
+  rules?: Omit<
+    RegisterOptions<TFieldValues, TName>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
+  shouldUnregister?: boolean;
+  defaultValue?: FieldPathValue<TFieldValues, TName>;
+};
+export default function Input<T extends FieldValues = FieldValues>({
+  type = 'text',
+  hint,
+  label,
+  placeholder,
+  leading,
+  trailing,
+  children,
+  fillContainer,
+  grow = true,
+  hintAlignment,
+  disabled,
+  name,
+  control,
+  rules,
+  shouldUnregister,
+  defaultValue,
+}: InputProps<T>) {
+  const controlC = useContext(InputControllerContext);
+  if (!controlC && !control) {
+    throw new Error(
+      'Input must be inside a controller provider or have a control prop',
+    );
+  }
+  const {
+    field: { ref, ...field },
+    fieldState,
+  } = useController({
+    name,
+    control: controlC || control,
+    rules,
+    defaultValue,
+  });
+  return type == 'checkbox' ? (
+    <Checkbox label={label} field={field} ref={ref} />
   ) : (
     <InputContainer
       fillContainer={fillContainer}
-      errorMessage={errorMsg}
+      errorMessage={fieldState?.error?.message}
       hint={hint}
       hintAlignment={hintAlignment}
       label={label}
@@ -85,20 +121,22 @@ export default forwardRef(function Input(
       {(type as NumericInput)?.type == 'numeric' ? (
         <NumberInput
           fillContainer
-          errorMessage={errorMsg}
           step={(type as NumericInput)?.step}
           unit={(type as NumericInput)?.unit}
           placeholder={placeholder}
-          {...others}
+          rules={rules}
+          field={field}
           ref={ref}
+          fieldState={fieldState}
         />
       ) : (
         <InputWrapper
-          errorMessage={errorMsg}
+          errorMessage={fieldState?.error?.message}
           leading={leading}
           trailing={trailing}
           fillContainer
           disabled={disabled}
+          height={type == 'textarea' ? '100%' : undefined}
         >
           {children
             ? children
@@ -108,20 +146,30 @@ export default forwardRef(function Input(
                     <Select
                       options={(type as SelectInput)?.options}
                       icon={trailing}
-                      ref={ref}
-                      defaultSelected={(type as SelectInput)?.defaultSelected}
                       placeholder={placeholder}
-                      {...others}
+                      field={field}
+                      ref={ref}
+                      fieldState={fieldState}
                     />
                   );
                 else if (typeof type === 'string')
+                  if (type == 'date') return <Datepicker field={field} />;
+                if (type == 'textarea')
+                  return (
+                    <TextArea
+                      field={field}
+                      placeholder={placeholder}
+                      ref={ref}
+                    />
+                  );
+                else
                   return (
                     <input
                       placeholder={placeholder}
                       type={type as HTMLInputTypeAttribute}
-                      {...others}
-                      ref={ref}
                       disabled={disabled}
+                      {...field}
+                      ref={ref}
                     ></input>
                   );
               })()}
@@ -129,4 +177,4 @@ export default forwardRef(function Input(
       )}
     </InputContainer>
   );
-});
+}

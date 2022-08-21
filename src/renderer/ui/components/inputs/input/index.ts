@@ -1,3 +1,3 @@
-import Input, { FormHookProps } from './Input';
+import Input, { ControllerProps } from './Input';
 export default Input;
-export type { FormHookProps };
+export type { ControllerProps };
