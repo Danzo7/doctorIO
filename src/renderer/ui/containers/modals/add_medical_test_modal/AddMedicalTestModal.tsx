@@ -6,7 +6,6 @@ import ModalContainer from '@components/modal_container';
 import { useUpdateTestMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { Test } from '../../../../models/instance.model';
 import { Overlay } from '@libs/overlay';
-import MultiOptionSwitcher from '@components/buttons/multi_option_switcher';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { InputControllerContext } from '@components/inputs/input/Input';
@@ -38,12 +37,16 @@ export default function AddMedicalTestModal({
   position,
 }: AddMedicalTestModalProps) {
   const [updateTest] = useUpdateTestMutation();
-  const RhOptions = ['Positive', 'Negative'];
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({ resolver: zodResolver(schema) });
+  const { control, handleSubmit } = useForm<Inputs>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      weight: 0,
+      height: 0,
+      BloodPressure: 0,
+      bloodType: 'A',
+      RH: false,
+    },
+  });
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     console.log(formData);
     const newTest: Test = {
@@ -76,26 +79,14 @@ export default function AddMedicalTestModal({
       }
     >
       <InputControllerContext.Provider value={control}>
+        <Input type="number" label="Weight" name="weight" />
+        <Input type="number" label="Height" name="height" />
         <Input
-          errorMessage={errors.weight?.message}
-          type="number"
-          label="Weight"
-          name="weight"
-        />
-        <Input
-          errorMessage={errors.height?.message}
-          type="number"
-          label="Height"
-          name="height"
-        />
-        <Input
-          errorMessage={errors.BloodPressure?.message}
-          type="number"
+          type={{ type: 'numeric' }}
           label="Blood pressure"
           name="BloodPressure"
         />
         <Input
-          errorMessage={errors.bloodType?.message}
           type={{
             type: 'select',
             options: ['A', 'B', 'AB', 'O'],
