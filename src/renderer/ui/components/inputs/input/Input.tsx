@@ -24,6 +24,7 @@ import Checkbox from '../checkbox';
 import Datepicker, { Timepicker } from '../datepicker';
 import TextArea from '../text_area';
 import { InputWrapperProps } from '../input_wrapper/InputWrapper';
+import { DatepickerProps } from '../datepicker/Datepicker';
 export const InputControllerContext = createContext<Control<any> | null>(null);
 
 export interface ControllerProps {
@@ -43,7 +44,9 @@ type SelectInput = {
   type: 'select';
   options: string[];
 };
-
+type DateField = {
+  type: 'date';
+} & DatepickerProps;
 type InputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -53,7 +56,8 @@ type InputProps<
     | NumericInput
     | 'toggle'
     | 'textarea'
-    | HTMLInputTypeAttribute;
+    | HTMLInputTypeAttribute
+    | DateField;
   hint?: string;
   label?: string;
   leading?: ReactNode;
@@ -159,8 +163,16 @@ export default function Input<T extends FieldValues = FieldValues>({
                       fieldState={fieldState}
                     />
                   );
-                else if (typeof type === 'string')
-                  if (type == 'date') return <Datepicker field={field} />;
+
+                if (type == 'date' || (type as DateField)?.type == 'date')
+                  return (
+                    <Datepicker
+                      field={field}
+                      {...((type as DateField)?.type
+                        ? (type as DateField)
+                        : {})}
+                    />
+                  );
                 if (type == 'time') return <Timepicker field={field} />;
                 if (type == 'textarea')
                   return (
@@ -170,7 +182,20 @@ export default function Input<T extends FieldValues = FieldValues>({
                       ref={ref}
                     />
                   );
-                else
+                if (type == 'number') {
+                  const { onChange, ...others } = field;
+                  return (
+                    <input
+                      placeholder={placeholder}
+                      type={type as HTMLInputTypeAttribute}
+                      disabled={disabled}
+                      onChange={(e) => onChange(Number(e.target.value))}
+                      {...others}
+                      ref={ref}
+                    />
+                  );
+                }
+                if (typeof type === 'string')
                   return (
                     <input
                       placeholder={placeholder}
