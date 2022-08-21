@@ -1,13 +1,13 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import Datepicker from '@components/inputs/datepicker';
-import TextArea from '@components/inputs/text_area';
+import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { DATE_ONLY } from '@constants/data_format';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Overlay } from '@libs/overlay';
 import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
-import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
 import './style/index.scss';
 
 interface AddMedicalHistoryModalProps {
@@ -15,30 +15,41 @@ interface AddMedicalHistoryModalProps {
 }
 type Data = {
   description: string;
+  selectedDate: Date;
 };
+
+const schema = z.object({
+  description: z.string().min(1),
+  selectedDate: z.preprocess((arg) => {
+    if (typeof arg == 'string' || arg instanceof Date) return new Date(arg); //TODO check the schema
+  }, z.date()),
+});
+
 export default function AddMedicalHistoryModal({
   patientId,
 }: AddMedicalHistoryModalProps) {
   const {
-    register,
+    control,
     handleSubmit,
-    getValues,
     formState: { errors },
-  } = useForm<Data>({ mode: 'onChange', defaultValues: { description: '' } });
-  const [description, setdescription] = useState(getValues('description'));
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const onSubmit: SubmitHandler<Data> = (data) => {
-    setdescription(data.description);
-  };
+  } = useForm<Data>({
+    mode: 'onChange',
+    resolver: zodResolver(schema),
+    defaultValues: { description: '' },
+  });
   const [addMedicalHistory, result] = useAddMedicalHistoryMutation();
-
-  const onDateChange = (date: Date) => {
-    setSelectedDate(date);
+  const onSubmit: SubmitHandler<Data> = ({ description, selectedDate }) => {
+    addMedicalHistory({
+      patientId: patientId,
+      body: { date: selectedDate, description: description },
+    });
+    Overlay.close();
   };
 
   return (
     <ModalContainer
       title="Medical history"
+      onSubmit={handleSubmit(onSubmit)}
       controls={
         <TextButton
           text="Add"
@@ -47,34 +58,22 @@ export default function AddMedicalHistoryModal({
           alignSelf="center"
           padding={'5px 15px'}
           fontSize={12}
-          onPress={() => {
-            if (description.length > 0) {
-              addMedicalHistory({
-                patientId: patientId,
-                body: { date: selectedDate, description: description },
-              });
-              Overlay.close();
-            }
-          }}
+          blank
         />
       }
     >
       <div className="medical-children">
-        <TextArea
+        <Input
+          type={'textarea'}
+          name="description"
           fillContainer
-          onSubmit={handleSubmit(onSubmit)}
-          {...register('description', {
-            required: { value: true, message: 'try again' },
-          })}
+          control={control}
+          errorMessage={errors.description?.message}
         />
         <span>Choose a date</span>
-        <Datepicker
-          selected={selectedDate}
-          onChange={onDateChange}
-          yearControl
-          dateFormat={DATE_ONLY}
-        />
+        <Input type={'date'} name="selectedDate" control={control} />
       </div>
     </ModalContainer>
   );
 }
+//TODO add dateFormat={DATE_ONLY} and year control

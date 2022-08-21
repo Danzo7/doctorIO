@@ -92,7 +92,6 @@ function BookedItem({
                 {
                   text: state == 'IN_QUEUE' ? 'Remove' : 'Cancel',
                   onPress: () => {
-                    //REDUX REMOVE Booked app;
                     if (state == 'IN_QUEUE') {
                       deleteAppointment({
                         roleId: 1,

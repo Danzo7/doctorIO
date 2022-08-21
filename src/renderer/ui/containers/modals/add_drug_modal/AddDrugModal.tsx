@@ -1,6 +1,7 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
+import { InputControllerContext } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
 import { Drug } from '@models/instance.model';
@@ -15,7 +16,7 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
   const prescription = useAppSelector((state) => state.session.prescription);
   const dispatch = useAppDispatch();
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<Omit<Drug, 'id'>>({
@@ -60,49 +61,41 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
         />
       }
     >
-      <Input
-        {...register('name', {
-          required: { value: true, message: 'Drug name is required' },
-        })}
-        label="Drug name"
-        errorMsg={errors.name?.message}
-        type={'text'}
-        fillContainer
-      />
-      <Input
-        {...register('qts', {
-          min: { value: 1, message: 'min value is 1 ' },
-          required: { value: true, message: 'qts is required' },
-        })}
-        label="Qts"
-        errorMsg={errors.qts?.message}
-        type={{ type: 'numeric', min: 1, step: 1, unit: '' }}
-      />
-      <Input
-        {...register('dosage', {
-          min: { value: 1, message: 'min value is 1 ' },
-          required: { value: true, message: 'dose is required' },
-        })}
-        label="dose"
-        errorMsg={errors.dosage?.message}
-        type={{ type: 'numeric', min: 1, step: 1, unit: '' }}
-      />
-      <Input
-        {...register('duration', {
-          min: { value: 1, message: 'min value is 1 ' },
-          required: { value: true, message: 'duration is required' },
-        })}
-        label="Duration"
-        errorMsg={errors.duration?.message}
-        type={{ type: 'numeric', min: 1, step: 1, unit: 'Day' }}
-      />
-      <Input
-        {...register('description', {})}
-        label="description"
-        errorMsg={errors.description?.message}
-        type={'text'}
-        fillContainer
-      />
+      {' '}
+      <InputControllerContext.Provider value={control}>
+        <Input
+          name="name"
+          label="Drug name"
+          errorMessage={errors.name?.message}
+          type={'text'}
+          fillContainer
+        />
+        <Input
+          name="qts"
+          label="Qts"
+          errorMessage={errors.qts?.message}
+          type={{ type: 'numeric', step: 1, unit: '' }}
+        />
+        <Input
+          name="dosage"
+          label="dose"
+          errorMessage={errors.dosage?.message}
+          type={{ type: 'numeric', step: 1, unit: '' }}
+        />
+        <Input
+          name="duration"
+          label="Duration"
+          errorMessage={errors.duration?.message}
+          type={{ type: 'numeric', step: 1, unit: 'Day' }}
+        />
+        <Input
+          name="description"
+          label="description"
+          errorMessage={errors.description?.message}
+          type={'text'}
+          fillContainer
+        />
+      </InputControllerContext.Provider>
     </ModalContainer>
   );
 }
