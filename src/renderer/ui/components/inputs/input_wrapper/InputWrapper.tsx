@@ -3,7 +3,7 @@ import { color } from '@assets/styles/color';
 import { MouseEventHandler, ReactNode, WheelEventHandler } from 'react';
 import './style/index.scss';
 
-interface InputWrapperProps {
+export interface InputWrapperProps {
   background?: string;
   borderColor?: string;
   radius?: number;

@@ -5,6 +5,7 @@ import usePrompt from '@libs/HistoryBlocker';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
+import { InputControllerContext } from '@components/inputs/input/Input';
 
 type Inputs = {
   name: string;
@@ -18,7 +19,7 @@ export default function OverviewInfoForm(
   props: OverviewInfoFormProps & Inputs,
 ) {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { isDirty },
   } = useForm<Inputs>({
@@ -53,15 +54,13 @@ export default function OverviewInfoForm(
 
   return (
     <form className="overview-info-form">
-      <span>Information</span>
-      <Input {...register('name')} label="Name" type={'text'} />
-      <Input {...register('description')} label="Description" type={'text'} />
-      <Input {...register('location')} label="Location" type={'text'} />
-      <Input
-        {...register('phoneNumber')}
-        label="Phone number"
-        type={'number'}
-      />
+      <InputControllerContext.Provider value={control}>
+        <span>Information</span>
+        <Input label="Name" type={'text'} name={'name'} />
+        <Input label="Description" type={'text'} name={'description'} />
+        <Input label="Location" type={'text'} name={'location'} />
+        <Input label="Phone number" type={'number'} name={'phoneNumber'} />
+      </InputControllerContext.Provider>
     </form>
   );
 }

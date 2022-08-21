@@ -20,7 +20,7 @@ type RoleProps = {
   onPress?: (e: any) => void;
 };
 export default function AddRoleTooltip({ actionList }: AddRoleTooltipProps) {
-  const { register, watch } = useForm<SearchInput>();
+  const { control, watch } = useForm<SearchInput>();
   const watchSearch = watch('searchField', '');
   const searchRoles = () => {
     let matches: any[] = [];
@@ -40,7 +40,8 @@ export default function AddRoleTooltip({ actionList }: AddRoleTooltipProps) {
   return (
     <div className="add-role-tooltip">
       <Input
-        {...register('searchField')}
+        control={control}
+        name="searchField"
         trailing={<Svg>{search}</Svg>}
         type={'search'}
         hint={

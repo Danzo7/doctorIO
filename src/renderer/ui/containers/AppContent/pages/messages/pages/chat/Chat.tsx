@@ -6,12 +6,12 @@ import colors from '@assets/styles/color';
 import ChatAddButton from '@components/buttons/chat_add_button';
 import ContentMessage from './content_message';
 import { useParams } from 'react-router-dom';
-import InputWrapper from '@components/inputs/input_wrapper';
 import { currentMember, DMs, members } from '@api/fake';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Input from '@components/inputs/input';
 
 const schema = z.object({
   message: z.string().trim().min(1),
@@ -28,7 +28,7 @@ export default function Chat({}: ChatProps) {
 
   const [currentMessagesList, setcurrentMessagesList] = useState(dm.messages); //REDUX update message list
 
-  const { register, handleSubmit, reset } = useForm<{ message: string }>({
+  const { control, handleSubmit, reset } = useForm<{ message: string }>({
     resolver: zodResolver(schema),
   });
   const onSubmit: SubmitHandler<{ message: string }> = (data) => {
@@ -78,7 +78,13 @@ export default function Chat({}: ChatProps) {
         </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <InputWrapper
+        <Input
+          radius={17}
+          background={colors.lighter_background}
+          fillContainer
+          type="text"
+          name="message"
+          control={control}
           leading={
             <ChatAddButton
               onPress={() => {
@@ -86,12 +92,7 @@ export default function Chat({}: ChatProps) {
               }}
             />
           }
-          radius={17}
-          background={colors.lighter_background}
-          fillContainer
-        >
-          <input {...register('message', { required: true })} />
-        </InputWrapper>
+        />
       </form>
     </div>
   );

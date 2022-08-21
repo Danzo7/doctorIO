@@ -23,6 +23,7 @@ import './style/index.scss';
 import Checkbox from '../checkbox';
 import Datepicker, { Timepicker } from '../datepicker';
 import TextArea from '../text_area';
+import { InputWrapperProps } from '../input_wrapper/InputWrapper';
 export const InputControllerContext = createContext<Control<any> | null>(null);
 
 export interface ControllerProps {
@@ -91,7 +92,9 @@ export default function Input<T extends FieldValues = FieldValues>({
   shouldUnregister,
   defaultValue,
   errorMessage,
-}: InputProps<T>) {
+  background,
+  radius,
+}: InputProps<T> & Partial<InputWrapperProps>) {
   const controlC = useContext(InputControllerContext);
   if (!controlC && !control) {
     throw new Error(
@@ -139,6 +142,8 @@ export default function Input<T extends FieldValues = FieldValues>({
           fillContainer
           disabled={disabled}
           height={type == 'textarea' ? '100%' : undefined}
+          background={background}
+          radius={radius}
         >
           {children
             ? children

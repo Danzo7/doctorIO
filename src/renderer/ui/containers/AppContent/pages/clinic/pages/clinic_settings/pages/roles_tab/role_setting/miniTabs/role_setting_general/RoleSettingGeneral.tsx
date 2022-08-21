@@ -19,7 +19,7 @@ export default function RoleSettingGeneral({
   linkedRole,
 }: Pick<Role, 'roleName' | 'roleDesc' | 'linkedRole'>) {
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     formState: { errors, isDirty },
@@ -28,7 +28,7 @@ export default function RoleSettingGeneral({
   });
   useEffect(() => {
     reset({ roleName: roleName, roleDesc: roleDesc });
-  }, [roleName, roleDesc]);
+  }, [roleName, roleDesc, reset]);
 
   usePrompt(
     'are you sure about that !!!',
@@ -47,11 +47,17 @@ export default function RoleSettingGeneral({
   return (
     <div className="role-setting-general">
       <div className="role-setting-general-inputs">
-        <Input {...register('roleName', {})} label="Name" type={'text'} />
         <Input
-          {...register('roleDesc', {})}
+          label="Role Name"
+          type={'text'}
+          name={'roleName'}
+          control={control}
+        />
+        <Input
           label="Description"
           type={'text'}
+          name={'roleDesc'}
+          control={control}
         />
         <BorderSeparator direction="horizontal" />
       </div>
