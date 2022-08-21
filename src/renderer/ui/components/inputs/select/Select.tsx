@@ -60,7 +60,7 @@ export default forwardRef(function Select(
             <span
               key={e + index}
               onClick={() => {
-                field.onChange(options[index]);
+                field.onChange?.(options[index]);
                 setOpen(false);
               }}
             >

@@ -2,7 +2,7 @@ import minus from 'toSvg/minus.svg?icon';
 import add from 'toSvg/add.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import InputWrapper from '../input_wrapper/InputWrapper';
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import AutoSizeInput from '../auto_size_input';
 import { color } from '@assets/styles/color';
 import { ControllerProps } from '../input';
@@ -43,7 +43,7 @@ export default forwardRef(function NumberInput(
     else if (rules.min && Number(v) < rules.min) return rules.min.toString();
   };
   const setValue = (vs: string, external?: boolean) =>
-    onChange(checkValue(vs, external));
+    onChange?.(Number(checkValue(vs, external)));
 
   const increase = () => {
     setValue(

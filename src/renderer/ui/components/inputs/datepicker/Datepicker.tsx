@@ -3,11 +3,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 import DatePickerReact from 'react-datepicker';
 import { ComponentProps } from 'react';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import Calendar from 'toSvg/calendar.svg?icon';
 import Arrow from 'toSvg/arrow.svg?icon';
-import Input, { ControllerProps } from '../input';
+import { ControllerProps } from '../input';
 import { DATE_NO_YEAR } from '@constants/data_format';
-interface DatepickerProps extends ControllerProps {
+export interface DatepickerProps
+  extends Omit<ComponentProps<typeof DatePickerReact>, 'onChange'> {
   yearControl?: boolean;
 }
 export default function Datepicker({
@@ -16,7 +16,7 @@ export default function Datepicker({
   fieldState,
   rules,
   ...props
-}: Omit<ComponentProps<typeof DatePickerReact>, 'onChange'> & DatepickerProps) {
+}: DatepickerProps & ControllerProps) {
   const { onChange, ...others } = field;
   return (
     <DatePickerReact

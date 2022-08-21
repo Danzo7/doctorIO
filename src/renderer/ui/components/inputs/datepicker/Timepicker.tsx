@@ -22,7 +22,7 @@ export default function Timepicker({ field }: ControllerProps) {
           event: React.SyntheticEvent<any, Event> | undefined,
         ) => {
           event?.stopPropagation();
-          onChange(date, event);
+          onChange?.(date, event);
         }}
         selected={field.value}
         {...others}
