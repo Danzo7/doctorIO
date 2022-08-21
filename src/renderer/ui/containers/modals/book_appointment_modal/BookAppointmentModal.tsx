@@ -8,7 +8,13 @@ import Datepicker from '@components/inputs/datepicker';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
 import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
+import Input from '@components/inputs/input';
+import { useForm } from 'react-hook-form';
+import InputContainer from '@components/inputs/input_container';
 
+type Inputs = {
+  subject: string;
+};
 interface BookAppointmentModalProps {
   patientName: string;
   id: number;
@@ -18,6 +24,13 @@ export default function BookAppointmentModal({
   id,
 }: BookAppointmentModalProps) {
   const [BookAppointment, result] = useBookAppointmentMutation();
+  const {
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm<Inputs>({
+    mode: 'onSubmit',
+  });
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const onDateChange = (date: Date) => {
@@ -36,8 +49,10 @@ export default function BookAppointmentModal({
           padding={'5px 10px'}
           fontSize={12}
           onPress={() => {
-            //REDUX add subject field for book app
-            BookAppointment({ patientId: id, body: { date: selectedDate } });
+            BookAppointment({
+              patientId: id,
+              body: { date: selectedDate, subject: getValues('subject') },
+            });
             Overlay.close();
           }}
         />
@@ -45,8 +60,15 @@ export default function BookAppointmentModal({
     >
       <div className="book-appointment-info">
         <TextPair first={patientName} second={`#${id}`} />
-        <BorderSeparator direction="vertical" />
-        <Datepicker selected={selectedDate} onChange={onDateChange} />
+        <Input
+          errorMsg={errors.subject?.message}
+          type="text"
+          label="Subject"
+          {...register('subject', {})}
+        />
+        <InputContainer label="Choose a date" grow>
+          <Datepicker selected={selectedDate} onChange={onDateChange} />
+        </InputContainer>
       </div>
     </ModalContainer>
   );

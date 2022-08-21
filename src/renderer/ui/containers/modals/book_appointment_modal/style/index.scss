@@ -1,7 +1,7 @@
 @use '~styles/appColors' as *;
 .book-appointment-info {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: stretch;
     flex-grow: 1;
     border-right: 1px solid $bordercolor;
