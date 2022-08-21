@@ -205,7 +205,6 @@ const appointmentQueueApi = createApi({
 });
 export default appointmentQueueApi;
 export const {
-  useGetQueueInfoQuery,
   useGetNextQueueItemQuery,
   useCreateQueueMutation,
   useResetQueueMutation,
