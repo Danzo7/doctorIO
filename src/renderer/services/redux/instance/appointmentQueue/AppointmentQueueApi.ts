@@ -61,6 +61,20 @@ const appointmentQueueApi = createApi({
     getQueueState: builder.query<QueueState, number>({
       query: (roleId) => `/${roleId}/state`,
       providesTags: ['state'],
+      transformResponse: ({
+        selected,
+        ...response
+      }: QueueState): QueueState => {
+        return {
+          ...response,
+          selected: selected
+            ? {
+                ...selected,
+                date: parseISO(selected.date as any as string),
+              }
+            : undefined,
+        };
+      },
     }),
     getIsQueueOwner: builder.query<boolean, number>({
       query: (roleId) => `/${roleId}/ownership`,
