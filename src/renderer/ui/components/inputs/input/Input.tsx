@@ -6,7 +6,6 @@ import {
 } from 'react';
 import {
   Control,
-  Controller,
   ControllerFieldState,
   ControllerRenderProps,
   FieldPath,
@@ -72,6 +71,7 @@ type InputProps<
   >;
   shouldUnregister?: boolean;
   defaultValue?: FieldPathValue<TFieldValues, TName>;
+  errorMessage?: string;
 };
 export default function Input<T extends FieldValues = FieldValues>({
   type = 'text',
@@ -90,6 +90,7 @@ export default function Input<T extends FieldValues = FieldValues>({
   rules,
   shouldUnregister,
   defaultValue,
+  errorMessage,
 }: InputProps<T>) {
   const controlC = useContext(InputControllerContext);
   if (!controlC && !control) {
@@ -105,13 +106,14 @@ export default function Input<T extends FieldValues = FieldValues>({
     control: controlC || control,
     rules,
     defaultValue,
+    shouldUnregister,
   });
   return type == 'checkbox' ? (
     <Checkbox label={label} field={field} ref={ref} />
   ) : (
     <InputContainer
       fillContainer={fillContainer}
-      errorMessage={fieldState?.error?.message}
+      errorMessage={errorMessage ?? fieldState?.error?.message}
       hint={hint}
       hintAlignment={hintAlignment}
       label={label}
