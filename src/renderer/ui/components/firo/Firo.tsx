@@ -7,6 +7,7 @@ type Inputs = {
   text: string;
   password: string;
   date: Date;
+  time: Date;
   select: string;
   number: number;
   textArea: string;
@@ -20,6 +21,7 @@ export default function Firo() {
       text: '',
       password: '',
       date: new Date(),
+      time: new Date(),
       select: 'hello',
       number: 0,
     },
@@ -36,6 +38,7 @@ export default function Firo() {
           <Input type={'text'} name="text" />
           <Input type={'password'} name="password" />
           <Input type={'date'} name="date" />
+          <Input type={'time'} name="time" />
           <Input
             type={{ type: 'numeric', unit: 'kg', step: 0.1 }}
             name="number"
