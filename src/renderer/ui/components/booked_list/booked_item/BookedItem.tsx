@@ -11,8 +11,11 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import TextPair from '@components/text_pair/TextPair';
 import { color } from '@assets/styles/color';
-import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment/AppointmentApi';
-import { useAppDispatch } from '@store';
+import {
+  useAssignAppointmentToQueueMutation,
+  useCancelAppointmentMutation,
+} from '@redux/instance/Appointment/AppointmentApi';
+import { useDeleteAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 
 function BookedItem({
   patientName,
@@ -22,11 +25,11 @@ function BookedItem({
   state,
   patientId,
 }: BookedAppointment) {
-  const { openTooltip, open } = useOverlay();
+  const { openTooltip, open, close } = useOverlay();
   const { navigate } = useNavigation();
-  const dispatch = useAppDispatch();
   const [AssignAppointmentToQueue] = useAssignAppointmentToQueueMutation();
-
+  const [deleteAppointment] = useDeleteAppointmentMutation();
+  const [CancelAppointment] = useCancelAppointmentMutation();
   return (
     <div className="booked-item">
       <div className="left-container">
@@ -87,9 +90,18 @@ function BookedItem({
                   },
                 },
                 {
-                  text: 'Remove',
+                  text: state == 'IN_QUEUE' ? 'Remove' : 'Cancel',
                   onPress: () => {
                     //REDUX REMOVE Booked app;
+                    if (state == 'IN_QUEUE') {
+                      deleteAppointment({
+                        roleId: 1,
+                        appointmentId: id,
+                      });
+                    } else {
+                      CancelAppointment(id);
+                    }
+                    close();
                   },
                   type: 'warning',
                 },
