@@ -37,6 +37,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const { control, handleSubmit } = useForm<SearchInput>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
+    defaultValues: { searchField: '' },
   });
   const { open } = useOverlay();
   const [trigger, result] = useLazyFindPatientByName2Query();

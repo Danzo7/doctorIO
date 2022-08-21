@@ -12,11 +12,10 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
 import { formatDistance } from 'date-fns';
 import { AppointmentQueue, Test } from '@models/instance.model';
-import MedicalTestModal from '@containers/modals/Medical_Test_Modal';
 import useNavigation from '@libs/hooks/useNavigation';
 import {
   useDeleteAppointmentMutation,
-  useGetQueueInfoQuery,
+  useGetIsQueueOwnerQuery,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 interface QueueItemWideProps {
@@ -41,8 +40,8 @@ function QueueItemWide({
   test,
 }: QueueItemWideProps) {
   const { open, openTooltip, close } = useOverlay();
-  const { isLoading, data, isSuccess } = useGetQueueInfoQuery(1);
-  const { isOwner } = data as AppointmentQueue;
+
+  const { data: isOwner, isSuccess } = useGetIsQueueOwnerQuery(1);
   const [deleteAppointment] = useDeleteAppointmentMutation();
 
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
@@ -57,7 +56,7 @@ function QueueItemWide({
               if (e)
                 openTooltip(
                   [
-                    ...(isOwner
+                    ...(isSuccess && isOwner
                       ? [
                           {
                             text: 'View records',
@@ -94,7 +93,6 @@ function QueueItemWide({
         <div className="buttons-hover-lock">
           {isOwner && (
             <TextIconButton
-              //onMouseOver={setActive}
               Icon={invite}
               text="invite in"
               color={colors.good_green}
@@ -119,7 +117,6 @@ function QueueItemWide({
             />
           )}
           <TextIconButton
-            //onMouseOver={setActive}
             Icon={view}
             text={test ? 'View tests' : 'Add tests'}
             color={colors.cold_blue}

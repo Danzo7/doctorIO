@@ -8,6 +8,7 @@ import {
   useGetIsQueueOwnerQuery,
   useResumeQueueMutation,
   usePauseQueueMutation,
+  useGetQueueStateQuery,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useEffect, useState } from 'react';
 import './style/index.scss';
@@ -18,7 +19,7 @@ interface SmallClinicStatusProps {
 export default function SmallClinicStatus({
   hasViewClinic,
 }: SmallClinicStatusProps) {
-  const [isAccept, setIsAccept] = useState(true);
+  const { data, isSuccess } = useGetQueueStateQuery(1);
   const [ResumeQueue] = useResumeQueueMutation();
   const [PauseQueue] = usePauseQueueMutation();
   const { navigate } = useNavigation();
@@ -26,10 +27,6 @@ export default function SmallClinicStatus({
   const appointmentsQuery = useGetQueueAppointmentsQuery(1);
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const isOwner = ownershipData.isSuccess ? ownershipData.data : undefined;
-  useEffect(() => {
-    if (isAccept) ResumeQueue(1);
-    else PauseQueue(1);
-  }, [isAccept]);
 
   return (
     <div
@@ -48,17 +45,29 @@ export default function SmallClinicStatus({
           }
         />
       )}
-      <div className="content">
-        <Timer active={isAccept} pCount={count} />
-        {isOwner && (
-          <div className="switch">
-            <ToggleButton isChecked={isAccept} onChange={setIsAccept} />
-            <span>
-              {isAccept ? 'Accept more Patients' : 'Do not accept patients'}
-            </span>
-          </div>
-        )}
-      </div>
+      {isSuccess ? (
+        <div className="content">
+          <Timer active={data.state != 'PAUSED'} pCount={count} />
+          {isOwner && (
+            <div className="switch">
+              <ToggleButton
+                isChecked={data.state != 'PAUSED'}
+                onChange={() => {
+                  if (data.state == 'PAUSED') ResumeQueue(1);
+                  else PauseQueue(1);
+                }}
+              />
+              <span>
+                {data.state != 'PAUSED'
+                  ? 'Accept more Patients'
+                  : 'Do not accept patients'}
+              </span>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div>error</div>
+      )}
     </div>
   );
 }
