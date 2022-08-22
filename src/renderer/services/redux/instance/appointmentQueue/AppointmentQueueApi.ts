@@ -108,6 +108,14 @@ const appointmentQueueApi = createApi({
         };
       },
       invalidatesTags: ['item'],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(appointmentApi.util.invalidateTags(['BookAppointment']));
+        } catch (err) {
+          console.log(err);
+        }
+      },
     }),
     //PATCH
     updateTest: builder.mutation({
@@ -205,7 +213,7 @@ const appointmentQueueApi = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: ['item'],
+      invalidatesTags: ['item', 'state'],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;

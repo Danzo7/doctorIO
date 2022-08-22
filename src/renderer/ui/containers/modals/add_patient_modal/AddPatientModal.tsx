@@ -22,7 +22,12 @@ export default function AddPatientModal({}: AddPatientModalProps) {
   const [AddQueueAppointment] = useAddQueueAppointmentMutation();
   const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onChange',
-    defaultValues: { birthDate: new Date(), gender: 'male' },
+    defaultValues: {
+      birthDate: new Date(),
+      gender: 'male',
+      firstName: '',
+      lastName: '',
+    },
   });
 
   const { open } = useOverlay();
@@ -83,7 +88,7 @@ export default function AddPatientModal({}: AddPatientModalProps) {
           label="Gender"
           name="gender"
         />
-        <Input type="text" label="Birthday" name="date" />
+        <Input type="date" label="Birthday" name="birthDate" />
       </InputControllerContext.Provider>
     </ModalContainer>
   );
