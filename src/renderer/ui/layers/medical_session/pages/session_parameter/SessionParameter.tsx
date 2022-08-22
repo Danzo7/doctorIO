@@ -14,7 +14,7 @@ interface Inputs {
   payOutside: boolean;
 }
 export default function SessionParameter({}: SessionParameterProps) {
-  const { control, handleSubmit, watch } = useForm<Inputs>({
+  const { control, handleSubmit } = useForm<Inputs>({
     defaultValues: {
       bookAppointment: false,
       bookDate: new Date(),
@@ -22,7 +22,7 @@ export default function SessionParameter({}: SessionParameterProps) {
       payOutside: false,
     },
   });
-  console.log(watch());
+
   return (
     <div className="session-parameter">
       <Header

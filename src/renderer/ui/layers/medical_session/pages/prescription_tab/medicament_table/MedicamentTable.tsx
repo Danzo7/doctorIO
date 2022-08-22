@@ -26,7 +26,9 @@ export default function MedicamentTable({
   prescriptionList,
 }: MedicamentTableProps) {
   const data = useAppSelector((state) => {
-    return prescriptionList ? prescriptionList : state.session.prescription;
+    return prescriptionList
+      ? prescriptionList
+      : state.session.sessionInfo.prescription;
   });
 
   const { open } = useOverlay();

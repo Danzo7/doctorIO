@@ -10,7 +10,9 @@ type Data = {
   diagnosis: string;
 };
 export default function NoticeTab() {
-  const diagnosis = useAppSelector((state) => state.session.diagnosis);
+  const diagnosis = useAppSelector(
+    (state) => state.session.sessionInfo.diagnosis,
+  );
   const dispatch = useAppDispatch();
   const { control, getValues } = useForm<Data>({
     mode: 'onChange',

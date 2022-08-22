@@ -8,17 +8,13 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useEndNextMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAppSelector } from '@store';
-import {
-  clearPrescription,
-  resetSession,
-} from '@redux/local/session/sessionSlice';
 interface EndSessionProps {}
 export default function EndSession({}: EndSessionProps) {
   const { openTooltip } = useOverlay();
   const { navigate } = useNavigation();
   const [EndNext] = useEndNextMutation();
   const session = useAppSelector((state) => state.session);
-  const currentSession = session;
+  const currentSession = session.sessionInfo;
   return (
     <ModalContainer
       title="End the session?"
