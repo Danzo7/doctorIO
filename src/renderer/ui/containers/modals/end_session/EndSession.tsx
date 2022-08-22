@@ -7,7 +7,7 @@ import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useEndNextMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { useAppDispatch, useAppSelector } from '@store';
+import { useAppSelector } from '@store';
 import {
   clearPrescription,
   resetSession,
@@ -19,7 +19,6 @@ export default function EndSession({}: EndSessionProps) {
   const [EndNext] = useEndNextMutation();
   const session = useAppSelector((state) => state.session);
   const currentSession = session;
-  const dispatch = useAppDispatch();
   return (
     <ModalContainer
       title="End the session?"

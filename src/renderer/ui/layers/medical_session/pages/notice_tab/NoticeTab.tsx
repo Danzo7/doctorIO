@@ -15,20 +15,38 @@ export default function NoticeTab() {
     defaultValues: { diagnosis: notice },
   });
 
-  dispatch(updateNotice(watch('diagnosis')));
+  //dispatch(updateNotice(watch('diagnosis')));
 
   return (
     <div className="notice-tab">
-      {<Input type="textarea" name="diagnosis" control={control} />}
+      {
+        <Input
+          type="textarea"
+          name="diagnosis"
+          control={control}
+          placeholder="write something..."
+        />
+      }
     </div>
   );
 }
-export function TimelineNotice({ diagnosis: notice }: Data) {
-  //FIXME
-
+export function TimelineNotice({ diagnosis }: Data) {
+  //FIXME control
+  const { control } = useForm<Data>({
+    mode: 'onChange',
+    defaultValues: { diagnosis: diagnosis },
+  });
   return (
     <div className="notice-tab">
-      {<Input type="textarea" disabled defaultValue={notice} name="field" />}
+      {
+        <Input
+          type="textarea"
+          disabled
+          defaultValue={diagnosis}
+          name="diagnosis"
+          control={control}
+        />
+      }
     </div>
   );
 }
