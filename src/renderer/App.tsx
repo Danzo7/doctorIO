@@ -1,19 +1,23 @@
 import './App.scss';
-import { OverlayContainer, PortalContainer } from '@libs/overlay';
+import {
+  DEFAULT_MODAL,
+  OverlayContainer,
+  PortalContainer,
+} from '@libs/overlay';
 import { Route, Routes } from 'react-router-dom';
 import MedicalSession from '@layers/medical_session';
 import MainLayer from '@layers/main_layer';
 import Clinic from '@containers/AppContent/pages/clinic';
-import { useAppDispatch, useAppSelector } from '@store';
-import { setUser } from '@redux/local/user/userSlice';
-import TextButton from '@components/buttons/text_button';
+import { useAppSelector } from '@store';
+import { ModalPortal } from '@libs/overlay/OverlayContainer';
+import UserRegister from '@containers/modals/user_regisiter';
 
 interface AppProps {}
 
 function App({}: AppProps) {
   const user = useAppSelector((state) => state.user);
   console.log('User :', user);
-  const dispatch = useAppDispatch();
+
   return (
     <>
       <div className="app-container">
@@ -28,16 +32,8 @@ function App({}: AppProps) {
               <Clinic />
             )
           ) : (
-            <div>
-              <TextButton
-                text="click"
-                onPress={() => {
-                  dispatch(setUser());
-                }}
-              />
-              <h1>It seems like this is your first time using this app</h1>
-            </div>
-          ) //UI FOR FIRST TIME USER
+            <UserRegister />
+          ) //UI fix the modal setup
         }
       </div>
       <OverlayContainer />
