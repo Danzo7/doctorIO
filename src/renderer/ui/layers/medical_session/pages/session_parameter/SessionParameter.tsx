@@ -29,28 +29,27 @@ export default function SessionParameter({}: SessionParameterProps) {
         title="Book an appointment"
         buttonNode={<ToggleButton isChecked={true} />}
       />
-      <form>
-        <Input type="date" control={control} name={'bookDate'} />
 
-        <div className="payment-container">
-          <Header
-            title="Payment"
-            buttonNode={<ToggleButton isChecked={true} />}
-          />
-          <span>Earnings can be disables in clinic settings</span>
-        </div>
-        <div className="payment-input-container">
-          <MultipleCheckGroup items={['none', '1000', '2000', '3000']} />
-          <span>Custom :</span>
-          <Input type={'number'} control={control} name={'customCost'} />
-        </div>
-        <Input
-          type={'checkbox'}
-          label="hand payment to assistant"
-          control={control}
-          name="payOutside"
+      <Input type="date" control={control} grow={false} name={'bookDate'} />
+
+      <div className="payment-container">
+        <Header
+          title="Payment"
+          buttonNode={<ToggleButton isChecked={true} />}
         />
-      </form>
+        <span>Earnings can be disables in clinic settings</span>
+      </div>
+      <div className="payment-input-container">
+        <MultipleCheckGroup items={['none', '1000', '2000', '3000']} />
+        <span>Custom :</span>
+        <Input type={'number'} control={control} name={'customCost'} />
+      </div>
+      <Input
+        type={'checkbox'}
+        label="hand payment to assistant"
+        control={control}
+        name="payOutside"
+      />
     </div>
   );
 }
