@@ -19,13 +19,13 @@ interface Inputs {
 }
 
 const schema = z.object({
-  weight: z.number({
-    required_error: 'Weight is required',
-  }),
-  height: z.number({
-    required_error: 'Height is required',
-  }),
-  BloodPressure: z.number({ required_error: 'Blood Pressure is required' }),
+  weight: z
+    .number({ required_error: 'Weight is required' })
+    .gt(0, 'Weight is required'),
+  height: z
+    .number({ required_error: 'Height is required' })
+    .gt(0, 'Height is required'),
+  BloodPressure: z.number().gt(0, 'Blood Pressure is required'),
   bloodType: z.enum(['A', 'B', 'AB', 'O']),
   RH: z.boolean(),
 });
@@ -40,9 +40,6 @@ export default function AddMedicalTestModal({
   const { control, handleSubmit } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      weight: 0,
-      height: 0,
-      BloodPressure: 0,
       bloodType: 'A',
       RH: false,
     },

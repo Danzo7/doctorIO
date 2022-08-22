@@ -4,11 +4,13 @@ import Input from '@components/inputs/input';
 import { InputControllerContext } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { DATE_ONLY } from '@constants/data_format';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAddPatientMutation } from '@redux/instance/record/patient_api';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { z } from 'zod';
 import AddSelectedToQueueModal from '../add_selected_to_queue_modal';
 
 type Inputs = {
@@ -17,11 +19,20 @@ type Inputs = {
   gender: string;
   birthDate: Date;
 };
+const schema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  gender: z.string(),
+  birthDate: z.preprocess((arg) => {
+    if (typeof arg == 'string' || arg instanceof Date) return new Date(arg);
+  }, z.date()),
+});
 interface AddPatientModalProps {}
 export default function AddPatientModal({}: AddPatientModalProps) {
   const [AddQueueAppointment] = useAddQueueAppointmentMutation();
   const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onChange',
+    resolver: zodResolver(schema),
     defaultValues: {
       birthDate: new Date(),
       gender: 'male',

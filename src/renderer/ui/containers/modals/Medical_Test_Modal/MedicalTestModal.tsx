@@ -10,16 +10,21 @@ import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment
 import { InputControllerContext } from '@components/inputs/input/Input';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-const InputSchema = z.object({
-  weight: z.number(),
-  height: z.number(),
-  BloodPressure: z.number(),
+
+const schema = z.object({
+  weight: z
+    .number({ required_error: 'Weight is required' })
+    .gt(0, 'Weight is required'),
+  height: z
+    .number({ required_error: 'Height is required' })
+    .gt(0, 'Height is required'),
+  BloodPressure: z
+    .number({ required_error: 'Blood pressure is required' })
+    .gt(0, 'Blood Pressure is required'),
   bloodType: z.enum(['A', 'B', 'AB', 'O']),
   RH: z.boolean(),
 });
-interface InputsArray {
-  [label: string]: string;
-}
+
 interface Inputs {
   weight: number;
   height: number;
@@ -43,7 +48,11 @@ export default function MedicalTestModal({
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>({
-    resolver: zodResolver(InputSchema),
+    resolver: zodResolver(schema),
+    defaultValues: {
+      bloodType: 'A',
+      RH: false,
+    },
   });
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     console.log(formData);
