@@ -189,6 +189,7 @@ export default function Input<T extends FieldValues = FieldValues>({
                       placeholder={placeholder}
                       type={type as HTMLInputTypeAttribute}
                       disabled={disabled}
+                      step="0.01"
                       onChange={(e) => onChange(Number(e.target.value))}
                       {...others}
                       ref={ref}
