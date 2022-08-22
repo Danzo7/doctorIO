@@ -19,9 +19,9 @@ type Data = {
 };
 
 const schema = z.object({
-  description: z.string().min(1),
+  description: z.string().min(3),
   selectedDate: z.preprocess((arg) => {
-    if (typeof arg == 'string' || arg instanceof Date) return new Date(arg); //TODO check the schema
+    if (typeof arg == 'string' || arg instanceof Date) return new Date(arg);
   }, z.date()),
 });
 
@@ -35,7 +35,7 @@ export default function AddMedicalHistoryModal({
   } = useForm<Data>({
     mode: 'onChange',
     resolver: zodResolver(schema),
-    defaultValues: { description: '' },
+    defaultValues: { description: '', selectedDate: new Date() },
   });
   const [addMedicalHistory, result] = useAddMedicalHistoryMutation();
   const onSubmit: SubmitHandler<Data> = ({ description, selectedDate }) => {
@@ -67,6 +67,7 @@ export default function AddMedicalHistoryModal({
           type={'textarea'}
           name="description"
           fillContainer
+          placeholder="write something..."
           control={control}
           errorMessage={errors.description?.message}
         />
