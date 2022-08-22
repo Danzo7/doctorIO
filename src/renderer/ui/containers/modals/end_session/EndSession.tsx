@@ -70,9 +70,7 @@ export default function EndSession({}: EndSessionProps) {
                 },
               })
                 .then(() => navigate('queue'))
-                .then(() => {
-                  dispatch(resetSession());
-                })
+
                 .catch((error) => console.log(error));
             }}
           />
