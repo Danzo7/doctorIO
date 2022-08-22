@@ -42,11 +42,6 @@ const patientApi = createApi({
       query: (body) => ({ url: `/patient`, method: 'POST', body: body }),
       invalidatesTags: ['patient'],
     }),
-    //MedicalHistory
-    //GET
-
-    //documentService
-    //GET
   }),
 });
 export default patientApi;

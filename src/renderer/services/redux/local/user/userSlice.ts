@@ -1,6 +1,6 @@
 import { firstUser } from '@api/fake';
 import { User } from '@models/local.models';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: Partial<User> = {
   username: undefined,
@@ -10,13 +10,21 @@ const userSlice = createSlice({
   name: 'user',
   initialState: initialState,
   reducers: {
-    setUser: (state: Partial<User>) => {
-      state.email = firstUser.email;
+    setUser: (
+      state: Partial<User>,
+      action: PayloadAction<{
+        firstName: string;
+        lastName: string;
+        email: string;
+        phoneNumber: number;
+      }>,
+    ) => {
+      state.email = action.payload.email;
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
+      state.phoneNumber = action.payload.phoneNumber;
       state.password = firstUser.password;
       state.avatar = firstUser.avatar;
-      state.firstName = firstUser.firstName;
-      state.lastName = firstUser.lastName;
-      state.phoneNumber = firstUser.phoneNumber;
       state.userId = firstUser.userId;
       state.username = firstUser.username;
       state.privateKey = firstUser.privateKey;
