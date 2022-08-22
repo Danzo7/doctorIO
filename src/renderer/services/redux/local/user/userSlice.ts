@@ -1,7 +1,6 @@
 import { firstUser } from '@api/fake';
 import { User } from '@models/local.models';
 import { createSlice } from '@reduxjs/toolkit';
-import { parseISO } from 'date-fns';
 
 interface UserType {
   user: User | undefined;
