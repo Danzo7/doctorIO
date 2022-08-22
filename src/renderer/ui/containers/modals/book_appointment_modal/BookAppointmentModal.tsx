@@ -25,6 +25,7 @@ export default function BookAppointmentModal({
   const [BookAppointment, _] = useBookAppointmentMutation();
   const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onSubmit',
+    defaultValues: { date: new Date(), subject: '' },
   });
   const onSubmit: SubmitHandler<Inputs> = ({ date, subject }) => {
     BookAppointment({
@@ -51,10 +52,18 @@ export default function BookAppointmentModal({
         />
       }
     >
-      <div className="book-appointment-info">
-        <TextPair first={patientName} second={`#${id}`} />
-        <Input type="text" label="Subject" control={control} name={'subject'} />
-        <Input type="text" label="Subject" control={control} name={'date'} />
+      <div css={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div className="book-appointment-info">
+          <TextPair first={patientName} second={`#${id}`} />
+          <BorderSeparator direction="vertical" />
+          <Input type="date" control={control} name={'date'} />
+        </div>
+        <Input
+          type="text"
+          label="Subject (optional)"
+          control={control}
+          name={'subject'}
+        />
       </div>
     </ModalContainer>
   );
