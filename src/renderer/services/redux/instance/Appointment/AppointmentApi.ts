@@ -42,6 +42,7 @@ const appointmentApi = createApi({
           bookedIn: parseISO(bookedIn as any as string),
         }));
       },
+      providesTags: ['BookAppointment'],
     }),
     bookAppointment: builder.mutation<
       any,
