@@ -21,11 +21,11 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
     formState: { errors },
   } = useForm<Omit<Drug, 'id'>>({
     defaultValues: {
-      description: defaultValues?.description,
-      dosage: defaultValues?.dosage,
-      duration: defaultValues?.duration,
-      name: defaultValues?.name,
-      qts: defaultValues?.qts,
+      description: defaultValues?.description ?? '',
+      dosage: defaultValues?.dosage ?? 0,
+      duration: defaultValues?.duration ?? 0,
+      name: defaultValues?.name ?? '',
+      qts: defaultValues?.qts ?? 0,
     },
   });
   const onSubmit: SubmitHandler<Omit<Drug, 'id'>> = (
