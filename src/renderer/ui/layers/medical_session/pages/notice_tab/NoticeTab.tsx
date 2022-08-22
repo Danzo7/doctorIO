@@ -1,5 +1,4 @@
 import Input from '@components/inputs/input';
-import { updateNotice } from '@redux/local/session/sessionSlice';
 import { useAppDispatch, useAppSelector } from '@store';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';
