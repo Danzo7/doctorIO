@@ -57,6 +57,7 @@
     "zod": "^3.17.3"
   },
   "devDependencies": {
+    "@babel/helper-string-parser": "^7.18.10",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
