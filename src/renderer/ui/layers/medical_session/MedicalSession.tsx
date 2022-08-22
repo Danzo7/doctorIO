@@ -13,7 +13,10 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import { Patient } from '@models/instance.model';
 import { useGetQueueStateQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
+import { resetSession } from '@redux/local/session/sessionSlice';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { useAppDispatch } from '@store';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PatientSmallCard from './components/patient_small_card';
 import MedicalSessionSideBar from './medical_session_side_bar';
@@ -54,6 +57,10 @@ export default function MedicalSession({}: MedicalSessionProps) {
       closeBtn: 'inner',
     });
   };
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(resetSession());
+  }, [dispatch]);
 
   return isLoading || isFetching || isFetchingState || isLoadingState ? (
     <LoadingSpinner />
