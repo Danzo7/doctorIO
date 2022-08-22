@@ -111,7 +111,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                   </ScrollView>
                 </Backdrop>
               ) : (
-                <span>IDLE</span>
+                <span>nothing</span>
               ) //UI: add good comp
             }
           </div>

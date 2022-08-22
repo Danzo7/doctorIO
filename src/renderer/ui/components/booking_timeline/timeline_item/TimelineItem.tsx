@@ -42,7 +42,9 @@ export default function TimelineItem({
         <WideCard borderColor={selectedColor}>
           <TextPair
             first={
-              state == 'canceled'
+              state == 'canceled' && bookedFor
+                ? 'Booked appointment'
+                : state == 'canceled'
                 ? 'Unprogrammed appointment'
                 : date
                 ? format(date, DATE_ONLY)
