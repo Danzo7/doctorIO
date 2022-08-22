@@ -2,7 +2,6 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
-import { DATE_ONLY } from '@constants/data_format';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Overlay } from '@libs/overlay';
 import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
