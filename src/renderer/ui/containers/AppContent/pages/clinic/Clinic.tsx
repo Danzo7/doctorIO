@@ -4,7 +4,7 @@ import Clinics from './pages/clinics';
 import ClinicSettings from './pages/clinic_settings';
 interface ClinicProps {}
 export default function Clinic({}: ClinicProps) {
-  const { user } = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   return user?.selectedClinic ? (
     <Routes>

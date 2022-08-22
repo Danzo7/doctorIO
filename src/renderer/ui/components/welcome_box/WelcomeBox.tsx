@@ -12,13 +12,13 @@ interface WelcomeBoxProps {
 }
 function WelcomeBox({ message }: WelcomeBoxProps) {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   const isDismised =
     user &&
     differenceInHours(
       new Date(),
-      parseISO(user.userPreferences.welcomeDismissedIn),
+      parseISO(user?.userPreferences?.welcomeDismissedIn ?? ''),
     ) < 24;
   const [close, setCloseState] = useState({
     isHidding: isDismised,

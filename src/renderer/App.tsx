@@ -11,14 +11,14 @@ import TextButton from '@components/buttons/text_button';
 interface AppProps {}
 
 function App({}: AppProps) {
-  const { user } = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   console.log('User :', user);
   const dispatch = useAppDispatch();
   return (
     <>
       <div className="app-container">
         {
-          user ? (
+          user?.username ? (
             user?.selectedClinic ? ( //FEATURE try to connect to selected clinic
               <Routes>
                 <Route path="session" element={<MedicalSession />} />
