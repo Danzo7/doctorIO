@@ -1,4 +1,7 @@
+import { color } from '@assets/styles/color';
+import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
+import { updateNotice } from '@redux/local/session/sessionSlice';
 import { useAppDispatch, useAppSelector } from '@store';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';
@@ -7,25 +10,31 @@ type Data = {
   diagnosis: string;
 };
 export default function NoticeTab() {
-  const notice = useAppSelector((state) => state.session.diagnosis);
+  const diagnosis = useAppSelector((state) => state.session.diagnosis);
   const dispatch = useAppDispatch();
-  const { control, watch } = useForm<Data>({
+  const { control, getValues } = useForm<Data>({
     mode: 'onChange',
-    defaultValues: { diagnosis: notice },
+    defaultValues: { diagnosis: diagnosis },
   });
-
-  //dispatch(updateNotice(watch('diagnosis')));
 
   return (
     <div className="notice-tab">
-      {
-        <Input
-          type="textarea"
-          name="diagnosis"
-          control={control}
-          placeholder="write something..."
+      <Input
+        type="textarea"
+        name="diagnosis"
+        control={control}
+        placeholder="write something..."
+      />
+      <div className="save-btn-wrapper">
+        <TextButton
+          text="Save"
+          backgroundColor={color.secondary_color}
+          fontSize={14}
+          onPress={() => {
+            dispatch(updateNotice(getValues('diagnosis')));
+          }}
         />
-      }
+      </div>
     </div>
   );
 }
@@ -37,15 +46,9 @@ export function TimelineNotice({ diagnosis }: Data) {
   });
   return (
     <div className="notice-tab">
-      {
-        <Input
-          type="textarea"
-          disabled
-          defaultValue={diagnosis}
-          name="diagnosis"
-          control={control}
-        />
-      }
+      <div className="span-wrapper">
+        <span>{diagnosis}</span>
+      </div>
     </div>
   );
 }

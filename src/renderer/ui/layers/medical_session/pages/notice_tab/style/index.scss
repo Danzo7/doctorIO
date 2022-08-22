@@ -5,6 +5,7 @@
     align-items: stretch;
     flex-grow: 1;
     align-self: stretch;
+    position: relative;
 
     > .defaultValue-container {
         background-color: $darkerseccolor;
@@ -17,5 +18,16 @@
             font-size: 15px;
             color: $textgray;
         }
+    }
+    > .save-btn-wrapper {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    > .span-wrapper {
+        border: 2px solid $bordercolor;
+        border-radius: 7px;
+        padding: 10px;
     }
 }
