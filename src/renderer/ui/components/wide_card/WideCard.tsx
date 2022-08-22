@@ -18,7 +18,7 @@ export default function WideCard({ borderColor, children }: WideCardProps) {
       }}
     >
       {children
-        .filter((c) => c != undefined)
+        .filter((c) => c && c != undefined)
         .map((child, index, arr) => (
           <Fragment key={index}>
             {child}
