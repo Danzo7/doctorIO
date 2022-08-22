@@ -10,7 +10,7 @@ interface User {
   email: string;
   firstName: string;
   lastName: string;
-  phoneNumber: string;
+  phoneNumber: number;
   avatar: string;
   privateKey: string;
   publicKey: string;
