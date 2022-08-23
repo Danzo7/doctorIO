@@ -40,8 +40,10 @@ export default function OverviewInfoForm(
   });
 
   const dispatch = useAppDispatch();
+  dispatch(setOverviewInfo(watch()));
+
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    dispatch(setOverviewInfo(formData));
+    //REDUX API SUBMIT
     reset(formData);
   };
   usePrompt(
