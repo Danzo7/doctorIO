@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useId, useRef } from 'react';
+import { ReactNode, useCallback, useEffect, useId, useRef } from 'react';
 import { Overlay } from './overlay';
 import { OverlayItem, OverlayOptions } from './OverlayContainer';
 import Tooltip, { ActionProps } from '@components/poppers/tooltip';
@@ -66,7 +66,12 @@ export function useOverlay(args?: { closeToOpen?: boolean }) {
     },
     [args?.closeToOpen, close, id],
   );
-
+  const useOpen = (target: ReactNode, props: OverlayOptions, when = false) => {
+    useEffect(() => {
+      if (!when || isOpened.current) return;
+      open(target, props);
+    }, [target, props, when]);
+  };
   const openTooltip = useCallback(
     (
       actionList: ActionProps[],
@@ -161,7 +166,15 @@ export function useOverlay(args?: { closeToOpen?: boolean }) {
     },
     [close, openPopper],
   );
-  return { open, close, openTooltip, openPopper, openTooltip_unstable };
+  return {
+    open,
+    close,
+    openTooltip,
+    openPopper,
+    openTooltip_unstable,
+    useOpen,
+    isOpened: isOpened.current,
+  };
 }
 // }unstable
 // export function usePopper() {
