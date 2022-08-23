@@ -32,12 +32,13 @@ function App({}: AppProps) {
               <Clinic />
             )
           ) : (
-            <UserRegister />
+            <ModalPortal onClose={() => {}} {...DEFAULT_MODAL}>
+              <UserRegister />
+            </ModalPortal>
           ) //UI fix the modal setup
         }
       </div>
       <OverlayContainer />
-      <PortalContainer />
     </>
   );
 }
