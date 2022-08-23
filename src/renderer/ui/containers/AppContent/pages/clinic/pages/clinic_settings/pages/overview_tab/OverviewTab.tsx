@@ -1,20 +1,20 @@
 import ClinicOverviewCard from '@components/clinic_overview_card';
 import OverviewInfoForm from './overview_info_form';
 import './style/index.scss';
-import { clinic } from '@api/fake';
+import { useAppSelector } from '@store';
 
 interface OverviewTabProps {}
 export default function OverviewTab({}: OverviewTabProps) {
-  const clinicInfo = clinic; //REDUX get clinic info
-
+  //REDUX fetch clinic info
+  const clinicInfo = useAppSelector((state) => state.overview);
   return (
     <div className="overview-tab">
       <ClinicOverviewCard {...clinicInfo} />
       <div className="overview-tab-sep" />
       <OverviewInfoForm
-        name={clinicInfo.clinicName}
+        clinicName={clinicInfo.clinicName}
         description={clinicInfo.description ?? ''}
-        location={clinicInfo.clinicAddress ?? ''}
+        clinicAddress={clinicInfo.clinicAddress}
         phoneNumber={clinicInfo.phoneNumber ?? ''}
       />
     </div>

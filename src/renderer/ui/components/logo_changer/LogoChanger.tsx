@@ -6,13 +6,13 @@ import { useState } from 'react';
 interface LogoChangerProps {
   src: string;
   width: number;
-  onPress?: () => void;
+  onChange?: (src: string) => void;
 }
 
 export default function LogoChanger({
   src,
   width = 100,
-  onPress,
+  onChange,
 }: LogoChangerProps) {
   const [selectedImage, setSelectedImage] = useState(src);
   const uploadImage = () => {
@@ -22,6 +22,7 @@ export default function LogoChanger({
       const files: FileList = input.files as FileList;
       console.log(files);
       setSelectedImage(URL.createObjectURL(files[0]));
+      onChange?.(URL.createObjectURL(files[0]));
     };
     input.click();
   };
