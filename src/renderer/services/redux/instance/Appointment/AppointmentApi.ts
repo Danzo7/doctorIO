@@ -4,15 +4,14 @@ import {
   Drug,
   Test,
 } from '@models/instance.model';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { StaticQueries } from '@redux/dynamic_queries';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
 import appointmentQueueApi from '../appointmentQueue/AppointmentQueueApi';
 
 const appointmentApi = createApi({
   reducerPath: 'AppointmentApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/record/appointment',
-  }),
+  baseQuery: StaticQueries.appointment.query,
   tagTypes: ['BookAppointment'],
   endpoints: (builder) => ({
     //GET
@@ -96,7 +95,7 @@ const appointmentApi = createApi({
 
           dispatch(appointmentQueueApi.util.invalidateTags(['item']));
         } catch (err) {
-          console.log(err);
+          //console.log(err);
         }
       },
     }),

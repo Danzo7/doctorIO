@@ -1,33 +1,32 @@
 import { Patient, PatientBrief } from '@models/instance.model';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { StaticQueries } from '@redux/dynamic_queries';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
 const patientApi = createApi({
   reducerPath: 'recordApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/record',
-  }),
+  baseQuery: StaticQueries.patient.query,
   tagTypes: ['patient', 'MedicalHistory', 'MedicalDocument'],
   endpoints: (builder) => ({
     //Patient
     //GET
     getPatient: builder.query<PatientBrief, number>({
-      query: (patId) => `/patient?id=${patId}`,
+      query: (patId) => `?id=${patId}`,
     }),
     getPatients: builder.query<PatientBrief, any>({
-      query: () => `/patient`,
+      query: () => ``,
       providesTags: ['patient'],
     }),
     findPatientByName: builder.mutation<PatientBrief[], string>({
       query: (name: string) => ({
-        url: `/patient/find?name=${name}`,
+        url: `find?name=${name}`,
         method: 'GET',
       }),
     }),
     findPatientByName2: builder.query<PatientBrief[], string>({
-      query: (name: string) => `/patient/find?name=${name}`,
+      query: (name: string) => `find?name=${name}`,
     }),
     getPatientDetail: builder.query<Patient, number>({
-      query: (patId) => `patient/detail?id=${patId}`,
+      query: (patId) => `detail?id=${patId}`,
     }),
     //POST
     addPatient: builder.mutation<
