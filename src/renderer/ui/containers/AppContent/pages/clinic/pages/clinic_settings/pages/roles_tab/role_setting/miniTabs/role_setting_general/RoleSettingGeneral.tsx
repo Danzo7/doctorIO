@@ -32,7 +32,7 @@ export default function RoleSettingGeneral({
 
   usePrompt(
     'are you sure about that !!!',
-    ({ closeOVerlay, dismiss }) => (
+    ({ closeOverlay: closeOVerlay, dismiss }) => (
       <TextButton
         text="OK"
         onPress={() => {
