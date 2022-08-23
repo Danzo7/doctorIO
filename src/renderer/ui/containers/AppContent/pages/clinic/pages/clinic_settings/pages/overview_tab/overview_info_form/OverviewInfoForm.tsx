@@ -8,7 +8,8 @@ import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_acti
 import { InputControllerContext } from '@components/inputs/input/Input';
 import { useAppDispatch } from '@store';
 import { setOverviewInfo } from '@redux/local/settings/overviewSlice';
-import { useEffect, useRef, useState } from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type Inputs = {
   clinicName: string;
@@ -16,7 +17,12 @@ type Inputs = {
   clinicAddress: string;
   phoneNumber: string;
 };
-
+const schema = z.object({
+  clinicName: z.string().min(1, 'Clinic name is required'),
+  clinicAddress: z.string().min(1, 'Clinic address is required'),
+  description: z.optional(z.string()),
+  phoneNumber: z.string().min(8),
+});
 interface OverviewInfoFormProps {}
 export default function OverviewInfoForm(
   props: OverviewInfoFormProps & Inputs,
@@ -30,6 +36,7 @@ export default function OverviewInfoForm(
   } = useForm<Inputs>({
     defaultValues: props,
     mode: 'onChange',
+    resolver: zodResolver(schema),
   });
 
   const dispatch = useAppDispatch();
@@ -72,7 +79,7 @@ export default function OverviewInfoForm(
         <Input label="Name" type={'text'} name={'clinicName'} />
         <Input label="Description" type={'text'} name={'description'} />
         <Input label="Location" type={'text'} name={'clinicAddress'} />
-        <Input label="Phone number" type={'number'} name={'phoneNumber'} />
+        <Input label="Phone number" type={'text'} name={'phoneNumber'} />
       </InputControllerContext.Provider>
     </form>
   );
