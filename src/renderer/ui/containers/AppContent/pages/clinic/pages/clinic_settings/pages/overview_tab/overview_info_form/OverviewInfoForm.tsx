@@ -32,8 +32,6 @@ export default function OverviewInfoForm(
     mode: 'onChange',
   });
 
-  console.log('watch', watch());
-  console.log('dirty', isDirty);
   const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     dispatch(setOverviewInfo(formData));
@@ -41,13 +39,14 @@ export default function OverviewInfoForm(
   };
   usePrompt(
     'Careful : you have unsaved changes !',
-    ({ closeOVerlay, dismiss }) => (
+    ({ closeOverlay, dismiss }) => (
       <SnakeBarActionsControls>
         <TextButton
-          text="dismiss"
+          text="reset"
           afterBgColor={color.darker}
           onPress={() => {
-            closeOVerlay();
+            closeOverlay();
+            reset();
             dismiss();
           }}
         />
@@ -56,15 +55,14 @@ export default function OverviewInfoForm(
           backgroundColor={color.good_green}
           onPress={() => {
             handleSubmit(onSubmit)();
-
-            closeOVerlay();
+            closeOverlay();
             dismiss();
           }}
         />
       </SnakeBarActionsControls>
     ),
     isDirty,
-    isDirty,
+    true,
   );
 
   return (
