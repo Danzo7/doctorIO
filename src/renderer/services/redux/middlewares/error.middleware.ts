@@ -10,7 +10,7 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
     const serverError: ServerError | undefined = action?.payload?.data;
     if (serverError) {
-      console.clear();
+      //console.clear();
       console.error('Server error', serverError);
     }
   }

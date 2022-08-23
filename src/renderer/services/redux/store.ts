@@ -2,16 +2,7 @@ import { configureStore, Middleware } from '@reduxjs/toolkit';
 import AppointmentQueueApi from './instance/appointmentQueue/AppointmentQueueApi';
 import patientApi from './instance/record/patient_api';
 import sessionSlice from './local/session/sessionSlice';
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userSlice from './local/user/userSlice';
 import medicalDocumentApi from './instance/record/medical_document_api';
