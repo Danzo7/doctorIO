@@ -45,25 +45,25 @@ export function useRouteChange(change: () => void) {
 export default function usePrompt(
   message: string,
   actionList: ({
-    closeOVerlay,
+    closeOverlay,
     retry,
     dismiss,
   }: {
-    closeOVerlay: () => void;
+    closeOverlay: () => void;
     dismiss: () => void;
     retry: () => void;
   }) => ReactNode,
   when = true,
   forceShow = false,
 ) {
-  const { open, close } = useOverlay();
+  const { open, useOpen, close } = useOverlay();
   const blocker = useCallback(
     (tx: TransitionD) => {
       open(
         SnakeBar({
           description: message,
           children: actionList({
-            closeOVerlay: close,
+            closeOverlay: close,
             dismiss: tx.dismiss,
             retry: tx.retry,
           }),
@@ -78,25 +78,24 @@ export default function usePrompt(
     },
     [open, message, actionList, close],
   );
-  if (forceShow) {
-    open(
-      SnakeBar({
-        description: message,
-        type: 'info',
-        children: actionList({
-          closeOVerlay: close,
-          dismiss: () => {},
-          retry: () => {},
-        }),
+  useOpen(
+    SnakeBar({
+      description: message,
+      type: 'info',
+      children: actionList({
+        closeOverlay: close,
+        dismiss: () => {},
+        retry: () => {},
       }),
-      {
-        closeOnClickOutside: true,
-        clickThrough: true,
-        position: { bottom: '2vh' },
-        transition: 'appear-bottom',
-      },
-    );
-  }
+    }),
+    {
+      closeOnClickOutside: true,
+      clickThrough: true,
+      position: { bottom: '2vh' },
+      transition: 'appear-bottom',
+    },
+    forceShow && when,
+  );
 
   useBlocker(blocker, when);
 }
