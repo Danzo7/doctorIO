@@ -19,6 +19,7 @@ import medicalHistoryApi from './instance/record/medical_history_api';
 import appointmentApi from './instance/Appointment/AppointmentApi';
 import { rtkQueryErrorLogger } from './middlewares/error.middleware';
 import { firstUser } from '@api/fake';
+import overviewSlice from './local/settings/overviewSlice';
 
 const persistConfig = {
   key: 'root',
@@ -30,6 +31,7 @@ const persistedUser = persistReducer(persistConfig, userSlice.reducer);
 
 export const store = configureStore({
   reducer: {
+    [overviewSlice.name]: overviewSlice.reducer,
     [sessionSlice.name]: sessionSlice.reducer,
     [userSlice.name]: persistedUser,
     [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
