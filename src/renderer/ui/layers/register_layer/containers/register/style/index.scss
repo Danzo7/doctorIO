@@ -1,0 +1,13 @@
+@use '~styles/appColors' as *;
+.register {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    border-radius: 1.5vw;
+    flex-grow: 70;
+    order: 1;
+    padding: 0px;
+    gap: 40px;
+    min-width: 60%;
+}

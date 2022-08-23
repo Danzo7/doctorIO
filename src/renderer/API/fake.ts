@@ -16,7 +16,7 @@ export const firstUser: User = {
     {
       clinicId: 1,
       name: 'graze',
-      serverLocation: '127.0.0.1:1004',
+      serverLocation: 'localhost:3000',
       accessKey: 'bb4da',
       memberId: 1,
     },
@@ -33,7 +33,7 @@ export const firstUser: User = {
   firstName: 'carlo',
   lastName: 'badi',
   password: 'person',
-  phoneNumber: '123456789',
+  phone: '123456789',
   publicKey: 'key',
   privateKey: 'yek',
   userId: 123,

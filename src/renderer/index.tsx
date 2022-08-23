@@ -7,7 +7,6 @@ import './index.scss';
 import { Provider } from 'react-redux';
 import { persistor, store } from '@redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import { PortalContainer } from '@libs/overlay';
 
 declare const ELECTRON_ROUTING: boolean;
 const app = document.getElementById('app-mount');
@@ -23,7 +22,6 @@ root.render(
         </Routing>
       </PersistGate>
     </Provider>
-    <PortalContainer />
   </StrictMode>,
 );
 
