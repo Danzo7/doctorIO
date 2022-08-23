@@ -33,7 +33,7 @@ export const firstUser: User = {
   firstName: 'carlo',
   lastName: 'badi',
   password: 'person',
-  phoneNumber: 123456789,
+  phoneNumber: '123456789',
   publicKey: 'key',
   privateKey: 'yek',
   userId: 123,
