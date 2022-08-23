@@ -8,7 +8,7 @@ const OfflineLayer = lazy(() => import('@layers/offline_layer'));
 interface StartupLayerProps {}
 export default function StartupLayer({}: StartupLayerProps) {
   const user = useAppSelector((state) => state.user);
-  return user ? (
+  return user.userId ? (
     user?.selectedClinic ? (
       <Suspense fallback={<LoadingSpinner />}>
         <MainLayer />
