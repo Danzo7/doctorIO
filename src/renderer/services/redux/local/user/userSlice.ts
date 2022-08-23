@@ -16,17 +16,18 @@ const userSlice = createSlice({
         firstName: string;
         lastName: string;
         email: string;
-        phoneNumber: number;
+        phoneNumber: string;
       }>,
     ) => {
       state.email = action.payload.email;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.phoneNumber = action.payload.phoneNumber;
+      state.username =
+        action.payload.firstName + action.payload.lastName + firstUser.userId;
       state.password = firstUser.password;
       state.avatar = firstUser.avatar;
       state.userId = firstUser.userId;
-      state.username = firstUser.username;
       state.privateKey = firstUser.privateKey;
       state.publicKey = firstUser.publicKey;
       state.clinic = firstUser.clinic;
