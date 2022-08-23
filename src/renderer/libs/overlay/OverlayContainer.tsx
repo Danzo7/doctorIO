@@ -99,6 +99,7 @@ export interface OverlayOptions {
     | 'appear-left'
     | 'appear-top'
     | 'appear-bottom';
+  autoFocus?: boolean;
 }
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
@@ -115,6 +116,7 @@ export function OverlayItem({
   popperTarget,
   closeOnClickOutside,
   closeOnBlur,
+  autoFocus,
   closeMethod,
   position,
   transition = 'zoom',
@@ -161,7 +163,7 @@ export function OverlayItem({
           right: position?.right,
           animation: transition && `${transition} .1s forwards ease-out`,
         }}
-        tabIndex={-1}
+        {...(autoFocus ? { tabIndex: -1 } : {})}
         onBlur={
           closeOnBlur
             ? (event) => {
