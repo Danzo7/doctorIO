@@ -13,13 +13,13 @@ const schema = z.object({
   firstName: z.string().min(3, 'first name is required'),
   lastName: z.string().min(3, 'last name is required'),
   email: z.string().email({ message: 'Invalid email address' }),
-  phoneNumber: z.number().int(),
+  phoneNumber: z.string().min(8),
 });
 interface Inputs {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
 }
 interface UserRegisterProps {}
 
@@ -30,6 +30,7 @@ export default function UserRegister({}: UserRegisterProps) {
       firstName: '',
       lastName: '',
       email: '',
+      phoneNumber: '',
     },
   });
   const dispatch = useAppDispatch();
@@ -57,7 +58,7 @@ export default function UserRegister({}: UserRegisterProps) {
         <Input type="text" label="First name" name="firstName" />
         <Input type="text" label="last name" name="lastName" />
         <Input type="email" label="Email" name="email" />
-        <Input type="number" label="Phone number" name="phoneNumber" />
+        <Input type="text" label="Phone number" name="phoneNumber" />
       </InputControllerContext.Provider>
     </ModalContainer>
   );
