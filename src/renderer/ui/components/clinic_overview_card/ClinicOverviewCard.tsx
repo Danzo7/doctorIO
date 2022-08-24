@@ -1,7 +1,7 @@
 import LogoChanger from '@components/logo_changer';
 import './style/index.scss';
 import { Clinic } from '@models/server.models';
-import { changeLogo } from '@redux/local/settings/overviewSlice';
+import { changeLogo } from '@redux/local/settings/settingsSlice';
 import { useAppDispatch } from '@store';
 
 export default function ClinicOverviewCard(clinicInfo: Clinic) {
