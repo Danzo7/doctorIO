@@ -1,6 +1,6 @@
-import { clinic } from '@api/fake';
 import { timeToDate } from '@helpers/date.helper';
-import { differenceInSeconds } from 'date-fns';
+import { useAppSelector } from '@store';
+import { differenceInSeconds, formatDistance } from 'date-fns';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Countdown from 'react-countdown';
 import Clinic from 'toSvg/clinic.svg?icon';
@@ -21,19 +21,20 @@ export default function Timer({ active, pCount }: TimerProps) {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestIdRef = useRef<number>();
-  const closeTimeRef = useRef(timeToDate(clinic.timing.timeToClose));
-  const openTimeRef = useRef(timeToDate(clinic.timing.timeToOpen));
+  const { timing } = useAppSelector((state) => state.settings);
+  const closeTimeRef = timeToDate(timing.timeToClose);
+  const openTimeRef = timeToDate(timing.timeToOpen);
   const TimeRef = useRef({ ratio: 1 });
 
   const renderFrame = useCallback(() => {
-    if (differenceInSeconds(new Date(), openTimeRef.current) < 0) {
+    if (differenceInSeconds(new Date(), openTimeRef) < 0) {
       TimeRef.current.ratio = 0; //early
     } else if (TimeRef.current.ratio < 100)
       TimeRef.current.ratio = Number.parseInt(
         (
           100 -
-          (differenceInSeconds(closeTimeRef.current, new Date()) /
-            differenceInSeconds(closeTimeRef.current, openTimeRef.current)) *
+          (differenceInSeconds(closeTimeRef, new Date()) /
+            differenceInSeconds(closeTimeRef, openTimeRef)) *
             100
         ).toPrecision(),
       );
@@ -84,10 +85,30 @@ export default function Timer({ active, pCount }: TimerProps) {
         <Clinic></Clinic> <span>Time to close</span>
         <span className="count-down">
           <Countdown
-            date={timeToDate(clinic.timing.timeToClose)}
+            date={timeToDate(timing.timeToClose)}
             daysInHours={true}
-            onComplete={() => {
+            onPause={() => {
               setIsActive(false);
+            }}
+            onStart={() => {
+              setIsActive(true);
+            }}
+            overtime
+            renderer={(p) => {
+              const condition =
+                timeToDate(timing.timeToClose).getTime() > new Date().getTime();
+
+              if (!condition) p.api.pause();
+              else if (p.api.isPaused()) {
+                p.api.start();
+              }
+              return condition
+                ? p.formatted.hours +
+                    ':' +
+                    p.formatted.minutes +
+                    ':' +
+                    p.formatted.seconds
+                : 'Finished';
             }}
           />
         </span>
