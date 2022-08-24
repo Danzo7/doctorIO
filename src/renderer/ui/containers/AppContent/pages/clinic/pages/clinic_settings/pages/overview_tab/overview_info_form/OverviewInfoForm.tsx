@@ -7,7 +7,7 @@ import { color } from '@assets/styles/color';
 import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
 import { InputControllerContext } from '@components/inputs/input/Input';
 import { useAppDispatch } from '@store';
-import { setOverviewInfo } from '@redux/local/settings/overviewSlice';
+import { setOverviewInfo } from '@redux/local/settings/settingsSlice';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 

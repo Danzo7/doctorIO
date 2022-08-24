@@ -6,7 +6,7 @@ import { useAppSelector } from '@store';
 interface OverviewTabProps {}
 export default function OverviewTab({}: OverviewTabProps) {
   //REDUX fetch clinic info
-  const clinicInfo = useAppSelector((state) => state.overview);
+  const clinicInfo = useAppSelector((state) => state.settings);
   return (
     <div className="overview-tab">
       <ClinicOverviewCard {...clinicInfo} />

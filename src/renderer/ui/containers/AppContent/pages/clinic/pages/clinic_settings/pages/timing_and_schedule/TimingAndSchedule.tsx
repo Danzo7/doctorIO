@@ -1,4 +1,3 @@
-import { clinic } from '@api/fake';
 import BorderSeparator from '@components/border_separator';
 import CheckboxTile from '@components/checkbox_tile';
 import Header from '@components/header';
@@ -6,10 +5,21 @@ import MultipleCheckGroup from '@components/inputs/multiple_check_group';
 import SmallClinicStatus from '@components/small_clinic_status';
 import PeriodTimePicker from '@components/time_picker';
 import { rules } from '@constants/permissions';
+import { useAppSelector } from '@store';
 import './style/index.scss';
 
 interface TimingAndScheduleProps {}
 export default function TimingAndSchedule({}: TimingAndScheduleProps) {
+  const days = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ];
+  const clinicInfo = useAppSelector((state) => state.settings);
   return (
     <div className="timing-and-schedule">
       <SmallClinicStatus />
@@ -18,8 +28,8 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
         <Header title="Timing" />
         <PeriodTimePicker
           title="Opening time"
-          startTime={clinic.timing.timeToOpen}
-          endTime={clinic.timing.timeToClose}
+          startTime={clinicInfo.timing.timeToOpen}
+          endTime={clinicInfo.timing.timeToClose}
           onChange={(data) => console.log(data)} //REDUX:update settings
         />
         <PeriodTimePicker
@@ -30,16 +40,8 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
         />
         <span>Working days</span>
         <MultipleCheckGroup
-          items={[
-            'sunday',
-            'monday',
-            'tuesday',
-            'wednesday',
-            'thursday',
-            'friday',
-            'saturday',
-          ]}
-          value={clinic.timing.workingDays}
+          items={days}
+          value={clinicInfo.timing.workingDays}
         />
         <BorderSeparator direction="horizontal" />
         <div className="rules-container">
@@ -49,7 +51,7 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
               key={permKey}
               primaryText={name}
               secondaryText={description}
-              isChecked={clinic.timing[permKey]}
+              isChecked={clinicInfo.timing[permKey]}
             />
           ))}
         </div>
