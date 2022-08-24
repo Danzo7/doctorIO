@@ -63,6 +63,8 @@ type ClinicPreferences = Partial<Record<PrefKeys, true>>;
 type ClinicTiming = {
   timeToOpen: string;
   timeToClose: string;
+  breakStart: string;
+  breakEnd: string;
   workingDays: DayAliased[];
 } & Rules;
 type Rules = Partial<Record<Rulekeys, true>>;
