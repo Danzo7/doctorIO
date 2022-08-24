@@ -30,6 +30,7 @@ export const InputControllerContext = createContext<Control<any> | null>(null);
 export interface ControllerProps {
   field: Omit<ControllerRenderProps, 'ref'>;
   fieldState?: ControllerFieldState;
+  onChanged?: (value: any) => void;
   rules?: Omit<
     RegisterOptions,
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
@@ -65,6 +66,7 @@ type InputProps<
   children?: ReactNode;
   placeholder?: string;
   fillContainer?: true;
+  onChange?: (value: TFieldValues) => void;
   grow?: boolean;
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
   disabled?: boolean;
@@ -86,6 +88,7 @@ export default function Input<T extends FieldValues = FieldValues>({
   leading,
   trailing,
   children,
+  onChange,
   fillContainer,
   grow = true,
   hintAlignment,
@@ -115,6 +118,7 @@ export default function Input<T extends FieldValues = FieldValues>({
     defaultValue,
     shouldUnregister,
   });
+
   return type == 'checkbox' ? (
     <Checkbox label={label} field={field} ref={ref} />
   ) : (
@@ -173,7 +177,8 @@ export default function Input<T extends FieldValues = FieldValues>({
                         : {})}
                     />
                   );
-                if (type == 'time') return <Timepicker field={field} />;
+                if (type == 'time')
+                  return <Timepicker field={field} onChanged={onChange} />;
                 if (type == 'textarea')
                   return (
                     <TextArea
@@ -183,14 +188,14 @@ export default function Input<T extends FieldValues = FieldValues>({
                     />
                   );
                 if (type == 'number') {
-                  const { onChange, ...others } = field;
+                  const { onChange: onChanged, ...others } = field;
                   return (
                     <input
                       placeholder={placeholder}
                       type={type as HTMLInputTypeAttribute}
                       disabled={disabled}
                       step="0.01"
-                      onChange={(e) => onChange(Number(e.target.value))}
+                      onChange={(e) => onChanged(Number(e.target.value))}
                       {...others}
                       ref={ref}
                     />
