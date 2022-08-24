@@ -4,9 +4,10 @@ import './style/index.scss';
 interface MultipleCheckGroupProps {
   items: string[];
   value?: number[];
+  onChange?: (selectedIndex: number[]) => void;
 }
 export default forwardRef(function MultipleCheckGroup(
-  { items, value }: MultipleCheckGroupProps,
+  { items, value, onChange }: MultipleCheckGroupProps,
   ref,
 ) {
   const [checkedItems, setCheckedItems] = useState<number[]>(value ?? []);
@@ -20,8 +21,10 @@ export default forwardRef(function MultipleCheckGroup(
       setCheckedItems(
         checkedItems.filter((checkedItem) => index != checkedItem),
       );
+      onChange?.(checkedItems.filter((checkedItem) => index != checkedItem));
     } else {
       setCheckedItems([...checkedItems, index]);
+      onChange?.([...checkedItems, index]);
     }
   };
   return (
