@@ -80,4 +80,5 @@ export type {
   PermKeys,
   Rulekeys,
   PrefKeys,
+  ClinicTiming,
 };
