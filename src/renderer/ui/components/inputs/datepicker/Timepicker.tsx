@@ -3,7 +3,7 @@ import './style/index.scss';
 import { TIME_ONLY } from '@constants/data_format';
 import { ControllerProps } from '../input';
 
-export default function Timepicker({ field }: ControllerProps) {
+export default function Timepicker({ field, onChanged }: ControllerProps) {
   const { onChange, ...others } = field;
   return (
     <div css={{ width: '100%', height: '100%' }}>
@@ -23,6 +23,7 @@ export default function Timepicker({ field }: ControllerProps) {
         ) => {
           event?.stopPropagation();
           onChange?.(date, event);
+          onChanged?.(date);
         }}
         selected={field.value}
         {...others}
