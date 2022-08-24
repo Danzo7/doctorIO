@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { clinic } from '@api/fake';
 const initialState: Clinic = clinic;
 
-const overviewSlice = createSlice({
-  name: 'overview',
+const settingsSlice = createSlice({
+  name: 'settings',
   initialState: initialState,
   reducers: {
     setOverviewInfo: (
@@ -26,6 +26,6 @@ const overviewSlice = createSlice({
     },
   },
 });
-export const { setOverviewInfo, changeLogo } = overviewSlice.actions;
+export const { setOverviewInfo, changeLogo } = settingsSlice.actions;
 
-export default overviewSlice;
+export default settingsSlice;
