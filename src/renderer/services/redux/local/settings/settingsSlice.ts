@@ -1,4 +1,4 @@
-import { Clinic } from '@models/server.models';
+import { Clinic, ClinicTiming } from '@models/server.models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { clinic } from '@api/fake';
 const initialState: Clinic = clinic;
@@ -24,8 +24,15 @@ const settingsSlice = createSlice({
     changeLogo: (state: Clinic, action: PayloadAction<string>) => {
       state.avatar = action.payload;
     },
+    updateTimingAndSchedule: (
+      state: Clinic,
+      action: PayloadAction<Partial<ClinicTiming>>,
+    ) => {
+      state.timing = { ...state.timing, ...action.payload };
+    },
   },
 });
-export const { setOverviewInfo, changeLogo } = settingsSlice.actions;
+export const { setOverviewInfo, changeLogo, updateTimingAndSchedule } =
+  settingsSlice.actions;
 
 export default settingsSlice;
