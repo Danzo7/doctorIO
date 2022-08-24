@@ -198,6 +198,14 @@ const appointmentQueueApi = createApi({
         body: { ...body },
       }),
       invalidatesTags: ['state', 'item'],
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(appointmentApi.util.invalidateTags(['BookAppointment']));
+        } catch (err) {
+          //console.log(err);
+        }
+      },
     }),
     //DELETE
     resetQueue: builder.mutation<AppointmentQueue, number>({
