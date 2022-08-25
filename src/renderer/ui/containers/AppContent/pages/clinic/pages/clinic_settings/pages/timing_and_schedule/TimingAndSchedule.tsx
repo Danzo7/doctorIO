@@ -73,30 +73,41 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
     isDirty,
     true,
   );  */
-  dispatch(
-    updateTimingAndSchedule({
-      timeToOpen: watch('openingTime.startTime'),
-      timeToClose: watch('openingTime.endTime'),
-      breakStart: watch('break.startTime'),
-      breakEnd: watch('break.endTime'),
-    }),
-  );
-  watch();
+
   return (
     <div className="timing-and-schedule">
       <SmallClinicStatus />
-      <BorderSeparator direction="vertical" />
       <div className="timing-container">
         <Header title="Timing" />
         <PeriodTimePicker
           title="Opening time"
           values={getValues('openingTime')}
-          onChange={(data) => setValue('openingTime', data)}
+          onChange={(data) => {
+            setValue('openingTime', data);
+            dispatch(
+              updateTimingAndSchedule({
+                timeToOpen: watch('openingTime.startTime'),
+                timeToClose: watch('openingTime.endTime'),
+                breakStart: watch('break.startTime'),
+                breakEnd: watch('break.endTime'),
+              }),
+            );
+          }}
         />
         <PeriodTimePicker
           title="Break"
           values={getValues('break')}
-          onChange={(data) => setValue('openingTime', data)}
+          onChange={(data) => {
+            setValue('break', data);
+            dispatch(
+              updateTimingAndSchedule({
+                timeToOpen: watch('openingTime.startTime'),
+                timeToClose: watch('openingTime.endTime'),
+                breakStart: watch('break.startTime'),
+                breakEnd: watch('break.endTime'),
+              }),
+            );
+          }}
         />
         <span>Working days</span>
         <MultipleCheckGroup
