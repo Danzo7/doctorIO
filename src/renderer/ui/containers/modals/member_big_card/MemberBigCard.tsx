@@ -25,7 +25,12 @@ export default function MemberBigCard({ memberId }: Pick<Member, 'memberId'>) {
   } = members.filter(({ memberId: id }) => id == memberId)[0];
   return (
     <div className="member-big-card">
-      <UserProfileStatus imgSrc={avatar} status={memberStatus} width={100} />
+      <UserProfileStatus
+        imgSrc={avatar}
+        status={memberStatus}
+        width={100}
+        alt={name + memberId}
+      />
       <div className="fullName-id-container">
         <span>{name}</span>
         <span>#{memberId}</span>

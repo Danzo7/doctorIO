@@ -13,9 +13,9 @@ const Template: Story<ComponentProps<typeof ContentMessage>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   memberId: 1,
-  dmId: 1,
-  dmName: 'Test',
-  dmAvatar: client,
+  id: 1,
+  name: 'Test',
+  avatar: client,
   message: {
     date: new Date(),
     text: 'Hello',

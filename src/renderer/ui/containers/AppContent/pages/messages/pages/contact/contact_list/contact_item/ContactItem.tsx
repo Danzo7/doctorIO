@@ -49,7 +49,11 @@ function ContactItem({
       }
     >
       <div className="info-container">
-        <UserProfileStatus status={status} imgSrc={avatar} />
+        <UserProfileStatus
+          status={status}
+          imgSrc={avatar}
+          alt={fullName + memberId}
+        />
         <span>{fullName}</span>
       </div>
       <div className="avatars-container">

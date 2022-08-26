@@ -35,6 +35,7 @@ function MembersPreview({
           status
           width={60}
           avatarRadius={17}
+          alt={name + memberId}
         />
         <div className="info-container">
           <span>{name}</span>

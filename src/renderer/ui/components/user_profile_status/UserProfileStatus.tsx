@@ -8,6 +8,7 @@ interface UserProfileStatusProps {
   width?: number;
   avatarRadius?: number;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  alt: string;
 }
 function UserProfileStatus({
   imgSrc,
@@ -15,6 +16,7 @@ function UserProfileStatus({
   width = 42,
   avatarRadius,
   onClick,
+  alt,
 }: UserProfileStatusProps) {
   return (
     <div className="user-profile-status">
@@ -31,9 +33,9 @@ function UserProfileStatus({
       <CircleAvatar
         src={imgSrc}
         width={width}
-        alt="profile image"
         radius={avatarRadius}
         onClick={onClick}
+        alt={alt}
       />
     </div>
   );

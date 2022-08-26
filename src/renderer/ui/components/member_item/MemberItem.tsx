@@ -32,7 +32,12 @@ export default function MemberItem({
     <div className="member-item">
       <div className="item-container">
         <div className="member-Info">
-          <UserProfileStatus imgSrc={avatar} status={memberStatus} width={30} />
+          <UserProfileStatus
+            imgSrc={avatar}
+            status={memberStatus}
+            width={30}
+            alt={name + memberId}
+          />
           <div className="id-container">
             <span>{name}</span>
             <span>#{memberId}</span>

@@ -10,7 +10,13 @@ export default function MemberCard({
 }: Pick<Member, 'memberId' | 'name' | 'avatar'>) {
   return (
     <div className="member-card">
-      <UserProfileStatus imgSrc={avatar} status width={60} avatarRadius={17} />
+      <UserProfileStatus
+        imgSrc={avatar}
+        status
+        width={60}
+        avatarRadius={17}
+        alt={name + memberId}
+      />
       <span>{name}</span>
       <div className="member-card-controls">
         <MemberActionControls memberId={memberId} />

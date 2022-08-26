@@ -67,9 +67,9 @@ export default function Chat({}: ChatProps) {
             <ContentMessage
               message={message}
               key={index}
-              dmAvatar={message.sent ? currentMember.avatar : dm.dmAvatar}
-              dmId={dm.dmId}
-              dmName={message.sent ? currentMember.name : dm.dmName}
+              avatar={message.sent ? currentMember.avatar : dm.dmAvatar}
+              id={dm.dmId}
+              name={message.sent ? currentMember.name : dm.dmName}
               memberId={
                 message.sent ? currentMember.memberId : contactMember.memberId
               }
