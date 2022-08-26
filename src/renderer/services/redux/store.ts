@@ -11,6 +11,7 @@ import appointmentApi from './instance/Appointment/AppointmentApi';
 import { rtkQueryErrorLogger } from './middlewares/error.middleware';
 import { firstUser } from '@api/fake';
 import settingsSlice from './local/settings/settingsSlice';
+import connectionStateSlice from './local/connectionStateSlice';
 
 const persistConfig = {
   key: 'root',
@@ -24,6 +25,7 @@ export const store = configureStore({
   reducer: {
     [settingsSlice.name]: settingsSlice.reducer,
     [sessionSlice.name]: sessionSlice.reducer,
+    [connectionStateSlice.name]: connectionStateSlice.reducer,
     [userSlice.name]: persistedUser,
     [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
     [patientApi.reducerPath]: patientApi.reducer,

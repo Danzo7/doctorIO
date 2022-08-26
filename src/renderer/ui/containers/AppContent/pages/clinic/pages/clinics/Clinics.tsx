@@ -6,7 +6,7 @@ import JoinNewClinicModal from '@containers/modals/join_new_clinic_modal';
 import useNavigation from '@libs/hooks/useNavigation';
 import { FIT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import userSlice from '@redux/local/user/userSlice';
+import { connect } from '@redux/local/connectionStateSlice';
 import { useDispatch } from 'react-redux';
 import './style/index.scss';
 
@@ -28,7 +28,7 @@ export default function Clinics() {
             onClick={() => {
               if (firstUser.selectedClinic === index) toParent();
               else {
-                dispatch(userSlice.actions.connect());
+                connect(dispatch);
                 toParent();
               }
             }}
