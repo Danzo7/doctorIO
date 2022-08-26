@@ -35,6 +35,7 @@ const userSlice = createSlice({
     disconnect: (state: Partial<User>) => {
       state.selectedClinic = undefined;
     },
+    refresh: () => {},
     connect: (state: Partial<User>) => {
       //TODO implement connect
       state.selectedClinic = 1;
