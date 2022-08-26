@@ -218,7 +218,7 @@ export function PortalContainer({}: OverlayContainerProps) {
 export function ModalPortal({
   children,
   ...options
-}: OverlayOptions & { onClose: () => void } & {
+}: OverlayOptions & { onClose?: () => void } & {
   children: ReactNode;
 }): React.ReactPortal {
   return createPortal(
