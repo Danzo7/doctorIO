@@ -103,7 +103,7 @@ export const rolesBrief: Role[] = roles.filter(({ roleName, roleId }) => {
 export const members: Member[] = [
   {
     name: 'Aymen Daouadji',
-    avatar: faker.image.avatar(),
+
     memberStatus: true,
     accessKey: '12346678',
     addedBy: 'Brahim aymen',
@@ -118,7 +118,7 @@ export const members: Member[] = [
   },
   {
     name: 'True Dragon',
-    avatar: faker.image.avatar(),
+
     memberStatus: false,
     accessKey: '12346678',
     addedBy: 'Acosta',
@@ -133,7 +133,7 @@ export const members: Member[] = [
   },
   {
     name: 'Acosta Zawb3a',
-    avatar: faker.image.avatar(),
+
     memberStatus: true,
     accessKey: '12346678',
     addedBy: 'Brahim aymen',
@@ -148,7 +148,7 @@ export const members: Member[] = [
   },
   {
     name: 'Brahim JohnWick',
-    avatar: faker.image.avatar(),
+
     memberStatus: true,
     accessKey: '12346fh678',
     addedBy: 'Aymen Daouadji',
@@ -178,8 +178,6 @@ export const members: Member[] = [
   },
   {
     name: 'Harnan Mohamed',
-    avatar:
-      'https://cdn.discordapp.com/avatars/701069618256674926/587a49fcb0c2d43bcec69ab9f07dd50d.webp',
     memberStatus: true,
     accessKey: '1234116678',
     addedBy: 'Aymen Daouadji',
