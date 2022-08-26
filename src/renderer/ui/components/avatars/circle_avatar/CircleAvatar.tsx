@@ -1,8 +1,8 @@
-import { MouseEventHandler, useEffect, useRef, useState } from 'react';
-import multiavatar from '@multiavatar/multiavatar';
+import { MouseEventHandler } from 'react';
 import './style/index.scss';
 import SVG from 'react-inlinesvg';
-import { mavatar } from '@libs/mavatar';
+import { createAvatar } from '@dicebear/avatars';
+import * as style from '@dicebear/avatars-initials-sprites';
 
 interface CircleAvatarProps {
   src?: string;
@@ -20,11 +20,10 @@ function CircleAvatar({
   border,
   onClick,
 }: CircleAvatarProps) {
-  const [avatar, setAvatar] = useState<string>('default');
-  useEffect(() => {
-    if (!alt) return;
-    (async () => setAvatar(await mavatar(alt, 'square')))();
-  }, [alt]);
+  const avatar = createAvatar(style, {
+    seed: alt,
+  });
+
   return (
     <div
       className={`circle-avatar ${onClick ? 'clickable' : ''}`}
