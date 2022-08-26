@@ -22,6 +22,10 @@ class DynamicBaseQuery {
     const user = store?.getState?.()?.user;
     if (!user.selectedClinic || !user.clinic) return undefined;
     const url = user.clinic[user.selectedClinic].serverLocation;
+    const res = await fetch('http://' + url + '/status');
+    if (!res.ok) {
+      return undefined;
+    }
     this.baseUrl = 'http://' + url + '/' + this.resource + '/';
     return this.baseUrl;
   }
@@ -29,6 +33,12 @@ class DynamicBaseQuery {
   reset = () => {
     this.baseUrl = undefined;
   };
+
+  async refresh() {
+    this.reset();
+    await this.getBaseUrl();
+    return this.baseUrl != undefined;
+  }
 
   query: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
     args: string | FetchArgs,
@@ -39,17 +49,25 @@ class DynamicBaseQuery {
     if (!this.baseUrl)
       return {
         error: {
-          status: 404,
-          data: 'No clinic selected',
-          statusText: 'Not Found',
+          status: 503,
+          data: {
+            statusCode: 503,
+            message:
+              'The server is not responding. make sure the server is running',
+            error: 'Service Unavailable',
+          },
+          statusText: 'Service Unavailable',
         },
       };
+
     const rawBaseQuery = fetchBaseQuery({ baseUrl: this.baseUrl });
 
     return rawBaseQuery(args, api, extraOptions);
   };
 }
 export class StaticQueries {
+  static isWorking = true;
+
   static readonly queue = new DynamicBaseQuery('queue');
 
   static readonly appointment = new DynamicBaseQuery('record/appointment');
@@ -66,5 +84,16 @@ export class StaticQueries {
     StaticQueries.medicalHistory.reset();
     StaticQueries.medicalDocument.reset();
     StaticQueries.patient.reset();
+  }
+
+  static async refreshAll() {
+    if (await StaticQueries.queue.refresh()) {
+      StaticQueries.appointment.reset();
+      StaticQueries.medicalHistory.reset();
+      StaticQueries.medicalDocument.reset();
+      StaticQueries.patient.reset();
+      this.isWorking = true;
+      return true;
+    } else return false;
   }
 }
