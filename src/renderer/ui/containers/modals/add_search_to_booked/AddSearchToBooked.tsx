@@ -95,7 +95,7 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
           hintAlignment="center"
           fillContainer
           placeholder="search for a patient"
-          trailing={<Svg>{search}</Svg>}
+          trailing={<TextButton Icon={search} blank />}
           type="search"
           name="searchField"
           control={control}

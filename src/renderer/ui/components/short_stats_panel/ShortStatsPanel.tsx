@@ -3,8 +3,11 @@ import MiniStats from '@components/mini_stats';
 import './style/index.scss';
 import exclamation from 'toSvg/exclamation.svg?icon';
 import colors from '@colors';
+import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 interface ShortStatsPanelProps {}
 export default function ShortStatsPanel({}: ShortStatsPanelProps) {
+  const appointmentsQuery = useGetQueueAppointmentsQuery(1);
+  const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const timeSortList = ['Today', 'Monthly'];
   const miniStatsList = [
     {
@@ -27,7 +30,7 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
     },
     {
       text: 'Queue',
-      value: 18,
+      value: count,
       Icon: exclamation,
     },
   ];

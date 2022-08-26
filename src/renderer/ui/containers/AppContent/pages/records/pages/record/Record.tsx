@@ -10,7 +10,7 @@ import RecordInfoItem from '@components/record_info_item';
 import MedicalHistory from '@components/medical_history';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useForm } from 'react-hook-form';
-import Search from 'toSvg/search.svg?icon';
+import search from 'toSvg/search.svg?icon';
 import './style/index.scss';
 import { Patient, PatientBrief, ServerError } from '@models/instance.model';
 import { useOverlay } from '@libs/overlay/useOverlay';
@@ -26,6 +26,7 @@ import LoadingSpinner from '@components/loading_spinner';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useGetPatientAppointmentsQuery } from '@redux/instance/Appointment/AppointmentApi';
+import TextButton from '@components/buttons/text_button';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -87,7 +88,7 @@ export default function Record({}: RecordProps) {
               : undefined
           }
           placeholder="Enter patient Id"
-          trailing={<Search />}
+          trailing={<TextButton Icon={search} blank />}
           type={'search'}
           name="searchField"
           control={control}
