@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import WarningModal from './WarningModal';
 
-export default function NetworkError({ errorMsg }: { errorMsg: string }) {
+export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
   const dispatch = useDispatch();
   const { state } = useAppSelector((st) => st.connectionState);
 
@@ -20,7 +20,19 @@ export default function NetworkError({ errorMsg }: { errorMsg: string }) {
       })();
   }, [dispatch, state]);
   return (
-    <WarningModal title="Network error" description={errorMsg}>
+    <WarningModal
+      title={
+        state == 'reconnecting' || state == 'connecting'
+          ? 'Trying to connect...'
+          : 'Network error'
+      }
+      description={
+        errorMsg ??
+        (state == 'unreachable'
+          ? 'The server is not responding. make sure the server is running'
+          : '')
+      }
+    >
       {state == 'reconnecting' || state == 'connecting' ? (
         <LoadingSpinner />
       ) : (

@@ -38,7 +38,7 @@ export default function MainLayer({}: MainLayerProps) {
     </Routes>
   ) : (
     <ModalPortal {...STOP_MODAL}>
-      <NetworkError errorMsg="The server is not responding. make sure the server is running" />
+      <NetworkError />
     </ModalPortal>
   );
 }
