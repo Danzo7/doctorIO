@@ -3,28 +3,25 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import LoadingSpinner from '@components/loading_spinner';
 import { StaticQueries } from '@redux/dynamic_queries';
-import userSlice, { disconnect } from '@redux/local/user/userSlice';
-import { useEffect, useState } from 'react';
+import { disconnect, refresh } from '@redux/local/connectionStateSlice';
+import { useAppSelector } from '@store';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import WarningModal from './WarningModal';
 
 export default function NetworkError({ errorMsg }: { errorMsg: string }) {
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const { state } = useAppSelector((st) => st.connectionState);
 
   useEffect(() => {
-    if (isLoading)
+    if (state == 'reconnecting' || state == 'connecting')
       (async () => {
         await StaticQueries.refreshAll();
-        setTimeout(() => {
-          dispatch(userSlice.actions.refresh());
-          setIsLoading(false);
-        }, 1000);
       })();
-  }, [dispatch, isLoading]);
+  }, [dispatch, state]);
   return (
     <WarningModal title="Network error" description={errorMsg}>
-      {isLoading ? (
+      {state == 'reconnecting' || state == 'connecting' ? (
         <LoadingSpinner />
       ) : (
         <>
@@ -32,13 +29,13 @@ export default function NetworkError({ errorMsg }: { errorMsg: string }) {
             text="Retry"
             backgroundColor={color.good_green}
             onPress={() => {
-              setIsLoading(true);
+              dispatch(refresh());
             }}
           />
           <TextButton
             text="Disconnect"
             backgroundColor={color.hot_red}
-            onPress={() => dispatch(disconnect())}
+            onPress={() => disconnect(dispatch)}
           />
         </>
       )}
