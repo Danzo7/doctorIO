@@ -7,10 +7,11 @@ import { PatientBrief, ServerError } from '@models/instance.model';
 import { useLazyFindPatientByName2Query } from '@redux/instance/record/patient_api';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import Search from 'toSvg/search.svg?icon';
+import search from 'toSvg/search.svg?icon';
 import './style/index.scss';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import TextButton from '@components/buttons/text_button';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -59,7 +60,7 @@ export default function RecordSearch({}: RecordSearchProps) {
               : undefined
           }
           placeholder="Enter patient Id"
-          trailing={<Search />}
+          trailing={<TextButton Icon={search} blank />}
           type={'search'}
           hint="You have to select a patient by fullName or Id to access to his medical records"
           control={control}

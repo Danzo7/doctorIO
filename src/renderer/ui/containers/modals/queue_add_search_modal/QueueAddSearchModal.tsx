@@ -108,7 +108,8 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
           }
           fillContainer
           placeholder="search for a patient"
-          trailing={<Svg>{search}</Svg>}
+          //      trailing={<Svg>{search}</Svg>}
+          trailing={<TextButton Icon={search} blank />}
           type="search"
           control={control}
           name="searchField"
