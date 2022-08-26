@@ -7,6 +7,7 @@ import {
   BaseQueryApi,
   BaseQueryFn,
 } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
+import { connected, unreachable } from './local/connectionStateSlice';
 
 class DynamicBaseQuery {
   resource: string;
@@ -17,7 +18,7 @@ class DynamicBaseQuery {
     this.resource = resource;
   }
 
-  private async getBaseUrl() {
+  async loadUrl() {
     const { store } = await import('./store');
     const user = store?.getState?.()?.user;
     if (!user.selectedClinic || !user.clinic) return undefined;
@@ -25,9 +26,11 @@ class DynamicBaseQuery {
     try {
       const res = await fetch('http://' + url + '/status');
       if (!res.ok) {
+        store.dispatch(unreachable());
         return undefined;
-      }
+      } else store.dispatch(connected());
     } catch (e) {
+      store.dispatch(unreachable());
       return undefined;
     }
 
@@ -39,18 +42,11 @@ class DynamicBaseQuery {
     this.baseUrl = undefined;
   };
 
-  async refresh() {
-    this.reset();
-    await this.getBaseUrl();
-    return this.baseUrl != undefined;
-  }
-
   query: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
     args: string | FetchArgs,
     api: BaseQueryApi,
     extraOptions: any,
   ) => {
-    if (!this.baseUrl) await this.getBaseUrl();
     if (!this.baseUrl)
       return {
         error: {
@@ -71,8 +67,6 @@ class DynamicBaseQuery {
   };
 }
 export class StaticQueries {
-  static isWorking = true;
-
   static readonly queue = new DynamicBaseQuery('queue');
 
   static readonly appointment = new DynamicBaseQuery('record/appointment');
@@ -83,6 +77,15 @@ export class StaticQueries {
 
   static readonly patient = new DynamicBaseQuery('record/patient');
 
+  static async initAll() {
+    if (await this.queue.loadUrl()) {
+      await this.appointment.loadUrl();
+      await this.medicalHistory.loadUrl();
+      await this.medicalDocument.loadUrl();
+      await this.patient.loadUrl();
+    }
+  }
+
   static resetAll() {
     StaticQueries.queue.reset();
     StaticQueries.appointment.reset();
@@ -92,12 +95,11 @@ export class StaticQueries {
   }
 
   static async refreshAll() {
-    if (await StaticQueries.queue.refresh()) {
-      StaticQueries.appointment.reset();
-      StaticQueries.medicalHistory.reset();
-      StaticQueries.medicalDocument.reset();
-      StaticQueries.patient.reset();
-      this.isWorking = true;
+    if (await this.queue.loadUrl()) {
+      this.appointment.loadUrl();
+      this.medicalHistory.loadUrl();
+      this.medicalDocument.loadUrl();
+      this.patient.loadUrl();
       return true;
     } else return false;
   }
