@@ -22,10 +22,15 @@ class DynamicBaseQuery {
     const user = store?.getState?.()?.user;
     if (!user.selectedClinic || !user.clinic) return undefined;
     const url = user.clinic[user.selectedClinic].serverLocation;
-    const res = await fetch('http://' + url + '/status');
-    if (!res.ok) {
+    try {
+      const res = await fetch('http://' + url + '/status');
+      if (!res.ok) {
+        return undefined;
+      }
+    } catch (e) {
       return undefined;
     }
+
     this.baseUrl = 'http://' + url + '/' + this.resource + '/';
     return this.baseUrl;
   }
