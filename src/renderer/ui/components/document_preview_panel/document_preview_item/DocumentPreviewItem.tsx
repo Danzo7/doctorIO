@@ -31,8 +31,8 @@ const DeleteDocumentModal = ({
 
   return (
     <WarningModal
-      warningTitle={`You are about to delete ${fileName} ? `}
-      warningDescription="the file will no longer be available after this action "
+      title={`You are about to delete ${fileName} ? `}
+      description="the file will no longer be available after this action "
     >
       <TextButton
         text={`${isLoading ? 'Deleting...' : 'Delete'}`}
@@ -69,8 +69,8 @@ export default function DocumentPreviewItem({
     consumedError.current = true;
     open(
       <WarningModal
-        warningTitle={`${downError.error} (${downError.statusCode})`}
-        warningDescription={downError?.message as string}
+        title={`${downError.error} (${downError.statusCode})`}
+        description={downError?.message as string}
       />,
       {
         ...DEFAULT_MODAL,
@@ -91,8 +91,8 @@ export default function DocumentPreviewItem({
           if (statusRef.current == 'LOST') {
             open(
               <WarningModal
-                warningTitle="Document Lost"
-                warningDescription="This document is lost. Please contact the administrator."
+                title="Document Lost"
+                description="This document is lost. Please contact the administrator."
               />,
               {
                 ...DEFAULT_MODAL,

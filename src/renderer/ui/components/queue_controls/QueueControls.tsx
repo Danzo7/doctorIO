@@ -46,8 +46,8 @@ export default function QueueControls({}: QueueControlsProps) {
               onPress={() => {
                 open(
                   <WarningModal
-                    warningTitle="You are going to resume the Queue"
-                    warningDescription="Allowed members will be able to add to the Queue again"
+                    title="You are going to resume the Queue"
+                    description="Allowed members will be able to add to the Queue again"
                   >
                     <TextButton
                       text="Resume"
@@ -91,8 +91,8 @@ export default function QueueControls({}: QueueControlsProps) {
                 onPress={() => {
                   open(
                     <WarningModal
-                      warningTitle="Are you sure you want to pause?"
-                      warningDescription="By pausing the queue no more patient will be accepted"
+                      title="Are you sure you want to pause?"
+                      description="By pausing the queue no more patient will be accepted"
                     >
                       <TextButton
                         text="Confirm"
