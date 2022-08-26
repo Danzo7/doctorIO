@@ -24,7 +24,12 @@ export default function LastDmMessage({
         ` last-dm-message${isActive ? ' selected' : ''}`
       }
     >
-      <UserProfileStatus imgSrc={avatar} status={status} width={35} />
+      <UserProfileStatus
+        imgSrc={avatar}
+        status={status}
+        width={35}
+        alt={dmName + id} //TODO: dm_name should be memberName+memberId in clinic and userName+userId in public
+      />
       <div className="info-container">
         <span>{dmName}</span>
         <span>{`${lastMessage?.sent && 'you:'} ${lastMessage.text}`}</span>

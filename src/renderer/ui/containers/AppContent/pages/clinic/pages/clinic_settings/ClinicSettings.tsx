@@ -32,8 +32,8 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
           onPress={() => {
             open(
               <WarningModal
-                warningTitle="are you sure you want to disconnect ?"
-                warningDescription="you will be disconnected from the clinic after confirming"
+                title="are you sure you want to disconnect ?"
+                description="you will be disconnected from the clinic after confirming"
               >
                 <TextButton
                   text="Confirm"

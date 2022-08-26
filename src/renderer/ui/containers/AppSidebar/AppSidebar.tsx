@@ -20,7 +20,10 @@ function AppSidebar({}: AppSidebarProps) {
             {state != 'exited' && (
               <div className="sidebar">
                 <div className={`content ${state}`}>
-                  <SearchProfile avatar={currentMember.avatar} />
+                  <SearchProfile
+                    avatar={currentMember.avatar}
+                    alt={currentMember.name + currentMember.memberId}
+                  />
                   <AppointmentQueueSmall></AppointmentQueueSmall>
                   <BookedList />
                 </div>

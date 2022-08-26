@@ -88,8 +88,8 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
     </ModalContainer>
   ) : (
     <WarningModal
-      warningTitle="The queue is empty for now "
-      warningDescription="You need to add patient to queue"
+      title="The queue is empty for now "
+      description="You need to add patient to queue"
     >
       <TextButton
         text="Close"

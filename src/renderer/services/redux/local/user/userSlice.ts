@@ -32,12 +32,21 @@ const userSlice = createSlice({
       state.selectedClinic = firstUser.selectedClinic;
       state.userPreferences = firstUser.userPreferences;
     },
+    disconnect: (state: Partial<User>) => {
+      state.selectedClinic = undefined;
+    },
+    refresh: () => {},
+    connect: (state: Partial<User>) => {
+      //TODO implement connect
+      state.selectedClinic = 1;
+    },
     resetWelcomeDismissedIn: (state: Partial<User>) => {
       if (state.userPreferences)
         state.userPreferences.welcomeDismissedIn = new Date().toISOString();
     },
   },
 });
-export const { setUser, resetWelcomeDismissedIn } = userSlice.actions;
+export const { setUser, resetWelcomeDismissedIn, disconnect } =
+  userSlice.actions;
 
 export default userSlice;

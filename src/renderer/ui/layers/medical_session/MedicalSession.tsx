@@ -126,8 +126,8 @@ export default function MedicalSession({}: MedicalSessionProps) {
   ) : (
     <ModalPortal onClose={() => navigate('/')} {...DEFAULT_MODAL}>
       <WarningModal
-        warningTitle="Error"
-        warningDescription={
+        title="Error"
+        description={
           queueState?.state !== 'IN_PROGRESS'
             ? 'No queue item is selected'
             : 'Something went wrong'

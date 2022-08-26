@@ -5,6 +5,7 @@ import {
 } from './OverlayContainer';
 import type { OverlayOptions } from './OverlayContainer';
 import { Overlay } from './overlay';
+import { color } from '@assets/styles/color';
 export {
   OverlayContainer,
   OverlayItem,
@@ -18,6 +19,12 @@ export const DEFAULT_MODAL: OverlayOptions = {
   isDimmed: true,
   clickThrough: false,
   closeBtn: 'inner',
+};
+export const STOP_MODAL: OverlayOptions = {
+  width: '30%',
+  clickThrough: false,
+  backdropColor: color.good_black,
+  isDimmed: true,
 };
 export const FIT_MODAL: OverlayOptions = {
   closeOnClickOutside: true,

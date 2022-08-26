@@ -32,8 +32,8 @@ function ContactItem({
           ? () => {
               open(
                 <WarningModal
-                  warningDescription="This is the first time you are messaging this user. You have to wait for them to accept your request."
-                  warningTitle="Start a conversasion"
+                  description="This is the first time you are messaging this user. You have to wait for them to accept your request."
+                  title="Start a conversasion"
                 >
                   <TextButton
                     text="Send a request"
@@ -49,7 +49,11 @@ function ContactItem({
       }
     >
       <div className="info-container">
-        <UserProfileStatus status={status} imgSrc={avatar} />
+        <UserProfileStatus
+          status={status}
+          imgSrc={avatar}
+          alt={fullName + memberId}
+        />
         <span>{fullName}</span>
       </div>
       <div className="avatars-container">

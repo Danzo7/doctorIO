@@ -12,8 +12,8 @@ const Template: Story<ComponentProps<typeof WarningModal>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  warningTitle: '(warningTitle)',
-  warningDescription: '(warningDescription)',
+  title: '(warningTitle)',
+  description: '(warningDescription)',
   children: (
     <>
       <TextButton text="Confirm" backgroundColor={color.hot_red} width="100%" />

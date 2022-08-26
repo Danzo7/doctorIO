@@ -58,8 +58,8 @@ export default function MemberActionControls({
             if (notFriend)
               open(
                 <WarningModal
-                  warningDescription="This is the first time you are messaging this user. You have to wait for them to accept your request."
-                  warningTitle="Start a conversasion"
+                  description="This is the first time you are messaging this user. You have to wait for them to accept your request."
+                  title="Start a conversasion"
                 >
                   <TextButton
                     text="Send a request"

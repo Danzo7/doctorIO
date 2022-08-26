@@ -2,22 +2,22 @@ import ModalContainer from '@components/modal_container';
 import { ReactNode } from 'react';
 import './style/index.scss';
 interface WarningModalProps {
-  warningTitle: string;
-  warningDescription: string;
+  title: string;
+  description: string;
   children?: ReactNode;
 }
 export default function WarningModal({
-  warningTitle,
-  warningDescription,
+  title,
+  description,
   children,
 }: WarningModalProps) {
   return (
     <ModalContainer
       gap={10}
-      title={warningTitle}
+      title={title}
       controls={<div className="warning-controls">{children}</div>}
     >
-      <span className="warning-description">{warningDescription}</span>
+      <span className="warning-description">{description}</span>
     </ModalContainer>
   );
 }

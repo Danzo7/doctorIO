@@ -7,13 +7,14 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 interface SearchProfileProps {
   avatar?: string;
+  alt: string;
 }
-export default function SearchProfile({ avatar }: SearchProfileProps) {
+export default function SearchProfile({ avatar, alt }: SearchProfileProps) {
   const { open } = useOverlay();
   //REFACTOR:remove imgSrc
   return (
     <div className="search-profile">
-      <UserProfileStatus width={40} status={true} imgSrc={avatar} />
+      <UserProfileStatus width={40} status={true} imgSrc={avatar} alt={alt} />
       <div>
         <IconicButton
           Icon={Search}
