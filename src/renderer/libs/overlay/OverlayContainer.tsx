@@ -116,7 +116,7 @@ export function OverlayItem({
   popperTarget,
   closeOnClickOutside,
   closeOnBlur,
-  autoFocus,
+  autoFocus = true,
   closeMethod,
   position,
   transition = 'zoom',

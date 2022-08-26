@@ -93,6 +93,7 @@ export default function usePrompt(
       clickThrough: true,
       position: { bottom: '2vh' },
       transition: 'appear-bottom',
+      autoFocus: false,
     },
     forceShow && when,
   );
