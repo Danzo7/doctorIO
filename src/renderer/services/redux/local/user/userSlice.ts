@@ -1,5 +1,6 @@
 import { firstUser } from '@api/fake';
 import { User } from '@models/local.models';
+import { store } from '@redux/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: Partial<User> = {
@@ -32,21 +33,21 @@ const userSlice = createSlice({
       state.selectedClinic = firstUser.selectedClinic;
       state.userPreferences = firstUser.userPreferences;
     },
-    disconnect: (state: Partial<User>) => {
-      state.selectedClinic = undefined;
+    //TODO use another slice for connection status
+    setSelectedServer: (
+      state: Partial<User>,
+      action: PayloadAction<number | undefined>,
+    ) => {
+      state.selectedClinic = action.payload;
     },
-    refresh: () => {},
-    connect: (state: Partial<User>) => {
-      //TODO implement connect
-      state.selectedClinic = 1;
-    },
+
     resetWelcomeDismissedIn: (state: Partial<User>) => {
       if (state.userPreferences)
         state.userPreferences.welcomeDismissedIn = new Date().toISOString();
     },
   },
 });
-export const { setUser, resetWelcomeDismissedIn, disconnect } =
+export const { setUser, resetWelcomeDismissedIn, setSelectedServer } =
   userSlice.actions;
 
 export default userSlice;
