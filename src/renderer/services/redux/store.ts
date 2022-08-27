@@ -1,4 +1,9 @@
-import { configureStore, Middleware } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  combineReducers,
+  configureStore,
+  Middleware,
+} from '@reduxjs/toolkit';
 import AppointmentQueueApi from './instance/appointmentQueue/AppointmentQueueApi';
 import patientApi from './instance/record/patient_api';
 import sessionSlice from './local/session/sessionSlice';
@@ -20,19 +25,37 @@ const persistConfig = {
 };
 
 const persistedUser = persistReducer(persistConfig, userSlice.reducer);
+const appReducer = combineReducers({
+  [settingsSlice.name]: settingsSlice.reducer,
+  [sessionSlice.name]: sessionSlice.reducer,
+  [connectionStateSlice.name]: connectionStateSlice.reducer,
+  [userSlice.name]: persistedUser,
+  [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
+  [patientApi.reducerPath]: patientApi.reducer,
+  [medicalDocumentApi.reducerPath]: medicalDocumentApi.reducer,
+  [medicalHistoryApi.reducerPath]: medicalHistoryApi.reducer,
+  [appointmentApi.reducerPath]: appointmentApi.reducer,
+  /* your app’s top-level reducers */
+});
 
+const rootReducer = (
+  state: ReturnType<typeof appReducer> | undefined,
+  action: AnyAction,
+) => {
+  if (action.type === 'RESET' && state) {
+    const myState = Object.fromEntries(
+      Object.entries(state).map(([key, value]) => [
+        key,
+        key == 'user' ? value : undefined,
+      ]),
+    ) as ReturnType<typeof appReducer>;
+
+    return appReducer(myState, { type: undefined });
+  }
+  return appReducer(state, action);
+};
 export const store = configureStore({
-  reducer: {
-    [settingsSlice.name]: settingsSlice.reducer,
-    [sessionSlice.name]: sessionSlice.reducer,
-    [connectionStateSlice.name]: connectionStateSlice.reducer,
-    [userSlice.name]: persistedUser,
-    [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
-    [patientApi.reducerPath]: patientApi.reducer,
-    [medicalDocumentApi.reducerPath]: medicalDocumentApi.reducer,
-    [medicalHistoryApi.reducerPath]: medicalHistoryApi.reducer,
-    [appointmentApi.reducerPath]: appointmentApi.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware): Middleware[] =>
     getDefaultMiddleware({
       serializableCheck: false,
