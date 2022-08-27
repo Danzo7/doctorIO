@@ -47,7 +47,7 @@ class DynamicBaseQuery {
     api: BaseQueryApi,
     extraOptions: any,
   ) => {
-    if (!this.baseUrl)
+    if (this.baseUrl == undefined)
       return {
         error: {
           status: 503,
@@ -79,10 +79,10 @@ export class StaticQueries {
 
   static async initAll() {
     if (await this.queue.loadUrl()) {
-      await this.appointment.loadUrl();
-      await this.medicalHistory.loadUrl();
-      await this.medicalDocument.loadUrl();
-      await this.patient.loadUrl();
+      this.patient.loadUrl();
+      this.appointment.loadUrl();
+      this.medicalHistory.loadUrl();
+      this.medicalDocument.loadUrl();
     }
   }
 
