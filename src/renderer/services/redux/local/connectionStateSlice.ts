@@ -38,15 +38,13 @@ const connectionStateSlice = createSlice({
 });
 
 export const disconnect = (dispatch: Dispatch) => {
-  Promise.resolve(dispatch(connectionStateSlice.actions.disconnect())).then(
-    () => {
-      dispatch(setSelectedServer(0));
-    },
-  );
+  Promise.resolve(dispatch(setSelectedServer(0))).then(() => {
+    dispatch(connectionStateSlice.actions.disconnect());
+  });
 };
 export const connect = (dispatch: Dispatch) => {
-  Promise.resolve(dispatch(connectionStateSlice.actions.connect())).then(() => {
-    dispatch(setSelectedServer(1));
+  Promise.resolve(dispatch(setSelectedServer(1))).then(() => {
+    dispatch(connectionStateSlice.actions.connect());
   });
 };
 
