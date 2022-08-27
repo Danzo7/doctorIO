@@ -16,9 +16,9 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
   useEffect(() => {
     if (state == 'reconnecting' || state == 'connecting')
       (async () => {
-        await StaticQueries.refreshAll();
+        await StaticQueries.initAll();
       })();
-  }, [dispatch, state]);
+  }, [state]);
   return (
     <WarningModal
       title={
@@ -34,7 +34,9 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
       }
     >
       {state == 'reconnecting' || state == 'connecting' ? (
-        <LoadingSpinner />
+        <div css={{ flexGrow: 1 }}>
+          <LoadingSpinner />
+        </div>
       ) : (
         <>
           <TextButton

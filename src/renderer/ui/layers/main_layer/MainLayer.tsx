@@ -15,10 +15,11 @@ interface MainLayerProps {}
 export default function MainLayer({}: MainLayerProps) {
   const { state } = useAppSelector((st) => st.connectionState); //check if url is alive
   useEffect(() => {
-    (async () => {
-      await StaticQueries.initAll();
-    })();
-  }, []);
+    if (!state)
+      (async () => {
+        await StaticQueries.initAll();
+      })();
+  }, [state]);
 
   return state == undefined ? (
     <LoadingSpinner />
