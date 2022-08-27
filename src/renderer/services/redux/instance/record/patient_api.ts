@@ -3,7 +3,7 @@ import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 const patientApi = createApi({
-  reducerPath: 'recordApi',
+  reducerPath: 'patientApi',
   baseQuery: StaticQueries.patient.query,
   tagTypes: ['patient', 'MedicalHistory', 'MedicalDocument'],
   endpoints: (builder) => ({
