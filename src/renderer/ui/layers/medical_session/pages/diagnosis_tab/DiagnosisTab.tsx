@@ -10,7 +10,7 @@ import './style/index.scss';
 type Data = {
   diagnosis: string;
 };
-export default function NoticeTab() {
+export default function DiagnosisTab() {
   const diagnosis = useAppSelector(
     (state) => state.session.sessionInfo.diagnosis,
   );

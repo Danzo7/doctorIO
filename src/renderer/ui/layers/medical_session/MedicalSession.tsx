@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PatientSmallCard from './components/patient_small_card';
 import MedicalSessionSideBar from './medical_session_side_bar';
-import NoticeTab from './pages/notice_tab';
+import DiagnosisTab from './pages/diagnosis_tab';
 import PrescriptionTab from './pages/prescription_tab';
 import SessionParameter from './pages/session_parameter';
 import './style/index.scss';
@@ -86,7 +86,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
             />
             <TabMenu items={['prescription', 'notice']}>
               <PrescriptionTab />
-              <NoticeTab />
+              <DiagnosisTab />
             </TabMenu>
             <BorderSeparator direction="horizontal" />
             <SessionParameter />
