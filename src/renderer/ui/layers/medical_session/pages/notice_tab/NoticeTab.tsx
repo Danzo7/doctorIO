@@ -3,6 +3,7 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import { updateNotice } from '@redux/local/session/sessionSlice';
 import { useAppDispatch, useAppSelector } from '@store';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';
 
@@ -18,7 +19,7 @@ export default function NoticeTab() {
     mode: 'onChange',
     defaultValues: { diagnosis: diagnosis },
   });
-
+  const [isSaved, setIsSaved] = useState(false);
   return (
     <div className="notice-tab">
       <Input
@@ -29,11 +30,12 @@ export default function NoticeTab() {
       />
       <div className="save-btn-wrapper">
         <TextButton
-          text="Save"
-          backgroundColor={color.secondary_color}
+          text={isSaved ? 'Saved' : 'Save'}
+          backgroundColor={isSaved ? color.good_green : color.secondary_color}
           fontSize={14}
           onPress={() => {
             dispatch(updateNotice(getValues('diagnosis')));
+            setIsSaved(true);
           }}
         />
       </div>
