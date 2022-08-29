@@ -16,23 +16,5 @@ FirstStory.args = {
   buttonNode: (
     <DarkLightCornerButton text="Add" isActive={true} onPress={() => {}} />
   ),
-  children: (
-    <>
-      <AppointmentHistoryItem
-        date={new Date('2022-05-01')}
-        subject="sick from the nose"
-        id={1}
-      />
-      <AppointmentHistoryItem
-        date={new Date('2022-05-02')}
-        subject="sick from the nose"
-        id={2}
-      />
-      <AppointmentHistoryItem
-        date={new Date('2022-05-03')}
-        subject="sick from the nose"
-        id={3}
-      />
-    </>
-  ),
+  children: <></>,
 };
