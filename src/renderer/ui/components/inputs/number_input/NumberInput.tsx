@@ -32,7 +32,7 @@ export default forwardRef(function NumberInput(
   }: NumberInputProps,
   ref: any,
 ) {
-  const { onChange, value, ...others } = field;
+  const { onChange, value, onBlur, ...others } = field;
   const checkValue = (v: string, external?: boolean) => {
     if (
       Number(v) <= (rules?.max ?? Infinity) &&
@@ -43,7 +43,7 @@ export default forwardRef(function NumberInput(
     else if (rules.min && Number(v) < rules.min) return rules.min.toString();
   };
   const setValue = (vs: string, external?: boolean) =>
-    onChange?.(Number(checkValue(vs, external)));
+    onChange(checkValue(vs, external));
 
   const increase = () => {
     setValue(
@@ -57,6 +57,14 @@ export default forwardRef(function NumberInput(
       (Number(value) - step).toFixed(
         step.toString().split('.')[1]?.length ?? 0,
       ),
+    );
+  };
+  const parseValue = (v: string) => {
+    const parsed = Number.parseFloat(v);
+    setValue(
+      isNaN(parsed)
+        ? '0'
+        : parsed.toFixed(step.toString().split('.')[1]?.length ?? 0),
     );
   };
   return (
@@ -100,6 +108,10 @@ export default forwardRef(function NumberInput(
           if (direction > 0) decrease();
           else increase();
           e.stopPropagation();
+        }}
+        onBlur={() => {
+          parseValue(value);
+          onBlur();
         }}
         onChange={(event) => {
           let v = event.target.value;
