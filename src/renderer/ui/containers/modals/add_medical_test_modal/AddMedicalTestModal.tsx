@@ -41,6 +41,7 @@ export default function AddMedicalTestModal({
     resolver: zodResolver(schema),
     defaultValues: {
       bloodType: 'A',
+      BloodPressure: 0,
       RH: false,
     },
   });
@@ -79,9 +80,10 @@ export default function AddMedicalTestModal({
         <Input type="number" label="Weight" name="weight" />
         <Input type="number" label="Height" name="height" />
         <Input
-          type={{ type: 'numeric' }}
+          type={{ type: 'numeric', unit: '' }}
           label="Blood pressure"
           name="BloodPressure"
+          //FIXME min value on input type=numeric not working (shows NAN) 
         />
         <Input
           type={{
