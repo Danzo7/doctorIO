@@ -10,21 +10,21 @@ export const firstUser: User = {
       clinicId: 2,
       name: 'clinic',
       serverLocation: '127.0.0.1:1004',
-      accessKey: '123',
+
       memberId: 2,
     },
     {
       clinicId: 1,
       name: 'graze',
       serverLocation: 'localhost:3000',
-      accessKey: 'bb4da',
+
       memberId: 1,
     },
     {
       clinicId: 1,
       name: 'graze',
       serverLocation: '127.0.0.1:1004',
-      accessKey: 'bb4da',
+
       memberId: 1,
     },
   ],
@@ -44,7 +44,7 @@ export const firstUser: User = {
     welcomeDismissedIn: new Date('2020-01-01').toISOString(),
   },
 };
-
+export const fakeInvKey = '2tsv1rwv0rHiH';
 export const roles: Role[] = [
   {
     roleId: 1,
