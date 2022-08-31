@@ -17,19 +17,29 @@ import { rtkQueryErrorLogger } from './middlewares/error.middleware';
 import { firstUser } from '@api/fake';
 import settingsSlice from './local/settings/settingsSlice';
 import connectionStateSlice from './local/connectionStateSlice';
+import authSlice from './local/auth/authSlice';
+import authApi from './local/auth/authApi';
 
-const persistConfig = {
-  key: 'root',
+const persistUserConfig = {
+  key: 'user',
   storage,
   whitelist: [...Object.keys(firstUser)],
 };
+const persistAuthConfig = {
+  key: 'auth',
+  storage,
+  whitelist: [authSlice.name],
+};
 
-const persistedUser = persistReducer(persistConfig, userSlice.reducer);
+const persistedUser = persistReducer(persistUserConfig, userSlice.reducer);
+const persistedAuth = persistReducer(persistAuthConfig, authSlice.reducer);
 const appReducer = combineReducers({
+  [authSlice.name]: persistedAuth,
   [settingsSlice.name]: settingsSlice.reducer,
   [sessionSlice.name]: sessionSlice.reducer,
   [connectionStateSlice.name]: connectionStateSlice.reducer,
   [userSlice.name]: persistedUser,
+  [authApi.reducerPath]: authApi.reducer,
   [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
   [patientApi.reducerPath]: patientApi.reducer,
   [medicalDocumentApi.reducerPath]: medicalDocumentApi.reducer,
@@ -46,7 +56,7 @@ const rootReducer = (
     const myState = Object.fromEntries(
       Object.entries(state).map(([key, value]) => [
         key,
-        key == 'user' ? value : undefined,
+        key == 'user' || key == 'authSlice' ? value : undefined,
       ]),
     ) as ReturnType<typeof appReducer>;
 
@@ -65,6 +75,7 @@ export const store = configureStore({
       medicalDocumentApi.middleware,
       medicalHistoryApi.middleware,
       appointmentApi.middleware,
+      authApi.middleware,
       rtkQueryErrorLogger,
     ),
 });
