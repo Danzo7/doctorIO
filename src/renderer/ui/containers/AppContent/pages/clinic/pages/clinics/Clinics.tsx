@@ -7,6 +7,7 @@ import useNavigation from '@libs/hooks/useNavigation';
 import { FIT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { connect } from '@redux/local/connectionStateSlice';
+import { useAppSelector } from '@store';
 import { useDispatch } from 'react-redux';
 import './style/index.scss';
 
@@ -14,26 +15,28 @@ export default function Clinics() {
   const { toParent } = useNavigation();
   const { open } = useOverlay();
   const dispatch = useDispatch();
+  const userInfo = useAppSelector((state) => state.user);
   return (
     <div className="clinics">
       <span>Clinics</span>
       <div className="servers-container">
-        {firstUser.clinic.map((clinicInfo, index) => (
-          <ClinicItem
-            selected={firstUser.selectedClinic == index}
-            key={clinicInfo.clinicId.toString() + index}
-            //just for testing
-            isHost={index == 2} //FEATURE check if clinic is localhost
-            clinicInfo={clinicInfo}
-            onClick={() => {
-              if (firstUser.selectedClinic === index) toParent();
-              else {
-                connect(dispatch);
-                toParent();
-              }
-            }}
-          />
-        ))}
+        {userInfo.clinic &&
+          userInfo.clinic.map((clinicInfo, index) => (
+            <ClinicItem
+              selected={firstUser.selectedClinic == index}
+              key={clinicInfo.clinicId.toString() + index}
+              //just for testing
+              isHost={index == 2} //FEATURE check if clinic is localhost
+              clinicInfo={clinicInfo}
+              onClick={() => {
+                if (firstUser.selectedClinic === index) toParent();
+                else {
+                  connect(dispatch);
+                  toParent();
+                }
+              }}
+            />
+          ))}
         <div className="join-button-container">
           <TextButton
             text="Join  a new server..."
