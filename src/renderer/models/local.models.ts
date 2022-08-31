@@ -51,7 +51,6 @@ interface LocalClinicData {
   clinicId: number;
   name: string;
   serverLocation: string;
-  accessKey: string;
   memberId: number;
   memberCount?: number;
   patientCount?: number;
