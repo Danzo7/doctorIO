@@ -10285,6 +10285,11 @@ jest@^28.0.3:
     import-local "^3.0.2"
     jest-cli "^28.0.3"
 
+js-cipher@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/js-cipher/-/js-cipher-1.0.5.tgz#010b8ba42e8e48f00b2c65361e665fb5272933b6"
+  integrity sha512-Zffnnlt83OamqcaGcZz4yuot2iM3S1zuxx1g3nbse3d1sJ6GGKL40mjRYAQStAgf6YfRqxABj8HDzHnM/WI8Sw==
+
 js-string-escape@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/js-string-escape/-/js-string-escape-1.0.1.tgz#e2625badbc0d67c7533e9edc1068c587ae4137ef"
