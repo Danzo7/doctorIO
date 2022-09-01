@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { parseInviteKey } from '@helpers/crypto/parse';
+import { authType } from '@models/auth.type';
+import { authQuery } from '@redux/dynamic_queries';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { disconnect } from '../connectionStateSlice';
+import { addNewClinic } from '../user/userSlice';
 
 const authApi = createApi({
   reducerPath: 'authApi',
@@ -73,4 +78,9 @@ const authApi = createApi({
   }),
 });
 export default authApi;
-export const { useRegisterMutation, useConnectMemberMutation } = authApi;
+export const {
+  useRegisterMutation,
+  useConnectMemberMutation,
+  useDisconnectMemberMutation,
+  useGetHelloMutation,
+} = authApi;
