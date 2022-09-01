@@ -42,8 +42,8 @@ export const disconnect = (dispatch: Dispatch) => {
     dispatch(connectionStateSlice.actions.disconnect());
   });
 };
-export const connect = (dispatch: Dispatch) => {
-  Promise.resolve(dispatch(setSelectedServer(1))).then(() => {
+export const connect = (dispatch: Dispatch, selectedIndex: number) => {
+  Promise.resolve(dispatch(setSelectedServer(selectedIndex))).then(() => {
     dispatch(connectionStateSlice.actions.connect());
   });
 };
