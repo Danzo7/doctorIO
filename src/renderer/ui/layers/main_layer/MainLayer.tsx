@@ -17,6 +17,7 @@ export default function MainLayer({}: MainLayerProps) {
   useEffect(() => {
     if (!state)
       (async () => {
+        console.log('checking url');
         await StaticQueries.initAll();
       })();
   }, [state]);

@@ -9,7 +9,7 @@ interface StartupLayerProps {}
 export default function StartupLayer({}: StartupLayerProps) {
   const user = useAppSelector((state) => state.user);
   return user.userId ? (
-    user?.selectedClinic ? (
+    user?.selectedClinic != undefined ? (
       <Suspense fallback={<LoadingSpinner />}>
         <MainLayer />
       </Suspense>
