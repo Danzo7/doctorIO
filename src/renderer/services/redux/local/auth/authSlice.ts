@@ -1,13 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import authApi from './authApi';
 
-const initialState: {
+const initialState: Partial<{
   accessToken: string | undefined;
   refreshToken: string | undefined;
-} = {
-  accessToken: undefined,
-  refreshToken: undefined,
-};
+}> = {};
 
 const authSlice = createSlice({
   name: 'authSlice',

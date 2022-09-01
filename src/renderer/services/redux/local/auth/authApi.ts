@@ -49,12 +49,6 @@ const authApi = createApi({
                 .location,
             }),
           );
-          dispatch(
-            setTokens({
-              accessToken: data.access_token,
-              refreshToken: data.refresh_token,
-            }),
-          );
         } catch (e) {
           console.log(e);
         }
