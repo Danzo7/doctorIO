@@ -22,7 +22,8 @@ class DynamicBaseQuery {
   async loadUrl() {
     const { store } = await import('./store');
     const user = store?.getState?.()?.user;
-    if (!user.selectedClinic || !user.clinic) return undefined;
+    if (user.selectedClinic == undefined || user.clinic.length == 0)
+      return undefined;
     const url = user.clinic[user.selectedClinic].serverLocation;
     try {
       const res = await fetch('http://' + url + '/status');
@@ -39,18 +40,19 @@ class DynamicBaseQuery {
     return this.baseUrl;
   }
 
-  async setUrl(url: string) {
-    const { store } = await import('./store');
+  discardUrl() {
+    this.baseUrl = undefined;
+    return true;
+  }
 
+  async setUrl(url: string) {
     try {
       const res = await fetch('http://' + url + '/status');
       if (!res.ok) {
-        store.dispatch(unreachable());
-        return undefined;
-      } else store.dispatch(connected());
+        return await Promise.reject('Not ok');
+      }
     } catch (e) {
-      store.dispatch(unreachable());
-      return undefined;
+      return await Promise.reject('Not ok');
     }
 
     this.baseUrl = 'http://' + url + '/' + this.resource + '/';

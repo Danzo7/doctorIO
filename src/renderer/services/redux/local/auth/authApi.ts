@@ -46,6 +46,7 @@ const authApi = createApi({
             }),
           );
           dispatch({ type: 'RESET' });
+          authQuery.discardUrl();
         } catch (e) {
           console.log(e);
         }
