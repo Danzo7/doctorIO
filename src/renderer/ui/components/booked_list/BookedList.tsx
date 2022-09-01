@@ -6,7 +6,7 @@ import useNavigation from '@libs/hooks/useNavigation';
 import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/AppointmentApi';
 
 export default function BookedList({}) {
-  const { data, isSuccess } = useGetBookedAppointmentQuery(null);
+  const { data, isSuccess } = useGetBookedAppointmentQuery();
   const { navigate } = useNavigation();
 
   return (

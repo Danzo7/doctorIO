@@ -7,7 +7,7 @@ import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/Appoin
 import BookedAppointmentItem from './booked_appointment_item';
 
 export default function BookedAppointmentPanel({}) {
-  const { data, isSuccess } = useGetBookedAppointmentQuery(null);
+  const { data, isSuccess } = useGetBookedAppointmentQuery();
   const { open } = useOverlay();
   return (
     <PreviewList
