@@ -14,7 +14,7 @@ import medicalDocumentApi from './instance/record/medical_document_api';
 import medicalHistoryApi from './instance/record/medical_history_api';
 import appointmentApi from './instance/Appointment/AppointmentApi';
 import { rtkQueryErrorLogger } from './middlewares/error.middleware';
-import { firstUser } from '@api/fake';
+import { template } from '@api/fake';
 import settingsSlice from './local/settings/settingsSlice';
 import connectionStateSlice from './local/connectionStateSlice';
 import authSlice from './local/auth/authSlice';
@@ -23,7 +23,7 @@ import authApi from './local/auth/authApi';
 const persistUserConfig = {
   key: 'user',
   storage,
-  whitelist: [...Object.keys(firstUser)],
+  //  whitelist: [...Object.keys(template)],
 };
 const persistAuthConfig = {
   key: 'auth',
@@ -56,7 +56,9 @@ const rootReducer = (
     const myState = Object.fromEntries(
       Object.entries(state).map(([key, value]) => [
         key,
-        key == 'user' || key == 'authSlice' ? value : undefined,
+        key == 'user' || key == 'authSlice' || key == authApi.reducerPath
+          ? value
+          : undefined,
       ]),
     ) as ReturnType<typeof appReducer>;
 
