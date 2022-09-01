@@ -85,11 +85,14 @@ class DynamicBaseQuery {
       baseUrl: this.baseUrl,
       prepareHeaders: async (headers, aps) => {
         const { store } = await import('./store');
-        headers.append(
-          'Authorization',
-          'Bearer ' +
-            (aps as unknown as typeof store).getState().authSlice.accessToken,
-        );
+        const tokens = (aps as unknown as typeof store).getState().authSlice;
+        if (tokens.accessToken && tokens.refreshToken)
+          headers.append(
+            'Authorization',
+            'Bearer ' + extraOptions?.useRefresh
+              ? tokens.refreshToken
+              : tokens.accessToken,
+          );
         return headers;
       },
     });
