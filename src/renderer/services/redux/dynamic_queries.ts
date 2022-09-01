@@ -61,7 +61,17 @@ class DynamicBaseQuery {
         },
       };
 
-    const rawBaseQuery = fetchBaseQuery({ baseUrl: this.baseUrl });
+    const rawBaseQuery = fetchBaseQuery({
+      baseUrl: this.baseUrl,
+      prepareHeaders: (headers) => {
+        headers.append(
+          'Authorization',
+          'Bearer ' +
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6NCwiaWF0IjoxNjYxOTg4Njc0LCJleHAiOjE2NjE5OTIyNzR9.kV8TkIATrXF81hGfHpl225YmYVnRY_fAU4G8JPA2RDQ',
+        );
+        return headers;
+      },
+    });
 
     return rawBaseQuery(args, api, extraOptions);
   };
