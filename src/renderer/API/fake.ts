@@ -3,41 +3,17 @@ import { DirectMessage, User } from '@models/local.models';
 import { Clinic, Member, Role, RolePermissions } from '@models/server.models';
 import { faker } from '@faker-js/faker';
 
-export const firstUser: User = {
-  avatar: '/assets/9b4caf44c40506a102ec.png',
-  clinic: [
-    {
-      clinicId: 2,
-      name: 'clinic',
-      serverLocation: '127.0.0.1:1004',
-
-      memberId: 2,
-    },
-    {
-      clinicId: 1,
-      name: 'graze',
-      serverLocation: 'localhost:3000',
-
-      memberId: 1,
-    },
-    {
-      clinicId: 1,
-      name: 'graze',
-      serverLocation: '127.0.0.1:1004',
-
-      memberId: 1,
-    },
-  ],
-  selectedClinic: 1,
-  email: 'aymenmiro@gmail.com',
-  firstName: 'carlo',
-  lastName: 'badi',
-  password: 'person',
-  phone: '123456789',
-  publicKey: 'key',
-  privateKey: 'yek',
-  userId: 123,
-  username: 'killerDz',
+export const template: User = {
+  userId: '',
+  email: '',
+  avatar: '',
+  clinic: [],
+  selectedClinic: 0,
+  phone: '',
+  publicKey: '',
+  privateKey: '',
+  firstName: '',
+  lastName: '',
   userPreferences: {
     language: 'en',
     theme: 'Nighty',

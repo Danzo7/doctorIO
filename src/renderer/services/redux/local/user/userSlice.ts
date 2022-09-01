@@ -1,15 +1,23 @@
-import { firstUser } from '@api/fake';
 import { User } from '@models/local.models';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: Partial<User> = {};
+const initialState: User = {
+  userPreferences: {
+    language: 'en',
+    theme: 'Nighty',
+    welcomeDismissedIn: '',
+  },
+  firstName: '',
+  lastName: '',
+  clinic: [],
+};
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: { username: undefined, clinic: [] } as any as User,
+  initialState: initialState,
   reducers: {
     setUser: (
-      state: Partial<User>,
+      state: User,
       action: PayloadAction<{
         firstName: string;
         lastName: string;
@@ -17,28 +25,21 @@ const userSlice = createSlice({
         phoneNumber: string;
       }>,
     ) => {
+      state.userId = nanoid();
       state.email = action.payload.email;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.phone = action.payload.phoneNumber;
-      state.password = firstUser.password;
-      state.avatar = firstUser.avatar;
-      state.userId = firstUser.userId;
-      state.privateKey = firstUser.privateKey;
-      state.publicKey = firstUser.publicKey;
-      state.clinic = firstUser.clinic;
-      state.selectedClinic = firstUser.selectedClinic;
-      state.userPreferences = firstUser.userPreferences;
     },
     //TODO use another slice for connection status
     setSelectedServer: (
-      state: Partial<User>,
+      state: User,
       action: PayloadAction<number | undefined>,
     ) => {
       state.selectedClinic = action.payload;
     },
 
-    resetWelcomeDismissedIn: (state: Partial<User>) => {
+    resetWelcomeDismissedIn: (state: User) => {
       if (state.userPreferences)
         state.userPreferences.welcomeDismissedIn = new Date().toISOString();
     },

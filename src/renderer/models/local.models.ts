@@ -4,16 +4,14 @@ interface AppLocalPreferences {
   welcomeDismissedIn: string;
 }
 interface User {
-  userId: number; //"machineId"
-  username: string;
-  password: string;
-  email: string;
+  userId?: string; //"machineId"
+  email?: string;
   firstName: string;
   lastName: string;
-  phone: string;
-  avatar: string;
-  privateKey: string;
-  publicKey: string;
+  phone?: string;
+  avatar?: string;
+  privateKey?: string;
+  publicKey?: string;
   clinic: LocalClinicData[];
   selectedClinic?: number;
   userPreferences: AppLocalPreferences;
