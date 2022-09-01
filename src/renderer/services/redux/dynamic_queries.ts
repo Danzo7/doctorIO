@@ -89,9 +89,10 @@ class DynamicBaseQuery {
         if (tokens.accessToken && tokens.refreshToken)
           headers.append(
             'Authorization',
-            'Bearer ' + extraOptions?.useRefresh
-              ? tokens.refreshToken
-              : tokens.accessToken,
+            'Bearer ' +
+              (extraOptions?.useRefresh
+                ? tokens.refreshToken
+                : tokens.accessToken),
           );
         return headers;
       },
