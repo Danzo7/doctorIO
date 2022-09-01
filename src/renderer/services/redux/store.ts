@@ -28,7 +28,7 @@ const persistUserConfig = {
 const persistAuthConfig = {
   key: 'auth',
   storage,
-  whitelist: [authSlice.name],
+  //  whitelist: [authSlice.name, 'access_token'],
 };
 
 const persistedUser = persistReducer(persistUserConfig, userSlice.reducer);
