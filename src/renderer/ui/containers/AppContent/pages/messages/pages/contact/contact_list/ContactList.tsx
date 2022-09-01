@@ -14,13 +14,13 @@ export default function ContactList({ contactType }: ContactListProps) {
         {contactType}--{contactList.length}
       </span>
       <div className="contact-container">
-        {contactList.map(({ memberId, userId, name, avatar, memberStatus }) => (
+        {contactList.map(({ id, userId, name, avatar, status }) => (
           <ContactItem
             fullName={name}
             avatar={avatar}
-            status={memberStatus}
-            key={memberId}
-            memberId={memberId}
+            status={status}
+            key={id}
+            memberId={id}
             dmId={DMs.filter((dm) => dm.userId === userId)[0]?.dmId}
           />
         ))}

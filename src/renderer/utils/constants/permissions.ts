@@ -7,78 +7,78 @@ import {
 
 export const PERMISSIONS: Permission<PermKeys>[] = [
   {
-    permKey: 'isAdmin',
+    permKey: 'CAN_HAVE_ADMIN',
     name: 'Administrator',
     description: 'Can manage all aspects of the application',
   },
 
   {
-    permKey: 'canAddMember',
+    permKey: 'CAN_ADD_MEMBERS',
     name: 'Add Member',
     description: 'Can add new members to the clinic',
   },
   {
-    permKey: 'canManageRole',
+    permKey: 'CAN_MANAGE_ROLE',
     name: 'Manage Roles',
     description: 'Can manage clinic roles',
   },
   {
-    permKey: 'canAccessPatientsList',
+    permKey: 'CAN_VIEW_PATIENTSLIST',
     name: 'Access patients list',
     description: 'Can access patients list',
   },
   {
-    permKey: 'canAddPatients',
+    permKey: 'CAN_ADD_PATIENT',
     name: 'Add patients',
     description: 'Can add patients ',
   },
   {
-    permKey: 'canManagePatients',
+    permKey: 'CAN_MANAGE_PATIENT',
     name: 'Manage patients',
     description: 'Can manage patients ',
   },
   {
-    permKey: 'canHaveQueue',
+    permKey: 'CAN_HAVE_QUEUE',
     name: 'Have a Queue',
     description: 'Can Have a Queue list ',
   },
   {
-    permKey: 'canAddDrugs',
+    permKey: 'CAN_ADD_DRUGS',
     name: 'Add drugs',
     description: 'can Add a drug to the drugs list ',
   },
   {
-    permKey: 'canViewClinicInsight',
+    permKey: 'CAN_VIEW_CLINIC_INSIGHT',
     name: 'View clinic insight',
     description: 'can view clinic insight and analyses',
   },
   {
-    permKey: 'canManageDataCollection',
+    permKey: 'CAN_MANAGE_DATA_COLLECTION',
     name: 'Manage Data Collections',
     description: 'can Manage Data Collections',
   },
   {
-    permKey: 'canViewMedicalRecords',
+    permKey: 'CAN_VIEW_RECORDS',
     name: 'View medical records',
     description: 'can view medical records of patients',
   },
   {
-    permKey: 'canManageMembers',
+    permKey: 'CAN_MANAGE_MEMBERS',
     name: 'Manage members',
     description: 'can manage all the members of the clinic',
   },
   {
-    permKey: 'canRemoveMember',
+    permKey: 'CAN_REMOVE_MEMBERS',
     name: 'Remove member',
     description: 'can remove a selected member from the clinic ',
   },
   {
-    permKey: 'canManageClinic',
+    permKey: 'CAN_MANAGE_CLINIC',
     name: 'Manage clinic',
     description: 'can manage the setting of the clinic',
   },
   {
-    permKey: 'canUseMessages',
+    permKey: 'CAN_HAVE_MESSAGES',
     name: 'Use messages',
     description: 'allow member to send and receive messages ',
   },

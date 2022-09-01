@@ -6,13 +6,8 @@ interface MembersTabProps {}
 export default function MembersTab({}: MembersTabProps) {
   return (
     <div className="members-tab">
-      {rolesBrief.map(({ roleId, roleName, roleDesc }, index) => (
-        <RoleMembers
-          roleName={roleName}
-          key={index}
-          roleDesc={roleDesc}
-          roleId={roleId}
-        />
+      {rolesBrief.map((role, index) => (
+        <RoleMembers {...role} key={index} />
       ))}
     </div>
   );

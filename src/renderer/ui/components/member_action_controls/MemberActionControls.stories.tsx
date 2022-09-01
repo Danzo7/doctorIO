@@ -11,5 +11,5 @@ const Template: Story<ComponentProps<typeof MemberActionControls>> = (args) => (
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  memberId: members[0].memberId,
+  id: members[0].id,
 };

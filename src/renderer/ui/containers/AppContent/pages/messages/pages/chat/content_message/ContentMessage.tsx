@@ -31,7 +31,7 @@ function ContentMessage({
           alt={name + memberId}
           width={40}
           onClick={(e) => {
-            open(<MemberCard memberId={id} name={name} avatar={avatar} />, {
+            open(<MemberCard id={id} name={name} avatar={avatar} />, {
               popperTarget: e.currentTarget,
               clickThrough: true,
               closeOnBlur: true,
@@ -44,7 +44,7 @@ function ContentMessage({
         <div className="title-container">
           <span
             onClick={(e) => {
-              open(<MemberCard memberId={id} name={name} avatar={avatar} />, {
+              open(<MemberCard id={id} name={name} avatar={avatar} />, {
                 popperTarget: e.currentTarget,
                 clickThrough: true,
                 closeOnBlur: true,

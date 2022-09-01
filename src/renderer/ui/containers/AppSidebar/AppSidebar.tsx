@@ -22,7 +22,7 @@ function AppSidebar({}: AppSidebarProps) {
                 <div className={`content ${state}`}>
                   <SearchProfile
                     avatar={currentMember.avatar}
-                    alt={currentMember.name + currentMember.memberId}
+                    alt={currentMember.name + currentMember.id}
                   />
                   <AppointmentQueueSmall></AppointmentQueueSmall>
                   <BookedList />

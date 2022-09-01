@@ -1,5 +1,7 @@
-import { PermKeys, RolePermissions } from '@models/server.models';
+import { PermKeys } from '@models/server.models';
 
-export const isAllowed = (permKey: PermKeys, permissions: RolePermissions) => {
-  return permissions.isAdmin || permissions[permKey];
+export const isAllowed = (permKey: PermKeys, permissions: PermKeys[]) => {
+  return (
+    permissions.includes('CAN_HAVE_ADMIN') || permissions.includes(permKey)
+  );
 };

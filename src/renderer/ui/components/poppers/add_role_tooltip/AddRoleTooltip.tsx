@@ -6,7 +6,7 @@ import { IconType } from '@components/buttons/text_button';
 import TooltipItem from '@components/poppers/tooltip/tooltip_item';
 import { color } from '@assets/styles/color';
 import { useForm } from 'react-hook-form';
-import { Role } from '@models/server.models';
+import { Role, RoleBrief } from '@models/server.models';
 
 interface AddRoleTooltipProps {
   actionList: RoleProps[];
@@ -15,7 +15,7 @@ interface SearchInput {
   searchField: string;
 }
 type RoleProps = {
-  role: Role;
+  role: RoleBrief;
   Icon?: IconType;
   onPress?: (e: any) => void;
 };
@@ -31,7 +31,7 @@ export default function AddRoleTooltip({ actionList }: AddRoleTooltipProps) {
     ) {
       matches = actionList?.filter((roleAction) => {
         const regex = new RegExp(`${watchSearch}`, 'gi');
-        if (roleAction.role.roleName.match(regex)) return roleAction;
+        if (roleAction.role.name.match(regex)) return roleAction;
       });
       return matches;
     } else return actionList;

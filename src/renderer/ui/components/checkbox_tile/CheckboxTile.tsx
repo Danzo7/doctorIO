@@ -4,7 +4,7 @@ interface CheckboxTileProps {
   editable?: boolean;
   primaryText: string;
   secondaryText?: string;
-  isChecked?: true;
+  isChecked?: boolean;
 }
 export default function CheckboxTile({
   editable = true,

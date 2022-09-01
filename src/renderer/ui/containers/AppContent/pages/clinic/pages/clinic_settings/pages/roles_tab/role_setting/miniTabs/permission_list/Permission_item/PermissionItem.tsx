@@ -7,7 +7,7 @@ import './style/index.scss';
 interface PermissionItemProps {
   linkedPermission?: string;
   editable?: boolean;
-  isChecked?: true;
+  isChecked?: boolean;
 }
 export default function PermissionItem({
   name,

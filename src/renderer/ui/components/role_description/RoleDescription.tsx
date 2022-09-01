@@ -1,10 +1,10 @@
 import './style/index.scss';
 interface RoleDescriptionProps {
-  roleName: string;
+  name: string;
   description?: string;
 }
 export default function RoleDescription({
-  roleName,
+  name: roleName,
   description,
 }: RoleDescriptionProps) {
   return (

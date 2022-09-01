@@ -31,7 +31,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         }
-        {isAllowed('canHaveQueue', permissions) && (
+        {isAllowed('CAN_HAVE_QUEUE', permissions) && (
           <Route
             path="queue"
             element={
@@ -41,7 +41,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('canViewMedicalRecords', permissions) && (
+        {isAllowed('CAN_VIEW_RECORDS', permissions) && (
           <Route
             path="records/*"
             element={
@@ -51,7 +51,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('canUseMessages', permissions) && (
+        {isAllowed('CAN_HAVE_MESSAGES', permissions) && (
           <Route
             path="messages/:category/*"
             element={
@@ -61,7 +61,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('canViewClinicInsight', permissions) && (
+        {isAllowed('CAN_MANAGE_CLINIC', permissions) && (
           <Route
             path="statistics"
             element={
@@ -71,7 +71,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('canManageDataCollection', permissions) && (
+        {isAllowed('CAN_MANAGE_CLINIC', permissions) && (
           <Route
             path="data"
             element={
@@ -81,7 +81,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('canHaveQueue', permissions) && (
+        {isAllowed('CAN_HAVE_QUEUE', permissions) && (
           <Route
             path="queue"
             element={
@@ -91,7 +91,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('canManageClinic', permissions) && (
+        {isAllowed('CAN_MANAGE_CLINIC', permissions) && (
           <Route
             path="clinic/*"
             element={

@@ -12,12 +12,12 @@ function AppMenu({}: AppMenuProps) {
   const getItem = (item: MenuKeys) => ({ name: item, svg: menuI[item] });
   const menuOptions = [
     getItem('home'),
-    isAllowed('canHaveQueue', permissions) && getItem('queue'),
-    isAllowed('canUseMessages', permissions) && getItem('messages'),
+    isAllowed('CAN_HAVE_QUEUE', permissions) && getItem('queue'),
+    isAllowed('CAN_HAVE_MESSAGES', permissions) && getItem('messages'),
     //  isAllowed('canViewClinicInsight', permissions) && getItem('stats'),
-    isAllowed('canViewMedicalRecords', permissions) && getItem('records'),
+    isAllowed('CAN_VIEW_RECORDS', permissions) && getItem('records'),
     //    isAllowed('canManageDataCollection', permissions) && getItem('database'),
-    isAllowed('canManageClinic', permissions) && getItem('clinic'),
+    isAllowed('CAN_MANAGE_CLINIC', permissions) && getItem('clinic'),
     //  getItem('settings'),
   ].filter(Boolean) as { name: MenuKeys; svg: any }[];
 

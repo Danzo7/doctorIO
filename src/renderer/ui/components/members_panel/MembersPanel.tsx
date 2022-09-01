@@ -3,10 +3,10 @@ import DarkLightCornerButton from '@components/buttons/dark_light_corner_button'
 import Header from '@components/header';
 import MembersPreview from '@components/members_preview';
 import useNavigation from '@libs/hooks/useNavigation';
-import { Member } from '@models/server.models';
+import { Member, MemberBrief } from '@models/server.models';
 import './style/index.scss';
 
-const membersList: Member[] = members;
+const membersList: MemberBrief[] = members;
 interface MembersPanelProps {}
 function MembersPanel({}: MembersPanelProps) {
   const { navigate } = useNavigation();
@@ -27,10 +27,7 @@ function MembersPanel({}: MembersPanelProps) {
         <div className="members-list">
           {membersList.length != 0 ? (
             membersList.map((member, index) => (
-              <MembersPreview
-                {...member}
-                key={member.memberId.toString() + index}
-              />
+              <MembersPreview {...member} key={member.id.toString() + index} />
             ))
           ) : (
             <div>No Members</div>

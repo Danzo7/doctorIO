@@ -4,36 +4,36 @@ import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import SmallRoleList from '@components/members_preview/small_role_list';
 import MemberActionControls from '@components/member_action_controls';
-import { Member } from '@models/server.models';
+import { Member, MemberBrief } from '@models/server.models';
 import { format } from 'date-fns';
 import { DATE_ONLY } from '@constants/data_format';
 import { members } from '@api/fake';
 
-export default function MemberBigCard({ memberId }: Pick<Member, 'memberId'>) {
+export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
   //REDUX fetch members
   const {
     avatar,
-    memberStatus,
+    status,
     name,
     age,
     gender,
-    phoneNumber,
+    phone,
     address,
-    joinDate: JoinDate,
-    addedBy,
+    joinDate,
     roles,
-  } = members.filter(({ memberId: id }) => id == memberId)[0];
+    addedBy,
+  } = members.filter(({ id: mId }) => id == mId)[0];
   return (
     <div className="member-big-card">
       <UserProfileStatus
         imgSrc={avatar}
-        status={memberStatus}
+        status={status}
         width={100}
-        alt={name + memberId}
+        alt={name + id}
       />
       <div className="fullName-id-container">
         <span>{name}</span>
-        <span>#{memberId}</span>
+        <span>#{id}</span>
       </div>
       <TextPair
         first={{ text: 'Age', fontSize: 15, fontColor: color.text_gray }}
@@ -53,7 +53,7 @@ export default function MemberBigCard({ memberId }: Pick<Member, 'memberId'>) {
         }}
         alignItems={'center'}
       />
-      {phoneNumber && (
+      {phone && (
         <TextPair
           first={{
             text: 'Phone number',
@@ -61,7 +61,7 @@ export default function MemberBigCard({ memberId }: Pick<Member, 'memberId'>) {
             fontColor: color.text_gray,
           }}
           second={{
-            text: phoneNumber,
+            text: phone,
             fontSize: 17,
             fontColor: color.white,
           }}
@@ -82,26 +82,28 @@ export default function MemberBigCard({ memberId }: Pick<Member, 'memberId'>) {
       <TextPair
         first={{ text: 'Join date', fontSize: 15, fontColor: color.text_gray }}
         second={{
-          text: format(JoinDate, DATE_ONLY),
+          text: format(joinDate, DATE_ONLY),
           fontSize: 17,
           fontColor: color.white,
         }}
         alignItems={'center'}
       />
-      <TextPair
-        first={{ text: 'Added by', fontSize: 15, fontColor: color.text_gray }}
-        second={{
-          text: addedBy,
-          fontSize: 17,
-          fontColor: color.white,
-        }}
-        alignItems={'center'}
-      />
+      {addedBy && (
+        <TextPair
+          first={{ text: 'Added by', fontSize: 15, fontColor: color.text_gray }}
+          second={{
+            text: addedBy?.name,
+            fontSize: 17,
+            fontColor: color.white,
+          }}
+          alignItems={'center'}
+        />
+      )}
       <div className="role-container">
         <span>Role</span>
-        <SmallRoleList roleList={roles} memberId={memberId} />
+        <SmallRoleList roleList={roles} memberId={id} />
       </div>
-      <MemberActionControls showCard={false} memberId={memberId} />
+      <MemberActionControls showCard={false} id={id} />
     </div>
   );
 }

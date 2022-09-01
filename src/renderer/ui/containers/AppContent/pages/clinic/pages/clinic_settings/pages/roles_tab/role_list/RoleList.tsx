@@ -61,8 +61,8 @@ export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
             <div className="content-list" {...droppableProps} ref={innerRef}>
               {itemList.map((role, index) => (
                 <Draggable
-                  key={role.roleId + index}
-                  draggableId={role.roleName + index}
+                  key={role.id + index}
+                  draggableId={role.id.toString() + index}
                   index={index}
                 >
                   {(props) => (
@@ -72,13 +72,11 @@ export default function RoleList({ defaultSelected = 0 }: RoleListProps) {
                       {...props.draggableProps}
                     >
                       <RoleItem
-                        roleId={role.roleId}
-                        roleName={role.roleName}
                         selected={
-                          role.roleId.toString() ==
+                          role.id.toString() ==
                           (searchParams.get('roleId') ?? '1')
                         }
-                        linkedRole={role.linkedRole}
+                        {...role}
                         key={index}
                       />
                     </div>

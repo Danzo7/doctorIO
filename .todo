@@ -1,0 +1,9 @@
+### FEATURES
+
+[] replace the current datepicker with a custom one as it so heavy and does not fit the needs.
+
+### FIX
+
+[] using icon imports create new component everytime even if an icon is already exists. by time this will increase the build size. a solution is to use a single file and add all icon imports to that file.
+
+[] Fix local error message in joinClinic modal

@@ -1,10 +1,10 @@
 import MembersTable from '@components/members_table';
-import { Member } from '@models/server.models';
+import { Member, MemberBrief } from '@models/server.models';
 
 import './style/index.scss';
 
 interface RoleSettingMembersProps {
-  list: Member[];
+  list: MemberBrief[];
 }
 export default function RoleSettingMembers({ list }: RoleSettingMembersProps) {
   return (

@@ -1,6 +1,9 @@
-import { members, roles, selectedRole as defaultSelected } from '@api/fake';
+import {
+  members as fakeMembers,
+  selectedRole as defaultSelected,
+  roles as fakeRoles,
+} from '@api/fake';
 import TabMenu from '@components/tab_menu';
-import { RolePermissions } from '@models/server.models';
 import { useSearchParams } from 'react-router-dom';
 import PermissionList from './miniTabs/permission_list';
 import RoleSettingGeneral from './miniTabs/role_setting_general';
@@ -10,25 +13,33 @@ import './style/index.scss';
 interface RoleSettingProps {}
 export default function RoleSetting({}: RoleSettingProps) {
   const [searchParams] = useSearchParams();
-  //REDUX fetch selected role
   const roleIdParam = searchParams.get('roleId')
     ? searchParams.get('roleId')
-    : defaultSelected.roleId;
-  const { roleName, linkedRole, rolePermissions, roleDesc } = roles.filter(
-    ({ roleId }) => roleId.toString() == roleIdParam,
+    : defaultSelected.id;
+  //REDUX fetch selected role
+  //FIXME
+  const { name, slaveRole, permissions, description } = fakeRoles.filter(
+    ({ id }) => id.toString() == roleIdParam,
   )[0];
 
+  if (!permissions) return <div>NOoooooo</div>;
   return (
     <div className="role-setting">
       <TabMenu items={['General', 'Permissions', 'Members']}>
-        <RoleSettingGeneral {...{ roleName, roleDesc, linkedRole }} />
-        <PermissionList permissions={rolePermissions as RolePermissions} />
+        <RoleSettingGeneral
+          name={name}
+          description={description}
+          slaveRole={slaveRole}
+        />
+        {
+          <PermissionList permissions={permissions} />
+          //FIXME types
+        }
         <RoleSettingMembers
-          list={members.filter(
-            ({ roles: memberRoles }) =>
-              memberRoles.find(
-                ({ roleId: id }) => id.toString() == roleIdParam,
-              ) != undefined,
+          list={fakeMembers.filter(
+            ({ roles }) =>
+              roles.find(({ id: id }) => id.toString() == roleIdParam) !=
+              undefined,
           )}
         />
       </TabMenu>

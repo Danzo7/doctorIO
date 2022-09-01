@@ -1,35 +1,29 @@
 import './style/index.scss';
-import Icon from 'toSvg/link.svg?icon';
-import { Role } from '@models/server.models';
+import { RoleBrief } from '@models/server.models';
 import { useSearchParams } from 'react-router-dom';
 
 interface RoleItemProps {
   selected: boolean;
 }
-function RoleItem({
-  roleId,
-  roleName,
-  linkedRole,
-  selected,
-}: Pick<Role, 'roleId' | 'roleName' | 'linkedRole'> & RoleItemProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+function RoleItem({ id, name, selected }: RoleBrief & RoleItemProps) {
+  const [_, setSearchParams] = useSearchParams();
   return (
     <div
       onClick={() => {
-        setSearchParams({ roleId: roleId.toString() });
+        setSearchParams({ roleId: id.toString() });
       }}
       className={`role-item${selected ? ' selected' : ''}`}
     >
-      <span>{roleName}</span>
-      <div
+      <span>{name}</span>
+      {/* <div
         className="linked"
-        css={{ display: linkedRole ? 'flex' : 'none!important' }}
+        css={{ display: masterRole ? 'flex' : 'none!important' }}
       >
         <Icon />
         <div className="linked-role-container">
-          <span>{linkedRole?.roleName}</span>
-        </div>
-      </div>
+          <span>{masterRole?.roleName}</span>
+        </div> 
+      </div>*/}
     </div>
   );
 }

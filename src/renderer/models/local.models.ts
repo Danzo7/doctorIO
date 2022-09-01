@@ -34,7 +34,7 @@ interface Drug {
 }
 interface DirectMessage {
   dmId: number;
-  userId: number; //"contactId"
+  userId: string; //"contactId"
   dmAvatar?: string;
   dmName: string; //contactName,update after get contact
   messages: Message[];

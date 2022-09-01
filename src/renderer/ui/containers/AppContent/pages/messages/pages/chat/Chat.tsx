@@ -44,7 +44,7 @@ export default function Chat({}: ChatProps) {
       <div className="chat-header">
         <MemberStatus
           memberFullName={contactMember.name}
-          status={contactMember.memberStatus}
+          status={contactMember.status}
         />
         <IconicButton
           Icon={Call_Icon}
@@ -70,9 +70,7 @@ export default function Chat({}: ChatProps) {
               avatar={message.sent ? currentMember.avatar : dm.dmAvatar}
               id={dm.dmId}
               name={message.sent ? currentMember.name : dm.dmName}
-              memberId={
-                message.sent ? currentMember.memberId : contactMember.memberId
-              }
+              memberId={message.sent ? currentMember.id : contactMember.id}
             />
           ))}
         </div>

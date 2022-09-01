@@ -1,13 +1,13 @@
 import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import MemberActionControls from '@components/member_action_controls';
-import { Member } from '@models/server.models';
+import { MemberBrief } from '@models/server.models';
 
 export default function MemberCard({
-  memberId,
+  id,
   name,
   avatar,
-}: Pick<Member, 'memberId' | 'name' | 'avatar'>) {
+}: Pick<MemberBrief, 'id' | 'name' | 'avatar'>) {
   return (
     <div className="member-card">
       <UserProfileStatus
@@ -15,11 +15,11 @@ export default function MemberCard({
         status
         width={60}
         avatarRadius={17}
-        alt={name + memberId}
+        alt={name + id}
       />
       <span>{name}</span>
       <div className="member-card-controls">
-        <MemberActionControls memberId={memberId} />
+        <MemberActionControls id={id} />
       </div>
     </div>
   );

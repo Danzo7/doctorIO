@@ -11,4 +11,4 @@ const Template: Story<ComponentProps<typeof MemberBigCard>> = (args) => (
   <MemberBigCard {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = members[0];
+FirstStory.args = { id: members[0].id };

@@ -13,30 +13,10 @@ FirstStory.args = {
   actionList: [
     {
       role: {
-        roleName: 'Cool',
-        roleId: 1,
-        roleDesc: 'cool Role',
-      },
-    },
-    {
-      role: {
-        roleName: 'Gamer',
-        roleId: 2,
-        roleDesc: 'Gamer Role',
-      },
-    },
-    {
-      role: {
-        roleName: 'Cool',
-        roleId: 3,
-        roleDesc: 'cool Role',
-      },
-    },
-    {
-      role: {
-        roleName: 'Support',
-        roleId: 1,
-        roleDesc: 'Support  Role',
+        name: 'Cool',
+        id: 1,
+        description: 'cool Role',
+        priority: 1,
       },
     },
   ],

@@ -9,26 +9,25 @@ import PermissionItem from '../permission_list/Permission_item';
 import './style/index.scss';
 
 interface Inputs {
-  roleName: string;
-  roleDesc: string;
+  name: string;
+  description: string;
 }
 
 export default function RoleSettingGeneral({
-  roleName,
-  roleDesc,
-  linkedRole,
-}: Pick<Role, 'roleName' | 'roleDesc' | 'linkedRole'>) {
+  name,
+  description,
+  slaveRole,
+}: Pick<Role, 'name' | 'description' | 'slaveRole'>) {
   const {
     control,
-    handleSubmit,
     reset,
-    formState: { errors, isDirty },
+    formState: { isDirty },
   } = useForm<Inputs>({
-    defaultValues: { roleName: roleName, roleDesc: roleDesc },
+    defaultValues: { name, description },
   });
   useEffect(() => {
-    reset({ roleName: roleName, roleDesc: roleDesc });
-  }, [roleName, roleDesc, reset]);
+    reset({ name, description });
+  }, [name, description, reset]);
 
   usePrompt(
     'are you sure about that !!!',
@@ -50,13 +49,13 @@ export default function RoleSettingGeneral({
         <Input
           label="Role Name"
           type={'text'}
-          name={'roleName'}
+          name={'name'}
           control={control}
         />
         <Input
           label="Description"
           type={'text'}
-          name={'roleDesc'}
+          name={'description'}
           control={control}
         />
         <BorderSeparator direction="horizontal" />
@@ -65,8 +64,8 @@ export default function RoleSettingGeneral({
         name="Assistants"
         description="Members with the below roles will be able to access and manage role personal queue List"
         editable
-        linkedPermission={linkedRole?.roleName}
-        isChecked={linkedRole ? true : undefined}
+        linkedPermission={slaveRole?.name}
+        isChecked={slaveRole ? true : undefined}
       />
     </div>
   );

@@ -13,8 +13,8 @@ const Template: Story<ComponentProps<typeof MembersPreview>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   name: 'Amanda Clark',
-  memberId: 100,
-  memberStatus: true,
+  id: 100,
+  status: true,
   avatar: test,
-  roles: [{ roleId: 1, roleName: 'gamer', roleDesc: 'gaming' }],
+  roles: [{ id: 1, name: 'gamer', description: 'gaming', priority: 1 }],
 };

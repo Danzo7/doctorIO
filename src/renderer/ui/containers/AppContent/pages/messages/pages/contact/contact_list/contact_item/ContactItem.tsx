@@ -59,7 +59,7 @@ function ContactItem({
       <div className="avatars-container">
         <MemberActionControls
           dmId={dmId}
-          memberId={memberId}
+          id={memberId}
           messagesRoutePath=""
           notFriend={dmId == undefined}
         />

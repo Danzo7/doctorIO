@@ -13,21 +13,21 @@ import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { IS_PREVIEW } from '@constants/env';
 import { currentMemberPermissions } from '@api/fake';
 import { isAllowed } from '@helpers/permission.helper';
+import { MemberBrief } from '@models/server.models';
 
 interface MemberActionControlsProps {
-  memberId: number;
   dmId?: number;
   messagesRoutePath?: string;
   showCard?: boolean;
   notFriend?: boolean;
 }
 export default function MemberActionControls({
-  memberId,
   messagesRoutePath = 'messages/@clinic/',
   showCard = true,
   dmId,
   notFriend,
-}: MemberActionControlsProps) {
+  id,
+}: MemberActionControlsProps & Pick<MemberBrief, 'id'>) {
   const { open } = useOverlay();
   const { navigate } = useNavigation();
   const permissions = currentMemberPermissions; //REDUX getCurrentPermissions
@@ -40,14 +40,14 @@ export default function MemberActionControls({
           width={40}
           iconSize={15}
           onPress={() => {
-            open(<MemberBigCard memberId={memberId} />, {
+            open(<MemberBigCard id={id} />, {
               ...DEFAULT_MODAL,
               width: '20%',
             });
           }}
         />
       )}
-      {isAllowed('canUseMessages', permissions) && (dmId || notFriend) && (
+      {isAllowed('CAN_HAVE_MESSAGES', permissions) && (dmId || notFriend) && (
         <IconicButton
           Icon={Messages}
           afterBgColor={notFriend ? colors.cold_red : colors.light}

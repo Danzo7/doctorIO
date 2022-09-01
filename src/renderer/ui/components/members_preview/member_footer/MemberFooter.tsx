@@ -3,15 +3,11 @@ import MemberActionControls from '@components/member_action_controls';
 import { Member } from '@models/server.models';
 import { DMs, members } from '@api/fake';
 
-function MemberFooter({
-  memberId,
-  memberStatus,
-}: Pick<Member, 'memberId' | 'memberStatus'>) {
+function MemberFooter({ id, status }: Pick<Member, 'id' | 'status'>) {
   const dm = DMs.filter(
     //REDUX:get DM List
     ({ userId }) =>
-      userId ==
-      members.filter(({ memberId: id }) => memberId === id)?.[0]?.userId,
+      userId == members.filter(({ id: mId }) => mId === id)?.[0]?.userId,
   )?.[0]; //REDUX select target member
   return (
     <div
@@ -22,16 +18,14 @@ function MemberFooter({
     >
       <div className="member-container">
         <span>Member ID</span>
-        <span className="member-span">{memberId}</span>
+        <span className="member-span">{id}</span>
       </div>
       <div className="member-container">
         <span>Status</span>
-        <span className="member-span">
-          {memberStatus ? 'Online' : 'Offline'}
-        </span>
+        <span className="member-span">{status ? 'Online' : 'Offline'}</span>
       </div>
       <MemberActionControls
-        memberId={memberId}
+        id={id}
         dmId={dm?.dmId}
         notFriend={dm?.dmId == undefined}
       />
