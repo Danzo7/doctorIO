@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { parseInviteKey } from '@helpers/crypto/parse';
-import { authQuery, StaticQueries } from '@redux/dynamic_queries';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { addNewClinic } from '../user/userSlice';
-import { setTokens } from './authSlice';
 
 const authApi = createApi({
   reducerPath: 'authApi',
@@ -13,12 +9,7 @@ const authApi = createApi({
       query: () => ({ url: ``, method: 'POST' }),
     }),
     register: builder.mutation<
-      {
-        secretKey: string;
-        id: number;
-        access_token: string;
-        refresh_token: string;
-      },
+      authType,
       {
         invKey?: string;
         body: {
@@ -55,12 +46,7 @@ const authApi = createApi({
       },
     }),
     connectMember: builder.mutation<
-      {
-        access_token: string;
-        refresh_token: string;
-        id: number;
-        secretKey: string;
-      },
+      authType,
       { memberId: number; secretKey: string }
     >({
       query: (body) => {
@@ -71,11 +57,20 @@ const authApi = createApi({
         };
       },
     }),
+    disconnectMember: builder.mutation<boolean, null>({
+      query: () => {
+        return { url: '/disconnect', method: 'POST', cache: 'no-cache' };
+      },
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          disconnect(dispatch);
+        } catch (err) {
+          //console.log(err);
+        }
+      },
+    }),
   }),
 });
 export default authApi;
-export const {
-  useRegisterMutation,
-  useConnectMemberMutation,
-  useGetHelloMutation,
-} = authApi;
+export const { useRegisterMutation, useConnectMemberMutation } = authApi;
