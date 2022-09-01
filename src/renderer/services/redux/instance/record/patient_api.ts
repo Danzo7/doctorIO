@@ -38,7 +38,7 @@ const patientApi = createApi({
         sex: 'male' | 'female';
       }
     >({
-      query: (body) => ({ url: `/patient`, method: 'POST', body: body }),
+      query: (body) => ({ url: ``, method: 'POST', body: body }),
       invalidatesTags: ['patient'],
     }),
   }),
