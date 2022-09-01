@@ -15,7 +15,7 @@ const appointmentApi = createApi({
   tagTypes: ['BookAppointment'],
   endpoints: (builder) => ({
     //GET
-    getBookedAppointment: builder.query<BookedAppointment[], null>({
+    getBookedAppointment: builder.query<BookedAppointment[], void>({
       query: () => `/book`,
       providesTags: ['BookAppointment'],
       transformResponse: (
