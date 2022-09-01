@@ -77,6 +77,29 @@ const authApi = createApi({
         }
       },
     }),
+    refresh: builder.mutation<
+      { access_token: string; refresh_token: string },
+      void
+    >({
+      query: () => {
+        return {
+          url: '/refresh',
+          method: 'POST',
+        };
+      },
+      extraOptions: { useRefresh: true },
+    }),
+    relink: builder.mutation<
+      { access_token: string; refresh_token: string },
+      void
+    >({
+      query: () => {
+        return {
+          url: '/relink',
+          method: 'POST',
+        };
+      },
+    }),
   }),
 });
 export default authApi;
@@ -85,4 +108,5 @@ export const {
   useConnectMemberMutation,
   useDisconnectMemberMutation,
   useGetHelloMutation,
+  useRefreshMutation,
 } = authApi;
