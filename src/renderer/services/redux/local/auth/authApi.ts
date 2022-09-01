@@ -45,6 +45,7 @@ const authApi = createApi({
                 .location,
             }),
           );
+          dispatch({ type: 'RESET' });
         } catch (e) {
           console.log(e);
         }

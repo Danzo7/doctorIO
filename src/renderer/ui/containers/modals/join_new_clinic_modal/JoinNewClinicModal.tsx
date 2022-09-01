@@ -60,7 +60,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
         //phone: userinfo.phone,
         publicKey: userinfo.publicKey,
       },
-    }).then(() => dispatch({ type: 'RESET' }));
+    });
   };
   return (
     <ModalContainer
