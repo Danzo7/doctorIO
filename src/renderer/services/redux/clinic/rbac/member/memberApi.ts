@@ -4,6 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 const memberApi = createApi({
   reducerPath: 'memberApi',
   baseQuery: fetchBaseQuery({ baseUrl: '/clinic/member' }),
+  tagTypes: ['member'],
   endpoints: (builder) => ({
     getMembers: builder.query<
       {
@@ -15,6 +16,7 @@ const memberApi = createApi({
       void
     >({
       query: () => '',
+      providesTags: ['member'],
     }),
   }),
 });
