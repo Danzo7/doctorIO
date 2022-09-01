@@ -4,7 +4,6 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { fakeInvKey } from '@api/fake';
 import {
   useGetHelloMutation,
   useRegisterMutation,
@@ -12,13 +11,13 @@ import {
 import { parseInviteKey } from '@helpers/crypto/parse';
 import { useAppDispatch, useAppSelector } from '@store';
 import { addNewClinic } from '@redux/local/user/userSlice';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Overlay } from '@libs/overlay';
-import { authQuery, StaticQueries } from '@redux/dynamic_queries';
-import InputWrapper from '@components/inputs/input_wrapper';
+import { authQuery } from '@redux/dynamic_queries';
 import { nanoid } from '@reduxjs/toolkit';
 import LoadingSpinner from '@components/loading_spinner';
 import { ServerError } from '@models/instance.model';
+import CopyField from '@components/copy_field';
 interface Inputs {
   key: string;
 }
@@ -70,39 +69,35 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
       onSubmit={handleSubmit(onSubmit)}
       title="Join a new clinic"
       controls={
-        <TextButton
-          text="Join"
-          backgroundColor={color.good_green}
-          fontSize={13}
-          fontWeight={700}
-          alignSelf="center"
-          padding={5}
-          blank
-        />
+        !isSuccess ? (
+          <TextButton
+            text="Join"
+            backgroundColor={color.good_green}
+            fontSize={13}
+            fontWeight={700}
+            alignSelf="center"
+            padding={5}
+            blank
+          />
+        ) : (
+          <TextButton
+            text="Close"
+            backgroundColor={color.good_green}
+            fontSize={13}
+            fontWeight={700}
+            alignSelf="center"
+            padding={5}
+            onPress={() => {
+              Overlay.close();
+            }}
+          />
+        )
       }
     >
       {isLoading ? (
         <LoadingSpinner />
       ) : isSuccess && data ? (
-        <InputWrapper
-          trailing={
-            <TextButton
-              text="Copy"
-              backgroundColor={color.cold_blue}
-              fontSize={13}
-              fontWeight={700}
-              alignSelf="center"
-              padding={5}
-              onPress={() => {
-                navigator.clipboard.writeText(data?.secretKey);
-              }}
-            />
-          }
-        >
-          <span css={{ userSelect: 'all', cursor: 'pointer' }}>
-            {data?.secretKey}
-          </span>
-        </InputWrapper>
+        <CopyField text={data.secretKey} />
       ) : (
         <Input
           name="key"

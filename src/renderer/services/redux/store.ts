@@ -20,6 +20,8 @@ import connectionStateSlice from './local/connectionStateSlice';
 import authSlice from './local/auth/authSlice';
 import authApi from './local/auth/authApi';
 import invitationApi from './clinic/invitation/invitationApi';
+import memberApi from './clinic/rbac/member/memberApi';
+import roleApi from './clinic/rbac/role/roleApi';
 
 const persistUserConfig = {
   key: 'user',
@@ -36,6 +38,8 @@ const persistedUser = persistReducer(persistUserConfig, userSlice.reducer);
 const persistedAuth = persistReducer(persistAuthConfig, authSlice.reducer);
 
 const appReducer = combineReducers({
+  [roleApi.reducerPath]: roleApi.reducer,
+  [memberApi.reducerPath]: memberApi.reducer,
   [invitationApi.reducerPath]: invitationApi.reducer,
   [authSlice.name]: persistedAuth,
   [settingsSlice.name]: settingsSlice.reducer,
@@ -82,6 +86,8 @@ export const store = configureStore({
       appointmentApi.middleware,
       authApi.middleware,
       invitationApi.middleware,
+      memberApi.middleware,
+      roleApi.middleware,
       rtkQueryErrorLogger,
     ),
 });
