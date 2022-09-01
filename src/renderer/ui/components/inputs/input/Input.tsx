@@ -201,7 +201,20 @@ export default function Input<T extends FieldValues = FieldValues>({
                     />
                   );
                 }
-                if (typeof type === 'string')
+                if (type == 'file') {
+                  const { onChange: onChanged, onBlur } = field;
+                  return (
+                    <input
+                      placeholder={placeholder}
+                      type={type as HTMLInputTypeAttribute}
+                      disabled={disabled}
+                      onChange={(e) => onChanged(e.target.files)}
+                      onBlur={onBlur}
+                      name={name}
+                    />
+                  );
+                }
+                if (typeof type === 'string') {
                   return (
                     <input
                       placeholder={placeholder}
@@ -211,6 +224,7 @@ export default function Input<T extends FieldValues = FieldValues>({
                       ref={ref}
                     ></input>
                   );
+                }
               })()}
         </InputWrapper>
       )}
