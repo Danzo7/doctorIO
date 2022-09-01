@@ -81,7 +81,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
         />
       }
     >
-      {isLoading || isFetching.current ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : isSuccess && data ? (
         <InputWrapper
