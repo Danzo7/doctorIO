@@ -38,11 +38,14 @@ const authApi = createApi({
       onQueryStarted: async (state, { queryFulfilled, dispatch }) => {
         try {
           const { data } = await queryFulfilled;
+
           dispatch(
             addNewClinic({
               memberId: data.id,
-              serverLocation: parseInviteKey(state.invKey ?? '127.0.0.1')
-                .location,
+              serverLocation:
+                state.invKey && state.invKey.length > 0
+                  ? parseInviteKey(state.invKey).location
+                  : '127.0.0.1:3000',
             }),
           );
           dispatch({ type: 'RESET' });
