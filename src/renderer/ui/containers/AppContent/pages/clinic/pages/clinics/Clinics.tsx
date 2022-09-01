@@ -1,4 +1,3 @@
-import { firstUser } from '@api/fake';
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ClinicItem from '@components/clinic_item';
@@ -23,16 +22,16 @@ export default function Clinics() {
         {userInfo.clinic &&
           userInfo.clinic.map((clinicInfo, index) => (
             <ClinicItem
-              selected={firstUser.selectedClinic == index}
+              selected={userInfo.selectedClinic == index}
               key={clinicInfo.clinicId.toString() + index}
               //just for testing
               isHost={index == 2} //FEATURE check if clinic is localhost
               clinicInfo={clinicInfo}
               onClick={() => {
-                if (firstUser.selectedClinic === index) toParent();
+                if (userInfo.selectedClinic === index) toParent();
                 else {
-                  connect(dispatch);
-                  toParent();
+                  connect(dispatch, index);
+                  // toParent();
                 }
               }}
             />
