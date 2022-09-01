@@ -38,7 +38,7 @@ const connectionStateSlice = createSlice({
 });
 
 export const disconnect = (dispatch: Dispatch) => {
-  Promise.resolve(dispatch(setSelectedServer(0))).then(() => {
+  Promise.resolve(dispatch(setSelectedServer())).then(() => {
     dispatch(connectionStateSlice.actions.disconnect());
   });
 };
