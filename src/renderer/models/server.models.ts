@@ -30,7 +30,11 @@ type Role = {
   masterRole?: RoleBrief;
   slaveRole?: RoleBrief;
 };
-
+type RoleBrief = {
+  id: number;
+  name: string;
+  priority: number;
+};
 type PermKeys =
   | 'CAN_HAVE_ADMIN'
   | 'CAN_ADD_MEMBERS'
@@ -98,6 +102,7 @@ type Rules = Partial<Record<Rulekeys, true>>;
 
 type Rulekeys = 'canPauseQueue' | 'canTakeBreak' | 'canBypassClosing';
 type PrefKeys = 'canCreateSession' | 'canMessageExternals';
+
 export type {
   Clinic,
   Member,
