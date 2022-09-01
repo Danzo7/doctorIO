@@ -12,7 +12,7 @@ import {
 import { parseInviteKey } from '@helpers/crypto/parse';
 import { useAppDispatch, useAppSelector } from '@store';
 import { addNewClinic } from '@redux/local/user/userSlice';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Overlay } from '@libs/overlay';
 import { authQuery, StaticQueries } from '@redux/dynamic_queries';
 import InputWrapper from '@components/inputs/input_wrapper';
@@ -29,38 +29,41 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
     useRegisterMutation();
   const [hello] = useGetHelloMutation();
   const userinfo = useAppSelector((state) => state.user);
-  const { control, handleSubmit } = useForm<{
+  const { control, handleSubmit, reset } = useForm<{
     key: string;
   }>({
     mode: 'onSubmit',
   });
-
   const errorMsg = isError
     ? ((error as any)?.data?.message as ServerError)
     : undefined;
+  const internalErrorRef = useRef<string>();
+  const isFetching = useRef(false);
+  console.log(internalErrorRef);
   const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
-    const location =
-      key && key.length > 0 ? parseInviteKey(key).location : '127.0.0.1:3000';
-    console.log(location);
-    await authQuery.setUrl(location);
-    // hello().then((data) => {
-    //   console.log('data', data);
-    //   const d = (data as any)?.data as any;
-    //   setSecret(d?.secretKey);
-    // });
-
-    register({
-      invKey: key,
-      body: {
-        name: userinfo.firstName + ' ' + userinfo.lastName,
-        age: 18,
-        gender: 'male',
-        userId: nanoid(),
-        address: 'address',
-        //phone: userinfo.phone,
-        publicKey: userinfo.publicKey,
-      },
-    });
+    isFetching.current = true;
+    try {
+      const location =
+        key && key.length > 0 ? parseInviteKey(key).location : '127.0.0.1:3000';
+      await authQuery.setUrl(location);
+      register({
+        invKey: key,
+        body: {
+          name: userinfo.firstName + ' ' + userinfo.lastName,
+          age: 18,
+          gender: 'male',
+          userId: nanoid(),
+          address: 'address',
+          //phone: userinfo.phone,
+          publicKey: userinfo.publicKey,
+        },
+      }).then(() => {
+        isFetching.current = false;
+      });
+    } catch (e: any) {
+      internalErrorRef.current = e;
+      reset();
+    }
   };
   return (
     <ModalContainer
@@ -78,7 +81,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
         />
       }
     >
-      {isLoading ? (
+      {isLoading || isFetching.current ? (
         <LoadingSpinner />
       ) : isSuccess && data ? (
         <InputWrapper
@@ -96,13 +99,18 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
             />
           }
         >
-          <span>{data?.secretKey}</span>
+          <span css={{ userSelect: 'all', cursor: 'pointer' }}>
+            {data?.secretKey}
+          </span>
         </InputWrapper>
       ) : (
         <Input
           name="key"
           control={control}
-          errorMessage={Array.isArray(errorMsg) ? errorMsg[0] : errorMsg}
+          errorMessage={
+            internalErrorRef?.current ??
+            (Array.isArray(errorMsg) ? errorMsg[0] : errorMsg)
+          }
           leading={<Key />}
           type="text"
           hint="The invite key should be provided by a clinic member"
