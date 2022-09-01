@@ -5,52 +5,62 @@ import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { fakeInvKey } from '@api/fake';
-import { useRegisterMutation } from '@redux/local/auth/authApi';
+import {
+  useGetHelloMutation,
+  useRegisterMutation,
+} from '@redux/local/auth/authApi';
 import { parseInviteKey } from '@helpers/crypto/parse';
 import { useAppDispatch, useAppSelector } from '@store';
 import { addNewClinic } from '@redux/local/user/userSlice';
 import { useState } from 'react';
 import { Overlay } from '@libs/overlay';
+import { authQuery, StaticQueries } from '@redux/dynamic_queries';
+import InputWrapper from '@components/inputs/input_wrapper';
+import { nanoid } from '@reduxjs/toolkit';
+import LoadingSpinner from '@components/loading_spinner';
+import { ServerError } from '@models/instance.model';
 interface Inputs {
   key: string;
 }
 interface JoinNewClinicModalProps {}
 export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
   const dispatch = useAppDispatch();
-  const [showCopyBtn, setShowCopyBtn] = useState(false);
-  const [register, result] = useRegisterMutation();
+  const [register, { data, isError, isLoading, error, isSuccess }] =
+    useRegisterMutation();
+  const [hello] = useGetHelloMutation();
   const userinfo = useAppSelector((state) => state.user);
-  const { control, handleSubmit, setValue, getValues } = useForm<{
+  const { control, handleSubmit } = useForm<{
     key: string;
   }>({
     mode: 'onSubmit',
   });
-  const onSubmit: SubmitHandler<Inputs> = ({ key }) => {
-    console.log(key);
-    const { id, location } = parseInviteKey(key);
+
+  const errorMsg = isError
+    ? ((error as any)?.data?.message as ServerError)
+    : undefined;
+  const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
+    const location =
+      key && key.length > 0 ? parseInviteKey(key).location : '127.0.0.1:3000';
+    console.log(location);
+    await authQuery.setUrl(location);
+    // hello().then((data) => {
+    //   console.log('data', data);
+    //   const d = (data as any)?.data as any;
+    //   setSecret(d?.secretKey);
+    // });
+
     register({
-      invKey: key ?? undefined,
+      invKey: key,
       body: {
         name: userinfo.firstName + ' ' + userinfo.lastName,
         age: 18,
         gender: 'male',
-        userId: userinfo.userId!.toString(),
+        userId: nanoid(),
         address: 'address',
-        phone: userinfo.phone,
+        //phone: userinfo.phone,
         publicKey: userinfo.publicKey,
       },
-    }).then(() => {
-      if (result.isSuccess) {
-        dispatch(
-          addNewClinic({ memberId: result.data.id, serverLocation: location }),
-        );
-        setValue('key', result.data.secretKey);
-        setShowCopyBtn(true);
-        Overlay.close();
-      }
-    });
-
-    console.log('result :', result);
+    }).then(() => dispatch({ type: 'RESET' }));
   };
   return (
     <ModalContainer
@@ -68,12 +78,11 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
         />
       }
     >
-      <Input
-        name="key"
-        control={control}
-        leading={<Key />}
-        trailing={
-          showCopyBtn ? (
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : isSuccess && data ? (
+        <InputWrapper
+          trailing={
             <TextButton
               text="Copy"
               backgroundColor={color.cold_blue}
@@ -82,14 +91,23 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
               alignSelf="center"
               padding={5}
               onPress={() => {
-                navigator.clipboard.writeText(getValues().key);
+                navigator.clipboard.writeText(data?.secretKey);
               }}
             />
-          ) : undefined
-        }
-        type="text"
-        hint="The invite key should be provided by a clinic member"
-      />
+          }
+        >
+          <span>{data?.secretKey}</span>
+        </InputWrapper>
+      ) : (
+        <Input
+          name="key"
+          control={control}
+          errorMessage={Array.isArray(errorMsg) ? errorMsg[0] : errorMsg}
+          leading={<Key />}
+          type="text"
+          hint="The invite key should be provided by a clinic member"
+        />
+      )}
     </ModalContainer>
   );
 }

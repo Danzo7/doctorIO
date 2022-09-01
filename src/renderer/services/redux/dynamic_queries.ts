@@ -7,6 +7,7 @@ import {
   BaseQueryApi,
   BaseQueryFn,
 } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
+import { Mutex } from 'async-mutex';
 import { connected, unreachable } from './local/connectionStateSlice';
 
 class DynamicBaseQuery {
@@ -23,6 +24,24 @@ class DynamicBaseQuery {
     const user = store?.getState?.()?.user;
     if (!user.selectedClinic || !user.clinic) return undefined;
     const url = user.clinic[user.selectedClinic].serverLocation;
+    try {
+      const res = await fetch('http://' + url + '/status');
+      if (!res.ok) {
+        store.dispatch(unreachable());
+        return undefined;
+      } else store.dispatch(connected());
+    } catch (e) {
+      store.dispatch(unreachable());
+      return undefined;
+    }
+
+    this.baseUrl = 'http://' + url + '/' + this.resource + '/';
+    return this.baseUrl;
+  }
+
+  async setUrl(url: string) {
+    const { store } = await import('./store');
+
     try {
       const res = await fetch('http://' + url + '/status');
       if (!res.ok) {
@@ -60,22 +79,26 @@ class DynamicBaseQuery {
           statusText: 'Service Unavailable',
         },
       };
-
     const rawBaseQuery = fetchBaseQuery({
       baseUrl: this.baseUrl,
-      prepareHeaders: (headers) => {
+      prepareHeaders: async (headers, aps) => {
+        const { store } = await import('./store');
         headers.append(
           'Authorization',
           'Bearer ' +
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJJZCI6NCwiaWF0IjoxNjYxOTg4Njc0LCJleHAiOjE2NjE5OTIyNzR9.kV8TkIATrXF81hGfHpl225YmYVnRY_fAU4G8JPA2RDQ',
+            (aps as unknown as typeof store).getState().authSlice.accessToken,
         );
         return headers;
       },
     });
+    const result = await rawBaseQuery(args, api, extraOptions);
 
-    return rawBaseQuery(args, api, extraOptions);
+    return result;
   };
 }
+const mutex = new Mutex();
+export const authQuery = new DynamicBaseQuery('auth');
+
 export class StaticQueries {
   static readonly queue = new DynamicBaseQuery('queue');
 

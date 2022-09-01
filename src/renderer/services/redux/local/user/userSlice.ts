@@ -46,16 +46,16 @@ const userSlice = createSlice({
       state: User,
       action: PayloadAction<{ serverLocation: string; memberId: number }>,
     ) => {
-      state.clinic?.push({
+      state.clinic.push({
         name: 'Clinic' + (Math.random() * 100).toString(),
         serverLocation: action.payload.serverLocation,
         clinicId: Math.random() * 100,
         memberId: action.payload.memberId,
       });
-      if (state.clinic)
-        state.selectedClinic = state.clinic.findIndex(
-          (cli) => cli == state.clinic[state.clinic.length - 1],
-        );
+
+      state.selectedClinic = state.clinic.findIndex(
+        (cli) => cli == state.clinic[state.clinic.length - 1],
+      );
     },
   },
 });
