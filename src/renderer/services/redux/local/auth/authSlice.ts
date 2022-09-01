@@ -1,5 +1,4 @@
-import { firstUser } from '@api/fake';
-import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import authApi from './authApi';
 
 const initialState: {
@@ -26,6 +25,8 @@ const authSlice = createSlice({
     builder.addMatcher(
       authApi.endpoints.register.matchFulfilled,
       (state, { payload }) => {
+        console.log('match');
+        console.log(payload);
         state.accessToken = payload.access_token;
         state.refreshToken = payload.refresh_token;
       },

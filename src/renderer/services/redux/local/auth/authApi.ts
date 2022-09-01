@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { parseInviteKey } from '@helpers/crypto/parse';
+import { authQuery, StaticQueries } from '@redux/dynamic_queries';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { addNewClinic } from '../user/userSlice';
+import { setTokens } from './authSlice';
 
 const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/auth' }),
+  baseQuery: authQuery.query,
   endpoints: (builder) => ({
+    getHello: builder.mutation<{ secretKey: string }, void>({
+      query: () => ({ url: ``, method: 'POST' }),
+    }),
     register: builder.mutation<
       {
         secretKey: string;
@@ -27,11 +34,30 @@ const authApi = createApi({
     >({
       query: ({ invKey, body }) => {
         return {
-          url: `/register?key=${invKey}`,
+          url: `/register` + (invKey ? `?key=${invKey}` : ''),
           method: 'POST',
           body: { ...body },
-          cache: 'no-cache',
         };
+      },
+      onQueryStarted: async (state, { queryFulfilled, dispatch }) => {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(
+            addNewClinic({
+              memberId: data.id,
+              serverLocation: parseInviteKey(state.invKey ?? '127.0.0.1')
+                .location,
+            }),
+          );
+          dispatch(
+            setTokens({
+              accessToken: data.access_token,
+              refreshToken: data.refresh_token,
+            }),
+          );
+        } catch (e) {
+          console.log(e);
+        }
       },
     }),
     connectMember: builder.mutation<
@@ -48,11 +74,14 @@ const authApi = createApi({
           url: '/login',
           method: 'POST',
           body: { ...body },
-          cache: 'no-cache',
         };
       },
     }),
   }),
 });
 export default authApi;
-export const { useRegisterMutation, useConnectMemberMutation } = authApi;
+export const {
+  useRegisterMutation,
+  useConnectMemberMutation,
+  useGetHelloMutation,
+} = authApi;
