@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import authApi from './authApi';
 
 const initialState: Partial<{
@@ -33,6 +33,13 @@ const authSlice = createSlice({
       (state, { payload }) => {
         state.accessToken = payload.access_token;
         state.refreshToken = payload.refresh_token;
+      },
+    );
+    builder.addMatcher(
+      authApi.endpoints.disconnectMember.matchFulfilled,
+      (state, { payload, meta }) => {
+        state.accessToken = undefined;
+        state.refreshToken = undefined;
       },
     );
   },
