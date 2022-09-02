@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { PermKeys, RoleBrief } from '@models/server.models';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { PermKeys, Role, RoleBrief } from '@models/server.models';
+import { StaticQueries } from '@redux/dynamic_queries';
+import { createApi } from '@reduxjs/toolkit/dist/query/react';
 
 const roleApi = createApi({
   reducerPath: 'roleApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/clinic/role' }),
-  tagTypes: ['role'],
+  baseQuery: StaticQueries.roles.query,
+  tagTypes: ['roles'],
   endpoints: (builder) => ({
     //TODO change types to the correct ones
-    getBriefRoles: builder.query<RoleBrief, void>({
+    getBriefRoles: builder.query<RoleBrief[], void>({
       query: () => '',
-      providesTags: ['role'],
+      providesTags: ['roles'],
     }),
     getRoles: builder.query<
       {
@@ -21,11 +22,13 @@ const roleApi = createApi({
         permissions?: PermKeys[];
         masterRole?: RoleBrief;
         slaveRole?: RoleBrief;
-      },
+      }[],
       void
     >({
       query: () => '/roles',
-      providesTags: ['role'],
+    }),
+    getRoleById: builder.query<Role, number>({
+      query: (roleId) => `/${roleId}`,
     }),
     createNewRole: builder.mutation<
       any,
@@ -39,14 +42,14 @@ const roleApi = createApi({
       query: (body) => {
         return { url: '/create', method: 'POST', body: { ...body } };
       },
-      invalidatesTags: ['role'],
+      invalidatesTags: ['roles'],
     }),
-    //FIXME make the url dynamic to insert id
-    UpdateRole: builder.mutation<void, number[]>({
+
+    UpdateRole: builder.mutation<void, number>({
       query: (body) => {
-        return { url: '', method: 'PATCH', body: { ...body } };
+        return { url: `?id=${body}`, method: 'PATCH' };
       },
-      invalidatesTags: ['role'],
+      invalidatesTags: ['roles'],
     }),
   }),
 });
@@ -56,4 +59,5 @@ export const {
   useGetBriefRolesQuery,
   useGetRolesQuery,
   useUpdateRoleMutation,
+  useGetRoleByIdQuery,
 } = roleApi;
