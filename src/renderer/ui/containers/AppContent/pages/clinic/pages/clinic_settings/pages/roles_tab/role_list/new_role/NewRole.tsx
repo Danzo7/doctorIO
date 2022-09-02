@@ -1,8 +1,10 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
+import { useCreateNewRoleMutation } from '@redux/clinic/rbac/role/roleApi';
 import add from 'toSvg/add.svg?icon';
 interface NewRoleProps {}
 export default function NewRole({}: NewRoleProps) {
+  const [CreateNewRole] = useCreateNewRoleMutation();
   return (
     <TextButton
       Icon={add}
@@ -13,6 +15,9 @@ export default function NewRole({}: NewRoleProps) {
       radius={7}
       borderColor={color.border_color}
       padding={'15px'}
+      onPress={() => {
+        CreateNewRole({ name: 'New role', description: '', permissions: [] });
+      }}
     />
   );
 }
