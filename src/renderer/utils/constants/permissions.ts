@@ -47,16 +47,16 @@ export const PERMISSIONS: Permission<PermKeys>[] = [
     name: 'Add drugs',
     description: 'can Add a drug to the drugs list ',
   },
-  {
-    permKey: 'CAN_VIEW_CLINIC_INSIGHT',
-    name: 'View clinic insight',
-    description: 'can view clinic insight and analyses',
-  },
-  {
-    permKey: 'CAN_MANAGE_DATA_COLLECTION',
-    name: 'Manage Data Collections',
-    description: 'can Manage Data Collections',
-  },
+  // {
+  //   permKey: 'CAN_VIEW_CLINIC_INSIGHT',
+  //   name: 'View clinic insight',
+  //   description: 'can view clinic insight and analyses',
+  // },
+  // {
+  //   permKey: 'CAN_MANAGE_DATA_COLLECTION',
+  //   name: 'Manage Data Collections',
+  //   description: 'can Manage Data Collections',
+  // },
   {
     permKey: 'CAN_VIEW_RECORDS',
     name: 'View medical records',
@@ -81,6 +81,11 @@ export const PERMISSIONS: Permission<PermKeys>[] = [
     permKey: 'CAN_HAVE_MESSAGES',
     name: 'Use messages',
     description: 'allow member to send and receive messages ',
+  },
+  {
+    permKey: 'CAN_MANAGE_QUEUE',
+    name: 'Manage queue',
+    description: 'allow member to manage queue ', //TODO update description
   },
 ];
 export const rules: Permission<Rulekeys>[] = [
