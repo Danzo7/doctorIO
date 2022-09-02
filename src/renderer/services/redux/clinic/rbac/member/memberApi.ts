@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { MemberBrief, RoleBrief } from '@models/server.models';
+import { Member, MemberBrief, PermKeys } from '@models/server.models';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 
 const memberApi = createApi({
@@ -11,7 +11,25 @@ const memberApi = createApi({
       query: () => '',
       providesTags: ['members'],
     }),
+
+    getMemberById: builder.query<MemberBrief, number>({
+      query: (roleId) => `/${roleId}`,
+    }),
+    getMemberDetail: builder.query<Member, number>({
+      query: (roleId) => `/detail?id=${roleId}`,
+    }),
+    getMyMemberDetail: builder.query<
+      { permissions: PermKeys[]; lvl: number },
+      void
+    >({ query: () => '/me/permissions' }),
+    getMyPermission: builder.query<Member, void>({ query: () => '/me/' }),
   }),
 });
 export default memberApi;
-export const { useGetMembersQuery } = memberApi;
+export const {
+  useGetMembersQuery,
+  useGetMyPermissionQuery,
+  useGetMemberByIdQuery,
+  useGetMemberDetailQuery,
+  useGetMyMemberDetailQuery,
+} = memberApi;
