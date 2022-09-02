@@ -35,19 +35,20 @@ const StrictModeDroppable = ({ children, ...props }: DroppableProps) => {
 };
 
 export default function RoleList({}: RoleListProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
-  // REDUX fetch roles
   const { data, isLoading, isFetching, isSuccess, error } =
     useGetBriefRolesQuery();
 
-  //FEATURE implement addNewRoleModal and new Role function
   return (
     <div className={`role-list`}>
-      <NewRole />
+      {
+        //FIXME  isAllowed check
+        <NewRole />
+      }
 
       <div className="content-list">
-        {isLoading || isFetching ? (
+        {isLoading ? (
           <LoadingSpinner />
         ) : isSuccess ? (
           data.map((role, index) => (
