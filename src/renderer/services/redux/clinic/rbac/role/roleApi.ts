@@ -3,6 +3,7 @@ import { PermKeys, Role, RoleBrief } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import memberApi from '../member/memberApi';
+import roleSettingSlice, { setRoleSettings } from './roleSettingSlice';
 
 const roleApi = createApi({
   reducerPath: 'roleApi',
@@ -26,9 +27,18 @@ const roleApi = createApi({
       void
     >({
       query: () => '/roles',
+      providesTags: ['roles'],
     }),
     getRoleById: builder.query<Role, number>({
       query: (roleId) => `/${roleId}`,
+      // keepUnusedDataFor: 0,
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+        } catch (err) {
+          //console.log(err);
+        }
+      },
     }),
     createNewRole: builder.mutation<
       any,
@@ -111,9 +121,10 @@ export default roleApi;
 export const {
   useCreateNewRoleMutation,
   useGetBriefRolesQuery,
-  useGetRolesQuery,
+
   useUpdateRoleMutation,
   useGetRoleByIdQuery,
+  useLazyGetRoleByIdQuery,
   useAssignRoleMutation,
   useRevokeRoleMutation,
   useDeleteRoleMutation,

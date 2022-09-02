@@ -3,6 +3,9 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import usePrompt from '@libs/HistoryBlocker';
 import { Role } from '@models/server.models';
+import roleApi from '@redux/clinic/rbac/role/roleApi';
+import { setRoleSettings } from '@redux/clinic/rbac/role/roleSettingSlice';
+import store, { useAppDispatch } from '@store';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import PermissionItem from '../permission_list/Permission_item';
@@ -21,28 +24,17 @@ export default function RoleSettingGeneral({
   const {
     control,
     reset,
+    watch,
     formState: { isDirty },
   } = useForm<Inputs>({
     defaultValues: { name, description },
+    mode: 'onChange',
   });
   useEffect(() => {
-    reset({ name, description });
+    reset({ name, description }, { keepDirty: true });
   }, [name, description, reset]);
-
-  usePrompt(
-    'are you sure about that !!!',
-    ({ closeOverlay: closeOVerlay, dismiss }) => (
-      <TextButton
-        text="OK"
-        onPress={() => {
-          dismiss();
-          closeOVerlay();
-        }}
-      />
-    ),
-    isDirty,
-  );
-
+  const dispatch = useAppDispatch();
+  watch();
   return (
     <div className="role-setting-general">
       <div className="role-setting-general-inputs">
@@ -51,12 +43,29 @@ export default function RoleSettingGeneral({
           type={'text'}
           name={'name'}
           control={control}
+          onChange={(v) => {
+            console.log('name change');
+            dispatch(
+              setRoleSettings({
+                name: v,
+                isDirty,
+              }),
+            );
+          }}
         />
         <Input
           label="Description"
           type={'text'}
           name={'description'}
           control={control}
+          onChange={(v) => {
+            dispatch(
+              setRoleSettings({
+                description: v,
+                isDirty,
+              }),
+            );
+          }}
         />
         <BorderSeparator direction="horizontal" />
       </div>
