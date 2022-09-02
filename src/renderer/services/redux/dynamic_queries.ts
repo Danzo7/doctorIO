@@ -116,12 +116,15 @@ export class StaticQueries {
 
   static readonly patient = new DynamicBaseQuery('record/patient');
 
+  static readonly roles = new DynamicBaseQuery('clinic/role');
+
   static async initAll() {
     if (await this.queue.loadUrl()) {
       this.patient.loadUrl();
       this.appointment.loadUrl();
       this.medicalHistory.loadUrl();
       this.medicalDocument.loadUrl();
+      this.roles.loadUrl();
     }
   }
 
@@ -131,15 +134,5 @@ export class StaticQueries {
     StaticQueries.medicalHistory.reset();
     StaticQueries.medicalDocument.reset();
     StaticQueries.patient.reset();
-  }
-
-  static async refreshAll() {
-    if (await this.queue.loadUrl()) {
-      this.appointment.loadUrl();
-      this.medicalHistory.loadUrl();
-      this.medicalDocument.loadUrl();
-      this.patient.loadUrl();
-      return true;
-    } else return false;
   }
 }
