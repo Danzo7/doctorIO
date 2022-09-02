@@ -66,7 +66,7 @@ type InputProps<
   children?: ReactNode;
   placeholder?: string;
   fillContainer?: true;
-  onChange?: (value: TFieldValues) => void;
+  onChange?: (value: FieldPathValue<TFieldValues, TName>) => void;
   grow?: boolean;
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
   disabled?: boolean;
@@ -215,12 +215,17 @@ export default function Input<T extends FieldValues = FieldValues>({
                   );
                 }
                 if (typeof type === 'string') {
+                  const { onChange: onChanged, ...others } = field;
                   return (
                     <input
                       placeholder={placeholder}
                       type={type as HTMLInputTypeAttribute}
                       disabled={disabled}
-                      {...field}
+                      onChange={(e) => {
+                        onChanged(e.target.value);
+                        onChange?.(e.target.value as any);
+                      }}
+                      {...others}
                       ref={ref}
                     ></input>
                   );
