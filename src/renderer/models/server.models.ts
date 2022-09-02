@@ -26,15 +26,11 @@ type Role = {
   name: string;
   priority: number;
   description?: string;
-  permissions?: PermKeys[];
+  permissions: PermKeys[];
   masterRole?: RoleBrief;
   slaveRole?: RoleBrief;
 };
-type RoleBrief = {
-  id: number;
-  name: string;
-  priority: number;
-};
+
 type PermKeys =
   | 'CAN_HAVE_ADMIN'
   | 'CAN_ADD_MEMBERS'
