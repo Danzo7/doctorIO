@@ -5,16 +5,30 @@ import colors from '@colors';
 import './style/index.scss';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
+import TextButton from '@components/buttons/text_button';
+import { useRefreshMutation } from '@redux/local/auth/authApi';
+import { authQuery } from '@redux/dynamic_queries';
+import store from '@store';
+import { setTokens } from '@redux/local/auth/authSlice';
 interface SearchProfileProps {
   avatar?: string;
   alt: string;
 }
 export default function SearchProfile({ avatar, alt }: SearchProfileProps) {
   const { open } = useOverlay();
+  const [Refresh, result] = useRefreshMutation();
+
   //REFACTOR:remove imgSrc
+
   return (
     <div className="search-profile">
       <UserProfileStatus width={40} status={true} imgSrc={avatar} alt={alt} />
+      <TextButton
+        text="Refresh"
+        onPress={() => {
+          authQuery.loadUrl().then(() => Refresh());
+        }}
+      />
       <div>
         <IconicButton
           Icon={Search}
