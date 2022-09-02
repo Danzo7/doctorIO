@@ -38,7 +38,7 @@ export default function SmallRoleList({
           key={role.id.toString() + index}
           canRemove={isAllowed('CAN_MANAGE_MEMBERS', permissions)}
           onClick={() => {
-            deleteRole(role);
+            // deleteRole(role);
           }}
         />
       ))}
