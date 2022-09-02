@@ -20,10 +20,15 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
+      authApi.endpoints.refresh.matchFulfilled,
+      (state, { payload }) => {
+        state.accessToken = payload.access_token;
+        state.refreshToken = payload.refresh_token;
+      },
+    );
+    builder.addMatcher(
       authApi.endpoints.register.matchFulfilled,
       (state, { payload }) => {
-        console.log('match');
-        console.log(payload);
         state.accessToken = payload.access_token;
         state.refreshToken = payload.refresh_token;
       },
