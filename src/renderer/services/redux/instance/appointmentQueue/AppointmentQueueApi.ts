@@ -153,7 +153,7 @@ const appointmentQueueApi = createApi({
     }),
     notifyQueue: builder.mutation({
       query: (data: { roleId: number; position: number }) => ({
-        url: `/${data.roleId}/state/notify`,
+        url: `/state/notify`,
         method: 'PATCH',
         body: { position: data.position },
       }),
@@ -161,7 +161,7 @@ const appointmentQueueApi = createApi({
     }),
     progressQueueState: builder.mutation({
       query: (data: { roleId: number; position: number }) => ({
-        url: `/${data.roleId}/state/progress`,
+        url: `/state/progress`,
         method: 'PATCH',
         body: { position: data.position },
       }),
