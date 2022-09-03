@@ -40,6 +40,7 @@ const connectionStateSlice = createSlice({
 export const disconnect = (dispatch: Dispatch) => {
   Promise.resolve(dispatch(setSelectedServer())).then(() => {
     dispatch(connectionStateSlice.actions.disconnect());
+    dispatch({ type: 'REST' });
   });
 };
 export const connect = (dispatch: Dispatch, selectedIndex: number) => {
