@@ -7,9 +7,7 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import TextButton from '@components/buttons/text_button';
 import { useRefreshMutation } from '@redux/local/auth/authApi';
-import { authQuery } from '@redux/dynamic_queries';
-import store from '@store';
-import { setTokens } from '@redux/local/auth/authSlice';
+import { StaticQueries } from '@redux/dynamic_queries';
 interface SearchProfileProps {
   avatar?: string;
   alt: string;
@@ -26,7 +24,7 @@ export default function SearchProfile({ avatar, alt }: SearchProfileProps) {
       <TextButton
         text="Refresh"
         onPress={() => {
-          authQuery.loadUrl().then(() => Refresh());
+          StaticQueries.authQuery.loadUrl().then(() => Refresh());
         }}
       />
       <div>

@@ -13,11 +13,11 @@ import { useAppDispatch, useAppSelector } from '@store';
 import { addNewClinic } from '@redux/local/user/userSlice';
 import { useRef } from 'react';
 import { Overlay } from '@libs/overlay';
-import { authQuery } from '@redux/dynamic_queries';
 import { nanoid } from '@reduxjs/toolkit';
 import LoadingSpinner from '@components/loading_spinner';
 import { ServerError } from '@models/instance.model';
 import CopyField from '@components/copy_field';
+import { StaticQueries } from '@redux/dynamic_queries';
 interface Inputs {
   key: string;
 }
@@ -44,7 +44,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
     try {
       const location =
         key && key.length > 0 ? parseInviteKey(key).location : '127.0.0.1:3000';
-      await authQuery.setUrl(location);
+      await StaticQueries.authQuery.setUrl(location);
       register({
         invKey: key,
         body: {
