@@ -43,7 +43,8 @@
     "UI",
     "API",
     "FEATURE",
-    "DOC"
+    "DOC",
+    "UTIL"
   ],
 
   "todo-tree.highlights.customHighlight": {
@@ -106,6 +107,13 @@
       "foreground": "white",
       "iconColour": "darkturquoise",
       "icon": "file"
+    },
+     "UTIL": {
+      "background": "darkturquoise",
+      "foreground": "white",
+      "iconColour": "darkturquoise",
+      "icon": "file"
     }
+  
   }
 }

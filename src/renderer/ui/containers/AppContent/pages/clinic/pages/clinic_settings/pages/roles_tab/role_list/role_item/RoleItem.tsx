@@ -1,6 +1,7 @@
 import './style/index.scss';
 import { RoleBrief } from '@models/server.models';
 import { useSearchParams } from 'react-router-dom';
+import roleApi from '@redux/clinic/rbac/role/roleApi';
 
 interface RoleItemProps {
   selected: boolean;
@@ -11,6 +12,7 @@ function RoleItem({ id, name, selected }: RoleBrief & RoleItemProps) {
     <div
       onClick={() => {
         setSearchParams({ roleId: id.toString() });
+        roleApi.util.resetApiState();
       }}
       className={`role-item${selected ? ' selected' : ''}`}
     >
