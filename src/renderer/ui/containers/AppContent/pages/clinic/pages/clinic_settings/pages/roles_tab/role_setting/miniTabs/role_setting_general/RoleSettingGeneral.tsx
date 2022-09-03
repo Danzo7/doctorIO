@@ -1,9 +1,14 @@
+import color from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
+import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
+import { mapIndexFromPermissions } from '@helpers/permission.helper';
 import usePrompt from '@libs/HistoryBlocker';
 import { Role } from '@models/server.models';
-import roleApi from '@redux/clinic/rbac/role/roleApi';
+import roleApi, {
+  useUpdateRoleMutation,
+} from '@redux/clinic/rbac/role/roleApi';
 import { setRoleSettings } from '@redux/clinic/rbac/role/roleSettingSlice';
 import store, { useAppDispatch } from '@store';
 import { useEffect } from 'react';
@@ -25,16 +30,21 @@ export default function RoleSettingGeneral({
     control,
     reset,
     watch,
-    formState: { isDirty },
+    formState: { isDirty, dirtyFields },
   } = useForm<Inputs>({
     defaultValues: { name, description },
     mode: 'onChange',
   });
-  useEffect(() => {
-    reset({ name, description }, { keepDirty: true });
-  }, [name, description, reset]);
+
   const dispatch = useAppDispatch();
-  watch();
+  dispatch(
+    setRoleSettings({
+      name: watch('name'),
+      description: watch('description'),
+      isDirty,
+    }),
+  );
+  console.log('dirtyFields :', dirtyFields);
   return (
     <div className="role-setting-general">
       <div className="role-setting-general-inputs">
@@ -43,29 +53,12 @@ export default function RoleSettingGeneral({
           type={'text'}
           name={'name'}
           control={control}
-          onChange={(v) => {
-            console.log('name change');
-            dispatch(
-              setRoleSettings({
-                name: v,
-                isDirty,
-              }),
-            );
-          }}
         />
         <Input
           label="Description"
           type={'text'}
           name={'description'}
           control={control}
-          onChange={(v) => {
-            dispatch(
-              setRoleSettings({
-                description: v,
-                isDirty,
-              }),
-            );
-          }}
         />
         <BorderSeparator direction="horizontal" />
       </div>

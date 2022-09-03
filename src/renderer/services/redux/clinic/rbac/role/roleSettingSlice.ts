@@ -23,7 +23,6 @@ const roleSettingSlice = createSlice({
       if (payload.permissions != undefined)
         state.permissions = payload.permissions;
       state.isDirty = payload.isDirty;
-      console.log('state dirty : ', state.isDirty);
     },
   },
   extraReducers: (builder) => {
@@ -37,6 +36,14 @@ const roleSettingSlice = createSlice({
         state.description = payload.description;
 
         state.permissions = payload.permissions;
+        state.isDirty = false;
+      },
+    );
+    builder.addMatcher(
+      roleApi.endpoints.UpdateRole.matchFulfilled,
+      (state, { payload }) => {
+        console.log('update matcher');
+
         state.isDirty = false;
       },
     );
