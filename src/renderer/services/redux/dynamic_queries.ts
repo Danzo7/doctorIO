@@ -8,7 +8,12 @@ import {
   BaseQueryFn,
 } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
 import { Mutex } from 'async-mutex';
-import { connected, unreachable } from './local/connectionStateSlice';
+import {
+  connected,
+  disconnect,
+  unreachable,
+} from './local/connectionStateSlice';
+export const mutex = new Mutex();
 
 class DynamicBaseQuery {
   resource: string;
@@ -35,7 +40,6 @@ class DynamicBaseQuery {
       store.dispatch(unreachable());
       return undefined;
     }
-
     this.baseUrl = 'http://' + url + '/' + this.resource + '/';
     return this.baseUrl;
   }
@@ -68,6 +72,8 @@ class DynamicBaseQuery {
     api: BaseQueryApi,
     extraOptions: any,
   ) => {
+    await mutex.waitForUnlock();
+
     if (this.baseUrl == undefined)
       return {
         error: {
@@ -97,15 +103,70 @@ class DynamicBaseQuery {
         return headers;
       },
     });
-    const result = await rawBaseQuery(args, api, extraOptions);
 
+    let result = await rawBaseQuery(args, api, extraOptions);
+    if (result.error?.status == 401) {
+      if (!mutex.isLocked()) {
+        const release = await mutex.acquire();
+        try {
+          const refreshBaseQuery = fetchBaseQuery({
+            baseUrl:
+              this.baseUrl.split('/' + this.resource + '/')[0] +
+              '/auth/refresh',
+            prepareHeaders: async (headers, aps) => {
+              const { store } = await import('./store');
+              const tokens = (aps as unknown as typeof store).getState()
+                .authSlice;
+              if (tokens.accessToken && tokens.refreshToken)
+                headers.append(
+                  'Authorization',
+                  'Bearer ' + tokens.refreshToken,
+                );
+              return headers;
+            },
+          });
+          console.log('refreshing ♻️....');
+
+          const refreshResult = await refreshBaseQuery(
+            { url: '', method: 'POST' },
+            api,
+            {},
+          );
+          if (
+            refreshResult.data &&
+            (refreshResult.data as any)?.access_token &&
+            (refreshResult.data as any)?.refresh_token
+          ) {
+            const { setTokens } = await import('./local/auth/authSlice');
+            console.log('refreshed 🌱.');
+            const tokens = refreshResult.data as any;
+            api.dispatch(
+              setTokens({
+                accessToken: tokens.access_token,
+                refreshToken: tokens.refresh_token,
+              }),
+            );
+            result = await rawBaseQuery(args, api, extraOptions);
+          } else {
+            const errMessage = (refreshResult.error?.data as any)?.message;
+            console.log('Lost the war ⚰️', errMessage);
+            disconnect(api.dispatch);
+          }
+        } finally {
+          release();
+        }
+      } else {
+        await mutex.waitForUnlock();
+        result = await rawBaseQuery(args, api, extraOptions);
+      }
+    }
     return result;
   };
 }
-const mutex = new Mutex();
-export const authQuery = new DynamicBaseQuery('auth');
 
 export class StaticQueries {
+  static readonly authQuery = new DynamicBaseQuery('auth');
+
   static readonly queue = new DynamicBaseQuery('queue');
 
   static readonly appointment = new DynamicBaseQuery('record/appointment');

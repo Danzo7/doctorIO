@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { parseInviteKey } from '@helpers/crypto/parse';
 import { authType } from '@models/auth.type';
-import { authQuery } from '@redux/dynamic_queries';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { StaticQueries } from '@redux/dynamic_queries';
+import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { disconnect } from '../connectionStateSlice';
 import { addNewClinic } from '../user/userSlice';
 
 const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: authQuery.query,
+  baseQuery: StaticQueries.authQuery.query,
   endpoints: (builder) => ({
     getHello: builder.mutation<{ secretKey: string }, void>({
       query: () => ({ url: ``, method: 'POST' }),
@@ -49,7 +49,7 @@ const authApi = createApi({
             }),
           );
           dispatch({ type: 'RESET' });
-          authQuery.discardUrl();
+          StaticQueries.authQuery.discardUrl();
         } catch (e) {
           console.log(e);
         }
