@@ -179,6 +179,10 @@ export class StaticQueries {
 
   static readonly roles = new DynamicBaseQuery('clinic/role');
 
+  static readonly members = new DynamicBaseQuery('clinic/member');
+
+  static readonly invitation = new DynamicBaseQuery('clinic/invite');
+
   static async initAll() {
     if (await this.queue.loadUrl()) {
       this.patient.loadUrl();
@@ -186,6 +190,8 @@ export class StaticQueries {
       this.medicalHistory.loadUrl();
       this.medicalDocument.loadUrl();
       this.roles.loadUrl();
+      this.members.loadUrl();
+      this.invitation.loadUrl();
     }
   }
 

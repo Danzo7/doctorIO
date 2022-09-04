@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { StaticQueries } from '@redux/dynamic_queries';
+import { createApi } from '@reduxjs/toolkit/dist/query/react';
 
 const invitationApi = createApi({
   reducerPath: 'invitationApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/clinic/invite' }),
+  baseQuery: StaticQueries.invitation.query,
   endpoints: (builder) => ({
     getInvitation: builder.query<
       {
@@ -17,7 +18,7 @@ const invitationApi = createApi({
       void
     >({ query: () => '' }),
     createInvitation: builder.mutation<
-      string,
+      { key: string },
       { type: 'JOIN' | 'RELINK'; roles?: number[]; relinkToId?: number }
     >({
       query: (body) => {
