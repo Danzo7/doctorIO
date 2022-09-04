@@ -1,4 +1,3 @@
-import { currentMemberPermissions } from '@api/fake';
 import DarkAddButton from '@components/buttons/dark_add_button';
 import LoadingSpinner from '@components/loading_spinner';
 import AddRoleTooltip from '@components/poppers/add_role_tooltip';
@@ -6,7 +5,7 @@ import { isAllowed } from '@helpers/permission.helper';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { RoleBrief } from '@models/server.models';
 import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
-import { useState } from 'react';
+
 import SmallRolePreview from '../small_role_preview';
 import './style/index.scss';
 interface SmallRoleListProps {
@@ -21,8 +20,8 @@ export default function SmallRoleList({
 }: SmallRoleListProps) {
   const { open, close } = useOverlay();
   const { data, isSuccess, isLoading } = useGetMyPermissionQuery();
-  const permissions = currentMemberPermissions; //REDUX getCurrentPermissions
-  console.log('data :', data);
+  if (isSuccess)
+    console.log('allowed', isAllowed('CAN_MANAGE_MEMBERS', data.permissions));
   return (
     <div className="role-list-small">
       {isLoading ? (

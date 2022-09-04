@@ -10,6 +10,10 @@ import { FIT_MODAL } from '@libs/overlay';
 import { MemberBrief } from '@models/server.models';
 import { format } from 'date-fns';
 import { DATE_ONLY } from '@constants/data_format';
+import {
+  useAssignRoleMutation,
+  useRevokeRoleMutation,
+} from '@redux/clinic/rbac/role/roleApi';
 
 export default function MemberItem({
   avatar,
@@ -20,7 +24,8 @@ export default function MemberItem({
   status,
 }: MemberBrief) {
   const { openTooltip, open } = useOverlay();
-
+  const [AssignRole, AssignResult] = useAssignRoleMutation();
+  const [RevokeRole, RevokeResult] = useRevokeRoleMutation();
   return (
     <div className="member-item">
       <div className="item-container">
@@ -41,7 +46,16 @@ export default function MemberItem({
         <div className="date-container">
           <span>{format(joinDate, DATE_ONLY)}</span>
         </div>
-        <SmallRoleList roleList={roles} />
+        <SmallRoleList
+          roleList={roles}
+          onAdd={(role) => {
+            //FIXME fetch error
+            AssignRole({ memberId: id, roleId: role.id });
+          }}
+          onDelete={(role) => {
+            RevokeRole({ memberId: id, roleId: role.id });
+          }}
+        />
       </div>
 
       <div className="option-menu">

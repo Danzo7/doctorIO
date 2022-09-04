@@ -6,10 +6,15 @@ import MemberFooter from './member_footer';
 import SmallRoleList from './small_role_list';
 import { MemberBrief } from '@models/server.models';
 import { blurWithin } from '@helpers/dom.helper';
+import {
+  useAssignRoleMutation,
+  useRevokeRoleMutation,
+} from '@redux/clinic/rbac/role/roleApi';
 
 function MembersPreview({ name, id, status, avatar, roles }: MemberBrief) {
   const [hideFooter, setHideFooter] = useState(true);
-
+  const [AssignRole, AssignResult] = useAssignRoleMutation();
+  const [RevokeRole, RevokeResult] = useRevokeRoleMutation();
   return (
     <div
       tabIndex={-1}
@@ -33,7 +38,18 @@ function MembersPreview({ name, id, status, avatar, roles }: MemberBrief) {
         />
         <div className="info-container">
           <span>{name}</span>
-          {<SmallRoleList roleList={roles} />}
+          {
+            <SmallRoleList
+              roleList={roles}
+              onAdd={(role) => {
+                //FIXME fetch error
+                AssignRole({ memberId: id, roleId: role.id });
+              }}
+              onDelete={(role) => {
+                RevokeRole({ memberId: id, roleId: role.id });
+              }}
+            />
+          }
         </div>
         <div className={`arrow-container`}>
           <UpArrow width={15} />
