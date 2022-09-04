@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Member, MemberBrief, PermKeys } from '@models/server.models';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { StaticQueries } from '@redux/dynamic_queries';
+import { createApi } from '@reduxjs/toolkit/dist/query/react';
 
 const memberApi = createApi({
   reducerPath: 'memberApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/clinic/member' }),
+  baseQuery: StaticQueries.members.query,
   tagTypes: ['members'],
   endpoints: (builder) => ({
     getMembers: builder.query<MemberBrief, void>({
@@ -13,16 +14,16 @@ const memberApi = createApi({
     }),
 
     getMemberById: builder.query<MemberBrief, number>({
-      query: (roleId) => `/${roleId}`,
+      query: (id) => `/${id}`,
     }),
     getMemberDetail: builder.query<Member, number>({
-      query: (roleId) => `/detail?id=${roleId}`,
+      query: (id) => `/detail?id=${id}`,
     }),
-    getMyMemberDetail: builder.query<
+    getMyPermission: builder.query<
       { permissions: PermKeys[]; lvl: number },
       void
     >({ query: () => '/me/permissions' }),
-    getMyPermission: builder.query<Member, void>({ query: () => '/me/' }),
+    getMyMemberDetail: builder.query<Member, void>({ query: () => '/me/' }),
   }),
 });
 export default memberApi;
@@ -32,4 +33,5 @@ export const {
   useGetMemberByIdQuery,
   useGetMemberDetailQuery,
   useGetMyMemberDetailQuery,
+  useLazyGetMemberByIdQuery,
 } = memberApi;
