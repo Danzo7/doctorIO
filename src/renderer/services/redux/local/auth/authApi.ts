@@ -66,10 +66,17 @@ const authApi = createApi({
           body: { ...body },
         };
       },
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          //console.log(err);
+        }
+      },
     }),
     disconnectMember: builder.mutation<boolean, null>({
       query: () => {
-        return { url: '/disconnect', method: 'POST', cache: 'no-cache' };
+        return { url: '/disconnect', method: 'POST' };
       },
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
