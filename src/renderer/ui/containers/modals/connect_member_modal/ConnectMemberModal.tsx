@@ -4,9 +4,7 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { parseInviteKey } from '@helpers/crypto/parse';
 import { useAppDispatch, useAppSelector } from '@store';
-import { useState } from 'react';
 import { Overlay } from '@libs/overlay';
 import { useConnectMemberMutation } from '@redux/local/auth/authApi';
 interface Inputs {
@@ -17,13 +15,12 @@ export default function ConnectMemberModal({}: ConnectMemberModalProps) {
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.user);
   const [ConnectMember, result] = useConnectMemberMutation();
-  const { control, handleSubmit, setValue, getValues } = useForm<{
+  const { control, handleSubmit } = useForm<{
     key: string;
   }>({
     mode: 'onSubmit',
   });
   const onSubmit: SubmitHandler<Inputs> = ({ key }) => {
-    console.log(key);
     let memId;
     if (userInfo.selectedClinic) {
       memId = userInfo.clinic[userInfo.selectedClinic].memberId;
@@ -49,6 +46,7 @@ export default function ConnectMemberModal({}: ConnectMemberModalProps) {
           alignSelf="center"
           padding={5}
           blank
+          type="submit"
         />
       }
     >
