@@ -41,7 +41,7 @@ export default function MemberItem({
         <div className="date-container">
           <span>{format(joinDate, DATE_ONLY)}</span>
         </div>
-        <SmallRoleList roleList={roles} memberId={id} />
+        <SmallRoleList roleList={roles} />
       </div>
 
       <div className="option-menu">
