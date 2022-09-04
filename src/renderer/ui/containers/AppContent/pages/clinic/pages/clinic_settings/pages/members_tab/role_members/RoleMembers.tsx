@@ -8,7 +8,7 @@ import './style/index.scss';
 
 export default function RoleMembers({ name, description, id }: RoleBrief) {
   const { data, isLoading, isSuccess, error } = useGetMembersQuery();
-  console.log('data :', data);
+
   const list = isSuccess
     ? data.filter(
         ({ roles }) => roles.find(({ id: rId }) => id == rId) != undefined,
