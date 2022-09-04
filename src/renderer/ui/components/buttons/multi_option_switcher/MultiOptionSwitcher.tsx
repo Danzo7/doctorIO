@@ -7,6 +7,7 @@ interface MultiOptionSwitcherProps {
   growOnselection?: boolean;
   noBorder?: boolean;
   noSep?: boolean;
+  backgroundColor?: string;
   onChange?: (selected: number, event?: MouseEvent<HTMLElement>) => void;
 }
 function MultiOptionSwitcher({
@@ -15,6 +16,7 @@ function MultiOptionSwitcher({
   growOnselection = false,
   noBorder = false,
   noSep = false,
+  backgroundColor,
   onChange,
 }: MultiOptionSwitcherProps) {
   const [selected, setSelected] = useState(defaultSelected);
@@ -27,6 +29,7 @@ function MultiOptionSwitcher({
       className="multi-option-switcher"
       css={{
         border: !noBorder ? `1px solid ${color.border_color}` : undefined,
+        backgroundColor: backgroundColor ? backgroundColor : undefined,
       }}
     >
       {textList.map((text, index) => (
