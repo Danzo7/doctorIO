@@ -1,64 +1,61 @@
 import { currentMemberPermissions } from '@api/fake';
 import DarkAddButton from '@components/buttons/dark_add_button';
+import LoadingSpinner from '@components/loading_spinner';
 import AddRoleTooltip from '@components/poppers/add_role_tooltip';
 import { isAllowed } from '@helpers/permission.helper';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { Role, RoleBrief } from '@models/server.models';
+import { RoleBrief } from '@models/server.models';
+import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
 import { useState } from 'react';
 import SmallRolePreview from '../small_role_preview';
 import './style/index.scss';
 interface SmallRoleListProps {
   roleList: RoleBrief[];
-  memberId?: number;
+  onAdd?: (role: RoleBrief) => void;
+  onDelete?: (role: RoleBrief) => void;
 }
 export default function SmallRoleList({
   roleList,
-  memberId,
+  onAdd,
+  onDelete,
 }: SmallRoleListProps) {
-  const [roles, setRoles] = useState(roleList);
   const { open, close } = useOverlay();
-  //REDUX RemoveRole(memberId,roleId)
+  const { data, isSuccess, isLoading } = useGetMyPermissionQuery();
   const permissions = currentMemberPermissions; //REDUX getCurrentPermissions
-  const addRole = (newRole: RoleBrief) => {
-    setRoles((prev) => {
-      return [...prev, newRole];
-    });
-    close();
-  }; //REDUX AddRole(memberId,roleId)
-  const deleteRole = (deletedRole: Role) => {
-    setRoles((prev) => {
-      return prev.filter((role) => role.name != deletedRole.name);
-    });
-  }; //REDUX RemoveRole(memberId,roleId)
+  console.log('data :', data);
   return (
     <div className="role-list-small">
-      {roles.map((role, index) => (
-        <SmallRolePreview
-          roleName={role.name}
-          key={role.id.toString() + index}
-          canRemove={isAllowed('CAN_MANAGE_MEMBERS', permissions)}
-          onClick={() => {
-            // deleteRole(role);
-          }}
-        />
-      ))}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        isSuccess &&
+        roleList.map((role, index) => (
+          <SmallRolePreview
+            roleName={role.name}
+            key={role.id.toString() + index}
+            canRemove={
+              isAllowed('CAN_MANAGE_MEMBERS', data.permissions) &&
+              data.lvl != undefined &&
+              data.lvl < role.priority
+            }
+            onClick={() => {
+              onDelete?.(role);
+            }}
+          />
+        ))
+      )}
 
-      {isAllowed('CAN_MANAGE_MEMBERS', permissions) && (
+      {isSuccess && isAllowed('CAN_MANAGE_MEMBERS', data.permissions) && (
         <DarkAddButton
           onPress={(e) => {
             if (e)
               open(
                 <AddRoleTooltip
-                  actionList={[
-                    {
-                      role: {
-                        name: 'Cool',
-                        id: 1,
-                        priority: 1,
-                      },
-                      onPress: addRole,
-                    },
-                  ]}
+                  onSelect={(role) => {
+                    onAdd?.(role);
+                    close();
+                  }}
+                  lvl={data.lvl}
                 />,
                 {
                   closeOnClickOutside: true,
