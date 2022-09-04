@@ -27,6 +27,11 @@ const memberApi = createApi({
     }),
     getMemberDetail: builder.query<Member, number>({
       query: (id) => `/detail?id=${id}`,
+      transformResponse: (
+        response: Omit<Member, 'joinDate'> & { joinDate: string },
+      ) => {
+        return { ...response, joinDate: parseISO(response.joinDate) };
+      },
     }),
     getMyPermission: builder.query<
       { permissions: PermKeys[]; lvl: number },
