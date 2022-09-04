@@ -7,4 +7,13 @@
     gap: 10px;
     background: $goodblack;
     border-radius: 7px;
+
+    > .tooltip-items {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 5px;
+         max-height: 300px;
+    overflow-y: auto;
+    }
 }

@@ -9,15 +9,4 @@ const Template: Story<ComponentProps<typeof AddRoleTooltip>> = (args) => (
   <AddRoleTooltip {...args} />
 );
 export const FirstStory = Template.bind({});
-FirstStory.args = {
-  actionList: [
-    {
-      role: {
-        name: 'Cool',
-        id: 1,
-        description: 'cool Role',
-        priority: 1,
-      },
-    },
-  ],
-};
+FirstStory.args = {};
