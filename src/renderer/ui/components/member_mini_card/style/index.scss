@@ -1,0 +1,31 @@
+@use '~styles/appColors' as *;
+.member-mini-card {
+      display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: $darkerseccolor;
+  align-items: center;
+  padding: 10px;
+  height: 52px;
+  border-radius: 17px;
+  cursor: pointer;
+  flex-grow: 1;
+  > .info-container {
+    gap: 1vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    > span {
+      color: $white;
+      font-weight: 600;
+      font-size: 15px;
+    }
+  }
+  > .avatars-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1vw;
+  }
+}
