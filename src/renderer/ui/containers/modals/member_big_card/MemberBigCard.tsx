@@ -4,41 +4,39 @@ import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import SmallRoleList from '@components/members_preview/small_role_list';
 import MemberActionControls from '@components/member_action_controls';
-import { Member, MemberBrief } from '@models/server.models';
+import { MemberBrief } from '@models/server.models';
 import { format } from 'date-fns';
 import { DATE_ONLY } from '@constants/data_format';
-import { members } from '@api/fake';
+import { useGetMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
+import LoadingSpinner from '@components/loading_spinner';
+import {
+  useAssignRoleMutation,
+  useRevokeRoleMutation,
+} from '@redux/clinic/rbac/role/roleApi';
 
 export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
-  //REDUX fetch members
-  const {
-    avatar,
-    status,
-    name,
-    age,
-    gender,
-    phone,
-    address,
-    joinDate,
-    roles,
-    addedBy,
-  } = members.filter(({ id: mId }) => id == mId)[0];
-  return (
+  const { data, isSuccess, isLoading, error } = useGetMemberDetailQuery(id);
+  const [AssignRole, AssignResult] = useAssignRoleMutation();
+  const [RevokeRole, RevokeResult] = useRevokeRoleMutation();
+
+  return isLoading ? (
+    <LoadingSpinner />
+  ) : isSuccess ? (
     <div className="member-big-card">
       <UserProfileStatus
-        imgSrc={avatar}
-        status={status}
+        imgSrc={data.avatar}
+        status={data.status}
         width={100}
-        alt={name + id}
+        alt={data.name + id}
       />
       <div className="fullName-id-container">
-        <span>{name}</span>
-        <span>#{id}</span>
+        <span>{data.name}</span>
+        <span>#{data.id}</span>
       </div>
       <TextPair
         first={{ text: 'Age', fontSize: 15, fontColor: color.text_gray }}
         second={{
-          text: age.toString(),
+          text: data.age.toString(),
           fontSize: 17,
           fontColor: color.white,
         }}
@@ -47,13 +45,13 @@ export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
       <TextPair
         first={{ text: 'Gender', fontSize: 15, fontColor: color.text_gray }}
         second={{
-          text: gender,
+          text: data.gender,
           fontSize: 17,
           fontColor: color.white,
         }}
         alignItems={'center'}
       />
-      {phone && (
+      {data.phone && (
         <TextPair
           first={{
             text: 'Phone number',
@@ -61,18 +59,18 @@ export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
             fontColor: color.text_gray,
           }}
           second={{
-            text: phone,
+            text: data.phone,
             fontSize: 17,
             fontColor: color.white,
           }}
           alignItems={'center'}
         />
       )}
-      {address && (
+      {data.address && (
         <TextPair
           first={{ text: 'Address', fontSize: 15, fontColor: color.text_gray }}
           second={{
-            text: address,
+            text: data.address,
             fontSize: 17,
             fontColor: color.white,
           }}
@@ -82,17 +80,17 @@ export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
       <TextPair
         first={{ text: 'Join date', fontSize: 15, fontColor: color.text_gray }}
         second={{
-          text: format(joinDate, DATE_ONLY),
+          text: format(data.joinDate, DATE_ONLY),
           fontSize: 17,
           fontColor: color.white,
         }}
         alignItems={'center'}
       />
-      {addedBy && (
+      {data.addedBy && (
         <TextPair
           first={{ text: 'Added by', fontSize: 15, fontColor: color.text_gray }}
           second={{
-            text: addedBy?.name,
+            text: data.addedBy?.name,
             fontSize: 17,
             fontColor: color.white,
           }}
@@ -101,9 +99,20 @@ export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
       )}
       <div className="role-container">
         <span>Role</span>
-        <SmallRoleList roleList={roles} />
+        <SmallRoleList
+          roleList={data.roles}
+          onAdd={(role) => {
+            //FIXME fetch error
+            AssignRole({ memberId: id, roleId: role.id });
+          }}
+          onDelete={(role) => {
+            RevokeRole({ memberId: id, roleId: role.id });
+          }}
+        />
       </div>
       <MemberActionControls showCard={false} id={id} />
     </div>
+  ) : (
+    <span>error when loading member detail</span>
   );
 }
