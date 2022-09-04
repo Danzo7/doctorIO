@@ -50,21 +50,26 @@ export default function CreateInvitationModal({}: CreateInvitationModalProps) {
   return (
     <ModalContainer
       onSubmit={handleSubmit((value) => {
-        if (selectedType == invTypes[0]) {
+        if (selectedType == invTypes[1]) {
           if (searchRef.current != value.searchField) {
             searchRef.current = value.searchField;
             const memId = Number(searchRef.current);
             if (!isNaN(memId)) GetMemberById(memId, false);
           }
         } else {
-          //TODO add Relink
+          const addedRoleId = addedRole.map((role) => role.id);
+          console.log('addedRoleId JOIN :', addedRoleId);
+          CreateInvitation({
+            type: 'JOIN',
+            roles: addedRoleId,
+          }).then((res) => setInvKey(res));
         }
       })}
       title={invKey ? 'Invitation Key' : 'Create an invitation key'}
       controls={
         <>
           {!invKey ? (
-            selectedType == invTypes[0] ? (
+            selectedType == invTypes[1] ? (
               <div className="result-div">
                 {result.isLoading ? (
                   <LoadingSpinner />
@@ -84,7 +89,7 @@ export default function CreateInvitationModal({}: CreateInvitationModalProps) {
                             );
                             console.log('addedRoleId :', addedRoleId);
                             CreateInvitation({
-                              type: 'JOIN',
+                              type: 'RELINK',
                               roles: addedRoleId,
                             }).then((res) => setInvKey(res));
                           }}
@@ -103,6 +108,7 @@ export default function CreateInvitationModal({}: CreateInvitationModalProps) {
                 alignSelf="center"
                 padding={5}
                 blank
+                type="submit"
               />
             )
           ) : (
@@ -131,7 +137,7 @@ export default function CreateInvitationModal({}: CreateInvitationModalProps) {
             defaultSelected={0}
             backgroundColor={color.darkersec_color}
           />
-          {selectedType == invTypes[0] ? (
+          {selectedType == invTypes[1] ? (
             <Input
               fillContainer
               placeholder="Select a member..."
