@@ -15,7 +15,7 @@ export default function DarkAddButton(
       padding={5}
       width={'fit-content'}
       borderColor={color.border_color}
-      Icon={<Add height={11} />}
+      Icon={<Add height={13} width={13} />}
       {...props}
     />
   );
