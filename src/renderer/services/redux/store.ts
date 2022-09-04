@@ -23,6 +23,7 @@ import invitationApi from './clinic/invitation/invitationApi';
 import memberApi from './clinic/rbac/member/memberApi';
 import roleApi from './clinic/rbac/role/roleApi';
 import roleSettingSlice from './clinic/rbac/role/roleSettingSlice';
+import smallRoleInvSlice from './local/small_role_invSlice';
 
 const persistUserConfig = {
   key: 'user',
@@ -39,6 +40,7 @@ const persistedUser = persistReducer(persistUserConfig, userSlice.reducer);
 const persistedAuth = persistReducer(persistAuthConfig, authSlice.reducer);
 
 const appReducer = combineReducers({
+  [smallRoleInvSlice.name]: smallRoleInvSlice.reducer,
   [roleSettingSlice.name]: roleSettingSlice.reducer,
   [roleApi.reducerPath]: roleApi.reducer,
   [memberApi.reducerPath]: memberApi.reducer,
