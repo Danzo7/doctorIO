@@ -12,8 +12,8 @@ export function parsePerms(perms: PermKeys[]) {
     if (splitter.length < 3) throw new Error('Invalid permission');
     const [_, action, ...subject] = splitter;
     return {
-      action: action as Actions,
-      subject: subject.join('_') as Subjects,
+      action: action.toLowerCase() as Actions,
+      subject: subject.join('_').toLowerCase() as Subjects,
     };
   });
 }
