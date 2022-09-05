@@ -1,5 +1,4 @@
-import { AbilityContext } from '@ability/Ability';
-import { useAbility } from '@casl/react';
+import { useAbility } from '@stores/abilityStore';
 import MenuOption from './MenuOption';
 import './style/index.scss';
 import menuI, { MenuKeys } from './svgList';
@@ -8,7 +7,7 @@ interface AppMenuProps {}
 
 function AppMenu({}: AppMenuProps) {
   const getItem = (item: MenuKeys) => ({ name: item, svg: menuI[item] });
-  const ability = useAbility(AbilityContext);
+  const ability = useAbility();
   const menuOptions = [
     getItem('home'),
     (ability.can('have', 'queue') || ability.can('manage', 'queue')) &&

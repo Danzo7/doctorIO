@@ -1,11 +1,11 @@
-import { AbilityContext, Can } from '@ability/Ability';
-import { useAbility } from '@casl/react';
+import Can from '@ability/index';
 import DarkAddButton from '@components/buttons/dark_add_button';
 import LoadingSpinner from '@components/loading_spinner';
 import AddRoleTooltip from '@components/poppers/add_role_tooltip';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { RoleBrief } from '@models/server.models';
 import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
+import { useAbility } from '@stores/abilityStore';
 
 import SmallRolePreview from '../small_role_preview';
 import './style/index.scss';
@@ -20,9 +20,10 @@ export default function SmallRoleList({
   onDelete,
 }: SmallRoleListProps) {
   const { open, close } = useOverlay();
-  const ability = useAbility(AbilityContext);
+  const ability = useAbility();
+  console.log(ability);
   const { data, isSuccess, isLoading } = useGetMyPermissionQuery();
-  if (isSuccess) console.log('allowed', ability.can('manage', 'members'));
+  if (isSuccess) console.log('allowed', ability?.can('manage', 'members'));
   return (
     <div className="role-list-small">
       {isLoading ? (

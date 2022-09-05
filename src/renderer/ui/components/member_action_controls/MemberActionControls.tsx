@@ -12,7 +12,7 @@ import WarningModal from '@containers/modals/warning_modal';
 import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { IS_PREVIEW } from '@constants/env';
 import { MemberBrief } from '@models/server.models';
-import { Can } from '@ability/Ability';
+import Can from '@ability/index';
 
 interface MemberActionControlsProps {
   dmId?: number;

@@ -2,8 +2,7 @@ import './index.scss';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
-import { AbilityContext } from '@ability/Ability';
-import { useAbility } from '@casl/react';
+import { useAbility } from '@stores/abilityStore';
 const Messages = lazy(() => import('./pages/messages'));
 const Clinic = lazy(() => import('./pages/clinic'));
 const HomeContent = lazy(() => import('./pages/home'));
@@ -16,7 +15,7 @@ const Statistics = lazy(() => import('./pages/statistics'));
 interface AppContentProps {}
 
 function AppContent({}: AppContentProps) {
-  const ability = useAbility(AbilityContext);
+  const ability = useAbility();
   return (
     <div className="AppContent">
       <Routes>
