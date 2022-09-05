@@ -11,9 +11,8 @@ import TextButton from '@components/buttons/text_button';
 import WarningModal from '@containers/modals/warning_modal';
 import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { IS_PREVIEW } from '@constants/env';
-import { isAllowed } from '@helpers/permission.helper';
 import { MemberBrief } from '@models/server.models';
-import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
+import { Can } from '@ability/Ability';
 
 interface MemberActionControlsProps {
   dmId?: number;
@@ -31,7 +30,6 @@ export default function MemberActionControls({
   const { open } = useOverlay();
   const { navigate } = useNavigation();
 
-  const { data, isSuccess, isLoading, error } = useGetMyPermissionQuery();
   return (
     <div className="member-action-controls">
       {showCard && (
@@ -48,9 +46,8 @@ export default function MemberActionControls({
           }}
         />
       )}
-      {isSuccess &&
-        isAllowed('CAN_HAVE_MESSAGES', data.permissions) &&
-        (dmId || notFriend) && (
+      {(dmId || notFriend) && (
+        <Can I="have" a="messages">
           <IconicButton
             Icon={Messages}
             afterBgColor={notFriend ? colors.cold_red : colors.light}
@@ -74,7 +71,8 @@ export default function MemberActionControls({
               else navigate(`${messagesRoutePath + dmId}`);
             }}
           />
-        )}
+        </Can>
+      )}
       <IconicButton
         Icon={Call_Icon}
         afterBgColor={colors.good_green}

@@ -108,14 +108,6 @@ export const DMs: DirectMessage[] = [
   },
 ];
 export const currentMember: Member = members[1];
-export const currentMemberPermissions: PermKeys[] = [
-  'CAN_HAVE_ADMIN',
-  'CAN_ADD_DRUGS',
-  'CAN_ADD_MEMBERS',
-  'CAN_ADD_PATIENT',
-  'CAN_HAVE_QUEUE',
-  'CAN_MANAGE_PATIENT',
-];
 
 export const clinic: Clinic = {
   clinicName: 'PAN',

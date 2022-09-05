@@ -1,7 +1,8 @@
+import { AbilityContext, Can } from '@ability/Ability';
+import { useAbility } from '@casl/react';
 import DarkAddButton from '@components/buttons/dark_add_button';
 import LoadingSpinner from '@components/loading_spinner';
 import AddRoleTooltip from '@components/poppers/add_role_tooltip';
-import { isAllowed } from '@helpers/permission.helper';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { RoleBrief } from '@models/server.models';
 import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
@@ -19,9 +20,9 @@ export default function SmallRoleList({
   onDelete,
 }: SmallRoleListProps) {
   const { open, close } = useOverlay();
+  const ability = useAbility(AbilityContext);
   const { data, isSuccess, isLoading } = useGetMyPermissionQuery();
-  if (isSuccess)
-    console.log('allowed', isAllowed('CAN_MANAGE_MEMBERS', data.permissions));
+  if (isSuccess) console.log('allowed', ability.can('manage', 'members'));
   return (
     <div className="role-list-small">
       {isLoading ? (
@@ -33,7 +34,7 @@ export default function SmallRoleList({
             roleName={role.name}
             key={role.id.toString() + index}
             canRemove={
-              isAllowed('CAN_MANAGE_MEMBERS', data.permissions) &&
+              ability.can('manage', 'members') &&
               data.lvl != undefined &&
               data.lvl < role.priority
             }
@@ -44,27 +45,29 @@ export default function SmallRoleList({
         ))
       )}
 
-      {isSuccess && isAllowed('CAN_MANAGE_MEMBERS', data.permissions) && (
-        <DarkAddButton
-          onPress={(e) => {
-            if (e)
-              open(
-                <AddRoleTooltip
-                  onSelect={(role) => {
-                    onAdd?.(role);
-                    close();
-                  }}
-                  lvl={data.lvl}
-                />,
-                {
-                  closeOnClickOutside: true,
-                  clickThrough: true,
-                  closeOnBlur: true,
-                  popperTarget: e.currentTarget,
-                },
-              );
-          }}
-        />
+      {isSuccess && (
+        <Can I="manage" a="members">
+          <DarkAddButton
+            onPress={(e) => {
+              if (e)
+                open(
+                  <AddRoleTooltip
+                    onSelect={(role) => {
+                      onAdd?.(role);
+                      close();
+                    }}
+                    lvl={data.lvl}
+                  />,
+                  {
+                    closeOnClickOutside: true,
+                    clickThrough: true,
+                    closeOnBlur: true,
+                    popperTarget: e.currentTarget,
+                  },
+                );
+            }}
+          />
+        </Can>
       )}
     </div>
   );

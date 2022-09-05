@@ -1,5 +1,5 @@
-import { currentMemberPermissions } from '@api/fake';
-import { isAllowed } from '@helpers/permission.helper';
+import { AbilityContext } from '@ability/Ability';
+import { useAbility } from '@casl/react';
 import MenuOption from './MenuOption';
 import './style/index.scss';
 import menuI, { MenuKeys } from './svgList';
@@ -7,17 +7,17 @@ import menuI, { MenuKeys } from './svgList';
 interface AppMenuProps {}
 
 function AppMenu({}: AppMenuProps) {
-  //REDUX getCurrentPermissions
-  const permissions = currentMemberPermissions;
   const getItem = (item: MenuKeys) => ({ name: item, svg: menuI[item] });
+  const ability = useAbility(AbilityContext);
   const menuOptions = [
     getItem('home'),
-    isAllowed('CAN_HAVE_QUEUE', permissions) && getItem('queue'),
-    isAllowed('CAN_HAVE_MESSAGES', permissions) && getItem('messages'),
-    //  isAllowed('canViewClinicInsight', permissions) && getItem('stats'),
-    isAllowed('CAN_VIEW_RECORDS', permissions) && getItem('records'),
-    //    isAllowed('canManageDataCollection', permissions) && getItem('database'),
-    isAllowed('CAN_MANAGE_CLINIC', permissions) && getItem('clinic'),
+    (ability.can('have', 'queue') || ability.can('manage', 'queue')) &&
+      getItem('queue'),
+    ability.can('have', 'messages') && getItem('messages'),
+    //  isAllowed('ability.canViewClinicInsight', permissions) && getItem('stats'),
+    ability.can('view', 'records') && getItem('records'),
+    //    isAllowed('ability.canManageDataCollection', permissions) && getItem('database'),
+    ability.can('manage', 'clinic') && getItem('clinic'),
     //  getItem('settings'),
   ].filter(Boolean) as { name: MenuKeys; svg: any }[];
 

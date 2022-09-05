@@ -1,7 +1,5 @@
 import LoadingSpinner from '@components/loading_spinner';
-import AppContent from '@containers/AppContent';
-import AppMenu from '@containers/AppMenu';
-import AppSidebar from '@containers/AppSidebar';
+
 import { NetworkError } from '@containers/modals/warning_modal';
 import MedicalSession from '@layers/medical_session';
 import { STOP_MODAL } from '@libs/overlay';
@@ -10,6 +8,7 @@ import { StaticQueries } from '@redux/dynamic_queries';
 import { useAppSelector } from '@store';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import AppLayout from './app_layout';
 
 interface MainLayerProps {}
 export default function MainLayer({}: MainLayerProps) {
@@ -27,16 +26,7 @@ export default function MainLayer({}: MainLayerProps) {
   ) : state == 'connected' ? (
     <Routes>
       <Route path="session" element={<MedicalSession />} />
-      <Route
-        path="*"
-        element={
-          <>
-            <AppMenu />
-            <AppContent />
-            <AppSidebar />
-          </>
-        }
-      />
+      <Route path="*" element={<AppLayout />} />
     </Routes>
   ) : (
     <ModalPortal {...STOP_MODAL}>

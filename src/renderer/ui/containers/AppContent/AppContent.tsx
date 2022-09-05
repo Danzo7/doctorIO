@@ -1,9 +1,9 @@
 import './index.scss';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-import { currentMemberPermissions } from '@api/fake';
-import { isAllowed } from '@helpers/permission.helper';
 import LoadingSpinner from '@components/loading_spinner';
+import { AbilityContext } from '@ability/Ability';
+import { useAbility } from '@casl/react';
 const Messages = lazy(() => import('./pages/messages'));
 const Clinic = lazy(() => import('./pages/clinic'));
 const HomeContent = lazy(() => import('./pages/home'));
@@ -16,22 +16,20 @@ const Statistics = lazy(() => import('./pages/statistics'));
 interface AppContentProps {}
 
 function AppContent({}: AppContentProps) {
-  //REDUX getCurrentPermissions
-  const permissions = currentMemberPermissions;
+  const ability = useAbility(AbilityContext);
   return (
     <div className="AppContent">
       <Routes>
-        {
-          <Route
-            path="/"
-            element={
-              <Suspense fallback={<LoadingSpinner />}>
-                <HomeContent />
-              </Suspense>
-            }
-          />
-        }
-        {isAllowed('CAN_HAVE_QUEUE', permissions) && (
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <HomeContent />
+            </Suspense>
+          }
+        />
+
+        {(ability.can('have', 'queue') || ability.can('manage', 'queue')) && (
           <Route
             path="queue"
             element={
@@ -41,7 +39,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('CAN_VIEW_RECORDS', permissions) && (
+        {ability.can('view', 'admin') && (
           <Route
             path="records/*"
             element={
@@ -51,7 +49,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('CAN_HAVE_MESSAGES', permissions) && (
+        {ability.can('have', 'messages') && (
           <Route
             path="messages/:category/*"
             element={
@@ -61,7 +59,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('CAN_MANAGE_CLINIC', permissions) && (
+        {ability.can('manage', 'clinic') && (
           <Route
             path="statistics"
             element={
@@ -71,7 +69,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('CAN_MANAGE_CLINIC', permissions) && (
+        {ability.can('manage', 'clinic') && (
           <Route
             path="data"
             element={
@@ -81,7 +79,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('CAN_HAVE_QUEUE', permissions) && (
+        {(ability.can('have', 'queue') || ability.can('manage', 'queue')) && (
           <Route
             path="queue"
             element={
@@ -91,7 +89,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {isAllowed('CAN_MANAGE_CLINIC', permissions) && (
+        {ability.can('manage', 'clinic') && (
           <Route
             path="clinic/*"
             element={
