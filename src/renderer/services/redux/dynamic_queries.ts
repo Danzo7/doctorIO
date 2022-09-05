@@ -67,6 +67,12 @@ class DynamicBaseQuery {
     this.baseUrl = undefined;
   };
 
+  takeUrl = (db: DynamicBaseQuery) => {
+    this.baseUrl = db.baseUrl
+      ? db.baseUrl.split('/' + db.resource + '/')[0] + '/' + this.resource + '/'
+      : undefined;
+  };
+
   query: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
     args: string | FetchArgs,
     api: BaseQueryApi,
@@ -184,15 +190,16 @@ export class StaticQueries {
   static readonly invitation = new DynamicBaseQuery('clinic/invite');
 
   static async initAll() {
-    if (await this.members.loadUrl()) {
+    if (await this.authQuery.loadUrl()) {
       //FIXME implement a better way to check if the server is running
-      this.queue.loadUrl();
-      this.patient.loadUrl();
-      this.appointment.loadUrl();
-      this.medicalHistory.loadUrl();
-      this.medicalDocument.loadUrl();
-      this.roles.loadUrl();
-      this.invitation.loadUrl();
+      this.members.takeUrl(this.authQuery);
+      this.queue.takeUrl(this.authQuery);
+      this.patient.takeUrl(this.authQuery);
+      this.appointment.takeUrl(this.authQuery);
+      this.medicalHistory.takeUrl(this.authQuery);
+      this.medicalDocument.takeUrl(this.authQuery);
+      this.roles.takeUrl(this.authQuery);
+      this.invitation.takeUrl(this.authQuery);
     }
   }
 
