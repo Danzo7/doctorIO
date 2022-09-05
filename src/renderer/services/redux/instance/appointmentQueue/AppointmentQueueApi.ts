@@ -16,8 +16,8 @@ const appointmentQueueApi = createApi({
   tagTypes: ['state', 'queue', 'item'],
   endpoints: (builder) => ({
     //GET
-    getQueueInfo: builder.query<AppointmentQueue, number>({
-      query: (roleId) => ``,
+    getQueueInfo: builder.query<AppointmentQueue, void>({
+      query: () => ``,
       providesTags: ['state', 'queue', 'item'],
       transformResponse: (
         response: Omit<AppointmentQueue, 'appointments' | 'selected'> & {
@@ -47,8 +47,8 @@ const appointmentQueueApi = createApi({
         };
       },
     }), //Avoid using this endpoint
-    getQueueAppointments: builder.query<AppointmentQueueItem[], number>({
-      query: (roleId) => `/item`,
+    getQueueAppointments: builder.query<AppointmentQueueItem[], void>({
+      query: () => `/item`,
       providesTags: ['item'],
       transformResponse: (
         response: (Omit<AppointmentQueueItem, 'date'> & { date: string })[],
@@ -59,8 +59,8 @@ const appointmentQueueApi = createApi({
         }));
       },
     }),
-    getQueueState: builder.query<QueueState, number>({
-      query: (roleId) => `/state`,
+    getQueueState: builder.query<QueueState, void>({
+      query: () => `/state`,
       providesTags: ['state'],
       transformResponse: ({
         selected,
@@ -77,11 +77,11 @@ const appointmentQueueApi = createApi({
         };
       },
     }),
-    getIsQueueOwner: builder.query<boolean, number>({
-      query: (roleId) => `/ownership`,
+    getIsQueueOwner: builder.query<boolean, void>({
+      query: () => `/ownership`,
     }),
-    getNextQueueItem: builder.query<AppointmentQueueItem, number>({
-      query: (roleId) => `/item/next`,
+    getNextQueueItem: builder.query<AppointmentQueueItem, void>({
+      query: () => `/item/next`,
       providesTags: ['state', 'item'],
       transformResponse: (
         response: Omit<AppointmentQueueItem, 'date'> & { date: string },
@@ -90,8 +90,8 @@ const appointmentQueueApi = createApi({
       },
     }),
     //POST
-    createQueue: builder.mutation<AppointmentQueue, number>({
-      query: (roleId: number) => ({ url: ``, method: 'POST' }),
+    createQueue: builder.mutation<AppointmentQueue, void>({
+      query: () => ({ url: ``, method: 'POST' }),
       invalidatesTags: ['state', 'queue', 'item'],
     }),
     addQueueAppointment: builder.mutation<
@@ -120,8 +120,8 @@ const appointmentQueueApi = createApi({
     }),
     //PATCH
     updateTest: builder.mutation({
-      query: (data: { roleId: number; position: number; test: Test }) => {
-        const { roleId, position, test } = data;
+      query: (data: { position: number; test: Test }) => {
+        const { position, test } = data;
         return {
           url: `/item`,
           method: 'PATCH',
@@ -138,14 +138,14 @@ const appointmentQueueApi = createApi({
       invalidatesTags: ['state'],
     }),
     pauseQueue: builder.mutation({
-      query: (roleId: number) => ({
+      query: () => ({
         url: `/state/pause`,
         method: 'PATCH',
       }),
       invalidatesTags: ['state'],
     }),
     resumeQueue: builder.mutation({
-      query: (roleId: number) => ({
+      query: () => ({
         url: `/state/idle`,
         method: 'PATCH',
       }),
@@ -168,14 +168,14 @@ const appointmentQueueApi = createApi({
       invalidatesTags: ['state'],
     }),
     notifyNext: builder.mutation({
-      query: (roleId: number) => ({
+      query: () => ({
         url: `/state/notify/next`,
         method: 'PATCH',
       }),
       invalidatesTags: ['state'],
     }),
     startNext: builder.mutation({
-      query: (roleId: number) => ({
+      query: () => ({
         url: `/state/start/next`,
         method: 'PATCH',
       }),
@@ -209,14 +209,14 @@ const appointmentQueueApi = createApi({
     }),
     //DELETE
     resetQueue: builder.mutation<AppointmentQueue, number>({
-      query: (roleId: number) => ({ url: ``, method: 'DELETE' }),
+      query: () => ({ url: ``, method: 'DELETE' }),
       invalidatesTags: ['state', 'queue', 'item'],
     }),
     deleteAppointment: builder.mutation<
       AppointmentQueueItem[],
       { roleId: number; appointmentId: number }
     >({
-      query: ({ roleId, appointmentId }) => {
+      query: ({ appointmentId }) => {
         return {
           url: `/item?appointmentId=${appointmentId}`,
           method: 'DELETE',

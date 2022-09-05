@@ -19,12 +19,12 @@ interface SmallClinicStatusProps {
 export default function SmallClinicStatus({
   hasViewClinic,
 }: SmallClinicStatusProps) {
-  const { data, isSuccess } = useGetQueueStateQuery(1);
+  const { data, isSuccess } = useGetQueueStateQuery();
   const [ResumeQueue] = useResumeQueueMutation();
   const [PauseQueue] = usePauseQueueMutation();
   const { navigate } = useNavigation();
-  const ownershipData = useGetIsQueueOwnerQuery(1);
-  const appointmentsQuery = useGetQueueAppointmentsQuery(1);
+  const ownershipData = useGetIsQueueOwnerQuery();
+  const appointmentsQuery = useGetQueueAppointmentsQuery();
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const isOwner = ownershipData.isSuccess ? ownershipData.data : undefined;
 

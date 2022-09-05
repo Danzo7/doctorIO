@@ -26,7 +26,7 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
   const [StartNext] = useStartNextMutation();
   const [notified, setNotified] = useState(false);
   const { data, isSuccess, isError, error, isFetching, isLoading } =
-    useGetNextQueueItemQuery(1);
+    useGetNextQueueItemQuery();
   const [ProgressQueueState] = useProgressQueueStateMutation();
 
   return isLoading && isFetching ? (

@@ -6,7 +6,7 @@ import colors from '@colors';
 import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 interface ShortStatsPanelProps {}
 export default function ShortStatsPanel({}: ShortStatsPanelProps) {
-  const appointmentsQuery = useGetQueueAppointmentsQuery(1);
+  const appointmentsQuery = useGetQueueAppointmentsQuery();
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const timeSortList = ['Today', 'Monthly'];
   const miniStatsList = [

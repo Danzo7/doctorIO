@@ -21,11 +21,11 @@ import LoadingSpinner from '@components/loading_spinner';
 interface AppointmentQueueSmallProps {}
 
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
-  const queueStateQuery = useGetQueueStateQuery(1);
-  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(1, {
+  const queueStateQuery = useGetQueueStateQuery();
+  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
   });
-  const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(1, {
+  const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(undefined, {
     skip: !isQueueOwnerQuery.isSuccess,
   });
   const [ResumeQueue] = useResumeQueueMutation();

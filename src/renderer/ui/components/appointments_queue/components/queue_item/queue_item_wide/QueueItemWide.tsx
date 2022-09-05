@@ -41,7 +41,7 @@ function QueueItemWide({
 }: QueueItemWideProps) {
   const { open, openTooltip, close } = useOverlay();
 
-  const { data: isOwner, isSuccess } = useGetIsQueueOwnerQuery(1);
+  const { data: isOwner, isSuccess } = useGetIsQueueOwnerQuery();
   const [deleteAppointment] = useDeleteAppointmentMutation();
 
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;

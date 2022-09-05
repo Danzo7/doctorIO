@@ -54,7 +54,7 @@ export default function AddMedicalTestModal({
       bloodType: formData.bloodType,
       Rh: formData.RH,
     };
-    updateTest({ roleId: 1, test: newTest, position: position });
+    updateTest({ test: newTest, position: position });
 
     Overlay.close();
   };
@@ -83,7 +83,7 @@ export default function AddMedicalTestModal({
           type={{ type: 'numeric', unit: '' }}
           label="Blood pressure"
           name="BloodPressure"
-          //FIXME min value on input type=numeric not working (shows NAN) 
+          //FIXME error : Expected number , received string
         />
         <Input
           type={{

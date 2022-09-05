@@ -22,8 +22,8 @@ import { AppointmentQueue } from '@models/instance.model';
 interface QueueControlsProps {}
 export default function QueueControls({}: QueueControlsProps) {
   const { open, close } = useOverlay();
-  const queueStateQuery = useGetQueueStateQuery(1);
-  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(1);
+  const queueStateQuery = useGetQueueStateQuery();
+  const isQueueOwnerQuery = useGetIsQueueOwnerQuery();
   const [PauseQueue] = usePauseQueueMutation();
   const [ResumeQueue] = useResumeQueueMutation();
 

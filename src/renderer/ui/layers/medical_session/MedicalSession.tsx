@@ -35,7 +35,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
     isSuccess: isSuccessState,
     isFetching: isFetchingState,
     error: errorState,
-  } = useGetQueueStateQuery(1);
+  } = useGetQueueStateQuery();
   const navigate = useNavigate();
   const queueState = state;
   const patientId =

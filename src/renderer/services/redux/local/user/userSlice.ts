@@ -31,7 +31,7 @@ const userSlice = createSlice({
       state.lastName = action.payload.lastName;
       state.phone = action.payload.phoneNumber;
     },
-    //TODO use another slice for connection status
+
     setSelectedServer: (
       state: User,
       action: PayloadAction<number | undefined>,
