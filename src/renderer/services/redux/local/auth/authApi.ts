@@ -49,7 +49,7 @@ const authApi = createApi({
             }),
           );
           dispatch({ type: 'RESET' });
-          StaticQueries.authQuery.discardUrl();
+          //  StaticQueries.authQuery.discardUrl();
         } catch (e) {
           console.log(e);
         }

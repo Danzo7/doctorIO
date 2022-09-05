@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Member, MemberBrief, PermKeys } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
+import { unreachable } from '@redux/local/connectionStateSlice';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { parseISO } from 'date-fns';
 
@@ -36,8 +37,19 @@ const memberApi = createApi({
     getMyPermission: builder.query<
       { permissions: PermKeys[]; lvl: number },
       void
-    >({ query: () => '/me/permissions' }),
-    getMyMemberDetail: builder.query<Member, void>({ query: () => '/me/' }),
+    >({
+      query: () => '/me/permissions',
+      onQueryStarted: async (state, { queryFulfilled, dispatch }) => {
+        try {
+          await queryFulfilled;
+        } catch (e) {
+          dispatch(unreachable());
+        }
+      },
+    }),
+    getMyMemberDetail: builder.query<Member, void>({
+      query: () => '/me/',
+    }),
   }),
 });
 export default memberApi;
