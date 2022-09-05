@@ -6,7 +6,7 @@ export default {
   component: PermissionList,
 };
 const Template: Story<ComponentProps<typeof PermissionList>> = (args) => (
-  <PermissionList {...args} />
+  <PermissionList />
 );
 export const FirstStory = Template.bind({});
 FirstStory.args = {};
