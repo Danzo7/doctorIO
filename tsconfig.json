@@ -23,7 +23,8 @@
       "@store": ["src/renderer/services/redux/index.ts"],
       "@redux/*": ["src/renderer/services/redux/*"],
       "@colors": ["src/renderer/assets/styles/color.ts"],
-      "@ability/*": ["src/renderer/services/ability/*"]
+      "@ability/*": ["src/renderer/services/ability/*"],
+      "@stores/*": ["src/renderer/services/zustand/*"]
     },
     "noEmit": false,
     "strict": true,
