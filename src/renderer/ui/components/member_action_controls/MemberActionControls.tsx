@@ -11,9 +11,9 @@ import TextButton from '@components/buttons/text_button';
 import WarningModal from '@containers/modals/warning_modal';
 import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { IS_PREVIEW } from '@constants/env';
-import { currentMemberPermissions } from '@api/fake';
 import { isAllowed } from '@helpers/permission.helper';
 import { MemberBrief } from '@models/server.models';
+import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
 
 interface MemberActionControlsProps {
   dmId?: number;
@@ -30,7 +30,8 @@ export default function MemberActionControls({
 }: MemberActionControlsProps & Pick<MemberBrief, 'id'>) {
   const { open } = useOverlay();
   const { navigate } = useNavigation();
-  const permissions = currentMemberPermissions; //REDUX getCurrentPermissions
+
+  const { data, isSuccess, isLoading, error } = useGetMyPermissionQuery();
   return (
     <div className="member-action-controls">
       {showCard && (
@@ -47,31 +48,33 @@ export default function MemberActionControls({
           }}
         />
       )}
-      {isAllowed('CAN_HAVE_MESSAGES', permissions) && (dmId || notFriend) && (
-        <IconicButton
-          Icon={Messages}
-          afterBgColor={notFriend ? colors.cold_red : colors.light}
-          backgroundColor={notFriend ? colors.hot_red : undefined}
-          width={40}
-          iconSize={15}
-          onPress={() => {
-            if (notFriend)
-              open(
-                <WarningModal
-                  description="This is the first time you are messaging this user. You have to wait for them to accept your request."
-                  title="Start a conversasion"
-                >
-                  <TextButton
-                    text="Send a request"
-                    backgroundColor={color.good_green}
-                  />
-                </WarningModal>,
-                FIT_MODAL,
-              );
-            else navigate(`${messagesRoutePath + dmId}`);
-          }}
-        />
-      )}
+      {isSuccess &&
+        isAllowed('CAN_HAVE_MESSAGES', data.permissions) &&
+        (dmId || notFriend) && (
+          <IconicButton
+            Icon={Messages}
+            afterBgColor={notFriend ? colors.cold_red : colors.light}
+            backgroundColor={notFriend ? colors.hot_red : undefined}
+            width={40}
+            iconSize={15}
+            onPress={() => {
+              if (notFriend)
+                open(
+                  <WarningModal
+                    description="This is the first time you are messaging this user. You have to wait for them to accept your request."
+                    title="Start a conversasion"
+                  >
+                    <TextButton
+                      text="Send a request"
+                      backgroundColor={color.good_green}
+                    />
+                  </WarningModal>,
+                  FIT_MODAL,
+                );
+              else navigate(`${messagesRoutePath + dmId}`);
+            }}
+          />
+        )}
       <IconicButton
         Icon={Call_Icon}
         afterBgColor={colors.good_green}
