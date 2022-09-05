@@ -43,6 +43,10 @@ const appointmentApi = createApi({
       },
       providesTags: ['BookAppointment'],
     }),
+    getPayments: builder.query<
+      { appointmentId: number; name: string; amount: number; date: Date },
+      void
+    >({ query: () => '/payment' }),
     bookAppointment: builder.mutation<
       any,
       { patientId: number; body: { date: Date; subject?: string } }
@@ -119,4 +123,5 @@ export const {
   useSetAppointmentDoneMutation,
   useAssignAppointmentToQueueMutation,
   useCancelAppointmentMutation,
+  useGetPaymentsQuery,
 } = appointmentApi;
