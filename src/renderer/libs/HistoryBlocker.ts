@@ -97,6 +97,7 @@ export default function usePrompt(
     },
     forceShow && when,
   );
+  if (!when && !forceShow) close();
 
   useBlocker(blocker, when);
 }
