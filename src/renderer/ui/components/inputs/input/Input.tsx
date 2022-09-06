@@ -47,7 +47,9 @@ type SelectInput = {
 };
 type DateField = {
   type: 'date';
-} & DatepickerProps;
+} & Partial<
+  Pick<DatepickerProps, 'yearControl' | 'dateFormat' | 'filterDate' | 'only'>
+>;
 type InputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,

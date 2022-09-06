@@ -5,13 +5,16 @@ import { ComponentProps } from 'react';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import Arrow from 'toSvg/arrow.svg?icon';
 import { ControllerProps } from '../input';
-import { DATE_NO_YEAR } from '@constants/data_format';
+import { DATE_NO_YEAR, DATE_ONLY } from '@constants/data_format';
 export interface DatepickerProps
   extends Omit<ComponentProps<typeof DatePickerReact>, 'onChange'> {
   yearControl?: boolean;
+  only?: 'before' | 'after';
 }
 export default function Datepicker({
   yearControl = false,
+  filterDate,
+  only,
   field,
   fieldState,
   rules,
@@ -70,7 +73,14 @@ export default function Datepicker({
         event?.stopPropagation();
         onChange?.(date, event);
       }}
-      dateFormat={props?.dateFormat ?? DATE_NO_YEAR}
+      filterDate={
+        filterDate ||
+        (only
+          ? (date) =>
+              only === 'before' ? date <= new Date() : date >= new Date()
+          : undefined)
+      }
+      dateFormat={props?.dateFormat ?? yearControl ? DATE_ONLY : DATE_NO_YEAR}
       selected={field.value}
       {...props}
       {...others}
