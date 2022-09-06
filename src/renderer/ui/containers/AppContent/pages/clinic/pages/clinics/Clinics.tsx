@@ -1,6 +1,7 @@
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ClinicItem from '@components/clinic_item';
+import ConnectMemberModal from '@containers/modals/connect_member_modal';
 import JoinNewClinicModal from '@containers/modals/join_new_clinic_modal';
 import useNavigation from '@libs/hooks/useNavigation';
 import { FIT_MODAL } from '@libs/overlay';
@@ -30,8 +31,7 @@ export default function Clinics() {
               onClick={() => {
                 if (userInfo.selectedClinic === index) toParent();
                 else {
-                  connect(dispatch, index);
-                  // toParent();
+                  open(<ConnectMemberModal selectedIndex={index} />, FIT_MODAL);
                 }
               }}
             />
