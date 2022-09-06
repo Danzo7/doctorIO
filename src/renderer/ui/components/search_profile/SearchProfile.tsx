@@ -8,19 +8,28 @@ import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import TextButton from '@components/buttons/text_button';
 import { useRefreshMutation } from '@redux/local/auth/authApi';
 import { StaticQueries } from '@redux/dynamic_queries';
-interface SearchProfileProps {
-  avatar?: string;
-  alt: string;
-}
-export default function SearchProfile({ avatar, alt }: SearchProfileProps) {
+import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
+import LoadingSpinner from '@components/loading_spinner';
+interface SearchProfileProps {}
+export default function SearchProfile({}: SearchProfileProps) {
+  const { data, isSuccess, error, isLoading } = useGetMyMemberDetailQuery();
   const { open } = useOverlay();
-  const [Refresh, result] = useRefreshMutation();
-
-  //REFACTOR:remove imgSrc
+  const [Refresh] = useRefreshMutation();
 
   return (
     <div className="search-profile">
-      <UserProfileStatus width={40} status={true} imgSrc={avatar} alt={alt} />
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        isSuccess && (
+          <UserProfileStatus
+            width={40}
+            status={true}
+            imgSrc={data.avatar}
+            alt={data.name + data.id}
+          />
+        )
+      )}
       <TextButton
         text="Refresh"
         onPress={() => {

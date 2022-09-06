@@ -5,7 +5,7 @@ import Arrow from 'toSvg/arrow.svg?icon';
 import { Transition } from 'react-transition-group';
 import './index.scss';
 import SearchProfile from '@components/search_profile';
-import { currentMember } from '@api/fake';
+import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 
 interface AppSidebarProps {}
 //REDUX currentMember
@@ -20,10 +20,7 @@ function AppSidebar({}: AppSidebarProps) {
             {state != 'exited' && (
               <div className="sidebar">
                 <div className={`content ${state}`}>
-                  <SearchProfile
-                    avatar={currentMember.avatar}
-                    alt={currentMember.name + currentMember.id}
-                  />
+                  <SearchProfile />
                   <AppointmentQueueSmall></AppointmentQueueSmall>
                   <BookedList />
                 </div>

@@ -6,12 +6,14 @@ import colors from '@assets/styles/color';
 import ChatAddButton from '@components/buttons/chat_add_button';
 import ContentMessage from './content_message';
 import { useParams } from 'react-router-dom';
-import { currentMember, DMs, members } from '@api/fake';
+import { DMs, members } from '@api/fake';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Input from '@components/inputs/input';
+import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
+import LoadingSpinner from '@components/loading_spinner';
 
 const schema = z.object({
   message: z.string().trim().min(1),
@@ -38,6 +40,7 @@ export default function Chat({}: ChatProps) {
     ]);
     reset({ message: '' });
   };
+  const { data, isSuccess, error, isLoading } = useGetMyMemberDetailQuery();
   return (
     <div className="chat">
       {dmId}
@@ -63,16 +66,21 @@ export default function Chat({}: ChatProps) {
             });
           }}
         >
-          {currentMessagesList.map((message, index) => (
-            <ContentMessage
-              message={message}
-              key={index}
-              avatar={message.sent ? currentMember.avatar : dm.dmAvatar}
-              id={dm.dmId}
-              name={message.sent ? currentMember.name : dm.dmName}
-              memberId={message.sent ? currentMember.id : contactMember.id}
-            />
-          ))}
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            isSuccess &&
+            currentMessagesList.map((message, index) => (
+              <ContentMessage
+                message={message}
+                key={index}
+                avatar={message.sent ? data.avatar : dm.dmAvatar}
+                id={dm.dmId}
+                name={message.sent ? data.name : dm.dmName}
+                memberId={message.sent ? data.id : contactMember.id}
+              />
+            ))
+          )}
         </div>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
