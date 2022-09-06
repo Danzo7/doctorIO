@@ -16,7 +16,10 @@ interface Member {
   isOwner?: boolean;
   refreshToken?: string; //backendOnly
 }
-type RoleBrief = Pick<Role, 'name' | 'id' | 'priority' | 'description'>;
+type RoleBrief = Pick<
+  Role,
+  'name' | 'id' | 'priority' | 'description' | 'masterRole'
+>;
 type MemberBrief = Pick<
   Member,
   'id' | 'name' | 'status' | 'roles' | 'joinDate' | 'avatar'
