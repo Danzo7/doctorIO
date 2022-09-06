@@ -90,6 +90,14 @@ $c: '.react-datepicker';
           color: $white;
           background-color: $light;
         }
+        &--disabled{
+            color: $silvergray;
+            background-color: $light!important;
+            &:hover{
+              color: $silvergray!important;
+              background-color: $light!important;
+            }
+        }
         &--outside-month {
           color: $silvergray;
         }
@@ -100,12 +108,7 @@ $c: '.react-datepicker';
         }
 
         &--keyboard-selected {
-          color: $white;
-          background-color: $darker;
-          &:hover {
-            background-color: unset;
-            @include lighter;
-          }
+          background-color: unset;
         }
         &--selected {
           color: $white;
