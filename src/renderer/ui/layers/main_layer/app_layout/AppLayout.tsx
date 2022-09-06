@@ -1,3 +1,4 @@
+import Can from '@ability/index';
 import { buildAbilityFor } from '@ability/utils';
 import LoadingSpinner from '@components/loading_spinner';
 import AppContent from '@containers/AppContent';
@@ -17,7 +18,9 @@ export default function AppLayout({}: AppLayoutProps) {
     <>
       <AppMenu />
       <AppContent />
-      <AppSidebar />
+      <Can I="manage" or={['have']} a="queue">
+        <AppSidebar />
+      </Can>
     </>
   ) : (
     <div>error here</div> //REFACTOR unothorized handle error

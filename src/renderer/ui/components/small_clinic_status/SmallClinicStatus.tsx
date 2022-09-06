@@ -1,3 +1,4 @@
+import Can from '@ability/index';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import ToggleButton from '@components/buttons/toggle_button';
 import Header from '@components/header';
@@ -44,18 +45,26 @@ export default function SmallClinicStatus({
           }
         />
       )}
-      {isSuccess ? (
+      {
         <div className="content">
-          <Timer active={data.state != 'PAUSED'} pCount={count} />
-          {isOwner && (
+          <Timer
+            active={isSuccess ? data.state != 'PAUSED' : true}
+            pCount={count}
+          />
+          {isSuccess && isOwner && (
             <div className="switch">
-              <ToggleButton
-                isChecked={data.state != 'PAUSED'}
-                onChange={() => {
-                  if (data.state == 'PAUSED') ResumeQueue();
-                  else PauseQueue();
-                }}
-              />
+              <Can I="manage" a="queue">
+                {(isAllowed) => (
+                  <ToggleButton
+                    disabled={!(isAllowed || isOwner)}
+                    isChecked={data.state != 'PAUSED'}
+                    onChange={() => {
+                      if (data.state == 'PAUSED') ResumeQueue();
+                      else PauseQueue();
+                    }}
+                  />
+                )}
+              </Can>
               <span>
                 {data.state != 'PAUSED'
                   ? 'Accept more Patients'
@@ -64,9 +73,7 @@ export default function SmallClinicStatus({
             </div>
           )}
         </div>
-      ) : (
-        <div>error</div>
-      )}
+      }
     </div>
   );
 }
