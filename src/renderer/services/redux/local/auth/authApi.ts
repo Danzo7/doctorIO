@@ -4,7 +4,7 @@ import { authType } from '@models/auth.type';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { disconnect } from '../connectionStateSlice';
-import { addNewClinic } from '../user/userSlice';
+import { addNewClinic, setSelectedServer } from '../user/userSlice';
 
 const authApi = createApi({
   reducerPath: 'authApi',
@@ -66,15 +66,18 @@ const authApi = createApi({
           body: { ...body },
         };
       },
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+      onQueryStarted: async (state, { queryFulfilled, dispatch }) => {
         try {
-          await queryFulfilled;
-        } catch (err) {
-          //console.log(err);
+          const { data } = await queryFulfilled;
+
+          dispatch({ type: 'RESET' });
+          //  StaticQueries.authQuery.discardUrl();
+        } catch (e) {
+          console.log(e);
         }
       },
     }),
-    disconnectMember: builder.mutation<boolean, null>({
+    disconnectMember: builder.mutation<boolean, void>({
       query: () => {
         return { url: '/disconnect', method: 'POST' };
       },
