@@ -42,11 +42,13 @@ export const AppAbilityC = Ability as AbilityClass<AppAbility>;
 
 function canAll(can: any) {
   Object.values(SubjectsEnum).forEach((subject) => {
-    can(Actions.manage, subject);
-    can(Actions.have, subject);
-    can(Actions.view, subject);
-    can(Actions.add, subject);
-    can(Actions.remove, subject);
+    if (subject != SubjectsEnum.queue && subject != SubjectsEnum.patientslist) {
+      can(Actions.manage, subject);
+      can(Actions.have, subject);
+      can(Actions.view, subject);
+      can(Actions.add, subject);
+      can(Actions.remove, subject);
+    }
   });
 }
 
@@ -54,22 +56,19 @@ export function defineRulesFor(perms: PermKeys[], isOwner?: boolean) {
   const { can, rules } = new AbilityBuilder(
     Ability as AbilityClass<AppAbility>,
   );
-  if (isOwner) {
-    canAll(can);
-  } else {
-    parsePerms(perms).forEach(({ action, subject }) => {
-      if (isOwner || (action === Actions.have && subject === 'admin')) {
-        canAll(can);
-      } else {
-        if (action === 'manage') {
-          can(Actions.add, subject);
-          can(Actions.remove, subject);
-          can(Actions.view, subject);
-        }
-        can(action, subject);
-      }
-    });
-  }
+
+  parsePerms(perms).forEach(({ action, subject }) => {
+    if (isOwner || (action === Actions.have && subject === 'admin')) {
+      canAll(can);
+    }
+    if (action === 'manage') {
+      can(Actions.add, subject);
+      can(Actions.remove, subject);
+      can(Actions.view, subject);
+    }
+    can(action, subject);
+  });
+
   return rules;
 }
 export function buildAbilityFor(
