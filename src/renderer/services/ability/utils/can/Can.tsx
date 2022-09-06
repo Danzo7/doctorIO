@@ -9,7 +9,10 @@ interface CanProps {
 }
 export default function Can({ I, a, children, or }: CanProps) {
   const abilities = useAbility();
-  if (typeof children == 'function') return <>children(abilities.can(I, a))</>;
+  if (typeof children == 'function')
+    return (
+      <>{children(abilities.can(I, a) && (or ? or.every(Boolean) : true))}</>
+    );
   return abilities.can(I, a) && (or ? or.every(Boolean) : true) ? (
     <>{children}</>
   ) : null;
