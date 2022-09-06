@@ -107,7 +107,6 @@ export const DMs: DirectMessage[] = [
     ],
   },
 ];
-export const currentMember: Member = members[1];
 
 export const clinic: Clinic = {
   clinicName: 'PAN',
