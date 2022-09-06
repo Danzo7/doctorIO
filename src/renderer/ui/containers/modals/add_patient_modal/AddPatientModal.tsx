@@ -58,8 +58,7 @@ export default function AddPatientModal({}: AddPatientModalProps) {
             name={patient.name}
             onAdd={() => {
               AddQueueAppointment({
-                roleId: 1,
-                body: { patientId: patient.id },
+                patientId: patient.id,
               });
             }}
           />,

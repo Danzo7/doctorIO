@@ -96,16 +96,13 @@ const appointmentQueueApi = createApi({
     }),
     addQueueAppointment: builder.mutation<
       AppointmentQueueItem[],
-      {
-        roleId: number;
-        body: { patientId: number; test?: Partial<Test> };
-      }
+      { patientId: number; test?: Partial<Test> }
     >({
-      query: ({ roleId, body }) => {
+      query: (body) => {
         return {
           url: `/item`,
           method: 'POST',
-          body: body,
+          body: { ...body },
         };
       },
       invalidatesTags: ['item'],
@@ -119,62 +116,66 @@ const appointmentQueueApi = createApi({
       },
     }),
     //PATCH
-    updateTest: builder.mutation({
-      query: (data: { position: number; test: Test }) => {
-        const { position, test } = data;
+    updateTest: builder.mutation<boolean, { position: number; test: Test }>({
+      query: (body) => {
         return {
           url: `/item`,
           method: 'PATCH',
-          body: { position: position, ...test },
+          body: { ...body },
         };
       },
       invalidatesTags: ['item'],
     }),
-    updateQueueState: builder.mutation({
-      query: (data: { roleId: number; body: any }) => {
-        const { roleId, body } = data;
-        return { url: `/state`, method: 'PATCH', body: body };
+    updateQueueState: builder.mutation<
+      boolean,
+      {
+        state: 'IDLE' | 'WAITING' | 'IN_PROGRESS' | 'PAUSED';
+        position?: number;
+      }
+    >({
+      query: (body) => {
+        return { url: `/state`, method: 'PATCH', body: { ...body } };
       },
       invalidatesTags: ['state'],
     }),
-    pauseQueue: builder.mutation({
+    pauseQueue: builder.mutation<boolean, void>({
       query: () => ({
         url: `/state/pause`,
         method: 'PATCH',
       }),
       invalidatesTags: ['state'],
     }),
-    resumeQueue: builder.mutation({
+    resumeQueue: builder.mutation<boolean, void>({
       query: () => ({
         url: `/state/idle`,
         method: 'PATCH',
       }),
       invalidatesTags: ['state'],
     }),
-    notifyQueue: builder.mutation({
-      query: (data: { roleId: number; position: number }) => ({
+    notifyQueue: builder.mutation<boolean, number>({
+      query: (position) => ({
         url: `/state/notify`,
         method: 'PATCH',
-        body: { position: data.position },
+        body: { position: position },
       }),
       invalidatesTags: ['state'],
     }),
-    progressQueueState: builder.mutation({
-      query: (data: { roleId: number; position: number }) => ({
+    progressQueueState: builder.mutation<boolean, number>({
+      query: (position) => ({
         url: `/state/progress`,
         method: 'PATCH',
-        body: { position: data.position },
+        body: { position: position },
       }),
       invalidatesTags: ['state'],
     }),
-    notifyNext: builder.mutation({
+    notifyNext: builder.mutation<boolean, void>({
       query: () => ({
         url: `/state/notify/next`,
         method: 'PATCH',
       }),
       invalidatesTags: ['state'],
     }),
-    startNext: builder.mutation({
+    startNext: builder.mutation<boolean, void>({
       query: () => ({
         url: `/state/start/next`,
         method: 'PATCH',
@@ -184,15 +185,12 @@ const appointmentQueueApi = createApi({
     endNext: builder.mutation<
       QueueState,
       {
-        roleId: number;
-        body: {
-          diagnosis: string;
-          subject?: string;
-          prescription: Omit<Drug, 'id'>[];
-        };
+        diagnosis: string;
+        subject?: string;
+        prescription: Omit<Drug, 'id'>[];
       }
     >({
-      query: ({ roleId, body }) => ({
+      query: (body) => ({
         url: `/state/end/next`,
         method: 'PATCH',
         body: { ...body },

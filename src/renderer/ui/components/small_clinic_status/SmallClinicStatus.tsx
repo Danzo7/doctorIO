@@ -10,7 +10,6 @@ import {
   usePauseQueueMutation,
   useGetQueueStateQuery,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { useEffect, useState } from 'react';
 import './style/index.scss';
 interface SmallClinicStatusProps {
   hasViewClinic?: true;
@@ -53,8 +52,8 @@ export default function SmallClinicStatus({
               <ToggleButton
                 isChecked={data.state != 'PAUSED'}
                 onChange={() => {
-                  if (data.state == 'PAUSED') ResumeQueue(1);
-                  else PauseQueue(1);
+                  if (data.state == 'PAUSED') ResumeQueue();
+                  else PauseQueue();
                 }}
               />
               <span>

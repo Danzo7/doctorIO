@@ -54,8 +54,7 @@ export default function QueueControls({}: QueueControlsProps) {
                       backgroundColor={color.good_green}
                       width="100%"
                       onPress={() => {
-                        //REDUX change the role id for the fetch
-                        ResumeQueue(1);
+                        ResumeQueue();
                         close();
                       }}
                     />
@@ -99,8 +98,7 @@ export default function QueueControls({}: QueueControlsProps) {
                         backgroundColor={color.hot_red}
                         width="100%"
                         onPress={() => {
-                          //REDUX change the role id for the fetch
-                          PauseQueue(1);
+                          PauseQueue();
                           close();
                         }}
                       />

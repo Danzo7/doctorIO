@@ -63,7 +63,7 @@ export default function AppointmentsQueue() {
                         text="resume"
                         backgroundColor={color.good_green}
                         onPress={() => {
-                          ResumeQueue(1);
+                          ResumeQueue();
                         }}
                       />
                     )}

@@ -56,13 +56,10 @@ export default function EndSession({}: EndSessionProps) {
             width={'100%'}
             onPress={() => {
               EndNext({
-                roleId: 1,
-                body: {
-                  diagnosis: currentSession.diagnosis,
-                  prescription: currentSession.prescription.map(
-                    ({ id, ...other }) => other,
-                  ),
-                },
+                diagnosis: currentSession.diagnosis,
+                prescription: currentSession.prescription.map(
+                  ({ id, ...other }) => other,
+                ),
               })
                 .then(() => navigate('queue'))
 

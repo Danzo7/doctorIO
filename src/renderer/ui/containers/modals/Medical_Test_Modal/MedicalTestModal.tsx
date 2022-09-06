@@ -68,8 +68,8 @@ export default function MedicalTestModal({
       AssignAppointmentToQueue({ appointmentId: appointmentId, test: newTest });
     } else {
       addAppointment({
-        roleId: 1,
-        body: { patientId: patientId, test: newTest },
+        patientId: patientId,
+        test: newTest,
       });
     }
     Overlay.close();
@@ -141,4 +141,4 @@ export default function MedicalTestModal({
     </ModalContainer>
   );
 }
-//FIXME step on input type=Number not working 
+//FIXME step on input type=Number not working

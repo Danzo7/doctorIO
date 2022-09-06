@@ -76,10 +76,8 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
                 name={patient.name}
                 id={patient.id}
                 onAdd={() => {
-                  //REDUX get the right roleId
                   AddAppointment({
-                    roleId: 1,
-                    body: { patientId: patient.id },
+                    patientId: patient.id,
                   });
                 }}
               />

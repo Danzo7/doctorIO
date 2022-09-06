@@ -43,13 +43,9 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
             fontSize={13}
             fontWeight={700}
             onPress={() => {
-              //REDUX change the roleId to the correct one
-              NotifyQueue({
-                roleId: 1,
-                position: invitedPatient
-                  ? invitedPatient.position
-                  : data.position,
-              });
+              NotifyQueue(
+                invitedPatient ? invitedPatient.position : data.position,
+              );
               setNotified(true);
             }}
           />
@@ -63,12 +59,9 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
             fontWeight={700}
             onPress={() => {
               if (invitedPatient) {
-                ProgressQueueState({
-                  roleId: 1,
-                  position: invitedPatient?.position,
-                });
+                ProgressQueueState(invitedPatient?.position);
               } else {
-                StartNext(1);
+                StartNext();
               }
               navigate('session');
             }}

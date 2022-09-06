@@ -64,7 +64,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                           text="resume"
                           backgroundColor={color.good_green}
                           onPress={() => {
-                            ResumeQueue(1);
+                            ResumeQueue();
                           }}
                         />
                       )}
