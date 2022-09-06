@@ -8,6 +8,7 @@ interface PermissionItemProps {
   linkedPermission?: string;
   editable?: boolean;
   isChecked?: boolean;
+  onChange?: (isChecked: boolean) => void;
 }
 export default function PermissionItem({
   name,
@@ -15,6 +16,7 @@ export default function PermissionItem({
   linkedPermission,
   editable = true,
   isChecked,
+  onChange,
 }: PermissionItemProps & Omit<Permission<PermKeys>, 'permKey'>) {
   return (
     <div
@@ -26,6 +28,7 @@ export default function PermissionItem({
         secondaryText={description}
         editable={editable}
         isChecked={isChecked}
+        onChange={onChange}
       />
       {linkedPermission && (
         <div

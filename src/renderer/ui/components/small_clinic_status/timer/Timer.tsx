@@ -45,7 +45,7 @@ export default function Timer({ active, pCount }: TimerProps) {
     RenderTimer.call(canvasRef?.current?.getContext('2d'), {
       timeRatio: TimeRef.current.ratio,
       size,
-      renderText: hoverRef.current,
+      renderText: pCount > 0 ? hoverRef.current : false,
       pNum: pCount,
     });
   }, [pCount]);
