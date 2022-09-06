@@ -1,5 +1,6 @@
 import { User } from '@models/local.models';
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { useAppSelector } from '@store';
 
 const initialState: User = {
   userPreferences: {
@@ -58,6 +59,11 @@ const userSlice = createSlice({
         (cli) => cli == state.clinic[state.clinic.length - 1],
       );
     },
+    setCurrentLocation: (state: User, action: PayloadAction<string>) => {
+      if (state.selectedClinic)
+        state.clinic[state.selectedClinic].serverLocation =
+          action.payload + ':3000';
+    },
   },
 });
 export const {
@@ -65,6 +71,12 @@ export const {
   resetWelcomeDismissedIn,
   setSelectedServer,
   addNewClinic,
+  setCurrentLocation,
 } = userSlice.actions;
-
+export const useSelectLocation = () =>
+  useAppSelector((state) =>
+    state.user.selectedClinic
+      ? state.user.clinic[state.user.selectedClinic].serverLocation
+      : undefined,
+  );
 export default userSlice;

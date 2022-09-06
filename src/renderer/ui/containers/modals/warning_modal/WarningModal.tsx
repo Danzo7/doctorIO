@@ -5,11 +5,13 @@ interface WarningModalProps {
   title: string;
   description: string;
   children?: ReactNode;
+  content?: ReactNode;
 }
 export default function WarningModal({
   title,
   description,
   children,
+  content,
 }: WarningModalProps) {
   return (
     <ModalContainer
@@ -18,6 +20,7 @@ export default function WarningModal({
       controls={<div className="warning-controls">{children}</div>}
     >
       <span className="warning-description">{description}</span>
+      {content}
     </ModalContainer>
   );
 }

@@ -2,17 +2,38 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import LoadingSpinner from '@components/loading_spinner';
+import { useOverlay } from '@libs/overlay/useOverlay';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { disconnect, refresh } from '@redux/local/connectionStateSlice';
 import { useAppSelector } from '@store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import WarningModal from './WarningModal';
-
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  setCurrentLocation,
+  useSelectLocation,
+} from '@redux/local/user/userSlice';
+import Input from '@components/inputs/input';
+const schema = z.object({
+  ip: z
+    .string()
+    .regex(
+      /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/,
+      'Please enter a valid IP address',
+    ),
+});
 export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
   const dispatch = useDispatch();
   const { state } = useAppSelector((st) => st.connectionState);
-
+  const [isEditAdr, setEditAdr] = useState(false);
+  const location = useSelectLocation();
+  const { control, handleSubmit } = useForm<{ ip: string }>({
+    defaultValues: { ip: location?.split(':')?.[0] },
+    resolver: zodResolver(schema),
+  });
   useEffect(() => {
     if (state == 'reconnecting' || state == 'connecting')
       (async () => {
@@ -32,6 +53,26 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
           ? 'The server is not responding. make sure the server is running'
           : '')
       }
+      content={
+        isEditAdr ? (
+          <Input
+            control={control}
+            name="ip"
+            type="text"
+            trailing={
+              <TextButton
+                backgroundColor={color.cold_blue}
+                onPress={handleSubmit((data) => {
+                  dispatch(setCurrentLocation(data.ip));
+                  dispatch(refresh());
+                  setEditAdr(false);
+                })}
+                text="Save"
+              />
+            }
+          />
+        ) : null
+      }
     >
       {state == 'reconnecting' || state == 'connecting' ? (
         <div css={{ flexGrow: 1 }}>
@@ -50,6 +91,11 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
             text="Disconnect"
             backgroundColor={color.hot_red}
             onPress={() => disconnect(dispatch)}
+          />
+          <TextButton
+            text="change"
+            //backgroundColor={color.hot_red}
+            onPress={() => setEditAdr(true)}
           />
         </>
       )}
