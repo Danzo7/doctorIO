@@ -5,6 +5,7 @@ import TabMenu from '@components/tab_menu';
 import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
 import { mapIndexFromPermissions } from '@helpers/permission.helper';
 import usePrompt from '@libs/HistoryBlocker';
+import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
 import {
   useLazyGetRoleByIdQuery,
   useUpdateRoleMutation,
@@ -30,6 +31,11 @@ export default function RoleSetting({}: RoleSettingProps) {
   const setSettings = useSetSettings();
   const [trigger, { data, isFetching, isLoading, isSuccess }] =
     useLazyGetRoleByIdQuery();
+  const {
+    data: dataL,
+    isLoading: isLoadingL,
+    isSuccess: isSuccessL,
+  } = useGetMyPermissionQuery();
   useEffect(() => {
     trigger(Number(roleIdParam) as any).then((res) => {
       if (res.data) {
@@ -107,7 +113,16 @@ export default function RoleSetting({}: RoleSettingProps) {
   if (roleIdParam == undefined)
     return <div className="role-setting"> choose a role </div>;
   return (
-    <div className="role-setting">
+    <div
+      className="role-setting"
+      css={
+        isLoadingL ||
+        isLoading ||
+        (isSuccessL && isSuccess && data && dataL.lvl > data.priority)
+          ? { pointerEvents: 'none', opacity: 0.5 }
+          : {}
+      }
+    >
       {isLoading ? (
         <LoadingSpinner />
       ) : isSuccess ? (
