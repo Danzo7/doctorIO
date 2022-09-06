@@ -13,10 +13,12 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import WarningModal from '@containers/modals/warning_modal';
 import TextButton from '@components/buttons/text_button';
 import { FIT_MODAL } from '@libs/overlay';
+import { useDisconnectMemberMutation } from '@redux/local/auth/authApi';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
   const { open, close } = useOverlay();
+  const [DisconnectMember] = useDisconnectMemberMutation();
   return (
     <div className="clinic-settings">
       <div className="clinic-settings-header">
@@ -37,10 +39,10 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
               >
                 <TextButton
                   text="Confirm"
-                  backgroundColor={colors.good_green}
+                  backgroundColor={colors.hot_red}
                   width="100%"
                   onPress={() => {
-                    //REDUX change the selected clinic
+                    DisconnectMember();
                     close();
                     navigate('/clinic/all');
                   }}
