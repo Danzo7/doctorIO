@@ -1,6 +1,8 @@
 import BorderSeparator from '@components/border_separator';
 import Input from '@components/inputs/input';
+import { mapIndexFromPermissions } from '@helpers/permission.helper';
 import { Role } from '@models/server.models';
+import { useCreateNewRoleMutation } from '@redux/clinic/rbac/role/roleApi';
 
 import {
   useGetDefaults,
@@ -19,17 +21,19 @@ interface Inputs {
 
 export default function RoleSettingGeneral({
   slaveRole,
-}: Pick<Role, 'slaveRole'>) {
+  id,
+}: Pick<Role, 'slaveRole' | 'id'>) {
   const { control, reset } = useForm<Inputs>({
     mode: 'onChange',
   });
   const setSettings = useSetSettings();
   const defaults = useGetDefaults();
   const { name, description } = useRoleSettingStore.getState();
-
+  const [CreateNewRole] = useCreateNewRoleMutation();
   useEffect(() => {
     reset({ name: name ?? '', description: description });
   }, [description, name, reset]);
+
   return (
     <div className="role-setting-general">
       <div className="role-setting-general-inputs">
@@ -65,6 +69,20 @@ export default function RoleSettingGeneral({
         editable
         linkedPermission={slaveRole?.name}
         isChecked={slaveRole ? true : undefined}
+        onChange={(isChecked) => {
+          if (!slaveRole && isChecked) {
+            CreateNewRole({
+              name: 'New Helper',
+              description: 'this is your bot',
+              masterRoleId: id,
+              permissions: mapIndexFromPermissions([
+                'CAN_MANAGE_QUEUE',
+                'CAN_ADD_PATIENT',
+                'CAN_VIEW_PATIENTSLIST',
+              ]),
+            });
+          }
+        }}
       />
     </div>
   );

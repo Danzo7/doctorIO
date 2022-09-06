@@ -127,7 +127,10 @@ export default function RoleSetting({}: RoleSettingProps) {
         <LoadingSpinner />
       ) : isSuccess ? (
         <TabMenu items={['General', 'Permissions', 'Members']}>
-          <RoleSettingGeneral slaveRole={data?.slaveRole} />
+          <RoleSettingGeneral
+            slaveRole={data?.slaveRole}
+            id={Number(roleIdParam)}
+          />
           {<PermissionList />}
           <RoleSettingMembers list={[]} />
         </TabMenu>
