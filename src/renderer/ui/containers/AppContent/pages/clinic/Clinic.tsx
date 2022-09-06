@@ -6,7 +6,7 @@ interface ClinicProps {}
 export default function Clinic({}: ClinicProps) {
   const { selectedClinic } = useAppSelector((state) => state.user);
 
-  return selectedClinic ? (
+  return selectedClinic != undefined ? (
     <Routes>
       <Route path="all" element={<Clinics />} />
       <Route path="/*" element={<ClinicSettings />} />
