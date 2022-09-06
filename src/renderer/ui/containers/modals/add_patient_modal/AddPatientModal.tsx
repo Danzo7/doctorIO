@@ -3,7 +3,6 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import { InputControllerContext } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
-import { DATE_ONLY } from '@constants/data_format';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
@@ -99,7 +98,11 @@ export default function AddPatientModal({}: AddPatientModalProps) {
           label="Gender"
           name="gender"
         />
-        <Input type="date" label="Birthday" name="birthDate" />
+        <Input
+          type={{ type: 'date', yearControl: true, only: 'before' }}
+          label="Birthday"
+          name="birthDate"
+        />
       </InputControllerContext.Provider>
     </ModalContainer>
   );
