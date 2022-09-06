@@ -102,13 +102,13 @@ export default function RoleSetting({}: RoleSettingProps) {
       </SnakeBarActionsControls>
     ),
     isDirty,
-    true,
+    isDirty,
   );
   if (roleIdParam == undefined)
-    return <div className="role-setting"> nothing </div>;
+    return <div className="role-setting"> choose a role </div>;
   return (
     <div className="role-setting">
-      {isLoading || isFetching ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : isSuccess ? (
         <TabMenu items={['General', 'Permissions', 'Members']}>

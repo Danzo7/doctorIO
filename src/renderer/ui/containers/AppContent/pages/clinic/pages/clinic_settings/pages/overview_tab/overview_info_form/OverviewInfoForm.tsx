@@ -71,7 +71,7 @@ export default function OverviewInfoForm(
       </SnakeBarActionsControls>
     ),
     isDirty,
-    true,
+    isDirty,
   );
 
   return (

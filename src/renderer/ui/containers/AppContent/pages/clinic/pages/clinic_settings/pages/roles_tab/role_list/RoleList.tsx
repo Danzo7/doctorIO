@@ -53,9 +53,7 @@ export default function RoleList({}: RoleListProps) {
         ) : isSuccess ? (
           data.map((role, index) => (
             <RoleItem
-              selected={
-                role.id.toString() == (searchParams.get('roleId') ?? '1')
-              }
+              selected={role.id.toString() == searchParams.get('roleId')}
               {...role}
               key={index}
             />
