@@ -42,8 +42,10 @@ export default forwardRef(function NumberInput(
     } else if (rules.max && Number(v) > rules.max) return rules.max.toString();
     else if (rules.min && Number(v) < rules.min) return rules.min.toString();
   };
-  const setValue = (vs: string, external?: boolean) =>
-    onChange(checkValue(vs, external));
+  const setValue = (vs: string, external?: boolean, cast?: boolean) =>
+    onChange(
+      cast ? Number(checkValue(vs, external)) ?? 0 : checkValue(vs, external),
+    );
 
   const increase = () => {
     setValue(
@@ -65,6 +67,8 @@ export default forwardRef(function NumberInput(
       isNaN(parsed)
         ? '0'
         : parsed.toFixed(step.toString().split('.')[1]?.length ?? 0),
+      undefined,
+      true,
     );
   };
   return (
