@@ -7,29 +7,48 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '@store';
 import { Overlay } from '@libs/overlay';
 import { useConnectMemberMutation } from '@redux/local/auth/authApi';
+import { setTokens } from '@redux/local/auth/authSlice';
+import { connect } from '@redux/local/connectionStateSlice';
+import { StaticQueries } from '@redux/dynamic_queries';
+import useNavigation from '@libs/hooks/useNavigation';
 interface Inputs {
   key: string;
 }
-interface ConnectMemberModalProps {}
-export default function ConnectMemberModal({}: ConnectMemberModalProps) {
+interface ConnectMemberModalProps {
+  selectedIndex: number;
+}
+export default function ConnectMemberModal({
+  selectedIndex,
+}: ConnectMemberModalProps) {
+  const { navigate } = useNavigation();
   const dispatch = useAppDispatch();
   const userInfo = useAppSelector((state) => state.user);
-  const [ConnectMember, result] = useConnectMemberMutation();
+  const [ConnectMember] = useConnectMemberMutation();
   const { control, handleSubmit } = useForm<{
     key: string;
   }>({
     mode: 'onSubmit',
+    defaultValues: { key: '' },
   });
-  const onSubmit: SubmitHandler<Inputs> = ({ key }) => {
-    let memId;
-    if (userInfo.selectedClinic) {
-      memId = userInfo.clinic[userInfo.selectedClinic].memberId;
-      ConnectMember({ memberId: memId, secretKey: key }).then(() => {
-        if (result.isSuccess) {
-          Overlay.close();
-        }
-      });
-    }
+  const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
+    const memId = userInfo.clinic[selectedIndex].memberId;
+    const location = userInfo.clinic[selectedIndex].serverLocation;
+    await StaticQueries.authQuery.setUrl(location);
+    ConnectMember({ memberId: memId, secretKey: key }).then((result: any) => {
+      if (result.data) {
+        // setSelectedServer(selectedIndex);
+
+        dispatch(
+          setTokens({
+            accessToken: result.data?.access_token,
+            refreshToken: result.data?.refresh_token,
+          }),
+        );
+        connect(dispatch, selectedIndex);
+        navigate('/');
+      }
+    });
+
     Overlay.close();
   };
 
