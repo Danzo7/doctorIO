@@ -22,6 +22,9 @@ export default function SmallRoleList({
   const { open, close } = useOverlay();
   const ability = useAbility();
   const { data, isSuccess, isLoading } = useGetMyPermissionQuery();
+  const roleListSorted = roleList
+    .slice()
+    .sort((a, b) => a.priority - b.priority);
   if (isSuccess) console.log('allowed', ability?.can('manage', 'members'));
   return (
     <div className="role-list-small">
@@ -29,7 +32,7 @@ export default function SmallRoleList({
         <LoadingSpinner />
       ) : (
         isSuccess &&
-        roleList.map((role, index) => (
+        roleListSorted.map((role, index) => (
           <SmallRolePreview
             roleName={role.name}
             key={role.id.toString() + index}
