@@ -38,12 +38,7 @@ export default function SearchProfile({}: SearchProfileProps) {
           />
         )
       )}
-      <TextButton
-        text="Refresh"
-        onPress={() => {
-          StaticQueries.authQuery.loadUrl().then(() => Refresh());
-        }}
-      />
+
       <div>
         <IconicButton
           Icon={Search}
