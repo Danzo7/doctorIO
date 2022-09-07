@@ -1,12 +1,19 @@
 import MembersTable from '@components/members_table';
-import { Member, MemberBrief } from '@models/server.models';
+import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
 
 import './style/index.scss';
 
 interface RoleSettingMembersProps {
-  list: MemberBrief[];
+  id: number;
 }
-export default function RoleSettingMembers({ list }: RoleSettingMembersProps) {
+export default function RoleSettingMembers({ id }: RoleSettingMembersProps) {
+  const { data, isLoading, isSuccess, error } = useGetMembersQuery();
+
+  const list = isSuccess
+    ? data.filter(
+        ({ roles }) => roles.find(({ id: rId }) => id == rId) != undefined,
+      )
+    : [];
   return (
     <div className="role-setting-members">
       <MembersTable list={list} />
