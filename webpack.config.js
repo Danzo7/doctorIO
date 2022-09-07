@@ -8,6 +8,8 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const webpack = require('webpack');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
 module.exports = ({ mode } = { mode: process.env.mode }) => {
   const isDevelopment = mode === 'development';
   const isProduction = mode === 'production';
@@ -36,6 +38,11 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
           use: [
             {
               loader: 'babel-loader',
+              options: {
+                plugins: [
+                  isDevelopment && require.resolve('react-refresh/babel'),
+                ].filter(Boolean),
+              },
             },
             //   { loader: 'ts-loader' },disabled for now.(testing babel instead)
           ],
@@ -153,11 +160,11 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
         //Setting environment variables
         ELECTRON_ROUTING: JSON.stringify(false),
       }),
-    ],
+      isDevelopment && new ReactRefreshWebpackPlugin({ overlay: false }),
+    ].filter(Boolean),
 
     devServer: {
       static: path.resolve(__dirname, 'public'),
-      liveReload: true,
       port: 4000,
       hot: true,
       historyApiFallback: true,

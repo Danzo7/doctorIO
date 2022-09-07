@@ -25,12 +25,12 @@ root.render(
   </StrictMode>,
 );
 
-if (typeof module !== 'undefined' && module.hot) {
-  module.hot.accept(function () {
-    console.error('An error occurred while accepting new version');
-  });
+// if (typeof module !== 'undefined' && module.hot) {
+//   module.hot.accept(function () {
+//     console.error('An error occurred while accepting new version');
+//   });
 
-  module.hot.addStatusHandler((status) => {
-    if (status === 'prepare') console.clear();
-  });
-}
+//   module.hot.addStatusHandler((status) => {
+//     if (status === 'prepare') console.clear();
+//   });
+// }
