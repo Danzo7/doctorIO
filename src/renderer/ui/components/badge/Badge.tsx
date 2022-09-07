@@ -31,7 +31,6 @@ export function Badged({
       : pre == 'new'
       ? { text: 'new', color: colors.hot_red }
       : { text, color };
-  console.log(skip);
   return skip ? (
     <>{children}</>
   ) : (

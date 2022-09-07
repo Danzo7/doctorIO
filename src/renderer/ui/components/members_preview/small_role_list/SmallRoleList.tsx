@@ -21,7 +21,6 @@ export default function SmallRoleList({
 }: SmallRoleListProps) {
   const { open, close } = useOverlay();
   const ability = useAbility();
-  console.log(ability);
   const { data, isSuccess, isLoading } = useGetMyPermissionQuery();
   if (isSuccess) console.log('allowed', ability?.can('manage', 'members'));
   return (

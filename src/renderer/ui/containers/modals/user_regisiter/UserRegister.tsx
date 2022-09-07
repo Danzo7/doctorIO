@@ -35,7 +35,6 @@ export default function UserRegister({}: UserRegisterProps) {
   });
   const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    console.log(formData);
     dispatch(setUser(formData));
     Overlay.close();
   };
