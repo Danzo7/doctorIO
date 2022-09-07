@@ -1,4 +1,5 @@
 import colors from '@assets/styles/color';
+import { Badged } from '@components/badge/Badge';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import { ReactNode, useState } from 'react';
 import './style/index.scss';
@@ -9,6 +10,7 @@ interface TabMenuProps {
   borderBottom?: boolean;
   children?: ReactNode[];
   menuItemsAlignment?: 'flex-start' | 'flex-end' | 'center';
+  previews?: number[];
 }
 export default function TabMenu({
   items,
@@ -17,6 +19,7 @@ export default function TabMenu({
   borderBottom = true,
   children,
   menuItemsAlignment = 'flex-start',
+  previews,
 }: TabMenuProps) {
   const [selected, setSelected] = useState(defaultSelected);
   function setTab(index: number) {
@@ -39,12 +42,17 @@ export default function TabMenu({
             className="menu-items"
           >
             {items.map((text, index) => (
-              <DarkLightCornerButton
+              <Badged
+                pre="preview"
                 key={index}
-                text={text}
-                isActive={selected == index}
-                onPress={() => setTab(index)}
-              />
+                skip={!previews?.includes(index)}
+              >
+                <DarkLightCornerButton
+                  text={text}
+                  isActive={selected == index}
+                  onPress={() => setTab(index)}
+                />
+              </Badged>
             ))}
           </div>
         </div>
