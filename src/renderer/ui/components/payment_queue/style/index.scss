@@ -11,18 +11,21 @@
         align-items: center;
         gap: 10px;
 
-        >.payment-queue-sep {
-            border-right: 1px solid $bordercolor;
-            align-self: stretch;
-            flex-grow: 1;
-        }
-
         >.payment-queue-list{
             display: flex;
             flex-direction: row;
             align-items: center;
             gap: 10px;
             overflow: hidden;
+
+            >.nothing-div {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                flex-grow: 1;
+                align-self: stretch;
+            }
         }
     }
 }
