@@ -4,11 +4,7 @@ import { mapIndexFromPermissions } from '@helpers/permission.helper';
 import { Role } from '@models/server.models';
 import { useCreateNewRoleMutation } from '@redux/clinic/rbac/role/roleApi';
 
-import {
-  useGetDefaults,
-  useRoleSettingStore,
-  useSetSettings,
-} from '@stores/roleSettingStore';
+import { useRoleSettingStore, useSetSettings } from '@stores/roleSettingStore';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import PermissionItem from '../permission_list/Permission_item';
@@ -27,8 +23,10 @@ export default function RoleSettingGeneral({
     mode: 'onChange',
   });
   const setSettings = useSetSettings();
-  const defaults = useGetDefaults();
-  const { name, description } = useRoleSettingStore.getState();
+  const { name, description } = useRoleSettingStore((s) => ({
+    name: s.name,
+    description: s.description,
+  }));
   const [CreateNewRole] = useCreateNewRoleMutation();
   useEffect(() => {
     reset({ name: name ?? '', description: description });
@@ -45,7 +43,6 @@ export default function RoleSettingGeneral({
           onChange={(e) =>
             setSettings({
               name: e,
-              isDirty: e != defaults?.name,
             })
           }
         />
@@ -57,7 +54,6 @@ export default function RoleSettingGeneral({
           onChange={(e) =>
             setSettings({
               description: e,
-              isDirty: e != defaults?.description,
             })
           }
         />

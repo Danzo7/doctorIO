@@ -11,7 +11,7 @@ interface RoleSettingState {
     defaults: Pick<RoleSettingState, 'name' | 'description' | 'permissions'>,
   ) => void;
   setSettings: (props: {
-    isDirty: boolean;
+    isDirty?: boolean;
     name?: string;
     description?: string;
     permissions?: PermKeys[];
@@ -22,14 +22,30 @@ interface RoleSettingState {
 export const useRoleSettingStore = create<RoleSettingState>((set) => ({
   isDirty: false,
   permissions: [],
-  setSettings: ({ name, description, permissions, isDirty, defaults }) =>
-    set((state) => ({
-      name: name ?? state.name,
-      description: description ?? state.description,
-      permissions: permissions ?? state.permissions,
-      isDirty: isDirty ?? state.isDirty,
-      defaults: defaults ?? state.defaults,
-    })),
+  setSettings: ({ name, description, permissions, defaults, isDirty }) =>
+    set((state) => {
+      const newState = {
+        name: name ?? state.name,
+        description: description ?? state.description,
+        permissions: permissions ?? state.permissions,
+        defaults: defaults ?? state.defaults, // this is the only line that is different
+      };
+      return {
+        ...newState,
+        isDirty:
+          isDirty != undefined
+            ? isDirty
+            : !(
+                newState?.name === newState.defaults?.name &&
+                newState?.description === newState.defaults?.description &&
+                newState?.permissions?.length ===
+                  newState.defaults?.permissions.length &&
+                newState?.permissions?.every((p) =>
+                  newState.defaults?.permissions.includes(p),
+                )
+              ),
+      };
+    }),
   setDefaults: (defaults) => set((state) => ({ ...state, defaults })),
 }));
 export const useRoleSettings = () => useRoleSettingStore((state) => state);

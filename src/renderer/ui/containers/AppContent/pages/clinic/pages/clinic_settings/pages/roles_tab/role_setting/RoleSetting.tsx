@@ -29,8 +29,7 @@ export default function RoleSetting({}: RoleSettingProps) {
 
   const isDirty = useIsDirty();
   const setSettings = useSetSettings();
-  const [trigger, { data, isFetching, isLoading, isSuccess }] =
-    useLazyGetRoleByIdQuery();
+  const [trigger, { data, isLoading, isSuccess }] = useLazyGetRoleByIdQuery();
   const {
     data: dataL,
     isLoading: isLoadingL,
@@ -43,7 +42,6 @@ export default function RoleSetting({}: RoleSettingProps) {
           name: res.data?.name,
           description: res.data?.description,
           permissions: res.data?.permissions,
-          isDirty: false,
           defaults: {
             name: res.data?.name,
             description: res.data?.description,
@@ -67,7 +65,6 @@ export default function RoleSetting({}: RoleSettingProps) {
               name: defaults?.name,
               description: defaults?.description,
               permissions: defaults?.permissions,
-              isDirty: false,
               defaults: {
                 name: defaults?.name,
                 description: defaults?.description,
@@ -84,7 +81,6 @@ export default function RoleSetting({}: RoleSettingProps) {
           onPress={async () => {
             const state = useRoleSettingStore.getState();
             setSettings({
-              isDirty: false,
               defaults: {
                 name: state.name,
                 description: state.description,
