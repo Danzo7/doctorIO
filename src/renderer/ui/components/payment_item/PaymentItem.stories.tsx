@@ -11,5 +11,5 @@ const Template: Story<ComponentProps<typeof PaymentItem>> = (args) => (
 export const FirstStory = Template.bind({});
 FirstStory.args = {
   patientFullName: 'Daouadji Aymen',
-  paymentAmount: '9000 Da',
+  amount: 9000,
 };

@@ -6,16 +6,16 @@ import { color } from '@assets/styles/color';
 
 interface PaymentItemProps {
   patientFullName: string;
-  paymentAmount: string;
+  amount: number;
 }
 export default function PaymentItem({
   patientFullName,
-  paymentAmount,
+  amount,
 }: PaymentItemProps) {
   return (
     <div className="payment-item">
       <span>{patientFullName}</span>
-      <span>{paymentAmount}</span>
+      <span>{amount}</span>
       <div className="payment-controls">
         <IconicButton
           Icon={Print}
