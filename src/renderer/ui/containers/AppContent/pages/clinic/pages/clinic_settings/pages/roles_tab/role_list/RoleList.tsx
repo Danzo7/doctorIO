@@ -11,6 +11,7 @@ import {
 import { useSearchParams } from 'react-router-dom';
 import { useGetBriefRolesQuery } from '@redux/clinic/rbac/role/roleApi';
 import LoadingSpinner from '@components/loading_spinner';
+import Can from '@ability/index';
 
 interface RoleListProps {
   selected?: number;
@@ -43,8 +44,9 @@ export default function RoleList({}: RoleListProps) {
   return (
     <div className={`role-list`}>
       {
-        //FIXME  isAllowed check
-        <NewRole />
+        <Can I="manage" a="role">
+          <NewRole />
+        </Can>
       }
 
       <div className="content-list">
