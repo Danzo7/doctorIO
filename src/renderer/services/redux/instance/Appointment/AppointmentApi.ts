@@ -44,9 +44,16 @@ const appointmentApi = createApi({
       providesTags: ['BookAppointment'],
     }),
     getPayments: builder.query<
-      { appointmentId: number; name: string; amount: number; date: Date },
+      { appointmentId: number; name: string; amount: number; date: Date }[],
       void
     >({ query: () => '/payment' }),
+
+    confirmPayment: builder.mutation<Appointment, number>({
+      query: (id) => {
+        return { url: `/payment?id=${id}`, method: 'DELETE' };
+      },
+    }),
+
     bookAppointment: builder.mutation<
       any,
       { patientId: number; body: { date: Date; subject?: string } }
@@ -124,4 +131,5 @@ export const {
   useAssignAppointmentToQueueMutation,
   useCancelAppointmentMutation,
   useGetPaymentsQuery,
+  useConfirmPaymentMutation,
 } = appointmentApi;
