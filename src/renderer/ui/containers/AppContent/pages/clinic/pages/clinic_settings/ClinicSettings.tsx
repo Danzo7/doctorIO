@@ -69,6 +69,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
           },
           'Security settings',
         ]}
+        previews={[3, 4, 5, 6]}
       />
       <Routes>
         <Route path="Roles/*" element={<RolesTab />} />

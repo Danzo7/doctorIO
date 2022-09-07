@@ -1,10 +1,12 @@
-import * as React from 'react';
 import './style/index.scss';
 import SmartLink, { ToRoute } from '@libs/smart_link';
+import { Badged } from '@components/badge/Badge';
+import { color } from '@assets/styles/color';
+import { FunctionComponent, SVGProps } from 'react';
 interface MenuOptionProps {
   items: {
     name: string;
-    svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>> | string;
+    svg: FunctionComponent<SVGProps<SVGSVGElement>> | string;
   }[];
 }
 
@@ -26,7 +28,21 @@ function MenuOption({ items }: MenuOptionProps) {
     <nav className="MenuOption">
       {items.map(
         ({ name, svg: Svg }) =>
-          name !== 'logo' && (
+          name !== 'logo' &&
+          (name == 'messages' ? (
+            <Badged text="preview" color={color.hot_red}>
+              <SmartLink
+                key={name}
+                className={({ isMatch }) =>
+                  `menuItem${isMatch ? ' isActive' : ''}`
+                }
+                to={routes[name]}
+                draggable={false}
+              >
+                <Svg />
+              </SmartLink>
+            </Badged>
+          ) : (
             <SmartLink
               key={name}
               className={({ isMatch }) =>
@@ -37,7 +53,7 @@ function MenuOption({ items }: MenuOptionProps) {
             >
               <Svg />
             </SmartLink>
-          ),
+          )),
       )}
     </nav>
   );
