@@ -10,16 +10,16 @@ const settingsSlice = createSlice({
     setOverviewInfo: (
       state: Clinic,
       action: PayloadAction<{
-        clinicName: string;
+        name: string;
         description: string;
-        clinicAddress: string;
-        phoneNumber: string;
+        address: string;
+        phone: string;
       }>,
     ) => {
-      state.clinicName = action.payload.clinicName;
+      state.name = action.payload.name;
       state.description = action.payload.description;
-      state.clinicAddress = action.payload.clinicAddress;
-      state.phoneNumber = action.payload.phoneNumber;
+      state.address = action.payload.address;
+      state.phone = action.payload.phone;
     },
     changeLogo: (state: Clinic, action: PayloadAction<string>) => {
       state.avatar = action.payload;

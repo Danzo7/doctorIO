@@ -6,8 +6,8 @@ import { useAppDispatch } from '@store';
 
 export default function ClinicOverviewCard(clinicInfo: Clinic) {
   const {
-    clinicName,
-    clinicAddress,
+    name,
+    address,
     serviceStatus,
     connectionCount,
     patientCount,
@@ -24,10 +24,10 @@ export default function ClinicOverviewCard(clinicInfo: Clinic) {
           dispatch(changeLogo(newSrc));
         }}
       />
-      <span>{clinicName}</span>
+      <span>{name}</span>
       <div>
         <span>Address</span>
-        <span>{clinicAddress}</span>
+        <span>{address}</span>
       </div>
       <div>
         <span>Service status</span>

@@ -109,9 +109,8 @@ export const DMs: DirectMessage[] = [
 ];
 
 export const clinic: Clinic = {
-  clinicName: 'PAN',
-  clinicId: 0,
-  clinicAddress: 'Blida',
+  name: 'PAN',
+  address: 'Blida',
   connectionCount: 20,
   serviceStatus: 'Good',
   patientCount: 18,
@@ -123,7 +122,7 @@ export const clinic: Clinic = {
     timeToOpen: '08:00',
     breakStart: '12:00',
     breakEnd: '13:00',
-    canBypassClosing: true,
+    rules: ['canBypassClosing'],
   },
-  preferences: { canCreateSession: true },
+  preferences: ['CAN_CREATE_SESSION'],
 };

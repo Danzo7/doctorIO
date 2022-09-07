@@ -12,10 +12,10 @@ export default function OverviewTab({}: OverviewTabProps) {
       <ClinicOverviewCard {...clinicInfo} />
       <div className="overview-tab-sep" />
       <OverviewInfoForm
-        clinicName={clinicInfo.clinicName}
+        name={clinicInfo.name}
         description={clinicInfo.description ?? ''}
-        clinicAddress={clinicInfo.clinicAddress}
-        phoneNumber={clinicInfo.phoneNumber ?? ''}
+        address={clinicInfo.address}
+        phone={clinicInfo.phone ?? ''}
       />
     </div>
   );

@@ -23,7 +23,7 @@ export default function RoleMembers({ name, description, id }: RoleBrief) {
         list.length > 0 ? (
           <MembersTable list={list} />
         ) : (
-          <span> No members were found. Add members to this role </span>
+          <span>Empty.</span>
         )
       ) : (
         <span> error when getting members </span>

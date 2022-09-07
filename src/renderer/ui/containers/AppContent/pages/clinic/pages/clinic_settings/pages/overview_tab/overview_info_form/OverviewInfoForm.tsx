@@ -12,16 +12,16 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 type Inputs = {
-  clinicName: string;
+  name: string;
   description: string;
-  clinicAddress: string;
-  phoneNumber: string;
+  address: string;
+  phone: string;
 };
 const schema = z.object({
-  clinicName: z.string().min(1, 'Clinic name is required'),
+  name: z.string().min(1, 'Clinic name is required'),
   clinicAddress: z.string().min(1, 'Clinic address is required'),
   description: z.optional(z.string()),
-  phoneNumber: z.string().min(8),
+  phone: z.string().min(8),
 });
 interface OverviewInfoFormProps {}
 export default function OverviewInfoForm(
@@ -78,10 +78,10 @@ export default function OverviewInfoForm(
     <form className="overview-info-form">
       <InputControllerContext.Provider value={control}>
         <span>Information</span>
-        <Input label="Name" type={'text'} name={'clinicName'} />
+        <Input label="Name" type={'text'} name={'name'} />
         <Input label="Description" type={'text'} name={'description'} />
-        <Input label="Location" type={'text'} name={'clinicAddress'} />
-        <Input label="Phone number" type={'text'} name={'phoneNumber'} />
+        <Input label="Location" type={'text'} name={'address'} />
+        <Input label="Phone number" type={'text'} name={'phone'} />
       </InputControllerContext.Provider>
     </form>
   );

@@ -108,13 +108,13 @@ export const rules: Permission<Rulekeys>[] = [
 ];
 export const preferences: Permission<PrefKeys>[] = [
   {
-    permKey: 'canCreateSession',
+    permKey: 'CAN_CREATE_SESSION',
     name: 'Enable earning & growth',
     description:
       'by enabling this members that can create session or members linked to them will be able to determine a price for their services',
   },
   {
-    permKey: 'canMessageExternals',
+    permKey: 'CAN_USE_MESSAGE_EXT',
     name: 'Allow outside messaging',
     description: 'Allow members to connect with externals over the internet',
   },

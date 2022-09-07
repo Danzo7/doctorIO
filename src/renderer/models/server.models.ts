@@ -75,32 +75,32 @@ interface Permission<T> {
   description?: string;
   permKey: T;
 }
+
 interface Clinic {
-  clinicId: number;
   description?: string;
-  clinicName: string;
+  name: string;
   serviceStatus: string;
   memberCount: number;
-  clinicAddress: string;
+  address: string;
   connectionCount: number;
   patientCount: number;
-  phoneNumber?: string;
+  phone?: string;
   avatar: string;
   timing: ClinicTiming;
-  preferences: ClinicPreferences;
+  preferences: PrefKeys[];
 }
-type ClinicPreferences = Partial<Record<PrefKeys, true>>;
+type DayAliased = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 type ClinicTiming = {
   timeToOpen: string;
   timeToClose: string;
   breakStart: string;
   breakEnd: string;
   workingDays: DayAliased[];
-} & Rules;
-type Rules = Partial<Record<Rulekeys, true>>;
+  rules: Rulekeys[];
+};
 
 type Rulekeys = 'canPauseQueue' | 'canTakeBreak' | 'canBypassClosing';
-type PrefKeys = 'canCreateSession' | 'canMessageExternals';
+type PrefKeys = 'CAN_CREATE_SESSION' | 'CAN_USE_MESSAGE_EXT';
 
 export type {
   Clinic,

@@ -14,7 +14,7 @@ export default function PreferencesTab({}: PreferencesTabProps) {
             editable
             primaryText={name}
             secondaryText={description}
-            isChecked={clinic.preferences[permKey]}
+            isChecked={clinic.preferences.includes(permKey)}
           />
           <BorderSeparator direction="horizontal" />
         </Fragment>
