@@ -4,9 +4,10 @@ import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/AppointmentApi';
+import LoadingSpinner from '@components/loading_spinner';
 
 export default function BookedList({}) {
-  const { data, isSuccess } = useGetBookedAppointmentQuery();
+  const { data, isSuccess, isLoading } = useGetBookedAppointmentQuery();
   const { navigate } = useNavigation();
 
   return (
@@ -25,8 +26,17 @@ export default function BookedList({}) {
         />
       }
     >
-      {isSuccess &&
-        data.map((props, index) => <BookedItem {...props} key={index} />)}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : isSuccess ? (
+        data.length > 0 ? (
+          data.map((props, index) => <BookedItem {...props} key={index} />)
+        ) : (
+          <span css={{ alignSelf: 'center' }}>Empty</span>
+        )
+      ) : (
+        <span css={{ alignSelf: 'center' }}>error</span>
+      )}
     </PreviewList>
   );
 }
