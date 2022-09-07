@@ -1,3 +1,4 @@
+import Can from '@ability/index';
 import DarkAddButton from '@components/buttons/dark_add_button';
 import LoadingSpinner from '@components/loading_spinner';
 import CreateInvitationModal from '@containers/modals/create_invitation_modal';
@@ -16,14 +17,16 @@ export default function MembersTab({}: MembersTabProps) {
   return (
     <div className="members-tab">
       <div className="add-member-wrapper">
-        <DarkAddButton
-          onPress={() => {
-            open(<CreateInvitationModal />, {
-              ...DEFAULT_MODAL,
-              position: { top: '30%' },
-            });
-          }}
-        />
+        <Can I="add" or={['manage']} a="members">
+          <DarkAddButton
+            onPress={() => {
+              open(<CreateInvitationModal />, {
+                ...DEFAULT_MODAL,
+                position: { top: '30%' },
+              });
+            }}
+          />
+        </Can>
       </div>
 
       {isLoading ? (
