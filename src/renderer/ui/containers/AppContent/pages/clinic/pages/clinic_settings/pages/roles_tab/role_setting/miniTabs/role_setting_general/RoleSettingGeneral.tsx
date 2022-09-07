@@ -1,4 +1,3 @@
-import Can from '@ability/index';
 import BorderSeparator from '@components/border_separator';
 import Input from '@components/inputs/input';
 import LoadingSpinner from '@components/loading_spinner';
@@ -26,12 +25,13 @@ export default function RoleSettingGeneral({
     mode: 'onChange',
   });
   const setSettings = useSetSettings();
-  const { name, description } = useRoleSettingStore((s) => ({
+  const { name, description, permissions } = useRoleSettingStore((s) => ({
     name: s.name,
     description: s.description,
+    permissions: s.permissions,
   }));
   const [CreateNewRole] = useCreateNewRoleMutation();
-  const { data, isSuccess, isLoading, error } = useGetMyMemberDetailQuery();
+  const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
 
   useEffect(() => {
     reset({ name: name ?? '', description: description });
@@ -67,30 +67,30 @@ export default function RoleSettingGeneral({
       {isLoading ? (
         <LoadingSpinner />
       ) : (
+        permissions?.includes('CAN_HAVE_QUEUE') &&
+        !permissions?.includes('CAN_MANAGE_QUEUE') &&
         isSuccess && (
-          <Can I="have" a="queue">
-            <PermissionItem
-              name="Assistants"
-              description="Members with the below roles will be able to access and manage role personal queue List"
-              editable={data.roles.filter((role) => role.id == id).length > 0}
-              linkedPermission={slaveRole?.name}
-              isChecked={slaveRole ? true : undefined}
-              onChange={(isChecked) => {
-                if (!slaveRole && isChecked) {
-                  CreateNewRole({
-                    name: 'New Helper',
-                    description: 'this is your bot',
-                    masterRoleId: id,
-                    permissions: mapIndexFromPermissions([
-                      'CAN_MANAGE_QUEUE',
-                      'CAN_ADD_PATIENT',
-                      'CAN_VIEW_PATIENTSLIST',
-                    ]),
-                  });
-                }
-              }}
-            />
-          </Can>
+          <PermissionItem
+            name="Assistants"
+            description="Members with the below roles will be able to access and manage role personal queue List"
+            editable={data.roles.find(({ id: rId }) => rId === id) != undefined}
+            linkedPermission={slaveRole?.name}
+            isChecked={slaveRole ? true : undefined}
+            onChange={(isChecked) => {
+              if (!slaveRole && isChecked) {
+                CreateNewRole({
+                  name: 'New Helper',
+                  description: 'this is your bot',
+                  masterRoleId: id,
+                  permissions: mapIndexFromPermissions([
+                    'CAN_MANAGE_QUEUE',
+                    'CAN_ADD_PATIENT',
+                    'CAN_VIEW_PATIENTSLIST',
+                  ]),
+                });
+              }
+            }}
+          />
         )
       )}
     </div>
