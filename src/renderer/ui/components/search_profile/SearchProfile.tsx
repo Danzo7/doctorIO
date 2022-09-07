@@ -10,6 +10,8 @@ import { useRefreshMutation } from '@redux/local/auth/authApi';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import LoadingSpinner from '@components/loading_spinner';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import MemberBigCard from '@containers/modals/member_big_card';
 interface SearchProfileProps {}
 export default function SearchProfile({}: SearchProfileProps) {
   const { data, isSuccess, error, isLoading } = useGetMyMemberDetailQuery();
@@ -27,6 +29,12 @@ export default function SearchProfile({}: SearchProfileProps) {
             status={true}
             imgSrc={data.avatar}
             alt={data.name + data.id}
+            onClick={() => {
+              open(<MemberBigCard id={data.id} />, {
+                ...DEFAULT_MODAL,
+                width: '20%',
+              });
+            }}
           />
         )
       )}
