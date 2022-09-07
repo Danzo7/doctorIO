@@ -9,6 +9,7 @@ import { Overlay } from '@libs/overlay';
 import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { DATE_ONLY } from '@constants/data_format';
 
 type Inputs = {
   subject: string;
@@ -56,7 +57,16 @@ export default function BookAppointmentModal({
         <div className="book-appointment-info">
           <TextPair first={patientName} second={`#${id}`} />
           <BorderSeparator direction="vertical" />
-          <Input type="date" control={control} name={'date'} />
+          <Input
+            type={{
+              type: 'date',
+              yearControl: false,
+              dateFormat: DATE_ONLY,
+              only: 'after',
+            }}
+            control={control}
+            name={'date'}
+          />
         </div>
         <Input
           type="text"

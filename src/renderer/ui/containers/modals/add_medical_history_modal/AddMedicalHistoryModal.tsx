@@ -2,6 +2,7 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
+import { DATE_ONLY } from '@constants/data_format';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Overlay } from '@libs/overlay';
 import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
@@ -71,9 +72,17 @@ export default function AddMedicalHistoryModal({
           errorMessage={errors.description?.message}
         />
         <span>Choose a date</span>
-        <Input type={'date'} name="selectedDate" control={control} />
+        <Input
+          type={{
+            type: 'date',
+            yearControl: true,
+            dateFormat: DATE_ONLY,
+            only: 'before',
+          }}
+          name="selectedDate"
+          control={control}
+        />
       </div>
     </ModalContainer>
   );
 }
-//TODO add dateFormat={DATE_ONLY} and year control

@@ -128,7 +128,7 @@ export default function RoleSetting({}: RoleSettingProps) {
             id={Number(roleIdParam)}
           />
           {<PermissionList />}
-          <RoleSettingMembers list={[]} />
+          <RoleSettingMembers id={Number(roleIdParam)} />
         </TabMenu>
       ) : (
         <div> mafihach </div>
