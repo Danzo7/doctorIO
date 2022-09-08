@@ -1,6 +1,6 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import Input, { InputControllerContext } from '@components/inputs/input/Input';
+import Input, { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Overlay } from '@libs/overlay';
@@ -53,12 +53,12 @@ export default function UserRegister({}: UserRegisterProps) {
         />
       }
     >
-      <InputControllerContext.Provider value={control}>
+      <Inputix control={control}>
         <Input type="text" label="First name" name="firstName" />
         <Input type="text" label="last name" name="lastName" />
         <Input type="email" label="Email" name="email" />
         <Input type="text" label="Phone number" name="phoneNumber" />
-      </InputControllerContext.Provider>
+      </Inputix>
     </ModalContainer>
   );
 }

@@ -5,6 +5,7 @@
     flex-direction: row;
     gap: 10px;
     align-items: center;
+
     >input[type="checkbox"]{
         cursor: pointer;
         display: grid;
@@ -41,5 +42,12 @@
         font-weight: 600;
         font-size: 15px;
         color: $textgray;
+    }
+    &.disabled {
+        opacity: 0.5;
+        cursor: no-drop;
+        >input[type="checkbox"]{
+            pointer-events: none;
+        }
     }
 }

@@ -1,15 +1,20 @@
 import { forwardRef, useState } from 'react';
+import { ControllerProps } from '../input';
 import CheckGroupItem from './check_group_item';
 import './style/index.scss';
-interface MultipleCheckGroupProps {
+interface MultipleCheckGroupProps extends ControllerProps {
   items: string[];
   value?: number[];
-  onChange?: (selectedIndex: number[]) => void;
+  disabled?: boolean;
 }
-export default forwardRef(function MultipleCheckGroup(
-  { items, value, onChange }: MultipleCheckGroupProps,
-  ref,
-) {
+export default function MultipleCheckGroup({
+  items,
+  value,
+  onChanged,
+  field,
+  fieldState,
+  disabled,
+}: MultipleCheckGroupProps) {
   const [checkedItems, setCheckedItems] = useState<number[]>(value ?? []);
   const isChecked = (index: number) => {
     return checkedItems.find((item) => item === index) == undefined
@@ -18,24 +23,18 @@ export default forwardRef(function MultipleCheckGroup(
   };
   const handleSelect = (index: number) => {
     if (isChecked(index)) {
-      setCheckedItems(
-        checkedItems.filter((checkedItem) => index != checkedItem),
-      );
-      onChange?.(checkedItems.filter((checkedItem) => index != checkedItem));
+      const itms = checkedItems.filter((checkedItem) => index != checkedItem);
+      setCheckedItems(itms);
+      onChanged?.(itms.map((inx) => items[inx]));
+      field.onChange?.(itms.map((inx) => items[inx]));
     } else {
       setCheckedItems([...checkedItems, index]);
-      onChange?.([...checkedItems, index]);
+      onChanged?.([...checkedItems, index].map((inx) => items[inx]));
+      field.onChange?.([...checkedItems, index].map((inx) => items[inx]));
     }
   };
   return (
     <div className="multiple-check-group">
-      <input
-        type={'hidden'}
-        value={checkedItems.toString()}
-        onChange={() => {}}
-        ref={ref as any}
-      />
-
       {items.map((text, index) => (
         <CheckGroupItem
           label={text}
@@ -44,6 +43,7 @@ export default forwardRef(function MultipleCheckGroup(
               ? false
               : true
           }
+          disabled={disabled}
           onSelect={() => {
             handleSelect(index);
           }}
@@ -52,4 +52,4 @@ export default forwardRef(function MultipleCheckGroup(
       ))}
     </div>
   );
-});
+}

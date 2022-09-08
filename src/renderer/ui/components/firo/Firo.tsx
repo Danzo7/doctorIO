@@ -1,6 +1,9 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import Input from '@components/inputs/input';
-import { InputControllerContext } from '@components/inputs/input/Input';
+import {
+  InputControllerContext,
+  Inputix,
+} from '@components/inputs/input/Input';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 type Inputs = {
@@ -34,7 +37,7 @@ export default function Firo() {
         onSubmit={handleSubmit(onSubmit)}
         css={{ display: 'flex', flexDirection: 'column', gap: 10 }}
       >
-        <InputControllerContext.Provider value={control}>
+        <Inputix control={control}>
           <Input type={'text'} name="text" />
           <Input type={'password'} name="password" />
           <Input type={'date'} name="date" />
@@ -49,7 +52,7 @@ export default function Firo() {
           />
           <Input type={'textarea'} name="textArea" />
           <Input type={'checkbox'} name="checkbox" />
-        </InputControllerContext.Provider>
+        </Inputix>
         <DarkLightCornerButton type="submit" text="submit" blank />
       </form>
     </div>

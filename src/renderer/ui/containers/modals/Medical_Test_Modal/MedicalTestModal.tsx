@@ -7,7 +7,7 @@ import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue
 import { Test } from '../../../../models/instance.model';
 import { Overlay } from '@libs/overlay';
 import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment/AppointmentApi';
-import { InputControllerContext } from '@components/inputs/input/Input';
+import { Inputix } from '@components/inputs/input/Input';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -91,7 +91,7 @@ export default function MedicalTestModal({
         </>
       }
     >
-      <InputControllerContext.Provider value={control}>
+      <Inputix control={control}>
         <Input
           errorMessage={errors.weight?.message}
           type="number"
@@ -137,7 +137,7 @@ export default function MedicalTestModal({
           </InputContainer>
         } */}
         <Input type="checkbox" label="RH" name="RH" />
-      </InputControllerContext.Provider>
+      </Inputix>
     </ModalContainer>
   );
 }

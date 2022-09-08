@@ -1,17 +1,13 @@
-import color from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
-import TextButton from '@components/buttons/text_button';
 import CheckboxTile from '@components/checkbox_tile';
 import Header from '@components/header';
-import MultipleCheckGroup from '@components/inputs/multiple_check_group';
+import Input from '@components/inputs/input';
 import SmallClinicStatus from '@components/small_clinic_status';
 import PeriodTimePicker, { PeriodTimeInputs } from '@components/time_picker';
 import { rules } from '@constants/permissions';
-import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
-import usePrompt from '@libs/HistoryBlocker';
 import { updateTimingAndSchedule } from '@redux/local/settings/settingsSlice';
-import store, { useAppDispatch, useAppSelector } from '@store';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import store, { useAppDispatch } from '@store';
+import { useForm } from 'react-hook-form';
 import './style/index.scss';
 
 interface TimingAndScheduleProps {}
@@ -29,6 +25,7 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
   interface Values {
     openingTime: PeriodTimeInputs;
     break: PeriodTimeInputs;
+    workingDays: DayAliased[];
   }
   // const clinicInfo = useAppSelector((state) => state.settings);
   const clinicInfo = store.getState().settings;
@@ -43,6 +40,7 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
         startTime: clinicInfo.timing.breakStart,
         endTime: clinicInfo.timing.breakEnd,
       },
+      workingDays: clinicInfo.timing.workingDays,
     },
   });
   const dispatch = useAppDispatch();
@@ -110,9 +108,10 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
           }}
         />
         <span>Working days</span>
-        <MultipleCheckGroup
-          items={days}
-          value={clinicInfo.timing.workingDays}
+        <Input
+          type={{ type: 'multiCheck', options: days }}
+          control={control}
+          name="workingDays"
         />
         <BorderSeparator direction="horizontal" />
         <div className="rules-container">

@@ -5,7 +5,7 @@ import usePrompt from '@libs/HistoryBlocker';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
-import { InputControllerContext } from '@components/inputs/input/Input';
+import { Inputix } from '@components/inputs/input/Input';
 import { useAppDispatch } from '@store';
 import { setOverviewInfo } from '@redux/local/settings/settingsSlice';
 import { z } from 'zod';
@@ -73,16 +73,15 @@ export default function OverviewInfoForm(
     isDirty,
     isDirty,
   );
-
   return (
     <form className="overview-info-form">
-      <InputControllerContext.Provider value={control}>
+      <Inputix control={control}>
         <span>Information</span>
         <Input label="Name" type={'text'} name={'name'} />
         <Input label="Description" type={'text'} name={'description'} />
         <Input label="Location" type={'text'} name={'address'} />
         <Input label="Phone number" type={'text'} name={'phone'} />
-      </InputControllerContext.Provider>
+      </Inputix>
     </form>
   );
 }

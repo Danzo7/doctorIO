@@ -25,7 +25,26 @@ import Datepicker, { Timepicker } from '../datepicker';
 import TextArea from '../text_area';
 import { InputWrapperProps } from '../input_wrapper/InputWrapper';
 import { DatepickerProps } from '../datepicker/Datepicker';
-export const InputControllerContext = createContext<Control<any> | null>(null);
+import MultipleCheckGroup from '../multiple_check_group';
+export const InputControllerContext = createContext<{
+  control: Control<any> | undefined;
+  onChange?: (value: any) => void;
+}>({ control: undefined });
+export const Inputix = ({
+  control,
+  onChange,
+  children,
+}: {
+  control: Control<any> | undefined;
+  onChange?: (value: any) => void;
+  children: ReactNode;
+}) => (
+  <InputControllerContext.Provider
+    value={{ control: control, onChange: onChange }}
+  >
+    {children}
+  </InputControllerContext.Provider>
+);
 
 export interface ControllerProps {
   field: Omit<ControllerRenderProps, 'ref'>;
@@ -50,6 +69,10 @@ type DateField = {
 } & Partial<
   Pick<DatepickerProps, 'yearControl' | 'dateFormat' | 'filterDate' | 'only'>
 >;
+type MultiCheck = {
+  type: 'multiCheck';
+  options: any[];
+};
 type InputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -60,7 +83,8 @@ type InputProps<
     | 'toggle'
     | 'textarea'
     | HTMLInputTypeAttribute
-    | DateField;
+    | DateField
+    | MultiCheck;
   hint?: string;
   label?: string;
   leading?: ReactNode;
@@ -104,7 +128,9 @@ export default function Input<T extends FieldValues = FieldValues>({
   background,
   radius,
 }: InputProps<T> & Partial<InputWrapperProps>) {
-  const controlC = useContext(InputControllerContext);
+  const { control: controlC, onChange: biOnChange } = useContext(
+    InputControllerContext,
+  );
   if (!controlC && !control) {
     throw new Error(
       'Input must be inside a controller provider or have a control prop',
@@ -120,9 +146,8 @@ export default function Input<T extends FieldValues = FieldValues>({
     defaultValue,
     shouldUnregister,
   });
-
   return type == 'checkbox' ? (
-    <Checkbox label={label} field={field} ref={ref} />
+    <Checkbox label={label} field={field} ref={ref} disabled={disabled} />
   ) : (
     <InputContainer
       fillContainer={fillContainer}
@@ -143,6 +168,15 @@ export default function Input<T extends FieldValues = FieldValues>({
           field={field}
           ref={ref}
           fieldState={fieldState}
+        />
+      ) : (type as MultiCheck)?.type == 'multiCheck' ? (
+        <MultipleCheckGroup
+          field={field}
+          items={(type as MultiCheck).options}
+          fieldState={fieldState}
+          rules={rules}
+          onChanged={onChange}
+          disabled={disabled}
         />
       ) : (
         <InputWrapper

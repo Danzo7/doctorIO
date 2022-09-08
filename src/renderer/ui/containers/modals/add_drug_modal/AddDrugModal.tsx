@@ -1,7 +1,7 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
-import { InputControllerContext } from '@components/inputs/input/Input';
+import { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Overlay } from '@libs/overlay';
@@ -74,8 +74,7 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
         />
       }
     >
-      {' '}
-      <InputControllerContext.Provider value={control}>
+      <Inputix control={control}>
         <Input
           name="name"
           label="Drug name"
@@ -108,7 +107,7 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
           type={'text'}
           fillContainer
         />
-      </InputControllerContext.Provider>
+      </Inputix>
     </ModalContainer>
   );
 }

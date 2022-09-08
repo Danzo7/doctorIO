@@ -4,11 +4,13 @@ interface CheckGroupItemProps {
   label: string;
   checked: boolean;
   onSelect: () => void;
+  disabled?: boolean;
 }
 export default function CheckGroupItem({
   checked,
   label,
   onSelect,
+  disabled,
 }: CheckGroupItemProps) {
   return (
     <TextButton
@@ -18,6 +20,7 @@ export default function CheckGroupItem({
       borderColor={color.border_color}
       onPress={onSelect}
       afterBgColor={!checked ? color.light : color.cold_blue}
+      disabled={disabled}
     />
   );
 }
