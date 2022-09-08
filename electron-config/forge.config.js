@@ -19,7 +19,7 @@ module.exports = {
   ],
   plugins: [
     [
-      'electron-wp',
+      'electron-webpack-forge',
       {
         output: 'build',
         mainConfig: './electron-config/webpack.main.config.js',

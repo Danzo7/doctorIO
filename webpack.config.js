@@ -13,6 +13,7 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 module.exports = ({ mode } = { mode: process.env.mode }) => {
   const isDevelopment = mode === 'development';
   const isProduction = mode === 'production';
+  const isElectron = process.env.platform === 'electron';
   console.log(isDevelopment + ' and ' + isProduction);
   process.env.mode = mode;
   return {
@@ -145,7 +146,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
 
     plugins: [
       //Ts error
-      new ForkTsCheckerWebpackPlugin(),
+      isDevelopment && new ForkTsCheckerWebpackPlugin(),
 
       new HtmlWebpackPlugin({
         favicon: 'public/favicon.ico',
@@ -157,7 +158,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       }),
       new webpack.DefinePlugin({
         //Setting environment variables
-        FROM_ELECTRON: JSON.stringify(process.env.platform ? true : false),
+        FROM_ELECTRON: JSON.stringify(isElectron ? true : false),
       }),
       isDevelopment && new ReactRefreshWebpackPlugin({ overlay: false }),
     ].filter(Boolean),

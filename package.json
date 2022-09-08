@@ -106,7 +106,7 @@
     "dotenv": "^16.0.2",
     "dotenv-webpack": "^8.0.1",
     "electron": "^20.1.2",
-    "electron-forge-webpack": "https://github.com/Danzo7/electron-forge-webpack#dist",
+    "electron-webpack-forge": "https://github.com/Danzo7/electron-webpack-forge#dist",
     "eslint": "^8.23.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
