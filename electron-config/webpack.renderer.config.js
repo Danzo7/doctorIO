@@ -11,7 +11,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       //Setting environment variables
-      ELECTRON_ROUTING: JSON.stringify(true),
+      FROM_ELECTRON: JSON.stringify(true),
     }),
     ...webpackDefault.plugins,
   ],

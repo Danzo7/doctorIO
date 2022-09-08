@@ -15,7 +15,6 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
   const isProduction = mode === 'production';
   console.log(isDevelopment + ' and ' + isProduction);
   process.env.mode = mode;
-
   return {
     mode: mode,
     entry: ['./src/renderer/index.tsx'],
@@ -158,7 +157,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
       }),
       new webpack.DefinePlugin({
         //Setting environment variables
-        ELECTRON_ROUTING: JSON.stringify(false),
+        FROM_ELECTRON: JSON.stringify(process.env.platform ? true : false),
       }),
       isDevelopment && new ReactRefreshWebpackPlugin({ overlay: false }),
     ].filter(Boolean),
