@@ -25,9 +25,8 @@ export default function Taskbar({}: TaskbarProps) {
           radius={0}
           iconSize={10}
           afterBgColor={color.hot_red}
-          onPress={() => {
-            const remote = (window.require('electron') as any).remote;
-            remote.getGlobal('mainWindow').minimize();
+          onPress={async () => {
+            console.log(await window.api.sayHello());
           }}
         />
       </div>

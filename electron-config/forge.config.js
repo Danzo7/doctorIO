@@ -19,10 +19,12 @@ module.exports = {
   ],
   plugins: [
     [
-      'electron-forge-webpack',
+      'electron-wp',
       {
         output: 'build',
         mainConfig: './electron-config/webpack.main.config.js',
+        devContentSecurityPolicy: `default-src * 'self' 'unsafe-inline' data:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' data:`,
+
         renderer: {
           config: './electron-config/webpack.renderer.config.js',
           entryPoints: [
@@ -31,9 +33,9 @@ module.exports = {
               js: './src/renderer/index.tsx',
               name: 'app',
               isMain: true,
-              // preload: {
-              //   js: './src/main/preload.ts',
-              // },
+              preload: {
+                js: './src/main/preload.ts',
+              },
             },
           ],
         },
