@@ -1,0 +1,24 @@
+@use '~styles/appColors' as *;
+.taskbar {
+    height: 25px;
+    background-color: $goodblack;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    z-index: 9999999;
+    align-items: center;
+
+    padding-left: 5px;
+    >span{
+        font-size: 0.6em;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-align: center;
+    }
+    >.items{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+}
