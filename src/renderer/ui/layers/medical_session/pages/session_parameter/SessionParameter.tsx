@@ -7,6 +7,14 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import './style/index.scss';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+const schema = z.object({
+  payment: z.number().min(0).max(4000).array().optional(),
+  customCost: z.number().optional(),
+  bookDate: z.string().optional(),
+  payOutside: z.boolean().optional(),
+});
 interface SessionParameterProps {}
 interface Inputs {
   bookDate: Date;
@@ -14,6 +22,7 @@ interface Inputs {
   payment: number[];
   payOutside: boolean;
 }
+
 export default function SessionParameter({}: SessionParameterProps) {
   const { control, watch } = useForm<Inputs>({
     defaultValues: {
@@ -22,6 +31,7 @@ export default function SessionParameter({}: SessionParameterProps) {
       payment: [],
       payOutside: false,
     },
+    resolver: zodResolver(schema),
   });
 
   const payments = ['1000', '2000', '3000'];
@@ -33,9 +43,9 @@ export default function SessionParameter({}: SessionParameterProps) {
     updateParameter({
       booked: willBook ? fields.bookDate : undefined,
       payment: canPay
-        ? +fields.payment.reduce((a, b) => +a + b, 0) +
+        ? Number(fields.payment.reduce((a, b) => Number(a) + Number(b), 0)) +
           Number(fields.customCost)
-        : undefined,
+        : undefined, //TODO check if NaN
       handPayment: canPay ? fields.payOutside : undefined,
     }),
   );
@@ -72,7 +82,8 @@ export default function SessionParameter({}: SessionParameterProps) {
         ></Input>
         <span>Custom :</span>
         <Input
-          type={'number'}
+          type={{ type: 'numeric', step: 100, unit: '$' }}
+          rules={{ min: 0, max: 10000000 }}
           control={control}
           name={'customCost'}
           disabled={!canPay}
