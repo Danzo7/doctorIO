@@ -17,6 +17,7 @@ export default forwardRef(function AutoSizeInput(
 
   return (
     <input
+      autoComplete="off"
       className="auto-size-input"
       ref={(e) => {
         inputRef?.(e);
