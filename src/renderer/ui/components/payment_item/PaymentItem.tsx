@@ -3,15 +3,19 @@ import TextButton from '@components/buttons/text_button';
 import './style/index.scss';
 import Print from 'toSvg/print.svg?icon';
 import { color } from '@assets/styles/color';
+import { useConfirmPaymentMutation } from '@redux/instance/Appointment/AppointmentApi';
 
 interface PaymentItemProps {
   patientFullName: string;
   amount: number;
+  appointmentId: number;
 }
 export default function PaymentItem({
   patientFullName,
+  appointmentId,
   amount,
 }: PaymentItemProps) {
+  const [ConfirmPayment] = useConfirmPaymentMutation();
   return (
     <div className="payment-item">
       <span>{patientFullName}</span>
@@ -37,6 +41,9 @@ export default function PaymentItem({
           borderColor={color.border_color}
           afterBgColor={color.good_green}
           padding=" 5px 10px"
+          onPress={() => {
+            ConfirmPayment(appointmentId);
+          }}
         />
       </div>
     </div>

@@ -12,7 +12,7 @@ import appointmentQueueApi from '../appointmentQueue/AppointmentQueueApi';
 const appointmentApi = createApi({
   reducerPath: 'AppointmentApi',
   baseQuery: StaticQueries.appointment.query,
-  tagTypes: ['BookAppointment'],
+  tagTypes: ['BookAppointment', 'payment'],
   endpoints: (builder) => ({
     //GET
     getBookedAppointment: builder.query<BookedAppointment[], void>({
@@ -46,12 +46,13 @@ const appointmentApi = createApi({
     getPayments: builder.query<
       { appointmentId: number; name: string; amount: number; date: Date }[],
       void
-    >({ query: () => '/payment' }),
+    >({ query: () => '/payment', providesTags: ['payment'] }),
 
     confirmPayment: builder.mutation<Appointment, number>({
       query: (id) => {
         return { url: `/payment?id=${id}`, method: 'DELETE' };
       },
+      invalidatesTags: ['payment'],
     }),
 
     bookAppointment: builder.mutation<
