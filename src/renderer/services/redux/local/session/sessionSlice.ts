@@ -4,16 +4,16 @@ import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 interface SessionType {
   sessionInfo: Session;
   sessionParameter: {
-    bookAppointment: { isAllowed: boolean; date: Date };
-    payment: { isAllowed: boolean; value: number; handPayment: boolean };
+    bookAppointment: Date | undefined;
+    payment: { value?: number; handPayment?: boolean };
   };
 }
 
 const initialState: SessionType = {
   sessionInfo: { diagnosis: '', prescription: [] },
   sessionParameter: {
-    bookAppointment: { isAllowed: true, date: new Date() },
-    payment: { value: 0, handPayment: false, isAllowed: true },
+    payment: { value: undefined, handPayment: false },
+    bookAppointment: undefined,
   },
 };
 const sessionSlice = createSlice({
@@ -42,32 +42,18 @@ const sessionSlice = createSlice({
         ...action.payload.drug,
       };
     },
-    setBookAppointmentValue: (
+
+    updateParameter: (
       state: SessionType,
-      action: PayloadAction<Date>,
+      action: PayloadAction<{
+        payment?: number;
+        handPayment?: boolean;
+        booked?: Date;
+      }>,
     ) => {
-      if (state.sessionParameter.bookAppointment.isAllowed)
-        state.sessionParameter.bookAppointment.date = action.payload;
-    },
-    updateBookAppointmentPermission: (state: SessionType) => {
-      state.sessionParameter.bookAppointment.isAllowed =
-        !state.sessionParameter.bookAppointment.isAllowed;
-    },
-    updatePaymentOptionPermission: (state: SessionType) => {
-      state.sessionParameter.payment.isAllowed =
-        !state.sessionParameter.payment.isAllowed;
-    },
-    updatePaymentValue: (
-      state: SessionType,
-      action: PayloadAction<{ value: 0; handPayment: false; isAllowed: true }>,
-    ) => {
-      if (state.sessionParameter.payment.isAllowed)
-        state.sessionParameter.payment = action.payload;
-    },
-    updateHandPaymentOption: (state: SessionType) => {
-      if (state.sessionParameter.payment.isAllowed)
-        state.sessionParameter.payment.handPayment =
-          !state.sessionParameter.payment.handPayment;
+      state.sessionParameter.payment.value = action.payload.payment;
+      state.sessionParameter.payment.handPayment = action.payload.handPayment;
+      state.sessionParameter.bookAppointment = action.payload.booked;
     },
   },
 });
@@ -77,11 +63,7 @@ export const {
   clearPrescription,
   updatePrescription,
   resetSession,
-  setBookAppointmentValue,
-  updateBookAppointmentPermission,
-  updatePaymentValue,
-  updateHandPaymentOption,
-  updatePaymentOptionPermission,
+  updateParameter,
 } = sessionSlice.actions;
 
 export default sessionSlice;
