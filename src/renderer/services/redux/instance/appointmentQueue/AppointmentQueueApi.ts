@@ -116,7 +116,7 @@ const appointmentQueueApi = createApi({
       },
     }),
     //PATCH
-    updateTest: builder.mutation<boolean, { position: number; test: Test }>({
+    updateTest: builder.mutation<boolean, { position: number } & Test>({
       query: (body) => {
         return {
           url: `/item`,
@@ -188,6 +188,7 @@ const appointmentQueueApi = createApi({
         diagnosis: string;
         subject?: string;
         prescription: Omit<Drug, 'id'>[];
+        payment?: number;
       }
     >({
       query: (body) => ({

@@ -8,7 +8,10 @@ import { Test } from '../../../../models/instance.model';
 import { Overlay } from '@libs/overlay';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { InputControllerContext } from '@components/inputs/input/Input';
+import {
+  InputControllerContext,
+  Inputix,
+} from '@components/inputs/input/Input';
 
 interface Inputs {
   weight: number;
@@ -54,7 +57,7 @@ export default function AddMedicalTestModal({
       bloodType: formData.bloodType,
       Rh: formData.RH,
     };
-    updateTest({ test: newTest, position: position });
+    updateTest({ ...newTest, position: position });
 
     Overlay.close();
   };
@@ -76,7 +79,7 @@ export default function AddMedicalTestModal({
         </>
       }
     >
-      <InputControllerContext.Provider value={control}>
+      <Inputix control={control}>
         <Input type="number" label="Weight" name="weight" />
         <Input type="number" label="Height" name="height" />
         <Input
@@ -111,7 +114,7 @@ export default function AddMedicalTestModal({
           </InputContainer>
         } */}
         <Input type="checkbox" label="RH" name="RH" />
-      </InputControllerContext.Provider>
+      </Inputix>
     </ModalContainer>
   );
 }
