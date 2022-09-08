@@ -44,6 +44,7 @@ module.exports = {
       { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
     ],
     '@emotion/pkg-renaming': 'error',
+    'react/no-unknown-property': ['error', { ignore: ['css'] }],
     'react/prop-types': 0,
     'no-console': 'warn',
     'linebreak-style': 'off',
