@@ -2,11 +2,12 @@ import { useState, useMemo } from 'react';
 import Arrow from 'toSvg/arrow.svg?icon';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import {
-  createTable,
   getCoreRowModel,
   getSortedRowModel,
   SortingState,
-  useTableInstance,
+  useReactTable,
+  createColumnHelper,
+  flexRender,
 } from '@tanstack/react-table';
 import './style/index.scss';
 import AddDrugModal from '@containers/modals/add_drug_modal';
@@ -20,7 +21,7 @@ interface MedicamentTableProps {
   prescriptionList?: Drug[];
 }
 
-const table = createTable().setRowType<Drug>();
+const table = createColumnHelper<Drug>();
 export default function MedicamentTable({
   editable,
   prescriptionList,
@@ -33,68 +34,64 @@ export default function MedicamentTable({
 
   const { open } = useOverlay();
   const [sorting, setSorting] = useState<SortingState>([]);
-  const columns = useMemo(
-    () =>
-      [
-        table.createDataColumn('name', {
-          header: 'Name',
-          footer: (props) => props.column.id,
-        }),
-        table.createDataColumn('qts', {
-          header: 'Qts',
-          footer: (props) => props.column.id,
-        }),
+  const columns = [
+    table.accessor('name', {
+      header: 'Name',
+      footer: (props) => props.column.id,
+    }),
+    table.accessor('qts', {
+      header: 'Qts',
+      footer: (props) => props.column.id,
+    }),
 
-        table.createDataColumn('dosage', {
-          header: 'Dose',
-          cell: ({ getValue }) => getValue() + '/day',
-        }),
-        table.createDataColumn('duration', {
-          header: 'Duration',
-          cell: ({ getValue }) =>
-            (getValue() ?? '*') + `${getValue() > 1 ? ' days' : ' day'}`,
-        }),
+    table.accessor('dosage', {
+      header: 'Dose',
+      cell: ({ getValue }) => getValue() + '/day',
+    }),
+    table.accessor('duration', {
+      header: 'Duration',
+      cell: ({ getValue }) =>
+        (getValue() ?? '*') + `${getValue() > 1 ? ' days' : ' day'}`,
+    }),
 
-        table.createDataColumn('description', {
-          header: 'description',
-          footer: (props) => props.column.id,
-        }),
+    table.accessor('description', {
+      header: 'description',
+      footer: (props) => props.column.id,
+    }),
 
-        !!editable &&
-          table.createDataColumn('id', {
-            header: '',
-            id: 'skip',
-            size: 1,
-            cell: ({ row, getValue }) => (
-              <div css={{ float: 'right' }}>
-                <DarkLightCornerButton
-                  text="Edit"
-                  isActive={true}
-                  onPress={() => {
-                    open(
-                      <AddDrugModal
-                        defaultValues={{
-                          name: row.getValue('name'),
-                          qts: row.getValue('qts'),
-                          dosage: row.getValue('dosage'),
-                          duration: row.getValue('duration'),
-                          description: row.getValue('description'),
-                          id: getValue(),
-                        }}
-                      />,
-                      DEFAULT_MODAL,
-                    );
-                  }}
-                />
-              </div>
-            ),
-          }),
-      ].filter(Boolean) as any,
-    [editable, open],
-  );
+    !!editable &&
+      table.accessor('id', {
+        header: '',
+        id: 'skip',
+        size: 1,
+        cell: ({ row, getValue }) => (
+          <div css={{ float: 'right' }}>
+            <DarkLightCornerButton
+              text="Edit"
+              isActive={true}
+              onPress={() => {
+                open(
+                  <AddDrugModal
+                    defaultValues={{
+                      name: row.getValue('name'),
+                      qts: row.getValue('qts'),
+                      dosage: row.getValue('dosage'),
+                      duration: row.getValue('duration'),
+                      description: row.getValue('description'),
+                      id: getValue(),
+                    }}
+                  />,
+                  DEFAULT_MODAL,
+                );
+              }}
+            />
+          </div>
+        ),
+      }),
+  ].filter(Boolean) as any;
 
-  const instance = useTableInstance(table, {
-    data: data,
+  const instance = useReactTable({
+    data,
     columns,
     state: {
       sorting,
@@ -117,7 +114,10 @@ export default function MedicamentTable({
                     {header.isPlaceholder || header.id == 'skip' ? null : (
                       <div onClick={header.column.getToggleSortingHandler()}>
                         <span className="text-cell">
-                          {header.renderHeader()}
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                         </span>
                         {header.column.getIsSorted() && (
                           <Arrow
@@ -145,7 +145,10 @@ export default function MedicamentTable({
                 {row.getVisibleCells().map((cell) => {
                   return (
                     <td className="text-cell" key={cell.id}>
-                      {cell.renderCell()}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </td>
                   );
                 })}
