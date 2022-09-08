@@ -48,14 +48,16 @@ export default function MedicalSession({}: MedicalSessionProps) {
     useGetPatientDetailQuery(patientId ?? skipToken);
   const { open, openTooltip } = useOverlay();
   const openEndSessionModal = () => {
-    open(<EndSession />, {
-      closeOnClickOutside: true,
-      isDimmed: true,
-      clickThrough: false,
-      position: { top: '30%' },
-      width: '30%',
-      closeBtn: 'inner',
-    });
+    if (patientId)
+      open(<EndSession patientId={patientId} />, {
+        closeOnClickOutside: true,
+        isDimmed: true,
+        clickThrough: false,
+        position: { top: '30%' },
+        width: '30%',
+        closeBtn: 'inner',
+      });
+    else throw new Error('patientId is undefined');
   };
   const dispatch = useAppDispatch();
   useEffect(() => {

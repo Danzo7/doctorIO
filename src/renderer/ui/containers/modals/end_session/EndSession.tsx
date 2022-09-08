@@ -8,13 +8,18 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useEndNextMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAppSelector } from '@store';
-interface EndSessionProps {}
-export default function EndSession({}: EndSessionProps) {
+import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
+interface EndSessionProps {
+  patientId: number;
+}
+export default function EndSession({ patientId }: EndSessionProps) {
   const { openTooltip } = useOverlay();
   const { navigate } = useNavigation();
   const [EndNext] = useEndNextMutation();
+  const [bookAppointment] = useBookAppointmentMutation();
   const session = useAppSelector((state) => state.session);
   const currentSession = session.sessionInfo;
+  const sessionParameters = session.sessionParameter;
   return (
     <ModalContainer
       title="End the session?"
@@ -54,16 +59,28 @@ export default function EndSession({}: EndSessionProps) {
             backgroundColor={color.good_green}
             padding=" 5px 15px"
             width={'100%'}
-            onPress={() => {
-              EndNext({
+            onPress={async () => {
+              await EndNext({
                 diagnosis: currentSession.diagnosis,
                 prescription: currentSession.prescription.map(
                   ({ id, ...other }) => other,
                 ),
-              })
-                .then(() => navigate('queue'))
-
-                .catch((error) => console.log(error));
+                payment:
+                  sessionParameters.payment?.value &&
+                  sessionParameters.payment?.handPayment &&
+                  sessionParameters.payment?.value > 0
+                    ? sessionParameters.payment.value
+                    : undefined,
+              });
+              if (sessionParameters.bookAppointment)
+                await bookAppointment({
+                  body: {
+                    date: sessionParameters.bookAppointment,
+                    subject: 'follow up',
+                  },
+                  patientId: patientId,
+                });
+              navigate('queue');
             }}
           />
         </div>
