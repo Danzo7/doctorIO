@@ -9,14 +9,17 @@ import PaymentItem from '@components/payment_item';
 import { useGetPaymentsQuery } from '@redux/instance/Appointment/AppointmentApi';
 import LoadingSpinner from '@components/loading_spinner';
 import BorderSeparator from '@components/border_separator';
+import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 
 interface PaymentQueueProps {}
 export default function PaymentQueue({}: PaymentQueueProps) {
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
   const { data, isSuccess, isLoading, error } = useGetPaymentsQuery();
+  const appointmentsQuery = useGetQueueAppointmentsQuery();
+  const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const smallInfoCardData = {
-    'In queue': (isSuccess && data.length > 0 ? data.length : 0).toString(),
-    unpaid: '0', //TODO add unpaid value
+    'In queue': count.toString(),
+    unpaid: (isSuccess && data.length > 0 ? data.length : 0).toString(), //TODO add unpaid value
   };
   return (
     <div className="payment-queue">
@@ -39,7 +42,11 @@ export default function PaymentQueue({}: PaymentQueueProps) {
             <ScrollView refs={ref} gap={10}>
               {data.map(({ appointmentId, amount, name, date }, index) => (
                 <li key={appointmentId + index}>
-                  <PaymentItem patientFullName={name} amount={amount} />
+                  <PaymentItem
+                    patientFullName={name}
+                    amount={amount}
+                    appointmentId={appointmentId}
+                  />
                 </li>
               ))}
             </ScrollView>
