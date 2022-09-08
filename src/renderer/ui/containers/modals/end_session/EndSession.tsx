@@ -7,8 +7,10 @@ import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useEndNextMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { useAppSelector } from '@store';
-import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
+import { useAppDispatch, useAppSelector } from '@store';
+import appointmentApi, {
+  useBookAppointmentMutation,
+} from '@redux/instance/Appointment/AppointmentApi';
 interface EndSessionProps {
   patientId: number;
 }
@@ -20,6 +22,7 @@ export default function EndSession({ patientId }: EndSessionProps) {
   const session = useAppSelector((state) => state.session);
   const currentSession = session.sessionInfo;
   const sessionParameters = session.sessionParameter;
+  const dispatch = useAppDispatch();
   return (
     <ModalContainer
       title="End the session?"
@@ -71,7 +74,15 @@ export default function EndSession({ patientId }: EndSessionProps) {
                   sessionParameters.payment?.value > 0
                     ? sessionParameters.payment.value
                     : undefined,
+              }).then(() => {
+                if (
+                  sessionParameters.payment?.value &&
+                  sessionParameters.payment?.handPayment &&
+                  sessionParameters.payment?.value > 0
+                )
+                  dispatch(appointmentApi.util.invalidateTags(['payment']));
               });
+
               if (sessionParameters.bookAppointment)
                 await bookAppointment({
                   body: {
