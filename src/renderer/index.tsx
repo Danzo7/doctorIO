@@ -9,17 +9,15 @@ import { persistor, store } from '@redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Taskbar from '@components/taskbar';
 
-declare const FROM_ELECTRON: boolean;
 const app = document.getElementById('app-mount');
 const root = createRoot(app as HTMLElement);
 const Routing = FROM_ELECTRON ? HashRouter : BrowserRouter;
 
 root.render(
   <StrictMode>
+    {FROM_ELECTRON && <Taskbar />}
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {FROM_ELECTRON && <Taskbar />}
-
         <Routing>
           <App />
         </Routing>
