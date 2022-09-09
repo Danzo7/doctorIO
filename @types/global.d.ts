@@ -65,6 +65,10 @@ declare module '*.png' {
   const ref: string;
   export default ref;
 }
+/**
+ * Predifined variables from webpack to Tell if we are in electron or web
+ */
+declare const FROM_ELECTRON: boolean;
 
 /* CUSTOM: ADD YOUR OWN HERE */
 declare module 'pixrem';
