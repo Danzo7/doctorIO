@@ -22,6 +22,7 @@ import invitationApi from './clinic/invitation/invitationApi';
 import memberApi from './clinic/rbac/member/memberApi';
 import roleApi from './clinic/rbac/role/roleApi';
 import smallRoleInvSlice from './local/small_role_invSlice';
+import clinicApi from './clinic/clinicApi';
 
 const persistUserConfig = {
   key: 'user',
@@ -38,6 +39,7 @@ const persistedUser = persistReducer(persistUserConfig, userSlice.reducer);
 const persistedAuth = persistReducer(persistAuthConfig, authSlice.reducer);
 
 const appReducer = combineReducers({
+  [clinicApi.reducerPath]: clinicApi.reducer,
   [smallRoleInvSlice.name]: smallRoleInvSlice.reducer,
   [roleApi.reducerPath]: roleApi.reducer,
   [memberApi.reducerPath]: memberApi.reducer,
@@ -90,6 +92,7 @@ export const store = configureStore({
       invitationApi.middleware,
       memberApi.middleware,
       roleApi.middleware,
+      clinicApi.middleware,
     ),
 });
 export const persistor = persistStore(store);

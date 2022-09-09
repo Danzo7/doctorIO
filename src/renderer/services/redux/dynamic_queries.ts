@@ -189,9 +189,12 @@ export class StaticQueries {
 
   static readonly invitation = new DynamicBaseQuery('clinic/invite');
 
+  static readonly clinic = new DynamicBaseQuery('clinic');
+
   static async initAll() {
     if (await this.authQuery.loadUrl()) {
       //FIXME implement a better way to check if the server is running
+      this.clinic.takeUrl(this.authQuery);
       this.members.takeUrl(this.authQuery);
       this.queue.takeUrl(this.authQuery);
       this.patient.takeUrl(this.authQuery);
