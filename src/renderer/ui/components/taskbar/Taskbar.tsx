@@ -16,6 +16,9 @@ export default function Taskbar({}: TaskbarProps) {
           iconSize={10}
           radius={0}
           afterBgColor={color.light}
+          onPress={() => {
+            window._ELECTRON_WINDOW_COMMAND.invokeWindow('minimize');
+          }}
         />
 
         <IconicButton
@@ -25,8 +28,8 @@ export default function Taskbar({}: TaskbarProps) {
           radius={0}
           iconSize={10}
           afterBgColor={color.hot_red}
-          onPress={async () => {
-            console.log(await window.api.sayHello());
+          onPress={() => {
+            window._ELECTRON_WINDOW_COMMAND.invokeWindow('close');
           }}
         />
       </div>
