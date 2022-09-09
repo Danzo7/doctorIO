@@ -24,9 +24,11 @@
       "@redux/*": ["src/renderer/services/redux/*"],
       "@colors": ["src/renderer/assets/styles/color.ts"],
       "@ability/*": ["src/renderer/services/ability/*"],
-      "@stores/*": ["src/renderer/services/zustand/*"]
+      "@stores/*": ["src/renderer/services/zustand/*"],
+      "@channels/*": ["src/main/channels/*"]
     },
     "noEmit": false,
+    "typeRoots": ["src/main/channel/types", "node_modules/@types"],
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
