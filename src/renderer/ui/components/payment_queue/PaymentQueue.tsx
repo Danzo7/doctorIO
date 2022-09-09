@@ -19,7 +19,7 @@ export default function PaymentQueue({}: PaymentQueueProps) {
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const smallInfoCardData = {
     'In queue': count.toString(),
-    unpaid: (isSuccess && data.length > 0 ? data.length : 0).toString(), //TODO add unpaid value
+    unpaid: (isSuccess && data.length > 0 ? data.length : 0).toString(),
   };
   return (
     <div className="payment-queue">

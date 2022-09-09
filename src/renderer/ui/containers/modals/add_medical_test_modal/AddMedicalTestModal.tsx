@@ -110,7 +110,7 @@ export default function AddMedicalTestModal({
               onChange={(selected) => {
                 setValue('RH', RhOptions[selected] == 'Positive');
               }}
-            />//TODO add multiOptionSwitcher to input component
+            />//TODO add ToggleButton to input component
           </InputContainer>
         } */}
         <Input type="checkbox" label="RH" name="RH" />
