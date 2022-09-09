@@ -13,11 +13,12 @@ const clinicApi = createApi({
     }),
     updateClinicOverview: builder.mutation<
       boolean,
-      { name: string; description: string }
+      { name: string; description: string; phone?: string; address: string }
     >({
       query: (body) => {
         return { url: '', body: { ...body }, method: 'PATCH' };
       },
+      invalidatesTags: ['clinic'],
     }),
   }),
 });
