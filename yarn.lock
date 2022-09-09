@@ -7046,7 +7046,7 @@ electron-to-chromium@^1.4.118, electron-to-chromium@^1.4.202:
 
 "electron-webpack-forge@https://github.com/Danzo7/electron-webpack-forge#dist":
   version "0.1.0"
-  resolved "https://github.com/Danzo7/electron-webpack-forge#31259b29cf768bf072ac632b32acbd151d09f02e"
+  resolved "https://github.com/Danzo7/electron-webpack-forge#fd81f3a0e305eb3e38dd856c99308ea8dddffa95"
   dependencies:
     "@electron-forge/async-ora" "6.0.0-beta.66"
     "@electron-forge/core" "6.0.0-beta.66"
