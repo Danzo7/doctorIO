@@ -1,29 +1,6 @@
-import { contextBridge, ipcRenderer, shell } from 'electron';
-
-contextBridge.exposeInMainWorld('api', {
-  sayHello: () => ipcRenderer.invoke('hello'),
-});
-contextBridge.exposeInMainWorld('electron', {
-  on(
-    eventName: string,
-    callback: (event: Electron.IpcRendererEvent, ...args: any[]) => void,
-  ) {
-    ipcRenderer.on(eventName, callback);
-  },
-
-  async invoke(eventName: string, ...params: any[]) {
-    return ipcRenderer.invoke(eventName, ...params);
-  },
-
-  async shellOpenExternal(url: string) {
-    await shell.openExternal(url);
-  },
-
-  async shellOpenPath(file: string) {
-    await shell.openPath(file);
-  },
-
-  async shellTrashItem(file: string) {
-    await shell.trashItem(file);
-  },
-});
+import { contextBridge } from 'electron';
+import { invokeWindow } from './channels/window/window_invoker';
+const wincom: _ELECTRON_WINDOW_COMMAND = {
+  invokeWindow,
+};
+contextBridge.exposeInMainWorld('_ELECTRON_WINDOW_COMMAND', wincom);
