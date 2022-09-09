@@ -6,10 +6,12 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
 import { Inputix } from '@components/inputs/input/Input';
-import { useAppDispatch } from '@store';
-import { setOverviewInfo } from '@redux/local/settings/settingsSlice';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useUpdateClinicOverviewMutation } from '@redux/clinic/clinicApi';
+import {
+  useOverViewInfo,
+  useSetDefaults,
+  useSetOverViewInfo,
+} from '@stores/overViewinfoStore';
 
 type Inputs = {
   name: string;
@@ -17,16 +19,13 @@ type Inputs = {
   address: string;
   phone: string;
 };
-const schema = z.object({
-  name: z.string().min(1, 'Clinic name is required'),
-  clinicAddress: z.string().min(1, 'Clinic address is required'),
-  description: z.optional(z.string()),
-  phone: z.string().min(8),
-});
+
 interface OverviewInfoFormProps {}
-export default function OverviewInfoForm(
-  props: OverviewInfoFormProps & Inputs,
-) {
+export default function OverviewInfoForm(props: OverviewInfoFormProps) {
+  const setOverviewInfor = useSetOverViewInfo();
+  const setDefaults = useSetDefaults();
+  const info = useOverViewInfo();
+
   const {
     control,
     watch,
@@ -34,16 +33,31 @@ export default function OverviewInfoForm(
     handleSubmit,
     formState: { isDirty },
   } = useForm<Inputs>({
-    defaultValues: props,
+    defaultValues: {
+      name: info.defaults?.name,
+      description: info.defaults?.description ?? '',
+      address: info.defaults?.address ?? '',
+      phone: info.defaults?.phone ?? '',
+    },
     mode: 'onChange',
-    resolver: zodResolver(schema),
   });
 
-  const dispatch = useAppDispatch();
-  dispatch(setOverviewInfo(watch()));
-
+  // dispatch(setOverviewInfo(watch()));
+  const [UpdateClinicOverview] = useUpdateClinicOverviewMutation();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    //REDUX API SUBMIT
+    UpdateClinicOverview({
+      //FIXME the req goes and respond with true but it never update clinic values on the server
+      name: formData.name,
+      description: formData.description,
+      address: formData.address,
+      phone: formData.phone,
+    }).then((res) => console.log('res : ', res));
+    setDefaults({
+      name: formData.name,
+      description: formData.description,
+      address: formData.address,
+      phone: formData.phone,
+    });
     reset(formData);
   };
   usePrompt(
@@ -62,8 +76,8 @@ export default function OverviewInfoForm(
         <TextButton
           text="Save changes"
           backgroundColor={color.good_green}
-          onPress={() => {
-            handleSubmit(onSubmit)();
+          onPress={async () => {
+            await handleSubmit(onSubmit)();
             closeOverlay();
             dismiss();
           }}
@@ -77,10 +91,46 @@ export default function OverviewInfoForm(
     <form className="overview-info-form">
       <Inputix control={control}>
         <span>Information</span>
-        <Input label="Name" type={'text'} name={'name'} />
-        <Input label="Description" type={'text'} name={'description'} />
-        <Input label="Location" type={'text'} name={'address'} />
-        <Input label="Phone number" type={'text'} name={'phone'} />
+        <Input
+          label="Name"
+          type={'text'}
+          name={'name'}
+          onChange={(e) =>
+            setOverviewInfor({
+              name: e,
+            })
+          }
+        />
+        <Input
+          label="Description"
+          type={'text'}
+          name={'description'}
+          onChange={(e) =>
+            setOverviewInfor({
+              description: e,
+            })
+          }
+        />
+        <Input
+          label="Location"
+          type={'text'}
+          name={'address'}
+          onChange={(e) =>
+            setOverviewInfor({
+              address: e,
+            })
+          }
+        />
+        <Input
+          label="Phone number"
+          type={'text'}
+          name={'phone'}
+          onChange={(e) =>
+            setOverviewInfor({
+              phone: e,
+            })
+          }
+        />
       </Inputix>
     </form>
   );
