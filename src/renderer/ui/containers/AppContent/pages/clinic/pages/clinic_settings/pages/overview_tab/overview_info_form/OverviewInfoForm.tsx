@@ -34,10 +34,10 @@ export default function OverviewInfoForm(props: OverviewInfoFormProps) {
     formState: { isDirty },
   } = useForm<Inputs>({
     defaultValues: {
-      name: info.defaults?.name,
-      description: info.defaults?.description ?? '',
-      address: info.defaults?.address ?? '',
-      phone: info.defaults?.phone ?? '',
+      name: info.formDefaults?.name,
+      description: info.formDefaults?.description ?? '',
+      address: info.formDefaults?.address ?? '',
+      phone: info.formDefaults?.phone ?? '',
     },
     mode: 'onChange',
   });
@@ -69,6 +69,12 @@ export default function OverviewInfoForm(props: OverviewInfoFormProps) {
           afterBgColor={color.darker}
           onPress={() => {
             closeOverlay();
+            setOverviewInfor({
+              name: info.formDefaults?.name,
+              description: info.formDefaults?.description,
+              address: info.formDefaults?.address,
+              phone: info.formDefaults?.phone,
+            });
             reset();
             dismiss();
           }}
