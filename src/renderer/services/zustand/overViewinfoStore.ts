@@ -1,5 +1,5 @@
 import { clinic } from '@api/fake';
-import { useGetClinicQuery } from '@redux/clinic/clinicApi';
+import { ClinicTiming, PrefKeys } from '@models/server.models';
 import create from 'zustand';
 
 interface OverViewInfoState {
@@ -7,12 +7,19 @@ interface OverViewInfoState {
   description?: string;
   address?: string;
   phone?: string;
-  defaults?: Pick<
+  serviceStatus: string;
+  memberCount: number;
+  connectionCount: number;
+  patientCount: number;
+  avatar: string;
+  timing: ClinicTiming;
+  preferences: PrefKeys[];
+  formDefaults?: Pick<
     OverViewInfoState,
     'name' | 'description' | 'address' | 'phone'
   >;
-  setDefaults: (
-    defaults: Pick<
+  setFormDefaults: (
+    formDefaults: Pick<
       OverViewInfoState,
       'name' | 'description' | 'address' | 'phone'
     >,
@@ -22,7 +29,7 @@ interface OverViewInfoState {
     description?: string;
     address?: string;
     phone?: string;
-    defaults?: Pick<
+    formDefaults?: Pick<
       OverViewInfoState,
       'name' | 'description' | 'address' | 'phone'
     >;
@@ -30,34 +37,35 @@ interface OverViewInfoState {
 }
 
 export const useOverViewInfoStore = create<OverViewInfoState>((set) => {
-  //   const { data, error, isSuccess } = useGetClinicQuery();
   return {
-    // defaults: {
-    //   name: isSuccess ? data.name : '',
-    //   description: isSuccess ? data.description : '',
-    //   address: isSuccess ? data.address : '',
-    //   phone: isSuccess ? data.phone : '',
-    // },
-    setOverViewInfo: ({ name, description, address, phone, defaults }) =>
+    setOverViewInfo: ({ name, description, address, phone, formDefaults }) =>
       set((state) => {
         const newState = {
           name: name ?? state.name,
           description: description ?? state.description,
           address: address ?? state.address,
           phone: phone ?? state.phone,
-          defaults: defaults ?? state.defaults,
+          formDefaults: formDefaults ?? state.formDefaults,
         };
         return {
           ...newState,
         };
       }),
-    setDefaults: (defaults) => set((state) => ({ ...state, defaults })),
+    setFormDefaults: (formDefaults) =>
+      set((state) => ({ ...state, formDefaults })),
+    memberCount: clinic.memberCount,
+    connectionCount: clinic.connectionCount,
+    patientCount: clinic.patientCount,
+    avatar: clinic.avatar,
+    timing: clinic.timing,
+    preferences: clinic.preferences,
+    serviceStatus: clinic.serviceStatus,
   };
 });
 export const useOverViewInfo = () => useOverViewInfoStore((state) => state);
 export const useSetOverViewInfo = () =>
   useOverViewInfoStore((state) => state.setOverViewInfo);
 export const useSetDefaults = () =>
-  useOverViewInfoStore((state) => state.setDefaults);
+  useOverViewInfoStore((state) => state.setFormDefaults);
 export const useGetDefaults = () =>
-  useOverViewInfoStore((state) => state.defaults);
+  useOverViewInfoStore((state) => state.formDefaults);
