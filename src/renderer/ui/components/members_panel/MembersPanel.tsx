@@ -3,7 +3,6 @@ import Header from '@components/header';
 import LoadingSpinner from '@components/loading_spinner';
 import MembersPreview from '@components/members_preview';
 import useNavigation from '@libs/hooks/useNavigation';
-import { Member, MemberBrief } from '@models/server.models';
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
 import './style/index.scss';
 

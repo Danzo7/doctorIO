@@ -1,5 +1,3 @@
-import { User } from '@models/local.models';
-import { store } from '@redux/store';
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { setSelectedServer } from './user/userSlice';
 
