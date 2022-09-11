@@ -6,20 +6,6 @@
   padding: 10px 0px;
   gap: 15px;
 
-  > .header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px;
-
-    > span {
-      font-weight: 600;
-      font-size: 20px;
-      letter-spacing: 0.3px;
-    }
-  }
   > .stats-container {
     display: flex;
     flex-direction: row;
@@ -28,3 +14,8 @@
     gap: 30px;
   }
 }
+   .add-container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }

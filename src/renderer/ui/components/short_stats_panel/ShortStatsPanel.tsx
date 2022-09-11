@@ -3,7 +3,16 @@ import MiniStats from '@components/mini_stats';
 import './style/index.scss';
 import exclamation from 'toSvg/exclamation.svg?icon';
 import colors from '@colors';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
+import MemberBigCard from '@containers/modals/member_big_card';
+import Can from '@ability/index';
+import LoadingSpinner from '@components/loading_spinner';
+import UserProfileStatus from '@components/user_profile_status';
 import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import Header from '@components/header';
+import { useAbility } from '@stores/abilityStore';
 interface ShortStatsPanelProps {}
 export default function ShortStatsPanel({}: ShortStatsPanelProps) {
   const appointmentsQuery = useGetQueueAppointmentsQuery();
@@ -34,12 +43,41 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
       Icon: exclamation,
     },
   ];
+  const { data, isSuccess, error, isLoading } = useGetMyMemberDetailQuery();
+  const { open } = useOverlay();
+  const abilities = useAbility();
   return (
     <div className="short-stats-panel">
-      <div className="header">
-        <span>Dashboard</span>
-        <MultiOptionSwitcher textList={timeSortList} />
-      </div>
+      <Header
+        title="Dashboard"
+        buttonNode={
+          <div className="add-container">
+            <MultiOptionSwitcher textList={timeSortList} />
+            {!(
+              abilities.can('have', 'queue') || abilities.can('manage', 'queue')
+            ) ? (
+              isLoading ? (
+                <LoadingSpinner />
+              ) : (
+                isSuccess && (
+                  <UserProfileStatus
+                    width={40}
+                    status={true}
+                    imgSrc={data.avatar}
+                    alt={data.name + data.id}
+                    onClick={() => {
+                      open(<MemberBigCard id={data.id} />, {
+                        ...DEFAULT_MODAL,
+                        width: '20%',
+                      });
+                    }}
+                  />
+                )
+              )
+            ) : null}
+          </div>
+        }
+      />
       <div className="stats-container">
         {miniStatsList.map(
           ({ text, Icon, value, backgroundColor, percentage }) => (
