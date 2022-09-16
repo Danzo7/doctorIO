@@ -31,7 +31,7 @@ function MembersPreview({ name, id, status, avatar, roles }: MemberBrief) {
       <div className="members-preview">
         <UserProfileStatus
           imgSrc={avatar}
-          status
+          status={status}
           width={60}
           avatarRadius={17}
           alt={name + id}

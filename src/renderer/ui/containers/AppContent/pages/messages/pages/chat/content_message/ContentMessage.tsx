@@ -10,6 +10,7 @@ interface ContentMessageProps {
   name: string;
   id: number;
   memberId: number;
+  status: boolean;
 }
 function ContentMessage({
   avatar: avatar,
@@ -17,6 +18,7 @@ function ContentMessage({
   name: name,
   message,
   memberId,
+  status,
 }: ContentMessageProps) {
   const { open } = useOverlay();
   return (
@@ -31,11 +33,19 @@ function ContentMessage({
           alt={name + memberId}
           width={40}
           onClick={(e) => {
-            open(<MemberCard id={id} name={name} avatar={avatar} />, {
-              popperTarget: e.currentTarget,
-              clickThrough: true,
-              closeOnBlur: true,
-            });
+            open(
+              <MemberCard
+                id={id}
+                name={name}
+                avatar={avatar}
+                status={status}
+              />,
+              {
+                popperTarget: e.currentTarget,
+                clickThrough: true,
+                closeOnBlur: true,
+              },
+            );
           }}
         />
       </div>
@@ -44,11 +54,19 @@ function ContentMessage({
         <div className="title-container">
           <span
             onClick={(e) => {
-              open(<MemberCard id={id} name={name} avatar={avatar} />, {
-                popperTarget: e.currentTarget,
-                clickThrough: true,
-                closeOnBlur: true,
-              });
+              open(
+                <MemberCard
+                  id={id}
+                  name={name}
+                  avatar={avatar}
+                  status={status}
+                />,
+                {
+                  popperTarget: e.currentTarget,
+                  clickThrough: true,
+                  closeOnBlur: true,
+                },
+              );
             }}
           >
             {name}

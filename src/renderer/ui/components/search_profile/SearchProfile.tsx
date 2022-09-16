@@ -26,7 +26,7 @@ export default function SearchProfile({}: SearchProfileProps) {
         isSuccess && (
           <UserProfileStatus
             width={40}
-            status={true}
+            status={data.status}
             imgSrc={data.avatar}
             alt={data.name + data.id}
             onClick={() => {

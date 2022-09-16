@@ -20,7 +20,7 @@ function UserProfileStatus({
 }: UserProfileStatusProps) {
   return (
     <div className="user-profile-status">
-      {status && (
+      {status != undefined && (
         <div
           className={`dot ${status ? 'online' : 'offline'}`}
           css={{

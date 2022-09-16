@@ -72,6 +72,7 @@ export default function Chat({}: ChatProps) {
             isSuccess &&
             currentMessagesList.map((message, index) => (
               <ContentMessage
+                status={data.status}
                 message={message}
                 key={index}
                 avatar={message.sent ? data.avatar : dm.dmAvatar}

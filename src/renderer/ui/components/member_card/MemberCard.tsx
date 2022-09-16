@@ -7,12 +7,13 @@ export default function MemberCard({
   id,
   name,
   avatar,
-}: Pick<MemberBrief, 'id' | 'name' | 'avatar'>) {
+  status,
+}: Pick<MemberBrief, 'id' | 'name' | 'avatar' | 'status'>) {
   return (
     <div className="member-card">
       <UserProfileStatus
         imgSrc={avatar}
-        status
+        status={status}
         width={60}
         avatarRadius={17}
         alt={name + id}

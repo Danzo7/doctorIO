@@ -62,7 +62,7 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
                 isSuccess && (
                   <UserProfileStatus
                     width={40}
-                    status={true}
+                    status={data.status}
                     imgSrc={data.avatar}
                     alt={data.name + data.id}
                     onClick={() => {

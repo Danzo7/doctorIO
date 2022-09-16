@@ -11,7 +11,11 @@
       background-color: $goodgreen;
     }
     &.offline {
-      background-color: $coldred;
+      outline-color: $textgray;
+      outline-style: solid;
+      outline-width: 4px;
+      outline-offset: -4px;
+      background-color: $silvergray;
     }
   }
 }
