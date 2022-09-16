@@ -27,8 +27,14 @@ class DynamicBaseQuery {
   async loadUrl() {
     const { store } = await import('./store');
     const user = store?.getState?.()?.user;
-    if (user.selectedClinic == undefined || user.clinic.length == 0)
+    if (
+      user.selectedClinic == undefined ||
+      user.clinic.length == 0 ||
+      user.clinic[user.selectedClinic] == undefined
+    ) {
+      disconnect(store.dispatch);
       return undefined;
+    }
     const url = user.clinic[user.selectedClinic].serverLocation;
     try {
       const res = await fetch('http://' + url + '/status');

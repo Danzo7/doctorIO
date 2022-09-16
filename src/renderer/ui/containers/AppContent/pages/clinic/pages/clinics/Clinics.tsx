@@ -16,6 +16,7 @@ export default function Clinics() {
   const { open } = useOverlay();
   const dispatch = useDispatch();
   const userInfo = useAppSelector((state) => state.user);
+  const tokens = useAppSelector((state) => state.authSlice);
   return (
     <div className="clinics">
       <span>Clinics</span>
@@ -31,7 +32,15 @@ export default function Clinics() {
               onClick={() => {
                 if (userInfo.selectedClinic === index) toParent();
                 else {
-                  open(<ConnectMemberModal selectedIndex={index} />, FIT_MODAL);
+                  if (
+                    tokens.accessToken == undefined ||
+                    tokens.refreshToken == undefined
+                  ) {
+                    open(
+                      <ConnectMemberModal selectedIndex={index} />,
+                      FIT_MODAL,
+                    );
+                  } else connect(dispatch, index);
                 }
               }}
             />

@@ -76,7 +76,7 @@ export const {
 export const useSelectLocation = () =>
   useAppSelector((state) =>
     state.user.selectedClinic != undefined
-      ? state.user.clinic[state.user.selectedClinic].serverLocation
+      ? state.user.clinic[state.user.selectedClinic]?.serverLocation
       : undefined,
   );
 export default userSlice;
