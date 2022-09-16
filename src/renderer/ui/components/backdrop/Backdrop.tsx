@@ -18,7 +18,7 @@ export default function Backdrop({
         '>.backdrop': {
           display: when == 'blur' ? 'none' : 'flex',
           '+div': {
-            filter: when == true ? filter : undefined,
+            filter: when == true ? filter + '!important' : undefined,
           },
         },
         '&:hover >.backdrop':
