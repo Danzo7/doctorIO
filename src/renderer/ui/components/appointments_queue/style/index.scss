@@ -34,5 +34,10 @@
                 align-items: center;
                 gap: 10px;
             }}
+        >.text-empty{
+            align-self: center;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
     }
 }

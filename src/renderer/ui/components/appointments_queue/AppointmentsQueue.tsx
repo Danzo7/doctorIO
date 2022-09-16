@@ -44,42 +44,43 @@ export default function AppointmentsQueue() {
           <Header title="Queue list" buttonNode={<QueueControls />} />
           <div className="appointments-queue-content">
             <CabinState state={state} selected={selected} />
-            <div className="wrapper">
-              <Backdrop
-                when={state == 'PAUSED'}
-                backdropItems={
-                  <>
-                    <span css={{ fontSize: 15 }}>
-                      Queue is paused
-                      {!isOwner && (
-                        <>
-                          {' by'}{' '}
-                          <span css={{ fontWeight: 600 }}>The owner</span>
-                        </>
+            {appointments.length > 0 ? (
+              <div className="wrapper">
+                <Backdrop
+                  when={state == 'PAUSED'}
+                  backdropItems={
+                    <>
+                      <span css={{ fontSize: 15 }}>
+                        Queue is paused
+                        {!isOwner && (
+                          <>
+                            {' by'}{' '}
+                            <span css={{ fontWeight: 600 }}>The owner</span>
+                          </>
+                        )}
+                      </span>
+                      {isOwner && (
+                        <TextButton
+                          text="resume"
+                          backgroundColor={color.good_green}
+                          onPress={() => {
+                            ResumeQueue();
+                          }}
+                        />
                       )}
-                    </span>
-                    {isOwner && (
-                      <TextButton
-                        text="resume"
-                        backgroundColor={color.good_green}
-                        onPress={() => {
-                          ResumeQueue();
-                        }}
-                      />
-                    )}
-                  </>
-                }
-              >
-                <div className="queue-list">
-                  <TextButton
-                    borderColor={colors.border_color}
-                    padding="30px 10px"
-                    afterBgColor={colors.darkersec_color}
-                    onHold={gotoFirst}
-                  >
-                    <Arrow css={{ transform: 'rotate(90deg)' }} />
-                  </TextButton>
-                  {appointments.length > 0 ? (
+                    </>
+                  }
+                >
+                  <div className="queue-list">
+                    <TextButton
+                      borderColor={colors.border_color}
+                      padding="30px 10px"
+                      afterBgColor={colors.darkersec_color}
+                      onHold={gotoFirst}
+                    >
+                      <Arrow css={{ transform: 'rotate(90deg)' }} />
+                    </TextButton>
+                    (
                     <ScrollView refs={ref} gap={10}>
                       {appointments.map(
                         (
@@ -107,21 +108,21 @@ export default function AppointmentsQueue() {
                         ),
                       )}
                     </ScrollView>
-                  ) : (
-                    <span>nothing...</span>
-                  )}
-                  <TextButton
-                    borderColor={colors.border_color}
-                    padding="30px 10px"
-                    afterBgColor={colors.darkersec_color}
-                    onPress={next}
-                    onHold={gotoLast}
-                  >
-                    <Arrow css={{ transform: 'rotate(-90deg)' }} />
-                  </TextButton>
-                </div>
-              </Backdrop>
-            </div>
+                    <TextButton
+                      borderColor={colors.border_color}
+                      padding="30px 10px"
+                      afterBgColor={colors.darkersec_color}
+                      onPress={next}
+                      onHold={gotoLast}
+                    >
+                      <Arrow css={{ transform: 'rotate(-90deg)' }} />
+                    </TextButton>
+                  </div>
+                </Backdrop>
+              </div>
+            ) : (
+              <span className="text-empty">Queue is empty.</span>
+            )}
           </div>
         </div>
       );
