@@ -60,6 +60,7 @@
     "react-router-dom": "^6.3.0",
     "react-transition-group": "^4.4.5",
     "redux-persist": "^6.0.0",
+    "socket.io-client": "^4.5.2",
     "zod": "^3.19.0",
     "zustand": "^4.1.1"
   },
