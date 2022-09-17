@@ -49,7 +49,7 @@ const appointmentQueueApi = createApi({
     }), //Avoid using this endpoint
     getQueueAppointments: builder.query<AppointmentQueueItem[], void>({
       query: () => `/item`,
-      providesTags: ['item'],
+      providesTags: ['item', 'queue'],
       transformResponse: (
         response: (Omit<AppointmentQueueItem, 'date'> & { date: string })[],
       ) => {
@@ -61,7 +61,7 @@ const appointmentQueueApi = createApi({
     }),
     getQueueState: builder.query<QueueState, void>({
       query: () => `/state`,
-      providesTags: ['state'],
+      providesTags: ['state', 'queue'],
       transformResponse: ({
         selected,
         ...response
@@ -82,17 +82,12 @@ const appointmentQueueApi = createApi({
     }),
     getNextQueueItem: builder.query<AppointmentQueueItem, void>({
       query: () => `/item/next`,
-      providesTags: ['state', 'item'],
+      providesTags: ['queue'],
       transformResponse: (
         response: Omit<AppointmentQueueItem, 'date'> & { date: string },
       ) => {
         return { ...response, date: parseISO(response.date) };
       },
-    }),
-    //POST
-    createQueue: builder.mutation<AppointmentQueue, void>({
-      query: () => ({ url: ``, method: 'POST' }),
-      invalidatesTags: ['state', 'queue', 'item'],
     }),
     addQueueAppointment: builder.mutation<
       AppointmentQueueItem[],
@@ -105,7 +100,6 @@ const appointmentQueueApi = createApi({
           body: { ...body },
         };
       },
-      invalidatesTags: ['item'],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -124,7 +118,6 @@ const appointmentQueueApi = createApi({
           body: { ...body },
         };
       },
-      invalidatesTags: ['item'],
     }),
     updateQueueState: builder.mutation<
       boolean,
@@ -136,21 +129,18 @@ const appointmentQueueApi = createApi({
       query: (body) => {
         return { url: `/state`, method: 'PATCH', body: { ...body } };
       },
-      invalidatesTags: ['state'],
     }),
     pauseQueue: builder.mutation<boolean, void>({
       query: () => ({
         url: `/state/pause`,
         method: 'PATCH',
       }),
-      invalidatesTags: ['state'],
     }),
     resumeQueue: builder.mutation<boolean, void>({
       query: () => ({
         url: `/state/idle`,
         method: 'PATCH',
       }),
-      invalidatesTags: ['state'],
     }),
     notifyQueue: builder.mutation<boolean, number>({
       query: (position) => ({
@@ -158,7 +148,6 @@ const appointmentQueueApi = createApi({
         method: 'PATCH',
         body: { position: position },
       }),
-      invalidatesTags: ['state'],
     }),
     progressQueueState: builder.mutation<boolean, number>({
       query: (position) => ({
@@ -166,21 +155,18 @@ const appointmentQueueApi = createApi({
         method: 'PATCH',
         body: { position: position },
       }),
-      invalidatesTags: ['state'],
     }),
     notifyNext: builder.mutation<boolean, void>({
       query: () => ({
         url: `/state/notify/next`,
         method: 'PATCH',
       }),
-      invalidatesTags: ['state'],
     }),
     startNext: builder.mutation<boolean, void>({
       query: () => ({
         url: `/state/start/next`,
         method: 'PATCH',
       }),
-      invalidatesTags: ['state'],
     }),
     endNext: builder.mutation<
       QueueState,
@@ -196,7 +182,6 @@ const appointmentQueueApi = createApi({
         method: 'PATCH',
         body: { ...body },
       }),
-      invalidatesTags: ['state', 'item'],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -209,7 +194,6 @@ const appointmentQueueApi = createApi({
     //DELETE
     resetQueue: builder.mutation<AppointmentQueue, number>({
       query: () => ({ url: ``, method: 'DELETE' }),
-      invalidatesTags: ['state', 'queue', 'item'],
     }),
     deleteAppointment: builder.mutation<
       AppointmentQueueItem[],
@@ -221,7 +205,6 @@ const appointmentQueueApi = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: ['item', 'state'],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -236,7 +219,6 @@ const appointmentQueueApi = createApi({
 export default appointmentQueueApi;
 export const {
   useGetNextQueueItemQuery,
-  useCreateQueueMutation,
   useResetQueueMutation,
   useGetQueueAppointmentsQuery,
   useAddQueueAppointmentMutation,
