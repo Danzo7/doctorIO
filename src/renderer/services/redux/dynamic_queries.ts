@@ -144,12 +144,14 @@ class DynamicBaseQuery {
             api,
             {},
           );
+          const { setTokens, discardTokens } = await import(
+            './local/auth/authSlice'
+          );
           if (
             refreshResult.data &&
             (refreshResult.data as any)?.access_token &&
             (refreshResult.data as any)?.refresh_token
           ) {
-            const { setTokens } = await import('./local/auth/authSlice');
             console.log('refreshed 🌱.');
             const tokens = refreshResult.data as any;
             api.dispatch(
@@ -162,6 +164,7 @@ class DynamicBaseQuery {
           } else {
             const errMessage = (refreshResult.error?.data as any)?.message;
             console.log('Lost the war ⚰️', errMessage);
+            api.dispatch(discardTokens());
             disconnect(api.dispatch);
           }
         } finally {

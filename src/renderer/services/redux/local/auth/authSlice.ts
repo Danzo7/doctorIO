@@ -17,6 +17,10 @@ const authSlice = createSlice({
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
     },
+    discardTokens: (state) => {
+      state.accessToken = undefined;
+      state.refreshToken = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -49,6 +53,6 @@ const authSlice = createSlice({
     );
   },
 });
-export const { setTokens } = authSlice.actions;
+export const { setTokens, discardTokens } = authSlice.actions;
 
 export default authSlice;
