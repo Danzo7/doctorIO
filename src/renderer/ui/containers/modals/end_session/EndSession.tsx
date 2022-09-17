@@ -75,12 +75,12 @@ export default function EndSession({ patientId }: EndSessionProps) {
                     ? sessionParameters.payment.value
                     : undefined,
               }).then(() => {
-                if (
-                  sessionParameters.payment?.value &&
-                  sessionParameters.payment?.handPayment &&
-                  sessionParameters.payment?.value > 0
-                )
-                  dispatch(appointmentApi.util.invalidateTags(['payment']));
+                // if (
+                //   sessionParameters.payment?.value &&
+                //   sessionParameters.payment?.handPayment &&
+                //   sessionParameters.payment?.value > 0
+                // )
+                //   dispatch(appointmentApi.util.invalidateTags(['payment']));
               });
 
               if (sessionParameters.bookAppointment)

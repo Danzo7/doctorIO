@@ -51,7 +51,6 @@ const appointmentApi = createApi({
       query: (id) => {
         return { url: `/payment?id=${id}`, method: 'DELETE' };
       },
-      invalidatesTags: ['payment'],
     }),
 
     bookAppointment: builder.mutation<
