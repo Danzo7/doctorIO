@@ -78,6 +78,8 @@ const appointmentQueueApi = createApi({
       },
     }),
     getIsQueueOwner: builder.query<boolean, void>({
+      providesTags: ['queue'],
+
       query: () => `/ownership`,
     }),
     getNextQueueItem: builder.query<AppointmentQueueItem, void>({
