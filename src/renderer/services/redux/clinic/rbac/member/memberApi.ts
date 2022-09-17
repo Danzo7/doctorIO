@@ -3,7 +3,7 @@ import { Member, MemberBrief, PermKeys } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
 import appointmentApi from '@redux/instance/Appointment/AppointmentApi';
 import appointmentQueueApi from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { unreachable } from '@redux/local/connectionStateSlice';
+import { unreachable, connecting } from '@redux/local/connectionStateSlice';
 import { store } from '@redux/store';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { useSocketStore } from '@stores/socketStore';
@@ -100,6 +100,9 @@ const memberApi = createApi({
               dispatch(memberApi.util.invalidateTags(['members']));
             });
           }
+          ws.on('disconnect', () => {
+            dispatch(unreachable());
+          });
         } catch (e) {
           dispatch(unreachable());
         }
