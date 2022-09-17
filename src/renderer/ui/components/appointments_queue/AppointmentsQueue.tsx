@@ -80,7 +80,7 @@ export default function AppointmentsQueue() {
                     >
                       <Arrow css={{ transform: 'rotate(90deg)' }} />
                     </TextButton>
-                    (
+
                     <ScrollView refs={ref} gap={10}>
                       {appointments.map(
                         (
