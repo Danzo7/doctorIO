@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Member, MemberBrief, PermKeys } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
+import appointmentQueueApi from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { unreachable } from '@redux/local/connectionStateSlice';
+import { store } from '@redux/store';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { parseISO } from 'date-fns';
+import { io } from 'socket.io-client';
 
 const memberApi = createApi({
   reducerPath: 'memberApi',
@@ -39,7 +42,7 @@ const memberApi = createApi({
       void
     >({
       query: () => '/me/permissions',
-      onQueryStarted: async (state, { queryFulfilled, dispatch }) => {
+      onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
         try {
           await queryFulfilled;
         } catch (e) {
@@ -49,6 +52,29 @@ const memberApi = createApi({
     }),
     getMyMemberDetail: builder.query<Member, void>({
       query: () => '/me/',
+      onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
+        try {
+          await queryFulfilled;
+          const user = store.getState().user;
+          if (user.selectedClinic == undefined)
+            throw new Error('No clinic selected');
+          const url = user.clinic[user.selectedClinic].serverLocation;
+          const ws = io(`ws://${url}/ws`, {
+            auth: {
+              token: store.getState().authSlice.accessToken,
+            },
+          });
+          ws.on('members', () => {
+            dispatch(memberApi.util.invalidateTags(['members']));
+          });
+
+          ws.on('queue', (tags: ('state' | 'queue' | 'item')[]) => {
+            dispatch(appointmentQueueApi.util.invalidateTags(tags));
+          });
+        } catch (e) {
+          dispatch(unreachable());
+        }
+      },
     }),
   }),
 });
