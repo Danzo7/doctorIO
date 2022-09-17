@@ -6,13 +6,15 @@ import appointmentQueueApi from '@redux/instance/appointmentQueue/AppointmentQue
 import { unreachable } from '@redux/local/connectionStateSlice';
 import { store } from '@redux/store';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { useSocketStore } from '@stores/socketStore';
 import { parseISO } from 'date-fns';
 import { io } from 'socket.io-client';
+import roleApi from '../role/roleApi';
 
 const memberApi = createApi({
   reducerPath: 'memberApi',
   baseQuery: StaticQueries.members.query,
-  tagTypes: ['members'],
+  tagTypes: ['members', 'me'],
   endpoints: (builder) => ({
     getMembers: builder.query<MemberBrief[], void>({
       query: () => '',
@@ -43,9 +45,61 @@ const memberApi = createApi({
       void
     >({
       query: () => '/me/permissions',
+      providesTags: ['me'],
       onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
         try {
           await queryFulfilled;
+          let ws = useSocketStore.getState().socket;
+
+          if (!ws) {
+            const user = store.getState().user;
+            if (user.selectedClinic == undefined)
+              throw new Error('No clinic selected');
+            const url = user.clinic[user.selectedClinic].serverLocation;
+            ws = io(`ws://${url}/ws`, {
+              auth: {
+                token: store.getState().authSlice.accessToken,
+              },
+            });
+            useSocketStore.setState({ socket: ws });
+
+            ws.on('connections', () => {
+              dispatch(memberApi.util.invalidateTags(['members']));
+            });
+
+            ws.on(
+              'queue',
+              (tags: ('booked' | 'state' | 'queue' | 'item')[]) => {
+                if (tags[0] === 'booked') {
+                  const [__, ...tag] = tags;
+                  dispatch(appointmentQueueApi.util.invalidateTags(tag as any));
+                  dispatch(appointmentApi.util.invalidateTags(['booked']));
+                } else
+                  dispatch(
+                    appointmentQueueApi.util.invalidateTags(tags as any),
+                  );
+              },
+            );
+
+            ws.on('appointment', (tags: ('payment' | 'booked' | 'item')[]) => {
+              if (tags[0] === 'item') {
+                const [__, ...tag] = tags;
+                dispatch(appointmentQueueApi.util.invalidateTags(['item']));
+                dispatch(appointmentApi.util.invalidateTags(tag as any));
+              } else dispatch(appointmentApi.util.invalidateTags(tags as any));
+            });
+            ws.on('role', (data: 'self' | 'setting' | 'assign') => {
+              if (data == 'self') {
+                dispatch(memberApi.util.invalidateTags(['me']));
+                dispatch(roleApi.util.invalidateTags(['roles']));
+                dispatch(appointmentQueueApi.util.invalidateTags(['queue']));
+              }
+              if (data == 'setting') {
+                dispatch(roleApi.util.invalidateTags(['roles']));
+              }
+              dispatch(memberApi.util.invalidateTags(['members']));
+            });
+          }
         } catch (e) {
           dispatch(unreachable());
         }
@@ -53,42 +107,7 @@ const memberApi = createApi({
     }),
     getMyMemberDetail: builder.query<Member, void>({
       query: () => '/me/',
-      onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
-        try {
-          await queryFulfilled;
-          const user = store.getState().user;
-          if (user.selectedClinic == undefined)
-            throw new Error('No clinic selected');
-          const url = user.clinic[user.selectedClinic].serverLocation;
-          const ws = io(`ws://${url}/ws`, {
-            auth: {
-              token: store.getState().authSlice.accessToken,
-            },
-          });
-          ws.on('connections', () => {
-            dispatch(memberApi.util.invalidateTags(['members']));
-          });
-
-          ws.on('queue', (tags: ('booked' | 'state' | 'queue' | 'item')[]) => {
-            if (tags[0] === 'booked') {
-              const [__, ...tag] = tags;
-              dispatch(appointmentQueueApi.util.invalidateTags(tag as any));
-              dispatch(appointmentApi.util.invalidateTags(['booked']));
-            } else
-              dispatch(appointmentQueueApi.util.invalidateTags(tags as any));
-          });
-
-          ws.on('appointment', (tags: ('payment' | 'booked' | 'item')[]) => {
-            if (tags[0] === 'item') {
-              const [__, ...tag] = tags;
-              dispatch(appointmentQueueApi.util.invalidateTags(['item']));
-              dispatch(appointmentApi.util.invalidateTags(tag as any));
-            } else dispatch(appointmentApi.util.invalidateTags(tags as any));
-          });
-        } catch (e) {
-          dispatch(unreachable());
-        }
-      },
+      providesTags: ['me'],
     }),
   }),
 });
