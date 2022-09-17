@@ -66,6 +66,9 @@ const memberApi = createApi({
             ws.on('connections', () => {
               dispatch(memberApi.util.invalidateTags(['members']));
             });
+            ws.on('connect', () => {
+              dispatch(connecting());
+            });
 
             ws.on(
               'queue',

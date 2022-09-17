@@ -47,5 +47,10 @@ export const connect = (dispatch: Dispatch, selectedIndex: number) => {
   });
 };
 
-export const { refresh, connected, unreachable } = connectionStateSlice.actions;
+export const {
+  refresh,
+  connected,
+  unreachable,
+  connect: connecting,
+} = connectionStateSlice.actions;
 export default connectionStateSlice;
