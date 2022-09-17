@@ -87,7 +87,7 @@ const appointmentApi = createApi({
       },
     }),
     AssignAppointmentToQueue: builder.mutation<
-      Appointment,
+      true,
       { appointmentId: number; test?: Test }
     >({
       query: ({ appointmentId, test }) => {
