@@ -64,7 +64,7 @@ const memberApi = createApi({
               token: store.getState().authSlice.accessToken,
             },
           });
-          ws.on('members', () => {
+          ws.on('connections', () => {
             dispatch(memberApi.util.invalidateTags(['members']));
           });
 
