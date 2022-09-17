@@ -100,14 +100,6 @@ const appointmentQueueApi = createApi({
           body: { ...body },
         };
       },
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-          dispatch(appointmentApi.util.invalidateTags(['BookAppointment']));
-        } catch (err) {
-          //console.log(err);
-        }
-      },
     }),
     //PATCH
     updateTest: builder.mutation<boolean, { position: number } & Test>({
@@ -182,14 +174,6 @@ const appointmentQueueApi = createApi({
         method: 'PATCH',
         body: { ...body },
       }),
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-          dispatch(appointmentApi.util.invalidateTags(['BookAppointment']));
-        } catch (err) {
-          //console.log(err);
-        }
-      },
     }),
     //DELETE
     resetQueue: builder.mutation<AppointmentQueue, number>({
@@ -204,14 +188,6 @@ const appointmentQueueApi = createApi({
           url: `/item?appointmentId=${appointmentId}`,
           method: 'DELETE',
         };
-      },
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-          dispatch(appointmentApi.util.invalidateTags(['BookAppointment']));
-        } catch (err) {
-          //console.log(err);
-        }
       },
     }),
   }),

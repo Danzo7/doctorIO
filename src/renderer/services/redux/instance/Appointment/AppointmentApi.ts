@@ -7,17 +7,16 @@ import {
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
-import appointmentQueueApi from '../appointmentQueue/AppointmentQueueApi';
 
 const appointmentApi = createApi({
   reducerPath: 'AppointmentApi',
   baseQuery: StaticQueries.appointment.query,
-  tagTypes: ['BookAppointment', 'payment'],
+  tagTypes: ['booked', 'payment'],
   endpoints: (builder) => ({
     //GET
     getBookedAppointment: builder.query<BookedAppointment[], void>({
       query: () => `/book`,
-      providesTags: ['BookAppointment'],
+      providesTags: ['booked'],
       transformResponse: (
         response: (Omit<BookedAppointment, 'bookedFor'> & {
           bookedFor: string;
@@ -41,7 +40,7 @@ const appointmentApi = createApi({
           bookedIn: parseISO(bookedIn as any as string),
         }));
       },
-      providesTags: ['BookAppointment'],
+      providesTags: ['booked'],
     }),
     getPayments: builder.query<
       { appointmentId: number; name: string; amount: number; date: Date }[],
@@ -66,11 +65,10 @@ const appointmentApi = createApi({
           body: { ...body },
         };
       },
-      invalidatesTags: ['BookAppointment'],
     }),
     //PATCH
     setAppointmentDone: builder.mutation<
-      Appointment,
+      void,
       {
         appointmentId: number;
         body: {
@@ -87,7 +85,6 @@ const appointmentApi = createApi({
           method: 'PATCH',
         };
       },
-      invalidatesTags: ['BookAppointment'],
     }),
     AssignAppointmentToQueue: builder.mutation<
       Appointment,
@@ -100,25 +97,14 @@ const appointmentApi = createApi({
           body: { ...test },
         };
       },
-      invalidatesTags: ['BookAppointment'],
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-
-          dispatch(appointmentQueueApi.util.invalidateTags(['item']));
-        } catch (err) {
-          //console.log(err);
-        }
-      },
     }),
-    cancelAppointment: builder.mutation<Appointment, number>({
+    cancelAppointment: builder.mutation<void, number>({
       query: (appointmentId) => {
         return {
           url: `/cancel?id=${appointmentId}`,
           method: 'PATCH',
         };
       },
-      invalidatesTags: ['BookAppointment'],
     }),
   }),
 });

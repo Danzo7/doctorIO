@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Member, MemberBrief, PermKeys } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
+import appointmentApi from '@redux/instance/Appointment/AppointmentApi';
 import appointmentQueueApi from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { unreachable } from '@redux/local/connectionStateSlice';
 import { store } from '@redux/store';
@@ -68,8 +69,21 @@ const memberApi = createApi({
             dispatch(memberApi.util.invalidateTags(['members']));
           });
 
-          ws.on('queue', (tags: ('state' | 'queue' | 'item')[]) => {
-            dispatch(appointmentQueueApi.util.invalidateTags(tags));
+          ws.on('queue', (tags: ('booked' | 'state' | 'queue' | 'item')[]) => {
+            if (tags[0] === 'booked') {
+              const [__, ...tag] = tags;
+              dispatch(appointmentQueueApi.util.invalidateTags(tag as any));
+              dispatch(appointmentApi.util.invalidateTags(['booked']));
+            } else
+              dispatch(appointmentQueueApi.util.invalidateTags(tags as any));
+          });
+
+          ws.on('appointment', (tags: ('payment' | 'booked' | 'item')[]) => {
+            if (tags[0] === 'item') {
+              const [__, ...tag] = tags;
+              dispatch(appointmentQueueApi.util.invalidateTags(['item']));
+              dispatch(appointmentApi.util.invalidateTags(tag as any));
+            } else dispatch(appointmentApi.util.invalidateTags(tags as any));
           });
         } catch (e) {
           dispatch(unreachable());
