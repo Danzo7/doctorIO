@@ -1,4 +1,5 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import { useSocketStore } from '@stores/socketStore';
 import { setSelectedServer } from './user/userSlice';
 
 const initialState: {
@@ -22,6 +23,9 @@ const connectionStateSlice = createSlice({
     },
     refresh: (state) => {
       state.state = 'reconnecting';
+      if (!useSocketStore.getState()?.socket?.active) {
+        useSocketStore.getState().socket?.connect();
+      }
     },
     connect: (state) => {
       state.state = 'connecting';
