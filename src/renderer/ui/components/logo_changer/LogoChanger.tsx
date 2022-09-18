@@ -20,7 +20,6 @@ export default function LogoChanger({
     input.type = 'file';
     input.onchange = (_) => {
       const files: FileList = input.files as FileList;
-      console.log(files);
       setSelectedImage(URL.createObjectURL(files[0]));
       onChange?.(URL.createObjectURL(files[0]));
     };

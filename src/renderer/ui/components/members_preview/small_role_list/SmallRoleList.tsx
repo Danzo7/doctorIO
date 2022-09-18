@@ -25,7 +25,6 @@ export default function SmallRoleList({
   const roleListSorted = roleList
     .slice()
     .sort((a, b) => a.priority - b.priority);
-  if (isSuccess) console.log('allowed', ability?.can('manage', 'members'));
   return (
     <div className="role-list-small">
       {isLoading ? (

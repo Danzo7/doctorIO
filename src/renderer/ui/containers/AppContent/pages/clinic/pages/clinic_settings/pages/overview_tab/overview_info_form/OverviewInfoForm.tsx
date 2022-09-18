@@ -51,7 +51,7 @@ export default function OverviewInfoForm(props: OverviewInfoFormProps) {
       description: formData.description,
       address: formData.address,
       phone: formData.phone,
-    }).then((res) => console.log('res : ', res));
+    });
     setDefaults({
       name: formData.name,
       description: formData.description,

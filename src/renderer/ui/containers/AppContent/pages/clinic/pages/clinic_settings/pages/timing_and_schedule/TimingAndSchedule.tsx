@@ -29,7 +29,6 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
   }
   // const clinicInfo = useAppSelector((state) => state.settings);
   const clinicInfo = store.getState().settings;
-  console.log('clinicInfo', clinicInfo.timing.timeToClose);
   const { control, getValues, setValue, watch } = useForm<Values>({
     defaultValues: {
       openingTime: {

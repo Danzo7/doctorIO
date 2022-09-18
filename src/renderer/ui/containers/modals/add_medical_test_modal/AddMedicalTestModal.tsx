@@ -49,7 +49,6 @@ export default function AddMedicalTestModal({
     },
   });
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    console.log(formData);
     const newTest: Test = {
       weight: Number(formData.weight),
       height: Number(formData.height),

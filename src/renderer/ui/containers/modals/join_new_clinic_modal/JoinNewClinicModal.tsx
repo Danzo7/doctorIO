@@ -36,9 +36,8 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
   const errorMsg = isError
     ? ((error as any)?.data?.message as ServerError)
     : undefined;
-  const internalErrorRef = useRef<string>();
+  const internalErrorRef = useRef<string>(); //FEATURE improve internal error handling
   const isFetching = useRef(false);
-  console.log(internalErrorRef);
   const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
     isFetching.current = true;
     try {
