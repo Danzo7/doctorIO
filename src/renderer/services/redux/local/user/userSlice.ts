@@ -11,6 +11,8 @@ const initialState: User = {
   firstName: '',
   lastName: '',
   clinic: [],
+  age: 18,
+  gender: 'male',
 };
 
 const userSlice = createSlice({
@@ -24,6 +26,9 @@ const userSlice = createSlice({
         lastName: string;
         email: string;
         phoneNumber: string;
+        gender: 'male' | 'female';
+        age: string;
+        address?: string;
       }>,
     ) => {
       state.userId = nanoid();
@@ -31,6 +36,9 @@ const userSlice = createSlice({
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
       state.phone = action.payload.phoneNumber;
+      state.age = Number(action.payload.age);
+      state.gender = action.payload.gender;
+      state.address = action.payload.address;
     },
 
     setSelectedServer: (
