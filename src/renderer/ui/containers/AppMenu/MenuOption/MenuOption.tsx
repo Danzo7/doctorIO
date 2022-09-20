@@ -27,10 +27,10 @@ function MenuOption({ items }: MenuOptionProps) {
   return (
     <nav className="MenuOption">
       {items.map(
-        ({ name, svg: Svg }) =>
+        ({ name, svg: Svg }, index) =>
           name !== 'logo' &&
           (name == 'messages' ? (
-            <Badged text="preview" color={color.hot_red}>
+            <Badged text="preview" color={color.hot_red} key={index}>
               <SmartLink
                 key={name}
                 className={({ isMatch }) =>
