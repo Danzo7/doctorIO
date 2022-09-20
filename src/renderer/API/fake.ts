@@ -15,6 +15,8 @@ export const template: User = {
   avatar: '',
   clinic: [],
   selectedClinic: 0,
+  age: 18,
+  gender: 'male',
   phone: '',
   publicKey: '',
   privateKey: '',

@@ -8,6 +8,9 @@ interface User {
   email?: string;
   firstName: string;
   lastName: string;
+  gender: 'male' | 'female';
+  age: number;
+  address?: string;
   phone?: string;
   avatar?: string;
   privateKey?: string;
