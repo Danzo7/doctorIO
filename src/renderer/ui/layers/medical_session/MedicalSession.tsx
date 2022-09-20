@@ -4,6 +4,7 @@ import DarkLightCornerButton from '@components/buttons/dark_light_corner_button'
 import TextButton from '@components/buttons/text_button';
 import Header from '@components/header';
 import LoadingSpinner from '@components/loading_spinner';
+import PrintedLayout from '@components/printed_layout';
 import TabMenu from '@components/tab_menu';
 import EndSession from '@containers/modals/end_session';
 import WarningModal from '@containers/modals/warning_modal';
@@ -11,11 +12,13 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import { ModalPortal } from '@libs/overlay/OverlayContainer';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { Patient } from '@models/instance.model';
+import { useGetClinicQuery } from '@redux/clinic/clinicApi';
+import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import { useGetQueueStateQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { resetSession } from '@redux/local/session/sessionSlice';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
-import { useAppDispatch } from '@store';
+import { useAppDispatch, useAppSelector } from '@store';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PatientSmallCard from './components/patient_small_card';
@@ -36,6 +39,8 @@ export default function MedicalSession({}: MedicalSessionProps) {
     isFetching: isFetchingState,
     error: errorState,
   } = useGetQueueStateQuery();
+  const GetClinicQuery = useGetClinicQuery();
+  const GetMyMemberDetail = useGetMyMemberDetailQuery();
   const navigate = useNavigate();
   const queueState = state;
   const patientId =
@@ -47,6 +52,8 @@ export default function MedicalSession({}: MedicalSessionProps) {
   const { isLoading, data, isSuccess, isError, error, isFetching } =
     useGetPatientDetailQuery(patientId ?? skipToken);
   const { open, openTooltip } = useOverlay();
+  const session = useAppSelector((appState) => appState.session);
+  const currentSession = session.sessionInfo;
   const openEndSessionModal = () => {
     if (patientId)
       open(<EndSession patientId={patientId} />, {
@@ -64,9 +71,17 @@ export default function MedicalSession({}: MedicalSessionProps) {
     dispatch(resetSession());
   }, [dispatch]);
 
-  return isLoading || isFetching || isFetchingState || isLoadingState ? (
+  return isLoading ||
+    isFetching ||
+    isFetchingState ||
+    isLoadingState ||
+    GetClinicQuery.isLoading ||
+    GetMyMemberDetail.isLoading ? (
     <LoadingSpinner />
-  ) : isSuccess && patientId ? (
+  ) : isSuccess &&
+    GetClinicQuery.isSuccess &&
+    GetMyMemberDetail.isSuccess &&
+    patientId ? (
     (() => {
       const patient = data as Patient;
       return (
@@ -104,6 +119,25 @@ export default function MedicalSession({}: MedicalSessionProps) {
                         },
                         {
                           text: 'Prescription',
+                          onPress: () => {
+                            open(
+                              <PrintedLayout
+                                patientName={
+                                  patient.firstName + ' ' + patient.lastName
+                                }
+                                patientAge={patient.age}
+                                drugList={currentSession.prescription}
+                                clinicName={GetClinicQuery.data.name}
+                                ClinicAddress={GetClinicQuery.data.address}
+                                doctorName={GetMyMemberDetail.data.name}
+                              />,
+                              {
+                                closeOnClickOutside: true,
+                                isDimmed: true,
+                                clickThrough: false,
+                              },
+                            );
+                          },
                         },
                         {
                           text: 'Both',
