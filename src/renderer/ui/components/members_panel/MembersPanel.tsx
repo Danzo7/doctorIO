@@ -1,3 +1,4 @@
+import Can from '@ability/index';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import Header from '@components/header';
 import LoadingSpinner from '@components/loading_spinner';
@@ -15,12 +16,14 @@ function MembersPanel({}: MembersPanelProps) {
       <Header
         title="Members"
         buttonNode={
-          <DarkLightCornerButton
-            onPress={() => {
-              navigate('/clinic/Members');
-            }}
-            text="Members ..."
-          />
+          <Can I="manage" or={['view']} a="clinic">
+            <DarkLightCornerButton
+              onPress={() => {
+                navigate('/clinic/Members');
+              }}
+              text="Members ..."
+            />
+          </Can>
         }
       />
       <div className="members-list-container">
