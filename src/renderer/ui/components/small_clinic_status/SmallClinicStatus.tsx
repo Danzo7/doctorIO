@@ -36,12 +36,14 @@ export default function SmallClinicStatus({
       {hasViewClinic && (
         <Header
           buttonNode={
-            <DarkLightCornerButton
-              text=" View clinic..."
-              onPress={() => {
-                navigate('clinic/TimingAndSchedule');
-              }}
-            />
+            <Can I="manage" a="clinic">
+              <DarkLightCornerButton
+                text=" View clinic..."
+                onPress={() => {
+                  navigate('clinic/TimingAndSchedule');
+                }}
+              />
+            </Can>
           }
         />
       )}
