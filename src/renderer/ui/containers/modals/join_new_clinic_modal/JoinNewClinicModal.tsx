@@ -23,11 +23,11 @@ interface Inputs {
 }
 interface JoinNewClinicModalProps {}
 export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
-  const dispatch = useAppDispatch();
   const [register, { data, isError, isLoading, error, isSuccess }] =
     useRegisterMutation();
   const [hello] = useGetHelloMutation();
   const userinfo = useAppSelector((state) => state.user);
+  console.log('userInfo :', userinfo);
   const { control, handleSubmit, reset } = useForm<{
     key: string;
   }>({
@@ -48,11 +48,11 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
         invKey: key,
         body: {
           name: userinfo.firstName + ' ' + userinfo.lastName,
-          age: 18,
-          gender: 'male',
+          age: userinfo.age,
+          gender: userinfo.gender,
           userId: nanoid(),
           address: 'address',
-          //phone: userinfo.phone,
+          //     phone: userinfo.phone,
           publicKey: userinfo.publicKey,
         },
       }).then(() => {
