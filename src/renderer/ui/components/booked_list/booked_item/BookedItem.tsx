@@ -16,6 +16,7 @@ import {
   useCancelAppointmentMutation,
 } from '@redux/instance/Appointment/AppointmentApi';
 import { useDeleteAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { useAbility } from '@stores/abilityStore';
 
 function BookedItem({
   patientName,
@@ -30,6 +31,7 @@ function BookedItem({
   const [AssignAppointmentToQueue] = useAssignAppointmentToQueueMutation();
   const [deleteAppointment] = useDeleteAppointmentMutation();
   const [CancelAppointment] = useCancelAppointmentMutation();
+  const abilities = useAbility();
   return (
     <div className="booked-item">
       <div className="left-container">
@@ -83,7 +85,7 @@ function BookedItem({
                     );
                   },
                 },
-                {
+                abilities.can('view', 'records') && {
                   text: 'View records',
                   onPress: () => {
                     navigate('/records/' + patientId, { replace: true });
