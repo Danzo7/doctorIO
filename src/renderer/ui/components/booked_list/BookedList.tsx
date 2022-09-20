@@ -14,16 +14,19 @@ export default function BookedList({}) {
     <PreviewList
       title="Booked appointment"
       buttonNode={
-        <TextButton
-          text="show all"
-          fontColor={colors.text_gray}
-          afterBgColor={colors.secondary_color}
-          fontSize={14}
-          radius={10}
-          onPress={() => {
-            navigate('/queue');
-          }}
-        />
+        isSuccess &&
+        data.length > 0 && (
+          <TextButton
+            text="show all"
+            fontColor={colors.text_gray}
+            afterBgColor={colors.secondary_color}
+            fontSize={14}
+            radius={10}
+            onPress={() => {
+              navigate('/queue');
+            }}
+          />
+        )
       }
     >
       {isLoading ? (
