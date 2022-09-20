@@ -1,46 +1,109 @@
+import color from '@assets/styles/color';
+import TextButton from '@components/buttons/text_button';
+import ModalContainer from '@components/modal_container';
+import { Drug } from '@models/instance.model';
+import { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 import './style/index.scss';
-interface PrintedLayoutProps {}
-export default function PrintedLayout({}: PrintedLayoutProps) {
+interface PrintedLayoutProps {
+  clinicName: string;
+  ClinicAddress: string;
+  doctorName: string;
+  patientName: string;
+  patientAge: number;
+  drugList: Drug[];
+}
+export default function PrintedLayout({
+  clinicName,
+  ClinicAddress,
+  doctorName,
+  patientName,
+  patientAge,
+  drugList,
+}: PrintedLayoutProps) {
+  const componentRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
   return (
-    <div className="printed-layout">
-      <div className="printed-layout-header">
-        <span>المؤسسة العمومية للصحة الجوارية بموزاية</span>
-        <span>ETABLISSEMENT PUBLIC DE SANTE ET PROXIMITE DE MOUZAIA</span>
-      </div>
-      <span>ORDONNACE</span>
-      <div className="info-container">
-        <span>Mouzaia, le : 03/02/2022</span>
-        <span>Delivre par le Docteur : Aymen Daouadji</span>
-        <div className="patient-info">
-          <span>a M. : Brahim Aymen</span>
-          <span>Age : 24</span>
+    <ModalContainer
+      controls={
+        <TextButton
+          text="Print now"
+          fontSize={14}
+          fontColor={color.white}
+          fontWeight={700}
+          backgroundColor={color.good_green}
+          padding=" 5px 15px"
+          width={'100%'}
+          onPress={handlePrint}
+        />
+      }
+    >
+      <div css={{ display: 'none' }}>
+        <div ref={componentRef} className="printed-layout">
+          <div className="printed-layout-header">
+            <span>المؤسسة العمومية للصحة</span>
+            <span>{clinicName}</span>
+          </div>
+          <span>ORDONNACE</span>
+          <div className="info-container">
+            <span>
+              {ClinicAddress}, le : {Date.now()}
+            </span>
+            <span>Delivre par le Docteur : {doctorName}</span>
+            <div className="patient-info">
+              <span>a M. {patientName}</span>
+              <span>Age : {patientAge}</span>
+            </div>
+          </div>
+
+          <div className="drug-list">
+            {drugList.map(
+              ({ name, dosage, qts, duration, description }, index) => (
+                <span key={index}>
+                  {name} {dosage} CP /JOUR qsp {qts} JOURS {duration + ' '}
+                  {description}
+                </span>
+              ),
+            )}
+          </div>
+          <div className="bottom-info">
+            <span>بالقليل من الدم الذي تتبرعون به تنقذون حياة انسان</span>
+          </div>
         </div>
       </div>
-      <ul>
-        <li>
-          ZOMAX 250 CP 1 CP *2 J EN JI PUIS 1 CP /JOUR qsp 5 JOURS (01H30 APRES
-          LES REPAS)
-        </li>
-        <li>
-          ZOMAX 250 CP 1 CP *2 J EN JI PUIS 1 CP /JOUR qsp 5 JOURS (01H30 APRES
-          LES REPAS)
-        </li>
-        <li>
-          ZOMAX 250 CP 1 CP *2 J EN JI PUIS 1 CP /JOUR qsp 5 JOURS (01H30 APRES
-          LES REPAS)
-        </li>
-        <li>
-          ZOMAX 250 CP 1 CP *2 J EN JI PUIS 1 CP /JOUR qsp 5 JOURS (01H30 APRES
-          LES REPAS)
-        </li>
-        <li>
-          ZOMAX 250 CP 1 CP *2 J EN JI PUIS 1 CP /JOUR qsp 5 JOURS (01H30 APRES
-          LES REPAS) oui
-        </li>
-      </ul>
-      <div className="bottom-info">
-        <span>بالقليل من الدم الذي تتبرعون به تنقذون حياة انسان</span>
+      <div className="printed-layout" css={{ height: 500, overflowY: 'auto' }}>
+        <div className="printed-layout-header">
+          <span>المؤسسة العمومية للصحة</span>
+          <span>{clinicName}</span>
+        </div>
+        <span>ORDONNACE</span>
+        <div className="info-container">
+          <span>
+            {ClinicAddress}, le : {Date.now()}
+          </span>
+          <span>Delivre par le Docteur : {doctorName}</span>
+          <div className="patient-info">
+            <span>a M. {patientName}</span>
+            <span>Age : {patientAge}</span>
+          </div>
+        </div>
+
+        <div className="drug-list">
+          {drugList.map(
+            ({ name, dosage, qts, duration, description }, index) => (
+              <span key={index}>
+                {name} {dosage} CP /JOUR qsp {qts} JOURS {duration + ' '}
+                {description}
+              </span>
+            ),
+          )}
+        </div>
+        <div className="bottom-info">
+          <span>بالقليل من الدم الذي تتبرعون به تنقذون حياة انسان</span>
+        </div>
       </div>
-    </div>
+    </ModalContainer>
   );
 }
