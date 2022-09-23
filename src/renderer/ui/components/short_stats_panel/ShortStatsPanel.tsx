@@ -13,6 +13,7 @@ import UserProfileStatus from '@components/user_profile_status';
 import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import Header from '@components/header';
 import { useAbility } from '@stores/abilityStore';
+import { Badged } from '@components/badge/Badge';
 interface ShortStatsPanelProps {}
 export default function ShortStatsPanel({}: ShortStatsPanelProps) {
   const appointmentsQuery = useGetQueueAppointmentsQuery();
@@ -81,14 +82,15 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
       <div className="stats-container">
         {miniStatsList.map(
           ({ text, Icon, value, backgroundColor, percentage }) => (
-            <MiniStats
-              key={text + value}
-              text={text}
-              Icon={Icon}
-              value={value}
-              backgroundColor={backgroundColor ? backgroundColor : ''}
-              percentage={percentage ? percentage : -1}
-            />
+            <Badged pre="preview" key={text + value}>
+              <MiniStats
+                text={text}
+                Icon={Icon}
+                value={value}
+                backgroundColor={backgroundColor ? backgroundColor : ''}
+                percentage={percentage ? percentage : -1}
+              />
+            </Badged>
           ),
         )}
       </div>
