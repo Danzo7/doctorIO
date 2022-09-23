@@ -47,7 +47,7 @@ export default function BookingTimeline({
         noBorder
       >
         {appointments.map((app, index) => (
-          <TimelineItem key={index} {...app} />
+          <TimelineItem key={index} {...app} patientId={patientId} />
         ))}
       </PreviewList>
     </div>

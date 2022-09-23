@@ -133,6 +133,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
                               />,
                               {
                                 closeOnClickOutside: true,
+                                closeOnBlur: true,
                                 isDimmed: true,
                                 clickThrough: false,
                               },

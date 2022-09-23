@@ -9,6 +9,7 @@ import SessionPreviewModal from '@containers/modals/session_preview_modal';
 import { format } from 'date-fns';
 import { DATE_ONLY, TIME_ONLY } from '@constants/data_format';
 import { Appointment } from '@models/instance.model';
+import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 
 export default function TimelineItem({
   bookedIn,
@@ -19,7 +20,8 @@ export default function TimelineItem({
   bookedFor,
   date,
   session,
-}: Appointment) {
+  patientId,
+}: Appointment & { patientId: number }) {
   const selectedColor =
     state == 'done-booked'
       ? color.good_green
@@ -29,6 +31,7 @@ export default function TimelineItem({
       ? color.warm_orange
       : color.cold_blue;
   const { open } = useOverlay();
+  const { isLoading, data, isSuccess } = useGetPatientDetailQuery(patientId);
   return (
     <div className="timeline-item">
       <div
@@ -73,14 +76,24 @@ export default function TimelineItem({
           {session && (
             <SquareIconButton
               Icon={View}
+              disabled={isLoading || !isSuccess}
               onPress={() => {
-                open(<SessionPreviewModal session={session} />, {
-                  closeOnClickOutside: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                  closeBtn: 'inner',
-                  width: '50%',
-                });
+                if (data)
+                  open(
+                    <SessionPreviewModal
+                      session={session}
+                      memberName={member?.memberName || 'unknown'}
+                      patientAge={data.age}
+                      patientName={data.firstName + ' ' + data.lastName}
+                    />,
+                    {
+                      closeOnClickOutside: true,
+                      isDimmed: true,
+                      clickThrough: false,
+                      closeBtn: 'inner',
+                      width: '50%',
+                    },
+                  );
               }}
             />
           )}
