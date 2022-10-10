@@ -44,7 +44,7 @@
     "@tanstack/react-table": "^8.5.13",
     "async-mutex": "^0.4.0",
     "crypto-hash": "^2.0.1",
-    "date-fns": "^2.29.2",
+    "date-fns": "^2.29.3",
     "electron-squirrel-startup": "^1.0.0",
     "history": "^5.3.0",
     "js-cipher": "^1.0.5",
