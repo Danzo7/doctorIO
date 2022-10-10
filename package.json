@@ -38,7 +38,7 @@
     "@dicebear/avatars-initials-sprites": "^4.10.3",
     "@emotion/react": "^11.10.4",
     "@faker-js/faker": "^7.5.0",
-    "@hookform/resolvers": "^2.9.7",
+    "@hookform/resolvers": "^2.9.8",
     "@popperjs/core": "^2.11.6",
     "@reduxjs/toolkit": "^1.8.5",
     "@tanstack/react-table": "^8.5.13",
