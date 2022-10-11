@@ -33,7 +33,7 @@
     "test": "web-test-runner \"src/**/*.test.tsx\""
   },
   "dependencies": {
-    "@casl/ability": "^6.1.1",
+    "@casl/ability": "^6.2.0",
     "@dicebear/avatars": "^4.10.3",
     "@dicebear/avatars-initials-sprites": "^4.10.3",
     "@emotion/react": "^11.10.4",
