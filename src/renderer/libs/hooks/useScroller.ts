@@ -5,6 +5,7 @@ export function useScroller(gap: number) {
   const gotoFrom = useCallback(
     (index: number, currentSelected: number) => {
       const scroll = ref?.current as unknown as HTMLDivElement;
+      if (!scroll) throw new Error('Invalid ref');
       let scrollX: any = 0;
       for (let i = 0; i < index; i++) {
         scrollX += scroll.children[i].clientWidth + gap;
@@ -27,6 +28,8 @@ export function useScroller(gap: number) {
   );
   const next = useCallback(() => {
     const scroll = ref?.current as unknown as HTMLDivElement;
+    if (!scroll) throw new Error('Invalid ref');
+
     let scrollX: any = 0;
     for (let i = 0; i < scroll.children.length; i++) {
       scrollX += (scroll.children[i] as HTMLElement).offsetWidth + gap;
@@ -39,6 +42,8 @@ export function useScroller(gap: number) {
   }, [gap, ref]);
   const previous = useCallback(() => {
     const scroll = ref?.current as unknown as HTMLDivElement;
+    if (!scroll) throw new Error('Invalid ref');
+
     let scrollX: any = 0;
     for (let i = 0; i < scroll.children.length; i++) {
       scrollX += scroll.children[i].clientWidth + gap;
@@ -55,6 +60,8 @@ export function useScroller(gap: number) {
   }, [gap, ref]);
   const gotoFirst = useCallback(() => {
     const scroll = ref?.current as unknown as HTMLDivElement;
+    if (!scroll) throw new Error('Invalid ref');
+
     (scroll.firstChild as Element)?.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
@@ -62,6 +69,8 @@ export function useScroller(gap: number) {
   }, [ref]);
   const gotoLast = useCallback(() => {
     const scroll = ref?.current as unknown as HTMLDivElement;
+    if (!scroll) throw new Error('Invalid ref');
+
     (scroll.lastChild as Element)?.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
