@@ -4,7 +4,6 @@ interface Member {
   age: number;
   gender: 'female' | 'male';
   userId: string;
-  secretKey: string;
   roles: RoleBrief[];
   addedBy?: { id: number; name: string };
   status: boolean;
@@ -14,7 +13,6 @@ interface Member {
   phone?: string;
   publicKey?: string;
   isOwner?: boolean;
-  refreshToken?: string; //backendOnly
 }
 type RoleBrief = Pick<
   Role,

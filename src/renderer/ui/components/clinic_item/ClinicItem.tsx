@@ -9,18 +9,17 @@ import TextButton from '@components/buttons/text_button';
 import { LocalClinicData } from '@models/local.models';
 
 interface ClinicItemProps {
-  clinicInfo: LocalClinicData;
+  name: string;
   selected: boolean;
   onClick?: () => void;
   isHost?: boolean;
 }
 export default function ClinicItem({
   selected,
-  clinicInfo,
   isHost = false,
   onClick,
+  name,
 }: ClinicItemProps) {
-  const { memberCount, patientCount, name } = clinicInfo;
   //FEATURE show clinic server info if is connected
   return (
     <div className="clinic-item">
@@ -38,25 +37,11 @@ export default function ClinicItem({
       </div>
       <div className="time-container">
         <ClinicIcon />
-        <span>{clinicInfo.name}</span>
+        <span>{name}</span>
       </div>
       <div className="stats-container">
-        {memberCount && (
-          <div className="info-container">
-            <MedicalAssistant />
-            <span>{memberCount}</span>
-            <span>Online</span>
-          </div>
-        )}
         {isHost && (
           <ServerState css={{ '>path': { fill: color.good_green } }} />
-        )}
-        {patientCount && (
-          <div className="info-container">
-            <Patient />
-            <span>{patientCount}</span>
-            <span>In queue</span>
-          </div>
         )}
       </div>
     </div>

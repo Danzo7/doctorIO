@@ -1,57 +1,11 @@
-import { Appointment, BookedAppointment, Drug } from '@models/instance.model';
-import { DirectMessage, User } from '@models/local.models';
-import {
-  Clinic,
-  Member,
-  PermKeys,
-  Role,
-  RoleBrief,
-} from '@models/server.models';
+import { DirectMessage } from '@models/local.models';
+import { Clinic, Member } from '@models/server.models';
 import { faker } from '@faker-js/faker';
-
-export const template: User = {
-  userId: '',
-  email: '',
-  avatar: '',
-  clinic: [],
-  selectedClinic: 0,
-  age: 18,
-  gender: 'male',
-  phone: '',
-  publicKey: '',
-  privateKey: '',
-  firstName: '',
-  lastName: '',
-  userPreferences: {
-    language: 'en',
-    theme: 'Nighty',
-    welcomeDismissedIn: new Date('2020-01-01').toISOString(),
-  },
-};
-export const fakeInvKey = '2tsv1rwv0rHiH';
-export const roles: Role[] = [
-  {
-    id: 1,
-    name: 'Support',
-    description: 'Technical support',
-    permissions: ['CAN_ADD_DRUGS', 'CAN_ADD_MEMBERS', 'CAN_ADD_PATIENT'],
-    slaveRole: { id: 1, name: 'Doctor', priority: 1 },
-    priority: 1,
-  },
-];
-export const selectedRole: Role = roles[0];
-
-export const rolesBrief: RoleBrief[] = roles.filter(
-  ({ name, id, priority }) => {
-    return { name, id, priority };
-  },
-);
 
 export const members: Member[] = [
   {
     name: 'Aymen Daouadji',
     status: true,
-    secretKey: '12346678',
     addedBy: { name: 'Brahim aymen', id: 1 },
     age: 18,
     gender: 'male',
@@ -59,13 +13,12 @@ export const members: Member[] = [
     userId: '150',
     phone: '054681349',
     id: 1,
-    roles: [rolesBrief[0]],
+    roles: [],
     joinDate: new Date('2022-01-01'),
   },
   {
     name: 'not aymen',
     status: true,
-    secretKey: '12346678',
     addedBy: { name: 'Brahim aymen', id: 1 },
     age: 18,
     gender: 'male',
@@ -73,7 +26,7 @@ export const members: Member[] = [
     userId: '150',
     phone: '054681349',
     id: 1,
-    roles: [rolesBrief[0]],
+    roles: [],
     joinDate: new Date('2022-01-01'),
   },
 ];
