@@ -108,12 +108,12 @@
       "iconColour": "darkturquoise",
       "icon": "file"
     },
-     "UTIL": {
+    "UTIL": {
       "background": "darkturquoise",
       "foreground": "white",
       "iconColour": "darkturquoise",
       "icon": "file"
     }
-  
-  }
+  },
+  "deepscan.enable": true
 }
