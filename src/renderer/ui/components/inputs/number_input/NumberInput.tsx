@@ -84,7 +84,7 @@ export default forwardRef(function NumberInput(
           .children[0] as HTMLInputElement;
 
         const end = input?.value?.length ?? 0;
-        input.setSelectionRange(end, end);
+        input?.setSelectionRange(end, end);
       }}
       onWheel={(e) => {
         const direction = e.deltaY > 0 ? -1 < 0 : 0;
