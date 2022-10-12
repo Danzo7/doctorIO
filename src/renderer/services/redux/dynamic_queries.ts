@@ -26,7 +26,13 @@ class DynamicBaseQuery {
 
   async loadUrl() {
     const { store } = await import('./store');
-    const user = store?.getState?.()?.user;
+    if (!store) {
+      throw new Error('store not found');
+    }
+    const user = store.getState?.()?.user;
+    if (!user) {
+      throw new Error('user not found');
+    }
     if (
       user.selectedClinic == undefined ||
       user.clinic.length == 0 ||
@@ -149,8 +155,8 @@ class DynamicBaseQuery {
           );
           if (
             refreshResult.data &&
-            (refreshResult.data as any)?.access_token &&
-            (refreshResult.data as any)?.refresh_token
+            (refreshResult.data as any).access_token &&
+            (refreshResult.data as any).refresh_token
           ) {
             console.log('refreshed 🌱.');
             const tokens = refreshResult.data as any;
