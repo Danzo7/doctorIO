@@ -2,7 +2,6 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import LoadingSpinner from '@components/loading_spinner';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { disconnect, refresh } from '@redux/local/connectionStateSlice';
 import { useAppSelector } from '@store';

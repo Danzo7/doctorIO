@@ -1,9 +1,6 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import Input from '@components/inputs/input';
-import {
-  InputControllerContext,
-  Inputix,
-} from '@components/inputs/input/Input';
+import { Inputix } from '@components/inputs/input/Input';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 type Inputs = {

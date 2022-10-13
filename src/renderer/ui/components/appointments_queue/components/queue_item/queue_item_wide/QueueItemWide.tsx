@@ -11,7 +11,7 @@ import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
 import { formatDistance } from 'date-fns';
-import { AppointmentQueue, Test } from '@models/instance.model';
+import { Test } from '@models/instance.model';
 import useNavigation from '@libs/hooks/useNavigation';
 import {
   useDeleteAppointmentMutation,

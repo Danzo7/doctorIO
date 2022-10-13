@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import ContactTabMenu from './ContactTabMenu';
-import Doctor from 'toSvg/doctor_icon.svg?icon';
 export default {
   title: 'Contact/ContactTabMenu',
   component: ContactTabMenu,

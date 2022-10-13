@@ -23,7 +23,6 @@ import memberApi from './clinic/rbac/member/memberApi';
 import roleApi from './clinic/rbac/role/roleApi';
 import smallRoleInvSlice from './local/small_role_invSlice';
 import clinicApi from './clinic/clinicApi';
-import { User } from '@models/local.models';
 
 const persistUserConfig = {
   key: 'user',

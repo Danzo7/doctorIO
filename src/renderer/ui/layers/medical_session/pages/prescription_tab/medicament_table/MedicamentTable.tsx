@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Arrow from 'toSvg/arrow.svg?icon';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import {

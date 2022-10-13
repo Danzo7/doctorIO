@@ -2,7 +2,7 @@ import './style/index.scss';
 import PreviewList from '@components/preview_list';
 import LogItem from '@components/log_item';
 import Input from '@components/inputs/input';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 const logsData = [
   {

@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import DmHistory from './DmHistory';
-import client from '@assets/pictures/test.png';
 import { MemoryRouter } from 'react-router-dom';
 export default {
   title: 'DmHistory',

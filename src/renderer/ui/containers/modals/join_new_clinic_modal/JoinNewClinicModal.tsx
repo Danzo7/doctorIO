@@ -9,8 +9,7 @@ import {
   useRegisterMutation,
 } from '@redux/local/auth/authApi';
 import { parseInviteKey } from '@helpers/crypto/parse';
-import { useAppDispatch, useAppSelector } from '@store';
-import { addNewClinic } from '@redux/local/user/userSlice';
+import { useAppSelector } from '@store';
 import { useRef } from 'react';
 import { Overlay } from '@libs/overlay';
 import { nanoid } from '@reduxjs/toolkit';

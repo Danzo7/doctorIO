@@ -1,7 +1,6 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
 import Tooltip from './Tooltip';
-import color from '@assets/styles/color';
 export default {
   title: 'Poppers/Tooltip',
   component: Tooltip,

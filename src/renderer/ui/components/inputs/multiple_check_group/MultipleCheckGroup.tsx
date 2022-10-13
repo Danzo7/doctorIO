@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { ControllerProps } from '../input';
 import CheckGroupItem from './check_group_item';
 import './style/index.scss';

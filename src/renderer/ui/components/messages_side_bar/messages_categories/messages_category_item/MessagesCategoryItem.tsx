@@ -1,7 +1,6 @@
 import { FunctionComponent, SVGProps } from 'react';
 import { color } from '@assets/styles/color';
 import { NavButton } from '@libs/smart_link/SmartLink';
-import { IS_PREVIEW } from '@constants/env';
 interface MessagesCategoryItemProps {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
   categoryName: string;

@@ -1,6 +1,5 @@
 import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
-import { NavLink } from 'react-router-dom';
 import MemberActionControls from '@components/member_action_controls';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import WarningModal from '@containers/modals/warning_modal';

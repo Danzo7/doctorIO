@@ -1,5 +1,4 @@
 import RecentAppsItem from '@components/recent_apps_item';
-import Svg from '@libs/svg';
 import search from 'toSvg/search.svg?icon';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';

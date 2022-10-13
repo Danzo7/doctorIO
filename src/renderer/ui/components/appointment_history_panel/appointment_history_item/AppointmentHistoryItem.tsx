@@ -3,7 +3,7 @@ import PreviewWithControls from '@components/preview_with_controls';
 import { DATE_ONLY } from '@constants/data_format';
 import SessionPreviewModal from '@containers/modals/session_preview_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { Appointment, Test } from '@models/instance.model';
+import { Appointment } from '@models/instance.model';
 import { format } from 'date-fns';
 import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 

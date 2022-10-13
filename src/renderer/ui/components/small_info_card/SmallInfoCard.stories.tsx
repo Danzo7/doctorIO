@@ -13,7 +13,7 @@ export const FirstStory = Template.bind({});
 FirstStory.args = {
   data: {
     'In queue': '30',
-    "unpaid": '10',
-    "urgent": '2',
+    unpaid: '10',
+    urgent: '2',
   },
 };

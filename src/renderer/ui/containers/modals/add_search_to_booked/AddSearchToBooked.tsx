@@ -1,7 +1,6 @@
 import Input from '@components/inputs/input';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';
-import Svg from '@libs/svg';
 import search from 'toSvg/search.svg?icon';
 import PresentationItem from '@components/presentation_item';
 import TextButton from '@components/buttons/text_button';

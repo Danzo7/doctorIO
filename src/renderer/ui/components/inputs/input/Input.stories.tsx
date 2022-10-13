@@ -4,7 +4,6 @@ import Input from './Input';
 import IconicButton from '@components/buttons/iconic_button';
 import search from 'toSvg/search.svg?icon';
 import { color } from '@assets/styles/color';
-import Select from '../select';
 export default {
   title: 'inputs/Input',
   component: Input,

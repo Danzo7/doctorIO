@@ -1,4 +1,3 @@
-import { members } from '@api/fake';
 import LoadingSpinner from '@components/loading_spinner';
 import MembersTable from '@components/members_table';
 import RoleDescription from '@components/role_description';

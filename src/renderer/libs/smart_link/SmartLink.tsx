@@ -63,14 +63,14 @@ export default function SmartLink({
       }
       className={
         typeof className == 'function'
-          ? (className as (props: { isMatch: boolean }) => string)?.({
+          ? (className as (props: { isMatch: boolean }) => string)({
               isMatch: isMatch,
             })
           : (className as string)
       }
       style={
         typeof style == 'function'
-          ? (style as (props: { isMatch: boolean }) => CSSProperties)?.({
+          ? (style as (props: { isMatch: boolean }) => CSSProperties)({
               isMatch: isMatch,
             })
           : (style as CSSProperties)
@@ -78,7 +78,7 @@ export default function SmartLink({
       {...others}
     >
       {typeof children == 'function'
-        ? children?.({ isMatch: isMatch })
+        ? children({ isMatch: isMatch })
         : children}
     </Link>
   );
@@ -135,7 +135,7 @@ export function NavButton({
       }}
       className={
         typeof className == 'function'
-          ? (className as (props: { isMatch: boolean }) => string)?.({
+          ? (className as (props: { isMatch: boolean }) => string)({
               isMatch: isMatch,
             })
           : (className as string)
@@ -143,7 +143,7 @@ export function NavButton({
       {...buttonProps({ isMatch: isMatch })}
     >
       {typeof children == 'function'
-        ? children?.({ isMatch: isMatch })
+        ? children({ isMatch: isMatch })
         : children}
     </TextButton>
   );

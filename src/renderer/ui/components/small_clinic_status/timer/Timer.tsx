@@ -1,6 +1,6 @@
 import { timeToDate } from '@helpers/date.helper';
 import { useAppSelector } from '@store';
-import { differenceInSeconds, formatDistance } from 'date-fns';
+import { differenceInSeconds } from 'date-fns';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Countdown from 'react-countdown';
 import Clinic from 'toSvg/clinic.svg?icon';

@@ -5,7 +5,6 @@ import Arrow from 'toSvg/arrow.svg?icon';
 import { Transition } from 'react-transition-group';
 import './index.scss';
 import SearchProfile from '@components/search_profile';
-import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 
 interface AppSidebarProps {}
 //REDUX currentMember

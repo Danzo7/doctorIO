@@ -8,7 +8,6 @@ import {
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
-import appointmentApi from '../Appointment/AppointmentApi';
 
 const appointmentQueueApi = createApi({
   reducerPath: 'AppointmentQueueApi',

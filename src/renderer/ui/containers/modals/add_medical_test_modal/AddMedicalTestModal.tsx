@@ -8,10 +8,7 @@ import { Test } from '../../../../models/instance.model';
 import { Overlay } from '@libs/overlay';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  InputControllerContext,
-  Inputix,
-} from '@components/inputs/input/Input';
+import { Inputix } from '@components/inputs/input/Input';
 
 interface Inputs {
   weight: number;

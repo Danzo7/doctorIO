@@ -1,10 +1,6 @@
-import { color } from '@assets/styles/color';
-import TextButton from '@components/buttons/text_button';
-import { useEffect, forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 
 import { ControllerProps } from '../input';
-import InputContainer from '../input_container';
-import InputWrapper from '../input_wrapper';
 import './style/index.scss';
 interface TextAreaProps extends ControllerProps {
   defaultValue?: string;

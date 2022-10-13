@@ -1,10 +1,6 @@
 import './style/index.scss';
 import { useForm } from 'react-hook-form';
-import {
-  START_OF_TIME,
-  TIME_ONLY,
-  TIME_ONLY_24H,
-} from '@constants/data_format';
+import { START_OF_TIME, TIME_ONLY_24H } from '@constants/data_format';
 import Input from '@components/inputs/input';
 import { format } from 'date-fns';
 

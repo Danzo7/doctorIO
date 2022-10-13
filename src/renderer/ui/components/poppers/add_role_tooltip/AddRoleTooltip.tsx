@@ -1,11 +1,11 @@
 import Input from '@components/inputs/input';
 import './style/index.scss';
 import search from 'toSvg/search.svg?icon';
-import TextButton, { IconType } from '@components/buttons/text_button';
+import TextButton from '@components/buttons/text_button';
 import TooltipItem from '@components/poppers/tooltip/tooltip_item';
 import { color } from '@assets/styles/color';
 import { useForm } from 'react-hook-form';
-import { Role, RoleBrief } from '@models/server.models';
+import { RoleBrief } from '@models/server.models';
 import { useGetBriefRolesQuery } from '@redux/clinic/rbac/role/roleApi';
 import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';

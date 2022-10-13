@@ -2,12 +2,7 @@ import NewRole from './new_role';
 import RoleItem from './role_item';
 import { useEffect, useState } from 'react';
 import './style/index.scss';
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DroppableProps,
-} from 'react-beautiful-dnd';
+import { Droppable, DroppableProps } from 'react-beautiful-dnd';
 import { useSearchParams } from 'react-router-dom';
 import { useGetBriefRolesQuery } from '@redux/clinic/rbac/role/roleApi';
 import LoadingSpinner from '@components/loading_spinner';

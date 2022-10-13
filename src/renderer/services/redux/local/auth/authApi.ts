@@ -4,7 +4,7 @@ import { authType } from '@models/auth.type';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { disconnect } from '../connectionStateSlice';
-import { addNewClinic, setSelectedServer } from '../user/userSlice';
+import { addNewClinic } from '../user/userSlice';
 
 const authApi = createApi({
   reducerPath: 'authApi',

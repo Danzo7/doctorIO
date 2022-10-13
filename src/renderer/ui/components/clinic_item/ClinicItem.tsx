@@ -1,12 +1,8 @@
 import './style/index.scss';
 import ClinicIcon from 'toSvg/clinic.svg?icon';
-import MedicalAssistant from 'toSvg/nurse_icon.svg';
-import Patient from 'toSvg/patient.svg';
 import ServerState from 'toSvg/server_state.svg';
 import { color } from '@colors';
 import TextButton from '@components/buttons/text_button';
-
-import { LocalClinicData } from '@models/local.models';
 
 interface ClinicItemProps {
   name: string;

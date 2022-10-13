@@ -8,9 +8,7 @@ import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useEndNextMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAppDispatch, useAppSelector } from '@store';
-import appointmentApi, {
-  useBookAppointmentMutation,
-} from '@redux/instance/Appointment/AppointmentApi';
+import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 interface EndSessionProps {
   patientId: number;
 }

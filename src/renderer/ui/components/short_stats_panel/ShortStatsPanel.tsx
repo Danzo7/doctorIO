@@ -7,7 +7,6 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import MemberBigCard from '@containers/modals/member_big_card';
-import Can from '@ability/index';
 import LoadingSpinner from '@components/loading_spinner';
 import UserProfileStatus from '@components/user_profile_status';
 import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
