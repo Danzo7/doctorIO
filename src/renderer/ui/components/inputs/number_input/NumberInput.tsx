@@ -87,7 +87,7 @@ export default forwardRef(function NumberInput(
         input?.setSelectionRange(end, end);
       }}
       onWheel={(e) => {
-        const direction = e.deltaY > 0 ? -1 < 0 : 0;
+        const direction = e.deltaY > 0 ? 1: 0;
         (e.currentTarget?.children[1].children[0] as HTMLInputElement)?.focus();
         if (direction > 0) decrease();
         else increase();
@@ -106,13 +106,7 @@ export default forwardRef(function NumberInput(
           e.stopPropagation();
         }}
         type="text"
-        onWheel={(e) => {
-          e.preventDefault();
-          const direction = e.deltaY > 0 ? -1 < 0 : 0;
-          if (direction > 0) decrease();
-          else increase();
-          e.stopPropagation();
-        }}
+    
         onBlur={() => {
           parseValue(value);
           onBlur();

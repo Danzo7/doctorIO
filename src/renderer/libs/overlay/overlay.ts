@@ -67,7 +67,7 @@ export class Overlay {
       if (document.querySelector('#overlay-' + id))
         document.querySelector('#overlay-' + id)?.remove();
       else this.entryElement.lastChild?.remove();
-      if (this.entryElement.children.length == 0) this.close();
+      if (this.entryElement.children.length == 0) Overlay.close();
       this.update((portals) => {
         if (id == this.entryElement.children.length.toString()) {
           return portals.slice(0, portals.length - 1);

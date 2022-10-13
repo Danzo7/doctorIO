@@ -77,8 +77,8 @@ export default function Timer({ active, pCount }: TimerProps) {
   return (
     <div
       className="timer"
-      onMouseEnter={() => (hoverRef.current = true)}
-      onMouseLeave={() => (hoverRef.current = false)}
+      onMouseEnter={() => {hoverRef.current = true}}
+      onMouseLeave={() => {hoverRef.current = false}}
     >
       <canvas ref={canvasRef} width={size} height={size}></canvas>
       <div className="time-to-close">
