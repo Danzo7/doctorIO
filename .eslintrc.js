@@ -35,7 +35,13 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['react', '@typescript-eslint', 'react-hooks', '@emotion'],
+  plugins: [
+    'react',
+    '@typescript-eslint',
+    'react-hooks',
+    '@emotion',
+    'unused-imports',
+  ],
   globals: { Atomics: 'readonly', SharedArrayBuffer: 'readonly' },
   rules: {
     'no-unused-vars': 'off',
@@ -54,6 +60,7 @@ module.exports = {
     'no-empty-pattern': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
+    'unused-imports/no-unused-imports': 'error',
     '@typescript-eslint/naming-convention': [
       'error',
       {
