@@ -15,7 +15,6 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     webPreferences: {
       contextIsolation: true,
-      nodeIntegration: true, //FIXME disable when fix preload forge
       preload: APP_PRELOAD_WEBPACK_ENTRY,
     },
     width: 400,
