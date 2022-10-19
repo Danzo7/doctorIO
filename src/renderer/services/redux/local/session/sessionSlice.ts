@@ -1,5 +1,6 @@
 import { Drug, Session } from '@models/instance.model';
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+//REFACTOR ZUSTAND
 
 interface SessionType {
   sessionInfo: Session;

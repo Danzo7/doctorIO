@@ -1,6 +1,7 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
 import { useSocketStore } from '@stores/socketStore';
 import { setSelectedServer } from './user/userSlice';
+//REFACTOR ZUSTAND
 
 const initialState: {
   state:

@@ -1,6 +1,7 @@
 import { User } from '@models/local.models';
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { useAppSelector } from '@store';
+//REFACTOR ZUSTAND
 
 const initialState: User = {
   userPreferences: {
