@@ -1,5 +1,5 @@
 import { timeToDate } from '@helpers/date.helper';
-import { useAppSelector } from '@store';
+import { useOverViewInfo } from '@stores/overViewinfoStore';
 import { differenceInSeconds } from 'date-fns';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Countdown from 'react-countdown';
@@ -21,7 +21,8 @@ export default function Timer({ active, pCount }: TimerProps) {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestIdRef = useRef<number>();
-  const { timing } = useAppSelector((state) => state.settings);
+  //REDUX fetch Time To Close from clinic
+  const { timing } = useOverViewInfo();
   const closeTimeRef = timeToDate(timing.timeToClose);
   const openTimeRef = timeToDate(timing.timeToOpen);
   const TimeRef = useRef({ ratio: 1 });
@@ -48,7 +49,7 @@ export default function Timer({ active, pCount }: TimerProps) {
       renderText: pCount > 0 ? hoverRef.current : false,
       pNum: pCount,
     });
-  }, [pCount]);
+  }, [closeTimeRef, openTimeRef, pCount]);
   const tick = useCallback(() => {
     if (!canvasRef.current) return;
     renderFrame();
@@ -73,12 +74,15 @@ export default function Timer({ active, pCount }: TimerProps) {
       cancelAnimationFrame(requestIdRef.current ?? 0);
     };
   }, [isActive, pCount, size, tick]);
-  //REDUX fetch Time To Close from clinic
   return (
     <div
       className="timer"
-      onMouseEnter={() => {hoverRef.current = true}}
-      onMouseLeave={() => {hoverRef.current = false}}
+      onMouseEnter={() => {
+        hoverRef.current = true;
+      }}
+      onMouseLeave={() => {
+        hoverRef.current = false;
+      }}
     >
       <canvas ref={canvasRef} width={size} height={size}></canvas>
       <div className="time-to-close">

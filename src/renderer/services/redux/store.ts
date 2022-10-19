@@ -14,7 +14,6 @@ import medicalDocumentApi from './instance/record/medical_document_api';
 import medicalHistoryApi from './instance/record/medical_history_api';
 import appointmentApi from './instance/Appointment/AppointmentApi';
 import { rtkQueryErrorLogger } from './middlewares/error.middleware';
-import settingsSlice from './local/settings/settingsSlice';
 import connectionStateSlice from './local/connectionStateSlice';
 import authSlice from './local/auth/authSlice';
 import authApi from './local/auth/authApi';
@@ -56,7 +55,6 @@ const appReducer = combineReducers({
   [memberApi.reducerPath]: memberApi.reducer,
   [invitationApi.reducerPath]: invitationApi.reducer,
   [authSlice.name]: persistedAuth,
-  [settingsSlice.name]: settingsSlice.reducer,
   [sessionSlice.name]: sessionSlice.reducer,
   [connectionStateSlice.name]: connectionStateSlice.reducer,
   [userSlice.name]: persistedUser,

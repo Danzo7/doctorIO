@@ -5,8 +5,7 @@ import Input from '@components/inputs/input';
 import SmallClinicStatus from '@components/small_clinic_status';
 import PeriodTimePicker, { PeriodTimeInputs } from '@components/time_picker';
 import { rules } from '@constants/permissions';
-import { updateTimingAndSchedule } from '@redux/local/settings/settingsSlice';
-import store, { useAppDispatch } from '@store';
+import { useOverViewInfo } from '@stores/overViewinfoStore';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';
 
@@ -27,9 +26,9 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
     break: PeriodTimeInputs;
     workingDays: DayAliased[];
   }
-  // const clinicInfo = useAppSelector((state) => state.settings);
-  const clinicInfo = store.getState().settings;
-  const { control, getValues, setValue, watch } = useForm<Values>({
+  //REDUX add API
+  const clinicInfo = useOverViewInfo();
+  const { control, getValues, setValue } = useForm<Values>({
     defaultValues: {
       openingTime: {
         startTime: clinicInfo.timing.timeToOpen,
@@ -42,7 +41,6 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
       workingDays: clinicInfo.timing.workingDays,
     },
   });
-  const dispatch = useAppDispatch();
   /* usePrompt(
     'Careful : you have unsaved changes !',
     ({ closeOverlay, dismiss }) => (
@@ -81,14 +79,14 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
           values={getValues('openingTime')}
           onChange={(data) => {
             setValue('openingTime', data);
-            dispatch(
-              updateTimingAndSchedule({
-                timeToOpen: watch('openingTime.startTime'),
-                timeToClose: watch('openingTime.endTime'),
-                breakStart: watch('break.startTime'),
-                breakEnd: watch('break.endTime'),
-              }),
-            );
+            // dispatch(
+            //   updateTimingAndSchedule({
+            //     timeToOpen: watch('openingTime.startTime'),
+            //     timeToClose: watch('openingTime.endTime'),
+            //     breakStart: watch('break.startTime'),
+            //     breakEnd: watch('break.endTime'),
+            //   }),
+            // );
           }}
         />
         <PeriodTimePicker
@@ -96,14 +94,14 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
           values={getValues('break')}
           onChange={(data) => {
             setValue('break', data);
-            dispatch(
-              updateTimingAndSchedule({
-                timeToOpen: watch('openingTime.startTime'),
-                timeToClose: watch('openingTime.endTime'),
-                breakStart: watch('break.startTime'),
-                breakEnd: watch('break.endTime'),
-              }),
-            );
+            // dispatch(
+            //   updateTimingAndSchedule({
+            //     timeToOpen: watch('openingTime.startTime'),
+            //     timeToClose: watch('openingTime.endTime'),
+            //     breakStart: watch('break.startTime'),
+            //     breakEnd: watch('break.endTime'),
+            //   }),
+            // );
           }}
         />
         <span>Working days</span>
