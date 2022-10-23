@@ -4,10 +4,7 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import {
-  useGetHelloMutation,
-  useRegisterMutation,
-} from '@redux/local/auth/authApi';
+import { useRegisterMutation } from '@redux/local/auth/authApi';
 import { parseInviteKey } from '@helpers/crypto/parse';
 import { useAppSelector } from '@store';
 import { useRef } from 'react';
@@ -24,9 +21,7 @@ interface JoinNewClinicModalProps {}
 export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
   const [register, { data, isError, isLoading, error, isSuccess }] =
     useRegisterMutation();
-  const [hello] = useGetHelloMutation();
   const userinfo = useAppSelector((state) => state.user);
-  console.log('userInfo :', userinfo);
   const { control, handleSubmit, reset } = useForm<{
     key: string;
   }>({

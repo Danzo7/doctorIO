@@ -10,9 +10,6 @@ const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: StaticQueries.authQuery.query,
   endpoints: (builder) => ({
-    getHello: builder.mutation<{ secretKey: string }, void>({
-      query: () => ({ url: ``, method: 'POST' }),
-    }),
     register: builder.mutation<
       authType,
       {
@@ -51,7 +48,7 @@ const authApi = createApi({
           dispatch({ type: 'RESET' });
           //  StaticQueries.authQuery.discardUrl();
         } catch (e) {
-          console.log(e);
+          throw new Error('error in register: ' + e);
         }
       },
     }),
@@ -68,12 +65,12 @@ const authApi = createApi({
       },
       onQueryStarted: async (state, { queryFulfilled, dispatch }) => {
         try {
-          const { data } = await queryFulfilled;
+          await queryFulfilled;
 
           dispatch({ type: 'RESET' });
           //  StaticQueries.authQuery.discardUrl();
         } catch (e) {
-          console.log(e);
+          throw new Error("Error while connecting to member's account");
         }
       },
     }),
@@ -120,6 +117,5 @@ export const {
   useRegisterMutation,
   useConnectMemberMutation,
   useDisconnectMemberMutation,
-  useGetHelloMutation,
   useRefreshMutation,
 } = authApi;
