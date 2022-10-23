@@ -4,7 +4,7 @@ import { useAppSelector } from '@store';
 //REFACTOR ZUSTAND
 
 const initialState: User = {
-  userPreferences: {
+  appPreferences: {
     language: 'en',
     theme: 'Nighty',
     welcomeDismissedIn: '',
@@ -50,8 +50,8 @@ const userSlice = createSlice({
     },
 
     resetWelcomeDismissedIn: (state: User) => {
-      if (state.userPreferences)
-        state.userPreferences.welcomeDismissedIn = new Date().toISOString();
+      if (state.appPreferences)
+        state.appPreferences.welcomeDismissedIn = new Date().toISOString();
     },
     addNewClinic: (
       state: User,
@@ -60,7 +60,6 @@ const userSlice = createSlice({
       state.clinic.push({
         name: 'Clinic' + (Math.random() * 100).toString(),
         serverLocation: action.payload.serverLocation,
-        clinicId: Math.random() * 100,
         memberId: action.payload.memberId,
       });
 

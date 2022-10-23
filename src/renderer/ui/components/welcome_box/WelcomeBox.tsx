@@ -14,15 +14,15 @@ function WelcomeBox({ message }: WelcomeBoxProps) {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
-  const isDismised =
+  const isDismiss =
     user &&
     differenceInHours(
       new Date(),
-      parseISO(user?.userPreferences?.welcomeDismissedIn ?? ''),
+      parseISO(user.appPreferences?.welcomeDismissedIn ?? ''),
     ) < 24;
   const [close, setCloseState] = useState({
-    isHidding: isDismised,
-    isHidden: isDismised,
+    isHidding: isDismiss,
+    isHidden: isDismiss,
   });
   const setClose = (state: { isHidding: boolean; isHidden: boolean }) => {
     dispatch(resetWelcomeDismissedIn());

@@ -15,22 +15,21 @@ export default function Clinics() {
   const { toParent } = useNavigation();
   const { open } = useOverlay();
   const dispatch = useDispatch();
-  const userInfo = useAppSelector((state) => state.user);
+  const userData = useAppSelector((state) => state.user);
   const tokens = useAppSelector((state) => state.authSlice);
   return (
     <div className="clinics">
       <span>Clinics</span>
       <div className="servers-container">
-        {userInfo.clinic &&
-          userInfo.clinic.map((clinicInfo, index) => (
+        {userData.clinic &&
+          userData.clinic.map((clinicData, index) => (
             <ClinicItem
-              selected={userInfo.selectedClinic == index}
-              key={clinicInfo.clinicId.toString() + index}
-              //just for testing
-              isHost={index == 2} //FEATURE check if clinic is localhost
-              name={clinicInfo.name}
+              selected={userData.selectedClinic == index}
+              key={clinicData.name + index}
+              isHost={clinicData.serverLocation == '127.0.0.1'}
+              name={clinicData.name}
               onClick={() => {
-                if (userInfo.selectedClinic === index) toParent();
+                if (userData.selectedClinic === index) toParent();
                 else {
                   if (
                     tokens.accessToken == undefined ||

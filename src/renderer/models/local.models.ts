@@ -1,4 +1,4 @@
-interface AppLocalPreferences {
+interface AppPreferences {
   language: 'en';
   theme: 'Nighty';
   welcomeDismissedIn: string;
@@ -6,8 +6,8 @@ interface AppLocalPreferences {
 interface User {
   userId?: string; //"machineId"
   email?: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   gender: 'male' | 'female';
   age: number;
   address?: string;
@@ -15,9 +15,61 @@ interface User {
   avatar?: string;
   privateKey?: string;
   publicKey?: string;
+
   clinic: LocalClinicData[];
   selectedClinic?: number;
-  userPreferences: AppLocalPreferences;
+  appPreferences: AppPreferences;
+}
+interface AppData {
+  user: AppUser;
+  clinicData: AppClinics;
+  appPreferences: AppPreferences;
+}
+export interface AppUser {
+  userId?: string; //"machineId"
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: 'male' | 'female';
+  age?: number;
+  address?: string;
+  phone?: string;
+  avatar?: string;
+  privateKey?: string;
+  publicKey?: string;
+}
+export class AppClinics {
+  clinics: LocalClinicData[] = [];
+
+  selected?: number;
+
+  constructor(obj?: AppClinics) {
+    this.clinics = obj?.clinics || [];
+    this.selected = obj?.selected;
+  }
+
+  get clinic() {
+    return this.selected ? this.clinics?.[this.selected] : undefined;
+  }
+
+  set select(index: number) {
+    if (index >= 0 && index < this.clinics.length) this.selected = index;
+    else throw new Error('out of bound');
+  }
+
+  set location(ip: string) {
+    if (this.clinic) this.clinic.serverLocation = ip;
+  }
+
+  set add(clinic: LocalClinicData) {
+    this.clinics.push(clinic);
+  }
+}
+interface LocalClinicData {
+  name: string;
+  serverLocation: string;
+  memberId: number;
+  avatar?: string;
 }
 interface MedicalSessionLocal {
   sessionId: number;
@@ -48,20 +100,13 @@ interface Message {
   seen?: boolean;
   sent?: true;
 }
-interface LocalClinicData {
-  clinicId: number;
-  name: string;
-  serverLocation: string;
-  memberId: number;
-  memberCount?: number;
-  patientCount?: number;
-}
 
 export type {
   DirectMessage,
   Message,
   User,
   LocalClinicData,
-  AppLocalPreferences,
+  AppPreferences,
   MedicalSessionLocal,
+  AppData,
 };
