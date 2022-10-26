@@ -1,29 +1,13 @@
-interface AppPreferences {
+interface UserSettings {
   language: 'en';
   theme: 'Nighty';
   welcomeDismissedIn: string;
 }
-interface User {
-  userId?: string; //"machineId"
-  email?: string;
-  firstName?: string;
-  lastName?: string;
-  gender: 'male' | 'female';
-  age: number;
-  address?: string;
-  phone?: string;
-  avatar?: string;
-  privateKey?: string;
-  publicKey?: string;
 
-  clinic: LocalClinicData[];
-  selectedClinic?: number;
-  appPreferences: AppPreferences;
-}
 interface AppData {
   user: AppUser;
   clinicData: AppClinics;
-  appPreferences: AppPreferences;
+  appPreferences: UserSettings;
 }
 export interface AppUser {
   userId?: string; //"machineId"
@@ -49,20 +33,28 @@ export class AppClinics {
   }
 
   get clinic() {
-    return this.selected ? this.clinics?.[this.selected] : undefined;
+    if (
+      this.selected != undefined &&
+      this.selected >= 0 &&
+      this.selected < this.clinics.length
+    )
+      return this.clinics[this.selected];
+    else throw new Error('No clinic selected');
   }
 
-  set select(index: number) {
-    if (index >= 0 && index < this.clinics.length) this.selected = index;
+  setSelected(index?: number) {
+    if (index == undefined) this.selected = undefined;
+    else if (index >= 0 && index < this.clinics.length) this.selected = index;
     else throw new Error('out of bound');
   }
 
-  set location(ip: string) {
+  setCurrentLocation(ip: string) {
     if (this.clinic) this.clinic.serverLocation = ip;
   }
 
   set add(clinic: LocalClinicData) {
     this.clinics.push(clinic);
+    this.selected = this.clinics.length - 1;
   }
 }
 interface LocalClinicData {
@@ -104,9 +96,8 @@ interface Message {
 export type {
   DirectMessage,
   Message,
-  User,
   LocalClinicData,
-  AppPreferences,
+  UserSettings,
   MedicalSessionLocal,
   AppData,
 };
