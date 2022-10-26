@@ -22,22 +22,6 @@ import roleApi from './clinic/rbac/role/roleApi';
 import smallRoleInvSlice from './local/small_role_invSlice';
 import clinicApi from './clinic/clinicApi';
 
-const persistUserConfig = {
-  key: 'user',
-  storage,
-  whitelist: [
-    'userId',
-    'firstName',
-    'lastName',
-    'gender',
-    'age',
-    'email',
-    'phone',
-    'clinic',
-    'selectedClinic',
-    'userPreferences',
-  ],
-};
 const persistAuthConfig = {
   key: 'auth',
   storage,
