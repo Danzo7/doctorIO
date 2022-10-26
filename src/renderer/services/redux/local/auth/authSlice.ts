@@ -46,7 +46,7 @@ const authSlice = createSlice({
     );
     builder.addMatcher(
       authApi.endpoints.disconnectMember.matchFulfilled,
-      (state, { payload, meta }) => {
+      (state) => {
         state.accessToken = undefined;
         state.refreshToken = undefined;
       },

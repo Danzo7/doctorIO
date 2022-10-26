@@ -3,8 +3,8 @@ import { parseInviteKey } from '@helpers/crypto/parse';
 import { authType } from '@models/auth.type';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { useClinicsStore } from '@stores/clinicsStore';
 import { disconnect } from '../connectionStateSlice';
-import { addNewClinic } from '../user/userSlice';
 
 const authApi = createApi({
   reducerPath: 'authApi',
@@ -35,16 +35,14 @@ const authApi = createApi({
       onQueryStarted: async (state, { queryFulfilled, dispatch }) => {
         try {
           const { data } = await queryFulfilled;
-
-          dispatch(
-            addNewClinic({
-              memberId: data.id,
-              serverLocation:
-                state.invKey && state.invKey.length > 0
-                  ? parseInviteKey(state.invKey).location
-                  : '127.0.0.1:3000',
-            }),
+          useClinicsStore.getState().addNewClinic(
+            'randomName', //todo get real name from backend
+            state.invKey && state.invKey.length > 0
+              ? parseInviteKey(state.invKey).location
+              : '127.0.0.1:3000',
+            data.id,
           );
+
           dispatch({ type: 'RESET' });
           //  StaticQueries.authQuery.discardUrl();
         } catch (e) {

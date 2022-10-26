@@ -7,6 +7,7 @@ import {
   BaseQueryApi,
   BaseQueryFn,
 } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
+import { useClinicsStore } from '@stores/clinicsStore';
 import { Mutex } from 'async-mutex';
 import {
   connected,
@@ -29,19 +30,13 @@ class DynamicBaseQuery {
     if (!store) {
       throw new Error('store not found');
     }
-    const user = store.getState?.()?.user;
-    if (!user) {
-      throw new Error('user not found');
-    }
-    if (
-      user.selectedClinic == undefined ||
-      user.clinic.length == 0 ||
-      user.clinic[user.selectedClinic] == undefined
-    ) {
+    const clinicsStore = useClinicsStore.getState();
+
+    if (!clinicsStore.hasSelectedClinic()) {
       disconnect(store.dispatch);
       return undefined;
     }
-    const url = user.clinic[user.selectedClinic].serverLocation;
+    const url = clinicsStore.getSelectedClinic().serverLocation;
     try {
       const res = await fetch('http://' + url + '/status');
       if (!res.ok) {
@@ -227,5 +222,6 @@ export class StaticQueries {
     StaticQueries.medicalHistory.reset();
     StaticQueries.medicalDocument.reset();
     StaticQueries.patient.reset();
+    StaticQueries.members.reset();
   }
 }

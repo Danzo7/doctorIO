@@ -8,6 +8,7 @@ import { FIT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { connect } from '@redux/local/connectionStateSlice';
 import { useAppSelector } from '@store';
+import { useClinicsStore } from '@stores/clinicsStore';
 import { useDispatch } from 'react-redux';
 import './style/index.scss';
 
@@ -15,35 +16,32 @@ export default function Clinics() {
   const { toParent } = useNavigation();
   const { open } = useOverlay();
   const dispatch = useDispatch();
-  const userData = useAppSelector((state) => state.user);
+  //const user = useAppSelector((state) => state.user);
+  const clinics = useClinicsStore();
   const tokens = useAppSelector((state) => state.authSlice);
   return (
     <div className="clinics">
       <span>Clinics</span>
       <div className="servers-container">
-        {userData.clinic &&
-          userData.clinic.map((clinicData, index) => (
-            <ClinicItem
-              selected={userData.selectedClinic == index}
-              key={clinicData.name + index}
-              isHost={clinicData.serverLocation == '127.0.0.1'}
-              name={clinicData.name}
-              onClick={() => {
-                if (userData.selectedClinic === index) toParent();
-                else {
-                  if (
-                    tokens.accessToken == undefined ||
-                    tokens.refreshToken == undefined
-                  ) {
-                    open(
-                      <ConnectMemberModal selectedIndex={index} />,
-                      FIT_MODAL,
-                    );
-                  } else connect(dispatch, index);
-                }
-              }}
-            />
-          ))}
+        {clinics.getClinics().map((clinicData, index) => (
+          <ClinicItem
+            selected={clinics.getSelectedIndex() == index}
+            key={clinicData.name + index}
+            isHost={clinicData.serverLocation == '127.0.0.1'}
+            name={clinicData.name}
+            onClick={() => {
+              if (clinics.getSelectedIndex() == index) toParent();
+              else {
+                if (
+                  tokens.accessToken == undefined ||
+                  tokens.refreshToken == undefined
+                ) {
+                  open(<ConnectMemberModal selectedIndex={index} />, FIT_MODAL);
+                } else connect(dispatch, index);
+              }
+            }}
+          />
+        ))}
         <div className="join-button-container">
           <TextButton
             text="Join  a new server..."

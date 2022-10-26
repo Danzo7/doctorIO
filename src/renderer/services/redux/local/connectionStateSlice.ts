@@ -1,6 +1,6 @@
 import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import { useClinicsStore } from '@stores/clinicsStore';
 import { useSocketStore } from '@stores/socketStore';
-import { setSelectedServer } from './user/userSlice';
 //REFACTOR ZUSTAND
 
 const initialState: {
@@ -41,13 +41,15 @@ const connectionStateSlice = createSlice({
 });
 
 export const disconnect = (dispatch: Dispatch) => {
-  Promise.resolve(dispatch(setSelectedServer())).then(() => {
+  Promise.resolve(useClinicsStore.getState().setSelectedClinic()).then(() => {
     dispatch(connectionStateSlice.actions.disconnect());
     dispatch({ type: 'REST' });
   });
 };
 export const connect = (dispatch: Dispatch, selectedIndex: number) => {
-  Promise.resolve(dispatch(setSelectedServer(selectedIndex))).then(() => {
+  Promise.resolve(
+    useClinicsStore.getState().setSelectedClinic(selectedIndex),
+  ).then(() => {
     dispatch(connectionStateSlice.actions.connect());
   });
 };

@@ -6,14 +6,14 @@ import ModalContainer from '@components/modal_container';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRegisterMutation } from '@redux/local/auth/authApi';
 import { parseInviteKey } from '@helpers/crypto/parse';
-import { useAppSelector } from '@store';
-import { useRef } from 'react';
+import { useState } from 'react';
 import { Overlay } from '@libs/overlay';
 import { nanoid } from '@reduxjs/toolkit';
 import LoadingSpinner from '@components/loading_spinner';
 import { ServerError } from '@models/instance.model';
 import CopyField from '@components/copy_field';
 import { StaticQueries } from '@redux/dynamic_queries';
+import { useUserStore } from '@stores/userStore';
 interface Inputs {
   key: string;
 }
@@ -21,7 +21,7 @@ interface JoinNewClinicModalProps {}
 export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
   const [register, { data, isError, isLoading, error, isSuccess }] =
     useRegisterMutation();
-  const userinfo = useAppSelector((state) => state.user);
+  const user = useUserStore();
   const { control, handleSubmit, reset } = useForm<{
     key: string;
   }>({
@@ -30,31 +30,31 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
   const errorMsg = isError
     ? ((error as any)?.data?.message as ServerError)
     : undefined;
-  const internalErrorRef = useRef<string>(); //FEATURE improve internal error handling
-  const isFetching = useRef(false);
+  const [internalError, setError] = useState('');
   const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
-    isFetching.current = true;
+    let location;
+
     try {
-      const location =
-        key && key.length > 0 ? parseInviteKey(key).location : '127.0.0.1:3000';
+      location =
+        key.length > 0 ? parseInviteKey(key).location : '127.0.0.1:3000';
+    } catch (e: any) {
+      setError("Couldn't parse invite key");
+      reset();
+    }
+    if (location) {
       await StaticQueries.authQuery.setUrl(location);
       register({
         invKey: key,
         body: {
-          name: userinfo.firstName + ' ' + userinfo.lastName,
-          age: userinfo.age,
-          gender: userinfo.gender,
+          name: user.firstName + ' ' + user.lastName,
+          age: user.age ?? 0,
+          gender: user.gender ?? 'male',
           userId: nanoid(),
           address: 'address',
           //     phone: userinfo.phone,
-          publicKey: userinfo.publicKey,
+          publicKey: user.publicKey,
         },
-      }).then(() => {
-        isFetching.current = false;
       });
-    } catch (e: any) {
-      internalErrorRef.current = e;
-      reset();
     }
   };
   return (
@@ -95,9 +95,15 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
         <Input
           name="key"
           control={control}
+          onChange={() => {
+            if (internalError.length > 0) setError('');
+          }}
           errorMessage={
-            internalErrorRef?.current ??
-            (Array.isArray(errorMsg) ? errorMsg[0] : errorMsg)
+            internalError.length > 0
+              ? internalError
+              : Array.isArray(errorMsg)
+              ? errorMsg[0]
+              : errorMsg
           }
           leading={<Key />}
           type="text"

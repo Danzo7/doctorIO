@@ -11,11 +11,9 @@ import { useDispatch } from 'react-redux';
 import WarningModal from './WarningModal';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  setCurrentLocation,
-  useSelectLocation,
-} from '@redux/local/user/userSlice';
+
 import Input from '@components/inputs/input';
+import { useClinicsStore } from '@stores/clinicsStore';
 const schema = z.object({
   ip: z
     .string()
@@ -28,9 +26,8 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
   const dispatch = useDispatch();
   const { state } = useAppSelector((st) => st.connectionState);
   const [isEditAdr, setEditAdr] = useState(false);
-  const location = useSelectLocation();
+  const clinicStore = useClinicsStore();
   const { control, handleSubmit } = useForm<{ ip: string }>({
-    defaultValues: { ip: location?.split(':')?.[0] },
     resolver: zodResolver(schema),
   });
   useEffect(() => {
@@ -53,16 +50,17 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
           : '')
       }
       content={
-        isEditAdr ? (
+        isEditAdr && clinicStore.hasSelectedClinic() ? (
           <Input
             control={control}
             name="ip"
             type="text"
+            defaultValue={clinicStore.getSelectedClinic().serverLocation}
             trailing={
               <TextButton
                 backgroundColor={color.cold_blue}
                 onPress={handleSubmit((data) => {
-                  dispatch(setCurrentLocation(data.ip));
+                  clinicStore.setCurrentLocation(data.ip);
                   dispatch(refresh());
                   setEditAdr(false);
                 })}

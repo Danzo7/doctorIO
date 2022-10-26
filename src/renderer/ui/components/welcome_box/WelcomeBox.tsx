@@ -4,28 +4,21 @@ import Svg from 'toSvg/doctor_figure.svg?icon';
 import Arrow from 'toSvg/arrow.svg';
 import Pattern from 'toSvg/pattern.svg';
 import { differenceInHours } from 'date-fns/esm';
-import { useAppDispatch, useAppSelector } from '@store';
 import { parseISO } from 'date-fns';
-import { resetWelcomeDismissedIn } from '@redux/local/user/userSlice';
+import { useUserSettingsStore } from '@stores/userSettingsStore';
 interface WelcomeBoxProps {
   message: string;
 }
 function WelcomeBox({ message }: WelcomeBoxProps) {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
-
+  const settings = useUserSettingsStore();
   const isDismiss =
-    user &&
-    differenceInHours(
-      new Date(),
-      parseISO(user.appPreferences?.welcomeDismissedIn ?? ''),
-    ) < 24;
+    differenceInHours(new Date(), parseISO(settings.welcomeDismissedIn)) < 24;
   const [close, setCloseState] = useState({
     isHidding: isDismiss,
     isHidden: isDismiss,
   });
   const setClose = (state: { isHidding: boolean; isHidden: boolean }) => {
-    dispatch(resetWelcomeDismissedIn());
+    settings.resetWelcomeDismissedIn();
     setCloseState(state);
   };
   const animationCount = useRef(0);

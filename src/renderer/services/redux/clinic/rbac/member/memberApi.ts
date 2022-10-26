@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Member, MemberBrief, PermKeys } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
 import appointmentApi from '@redux/instance/Appointment/AppointmentApi';
@@ -6,6 +5,7 @@ import appointmentQueueApi from '@redux/instance/appointmentQueue/AppointmentQue
 import { unreachable, connecting } from '@redux/local/connectionStateSlice';
 import { store } from '@redux/store';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { useClinicsStore } from '@stores/clinicsStore';
 import { useSocketStore } from '@stores/socketStore';
 import { parseISO } from 'date-fns';
 import { io } from 'socket.io-client';
@@ -52,10 +52,10 @@ const memberApi = createApi({
           let ws = useSocketStore.getState().socket;
 
           if (!ws) {
-            const user = store.getState().user;
-            if (user.selectedClinic == undefined)
-              throw new Error('No clinic selected');
-            const url = user.clinic[user.selectedClinic].serverLocation;
+            const url = useClinicsStore
+              .getState()
+              .getSelectedClinic().serverLocation;
+
             ws = io(`ws://${url}/ws`, {
               auth: {
                 token: store.getState().authSlice.accessToken,

@@ -4,13 +4,14 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '@store';
+import { useAppDispatch } from '@store';
 import { Overlay } from '@libs/overlay';
 import { useConnectMemberMutation } from '@redux/local/auth/authApi';
 import { setTokens } from '@redux/local/auth/authSlice';
 import { connect } from '@redux/local/connectionStateSlice';
 import { StaticQueries } from '@redux/dynamic_queries';
 import useNavigation from '@libs/hooks/useNavigation';
+import { useClinicsStore } from '@stores/clinicsStore';
 interface Inputs {
   key: string;
 }
@@ -22,7 +23,8 @@ export default function ConnectMemberModal({
 }: ConnectMemberModalProps) {
   const { navigate } = useNavigation();
   const dispatch = useAppDispatch();
-  const userInfo = useAppSelector((state) => state.user);
+  const clinics = useClinicsStore();
+
   const [ConnectMember] = useConnectMemberMutation();
   const { control, handleSubmit } = useForm<{
     key: string;
@@ -31,17 +33,17 @@ export default function ConnectMemberModal({
     defaultValues: { key: '' },
   });
   const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
-    const memId = userInfo.clinic[selectedIndex].memberId;
-    const location = userInfo.clinic[selectedIndex].serverLocation;
+    //TODO: If fail to connect to clinic, handle selected change and show error
+    clinics.setSelectedClinic(selectedIndex);
+    const memId = clinics.getSelectedClinic().memberId;
+    const location = clinics.getSelectedClinic().serverLocation;
     await StaticQueries.authQuery.setUrl(location);
     ConnectMember({ memberId: memId, secretKey: key }).then((result: any) => {
       if (result.data) {
-        // setSelectedServer(selectedIndex);
-
         dispatch(
           setTokens({
-            accessToken: result.data?.access_token,
-            refreshToken: result.data?.refresh_token,
+            accessToken: result.data.access_token,
+            refreshToken: result.data.refresh_token,
           }),
         );
         connect(dispatch, selectedIndex);

@@ -4,8 +4,7 @@ import Input, { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Overlay } from '@libs/overlay';
-import { setUser } from '@redux/local/user/userSlice';
-import { useAppDispatch } from '@store';
+import { useUserStore } from '@stores/userStore';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -22,9 +21,9 @@ interface Inputs {
   firstName: string;
   lastName: string;
   gender: 'male' | 'female';
-  age: string;
+  age: number;
   email: string;
-  phoneNumber: string;
+  phone: string;
   address: string;
 }
 interface UserRegisterProps {}
@@ -37,25 +36,16 @@ export default function UserRegister({}: UserRegisterProps) {
       lastName: '',
       gender: 'male',
       email: '',
-      phoneNumber: '',
-      age: '',
+      phone: '',
+      age: 0,
       address: '',
     },
   });
-  const dispatch = useAppDispatch();
+  const setUser = useUserStore((state) => state.setUser);
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    console.log('form data :', formData);
-    dispatch(
-      setUser({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        age: formData.age,
-        email: formData.email,
-        gender: formData.gender,
-        phoneNumber: formData.phoneNumber,
-        address: formData.address,
-      }),
-    );
+    setUser({
+      ...formData,
+    });
     Overlay.close();
   };
   return (
