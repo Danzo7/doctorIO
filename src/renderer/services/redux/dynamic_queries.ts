@@ -7,6 +7,7 @@ import {
   BaseQueryApi,
   BaseQueryFn,
 } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
+import { useAuthStore } from '@stores/authStore';
 import { useClinicsStore } from '@stores/clinicsStore';
 import { Mutex } from 'async-mutex';
 import {
@@ -103,8 +104,7 @@ class DynamicBaseQuery {
     const rawBaseQuery = fetchBaseQuery({
       baseUrl: this.baseUrl,
       prepareHeaders: async (headers, aps) => {
-        const { store } = await import('./store');
-        const tokens = (aps as unknown as typeof store).getState().authSlice;
+        const tokens = useAuthStore.getState();
         if (tokens.accessToken && tokens.refreshToken)
           headers.append(
             'Authorization',
@@ -122,31 +122,27 @@ class DynamicBaseQuery {
       if (!mutex.isLocked()) {
         const release = await mutex.acquire();
         try {
+          const authStore = useAuthStore.getState();
           const refreshBaseQuery = fetchBaseQuery({
             baseUrl:
               this.baseUrl.split('/' + this.resource + '/')[0] +
               '/auth/refresh',
             prepareHeaders: async (headers, aps) => {
-              const { store } = await import('./store');
-              const tokens = (aps as unknown as typeof store).getState()
-                .authSlice;
-              if (tokens.accessToken && tokens.refreshToken)
+              if (authStore.accessToken && authStore.refreshToken)
                 headers.append(
                   'Authorization',
-                  'Bearer ' + tokens.refreshToken,
+                  'Bearer ' + authStore.refreshToken,
                 );
               return headers;
             },
           });
+
           console.log('refreshing ♻️....');
 
           const refreshResult = await refreshBaseQuery(
             { url: '', method: 'POST' },
             api,
             {},
-          );
-          const { setTokens, discardTokens } = await import(
-            './local/auth/authSlice'
           );
           if (
             refreshResult.data &&
@@ -155,17 +151,15 @@ class DynamicBaseQuery {
           ) {
             console.log('refreshed 🌱.');
             const tokens = refreshResult.data as any;
-            api.dispatch(
-              setTokens({
-                accessToken: tokens.access_token,
-                refreshToken: tokens.refresh_token,
-              }),
-            );
+            authStore.setTokens({
+              accessToken: tokens.access_token,
+              refreshToken: tokens.refresh_token,
+            });
             result = await rawBaseQuery(args, api, extraOptions);
           } else {
             const errMessage = (refreshResult.error?.data as any)?.message;
             console.log('Lost the war ⚰️', errMessage);
-            api.dispatch(discardTokens());
+            api.dispatch(authStore.discard());
             disconnect(api.dispatch);
           }
         } finally {

@@ -4,12 +4,15 @@ import { persist } from 'zustand/middleware';
 interface AuthState {
   refreshToken?: string;
   accessToken?: string;
-  set(props: Partial<AuthState>): void;
+  setTokens(props: { accessToken: string; refreshToken: string }): void;
+  discard(): void;
 }
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      set: (props) => set((state) => ({ ...state, ...props })),
+      setTokens: (props) => set((state) => ({ ...state, ...props })),
+      discard: () =>
+        set(() => ({ accessToken: undefined, refreshToken: undefined })),
     }),
     {
       name: 'AuthStore',

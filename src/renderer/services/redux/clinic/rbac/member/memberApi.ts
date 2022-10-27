@@ -1,10 +1,12 @@
+import { buildAbilityFor } from '@ability/utils';
 import { Member, MemberBrief, PermKeys } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
 import appointmentApi from '@redux/instance/Appointment/AppointmentApi';
 import appointmentQueueApi from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { unreachable, connecting } from '@redux/local/connectionStateSlice';
-import { store } from '@redux/store';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { useAbilityStore } from '@stores/abilityStore';
+import { useAuthStore } from '@stores/authStore';
 import { useClinicsStore } from '@stores/clinicsStore';
 import { useSocketStore } from '@stores/socketStore';
 import { parseISO } from 'date-fns';
@@ -48,7 +50,11 @@ const memberApi = createApi({
       providesTags: ['me'],
       onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
         try {
-          await queryFulfilled;
+          const { data: res } = await queryFulfilled;
+          useAbilityStore
+            .getState()
+            .set(buildAbilityFor(res.permissions, res.lvl == 0));
+
           let ws = useSocketStore.getState().socket;
 
           if (!ws) {
@@ -58,7 +64,7 @@ const memberApi = createApi({
 
             ws = io(`ws://${url}/ws`, {
               auth: {
-                token: store.getState().authSlice.accessToken,
+                token: useAuthStore.getState().accessToken,
               },
             });
             useSocketStore.setState({ socket: ws });

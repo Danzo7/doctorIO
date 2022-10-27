@@ -7,14 +7,11 @@ import {
 import AppointmentQueueApi from './instance/appointmentQueue/AppointmentQueueApi';
 import patientApi from './instance/record/patient_api';
 import sessionSlice from './local/session/sessionSlice';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import medicalDocumentApi from './instance/record/medical_document_api';
 import medicalHistoryApi from './instance/record/medical_history_api';
 import appointmentApi from './instance/Appointment/AppointmentApi';
 import { rtkQueryErrorLogger } from './middlewares/error.middleware';
 import connectionStateSlice from './local/connectionStateSlice';
-import authSlice from './local/auth/authSlice';
 import authApi from './local/auth/authApi';
 import invitationApi from './clinic/invitation/invitationApi';
 import memberApi from './clinic/rbac/member/memberApi';
@@ -22,21 +19,12 @@ import roleApi from './clinic/rbac/role/roleApi';
 import smallRoleInvSlice from './local/small_role_invSlice';
 import clinicApi from './clinic/clinicApi';
 
-const persistAuthConfig = {
-  key: 'auth',
-  storage,
-  whitelist: ['refreshToken', 'accessToken'],
-};
-
-const persistedAuth = persistReducer(persistAuthConfig, authSlice.reducer);
-
 const appReducer = combineReducers({
   [clinicApi.reducerPath]: clinicApi.reducer,
   [smallRoleInvSlice.name]: smallRoleInvSlice.reducer,
   [roleApi.reducerPath]: roleApi.reducer,
   [memberApi.reducerPath]: memberApi.reducer,
   [invitationApi.reducerPath]: invitationApi.reducer,
-  [authSlice.name]: persistedAuth,
   [sessionSlice.name]: sessionSlice.reducer,
   [connectionStateSlice.name]: connectionStateSlice.reducer,
   [authApi.reducerPath]: authApi.reducer,
@@ -85,7 +73,6 @@ export const store = configureStore({
       clinicApi.middleware,
     ),
 });
-export const persistor = persistStore(store);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

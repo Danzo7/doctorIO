@@ -5,9 +5,8 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import App from './App';
 import './index.scss';
 import { Provider } from 'react-redux';
-import { persistor, store } from '@redux/store';
-import { PersistGate } from 'redux-persist/integration/react';
 import Taskbar from '@components/taskbar';
+import store from '@store';
 
 const app = document.getElementById('app-mount');
 const root = createRoot(app as HTMLElement);
@@ -17,11 +16,9 @@ root.render(
   <StrictMode>
     {FROM_ELECTRON && <Taskbar />}
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Routing>
-          <App />
-        </Routing>
-      </PersistGate>
+      <Routing>
+        <App />
+      </Routing>
     </Provider>
   </StrictMode>,
 );

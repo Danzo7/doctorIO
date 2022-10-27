@@ -7,7 +7,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch } from '@store';
 import { Overlay } from '@libs/overlay';
 import { useConnectMemberMutation } from '@redux/local/auth/authApi';
-import { setTokens } from '@redux/local/auth/authSlice';
 import { connect } from '@redux/local/connectionStateSlice';
 import { StaticQueries } from '@redux/dynamic_queries';
 import useNavigation from '@libs/hooks/useNavigation';
@@ -40,12 +39,6 @@ export default function ConnectMemberModal({
     await StaticQueries.authQuery.setUrl(location);
     ConnectMember({ memberId: memId, secretKey: key }).then((result: any) => {
       if (result.data) {
-        dispatch(
-          setTokens({
-            accessToken: result.data.access_token,
-            refreshToken: result.data.refresh_token,
-          }),
-        );
         connect(dispatch, selectedIndex);
         navigate('/');
       }

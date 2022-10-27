@@ -3,6 +3,7 @@ import { parseInviteKey } from '@helpers/crypto/parse';
 import { authType } from '@models/auth.type';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { useAuthStore } from '@stores/authStore';
 import { useClinicsStore } from '@stores/clinicsStore';
 import { disconnect } from '../connectionStateSlice';
 
@@ -42,9 +43,11 @@ const authApi = createApi({
               : '127.0.0.1:3000',
             data.id,
           );
-
+          useAuthStore.getState().setTokens({
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+          });
           dispatch({ type: 'RESET' });
-          //  StaticQueries.authQuery.discardUrl();
         } catch (e) {
           throw new Error('error in register: ' + e);
         }
@@ -63,8 +66,11 @@ const authApi = createApi({
       },
       onQueryStarted: async (state, { queryFulfilled, dispatch }) => {
         try {
-          await queryFulfilled;
-
+          const { data } = await queryFulfilled;
+          useAuthStore.getState().setTokens({
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+          });
           dispatch({ type: 'RESET' });
           //  StaticQueries.authQuery.discardUrl();
         } catch (e) {
@@ -79,6 +85,7 @@ const authApi = createApi({
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
+          useAuthStore.getState().discard();
           disconnect(dispatch);
         } catch (err) {
           //console.log(err);
