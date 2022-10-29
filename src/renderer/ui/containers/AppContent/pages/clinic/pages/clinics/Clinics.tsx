@@ -1,6 +1,7 @@
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ClinicItem from '@components/clinic_item';
+import ConnectMemberModal from '@containers/modals/connect_member_modal';
 import JoinNewClinicModal from '@containers/modals/join_new_clinic_modal';
 import useNavigation from '@libs/hooks/useNavigation';
 import { FIT_MODAL } from '@libs/overlay';
@@ -11,9 +12,7 @@ import './style/index.scss';
 export default function Clinics() {
   const { toParent } = useNavigation();
   const { open } = useOverlay();
-  //const user = useAppSelector((state) => state.user);
   const clinics = useClinicsStore();
-  // const tokens = useAppSelector((state) => state.authSlice);
   return (
     <div className="clinics">
       <span>Clinics</span>
@@ -26,14 +25,8 @@ export default function Clinics() {
             name={clinicData.name}
             onClick={() => {
               if (clinics.getSelectedIndex() == index) toParent();
-              // else {
-              //   if (
-              //     tokens.accessToken == undefined ||
-              //     tokens.refreshToken == undefined
-              //   ) {
-              //     open(<ConnectMemberModal selectedIndex={index} />, FIT_MODAL);
-              //   } else connect(dispatch, index);
-              // }
+              else
+                open(<ConnectMemberModal selectedIndex={index} />, FIT_MODAL);
             }}
           />
         ))}

@@ -1,7 +1,6 @@
 import { AppClinics, LocalClinicData } from '@models/local.models';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer';
 
 interface ClinicsState {
   clinicData: AppClinics;
@@ -16,13 +15,13 @@ interface ClinicsState {
 }
 export const useClinicsStore = create<ClinicsState>()(
   persist(
-    immer((set) => ({
+    (set) => ({
       clinicData: new AppClinics(),
       setCurrentLocation: (ip: string) => {
         set((state) => {
           const clinicData = new AppClinics(state.clinicData);
           clinicData.setCurrentLocation(ip);
-          state.clinicData = clinicData;
+          return { clinicData };
         });
       },
 
@@ -30,14 +29,14 @@ export const useClinicsStore = create<ClinicsState>()(
         set((state) => {
           const clinicData = new AppClinics(state.clinicData);
           clinicData.setSelected(index);
-          state.clinicData = clinicData;
+          return { clinicData };
         });
       },
       addNewClinic(name, serverLocation, memberId) {
         set((state) => {
           const clinicData = new AppClinics(state.clinicData);
           clinicData.add = { name, serverLocation, memberId };
-          state.clinicData = clinicData;
+          return { clinicData };
         });
       },
       hasSelectedClinic() {
@@ -52,7 +51,7 @@ export const useClinicsStore = create<ClinicsState>()(
       getSelectedIndex() {
         return this.clinicData.selected;
       },
-    })),
+    }),
 
     {
       name: 'ClinicsStore', // unique name

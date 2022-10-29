@@ -34,8 +34,10 @@ export default function ConnectMemberModal({
   const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
     //TODO: If fail to connect to clinic, handle selected change and show error
     clinics.setSelectedClinic(selectedIndex);
-    const memId = clinics.getSelectedClinic().memberId;
-    const location = clinics.getSelectedClinic().serverLocation;
+    const memId = useClinicsStore.getState().getSelectedClinic().memberId;
+    const location = useClinicsStore
+      .getState()
+      .getSelectedClinic().serverLocation;
     await StaticQueries.authQuery.setUrl(location);
     ConnectMember({ memberId: memId, secretKey: key }).then((result: any) => {
       if (result.data) {
