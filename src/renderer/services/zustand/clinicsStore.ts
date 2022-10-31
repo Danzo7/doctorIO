@@ -15,7 +15,7 @@ interface ClinicsState {
 }
 export const useClinicsStore = create<ClinicsState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       clinicData: new AppClinics(),
       setCurrentLocation: (ip: string) => {
         set((state) => {
@@ -40,16 +40,16 @@ export const useClinicsStore = create<ClinicsState>()(
         });
       },
       hasSelectedClinic() {
-        return this.clinicData.selected != undefined;
+        return get().clinicData.selected != undefined;
       },
       getSelectedClinic() {
-        return this.clinicData.clinic;
+        return get().clinicData.clinic;
       },
       getClinics() {
-        return this.clinicData.clinics;
+        return get().clinicData.clinics;
       },
       getSelectedIndex() {
-        return this.clinicData.selected;
+        return get().clinicData.selected;
       },
     }),
 
