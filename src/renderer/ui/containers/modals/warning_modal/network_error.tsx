@@ -2,18 +2,15 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import LoadingSpinner from '@components/loading_spinner';
-import { StaticQueries } from '@redux/dynamic_queries';
-import { disconnect, refresh } from '@redux/local/connectionStateSlice';
-import { useAppSelector } from '@store';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import WarningModal from './WarningModal';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Input from '@components/inputs/input';
 import { useClinicsStore } from '@stores/clinicsStore';
+import { useConnectionStore } from '@stores/ConnectionStore';
 const schema = z.object({
   ip: z
     .string()
@@ -23,29 +20,24 @@ const schema = z.object({
     ),
 });
 export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
-  const dispatch = useDispatch();
-  const { state } = useAppSelector((st) => st.connectionState);
+  const { status, disconnect } = useConnectionStore();
   const [isEditAdr, setEditAdr] = useState(false);
   const clinicStore = useClinicsStore();
   const { control, handleSubmit } = useForm<{ ip: string }>({
     resolver: zodResolver(schema),
   });
   useEffect(() => {
-    if (state == 'reconnecting' || state == 'connecting')
+    if (status == 'connecting')
       (async () => {
-        await StaticQueries.initAll();
+        //  await StaticQueries.initAll();
       })();
-  }, [state]);
+  }, [status]);
   return (
     <WarningModal
-      title={
-        state == 'reconnecting' || state == 'connecting'
-          ? 'Trying to connect...'
-          : 'Network error'
-      }
+      title={status == 'connecting' ? 'Trying to connect...' : 'Network error'}
       description={
         errorMsg ??
-        (state == 'unreachable'
+        (status == 'unreachable'
           ? 'The server is not responding. make sure the server is running'
           : '')
       }
@@ -61,7 +53,7 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
                 backgroundColor={color.cold_blue}
                 onPress={handleSubmit((data) => {
                   clinicStore.setCurrentLocation(data.ip);
-                  dispatch(refresh());
+                  //dispatch(refresh());
                   setEditAdr(false);
                 })}
                 text="Save"
@@ -71,7 +63,7 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
         ) : null
       }
     >
-      {state == 'reconnecting' || state == 'connecting' ? (
+      {status == 'connecting' ? (
         <div css={{ flexGrow: 1 }}>
           <LoadingSpinner />
         </div>
@@ -81,13 +73,13 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
             text="Retry"
             backgroundColor={color.good_green}
             onPress={() => {
-              dispatch(refresh());
+              // dispatch(refresh());
             }}
           />
           <TextButton
             text="Disconnect"
             backgroundColor={color.hot_red}
-            onPress={() => disconnect(dispatch)}
+            onPress={() => disconnect()}
           />
           <TextButton
             text="change"

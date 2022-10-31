@@ -4,13 +4,11 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch } from '@store';
 import { Overlay } from '@libs/overlay';
 import { useConnectMemberMutation } from '@redux/local/auth/authApi';
-import { connect } from '@redux/local/connectionStateSlice';
-import { StaticQueries } from '@redux/dynamic_queries';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useClinicsStore } from '@stores/clinicsStore';
+import { useConnectionStore } from '@stores/ConnectionStore';
 interface Inputs {
   key: string;
 }
@@ -21,7 +19,6 @@ export default function ConnectMemberModal({
   selectedIndex,
 }: ConnectMemberModalProps) {
   const { navigate } = useNavigation();
-  const dispatch = useAppDispatch();
   const clinics = useClinicsStore();
 
   const [ConnectMember] = useConnectMemberMutation();
@@ -38,10 +35,9 @@ export default function ConnectMemberModal({
     const location = useClinicsStore
       .getState()
       .getSelectedClinic().serverLocation;
-    await StaticQueries.authQuery.setUrl(location);
+    useConnectionStore.getState().pseudoConnect(location);
     ConnectMember({ memberId: memId, secretKey: key }).then((result: any) => {
       if (result.data) {
-        connect(dispatch, selectedIndex);
         navigate('/');
       }
     });

@@ -4,26 +4,25 @@ import { NetworkError } from '@containers/modals/warning_modal';
 import MedicalSession from '@layers/medical_session';
 import { STOP_MODAL } from '@libs/overlay';
 import { ModalPortal } from '@libs/overlay/OverlayContainer';
-import { StaticQueries } from '@redux/dynamic_queries';
-import { useAppSelector } from '@store';
+import { useConnectionStore } from '@stores/ConnectionStore';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AppLayout from './app_layout';
 
 interface MainLayerProps {}
 export default function MainLayer({}: MainLayerProps) {
-  const { state } = useAppSelector((st) => st.connectionState); //check if url is alive
+  const { status, connect } = useConnectionStore();
   useEffect(() => {
-    if (!state)
+    if (!status)
       (async () => {
-        console.log('checking url');
-        await StaticQueries.initAll();
+        console.log('Connecting');
+        connect();
       })();
-  }, [state]);
+  }, [connect, status]);
 
-  return state == undefined ? (
+  return status == undefined ? (
     <LoadingSpinner />
-  ) : state == 'connected' ? (
+  ) : status == 'connected' ? (
     <Routes>
       <Route path="session" element={<MedicalSession />} />
       <Route path="*" element={<AppLayout />} />

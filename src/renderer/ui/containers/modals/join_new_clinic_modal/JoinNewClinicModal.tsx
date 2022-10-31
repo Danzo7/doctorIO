@@ -12,8 +12,8 @@ import { nanoid } from '@reduxjs/toolkit';
 import LoadingSpinner from '@components/loading_spinner';
 import { ServerError } from '@models/instance.model';
 import CopyField from '@components/copy_field';
-import { StaticQueries } from '@redux/dynamic_queries';
 import { useUserStore } from '@stores/userStore';
+import { useConnectionStore } from '@stores/ConnectionStore';
 interface Inputs {
   key: string;
 }
@@ -42,7 +42,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
       reset();
     }
     if (location) {
-      await StaticQueries.authQuery.setUrl(location);
+      useConnectionStore.getState().pseudoConnect(location);
       register({
         invKey: key,
         body: {

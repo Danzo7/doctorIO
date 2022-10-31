@@ -5,7 +5,7 @@ import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { useAuthStore } from '@stores/authStore';
 import { useClinicsStore } from '@stores/clinicsStore';
-import { disconnect } from '../connectionStateSlice';
+import { useConnectionStore } from '@stores/ConnectionStore';
 
 const authApi = createApi({
   reducerPath: 'authApi',
@@ -47,6 +47,7 @@ const authApi = createApi({
             accessToken: data.access_token,
             refreshToken: data.refresh_token,
           });
+          useConnectionStore.getState().connect();
           dispatch({ type: 'RESET' });
         } catch (e) {
           throw new Error('error in register: ' + e);
@@ -71,8 +72,8 @@ const authApi = createApi({
             accessToken: data.access_token,
             refreshToken: data.refresh_token,
           });
+          useConnectionStore.getState().connect();
           dispatch({ type: 'RESET' });
-          //  StaticQueries.authQuery.discardUrl();
         } catch (e) {
           throw new Error("Error while connecting to member's account");
         }
@@ -82,11 +83,11 @@ const authApi = createApi({
       query: () => {
         return { url: '/disconnect', method: 'POST' };
       },
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+      async onQueryStarted(id, { queryFulfilled }) {
         try {
           await queryFulfilled;
           useAuthStore.getState().discard();
-          disconnect(dispatch);
+          useConnectionStore.getState().disconnect();
         } catch (err) {
           //console.log(err);
         }
