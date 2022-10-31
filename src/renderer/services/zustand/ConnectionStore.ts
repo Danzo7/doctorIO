@@ -16,6 +16,7 @@ interface SocketState {
   reconnect: () => void;
   pseudoConnect: (url: string) => void;
   getUrl: () => string;
+  reconnecting: () => void;
 }
 
 export const useConnectionStore = create<SocketState>()((set) => ({
@@ -45,13 +46,21 @@ export const useConnectionStore = create<SocketState>()((set) => ({
         });
         socket.on('disconnect', () => {
           console.log('disconnect');
-          useConnectionStore.getState().unreachable();
+          useConnectionStore.getState().reconnecting();
         });
         socket.on('reconnect', () => {
           console.log('reconnect');
-
           useConnectionStore.getState().connected();
         });
+
+        socket.io.on('reconnect_attempt', (attp) => {
+          if (attp > 30) {
+            useConnectionStore.getState().unreachable();
+          }
+
+          console.log('reconnect_attempt');
+        });
+
         socket.on('error', async (data) => {
           if (data?.status == 401) {
             const refreshed = await refreshTokens();
@@ -70,6 +79,11 @@ export const useConnectionStore = create<SocketState>()((set) => ({
         state.socket.connect();
         return { ...state, status: 'connecting' };
       } else return { status: 'disconnected' };
+    });
+  },
+  reconnecting: () => {
+    set((state) => {
+      return { ...state, status: 'connecting' };
     });
   },
   disconnect: () => {
