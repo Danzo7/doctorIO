@@ -11,7 +11,6 @@ import medicalDocumentApi from './instance/record/medical_document_api';
 import medicalHistoryApi from './instance/record/medical_history_api';
 import appointmentApi from './instance/Appointment/AppointmentApi';
 import { rtkQueryErrorLogger } from './middlewares/error.middleware';
-import connectionStateSlice from './local/connectionStateSlice';
 import authApi from './local/auth/authApi';
 import invitationApi from './clinic/invitation/invitationApi';
 import memberApi from './clinic/rbac/member/memberApi';
@@ -26,7 +25,6 @@ const appReducer = combineReducers({
   [memberApi.reducerPath]: memberApi.reducer,
   [invitationApi.reducerPath]: invitationApi.reducer,
   [sessionSlice.name]: sessionSlice.reducer,
-  [connectionStateSlice.name]: connectionStateSlice.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
   [patientApi.reducerPath]: patientApi.reducer,
@@ -42,14 +40,8 @@ const rootReducer = (
 ) => {
   if (action.type === 'RESET' && state) {
     const myState = Object.fromEntries(
-      Object.entries(state).map(([key, value]) => [
-        key,
-        key == 'user' || key == 'authSlice' || key == authApi.reducerPath
-          ? value
-          : undefined,
-      ]),
+      Object.entries(state).map(([key, value]) => [key, value]),
     ) as ReturnType<typeof appReducer>;
-
     return appReducer(myState, { type: undefined });
   }
   return appReducer(state, action);
