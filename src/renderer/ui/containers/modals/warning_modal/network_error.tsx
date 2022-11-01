@@ -20,7 +20,7 @@ const schema = z.object({
     ),
 });
 export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
-  const { status, disconnect } = useConnectionStore();
+  const { status, disconnect, stop, reconnect } = useConnectionStore();
   const [isEditAdr, setEditAdr] = useState(false);
   const clinicStore = useClinicsStore();
   const { control, handleSubmit } = useForm<{ ip: string }>({
@@ -47,13 +47,15 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
             control={control}
             name="ip"
             type="text"
-            defaultValue={clinicStore.getSelectedClinic().serverLocation}
+            defaultValue={clinicStore
+              .getSelectedClinic()
+              .serverLocation.replace(':3000', '')}
             trailing={
               <TextButton
                 backgroundColor={color.cold_blue}
                 onPress={handleSubmit((data) => {
-                  clinicStore.setCurrentLocation(data.ip);
-                  //dispatch(refresh());
+                  clinicStore.setCurrentLocation(data.ip + ':3000');
+                  reconnect();
                   setEditAdr(false);
                 })}
                 text="Save"
@@ -63,31 +65,27 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
         ) : null
       }
     >
-      {status == 'connecting' ? (
-        <div css={{ flexGrow: 1 }}>
-          <LoadingSpinner />
-        </div>
-      ) : (
-        <>
-          <TextButton
-            text="Retry"
-            backgroundColor={color.good_green}
-            onPress={() => {
-              // dispatch(refresh());
-            }}
-          />
-          <TextButton
-            text="Disconnect"
-            backgroundColor={color.hot_red}
-            onPress={() => disconnect()}
-          />
-          <TextButton
-            text="change"
-            //backgroundColor={color.hot_red}
-            onPress={() => setEditAdr(true)}
-          />
-        </>
-      )}
+      <>
+        <LoadingSpinner />
+
+        {status == 'unreachable' && (
+          <>
+            <TextButton
+              text="Disconnect"
+              backgroundColor={color.hot_red}
+              onPress={() => disconnect()}
+            />
+            <TextButton
+              text="change"
+              //backgroundColor={color.hot_red}
+              onPress={() => {
+                stop();
+                setEditAdr(true);
+              }}
+            />
+          </>
+        )}
+      </>
     </WarningModal>
   );
 }

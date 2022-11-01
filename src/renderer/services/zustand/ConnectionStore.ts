@@ -8,18 +8,25 @@ import { useClinicsStore } from './clinicsStore';
 interface SocketState {
   socket?: Socket;
   url?: string;
-  status?: 'connected' | 'connecting' | 'unreachable' | 'disconnected'; //TODO add "reconnecting","reauthenticate"
+  status?:
+    | 'connected'
+    | 'connecting'
+    | 'unreachable'
+    | 'disconnected'
+    | 'stopped';
   connect: () => void;
+  reAuthorize: () => void;
+  stop: () => void;
   disconnect: () => void;
+  reconnect: () => void;
   unreachable: () => void;
   connected: () => void;
-  reconnect: () => void;
+  reconnecting: () => void;
   pseudoConnect: (url: string) => void;
   getUrl: () => string;
-  reconnecting: () => void;
 }
 
-export const useConnectionStore = create<SocketState>()((set) => ({
+export const useConnectionStore = create<SocketState>()((set, get) => ({
   connect() {
     set((state) => {
       if (
@@ -31,7 +38,7 @@ export const useConnectionStore = create<SocketState>()((set) => ({
         state.socket?.disconnect().close();
         return { status: 'disconnected' };
       }
-      if (state.status == undefined) {
+      if (state.status == undefined || state.status == 'stopped') {
         const url = useClinicsStore
           .getState()
           .getSelectedClinic().serverLocation;
@@ -53,8 +60,8 @@ export const useConnectionStore = create<SocketState>()((set) => ({
           useConnectionStore.getState().connected();
         });
 
-        socket.io.on('reconnect_attempt', (attp) => {
-          if (attp > 30) {
+        socket.io.on('reconnect_attempt', (attempt) => {
+          if (attempt > 3) {
             useConnectionStore.getState().unreachable();
           }
 
@@ -64,7 +71,7 @@ export const useConnectionStore = create<SocketState>()((set) => ({
         socket.on('error', async (data) => {
           if (data?.status == 401) {
             const refreshed = await refreshTokens();
-            if (refreshed) useConnectionStore.getState().reconnect();
+            if (refreshed) useConnectionStore.getState().reAuthorize();
           }
         });
 
@@ -72,7 +79,7 @@ export const useConnectionStore = create<SocketState>()((set) => ({
       } else return state;
     });
   },
-  reconnect: () => {
+  reAuthorize: () => {
     set((state) => {
       if (state.socket) {
         state.socket.auth = { token: useAuthStore.getState().accessToken };
@@ -81,15 +88,22 @@ export const useConnectionStore = create<SocketState>()((set) => ({
       } else return { status: 'disconnected' };
     });
   },
-  reconnecting: () => {
+  stop: () => {
     set((state) => {
-      return { ...state, status: 'connecting' };
+      state.socket?.disconnect();
+      return { ...state, status: 'stopped' };
     });
   },
+  reconnect() {
+    if (get().status != 'stopped') get().stop();
+    get().connect();
+  },
+
   disconnect: () => {
     set((state) => {
       useClinicsStore.getState().setSelectedClinic();
       store.dispatch({ type: 'REST' });
+      state.socket?.removeAllListeners();
       state.socket?.disconnect().close();
       return { status: 'disconnected' };
     });
@@ -97,14 +111,22 @@ export const useConnectionStore = create<SocketState>()((set) => ({
   connected: () => {
     set((state) => ({ ...state, status: 'connected' }));
   },
-  unreachable: () => {
-    set((state) => ({ ...state, status: 'unreachable' }));
+  reconnecting: () => {
+    set((state) => {
+      return { ...state, status: 'connecting' };
+    });
   },
+  unreachable: () => {
+    set((state) => {
+      return { ...state, status: 'unreachable' };
+    });
+  },
+
   pseudoConnect: (url) => {
     set(() => ({ url }));
   },
   getUrl() {
-    if (this.url) return 'http://' + this.url;
+    if (get().url) return 'http://' + get().url;
     else throw new Error('No url');
   },
 }));
