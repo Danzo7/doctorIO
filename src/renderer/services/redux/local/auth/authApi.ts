@@ -72,7 +72,6 @@ const authApi = createApi({
             accessToken: data.access_token,
             refreshToken: data.refresh_token,
           });
-          useConnectionStore.getState().connect();
           dispatch({ type: 'RESET' });
         } catch (e) {
           throw new Error("Error while connecting to member's account");

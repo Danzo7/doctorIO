@@ -30,14 +30,17 @@ export default function ConnectMemberModal({
   });
   const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
     //TODO: If fail to connect to clinic, handle selected change and show error
-    clinics.setSelectedClinic(selectedIndex);
-    const memId = useClinicsStore.getState().getSelectedClinic().memberId;
-    const location = useClinicsStore
-      .getState()
-      .getSelectedClinic().serverLocation;
+    const memId =
+      useClinicsStore.getState().clinicData.clinics[selectedIndex].memberId;
+    const location =
+      useClinicsStore.getState().clinicData.clinics[selectedIndex]
+        .serverLocation;
     useConnectionStore.getState().pseudoConnect(location);
     ConnectMember({ memberId: memId, secretKey: key }).then((result: any) => {
       if (result.data) {
+        clinics.setSelectedClinic(selectedIndex);
+        useConnectionStore.getState().connect();
+
         navigate('/');
       }
     });
