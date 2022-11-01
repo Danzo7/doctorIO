@@ -36,11 +36,11 @@ export const useRoleSettingStore = create<RoleSettingState>((set) => ({
           isDirty != undefined
             ? isDirty
             : !(
-                newState?.name === newState.defaults?.name &&
-                newState?.description === newState.defaults?.description &&
-                newState?.permissions?.length ===
+                newState.name === newState.defaults?.name &&
+                newState.description === newState.defaults?.description &&
+                newState.permissions?.length ===
                   newState.defaults?.permissions.length &&
-                newState?.permissions?.every((p) =>
+                newState.permissions?.every((p) =>
                   newState.defaults?.permissions.includes(p),
                 )
               ),
