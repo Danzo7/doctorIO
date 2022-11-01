@@ -79,14 +79,6 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
           values={getValues('openingTime')}
           onChange={(data) => {
             setValue('openingTime', data);
-            // dispatch(
-            //   updateTimingAndSchedule({
-            //     timeToOpen: watch('openingTime.startTime'),
-            //     timeToClose: watch('openingTime.endTime'),
-            //     breakStart: watch('break.startTime'),
-            //     breakEnd: watch('break.endTime'),
-            //   }),
-            // );
           }}
         />
         <PeriodTimePicker
