@@ -46,7 +46,12 @@ export function OverlayContainer({}: OverlayContainerProps) {
 
   const removePortal = useCallback((portal?: React.ReactPortal) => {
     if (portal) {
-      setrender((old) => old.filter((item) => item !== portal));
+      //FIXME use zustand/vanilla instead of static Overlay class
+      //Temporary fix with "setTimeout" for dirty state when removing a portal while updating with usePrompt while updating a component
+      setTimeout(
+        () => setrender((old) => old.filter((item) => item !== portal)),
+        0,
+      );
     }
   }, []);
   useEffect(() => {
@@ -178,9 +183,9 @@ export function OverlayItem({
           if (e != null) {
             if (popperTarget)
               createPopper(
-                (popperTarget as PopperTargetType)?.target ?? popperTarget,
+                (popperTarget as PopperTargetType).target ?? popperTarget,
                 e,
-                (popperTarget as PopperTargetType)?.options ?? {
+                (popperTarget as PopperTargetType).options ?? {
                   placement: 'auto-end',
                 },
               );
