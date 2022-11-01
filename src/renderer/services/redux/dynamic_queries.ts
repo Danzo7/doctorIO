@@ -99,7 +99,10 @@ class DynamicBaseQuery {
     });
 
     let result = await rawBaseQuery(args, api, extraOptions);
-    if (result.error?.status == 401) {
+    if (
+      result.error?.status == 401 &&
+      (result.error?.data as any)?.errorCode != 1006
+    ) {
       if (!mutex.isLocked()) {
         const release = await mutex.acquire();
 
