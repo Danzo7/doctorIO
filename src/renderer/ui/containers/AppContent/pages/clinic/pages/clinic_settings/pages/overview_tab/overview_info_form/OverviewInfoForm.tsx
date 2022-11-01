@@ -7,11 +7,7 @@ import { color } from '@assets/styles/color';
 import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
 import { Inputix } from '@components/inputs/input/Input';
 import { useUpdateClinicOverviewMutation } from '@redux/clinic/clinicApi';
-import {
-  useOverViewInfo,
-  useSetDefaults,
-  useSetOverViewInfo,
-} from '@stores/overViewinfoStore';
+import { Clinic } from '@models/server.models';
 
 type Inputs = {
   name: string;
@@ -20,63 +16,42 @@ type Inputs = {
   phone: string;
 };
 
-interface OverviewInfoFormProps {}
-export default function OverviewInfoForm(props: OverviewInfoFormProps) {
-  const setOverviewInfor = useSetOverViewInfo();
-  const setDefaults = useSetDefaults();
-  const info = useOverViewInfo();
-
+export default function OverviewInfoForm(defaults: Clinic) {
   const {
     control,
-    watch,
     reset,
     handleSubmit,
     formState: { isDirty },
   } = useForm<Inputs>({
     defaultValues: {
-      name: info.formDefaults?.name,
-      description: info.formDefaults?.description ?? '',
-      address: info.formDefaults?.address ?? '',
-      phone: info.formDefaults?.phone ?? '',
+      name: defaults?.name,
+      description: defaults?.description,
+      address: defaults?.address,
+      phone: defaults?.phone,
     },
     mode: 'onChange',
   });
 
-  // dispatch(setOverviewInfo(watch()));
-  const [UpdateClinicOverview] = useUpdateClinicOverviewMutation();
+  const [updateClinicOverview] = useUpdateClinicOverviewMutation();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    UpdateClinicOverview({
-      //FIXME the req goes and respond with true but it never update clinic values on the server
+    updateClinicOverview({
       name: formData.name,
       description: formData.description,
       address: formData.address,
       phone: formData.phone,
     });
-    setDefaults({
-      name: formData.name,
-      description: formData.description,
-      address: formData.address,
-      phone: formData.phone,
-    });
+
     reset(formData);
   };
   usePrompt(
     'Careful : you have unsaved changes !',
-    ({ closeOverlay, dismiss }) => (
+    () => (
       <SnakeBarActionsControls>
         <TextButton
           text="reset"
           afterBgColor={color.darker}
           onPress={() => {
-            closeOverlay();
-            setOverviewInfor({
-              name: info.formDefaults?.name,
-              description: info.formDefaults?.description,
-              address: info.formDefaults?.address,
-              phone: info.formDefaults?.phone,
-            });
             reset();
-            dismiss();
           }}
         />
         <TextButton
@@ -84,8 +59,6 @@ export default function OverviewInfoForm(props: OverviewInfoFormProps) {
           backgroundColor={color.good_green}
           onPress={async () => {
             await handleSubmit(onSubmit)();
-            closeOverlay();
-            dismiss();
           }}
         />
       </SnakeBarActionsControls>
@@ -97,46 +70,10 @@ export default function OverviewInfoForm(props: OverviewInfoFormProps) {
     <form className="overview-info-form">
       <Inputix control={control}>
         <span>Information</span>
-        <Input
-          label="Name"
-          type={'text'}
-          name={'name'}
-          onChange={(e) =>
-            setOverviewInfor({
-              name: e,
-            })
-          }
-        />
-        <Input
-          label="Description"
-          type={'text'}
-          name={'description'}
-          onChange={(e) =>
-            setOverviewInfor({
-              description: e,
-            })
-          }
-        />
-        <Input
-          label="Location"
-          type={'text'}
-          name={'address'}
-          onChange={(e) =>
-            setOverviewInfor({
-              address: e,
-            })
-          }
-        />
-        <Input
-          label="Phone number"
-          type={'text'}
-          name={'phone'}
-          onChange={(e) =>
-            setOverviewInfor({
-              phone: e,
-            })
-          }
-        />
+        <Input label="Name" type={'text'} name={'name'} />
+        <Input label="Description" type={'text'} name={'description'} />
+        <Input label="Location" type={'text'} name={'address'} />
+        <Input label="Phone number" type={'text'} name={'phone'} />
       </Inputix>
     </form>
   );
