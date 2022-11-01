@@ -1,7 +1,7 @@
 import { clinic } from '@api/fake';
 import { ClinicTiming, PrefKeys } from '@models/server.models';
 import create from 'zustand';
-
+//TODO : remove this store and use rtk cache
 interface OverViewInfoState {
   name?: string;
   description?: string;
@@ -14,10 +14,7 @@ interface OverViewInfoState {
   avatar: string;
   timing: ClinicTiming;
   preferences: PrefKeys[];
-  formDefaults?: Pick<
-    OverViewInfoState,
-    'name' | 'description' | 'address' | 'phone'
-  >;
+
   setFormDefaults: (
     formDefaults: Pick<
       OverViewInfoState,
@@ -38,17 +35,14 @@ interface OverViewInfoState {
 
 export const useOverViewInfoStore = create<OverViewInfoState>((set) => {
   return {
-    setOverViewInfo: ({ name, description, address, phone, formDefaults }) =>
+    setOverViewInfo: ({ name, description, address, phone }) =>
       set((state) => {
-        const newState = {
-          name: name ?? state.name,
-          description: description ?? state.description,
-          address: address ?? state.address,
-          phone: phone ?? state.phone,
-          formDefaults: formDefaults ?? state.formDefaults,
-        };
         return {
-          ...newState,
+          ...state,
+          name,
+          description,
+          address,
+          phone,
         };
       }),
     setFormDefaults: (formDefaults) =>
@@ -65,7 +59,3 @@ export const useOverViewInfoStore = create<OverViewInfoState>((set) => {
 export const useOverViewInfo = () => useOverViewInfoStore((state) => state);
 export const useSetOverViewInfo = () =>
   useOverViewInfoStore((state) => state.setOverViewInfo);
-export const useSetDefaults = () =>
-  useOverViewInfoStore((state) => state.setFormDefaults);
-export const useGetDefaults = () =>
-  useOverViewInfoStore((state) => state.formDefaults);
