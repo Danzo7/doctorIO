@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof SessionPreviewModal>> = (args) => (
   <SessionPreviewModal {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {};

@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof AppointmentsQueue>> = () => (
   <AppointmentsQueue />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   cabinState: 'inProgress',
 };

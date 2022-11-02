@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof Header>> = (args) => (
   <Header {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   title: 'Header Title',
   buttonNode: <DarkLightCornerButton text="Click" />,

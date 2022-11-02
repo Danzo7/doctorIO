@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof TextArea>> = (args) => (
   <TextArea {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {};

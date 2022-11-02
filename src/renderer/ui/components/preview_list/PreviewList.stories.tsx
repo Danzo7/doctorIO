@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof PreviewList>> = (args) => (
   <PreviewList {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   title: 'Medical history',
   buttonNode: (

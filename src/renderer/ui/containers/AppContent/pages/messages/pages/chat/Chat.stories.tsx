@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof Chat>> = (args) => (
   <Chat {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   memberFullName: 'Dr therapist',
   status: false,

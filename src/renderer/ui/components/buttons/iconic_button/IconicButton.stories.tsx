@@ -10,7 +10,7 @@ export default {
 const Template: Story<ComponentProps<typeof IconicButton>> = (args) => (
   <IconicButton {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   Icon: Call_icon,
   width: 40,

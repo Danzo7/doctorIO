@@ -9,5 +9,5 @@ export default {
 const Template: Story<ComponentProps<typeof AppointmentQueueSmall>> = (
   args,
 ) => <AppointmentQueueSmall {...args} />;
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {};

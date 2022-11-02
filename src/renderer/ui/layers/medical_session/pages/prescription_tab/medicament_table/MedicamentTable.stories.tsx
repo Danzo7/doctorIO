@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof MedicamentTable>> = (args) => (
   <MedicamentTable {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {};

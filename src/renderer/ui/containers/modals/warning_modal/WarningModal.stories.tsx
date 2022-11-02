@@ -10,7 +10,7 @@ export default {
 const Template: Story<ComponentProps<typeof WarningModal>> = (args) => (
   <WarningModal {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   title: '(warningTitle)',
   description: '(warningDescription)',

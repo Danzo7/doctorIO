@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof OverviewTab>> = (args) => (
   <OverviewTab {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {};

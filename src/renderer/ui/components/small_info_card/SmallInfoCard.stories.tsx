@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof SmallInfoCard>> = (args) => (
   <SmallInfoCard {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   data: {
     'In queue': '30',

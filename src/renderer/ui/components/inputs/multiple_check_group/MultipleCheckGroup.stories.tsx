@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof MultipleCheckGroup>> = (args) => (
   <MultipleCheckGroup {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   items: ['Friday', 'Sunday', 'Monday', 'monday', 'monday'],
 };

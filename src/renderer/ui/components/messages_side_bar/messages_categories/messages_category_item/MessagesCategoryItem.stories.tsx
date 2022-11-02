@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof MessagesCategoryItem>> = (args) => (
   <MessagesCategoryItem {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   Icon: Doctor,
   categoryName: 'Clinic',

@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof LogItem>> = (args) => (
   <LogItem {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   actionDispatcher: 'Aymen Daouadji',
   id: '123456789',

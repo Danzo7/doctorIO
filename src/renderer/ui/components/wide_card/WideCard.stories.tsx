@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof WideCard>> = (args) => (
   <WideCard {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   children: [
     <TextPair first="hello" second="world" key={Math.random()} />,

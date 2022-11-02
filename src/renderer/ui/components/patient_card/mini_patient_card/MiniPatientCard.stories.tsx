@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof MiniPatientCard>> = (args) => (
   <MiniPatientCard {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   patientFullName: 'John Brown',
   patientId: '#12345678',

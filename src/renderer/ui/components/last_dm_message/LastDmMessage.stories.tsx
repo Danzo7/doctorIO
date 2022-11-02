@@ -12,7 +12,7 @@ const Template: Story<ComponentProps<typeof LastDmMessage>> = (args) => (
     <LastDmMessage {...args} />
   </MemoryRouter>
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   avatar: AVATAR_DEFAULT,
   status: true,

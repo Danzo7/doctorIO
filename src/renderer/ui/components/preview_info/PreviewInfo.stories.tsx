@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof PreviewInfo>> = (args) => (
   <PreviewInfo {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   title: 'Patient',
 

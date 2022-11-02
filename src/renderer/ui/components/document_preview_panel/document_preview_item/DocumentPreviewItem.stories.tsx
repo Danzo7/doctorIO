@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof DocumentPreviewItem>> = (args) => (
   <DocumentPreviewItem {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   id: '4',
   fileName: 'file1.pdf',

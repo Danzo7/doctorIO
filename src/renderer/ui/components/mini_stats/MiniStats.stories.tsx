@@ -10,7 +10,7 @@ export default {
 const Template: Story<ComponentProps<typeof MiniStats>> = (args) => (
   <MiniStats {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   value: 10,
   text: 'hello',

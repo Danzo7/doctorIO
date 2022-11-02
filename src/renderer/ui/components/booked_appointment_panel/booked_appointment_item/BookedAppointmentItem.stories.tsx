@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof BookedAppointmentItem>> = (
   args,
 ) => <BookedAppointmentItem {...args} />;
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   state: 'IN_QUEUE',
   bookedFor: new Date(),

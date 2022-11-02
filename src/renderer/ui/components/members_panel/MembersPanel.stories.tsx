@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof MembersPanel>> = (args) => (
   <MembersPanel {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   membersList: [
     {

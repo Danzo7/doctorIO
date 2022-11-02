@@ -10,7 +10,7 @@ export default {
 const Template: Story<ComponentProps<typeof TextIconButton>> = (args) => (
   <TextIconButton {...args} />
 );
-export const primary = Template.bind({});
+export const primary = Template;
 primary.args = {
   Icon: invite,
   text: 'invite in',

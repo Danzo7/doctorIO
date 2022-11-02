@@ -10,7 +10,7 @@ export default {
 const Template: Story<ComponentProps<typeof InputField>> = (args) => (
   <InputField {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   leading: <Svg>{search}</Svg>,
   trailing: <Svg>{search}</Svg>,

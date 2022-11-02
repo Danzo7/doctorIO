@@ -6,5 +6,5 @@ export default {
   component: Firo,
 };
 const Template: Story<ComponentProps<typeof Firo>> = () => <Firo />;
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {};

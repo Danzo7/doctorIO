@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof SnakeBar>> = (args) => (
   <SnakeBar {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   children: <DarkLightCornerButton text="close" />,
 };

@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof ConversationSearch>> = (args) => (
   <ConversationSearch {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {};

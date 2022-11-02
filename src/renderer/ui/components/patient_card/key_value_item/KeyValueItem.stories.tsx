@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof KeyValueItem>> = (args) => (
   <KeyValueItem {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   primaryText: 'width',
   secondaryText: '1.75m',

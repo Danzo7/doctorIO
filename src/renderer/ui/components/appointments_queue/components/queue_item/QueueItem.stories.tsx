@@ -20,7 +20,7 @@ const Template: Story<ComponentProps<typeof QueueItem>> = (args) => (
   <QueueItem {...args} />
 );
 
-export const Primary = Template.bind({});
+export const Primary = Template;
 Primary.args = {
   name: 'adam smith',
   number: 1,

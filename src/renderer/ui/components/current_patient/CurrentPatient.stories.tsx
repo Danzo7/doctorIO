@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof CurrentPatient>> = (args) => (
   <CurrentPatient {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   fullName: 'John Doe',
   age: 15,

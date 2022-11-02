@@ -12,7 +12,7 @@ export default {
 const Template: Story<ComponentProps<typeof BookedItem>> = (args) => (
   <BookedItem {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   patientName: 'John Doe',
   bookedFor: new Date('2022-05-01'),

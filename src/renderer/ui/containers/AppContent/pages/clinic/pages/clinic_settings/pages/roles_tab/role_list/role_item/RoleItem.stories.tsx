@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof RoleItem>> = (args) => (
   <RoleItem {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   name: 'Support',
 

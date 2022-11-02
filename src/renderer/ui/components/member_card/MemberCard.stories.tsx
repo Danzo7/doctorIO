@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof MemberCard>> = (args) => (
   <MemberCard {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   id: members[0].id,
   avatar: members[0].avatar,

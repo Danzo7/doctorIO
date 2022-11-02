@@ -10,7 +10,7 @@ export default {
 const Template: Story<ComponentProps<typeof MessagesCategories>> = (args) => (
   <MessagesCategories {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   categories: [
     {

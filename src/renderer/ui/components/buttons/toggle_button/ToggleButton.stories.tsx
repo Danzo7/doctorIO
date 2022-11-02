@@ -9,7 +9,7 @@ export default {
 const Template: Story<ComponentProps<typeof ToggleButton>> = (args) => (
   <ToggleButton {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   disabled: false,
   isChecked: true,

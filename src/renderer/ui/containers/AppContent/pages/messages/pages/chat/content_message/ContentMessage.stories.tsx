@@ -10,7 +10,7 @@ export default {
 const Template: Story<ComponentProps<typeof ContentMessage>> = (args) => (
   <ContentMessage {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   memberId: 1,
   id: 1,

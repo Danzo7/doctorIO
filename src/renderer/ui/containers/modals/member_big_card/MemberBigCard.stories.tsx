@@ -10,5 +10,5 @@ export default {
 const Template: Story<ComponentProps<typeof MemberBigCard>> = (args) => (
   <MemberBigCard {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = { id: members[0].id };

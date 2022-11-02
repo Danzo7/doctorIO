@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof ClinicOverviewCard>> = (args) => (
   <ClinicOverviewCard {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   name: 'PAN',
   address: '192.168.1.1',

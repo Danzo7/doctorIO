@@ -11,7 +11,7 @@ const Template: Story<ComponentProps<typeof DmHistory>> = (args) => (
     <DmHistory {...args} />
   </MemoryRouter>
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   list: [],
 };

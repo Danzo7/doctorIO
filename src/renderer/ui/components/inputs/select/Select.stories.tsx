@@ -10,7 +10,7 @@ export default {
 const Template: Story<ComponentProps<typeof Select>> = (args) => (
   <Select {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   icon: <Svg>{search}</Svg>,
   options: ['اثممخ', 'hello'],

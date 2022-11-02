@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof Badge>> = (args) => (
   <Badge {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = { text: 'test', color: '#ff0000' };

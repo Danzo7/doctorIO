@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof PermissionItem>> = (args) => (
   <PermissionItem {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   name: 'Assistant',
   description:

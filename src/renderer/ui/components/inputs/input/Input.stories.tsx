@@ -11,7 +11,7 @@ export default {
 const Template: Story<ComponentProps<typeof Input>> = (args) => (
   <Input {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   hint: 'hello',
   label: 'name',

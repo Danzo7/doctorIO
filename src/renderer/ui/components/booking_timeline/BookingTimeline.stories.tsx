@@ -8,7 +8,7 @@ export default {
 const Template: Story<ComponentProps<typeof BookingTimeline>> = (args) => (
   <BookingTimeline {...args} />
 );
-export const FirstStory = Template.bind({});
+export const FirstStory = Template;
 FirstStory.args = {
   appointments: [],
 };
