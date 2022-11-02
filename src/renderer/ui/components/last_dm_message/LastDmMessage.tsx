@@ -32,7 +32,7 @@ export default function LastDmMessage({
       />
       <div className="info-container">
         <span>{dmName}</span>
-        <span>{`${lastMessage?.sent && 'you:'} ${lastMessage.text}`}</span>
+        <span>{`${lastMessage.sent && 'you:'} ${lastMessage.text}`}</span>
       </div>
     </NavLink>
   );

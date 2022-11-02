@@ -70,7 +70,7 @@ export default function DocumentPreviewItem({
     open(
       <WarningModal
         title={`${downError.error} (${downError.statusCode})`}
-        description={downError?.message as string}
+        description={downError.message as string}
       />,
       {
         ...DEFAULT_MODAL,

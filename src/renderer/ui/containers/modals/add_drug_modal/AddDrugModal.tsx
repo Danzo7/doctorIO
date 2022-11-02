@@ -98,7 +98,8 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
           name="duration"
           label="Duration"
           errorMessage={errors.duration?.message}
-          type={{ type: 'numeric', step: 1, unit: 'Day' }}
+          rules={{ max: 30 }}
+          type={{ type: 'numeric', step: 10, unit: 'Day' }}
         />
         <Input
           name="description"

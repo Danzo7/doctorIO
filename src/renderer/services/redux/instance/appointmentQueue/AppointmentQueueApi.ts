@@ -29,7 +29,7 @@ const appointmentQueueApi = createApi({
         const transformedSelected = response.selected
           ? {
               ...response.selected,
-              date: parseISO(response.selected?.date),
+              date: parseISO(response.selected.date),
             }
           : undefined;
         const transformedApp = response.appointments.map(

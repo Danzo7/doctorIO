@@ -26,7 +26,7 @@ export default forwardRef(function AutoSizeInput(
             'style',
             `width:${
               (inputSize === true ? 2 : inputSize) +
-              (e?.value.toString().length - 1 ?? 0)
+              (e.value.toString().length - 1)
             }ch`,
           );
       }}
