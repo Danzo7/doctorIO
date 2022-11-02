@@ -119,7 +119,7 @@ function TextButton({
     Node =
       (Icon as IconProps)?.svg != undefined
         ? (Icon as IconProps).svg
-        : (Node = Icon as FunctionComponent | ReactNode);
+        : (Icon as FunctionComponent | ReactNode);
 
     if ((Node as FunctionComponent)?.prototype != undefined) {
       Node = Node as FunctionComponent<SVGProps<SVGSVGElement>>;

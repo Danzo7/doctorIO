@@ -80,7 +80,7 @@ export default function Datepicker({
               only === 'before' ? date <= new Date() : date >= new Date()
           : undefined)
       }
-      dateFormat={props?.dateFormat ?? yearControl ? DATE_ONLY : DATE_NO_YEAR}
+      dateFormat={props.dateFormat ?? yearControl ? DATE_ONLY : DATE_NO_YEAR}
       selected={field.value}
       {...props}
       {...others}

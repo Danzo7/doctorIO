@@ -13,5 +13,5 @@ const Template2: Story<ComponentProps<typeof Timepicker>> = (args) => (
   <Timepicker {...args} />
 );
 export const FirstStory = Template;
-export const SecondStory = Template2.bind({});
+export const SecondStory = Template2;
 FirstStory.args = {};
