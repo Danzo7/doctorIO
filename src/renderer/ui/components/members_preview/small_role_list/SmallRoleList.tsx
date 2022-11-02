@@ -13,25 +13,27 @@ interface SmallRoleListProps {
   roleList: RoleBrief[];
   onAdd?: (role: RoleBrief) => void;
   onDelete?: (role: RoleBrief) => void;
+  sort?: true;
 }
 export default function SmallRoleList({
   roleList,
   onAdd,
   onDelete,
+  sort,
 }: SmallRoleListProps) {
   const { open, close } = useOverlay();
   const ability = useAbility();
   const { data, isSuccess, isLoading } = useGetMyPermissionQuery();
-  const roleListSorted = roleList
-    .slice()
-    .sort((a, b) => a.priority - b.priority);
   return (
     <div className="role-list-small">
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         isSuccess &&
-        roleListSorted.map((role, index) => (
+        (sort
+          ? roleList.sort((a, b) => a.priority - b.priority)
+          : roleList
+        ).map((role, index) => (
           <SmallRolePreview
             roleName={role.name}
             key={role.id.toString() + index}
@@ -54,6 +56,7 @@ export default function SmallRoleList({
               if (e)
                 open(
                   <AddRoleTooltip
+                    skipRoles={roleList}
                     onSelect={(role) => {
                       onAdd?.(role);
                       close();
