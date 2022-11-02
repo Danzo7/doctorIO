@@ -59,7 +59,7 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
             fontWeight={700}
             onPress={() => {
               if (invitedPatient) {
-                ProgressQueueState(invitedPatient?.position);
+                ProgressQueueState(invitedPatient.position);
               } else {
                 StartNext();
               }
@@ -72,10 +72,10 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
       {
         <AppointmentsCurrentPatient
           patientName={
-            invitedPatient ? invitedPatient?.patientName : data.patientName
+            invitedPatient ? invitedPatient.patientName : data.patientName
           }
-          arrivalTime={invitedPatient ? invitedPatient?.arrivalTime : data.date}
-          position={invitedPatient ? invitedPatient?.position : data.position}
+          arrivalTime={invitedPatient ? invitedPatient.arrivalTime : data.date}
+          position={invitedPatient ? invitedPatient.position : data.position}
         />
       }
     </ModalContainer>

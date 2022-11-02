@@ -78,7 +78,7 @@ function QueueItemWide({
                       },
                     },
                   ],
-                  e?.currentTarget,
+                  e.currentTarget,
                   true,
                 );
             }}

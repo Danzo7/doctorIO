@@ -72,7 +72,7 @@ export default function MemberItem({
                     },
                   },
                 ],
-                e?.currentTarget,
+                e.currentTarget,
                 true,
               );
           }}

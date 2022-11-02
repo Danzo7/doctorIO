@@ -42,7 +42,7 @@ export default function useRouteMatch(
         ? secondRoute
         : caseSensitive
         ? params
-        : params?.toLowerCase(),
+        : params.toLowerCase(),
     [caseSensitive, params, secondRoute, tree.length],
   );
 

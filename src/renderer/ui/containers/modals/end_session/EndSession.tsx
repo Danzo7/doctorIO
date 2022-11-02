@@ -47,7 +47,7 @@ export default function EndSession({ patientId }: EndSessionProps) {
                       text: 'Both',
                     },
                   ],
-                  e?.currentTarget,
+                  e.currentTarget,
                   true,
                 );
             }}

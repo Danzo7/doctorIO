@@ -90,7 +90,7 @@ export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
         <TextPair
           first={{ text: 'Added by', fontSize: 15, fontColor: color.text_gray }}
           second={{
-            text: data.addedBy?.name,
+            text: data.addedBy.name,
             fontSize: 17,
             fontColor: color.white,
           }}

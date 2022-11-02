@@ -24,7 +24,7 @@ function ContentMessage({
   return (
     <div
       className={`content-message ${
-        message.seen && !message.seen ? 'last-message-sent' : ''
+        message.sent && !message.seen ? 'last-message-sent' : ''
       } `}
     >
       <div>

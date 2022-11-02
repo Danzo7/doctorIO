@@ -66,7 +66,7 @@ export default function TimelineItem({
 
           {subject && <TextPair first={subject} second="Subject" reversed />}
           {member && (
-            <TextPair first={member?.memberName} second="Treated by" reversed />
+            <TextPair first={member.memberName} second="Treated by" reversed />
           )}
           <TextPair
             first={assignedBy?.memberName}

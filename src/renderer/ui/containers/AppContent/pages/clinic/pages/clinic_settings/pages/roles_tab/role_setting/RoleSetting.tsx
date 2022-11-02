@@ -39,13 +39,13 @@ export default function RoleSetting({}: RoleSettingProps) {
     trigger(Number(roleIdParam) as any).then((res) => {
       if (res.data) {
         setSettings({
-          name: res.data?.name,
-          description: res.data?.description,
-          permissions: res.data?.permissions,
+          name: res.data.name,
+          description: res.data.description,
+          permissions: res.data.permissions,
           defaults: {
-            name: res.data?.name,
-            description: res.data?.description,
-            permissions: res.data?.permissions,
+            name: res.data.name,
+            description: res.data.description,
+            permissions: res.data.permissions,
           },
         });
       }

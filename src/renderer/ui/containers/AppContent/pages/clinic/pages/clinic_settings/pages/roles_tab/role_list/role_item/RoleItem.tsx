@@ -25,13 +25,10 @@ function RoleItem({
     >
       <span>{name}</span>
       {masterRole && (
-        <div
-          className="linked"
-          css={{ display: masterRole ? 'flex' : 'none!important' }}
-        >
+        <div className="linked" css={{ display: 'flex' }}>
           <Icon />
           <div className="linked-role-container">
-            <span>{masterRole?.name}</span>
+            <span>{masterRole.name}</span>
           </div>
         </div>
       )}

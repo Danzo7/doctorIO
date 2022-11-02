@@ -107,7 +107,7 @@ function BookedItem({
                   type: 'warning',
                 },
               ].filter(Boolean) as any,
-              e?.currentTarget,
+              e.currentTarget,
               true,
             );
         }}

@@ -144,7 +144,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
                           text: 'Both',
                         },
                       ],
-                      e?.currentTarget,
+                      e.currentTarget,
                       true,
                     );
                 }}
