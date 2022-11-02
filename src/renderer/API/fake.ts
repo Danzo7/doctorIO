@@ -1,6 +1,5 @@
 import { DirectMessage } from '@models/local.models';
 import { Clinic, Member } from '@models/server.models';
-import { faker } from '@faker-js/faker';
 
 export const members: Member[] = [
   {
@@ -70,7 +69,7 @@ export const clinic: Clinic = {
   serviceStatus: 'Good',
   patientCount: 18,
   memberCount: 20,
-  avatar: faker.image.avatar(),
+  avatar: '',
   timing: {
     workingDays: [0, 2, 3, 4, 5, 6],
     timeToClose: '23:59',
