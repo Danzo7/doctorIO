@@ -32,7 +32,6 @@ export const refreshTokens = async () => {
       throw new Error('refresh failed');
     }
     const refreshResult = await respond.json();
-    console.log({ refreshResult });
     if (refreshResult.access_token && refreshResult.refresh_token) {
       console.log('refreshed 🌱.');
       authStore.setTokens({
@@ -40,15 +39,14 @@ export const refreshTokens = async () => {
         refreshToken: refreshResult.refresh_token,
       });
       return true;
-    } else {
-      const errMessage = (refreshResult.error?.data as any)?.message;
-      console.error('Lost the war ⚰️', errMessage);
-      authStore.discard();
-      useConnectionStore.getState().disconnect();
-      return false;
-    }
+    } else throw new Error((refreshResult.error?.data as any)?.message);
   } catch (e: any) {
-    throw new Error(e);
+    //TODO understand why sometimes refresh fails
+    // Maybe because of opening multiple tabs and refreshing them at the same time
+    console.error('Lost the war ⚰️', e);
+    //authStore.discard();
+    useConnectionStore.getState().unreachable();
+    return false;
   }
 };
 
