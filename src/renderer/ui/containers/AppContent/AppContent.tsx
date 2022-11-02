@@ -88,7 +88,7 @@ function AppContent({}: AppContentProps) {
             }
           />
         )}
-        {ability.can('manage', 'clinic') && (
+        {
           <Route
             path="clinic/*"
             element={
@@ -97,7 +97,7 @@ function AppContent({}: AppContentProps) {
               </Suspense>
             }
           />
-        )}
+        }
         <Route path="*" element={<Navigate to={''} replace={true} />} />
       </Routes>
     </div>
