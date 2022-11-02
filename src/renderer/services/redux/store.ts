@@ -15,12 +15,10 @@ import authApi from './local/auth/authApi';
 import invitationApi from './clinic/invitation/invitationApi';
 import memberApi from './clinic/rbac/member/memberApi';
 import roleApi from './clinic/rbac/role/roleApi';
-import smallRoleInvSlice from './local/small_role_invSlice';
 import clinicApi from './clinic/clinicApi';
 
 const appReducer = combineReducers({
   [clinicApi.reducerPath]: clinicApi.reducer,
-  [smallRoleInvSlice.name]: smallRoleInvSlice.reducer,
   [roleApi.reducerPath]: roleApi.reducer,
   [memberApi.reducerPath]: memberApi.reducer,
   [invitationApi.reducerPath]: invitationApi.reducer,
@@ -31,7 +29,6 @@ const appReducer = combineReducers({
   [medicalDocumentApi.reducerPath]: medicalDocumentApi.reducer,
   [medicalHistoryApi.reducerPath]: medicalHistoryApi.reducer,
   [appointmentApi.reducerPath]: appointmentApi.reducer,
-  /* your app’s top-level reducers */
 });
 
 const rootReducer = (
