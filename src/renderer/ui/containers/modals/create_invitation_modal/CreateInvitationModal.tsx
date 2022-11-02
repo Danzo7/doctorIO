@@ -8,15 +8,11 @@ import LoadingSpinner from '@components/loading_spinner';
 import SmallRoleList from '@components/members_preview/small_role_list';
 import MemberMiniCard from '@components/member_mini_card';
 import ModalContainer from '@components/modal_container';
+import { findByName } from '@helpers/search.helper';
 import { Overlay } from '@libs/overlay';
+import { RoleBrief } from '@models/server.models';
 import { useCreateInvitationMutation } from '@redux/clinic/invitation/invitationApi';
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
-import {
-  addRole,
-  clearAddedRoles,
-  deleteRole,
-} from '@redux/local/small_role_invSlice';
-import { useAppDispatch, useAppSelector } from '@store';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import search from 'toSvg/search.svg?icon';
@@ -25,80 +21,62 @@ import './style/index.scss';
 interface Inputs {
   searchField: string;
 }
-interface CreateInvitationModalProps {}
-export default function CreateInvitationModal({}: CreateInvitationModalProps) {
+export default function CreateInvitationModal() {
   const {
     control,
-    handleSubmit,
     watch,
     formState: { isDirty },
   } = useForm<Inputs>({
     mode: 'onChange',
     defaultValues: { searchField: '' },
   });
-  const invTypes = ['Join', 'Relink'];
-  const [selectedType, setselectedType] = useState(invTypes[0]);
-  const { data, isLoading, error, isSuccess } = useGetMembersQuery();
-  const addedRole = useAppSelector(
-    (state) => state.smallRoleInvSlice.addedRole,
+  const [invitationType, setInvitationType] = useState<'JOIN' | 'RELINK'>(
+    'JOIN',
   );
-  const dispatch = useAppDispatch();
-  const [CreateInvitation] = useCreateInvitationMutation();
-  const [invResult, setInvResult] = useState<any>();
-  const filterMembers = (value: string) => {
-    return data?.filter(({ name, id }) =>
-      id != 1 && value.length > 0
-        ? RegExp(`^${value.trim().replace(/\s\s+/g, ' ')}`, 'i').test(name)
-        : false,
-    );
-  };
-  const filteredMembers = filterMembers(watch('searchField'));
-  const serverError: string | undefined = (error as any)?.data?.message;
+  const { data, isLoading, error, isSuccess } = useGetMembersQuery();
+  const [CreateInvitation, invResult] = useCreateInvitationMutation();
+  const [roles, setRoles] = useState<RoleBrief[]>([]);
+
   return (
     <ModalContainer
-      onSubmit={handleSubmit(() => {
-        const addedRoleId = addedRole.map((role) => role.id);
-        if (addedRoleId.length == 0)
-          throw new Error('Please add at least one role'); //Catch
-        CreateInvitation({
-          type: 'JOIN',
-          roles: addedRoleId,
-        }).then((res) => {
-          dispatch(clearAddedRoles());
-          setInvResult(res);
-        });
-      })}
-      title={invResult ? 'Invitation Key' : 'Create an invitation key'}
+      title={
+        invResult.isSuccess ? 'Invitation Key' : 'Create an invitation key'
+      }
       controls={
         <>
-          {!invResult ? (
-            selectedType == invTypes[1] ? (
+          {invResult.isUninitialized ? (
+            invitationType == 'RELINK' ? (
               <div className="result-div">
                 {isLoading ? (
                   <LoadingSpinner />
+                ) : isSuccess ? (
+                  findByName(watch('searchField'), data, 'name', 4)?.map(
+                    (member) => (
+                      <MemberMiniCard
+                        fullName={member.name}
+                        memberId={member.id}
+                        status={member.status}
+                        avatar={member.avatar}
+                        key={member.id + 'member'}
+                        buttonNode={
+                          <DarkLightCornerButton
+                            text="Select"
+                            onPress={() => {
+                              CreateInvitation({
+                                type: 'RELINK',
+                                relinkToId: member.id,
+                              });
+                            }}
+                          />
+                        }
+                      />
+                    ),
+                  ) ??
+                  (isDirty && <span className="error">No member found</span>)
                 ) : (
-                  isSuccess &&
-                  data &&
-                  filteredMembers?.map((member) => (
-                    <MemberMiniCard
-                      fullName={member.name}
-                      memberId={member.id}
-                      status={member.status}
-                      avatar={member.avatar}
-                      key={member.id + 'member'}
-                      buttonNode={
-                        <DarkLightCornerButton
-                          text="Select"
-                          onPress={() => {
-                            CreateInvitation({
-                              type: 'RELINK',
-                              relinkToId: member.id,
-                            }).then((res) => setInvResult(res));
-                          }}
-                        />
-                      }
-                    />
-                  ))
+                  <span className="error">
+                    {(error as any)?.data?.message ?? 'something bad happened'}
+                  </span>
                 )}
               </div>
             ) : (
@@ -109,8 +87,12 @@ export default function CreateInvitationModal({}: CreateInvitationModalProps) {
                 fontWeight={700}
                 alignSelf="center"
                 padding={5}
-                blank
-                type="submit"
+                onPress={() => {
+                  CreateInvitation({
+                    type: 'JOIN',
+                    roles: roles.map((role) => role.id),
+                  });
+                }}
               />
             )
           ) : (
@@ -129,17 +111,17 @@ export default function CreateInvitationModal({}: CreateInvitationModalProps) {
         </>
       }
     >
-      {!invResult ? (
+      {invResult.isUninitialized ? (
         <div className="invitation-div">
           <MultiOptionSwitcher
             onChange={(selectedIndex) => {
-              setselectedType(invTypes[selectedIndex]);
+              setInvitationType(selectedIndex == 0 ? 'JOIN' : 'RELINK');
             }}
-            textList={invTypes}
+            textList={['Join', 'Relink']}
             defaultSelected={0}
             backgroundColor={color.darkersec_color}
           />
-          {selectedType == invTypes[1] ? (
+          {invitationType == 'RELINK' ? (
             <Input
               fillContainer
               placeholder="Select a member..."
@@ -148,35 +130,36 @@ export default function CreateInvitationModal({}: CreateInvitationModalProps) {
               name="searchField"
               control={control}
               errorMessage={
-                isDirty && filteredMembers?.length == 0
-                  ? 'No member founds'
-                  : serverError
+                (error as any)?.data?.message ?? 'something bad happened'
               }
             />
           ) : (
             <div className="role-list-div">
               <SmallRoleList
-                roleList={addedRole}
+                roleList={roles}
                 onAdd={(role) => {
-                  dispatch(addRole(role));
+                  setRoles([...roles, role]);
                 }}
                 onDelete={(role) => {
-                  dispatch(deleteRole(role));
+                  setRoles(roles.filter((r) => r.id != role.id));
                 }}
               />
             </div>
           )}
         </div>
-      ) : invResult?.data ? (
+      ) : invResult.isLoading ? (
+        <LoadingSpinner />
+      ) : invResult.isSuccess ? (
         <CopyField
-          text={(invResult as any).data.key}
+          text={invResult.data.key}
           hint="The invitation key is valid for 1 minute"
         />
       ) : (
-        <span>
-          {' '}
-          {invResult?.error?.data?.message ?? 'Something went wrong'}{' '}
-        </span>
+        invResult.isError && (
+          <span>
+            {(invResult.error as any)?.data.message ?? 'Something went wrong'}
+          </span>
+        )
       )}
     </ModalContainer>
   );
