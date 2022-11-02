@@ -112,12 +112,16 @@ export default forwardRef(function NumberInput(
         }}
         onChange={(event) => {
           let v = event.target.value;
-          v = v.startsWith('.')
-            ? '0.' + v
-            : v.length == 2 && v.charAt(0) === '0' && v.charAt(1) !== '.'
-            ? [v.slice(0, 1), '.', v.slice(1)].join('')
-            : v;
-          v = v.startsWith('.') ? '0.' + v : v;
+          if (step.toString().includes('.')) {
+            v = v.startsWith('.')
+              ? '0.' + v
+              : v.length == 2 && v.charAt(0) === '0' && v.charAt(1) !== '.'
+              ? [v.slice(0, 1), '.', v.slice(1)].join('')
+              : v;
+            v = v.startsWith('.') ? '0.' + v : v;
+          } else {
+            v = v.startsWith('0') && v.length > 1 ? v.slice(1) : v;
+          }
           const floatRegex = new RegExp(
             '(^([0-9])' +
               (step.toString().includes('.')
