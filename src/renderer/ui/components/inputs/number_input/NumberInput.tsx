@@ -24,7 +24,7 @@ export default forwardRef(function NumberInput(
     inputAlignment,
     placeholder,
     step = 0.1,
-    unit = 'kg',
+    unit = '',
     width = 'fit-content',
     field,
     fieldState,
@@ -125,7 +125,7 @@ export default forwardRef(function NumberInput(
                   '[0-9]{0,' +
                   step.toString().split('.')[1]?.length +
                   '})?'
-                : '') +
+                : '*') +
               ')',
             'g',
           );
