@@ -7,39 +7,34 @@ import { color } from '@assets/styles/color';
 import { useForm } from 'react-hook-form';
 import { RoleBrief } from '@models/server.models';
 import { useGetBriefRolesQuery } from '@redux/clinic/rbac/role/roleApi';
-import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
 
 interface AddRoleTooltipProps {
   onSelect?: (role: RoleBrief) => void;
   lvl?: number;
+  skipRoles?: RoleBrief[];
 }
 interface SearchInput {
   searchField: string;
 }
 
 export default function AddRoleTooltip({
+  skipRoles = [],
   onSelect,
   lvl = 2,
 }: AddRoleTooltipProps) {
-  const searchRef = useRef<string>('');
-  const {
-    control,
-    handleSubmit,
-    watch,
-    formState: { isValid },
-  } = useForm<SearchInput>({
+  const { control, watch } = useForm<SearchInput>({
     mode: 'onChange',
     defaultValues: { searchField: '' },
   });
-  const { data, isSuccess, isError, isFetching, isLoading, error } =
-    useGetBriefRolesQuery();
+  const { data, isSuccess, isLoading } = useGetBriefRolesQuery();
 
   const searchRoles = (value: string) => {
     return data?.filter(
       (role) =>
         RegExp(`${value.trim().replace(/\s\s+/g, ' ')}`, 'i').test(role.name) &&
-        lvl < role.priority,
+        lvl < role.priority &&
+        !skipRoles.some(({ id }) => role.id == id),
     );
   };
   const result = searchRoles(watch('searchField'));
@@ -53,9 +48,9 @@ export default function AddRoleTooltip({
       />
       {isLoading ? (
         <LoadingSpinner />
-      ) : isSuccess && result && result?.length > 0 ? (
+      ) : isSuccess && result && result.length > 0 ? (
         <div className="tooltip-items">
-          {result?.map((role, index) => (
+          {result.map((role, index) => (
             <TooltipItem
               key={index}
               text={role.name}
