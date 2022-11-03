@@ -1,14 +1,12 @@
 import ToggleButton from '@components/buttons/toggle_button';
 import Header from '@components/header';
 import Input from '@components/inputs/input';
-import { updateParameter } from '@redux/local/session/sessionSlice';
-import { useAppDispatch } from '@store';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-
 import './style/index.scss';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 const schema = z.object({
   payment: z.number().min(0).max(4000).array().optional(),
   customCost: z.number().optional(),
@@ -20,7 +18,7 @@ interface Inputs {
   bookDate: Date;
   customCost: number;
   payment: number[];
-  payOutside: boolean;
+  handPayment: boolean;
 }
 
 export default function SessionParameter({}: SessionParameterProps) {
@@ -29,7 +27,7 @@ export default function SessionParameter({}: SessionParameterProps) {
       bookDate: new Date(),
       customCost: 0,
       payment: [],
-      payOutside: false,
+      handPayment: false,
     },
     resolver: zodResolver(schema),
   });
@@ -38,17 +36,18 @@ export default function SessionParameter({}: SessionParameterProps) {
   const [canPay, setCanPay] = useState(false);
   const [willBook, setWillBook] = useState(false);
   const fields = watch();
-  const dispatch = useAppDispatch();
-  dispatch(
-    updateParameter({
-      booked: willBook ? fields.bookDate : undefined,
-      payment: canPay
-        ? Number(fields.payment.reduce((a, b) => Number(a) + Number(b), 0)) +
-          Number(fields.customCost)
-        : undefined, //TODO check if NaN
-      handPayment: canPay ? fields.payOutside : undefined,
-    }),
-  );
+  useMedicalSessionStore.getState().setParameter({
+    booked: willBook ? fields.bookDate : undefined,
+    payment: canPay
+      ? {
+          value:
+            Number(fields.payment.reduce((a, b) => Number(a) + Number(b), 0)) +
+            Number(fields.customCost), //TODO check if NaN
+          isHandPayment: fields.handPayment,
+        }
+      : undefined,
+  });
+
   return (
     <div className="session-parameter">
       <Header
@@ -93,7 +92,7 @@ export default function SessionParameter({}: SessionParameterProps) {
         type={'checkbox'}
         label="hand payment to assistant"
         control={control}
-        name="payOutside"
+        name="handPayment"
         disabled={!canPay}
       />
     </div>

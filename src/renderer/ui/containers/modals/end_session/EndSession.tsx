@@ -7,8 +7,8 @@ import ModalContainer from '@components/modal_container';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useEndNextMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { useAppDispatch, useAppSelector } from '@store';
 import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
+import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 interface EndSessionProps {
   patientId: number;
 }
@@ -17,10 +17,8 @@ export default function EndSession({ patientId }: EndSessionProps) {
   const { navigate } = useNavigation();
   const [EndNext] = useEndNextMutation();
   const [bookAppointment] = useBookAppointmentMutation();
-  const session = useAppSelector((state) => state.session);
-  const currentSession = session.sessionInfo;
-  const sessionParameters = session.sessionParameter;
-  const dispatch = useAppDispatch();
+  const currentSession = useMedicalSessionStore.getState().session;
+  const sessionParameters = useMedicalSessionStore.getState().sessionParameter;
   return (
     <ModalContainer
       title="End the session?"
@@ -64,27 +62,21 @@ export default function EndSession({ patientId }: EndSessionProps) {
               await EndNext({
                 diagnosis: currentSession.diagnosis,
                 prescription: currentSession.prescription.map(
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
                   ({ id, ...other }) => other,
                 ),
                 payment:
                   sessionParameters.payment?.value &&
-                  sessionParameters.payment?.handPayment &&
+                  sessionParameters.payment?.isHandPayment &&
                   sessionParameters.payment?.value > 0
                     ? sessionParameters.payment.value
                     : undefined,
-              }).then(() => {
-                // if (
-                //   sessionParameters.payment?.value &&
-                //   sessionParameters.payment?.handPayment &&
-                //   sessionParameters.payment?.value > 0
-                // )
-                //   dispatch(appointmentApi.util.invalidateTags(['payment']));
               });
 
-              if (sessionParameters.bookAppointment)
+              if (sessionParameters.booked)
                 await bookAppointment({
                   body: {
-                    date: sessionParameters.bookAppointment,
+                    date: sessionParameters.booked,
                     subject: 'follow up',
                   },
                   patientId: patientId,

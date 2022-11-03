@@ -14,25 +14,19 @@ import AddDrugModal from '@containers/modals/add_drug_modal';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { Drug } from '@models/instance.model';
-import { useAppSelector } from '@store';
+import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 
 interface MedicamentTableProps {
   editable?: true;
-  prescriptionList?: Drug[];
+  drugList: Drug[];
 }
 
 const table = createColumnHelper<Drug>();
 export default function MedicamentTable({
   editable,
-  prescriptionList,
+  drugList,
 }: MedicamentTableProps) {
-  const data = useAppSelector((state) => {
-    return prescriptionList
-      ? prescriptionList
-      : state.session.sessionInfo.prescription;
-  });
-
-  const { open } = useOverlay();
+  const { open, close } = useOverlay();
   const [sorting, setSorting] = useState<SortingState>([]);
   const columns = [
     table.accessor('name', {
@@ -80,6 +74,12 @@ export default function MedicamentTable({
                       description: row.getValue('description'),
                       id: getValue(),
                     }}
+                    onSubmit={(data) => {
+                      useMedicalSessionStore
+                        .getState()
+                        .updateDrug(getValue(), data);
+                      close();
+                    }}
                   />,
                   DEFAULT_MODAL,
                 );
@@ -91,7 +91,7 @@ export default function MedicamentTable({
   ].filter(Boolean) as any;
 
   const instance = useReactTable({
-    data,
+    data: drugList,
     columns,
     state: {
       sorting,

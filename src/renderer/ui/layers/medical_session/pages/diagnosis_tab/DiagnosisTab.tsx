@@ -1,8 +1,11 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
-import { updateNotice } from '@redux/local/session/sessionSlice';
-import { useAppDispatch, useAppSelector } from '@store';
+import {
+  useDiagnosis,
+  useMedicalSessionStore,
+} from '@stores/medicalSessionStore';
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './style/index.scss';
@@ -11,10 +14,7 @@ type Data = {
   diagnosis: string;
 };
 export default function DiagnosisTab() {
-  const diagnosis = useAppSelector(
-    (state) => state.session.sessionInfo.diagnosis,
-  );
-  const dispatch = useAppDispatch();
+  const diagnosis = useDiagnosis();
   const { control, getValues } = useForm<Data>({
     mode: 'onChange',
     defaultValues: { diagnosis: diagnosis },
@@ -34,7 +34,9 @@ export default function DiagnosisTab() {
           backgroundColor={isSaved ? color.good_green : color.secondary_color}
           fontSize={14}
           onPress={() => {
-            dispatch(updateNotice(getValues('diagnosis')));
+            useMedicalSessionStore
+              .getState()
+              .setDiagnosis(getValues('diagnosis'));
             setIsSaved(true);
           }}
         />
@@ -42,12 +44,7 @@ export default function DiagnosisTab() {
     </div>
   );
 }
-export function TimelineNotice({ diagnosis }: Data) {
-  //FIXME control
-  const { control } = useForm<Data>({
-    mode: 'onChange',
-    defaultValues: { diagnosis: diagnosis },
-  });
+export function TimeLineDiagnosis({ diagnosis }: Data) {
   return (
     <div className="notice-tab">
       <div className="span-wrapper">
