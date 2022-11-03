@@ -4,15 +4,13 @@ import Input from '@components/inputs/input';
 import { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Overlay } from '@libs/overlay';
 import { Drug } from '@models/instance.model';
-import { addDrug, updatePrescription } from '@redux/local/session/sessionSlice';
-import { useAppDispatch, useAppSelector } from '@store';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 interface AddDrugModalProps {
   defaultValues?: Drug;
+  onSubmit: SubmitHandler<Omit<Drug, 'id'>>;
 }
 const schema = z.object({
   name: z.string().min(1, 'Drug name is required'),
@@ -22,11 +20,10 @@ const schema = z.object({
   description: z.optional(z.string()),
 });
 
-export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
-  const prescription = useAppSelector(
-    (state) => state.session.sessionInfo.prescription,
-  );
-  const dispatch = useAppDispatch();
+export default function AddDrugModal({
+  defaultValues,
+  onSubmit,
+}: AddDrugModalProps) {
   const {
     control,
     handleSubmit,
@@ -41,22 +38,6 @@ export default function AddDrugModal({ defaultValues }: AddDrugModalProps) {
       qts: defaultValues?.qts ?? 0,
     },
   });
-  const onSubmit: SubmitHandler<Omit<Drug, 'id'>> = (
-    formData: Omit<Drug, 'id'>,
-  ) => {
-    if (!defaultValues) {
-      dispatch(addDrug(formData));
-    } else {
-      dispatch(
-        updatePrescription({
-          index: prescription.findIndex(({ id }) => id == defaultValues.id),
-          drug: formData,
-        }),
-      );
-    }
-
-    Overlay.close();
-  };
 
   return (
     <ModalContainer
