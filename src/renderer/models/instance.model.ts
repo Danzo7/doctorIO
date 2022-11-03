@@ -39,8 +39,9 @@ interface PatientBrief {
 }
 
 interface Session {
-  diagnosis: string;
   prescription: Drug[];
+  diagnosis?: string;
+  //here we can add more types for a session(example a file or scanner)
 }
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface Appointment_v2 {
