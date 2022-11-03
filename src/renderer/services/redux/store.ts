@@ -6,7 +6,6 @@ import {
 } from '@reduxjs/toolkit';
 import AppointmentQueueApi from './instance/appointmentQueue/AppointmentQueueApi';
 import patientApi from './instance/record/patient_api';
-import sessionSlice from './local/session/sessionSlice';
 import medicalDocumentApi from './instance/record/medical_document_api';
 import medicalHistoryApi from './instance/record/medical_history_api';
 import appointmentApi from './instance/Appointment/AppointmentApi';
@@ -22,7 +21,6 @@ const appReducer = combineReducers({
   [roleApi.reducerPath]: roleApi.reducer,
   [memberApi.reducerPath]: memberApi.reducer,
   [invitationApi.reducerPath]: invitationApi.reducer,
-  [sessionSlice.name]: sessionSlice.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [AppointmentQueueApi.reducerPath]: AppointmentQueueApi.reducer,
   [patientApi.reducerPath]: patientApi.reducer,
@@ -62,7 +60,5 @@ export const store = configureStore({
       clinicApi.middleware,
     ),
 });
-
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
