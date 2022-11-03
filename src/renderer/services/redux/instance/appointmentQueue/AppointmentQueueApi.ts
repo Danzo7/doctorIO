@@ -164,7 +164,7 @@ const appointmentQueueApi = createApi({
     endNext: builder.mutation<
       QueueState,
       {
-        diagnosis: string;
+        diagnosis?: string;
         subject?: string;
         prescription: Omit<Drug, 'id'>[];
         payment?: number;
