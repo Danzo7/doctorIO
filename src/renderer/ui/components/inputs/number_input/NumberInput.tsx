@@ -16,6 +16,7 @@ interface NumberInputProps extends ControllerProps {
   width?: string | number;
   step?: number;
   unit?: string;
+  disabled?: boolean;
 }
 export default forwardRef(function NumberInput(
   {
@@ -28,6 +29,8 @@ export default forwardRef(function NumberInput(
     width = 'fit-content',
     field,
     fieldState,
+    disabled,
+
     rules = { max: 100, min: 0, maxLength: 1000 },
   }: NumberInputProps,
   ref: any,
@@ -78,6 +81,7 @@ export default forwardRef(function NumberInput(
       padding={padding}
       fillContainer={fillContainer}
       inputAlignment={inputAlignment}
+      disabled={disabled}
       onClick={(e) => {
         e.preventDefault();
         const input = e.currentTarget?.children[1]

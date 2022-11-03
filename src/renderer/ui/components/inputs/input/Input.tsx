@@ -128,9 +128,7 @@ export default function Input<T extends FieldValues = FieldValues>({
   background,
   radius,
 }: InputProps<T> & Partial<InputWrapperProps>) {
-  const { control: controlC, onChange: biOnChange } = useContext(
-    InputControllerContext,
-  );
+  const { control: controlC } = useContext(InputControllerContext);
   if (!controlC && !control) {
     throw new Error(
       'Input must be inside a controller provider or have a control prop',
@@ -168,6 +166,7 @@ export default function Input<T extends FieldValues = FieldValues>({
           field={field}
           ref={ref}
           fieldState={fieldState}
+          disabled={disabled}
         />
       ) : (type as MultiCheck)?.type == 'multiCheck' ? (
         <MultipleCheckGroup
