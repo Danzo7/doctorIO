@@ -3,7 +3,7 @@ import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
 import PrintedLayout from '@components/printed_layout';
 import TabMenu from '@components/tab_menu';
-import { TimelineNotice } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
+import { TimeLineDiagnosis } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { Session } from '@models/instance.model';
@@ -47,8 +47,6 @@ export default function SessionPreviewModal({
                   patientName={patientName}
                   patientAge={patientAge}
                   drugList={session.prescription}
-                  clinicName={data.name}
-                  ClinicAddress={data.address}
                   doctorName={memberName}
                 />,
                 {
@@ -65,12 +63,18 @@ export default function SessionPreviewModal({
     >
       <div className="tab-menu-container">
         <TabMenu
-          items={['prescription', 'notice']}
+          items={
+            ['prescription', session.diagnosis && 'Diagnosis'].filter(
+              Boolean,
+            ) as string[]
+          }
           borderBottom={false}
           menuItemsAlignment="center"
         >
-          <MedicamentTable prescriptionList={session.prescription} />
-          <TimelineNotice diagnosis={session.diagnosis} />
+          <MedicamentTable drugList={session.prescription} />
+          {session.diagnosis && (
+            <TimeLineDiagnosis diagnosis={session.diagnosis} />
+          )}
         </TabMenu>
       </div>
     </ModalContainer>
