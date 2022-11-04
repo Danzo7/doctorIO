@@ -18,6 +18,7 @@ interface MedicalSessionStore {
     payment?: { value: number; isHandPayment: boolean };
     booked?: Date;
   }): void;
+  clear(): void;
 }
 
 export const useMedicalSessionStore = create<MedicalSessionStore>()(
@@ -47,6 +48,8 @@ export const useMedicalSessionStore = create<MedicalSessionStore>()(
       set((state) => {
         state.sessionParameter = { ...state.sessionParameter, ...props };
       }),
+    clear: () =>
+      set(() => ({ sessionParameter: {}, session: { prescription: [] } })),
   })),
 );
 export const usePrescription = () =>

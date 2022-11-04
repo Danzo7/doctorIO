@@ -81,6 +81,7 @@ export default function EndSession({ patientId }: EndSessionProps) {
                   },
                   patientId: patientId,
                 });
+              useMedicalSessionStore.getState().clear();
               navigate('queue');
             }}
           />
