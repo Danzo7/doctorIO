@@ -56,7 +56,12 @@ export function RenderTimer(
     this.globalCompositeOperation = 'source-over';
     this.beginPath();
     this.arc(x, y, smallDSize, 0, 2 * Math.PI);
-    this.fillStyle = state == 'moving' ? color.cold_blue : color.hot_red;
+    this.fillStyle =
+      state == 'moving'
+        ? pNum == 0
+          ? color.warm_orange
+          : color.cold_blue
+        : color.hot_red;
 
     this.fill();
     this.closePath();
