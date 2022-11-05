@@ -37,7 +37,7 @@
     "@dicebear/avatars": "^4.10.5",
     "@dicebear/avatars-initials-sprites": "^4.10.5",
     "@emotion/react": "^11.10.4",
-    "@hookform/resolvers": "^2.9.8",
+    "@hookform/resolvers": "^2.9.9",
     "@popperjs/core": "^2.11.6",
     "@reduxjs/toolkit": "^1.8.5",
     "@tanstack/react-table": "^8.5.13",
