@@ -13,8 +13,12 @@ import { Mutex } from 'async-mutex';
 export const mutex = new Mutex();
 
 export const refreshTokens = async () => {
+  const release = !mutex.isLocked() ? await mutex.acquire() : undefined;
+  if (!release) {
+    await mutex.waitForUnlock();
+    return true;
+  }
   const authStore = useAuthStore.getState();
-
   try {
     console.log('refreshing ♻️....');
 
@@ -38,6 +42,7 @@ export const refreshTokens = async () => {
         accessToken: refreshResult.access_token,
         refreshToken: refreshResult.refresh_token,
       });
+      release();
       return true;
     } else throw new Error((refreshResult.error?.data as any)?.message);
   } catch (e: any) {
@@ -46,6 +51,7 @@ export const refreshTokens = async () => {
     console.error('Lost the war ⚰️', e);
     //authStore.discard();
     useConnectionStore.getState().unreachable();
+    release();
     return false;
   }
 };
@@ -101,18 +107,8 @@ class DynamicBaseQuery {
       result.error?.status == 401 &&
       (result.error?.data as any)?.errorCode != 1006
     ) {
-      if (!mutex.isLocked()) {
-        const release = await mutex.acquire();
-
-        const refreshed = await refreshTokens();
-        if (refreshed) {
-          result = await rawBaseQuery(args, api, extraOptions);
-        }
-        release();
-      } else {
-        await mutex.waitForUnlock();
-        result = await rawBaseQuery(args, api, extraOptions);
-      }
+      const refreshed = await refreshTokens();
+      if (refreshed) result = await rawBaseQuery(args, api, extraOptions);
     }
     return result;
   };
