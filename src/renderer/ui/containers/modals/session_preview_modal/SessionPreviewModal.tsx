@@ -29,7 +29,7 @@ export default function SessionPreviewModal({
     <ModalContainer
       title="Session preview"
       controls={
-        patientAge &&
+        patientAge != undefined &&
         patientName &&
         memberName && (
           <TextButton
