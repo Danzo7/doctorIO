@@ -32,11 +32,8 @@ function MembersPanel({}: MembersPanelProps) {
             <LoadingSpinner />
           ) : isSuccess ? (
             data.length > 0 ? (
-              data.map((member, index) => (
-                <MembersPreview
-                  {...member}
-                  key={member.id.toString() + index}
-                />
+              data.map((member) => (
+                <MembersPreview {...member} key={member.id.toString()} />
               ))
             ) : (
               <div>No Members</div>
