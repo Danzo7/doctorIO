@@ -16,6 +16,7 @@ import useNavigation from '@libs/hooks/useNavigation';
 import {
   useDeleteAppointmentMutation,
   useGetIsQueueOwnerQuery,
+  useUpdateTestMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 interface QueueItemWideProps {
@@ -43,6 +44,7 @@ function QueueItemWide({
 
   const { data: isOwner, isSuccess } = useGetIsQueueOwnerQuery();
   const [deleteAppointment] = useDeleteAppointmentMutation();
+  const [updateTest] = useUpdateTestMutation();
 
   const Svg = state === 'urgent' ? PregnantState : WaitingFigure;
   const { navigate } = useNavigation();
@@ -125,7 +127,12 @@ function QueueItemWide({
                 test ? (
                   <DiagnosisPreview data={test} />
                 ) : (
-                  <AddMedicalTestModal position={number} />
+                  <AddMedicalTestModal
+                    onSubmit={(data) => {
+                      updateTest({ ...data, position: number });
+                      close();
+                    }}
+                  />
                 ),
                 {
                   closeOnClickOutside: true,
