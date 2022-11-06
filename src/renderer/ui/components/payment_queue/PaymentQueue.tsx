@@ -26,19 +26,20 @@ export default function PaymentQueue({}: PaymentQueueProps) {
       <div className="payment-queue-content">
         <SmallInfoCard data={smallInfoCardData} />
         <BorderSeparator direction="vertical" />
-        <div className="payment-queue-list">
-          <TextButton
-            borderColor={colors.border_color}
-            padding="30px 10px"
-            afterBgColor={colors.darkersec_color}
-            onPress={previous}
-            onHold={gotoFirst}
-          >
-            <Arrow css={{ transform: 'rotate(90deg)' }} />
-          </TextButton>
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : isSuccess && data.length > 0 ? (
+
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : isSuccess && data.length > 0 ? (
+          <div className="payment-queue-list">
+            <TextButton
+              borderColor={colors.border_color}
+              padding="30px 10px"
+              afterBgColor={colors.darkersec_color}
+              onPress={previous}
+              onHold={gotoFirst}
+            >
+              <Arrow css={{ transform: 'rotate(90deg)' }} />
+            </TextButton>
             <ScrollView refs={ref} gap={10}>
               {data.map(({ appointmentId, amount, name, date }, index) => (
                 <li key={appointmentId + index}>
@@ -50,21 +51,21 @@ export default function PaymentQueue({}: PaymentQueueProps) {
                 </li>
               ))}
             </ScrollView>
-          ) : (
-            <div className="nothing-div">
-              <span>nothing...</span>
-            </div>
-          )}
-          <TextButton
-            borderColor={colors.border_color}
-            padding="30px 10px"
-            afterBgColor={colors.darkersec_color}
-            onPress={next}
-            onHold={gotoLast}
-          >
-            <Arrow css={{ transform: 'rotate(-90deg)' }} />
-          </TextButton>
-        </div>
+            <TextButton
+              borderColor={colors.border_color}
+              padding="30px 10px"
+              afterBgColor={colors.darkersec_color}
+              onPress={next}
+              onHold={gotoLast}
+            >
+              <Arrow css={{ transform: 'rotate(-90deg)' }} />
+            </TextButton>
+          </div>
+        ) : (
+          <div className="nothing-div">
+            <span>No payments</span>
+          </div>
+        )}
       </div>
     </div>
   );
