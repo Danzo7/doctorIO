@@ -17,8 +17,9 @@ export default function DiagnosisTab() {
   const diagnosis = useDiagnosis();
   const { control, getValues } = useForm<Data>({
     mode: 'onChange',
-    defaultValues: { diagnosis: diagnosis },
+    defaultValues: { diagnosis: diagnosis ?? '' },
   });
+
   const [isSaved, setIsSaved] = useState(false);
   return (
     <div className="notice-tab">
@@ -30,7 +31,7 @@ export default function DiagnosisTab() {
       />
       <div className="save-btn-wrapper">
         <TextButton
-          text={isSaved ? 'Saved' : 'Save'}
+          text={isSaved ? 'Saved' : 'Save'} //TODO  autosave
           backgroundColor={isSaved ? color.good_green : color.secondary_color}
           fontSize={14}
           onPress={() => {

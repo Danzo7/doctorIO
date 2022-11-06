@@ -26,6 +26,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
     key: string;
   }>({
     mode: 'onSubmit',
+    defaultValues: { key: '' },
   });
   const errorMsg = isError
     ? ((error as any)?.data?.message as ServerError)
@@ -33,7 +34,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
   const [internalError, setError] = useState('');
   const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
     let location;
-
+    console.log('key :', key);
     try {
       location =
         key.length > 0 ? parseInviteKey(key).location : '127.0.0.1:3000';
