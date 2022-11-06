@@ -17,6 +17,7 @@ interface NumberInputProps extends ControllerProps {
   step?: number;
   unit?: string;
   disabled?: boolean;
+  isOptional?: boolean;
 }
 export default forwardRef(function NumberInput(
   {
@@ -30,6 +31,7 @@ export default forwardRef(function NumberInput(
     field,
     fieldState,
     disabled,
+    isOptional = false,
 
     rules = { max: 100, min: 0, maxLength: 1000 },
   }: NumberInputProps,
@@ -68,10 +70,12 @@ export default forwardRef(function NumberInput(
     const parsed = Number.parseFloat(v);
     setValue(
       isNaN(parsed)
-        ? '0'
+        ? isOptional
+          ? ''
+          : '0'
         : parsed.toFixed(step.toString().split('.')[1]?.length ?? 0),
       undefined,
-      true,
+      !isOptional,
     );
   };
   return (

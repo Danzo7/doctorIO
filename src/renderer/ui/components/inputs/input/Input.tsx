@@ -59,6 +59,7 @@ type NumericInput = {
   type: 'numeric';
   step?: number;
   unit?: string;
+  isOptional?: true;
 };
 type SelectInput = {
   type: 'select';
@@ -164,6 +165,7 @@ export default function Input<T extends FieldValues = FieldValues>({
           placeholder={placeholder}
           rules={rules}
           field={field}
+          isOptional={(type as NumericInput)?.isOptional}
           ref={ref}
           fieldState={fieldState}
           disabled={disabled}
