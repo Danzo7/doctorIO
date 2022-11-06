@@ -1,3 +1,4 @@
+import { Logger } from '@libs/Logger';
 import {
   FetchArgs,
   fetchBaseQuery,
@@ -20,8 +21,7 @@ export const refreshTokens = async () => {
   }
   const authStore = useAuthStore.getState();
   try {
-    console.log('refreshing ♻️....');
-
+    Logger.log('refreshTokens', 'Refreshing tokens');
     const respond = await fetch(
       useConnectionStore.getState().getUrl() + '/auth/refresh',
       {
@@ -37,7 +37,7 @@ export const refreshTokens = async () => {
     }
     const refreshResult = await respond.json();
     if (refreshResult.access_token && refreshResult.refresh_token) {
-      console.log('refreshed 🌱.');
+      Logger.log('refreshTokens', 'Successfully refreshed tokens');
       authStore.setTokens({
         accessToken: refreshResult.access_token,
         refreshToken: refreshResult.refresh_token,
@@ -46,9 +46,8 @@ export const refreshTokens = async () => {
       return true;
     } else throw new Error((refreshResult.error?.data as any)?.message);
   } catch (e: any) {
-    //TODO understand why sometimes refresh fails
-    // Maybe because of opening multiple tabs and refreshing them at the same time
-    console.error('Lost the war ⚰️', e);
+    //TODO SHow a detailed error to the user when this happen
+    Logger.error('refreshTokens', 'Lost the war ⚰️', e);
     //authStore.discard();
     useConnectionStore.getState().unreachable();
     release();
@@ -56,7 +55,7 @@ export const refreshTokens = async () => {
   }
 };
 
-class DynamicBaseQuery {
+export class DynamicBaseQuery {
   resource: string;
 
   constructor(resource: string) {

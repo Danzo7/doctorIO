@@ -1,5 +1,6 @@
+import { Logger } from '@libs/Logger';
 import { refreshTokens } from '@redux/dynamic_queries';
-import store from '@store';
+import { dispatch } from '@store';
 import { io, Socket } from 'socket.io-client';
 import create from 'zustand';
 import { useAuthStore } from './authStore';
@@ -34,7 +35,7 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
         !useAuthStore.getState().accessToken
       ) {
         useClinicsStore.getState().setSelectedClinic();
-        store.dispatch({ type: 'REST' });
+        dispatch({ type: 'REST' });
         state.socket?.disconnect().close();
         return { status: 'disconnected' };
       }
@@ -47,16 +48,17 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
             token: useAuthStore.getState().accessToken,
           },
         });
+        Logger.log('Socket', 'Initializing socket connection');
         socket.on('connected', () => {
-          console.log('connected');
+          Logger.log('Socket', 'Connected');
           useConnectionStore.getState().connected();
         });
         socket.on('disconnect', () => {
-          console.log('disconnect');
+          Logger.log('Socket', 'disconnect');
           useConnectionStore.getState().reconnecting();
         });
         socket.on('reconnect', () => {
-          console.log('reconnect');
+          Logger.log('Socket', 'reconnect');
           useConnectionStore.getState().connected();
         });
 
@@ -65,7 +67,7 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
             useConnectionStore.getState().unreachable();
           }
 
-          console.log('reconnect_attempt');
+          Logger.warn('Socket', 'Trying to reconnect', attempt);
         });
 
         socket.on('error', async (data) => {
@@ -102,7 +104,7 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
   disconnect: () => {
     set((state) => {
       useClinicsStore.getState().setSelectedClinic();
-      store.dispatch({ type: 'REST' });
+      dispatch({ type: 'REST' });
       state.socket?.removeAllListeners();
       state.socket?.disconnect().close();
       return { status: 'disconnected' };

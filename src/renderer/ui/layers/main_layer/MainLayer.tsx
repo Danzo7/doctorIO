@@ -15,7 +15,6 @@ export default function MainLayer({}: MainLayerProps) {
   useEffect(() => {
     if (!status)
       (async () => {
-        console.log('Connecting');
         connect();
       })();
   }, [connect, status]);

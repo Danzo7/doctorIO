@@ -1,4 +1,5 @@
 import { buildAbilityFor } from '@ability/utils';
+import { Logger } from '@libs/Logger';
 import { Member, MemberBrief, PermKeys } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
 import appointmentApi from '@redux/instance/Appointment/AppointmentApi';
@@ -54,7 +55,7 @@ const memberApi = createApi({
 
           const ws = useConnectionStore.getState().socket as Socket;
 
-          if (!ws) console.error('bad socket! bad socket!');
+          if (!ws) Logger.error('MemberApi', 'bad socket! bad socket!');
           ws.on('connections', () => {
             dispatch(memberApi.util.invalidateTags(['members']));
           });
@@ -86,8 +87,8 @@ const memberApi = createApi({
             }
             dispatch(memberApi.util.invalidateTags(['members']));
           });
-        } catch (e) {
-          console.error(e);
+        } catch (e: any) {
+          Logger.error('MemberApi', e);
         }
       },
     }),
