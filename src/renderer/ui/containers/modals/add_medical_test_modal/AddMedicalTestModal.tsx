@@ -3,64 +3,41 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ModalContainer from '@components/modal_container';
-import { useUpdateTestMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { Test } from '../../../../models/instance.model';
-import { Overlay } from '@libs/overlay';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Inputix } from '@components/inputs/input/Input';
-
-interface Inputs {
-  weight: number;
-  height: number;
-  BloodPressure: number;
-  bloodType: 'A' | 'B' | 'AB' | 'O';
-  RH: boolean;
-}
+import { numericString } from '@helpers/zod.helper';
 
 const schema = z.object({
-  weight: z
-    .number({ required_error: 'Weight is required' })
-    .gt(0, 'Weight is required'),
-  height: z
-    .number({ required_error: 'Height is required' })
-    .gt(0, 'Height is required'),
-  BloodPressure: z.number().gt(0, 'Blood Pressure is required'),
+  weight: numericString(z.number().optional()),
+
+  height: numericString(z.number().optional()),
+  bloodPressure: numericString(z.number().optional()),
   bloodType: z.enum(['A', 'B', 'AB', 'O']),
-  RH: z.boolean(),
+  Rh: z.boolean(),
 });
 interface AddMedicalTestModalProps {
-  position: number;
+  onSubmit: SubmitHandler<Test>;
 }
 
 export default function AddMedicalTestModal({
-  position,
+  onSubmit,
 }: AddMedicalTestModalProps) {
-  const [updateTest] = useUpdateTestMutation();
-  const { control, handleSubmit } = useForm<Inputs>({
+  const { control, handleSubmit } = useForm<Test>({
     resolver: zodResolver(schema),
     defaultValues: {
       bloodType: 'A',
-      BloodPressure: 0,
-      RH: false,
+      bloodPressure: 0,
+      Rh: false,
+      height: 0,
+      weight: 0,
     },
   });
-  const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    const newTest: Test = {
-      weight: Number(formData.weight),
-      height: Number(formData.height),
-      bloodPressure: Number(formData.BloodPressure),
-      bloodType: formData.bloodType,
-      Rh: formData.RH,
-    };
-    updateTest({ ...newTest, position: position });
-
-    Overlay.close();
-  };
 
   return (
     <ModalContainer
-      title="Medical test"
+      title="Medical testa"
       onSubmit={handleSubmit(onSubmit)}
       controls={
         <>
@@ -71,18 +48,29 @@ export default function AddMedicalTestModal({
             fontSize={14}
             width={'60%'}
             blank
+            type="submit"
           />
         </>
       }
     >
       <Inputix control={control}>
-        <Input type="number" label="Weight" name="weight" />
-        <Input type="number" label="Height" name="height" />
+        {/* TODO must add a toggle to enable each input and add a button to add more custom inputs */}
         <Input
-          type={{ type: 'numeric', unit: '' }}
+          type={{ type: 'numeric', unit: 'kg' }}
+          label="Weight"
+          name="weight"
+          control={control}
+        />
+        <Input
+          type={{ type: 'numeric', unit: 'cm', step: 1 }}
+          rules={{ max: 750, minLength: 0 }}
+          label="Height"
+          name="height"
+        />
+        <Input
+          type={{ type: 'numeric', unit: 'mmHg' }}
           label="Blood pressure"
-          name="BloodPressure"
-          //FIXME error : Expected number , received string
+          name="bloodPressure"
         />
         <Input
           type={{
@@ -92,24 +80,7 @@ export default function AddMedicalTestModal({
           label="Blood type"
           name="bloodType"
         />
-        {/* <InputContainer label="RH" grow>
-        <ToggleButton
-          onChange={(checked) => {
-            setValue('RH', checked);
-          }}
-        />
-        </InputContainer>  */}
-        {/* {
-          <InputContainer label="RH" grow>
-            <MultiOptionSwitcher
-              textList={RhOptions}
-              onChange={(selected) => {
-                setValue('RH', RhOptions[selected] == 'Positive');
-              }}
-            />//TODO add ToggleButton to input component
-          </InputContainer>
-        } */}
-        <Input type="checkbox" label="RH" name="RH" />
+        <Input type="checkbox" label="RH" name="Rh" />
       </Inputix>
     </ModalContainer>
   );
