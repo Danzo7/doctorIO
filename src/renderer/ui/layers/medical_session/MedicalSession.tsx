@@ -15,6 +15,7 @@ import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import { useGetQueueStateQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 import { useNavigate } from 'react-router-dom';
 import PatientSmallCard from './components/patient_small_card';
 import MedicalSessionSideBar from './medical_session_side_bar';
@@ -97,7 +98,10 @@ export default function MedicalSession({}: MedicalSessionProps) {
                           <PrintedLayout
                             patientName={data.firstName + ' ' + data.lastName}
                             patientAge={data.age}
-                            drugList={[]} //FIXME
+                            drugList={
+                              useMedicalSessionStore.getState().session
+                                .prescription
+                            }
                             doctorName={
                               myMemberDetailQuery.data?.name ?? 'John doe'
                             }
