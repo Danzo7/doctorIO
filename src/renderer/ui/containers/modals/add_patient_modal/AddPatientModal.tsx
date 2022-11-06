@@ -6,7 +6,6 @@ import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAddPatientMutation } from '@redux/instance/record/patient_api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -28,7 +27,6 @@ const schema = z.object({
 });
 interface AddPatientModalProps {}
 export default function AddPatientModal({}: AddPatientModalProps) {
-  const [AddQueueAppointment] = useAddQueueAppointmentMutation();
   const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onChange',
     resolver: zodResolver(schema),
@@ -53,15 +51,7 @@ export default function AddPatientModal({}: AddPatientModalProps) {
       .unwrap()
       .then((patient) => {
         open(
-          <AddSelectedToQueueModal
-            id={patient.id}
-            name={patient.name}
-            onAdd={() => {
-              AddQueueAppointment({
-                patientId: patient.id,
-              });
-            }}
-          />,
+          <AddSelectedToQueueModal id={patient.id} name={patient.name} />,
           DEFAULT_MODAL,
         );
       });

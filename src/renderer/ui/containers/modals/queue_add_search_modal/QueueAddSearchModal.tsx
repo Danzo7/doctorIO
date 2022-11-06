@@ -15,7 +15,6 @@ import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -40,7 +39,6 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   });
   const { open } = useOverlay();
   const [trigger, result] = useLazyFindPatientByName2Query();
-  const [AddAppointment] = useAddQueueAppointmentMutation();
 
   const errorRef = useRef<ServerError>();
   const serverError: ServerError | undefined = (result.error as any)
@@ -74,11 +72,6 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
                 key={patient.id}
                 name={patient.name}
                 id={patient.id}
-                onAdd={() => {
-                  AddAppointment({
-                    patientId: patient.id,
-                  });
-                }}
               />
             ));
           })()

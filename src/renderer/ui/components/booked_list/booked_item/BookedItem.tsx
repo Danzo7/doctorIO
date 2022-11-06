@@ -11,10 +11,7 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import TextPair from '@components/text_pair/TextPair';
 import { color } from '@assets/styles/color';
-import {
-  useAssignAppointmentToQueueMutation,
-  useCancelAppointmentMutation,
-} from '@redux/instance/Appointment/AppointmentApi';
+import { useCancelAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import { useDeleteAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAbility } from '@stores/abilityStore';
 
@@ -28,7 +25,6 @@ function BookedItem({
 }: BookedAppointment) {
   const { openTooltip, open, close } = useOverlay();
   const { navigate } = useNavigation();
-  const [AssignAppointmentToQueue] = useAssignAppointmentToQueueMutation();
   const [deleteAppointment] = useDeleteAppointmentMutation();
   const [CancelAppointment] = useCancelAppointmentMutation();
   const abilities = useAbility();
@@ -77,9 +73,6 @@ function BookedItem({
                         id={patientId}
                         name={patientName}
                         appointmentId={id}
-                        onAdd={() => {
-                          AssignAppointmentToQueue({ appointmentId: id });
-                        }}
                       />,
                       DEFAULT_MODAL,
                     );
