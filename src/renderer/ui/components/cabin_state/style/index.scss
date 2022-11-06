@@ -1,18 +1,4 @@
 @use '~styles/appColors' as *;
-@mixin commonStyle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 30px;
-    border-radius: 7px;
-
-    > span {
-        font-weight: 600;
-        font-size: 16px;
-        white-space: nowrap;
-    }
-}
 
 .cabin-state {
     display: flex;
@@ -27,27 +13,5 @@
         font-size: 14px;
         color: $textgray;
         align-self: flex-start
-    }
-
-    > .In-progress-div {
-        @include commonStyle();
-        border: 1px solid $bordercolor;
-        align-self: stretch;
-    }
-    > .paused-div {
-        @include commonStyle();
-        border: 1px solid $hotred;
-
-        > span {
-            color: $hotred;
-        }
-    }
-    > .idle-div {
-        @include commonStyle();
-        border: 1px solid $warmorange;
-
-        > span {
-            color: $warmorange;
-        }
     }
 }
