@@ -32,6 +32,7 @@ export default function Chat({}: ChatProps) {
 
   const { control, handleSubmit, reset } = useForm<{ message: string }>({
     resolver: zodResolver(schema),
+    defaultValues: { message: '' },
   });
   const onSubmit: SubmitHandler<{ message: string }> = (data) => {
     setcurrentMessagesList([

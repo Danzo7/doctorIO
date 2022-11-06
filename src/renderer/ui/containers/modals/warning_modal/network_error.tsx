@@ -25,6 +25,7 @@ export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
   const clinicStore = useClinicsStore();
   const { control, handleSubmit } = useForm<{ ip: string }>({
     resolver: zodResolver(schema),
+    defaultValues: { ip: '' },
   });
   useEffect(() => {
     if (status == 'connecting')

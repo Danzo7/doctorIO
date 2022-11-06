@@ -23,6 +23,7 @@ export default function RoleSettingGeneral({
 }: Pick<Role, 'slaveRole' | 'id'>) {
   const { control, reset } = useForm<Inputs>({
     mode: 'onChange',
+    defaultValues: { name: '', description: '' },
   });
   const setSettings = useSetSettings();
   const { name, description, permissions } = useRoleSettingStore((s) => ({

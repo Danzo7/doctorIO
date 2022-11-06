@@ -9,6 +9,7 @@ interface SearchInput {
 export default function ConversationSearch({}: ConversationSearchProps) {
   const { control, handleSubmit } = useForm<SearchInput>({
     mode: 'onSubmit',
+    defaultValues: { search: '' },
   });
   //FEATURE add Dm search
   return (

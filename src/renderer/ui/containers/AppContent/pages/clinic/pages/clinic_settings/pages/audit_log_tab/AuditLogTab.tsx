@@ -98,12 +98,14 @@ const logsData = [
   },
 ];
 interface Inputs {
-  actions: string;
+  actions: 'add' | 'delete' | 'edit';
   member: string;
 }
 interface AuditLogTabProps {}
 export default function AuditLogTab({}: AuditLogTabProps) {
-  const { control, watch } = useForm<Inputs>();
+  const { control, watch } = useForm<Inputs>({
+    defaultValues: { actions: 'add', member: '' },
+  });
 
   return (
     <div className="audit-log-tab">
