@@ -129,9 +129,7 @@ export default function CreateInvitationModal() {
               type="search"
               name="searchField"
               control={control}
-              errorMessage={
-                (error as any)?.data?.message ?? 'something bad happened'
-              }
+              errorMessage={(error as any)?.data?.message}
             />
           ) : (
             <div className="role-list-div">
