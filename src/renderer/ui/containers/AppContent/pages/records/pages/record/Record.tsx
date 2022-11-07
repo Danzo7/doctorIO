@@ -46,6 +46,7 @@ export default function Record({}: RecordProps) {
   const { control, handleSubmit, setValue, watch } = useForm<SearchInput>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
+    defaultValues: { searchField: '' },
   });
   const isDirty = useRef(false);
   const watchSearchField = watch('searchField');

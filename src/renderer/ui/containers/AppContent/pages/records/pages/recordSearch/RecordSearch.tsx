@@ -31,6 +31,7 @@ export default function RecordSearch({}: RecordSearchProps) {
   const { control, handleSubmit } = useForm<SearchInput>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
+    defaultValues: { searchField: '' },
   });
   const [trigger, result] = useLazyFindPatientByName2Query();
   const errorRef = useRef<ServerError>();
