@@ -3,6 +3,7 @@ import IconicButton from '@components/buttons/iconic_button';
 import NextIcon from 'toSvg/next.svg?icon';
 import PauseIcon from 'toSvg/pause.svg?icon';
 import AddIcon from 'toSvg/add.svg?icon';
+import ResetIcon from 'toSvg/reset.svg?icon';
 import './style/index.scss';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
@@ -17,7 +18,7 @@ import {
   usePauseQueueMutation,
   useResumeQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { AppointmentQueue } from '@models/instance.model';
+import { QueueState } from '@models/instance.model';
 
 interface QueueControlsProps {}
 export default function QueueControls({}: QueueControlsProps) {
@@ -31,8 +32,7 @@ export default function QueueControls({}: QueueControlsProps) {
   let state;
   if (queueStateQuery.isSuccess && isQueueOwnerQuery.isSuccess) {
     isOwner = isQueueOwnerQuery.data;
-    state = (queueStateQuery.data as AppointmentQueue).state;
-
+    state = (queueStateQuery.data as QueueState).state;
     return (
       <>
         {!(state == 'PAUSED' && !isOwner) &&
@@ -94,6 +94,14 @@ export default function QueueControls({}: QueueControlsProps) {
                       description="By pausing the queue no more patient will be accepted"
                     >
                       <TextButton
+                        text="Cancel"
+                        backgroundColor={color.cold_blue}
+                        width="100%"
+                        onPress={() => {
+                          close();
+                        }}
+                      />
+                      <TextButton
                         text="Confirm"
                         backgroundColor={color.hot_red}
                         width="100%"
@@ -112,6 +120,47 @@ export default function QueueControls({}: QueueControlsProps) {
                   );
                 }}
               />
+              {
+                <IconicButton
+                  Icon={ResetIcon}
+                  backgroundColor={color.hot_purple}
+                  width={25}
+                  radius={7}
+                  iconSize={14}
+                  onPress={() => {
+                    open(
+                      <WarningModal
+                        title="Are you sure you want to reset the queue count ? "
+                        description="By applying the reset, the queue count will start from zero. "
+                      >
+                        <TextButton
+                          text="Cancel"
+                          backgroundColor={color.cold_blue}
+                          width="100%"
+                          onPress={() => {
+                            close();
+                          }}
+                        />
+                        <TextButton
+                          text="Confirm"
+                          backgroundColor={color.hot_red}
+                          width="100%"
+                          onPress={() => {
+                            //TODO: add reset api call function
+                            close();
+                          }}
+                        />
+                      </WarningModal>,
+                      {
+                        closeOnClickOutside: true,
+                        isDimmed: true,
+                        clickThrough: false,
+                        closeBtn: 'inner',
+                      },
+                    );
+                  }}
+                />
+              }
             </div>
           ) : (
             <IconicButton
