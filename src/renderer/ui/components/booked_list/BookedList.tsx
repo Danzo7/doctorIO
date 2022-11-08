@@ -5,6 +5,7 @@ import TextButton from '@components/buttons/text_button';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/AppointmentApi';
 import LoadingSpinner from '@components/loading_spinner';
+import SimpleInfoContainer from '@components/simple_info_container';
 
 export default function BookedList({}) {
   const { data, isSuccess, isLoading } = useGetBookedAppointmentQuery();
@@ -35,7 +36,7 @@ export default function BookedList({}) {
         data.length > 0 ? (
           data.map((props, index) => <BookedItem {...props} key={index} />)
         ) : (
-          <span css={{ alignSelf: 'center' }}>Empty</span>
+          <SimpleInfoContainer text="Empty" />
         )
       ) : (
         <span css={{ alignSelf: 'center' }}>error</span>

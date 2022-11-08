@@ -10,6 +10,7 @@ import { useGetPaymentsQuery } from '@redux/instance/Appointment/AppointmentApi'
 import LoadingSpinner from '@components/loading_spinner';
 import BorderSeparator from '@components/border_separator';
 import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import SimpleInfoContainer from '@components/simple_info_container';
 
 interface PaymentQueueProps {}
 export default function PaymentQueue({}: PaymentQueueProps) {
@@ -62,9 +63,7 @@ export default function PaymentQueue({}: PaymentQueueProps) {
             </TextButton>
           </div>
         ) : (
-          <div className="nothing-div">
-            <span>No payments</span>
-          </div>
+          <SimpleInfoContainer text="No pending payments" alignSelf="center" />
         )}
       </div>
     </div>

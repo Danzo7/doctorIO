@@ -17,6 +17,7 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
+import SimpleInfoContainer from '@components/simple_info_container';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
@@ -121,7 +122,7 @@ export default function AppointmentsQueue() {
                 </Backdrop>
               </div>
             ) : (
-              <span className="text-empty">Queue is empty.</span>
+              <SimpleInfoContainer text="Queue is empty" alignSelf="center" />
             )}
           </div>
         </div>

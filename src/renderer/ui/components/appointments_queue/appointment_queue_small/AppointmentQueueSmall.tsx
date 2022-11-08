@@ -17,6 +17,7 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
+import SimpleInfoContainer from '@components/simple_info_container';
 
 interface AppointmentQueueSmallProps {}
 
@@ -111,7 +112,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                   </ScrollView>
                 </Backdrop>
               ) : (
-                <span>nothing</span>
+                <SimpleInfoContainer text="Empty" />
               ) //UI: add good comp
             }
           </div>
