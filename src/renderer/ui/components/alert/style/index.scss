@@ -1,0 +1,17 @@
+@use '~styles/appColors' as *;
+.alert {
+    display: flex;
+flex-direction: row;
+align-items: center;
+gap: 10px;
+background-color: $secondarycolor;
+padding-right:  10px;
+border-radius: 9px;
+width: fit-content;
+//TODO fix the radius (not matching)
+
+> span {
+font-size: 14px;
+color: $white;
+}
+}
