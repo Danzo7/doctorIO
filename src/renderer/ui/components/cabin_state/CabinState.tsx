@@ -44,6 +44,7 @@ export default function CabinState({ state, selected }: QueueState) {
           color={color.hot_red}
           padding={'10px 30px'}
           fontSize={16}
+          width={'100%'}
         />
       )}
       {state == 'IDLE' && (
@@ -52,6 +53,7 @@ export default function CabinState({ state, selected }: QueueState) {
           color={color.warm_orange}
           padding={'10px 30px'}
           fontSize={16}
+          width={'100%'}
         />
       )}
     </div>
