@@ -1,8 +1,8 @@
 import colors from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import CheckboxTile from '@components/checkbox_tile';
+import LinkedRole from '@components/linked_role';
 import { Permission, PermKeys } from '@models/server.models';
-import Icon from 'toSvg/link.svg?icon';
 import './style/index.scss';
 interface PermissionItemProps {
   linkedPermission?: string;
@@ -35,13 +35,7 @@ export default function PermissionItem({
           className="permission-linked"
           css={editable ? null : { opacity: 0.3 }}
         >
-          <div className={`left-linked`}>
-            <span>Linked To</span>
-            <Icon />
-            <div className="linked-permission-container">
-              <span>{linkedPermission}</span>
-            </div>
-          </div>
+          <LinkedRole linkedText="Linked To" linkedRole={linkedPermission} />
           <TextButton
             text="Change dependent..."
             fontColor={colors.cold_red}

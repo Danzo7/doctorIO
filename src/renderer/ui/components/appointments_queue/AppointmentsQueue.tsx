@@ -19,11 +19,17 @@ import { QueueState } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
 import SimpleInfoContainer from '@components/simple_info_container';
 import BorderSeparator from '@components/border_separator';
+import TabMenu from '@components/tab_menu';
+import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
+import LinkedRole from '@components/linked_role';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
 
   const queueStateQuery = useGetQueueStateQuery();
+  const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
+    skip: !queueStateQuery.isSuccess,
+  });
   const isQueueOwnerQuery = useGetIsQueueOwnerQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
   });
@@ -44,17 +50,30 @@ export default function AppointmentsQueue() {
 
       return (
         <div className="appointments-queue">
-          <Header
-            title="Queue list"
-            buttonNode={
-              <QueueControls
-                {...{
-                  state: appointments.length == 0 ? 'EMPTY' : state,
-                  isOwner,
+          {myMemberDetailQuery.isSuccess && (
+            <>
+              <TabMenu
+                onChanged={() => {
+                  //TODO change the queue by api call
                 }}
+                items={myMemberDetailQuery.data.roles.map((role) => role.name)}
               />
-            }
-          />
+
+              <Header
+                leftComponent={
+                  <LinkedRole linkedText="Queue List" linkedRole={'doctor'} />
+                }
+                buttonNode={
+                  <QueueControls
+                    {...{
+                      state: appointments.length == 0 ? 'EMPTY' : state,
+                      isOwner,
+                    }}
+                  />
+                }
+              />
+            </>
+          )}
           <div className="appointments-queue-content">
             <CabinState state={state} selected={selected} />
             <BorderSeparator direction="vertical" />
