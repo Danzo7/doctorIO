@@ -39,11 +39,22 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
       const { state } = queueStateQuery.data as QueueState;
-      const isOwner = isQueueOwnerQuery.data;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const isOwner = isQueueOwnerQuery.data!;
       const appointments = getQueueAppointmentsQuery.data;
       return (
         <div className="appointment-queue-small">
-          <Header title="Queue list" buttonNode={<QueueControls />} />
+          <Header
+            title="Queue list"
+            buttonNode={
+              <QueueControls
+                {...{
+                  state: appointments.length == 0 ? 'EMPTY' : state,
+                  isOwner,
+                }}
+              />
+            }
+          />
           <div className="queue-items">
             {
               appointments.length > 0 ? (

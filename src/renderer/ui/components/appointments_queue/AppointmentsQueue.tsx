@@ -37,12 +37,23 @@ export default function AppointmentsQueue() {
   ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
       const { state, selected } = queueStateQuery.data as QueueState;
-      const isOwner = isQueueOwnerQuery.data;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const isOwner = isQueueOwnerQuery.data!;
       const appointments = getQueueAppointmentsQuery.data;
 
       return (
         <div className="appointments-queue">
-          <Header title="Queue list" buttonNode={<QueueControls />} />
+          <Header
+            title="Queue list"
+            buttonNode={
+              <QueueControls
+                {...{
+                  state: appointments.length == 0 ? 'EMPTY' : state,
+                  isOwner,
+                }}
+              />
+            }
+          />
           <div className="appointments-queue-content">
             <CabinState state={state} selected={selected} />
             {appointments.length > 0 ? (
@@ -55,7 +66,7 @@ export default function AppointmentsQueue() {
                         Queue is paused
                         {!isOwner && (
                           <>
-                            {' by'}{' '}
+                            {' by'}
                             <span css={{ fontWeight: 600 }}>The owner</span>
                           </>
                         )}
