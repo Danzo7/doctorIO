@@ -1,0 +1,26 @@
+@use '~styles/appColors' as *;
+.linked-role {
+        display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+
+        > span {
+        font-weight: 700;
+        font-size: 17px;
+      }
+
+          > .linked-role-span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 5px;
+        background-color: $secondarycolor;
+        border-radius: 5px;
+        > span {
+          font-weight: 500;
+          font-size: 12px;
+          color: $textgray;
+        }
+      }
+}
