@@ -18,6 +18,7 @@ import {
 import { QueueState } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
 import SimpleInfoContainer from '@components/simple_info_container';
+import BorderSeparator from '@components/border_separator';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
@@ -56,6 +57,7 @@ export default function AppointmentsQueue() {
           />
           <div className="appointments-queue-content">
             <CabinState state={state} selected={selected} />
+            <BorderSeparator direction="vertical" />
             {appointments.length > 0 ? (
               <div className="wrapper">
                 <Backdrop
