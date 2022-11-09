@@ -10,6 +10,7 @@ interface HeaderProps {
         fontColor?: string;
         fontWeight?: string | number;
       };
+  leftComponent?: ReactNode;
   buttonNode?: ReactNode;
   alignItems?: string;
   titleColor?: string;
@@ -20,21 +21,26 @@ export default function Header({
   title,
   alignItems = 'baseline',
   flexGrow = 0,
+  leftComponent,
 }: HeaderProps) {
   return (
     <div
       className="header"
       css={{ alignItems: alignItems, flexGrow: flexGrow }}
     >
-      <span
-        css={{
-          fontSize: typeof title != 'string' ? title?.fontSize : 18,
-          color: typeof title != 'string' ? title?.fontColor : color.white,
-          fontWeight: typeof title != 'string' ? title?.fontWeight : 600,
-        }}
-      >
-        {typeof title == 'string' ? title : title?.text}
-      </span>
+      {leftComponent ? (
+        leftComponent
+      ) : (
+        <span
+          css={{
+            fontSize: typeof title != 'string' ? title?.fontSize : 18,
+            color: typeof title != 'string' ? title?.fontColor : color.white,
+            fontWeight: typeof title != 'string' ? title?.fontWeight : 600,
+          }}
+        >
+          {typeof title == 'string' ? title : title?.text}
+        </span>
+      )}
       {buttonNode}
     </div>
   );
