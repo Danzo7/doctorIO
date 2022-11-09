@@ -11,7 +11,7 @@ type AppointmentQueue = {
   appointments: AppointmentQueueItem[];
 } & QueueState;
 interface QueueState {
-  state: 'PAUSED' | 'IDLE' | 'IN_PROGRESS' | 'WAITING';
+  state: 'PAUSED' | 'IDLE' | 'IN_PROGRESS' | 'WAITING' | 'EMPTY';
   selected?: AppointmentQueueItem;
 }
 interface AppointmentQueueItem {
