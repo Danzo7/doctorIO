@@ -14,6 +14,7 @@ import playIcon from 'toSvg/play.svg?icon';
 import { FIT_MODAL } from '@libs/overlay';
 import {
   usePauseQueueMutation,
+  useResetQueueMutation,
   useResumeQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
@@ -26,6 +27,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
   const { open, close } = useOverlay();
   const [PauseQueue] = usePauseQueueMutation();
   const [ResumeQueue] = useResumeQueueMutation();
+  const [resetQueue] = useResetQueueMutation();
   return (
     <div className="queue-controls">
       {state !== 'PAUSED' && (
@@ -72,7 +74,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
                   backgroundColor={color.hot_red}
                   width="100%"
                   onPress={() => {
-                    //TODO: add reset api call function
+                    resetQueue();
                     close();
                   }}
                 />
