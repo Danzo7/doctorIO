@@ -2,11 +2,16 @@ import { color } from '@assets/styles/color';
 import { ReactNode } from 'react';
 import './style/index.scss';
 interface HeaderProps {
-  title?: string;
+  title?:
+    | string
+    | {
+        text: string;
+        fontSize?: number;
+        fontColor?: string;
+        fontWeight?: string | number;
+      };
   buttonNode?: ReactNode;
   alignItems?: string;
-  titleFontSize?: number;
-  titleFontWeight?: number | string;
   titleColor?: string;
   flexGrow?: number;
 }
@@ -14,9 +19,6 @@ export default function Header({
   buttonNode,
   title,
   alignItems = 'baseline',
-  titleFontSize = 18,
-  titleFontWeight = 600,
-  titleColor = color.white,
   flexGrow = 0,
 }: HeaderProps) {
   return (
@@ -26,12 +28,12 @@ export default function Header({
     >
       <span
         css={{
-          fontSize: titleFontSize,
-          fontWeight: titleFontWeight,
-          color: titleColor,
+          fontSize: typeof title != 'string' ? title?.fontSize : 18,
+          color: typeof title != 'string' ? title?.fontColor : color.white,
+          fontWeight: typeof title != 'string' ? title?.fontWeight : 600,
         }}
       >
-        {title}
+        {typeof title == 'string' ? title : title?.text}
       </span>
       {buttonNode}
     </div>
