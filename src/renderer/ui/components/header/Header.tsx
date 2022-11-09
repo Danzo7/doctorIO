@@ -28,9 +28,9 @@ export default function Header({
       className="header"
       css={{ alignItems: alignItems, flexGrow: flexGrow }}
     >
-      {leftComponent ? (
-        leftComponent
-      ) : (
+      {leftComponent}
+
+      {title && (
         <span
           css={{
             fontSize: typeof title != 'string' ? title?.fontSize : 18,
