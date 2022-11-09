@@ -1,0 +1,31 @@
+@use '~styles/appColors' as *;
+.dialog-modal {
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+padding: 20px 20px 10px;
+gap: 10px;
+ background: $secondarycolor;
+border-radius: 7px;
+
+> .dialog-modal-texts {
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px;
+gap: 10px;
+align-self: stretch;
+flex-grow: 1;
+}
+> .controls-div {
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+align-items: center;
+padding: 0px;
+gap: 5px;
+align-self: stretch;
+flex-grow: 1;
+}
+}
