@@ -177,7 +177,7 @@ const appointmentQueueApi = createApi({
       }),
     }),
     //DELETE
-    resetQueue: builder.mutation<AppointmentQueue, number>({
+    resetQueue: builder.mutation<boolean, void>({
       query: () => ({ url: ``, method: 'DELETE' }),
     }),
     deleteAppointment: builder.mutation<
