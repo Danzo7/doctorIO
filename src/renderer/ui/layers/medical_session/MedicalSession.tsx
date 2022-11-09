@@ -63,9 +63,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
       <MedicalSessionSideBar patientId={patientId} />
       <div className="content-container">
         <Header
-          title="Session"
-          titleFontSize={20}
-          titleFontWeight={600}
+          title={{ text: 'Session', fontSize: 20, fontWeight: 600 }}
           buttonNode={
             <PatientSmallCard
               age={data.age}

@@ -42,7 +42,7 @@ export default function RecordSearch({}: RecordSearchProps) {
 
   return (
     <div className="record-search">
-      <Header title="Select a patient" titleFontWeight={500} />
+      <Header title={{ text: 'Select a patient', fontWeight: 500 }} />
       <form
         onSubmit={handleSubmit((value) => {
           // result.reset();
