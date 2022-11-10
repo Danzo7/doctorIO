@@ -1,22 +1,13 @@
 import { color } from '@assets/styles/color';
+type TextType = {
+  text: string | number;
+  fontSize: number;
+  fontColor?: string;
+  fontWeight?: string | number;
+};
 interface TextPairProps {
-  first:
-    | string
-    | {
-        text: string | number;
-        fontSize: number;
-        fontColor?: string;
-        fontWeight?: string;
-      };
-  second:
-    | string
-    | {
-        text: string | number;
-        fontSize: number;
-        fontColor?: string;
-        fontWeight?: string;
-        border?: boolean;
-      };
+  first: string | TextType;
+  second: string | (TextType & { border?: boolean });
   reversed?: true;
   alignItems?: 'flex-start' | 'flex-end' | 'center';
   flexGrow?: true;
@@ -59,9 +50,11 @@ export default function TextPair({
       <span
         css={{
           fontSize: typeof second != 'string' ? second?.fontSize : 12,
-          fontWeight: typeof first != 'string' ? first?.fontWeight : 600,
+          fontWeight: typeof second != 'string' ? second?.fontWeight : 600,
           color:
-            typeof second != 'string' ? second?.fontColor : color.text_gray,
+            typeof second != 'string'
+              ? second?.fontColor ?? color.text_gray
+              : color.text_gray,
           border:
             typeof second != 'string' && second.border
               ? `1px solid ${color.border_color}`
