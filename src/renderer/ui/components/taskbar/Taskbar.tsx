@@ -7,7 +7,7 @@ interface TaskbarProps {}
 export default function Taskbar({}: TaskbarProps) {
   return (
     <div className="taskbar">
-      <span>Medicord</span>
+      <span>Clinicord</span>
       <div className="items">
         <IconicButton
           Icon={minus}
