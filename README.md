@@ -8,15 +8,18 @@
 > DoctorIO is the project name for **Clinicord-Client**
 
 **Clinicord-Client** is a desktop/web compatible software. It is an offline software that can connect to a Clinicord-server instance on a LAN to enable it features. Multiple instances of Clinicord-server can be joined but not at the same time.
-###Installation
+
+### Installation
+
 **Clinicord-Client** is not yet available for download. You can however build it yourself.
-####Requirements
+
+#### Requirements
 
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://yarnpkg.com/)
 - [Git](https://git-scm.com/)
 
-####Building
+#### Building
 
 1. Clone the repository.
 2. Install dependencies with `yarn install`.
@@ -24,7 +27,8 @@
 
 <img src="./brand/example.png" alt="queue page" />
 
-####Storybook
+#### Storybook
+
 To view the components of the software, you can run `yarn storybook` to start the storybook server. Some components does not work because they require the context or an API calls.
 
 ### About Clinicord
@@ -58,11 +62,12 @@ Clinicord is a Medical practice management software/system tend to improve healt
 
 **Patient health information protection:** Clinicord is not a HIPPA compliant software "yet", but it follows the HIPPA guidelines to protect patients' health information.
 
-####Repositories
-| Repo name | Job | Description
-| :--- | :--- |:--- |
-| Latus (Currently private)| Clinicord-server | NestJS based server for Clinicord
-[DoctorIO](https://github.com/Danzo7/doctorIO) | Clinicord-client | React based client for Clinicord |
-NightyUI (Currently in [DoctorIO](https://github.com/Danzo7/doctorIO))|UI library| A React UI library for Clinicord |
-Docs (Currently private) | Documentation | Documentation for Clinicord |
-Website (Not yet) | website | A website for Clinicord |
+#### Repositories
+
+| Repo name                                                              | Job              | Description                       |
+| :--------------------------------------------------------------------- | :--------------- | :-------------------------------- |
+| Latus (Currently private)                                              | Clinicord-server | NestJS based server for Clinicord |
+| [DoctorIO](https://github.com/Danzo7/doctorIO)                         | Clinicord-client | React based client for Clinicord  |
+| NightyUI (Currently in [DoctorIO](https://github.com/Danzo7/doctorIO)) | UI library       | A React UI library for Clinicord  |
+| Docs (Currently private)                                               | Documentation    | Documentation for Clinicord       |
+| Website (Not yet)                                                      | website          | A website for Clinicord           |
