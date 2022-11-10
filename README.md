@@ -31,7 +31,7 @@
 
 To view the components of the software, you can run `yarn storybook` to start the storybook server. Some components does not work because they require the context or an API calls.
 
-### About Clinicord
+## About Clinicord
 
 Clinicord is a Medical practice management software/system tend to improve healthcare services. It is a platform that allows doctors to manage their patients, appointments, and medical records. It build for the interest of creating a secure and safe way to store and exchange medical records. Clinicord come with a pair of softwares.
 
@@ -39,7 +39,7 @@ Clinicord is a Medical practice management software/system tend to improve healt
 
 **Clinicord-server** is a software that creates an instance on the local network, User on the same network can connect to the server using Clinicord-client. Clinicord-server provides Services/API that allows the functionality of Clinicord.
 
-#### features
+### features
 
 **Intranet:** Clinicord is build for the purpose of working on a local network "LAN".
 
@@ -62,7 +62,7 @@ Clinicord is a Medical practice management software/system tend to improve healt
 
 **Patient health information protection:** Clinicord is not a HIPPA compliant software "yet", but it follows the HIPPA guidelines to protect patients' health information.
 
-#### Repositories
+### Repositories
 
 | Repo name                                                              | Job              | Description                       |
 | :--------------------------------------------------------------------- | :--------------- | :-------------------------------- |
