@@ -19,7 +19,7 @@ export default function Alert({ status, text }: AlertProps) {
         }`,
       }}
     >
-      <StatusIcon status={status} borderRadius={7} />
+      <StatusIcon status={status} borderRadius={7} size={42} />
 
       <span>{text} </span>
     </div>

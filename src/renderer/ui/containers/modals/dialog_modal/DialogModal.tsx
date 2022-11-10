@@ -18,7 +18,10 @@ export default function DialogModal({
     <div className="dialog-modal">
       <div className="dialog-modal-texts">
         <StatusIcon status={status} />
-        <TextPair first={title} second={description} />
+        <TextPair
+          first={{ fontSize: 18, fontWeight: 600, text: title }}
+          second={{ fontSize: 14, fontWeight: 400, text: description }}
+        />
       </div>
       <div className="controls-div">{controls}</div>
     </div>
