@@ -1,7 +1,7 @@
  <h1 align="center">DoctorIO "Clinicord-Client"</h1>
 
 <p align="center">
- <img src="./brand/Logo.svg" width="150" alt="Clinicord" />
+ <img src="./brand/logo.svg" width="150" alt="Clinicord" />
 </p>
  <p align="center">A desktop/web compatible software build with React and Electron</p>
 
