@@ -1,22 +1,18 @@
 import { color } from '@assets/styles/color';
+import LoadingSpinner from '@components/loading_spinner';
 import TextPair from '@components/text_pair/TextPair';
-import { FunctionComponent, SVGProps } from 'react';
 import './style/index.scss';
 interface LoadingModalProps {
-  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
-  iconSize?: number | string;
-  actionText: string;
+  title: string;
   description: string;
 }
 export default function LoadingModal({
-  Icon,
-  iconSize = 40,
-  actionText,
+  title: actionText,
   description,
 }: LoadingModalProps) {
   return (
     <div className="loading-modal">
-      <Icon width={iconSize} height={iconSize} />
+      <LoadingSpinner />
       <TextPair
         alignItems="center"
         first={{ text: actionText, fontSize: 18, fontWeight: '400' }}

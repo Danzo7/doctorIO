@@ -12,6 +12,6 @@ const Template: Story<ComponentProps<typeof LoadingModal>> = (args) => (
 export const FirstStory = Template;
 FirstStory.args = {
   Icon: GoodMark,
-  actionText: 'Reconnicting...',
+  title: 'Reconnicting...',
   description: 'Trying to reconnect back to the server',
 };
