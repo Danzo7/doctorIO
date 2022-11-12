@@ -1,28 +1,26 @@
 import './style/index.scss';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useEndNextMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
-import WarningModal from '../warning_modal';
+import AlertModal from '../dialog_modal';
 interface EndSessionProps {
   patientId: number;
 }
 export default function EndSession({ patientId }: EndSessionProps) {
-  const { openTooltip } = useOverlay();
   const { navigate } = useNavigation();
   const [EndNext] = useEndNextMutation();
   const [bookAppointment] = useBookAppointmentMutation();
   const currentSession = useMedicalSessionStore.getState().session;
   const sessionParameters = useMedicalSessionStore.getState().sessionParameter;
   return (
-    <WarningModal
+    <AlertModal
       title="End the session?"
       description="Are you sure you want to finish the session ?"
-    >
-      <div className="end-session-controls">
+      status="warning"
+      controls={
         <TextButton
           text="Confirm"
           fontSize={14}
@@ -30,7 +28,6 @@ export default function EndSession({ patientId }: EndSessionProps) {
           fontWeight={700}
           backgroundColor={color.good_green}
           padding=" 5px 15px"
-          width={'100%'}
           onPress={async () => {
             await EndNext({
               diagnosis: currentSession.diagnosis,
@@ -58,7 +55,7 @@ export default function EndSession({ patientId }: EndSessionProps) {
             navigate('queue');
           }}
         />
-      </div>
-    </WarningModal>
+      }
+    ></AlertModal>
   );
 }

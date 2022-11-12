@@ -7,7 +7,6 @@ import ResetIcon from 'toSvg/reset.svg?icon';
 import './style/index.scss';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
-import WarningModal from '@containers/modals/warning_modal';
 import TextButton from '@components/buttons/text_button';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import playIcon from 'toSvg/play.svg?icon';
@@ -18,6 +17,7 @@ import {
   useResumeQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
+import AlertModal from '@containers/modals/dialog_modal';
 
 interface QueueControlsProps {
   state: QueueState['state'];
@@ -57,28 +57,31 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
           iconSize={14}
           onPress={() => {
             open(
-              <WarningModal
+              <AlertModal
                 title="Are you sure you want to reset the queue count ? "
                 description="By applying the reset, the queue count will start from zero. "
-              >
-                <TextButton
-                  text="Cancel"
-                  backgroundColor={color.cold_blue}
-                  width="100%"
-                  onPress={() => {
-                    close();
-                  }}
-                />
-                <TextButton
-                  text="Confirm"
-                  backgroundColor={color.hot_red}
-                  width="100%"
-                  onPress={() => {
-                    resetQueue();
-                    close();
-                  }}
-                />
-              </WarningModal>,
+                status="warning"
+                controls={
+                  <>
+                    <TextButton
+                      text="Cancel"
+                      backgroundColor={color.cold_blue}
+                      onPress={() => {
+                        close();
+                      }}
+                    />
+                    <TextButton
+                      text="Confirm"
+                      backgroundColor={color.hot_red}
+                      onPress={() => {
+                        resetQueue();
+                        close();
+                      }}
+                    />
+                  </>
+                }
+              ></AlertModal>,
+
               {
                 closeOnClickOutside: true,
                 isDimmed: true,
@@ -98,20 +101,21 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
             iconSize={10}
             onPress={() => {
               open(
-                <WarningModal
+                <AlertModal
                   title="You are going to resume the Queue"
                   description="Allowed members will be able to add to the Queue again"
-                >
-                  <TextButton
-                    text="Resume"
-                    backgroundColor={color.good_green}
-                    width="100%"
-                    onPress={() => {
-                      ResumeQueue();
-                      close();
-                    }}
-                  />
-                </WarningModal>,
+                  status="warning"
+                  controls={
+                    <TextButton
+                      text="Resume"
+                      backgroundColor={color.good_green}
+                      onPress={() => {
+                        ResumeQueue();
+                        close();
+                      }}
+                    />
+                  }
+                ></AlertModal>,
                 FIT_MODAL,
               );
             }}
@@ -144,28 +148,30 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
               iconSize={10}
               onPress={() => {
                 open(
-                  <WarningModal
+                  <AlertModal
                     title="Are you sure you want to pause?"
                     description="By pausing the queue no more patient will be accepted"
-                  >
-                    <TextButton
-                      text="Cancel"
-                      backgroundColor={color.cold_blue}
-                      width="100%"
-                      onPress={() => {
-                        close();
-                      }}
-                    />
-                    <TextButton
-                      text="Confirm"
-                      backgroundColor={color.hot_red}
-                      width="100%"
-                      onPress={() => {
-                        PauseQueue();
-                        close();
-                      }}
-                    />
-                  </WarningModal>,
+                    status="warning"
+                    controls={
+                      <>
+                        <TextButton
+                          text="Cancel"
+                          backgroundColor={color.cold_blue}
+                          onPress={() => {
+                            close();
+                          }}
+                        />
+                        <TextButton
+                          text="Confirm"
+                          backgroundColor={color.hot_red}
+                          onPress={() => {
+                            PauseQueue();
+                            close();
+                          }}
+                        />
+                      </>
+                    }
+                  ></AlertModal>,
                   {
                     closeOnClickOutside: true,
                     isDimmed: true,

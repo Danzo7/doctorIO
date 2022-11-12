@@ -13,8 +13,8 @@ import {
   useStartNextMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import LoadingSpinner from '@components/loading_spinner';
-import WarningModal from '../warning_modal';
 import { Overlay } from '@libs/overlay';
+import AlertModal from '../dialog_modal';
 
 interface NextPatientProps {
   invitedPatient?: { patientName: string; arrivalTime: Date; position: number };
@@ -80,18 +80,19 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
       }
     </ModalContainer>
   ) : (
-    <WarningModal
+    <AlertModal
       title="The queue is empty for now "
       description="You need to add patient to queue"
-    >
-      <TextButton
-        text="Close"
-        backgroundColor={color.cold_blue}
-        width="100%"
-        onPress={() => {
-          Overlay.close();
-        }}
-      />
-    </WarningModal>
+      status="warning"
+      controls={
+        <TextButton
+          text="Close"
+          backgroundColor={color.cold_blue}
+          onPress={() => {
+            Overlay.close();
+          }}
+        />
+      }
+    ></AlertModal>
   );
 }

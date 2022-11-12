@@ -9,7 +9,6 @@ import { DATE_ONLY } from '@constants/data_format';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import WarningModal from '@containers/modals/warning_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 
 import { useRef } from 'react';
@@ -17,6 +16,8 @@ import {
   useDeleteDocumentMutation,
   useDownloadDocumentMutation,
 } from '@redux/instance/record/medical_document_api';
+import AlertModal from '@containers/modals/dialog_modal';
+import TextButton from '@components/buttons/text_button';
 //TODO move to file
 const DeleteDocumentModal = ({
   fileName,
@@ -30,22 +31,24 @@ const DeleteDocumentModal = ({
   const [deleting, { isLoading }] = useDeleteDocumentMutation();
 
   return (
-    <WarningModal
+    <AlertModal
       title={`You are about to delete ${fileName} ? `}
       description="the file will no longer be available after this action "
-    >
-      <TextButton
-        text={`${isLoading ? 'Deleting...' : 'Delete'}`}
-        backgroundColor={color.hot_red}
-        disabled={isLoading}
-        width="100%"
-        onPress={() => {
-          deleting({ id }).then(() => {
-            onSucceed?.();
-          });
-        }}
-      />
-    </WarningModal>
+      status="warning"
+      controls={
+        <TextButton
+          text={`${isLoading ? 'Deleting...' : 'Delete'}`}
+          backgroundColor={color.hot_red}
+          disabled={isLoading}
+          width="100%"
+          onPress={() => {
+            deleting({ id }).then(() => {
+              onSucceed?.();
+            });
+          }}
+        />
+      }
+    />
   );
 };
 
@@ -67,6 +70,7 @@ export default function DocumentPreviewItem({
   }
   if (downError?.statusCode && !consumedError.current) {
     consumedError.current = true;
+    //TODO convert to error modal
     open(
       <WarningModal
         title={`${downError.error} (${downError.statusCode})`}

@@ -20,6 +20,7 @@ const schema = z.object({
     ),
 });
 export default function NetworkError({ errorMsg }: { errorMsg?: string }) {
+  //TODO refactor the entire component
   const { status, disconnect, stop, reconnect } = useConnectionStore();
   const [isEditAdr, setEditAdr] = useState(false);
   const clinicStore = useClinicsStore();

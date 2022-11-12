@@ -10,10 +10,10 @@ import TimingAndSchedule from './pages/timing_and_schedule';
 import PreferencesTab from './pages/preferences_tab';
 import AuditLogTab from './pages/audit_log_tab';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import WarningModal from '@containers/modals/warning_modal';
 import TextButton from '@components/buttons/text_button';
 import { FIT_MODAL } from '@libs/overlay';
 import { useDisconnectMemberMutation } from '@redux/local/auth/authApi';
+import AlertModal from '@containers/modals/dialog_modal';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
@@ -33,21 +33,22 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
           isActive={true}
           onPress={() => {
             open(
-              <WarningModal
+              <AlertModal
                 title="are you sure you want to disconnect ?"
                 description="you will be disconnected from the clinic after confirming"
-              >
-                <TextButton
-                  text="Confirm"
-                  backgroundColor={colors.hot_red}
-                  width="100%"
-                  onPress={() => {
-                    DisconnectMember();
-                    close();
-                    navigate('/clinic/all');
-                  }}
-                />
-              </WarningModal>,
+                status="warning"
+                controls={
+                  <TextButton
+                    text="Confirm"
+                    backgroundColor={colors.hot_red}
+                    onPress={() => {
+                      DisconnectMember();
+                      close();
+                      navigate('/clinic/all');
+                    }}
+                  />
+                }
+              ></AlertModal>,
               FIT_MODAL,
             );
           }}

@@ -8,11 +8,11 @@ import MemberBigCard from '@containers/modals/member_big_card';
 import useNavigation from '@libs/hooks/useNavigation';
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
-import WarningModal from '@containers/modals/warning_modal';
 import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { IS_PREVIEW } from '@constants/env';
 import { MemberBrief } from '@models/server.models';
 import Can from '@ability/index';
+import AlertModal from '@containers/modals/dialog_modal';
 
 interface MemberActionControlsProps {
   dmId?: number;
@@ -57,15 +57,17 @@ export default function MemberActionControls({
             onPress={() => {
               if (notFriend)
                 open(
-                  <WarningModal
+                  <AlertModal
+                    title="Start a conversation"
                     description="This is the first time you are messaging this user. You have to wait for them to accept your request."
-                    title="Start a conversasion"
-                  >
-                    <TextButton
-                      text="Send a request"
-                      backgroundColor={color.good_green}
-                    />
-                  </WarningModal>,
+                    controls={
+                      <TextButton
+                        text="Send a request"
+                        backgroundColor={color.good_green}
+                      />
+                    }
+                    status="warning"
+                  />,
                   FIT_MODAL,
                 );
               else navigate(`${messagesRoutePath + dmId}`);
