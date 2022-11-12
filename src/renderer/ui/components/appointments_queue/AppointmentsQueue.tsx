@@ -66,7 +66,10 @@ export default function AppointmentsQueue() {
                 buttonNode={
                   <QueueControls
                     {...{
-                      state: appointments.length == 0 ? 'EMPTY' : state,
+                      state:
+                        appointments.length == 0 && state != 'PAUSED'
+                          ? 'EMPTY'
+                          : state,
                       isOwner,
                     }}
                   />
