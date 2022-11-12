@@ -1,5 +1,5 @@
 @use '~styles/appColors' as *;
-.dialog-modal {
+.alert-modal {
     display: flex;
 flex-direction: column;
 justify-content: center;
@@ -9,7 +9,7 @@ gap: 10px;
  background: $secondarycolor;
 border-radius: 7px;
 
-> .dialog-modal-texts {
+> .alert-modal-texts {
 display: flex;
 flex-direction: row;
 align-items: flex-start;

@@ -1,14 +1,14 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
-import DialogModal from './DialogModal';
+import AlertModal from './AlertModal';
 import TextButton from '@components/buttons/text_button';
 import color from '@assets/styles/color';
 export default {
   title: 'Modals/DialogModal',
-  component: DialogModal,
+  component: AlertModal,
 };
-const Template: Story<ComponentProps<typeof DialogModal>> = (args) => (
-  <DialogModal {...args} />
+const Template: Story<ComponentProps<typeof AlertModal>> = (args) => (
+  <AlertModal {...args} />
 );
 export const FirstStory = Template;
 FirstStory.args = {

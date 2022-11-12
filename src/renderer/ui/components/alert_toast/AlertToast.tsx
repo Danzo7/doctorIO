@@ -1,14 +1,14 @@
 import { color } from '@assets/styles/color';
 import StatusIcon from '@components/status_icon';
 import './style/index.scss';
-interface AlertProps {
+interface AlertToastProps {
   status: 'Success' | 'warning' | 'error';
   text: string;
 }
-export default function Alert({ status, text }: AlertProps) {
+export default function AlertToast({ status, text }: AlertToastProps) {
   return (
     <div
-      className="alert"
+      className="alert-toast"
       css={{
         border: `1px solid  ${
           status == 'Success'

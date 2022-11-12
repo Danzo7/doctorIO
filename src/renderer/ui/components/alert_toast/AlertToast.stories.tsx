@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react';
 import type { Story } from '@storybook/react';
-import Alert from './Alert';
+import Alert from './AlertToast';
 export default {
   title: 'Modals/Alert',
   component: Alert,

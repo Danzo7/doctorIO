@@ -2,21 +2,21 @@ import StatusIcon from '@components/status_icon';
 import TextPair from '@components/text_pair/TextPair';
 import { ReactNode } from 'react';
 import './style/index.scss';
-interface DialogModalProps {
+interface AlertModalProps {
   status: 'Success' | 'warning' | 'error';
   title: string;
   description: string;
   controls?: ReactNode;
 }
-export default function DialogModal({
+export default function AlertModal({
   status,
   title,
   description,
   controls,
-}: DialogModalProps) {
+}: AlertModalProps) {
   return (
-    <div className="dialog-modal">
-      <div className="dialog-modal-texts">
+    <div className="alert-modal">
+      <div className="alert-modal-texts">
         <StatusIcon status={status} />
         <TextPair
           first={{ fontSize: 18, fontWeight: 600, text: title }}

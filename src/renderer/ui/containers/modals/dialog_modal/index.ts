@@ -1,2 +1,2 @@
-import DialogModal from './DialogModal';
-export default DialogModal;
+import AlertModal from './AlertModal';
+export default AlertModal;
