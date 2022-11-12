@@ -6,8 +6,8 @@ import Header from '@components/header';
 import LoadingSpinner from '@components/loading_spinner';
 import PrintedLayout from '@components/printed_layout';
 import TabMenu from '@components/tab_menu';
+import AlertModal from '@containers/modals/dialog_modal';
 import EndSession from '@containers/modals/end_session';
-import WarningModal from '@containers/modals/warning_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { ModalPortal } from '@libs/overlay/OverlayContainer';
 import { useOverlay } from '@libs/overlay/useOverlay';
@@ -38,9 +38,8 @@ export default function MedicalSession({}: MedicalSessionProps) {
       ? queueStateQuery.data.selected.patientId
       : undefined
     : undefined;
-  const { isLoading, data, isSuccess, isFetching } = useGetPatientDetailQuery(
-    patientId ?? skipToken,
-  );
+  const { isLoading, data, isSuccess, isUninitialized } =
+    useGetPatientDetailQuery(patientId ?? skipToken);
   const { open, openTooltip } = useOverlay();
 
   const openEndSessionModal = () => {
@@ -56,11 +55,17 @@ export default function MedicalSession({}: MedicalSessionProps) {
     else throw new Error('patientId is undefined');
   };
 
-  return isLoading || isFetching ? (
+  return isLoading ||
+    (patientId != undefined && isUninitialized) ||
+    queueStateQuery.isLoading ? (
     <LoadingSpinner />
   ) : isSuccess && patientId ? (
     <div className="medical-session">
-      <MedicalSessionSideBar patientId={patientId} />
+      <MedicalSessionSideBar
+        test={queueStateQuery.data?.selected?.test}
+        patientId={patientId}
+      />
+
       <div className="content-container">
         <Header
           title={{ text: 'Session', fontSize: 20, fontWeight: 600 }}
@@ -133,8 +138,9 @@ export default function MedicalSession({}: MedicalSessionProps) {
     </div>
   ) : (
     <ModalPortal onClose={() => navigate('/')} {...DEFAULT_MODAL}>
-      <WarningModal
-        title="Error"
+      <AlertModal
+        title="Error on the session page"
+        status="error"
         description={
           queueStateQuery.data?.state !== 'IN_PROGRESS'
             ? 'No queue item is selected'
