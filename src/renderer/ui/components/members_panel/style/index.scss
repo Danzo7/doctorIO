@@ -28,6 +28,18 @@
       justify-content: flex-start;
       align-items: stretch;
       gap: 5px;
+
+      > .members-filter-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        > span {
+          font-weight: 400;
+          font-size: 18px;
+          color: $white;
+        }
+      }
     }
   }
 }
