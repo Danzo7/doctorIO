@@ -13,3 +13,4 @@ export default function SimpleInfoContainer({
     </div>
   );
 }
+//UI: add good comp
