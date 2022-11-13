@@ -10,6 +10,9 @@ import { format } from 'date-fns';
 import { DATE_ONLY, TIME_ONLY } from '@constants/data_format';
 import { Appointment } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import AlertModal from '@containers/modals/dialog_modal';
+import TextButton from '@components/buttons/text_button';
 
 export default function TimelineItem({
   bookedIn,
@@ -30,7 +33,7 @@ export default function TimelineItem({
       : state == 'upcoming' || state == 'opened'
       ? color.warm_orange
       : color.cold_blue;
-  const { open } = useOverlay();
+  const { open, close } = useOverlay();
   const { isLoading, data, isSuccess } = useGetPatientDetailQuery(patientId);
   return (
     <div className="timeline-item">
@@ -78,7 +81,11 @@ export default function TimelineItem({
               Icon={View}
               disabled={isLoading || !isSuccess}
               onPress={() => {
-                if (data)
+                if (
+                  data &&
+                  session.prescription.length > 0 &&
+                  session.diagnosis != undefined
+                )
                   open(
                     <SessionPreviewModal
                       session={session}
@@ -93,6 +100,24 @@ export default function TimelineItem({
                       closeBtn: 'inner',
                       width: '50%',
                     },
+                  );
+                else
+                  open(
+                    <AlertModal
+                      title="Empty Session"
+                      description="No session information available for this appointment"
+                      status="warning"
+                      controls={
+                        <TextButton
+                          text="Confirm"
+                          backgroundColor={color.good_green}
+                          onPress={() => {
+                            close();
+                          }}
+                        />
+                      }
+                    />,
+                    DEFAULT_MODAL,
                   );
               }}
             />
