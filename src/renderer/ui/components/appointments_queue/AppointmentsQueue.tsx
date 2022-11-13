@@ -39,7 +39,7 @@ export default function AppointmentsQueue() {
   const [ResumeQueue] = useResumeQueueMutation();
 
   return getQueueAppointmentsQuery.isLoading &&
-    getQueueAppointmentsQuery.isFetching ? (
+    getQueueAppointmentsQuery.isUninitialized ? (
     <LoadingSpinner />
   ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
@@ -80,7 +80,9 @@ export default function AppointmentsQueue() {
           <div className="appointments-queue-content">
             <CabinState state={state} selected={selected} />
             <BorderSeparator direction="vertical" />
-            {appointments.length > 0 ? (
+            {appointments.length == 0 && state != 'PAUSED' ? (
+              <SimpleInfoContainer text="Queue is empty" alignSelf="center" />
+            ) : (
               <div className="wrapper">
                 <Backdrop
                   when={state == 'PAUSED'}
@@ -90,14 +92,14 @@ export default function AppointmentsQueue() {
                         Queue is paused
                         {!isOwner && (
                           <>
-                            {' by'}
+                            {' by '}
                             <span css={{ fontWeight: 600 }}>The owner</span>
                           </>
                         )}
                       </span>
                       {isOwner && (
                         <TextButton
-                          text="resume"
+                          text="Resume"
                           backgroundColor={color.good_green}
                           onPress={() => {
                             ResumeQueue();
@@ -156,8 +158,6 @@ export default function AppointmentsQueue() {
                   </div>
                 </Backdrop>
               </div>
-            ) : (
-              <SimpleInfoContainer text="Queue is empty" alignSelf="center" />
             )}
           </div>
         </div>

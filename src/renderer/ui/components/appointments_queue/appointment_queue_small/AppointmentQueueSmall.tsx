@@ -56,76 +56,73 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
             />
           }
         >
-          {
-            appointments.length > 0 ? (
-              <Backdrop
-                when={state === 'PAUSED' ? (isOwner ? 'blur' : true) : false}
-                backdropItems={
-                  <>
-                    <span css={{ fontSize: 14 }}>
-                      Queue is paused
-                      {!isOwner && (
-                        <>
-                          {' by'}{' '}
-                          <span css={{ fontWeight: 600 }}>The owner</span>
-                        </>
-                      )}
-                    </span>
-                    {isOwner && (
-                      <TextButton
-                        text="resume"
-                        backgroundColor={color.good_green}
-                        onPress={() => {
-                          ResumeQueue();
+          {appointments.length == 0 && state != 'PAUSED' ? (
+            <SimpleInfoContainer text="Empty" />
+          ) : (
+            <Backdrop
+              when={state == 'PAUSED'}
+              backdropItems={
+                <>
+                  <span css={{ fontSize: 14 }}>
+                    Queue is paused
+                    {!isOwner && (
+                      <>
+                        {' by'} <span css={{ fontWeight: 600 }}>The owner</span>
+                      </>
+                    )}
+                  </span>
+                  {isOwner && (
+                    <TextButton
+                      text="Resume"
+                      backgroundColor={color.good_green}
+                      onPress={() => {
+                        ResumeQueue();
+                      }}
+                    />
+                  )}
+                </>
+              }
+            >
+              <ScrollView refs={ref} gap={10}>
+                {appointments &&
+                  appointments.map(
+                    (
+                      {
+                        date,
+                        patientId,
+                        patientName,
+                        test,
+                        position,
+                        appointmentId,
+                      },
+                      index,
+                    ) => (
+                      <div
+                        key={patientId.toString() + index}
+                        onClick={() => {
+                          if (selected == index) setSelected(-1);
+                          else {
+                            if (selected > appointments.length - 1) return;
+                            gotoFrom(index, selected);
+                            setSelected(index);
+                          }
                         }}
-                      />
-                    )}
-                  </>
-                }
-              >
-                <ScrollView refs={ref} gap={10}>
-                  {appointments &&
-                    appointments.map(
-                      (
-                        {
-                          date,
-                          patientId,
-                          patientName,
-                          test,
-                          position,
-                          appointmentId,
-                        },
-                        index,
-                      ) => (
-                        <div
-                          key={patientId.toString() + index}
-                          onClick={() => {
-                            if (selected == index) setSelected(-1);
-                            else {
-                              if (selected > appointments.length - 1) return;
-                              gotoFrom(index, selected);
-                              setSelected(index);
-                            }
-                          }}
-                        >
-                          <QueueItem
-                            id={patientId}
-                            name={patientName}
-                            number={position}
-                            timeAgo={date}
-                            test={test}
-                            opened={selected == index}
-                            appointmentId={appointmentId}
-                          />
-                        </div>
-                      ),
-                    )}
-                </ScrollView>
-              </Backdrop>
-            ) : (
-              <SimpleInfoContainer text="Empty" />
-            ) //UI: add good comp
-          }
+                      >
+                        <QueueItem
+                          id={patientId}
+                          name={patientName}
+                          number={position}
+                          timeAgo={date}
+                          test={test}
+                          opened={selected == index}
+                          appointmentId={appointmentId}
+                        />
+                      </div>
+                    ),
+                  )}
+              </ScrollView>
+            </Backdrop>
+          )}
         </PreviewList>
       );
     })()
