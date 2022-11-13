@@ -2,6 +2,7 @@
 .backdrop-container{
     position: relative;
     border-radius: 5px;
+    min-height: 75px;
     >.backdrop {
         position: absolute;
         display: flex;
