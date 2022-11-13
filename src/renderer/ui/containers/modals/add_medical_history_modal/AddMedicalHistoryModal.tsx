@@ -1,10 +1,12 @@
 import { color } from '@assets/styles/color';
+import AlertToast from '@components/alert_toast';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { DATE_ONLY } from '@constants/data_format';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Overlay } from '@libs/overlay';
+import { DEFAULT_MODAL, Overlay } from '@libs/overlay';
+import { useOverlay } from '@libs/overlay/useOverlay';
 import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -37,13 +39,32 @@ export default function AddMedicalHistoryModal({
     resolver: zodResolver(schema),
     defaultValues: { description: '', selectedDate: new Date() },
   });
-  const [addMedicalHistory, result] = useAddMedicalHistoryMutation();
+  const { open } = useOverlay();
+  const [addMedicalHistory] = useAddMedicalHistoryMutation();
   const onSubmit: SubmitHandler<Data> = ({ description, selectedDate }) => {
     addMedicalHistory({
       patientId: patientId,
       body: { date: selectedDate, description: description },
-    });
-    Overlay.close();
+    })
+      .then(() => {
+        Overlay.close();
+        open(
+          <AlertToast
+            status="Success"
+            text="New medical history added successfully"
+          />,
+          {
+            ...DEFAULT_MODAL,
+            position: { bottom: '10%' },
+            closeBtn: undefined,
+          },
+        );
+      })
+      .then(() => {
+        setTimeout(() => {
+          Overlay.close();
+        }, 2000);
+      });
   };
 
   return (
