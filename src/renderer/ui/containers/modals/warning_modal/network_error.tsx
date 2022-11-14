@@ -40,8 +40,16 @@ export default function NetworkError() {
       status="warning"
       controls={
         <>
-          <TextButton text="Confirm" onPress={disconnect} />
-          <TextButton text="Cancel" onPress={() => setConfirmLogout(false)} />
+          <TextButton
+            text="Confirm"
+            onPress={disconnect}
+            backgroundColor={color.hot_red}
+          />
+          <TextButton
+            text="Cancel"
+            onPress={() => setConfirmLogout(false)}
+            afterBgColor={color.light}
+          />
         </>
       }
     />
@@ -73,27 +81,30 @@ export default function NetworkError() {
         />
       )}
       {status == 'stopped' && (
-        <ModalContainer title={'Change server location'}>
+        <ModalContainer
+          title={'Change server location'}
+          controls={
+            <TextButton
+              backgroundColor={color.cold_blue}
+              onPress={handleSubmit((data) => {
+                clinicStore.setCurrentLocation(data.ip + ':3000');
+                reconnect();
+              })}
+              text="Update"
+              width={'100%'}
+            />
+          }
+        >
           {clinicStore.hasSelectedClinic() ? (
             <Input
               control={control}
-              hint="Enter the IP address of the server"
+              hint="The server IP address of can be retrieved from a connected devices"
               name="ip"
               label="IP address"
               type="text"
               defaultValue={clinicStore
                 .getSelectedClinic()
                 .serverLocation.replace(':3000', '')}
-              trailing={
-                <TextButton
-                  backgroundColor={color.cold_blue}
-                  onPress={handleSubmit((data) => {
-                    clinicStore.setCurrentLocation(data.ip + ':3000');
-                    reconnect();
-                  })}
-                  text="Save"
-                />
-              }
             />
           ) : (
             <ErrorPanel />
