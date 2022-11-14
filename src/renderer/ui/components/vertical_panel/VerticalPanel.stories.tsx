@@ -16,5 +16,5 @@ FirstStory.args = {
   description: 'Trying to reconnect back to the server.',
   Icon: Loading,
   action: { text: 'Refresh the page' },
-  IconBtn: LogOut,
+  IconBtn: { icon: LogOut },
 };

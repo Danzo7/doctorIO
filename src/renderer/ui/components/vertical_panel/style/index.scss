@@ -9,6 +9,8 @@ gap: 10px;
 background: $secondarycolor;
 border-radius: 7px;
  position: relative;
+ flex-grow: 1;
+ align-self: stretch;
 
  > span {
     font-size: 18px;
