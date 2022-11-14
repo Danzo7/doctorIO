@@ -13,7 +13,11 @@
         font-size: 22px;
         color: $white;
     }
-
+    >.queues-header{
+        display: flex;
+        flex-direction: column;
+        gap:10px;
+    }
     > .queues-footer {
         display: flex;
         flex-direction: row;

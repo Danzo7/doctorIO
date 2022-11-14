@@ -9,8 +9,10 @@ export default function Queues({}: QueuesProps) {
   return (
     <div className="queues">
       <span>Appointment Queue</span>
-      <AppointmentsQueue />
-      <PaymentQueue />
+      <div className="queues-header">
+        <AppointmentsQueue />
+        <PaymentQueue />
+      </div>
       <div className="queues-footer">
         <BookedAppointmentPanel />
         <SmallClinicStatus />
