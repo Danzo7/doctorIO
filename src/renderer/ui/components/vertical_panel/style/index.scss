@@ -1,0 +1,57 @@
+@use '~styles/appColors' as *;
+.vertical-panel {
+        display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 20px;
+gap: 10px;
+background: $secondarycolor;
+border-radius: 7px;
+ position: relative;
+
+ > span {
+    font-size: 18px;
+        font-weight: '400';
+        color:$white;
+ }
+
+> .description-div {
+    display: flex;
+        flex-direction: row;
+        gap: 5px;
+
+         > span {
+     font-size: 14px;
+        font-weight: '400';
+        color:$textgray;
+
+         + span {
+        font-size: 14px;
+        font-weight: '400';
+        color:$textgray;
+        text-decoration: underline;
+        cursor: pointer;
+          }
+ }
+}
+
+>.iconBtn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+}
+ &:hover {
+
+    > .description-div {
+
+        > span {
+
+            + span {
+                color: $coldblue;
+            }
+    }
+ }
+}
+}
