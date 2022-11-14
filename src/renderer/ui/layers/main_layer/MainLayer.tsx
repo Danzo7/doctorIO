@@ -2,7 +2,6 @@ import LoadingSpinner from '@components/loading_spinner';
 
 import { NetworkError } from '@containers/modals/warning_modal';
 import MedicalSession from '@layers/medical_session';
-import { STOP_MODAL } from '@libs/overlay';
 import { ModalPortal } from '@libs/overlay/OverlayContainer';
 import { useConnectionStore } from '@stores/ConnectionStore';
 import { useEffect } from 'react';
@@ -27,7 +26,7 @@ export default function MainLayer({}: MainLayerProps) {
       <Route path="*" element={<AppLayout />} />
     </Routes>
   ) : (
-    <ModalPortal {...STOP_MODAL}>
+    <ModalPortal style={{ minWidth: '30%' }} isDimmed>
       <NetworkError />
     </ModalPortal>
   );
