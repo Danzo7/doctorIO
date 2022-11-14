@@ -12,7 +12,7 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import { useFindPatientByNameMutation } from '@redux/instance/record/patient_api';
 import LoadingSpinner from '@components/loading_spinner';
 import { useRef } from 'react';
-import { PatientBrief, ServerError } from '@models/instance.model';
+import { PatientBrief } from '@models/instance.model';
 
 interface SearchInput {
   searchField: string;
@@ -85,9 +85,9 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
       >
         <Input
           errorMessage={
-            errorRef.current?.statusCode == 400
-              ? errorRef.current.message[0]
-              : errorRef.current?.statusCode == 404
+            errorRef.current?.errorCode == 1200
+              ? 'Invalid input. Must be the first and last name or the patient id'
+              : errorRef.current?.errorCode == 1300
               ? 'No patient found'
               : undefined
           }

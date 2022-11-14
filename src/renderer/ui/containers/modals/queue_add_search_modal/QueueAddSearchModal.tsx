@@ -10,7 +10,7 @@ import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useLazyFindPatientByName2Query } from '@redux/instance/record/patient_api';
-import { PatientBrief, ServerError } from '@models/instance.model';
+import { PatientBrief } from '@models/instance.model';
 import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
 import * as z from 'zod';
@@ -41,15 +41,16 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
   const [trigger, result] = useLazyFindPatientByName2Query();
 
   const errorRef = useRef<ServerError>();
-  const serverError: ServerError | undefined = (result.error as any)
-    ?.data as ServerError;
+  const serverError: ServerError | undefined = result.isError
+    ? ((result.error as any).data as ServerError)
+    : undefined;
   if (result.isError || result.isSuccess) errorRef.current = serverError;
 
   return (
     <ModalContainer
       title="Add a Patient to appointment queue"
       controls={
-        errorRef.current?.statusCode == 404 ? (
+        errorRef.current?.errorCode == 1300 ? (
           <TextButton
             text="Add new patient"
             backgroundColor={color.lighter_background}
@@ -90,9 +91,9 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
       >
         <Input
           errorMessage={
-            errorRef.current?.statusCode == 400
-              ? errorRef.current.message[0]
-              : errorRef.current?.statusCode == 404
+            errorRef.current?.errorCode == 1200
+              ? 'Invalid input. Must be the first and last name or the patient id'
+              : errorRef.current?.errorCode == 1300
               ? 'No patient found'
               : undefined
           }

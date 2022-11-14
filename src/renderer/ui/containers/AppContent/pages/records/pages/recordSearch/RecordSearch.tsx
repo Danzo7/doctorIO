@@ -3,7 +3,7 @@ import Input from '@components/inputs/input';
 import LoadingSpinner from '@components/loading_spinner';
 import RecordInfoItem from '@components/record_info_item';
 import useNavigation from '@libs/hooks/useNavigation';
-import { PatientBrief, ServerError } from '@models/instance.model';
+import { PatientBrief } from '@models/instance.model';
 import { useLazyFindPatientByName2Query } from '@redux/instance/record/patient_api';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
@@ -54,9 +54,9 @@ export default function RecordSearch({}: RecordSearchProps) {
       >
         <Input
           errorMessage={
-            errorRef.current?.statusCode == 400
-              ? errorRef.current.message[0]
-              : errorRef.current?.statusCode == 404
+            errorRef.current?.errorCode == 1200
+              ? 'Invalid input. Must be the first and last name or the patient id'
+              : errorRef.current?.errorCode == 1300
               ? 'No patient found'
               : undefined
           }
@@ -69,7 +69,7 @@ export default function RecordSearch({}: RecordSearchProps) {
           grow={false}
         />
       </form>
-      {errorRef.current?.statusCode == 404 ? (
+      {errorRef.current?.errorCode == 1300 ? (
         <div className="not-found">No Patient found !</div>
       ) : errorRef.current == undefined && result.isFetching ? (
         <LoadingSpinner />

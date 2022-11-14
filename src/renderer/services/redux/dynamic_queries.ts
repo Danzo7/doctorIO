@@ -47,7 +47,7 @@ export const refreshTokens = async () => {
     } else throw new Error((refreshResult.error?.data as any)?.message);
   } catch (e: any) {
     //TODO SHow a detailed error to the user when this happen
-    Logger.error('refreshTokens', 'Lost the war ⚰️', e);
+    Logger.error('refreshTokens', 'Refreshing failed ⚰️:', e);
     //authStore.discard();
     useConnectionStore.getState().unreachable();
     release();
@@ -70,14 +70,11 @@ export class DynamicBaseQuery {
     if (!useConnectionStore.getState().url)
       return {
         error: {
-          status: 503,
+          status: -1,
           data: {
-            statusCode: 503,
-            message:
-              'The server is not responding. make sure the server is running',
-            error: 'Service Unavailable',
+            errorCode: -1,
+            message: "The server's URL is not set",
           },
-          statusText: 'Service Unavailable',
         },
       };
     await mutex.waitForUnlock();
@@ -102,10 +99,7 @@ export class DynamicBaseQuery {
     });
 
     let result = await rawBaseQuery(args, api, extraOptions);
-    if (
-      result.error?.status == 401 &&
-      (result.error?.data as any)?.errorCode != 1006
-    ) {
+    if ((result.error?.data as ServerError)?.errorCode == 1007) {
       const refreshed = await refreshTokens();
       if (refreshed) result = await rawBaseQuery(args, api, extraOptions);
     }

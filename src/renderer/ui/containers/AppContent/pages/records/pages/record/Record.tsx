@@ -12,7 +12,7 @@ import useNavigation from '@libs/hooks/useNavigation';
 import { useForm } from 'react-hook-form';
 import search from 'toSvg/search.svg?icon';
 import './style/index.scss';
-import { Patient, PatientBrief, ServerError } from '@models/instance.model';
+import { Patient, PatientBrief } from '@models/instance.model';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '@containers/modals/book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
@@ -82,9 +82,9 @@ export default function Record({}: RecordProps) {
           errorMessage={
             isDirty.current
               ? undefined
-              : errorRef.current?.statusCode == 400
-              ? errorRef.current.message[0]
-              : errorRef.current?.statusCode == 404
+              : errorRef.current?.errorCode == 1200
+              ? 'Invalid input. Must be the first and last name or the patient id'
+              : errorRef.current?.errorCode == 1300
               ? 'No patient found'
               : undefined
           }

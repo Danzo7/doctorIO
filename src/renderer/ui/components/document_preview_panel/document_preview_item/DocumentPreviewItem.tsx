@@ -3,7 +3,7 @@ import PreviewWithControls from '@components/preview_with_controls';
 import TrashCan from 'toSvg/trash_can.svg?icon';
 import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 import damaged from 'toSvg/damaged.svg?icon';
-import { MedicalDocument, ServerError } from '@models/instance.model';
+import { MedicalDocument } from '@models/instance.model';
 import { format } from 'date-fns';
 import { DATE_ONLY } from '@constants/data_format';
 import { useOverlay } from '@libs/overlay/useOverlay';
@@ -65,15 +65,15 @@ export default function DocumentPreviewItem({
   const downError = result.isError
     ? ((result.error as any).error?.data as ServerError)
     : undefined;
-  if (downError?.statusCode === 404) {
+  if (downError?.errorCode === 1300) {
     statusRef.current = 'LOST';
   }
-  if (downError?.statusCode && !consumedError.current) {
+  if (downError?.errorCode && !consumedError.current) {
     consumedError.current = true;
     //TODO convert to error modal
     open(
       <WarningModal
-        title={`${downError.error} (${downError.statusCode})`}
+        title={`${downError.message}`}
         description={downError.message as string}
       />,
       {
