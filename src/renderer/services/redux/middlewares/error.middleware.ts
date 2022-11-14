@@ -1,6 +1,5 @@
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 import type { Middleware } from '@reduxjs/toolkit';
-import { ServerError } from '@models/instance.model';
 import { Logger } from '@libs/Logger';
 
 /**

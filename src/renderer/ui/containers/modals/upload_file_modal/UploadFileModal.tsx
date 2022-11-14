@@ -3,7 +3,6 @@ import IconicButton from '@components/buttons/iconic_button';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
-import { ServerError } from '@models/instance.model';
 import { useUploadFileMutation } from '@redux/instance/record/medical_document_api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Upload from 'toSvg/link.svg?icon';
@@ -21,7 +20,7 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
   const { control, handleSubmit, reset, watch } = useForm<IFile>({
     //  resolver: zodResolver(schema),
   });
-  const [uploadFile, { isLoading, isSuccess, error }] = useUploadFileMutation();
+  const [uploadFile, { isLoading, error }] = useUploadFileMutation();
   const serverError: ServerError | undefined = (error as any)
     ?.data as ServerError;
   const files = watch('files');
