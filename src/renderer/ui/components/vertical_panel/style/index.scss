@@ -1,51 +1,50 @@
 @use '~styles/appColors' as *;
 .vertical-panel {
-        display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-padding: 20px;
-gap: 10px;
-background: $secondarycolor;
-border-radius: 7px;
- position: relative;
- flex-grow: 1;
- align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+    background: $secondarycolor;
+    border-radius: 7px;
+    position: relative;
+    flex-grow: 1;
+    align-self: stretch;
 
- > span {
-    font-size: 18px;
+    > span {
+        font-size: 18px;
         font-weight: '400';
         color:$white;
- }
+    }
 
-> .description-div {
-    display: flex;
+    > .description-div {
+        display: flex;
         flex-direction: row;
         gap: 5px;
 
-         > span {
-     font-size: 14px;
-        font-weight: '400';
-        color:$textgray;
+        > span {
+            font-size: 14px;
+            font-weight: '400';
+            color:$textgray;
 
-         + span {
-        font-size: 14px;
-        font-weight: '400';
-        color:$textgray;
-        text-decoration: underline;
-        cursor: pointer;
+            + span {
+                font-size: 14px;
+                font-weight: '400';
+                color:$textgray;
+                text-decoration: underline;
+                cursor: pointer;
 
-        &:hover {
-            color: $coldblue;
+                &:hover {
+                    color: $coldblue;
+                }
+            }
         }
-          }
- }
-}
+    }
 
->.iconBtn {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    cursor: pointer;
-}
+    >.top-left-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
 }

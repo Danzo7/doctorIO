@@ -3,6 +3,7 @@ import type { Story } from '@storybook/react';
 import VerticalPanel from './VerticalPanel';
 import LogOut from 'toSvg/logOut.svg?icon';
 import Loading from 'toSvg/loading_logo.svg?icon';
+import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 export default {
   title: 'VerticalPanel',
   component: VerticalPanel,
@@ -16,5 +17,5 @@ FirstStory.args = {
   description: 'Trying to reconnect back to the server.',
   Icon: Loading,
   action: { text: 'Refresh the page' },
-  IconBtn: { icon: LogOut },
+  IconBtn: <SquareIconButton Icon={LogOut} />,
 };
