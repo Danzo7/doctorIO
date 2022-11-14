@@ -13,10 +13,9 @@ import ModalContainer from '@components/modal_container';
 import VerticalPanel from '@components/vertical_panel';
 import LoadingSpinner from '@components/loading_spinner';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import AlertModal from '../dialog_modal';
 import ErrorPanel from '@components/error_panel';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { useState } from 'react';
 const schema = z.object({
   ip: z
     .string()
@@ -28,14 +27,25 @@ const schema = z.object({
 export default function NetworkError() {
   //TODO refactor the entire component
   const { status, disconnect, stop, reconnect } = useConnectionStore();
-  const { open } = useOverlay();
   const clinicStore = useClinicsStore();
   const { control, handleSubmit } = useForm<{ ip: string }>({
     resolver: zodResolver(schema),
-    defaultValues: { ip: '' },
   });
+  const [confirmLogout, setConfirmLogout] = useState(false);
 
-  return (
+  return confirmLogout ? (
+    <AlertModal
+      title="Are you sure?"
+      description="You will be disconnected from the server"
+      status="warning"
+      controls={
+        <>
+          <TextButton text="Confirm" onPress={disconnect} />
+          <TextButton text="Cancel" onPress={() => setConfirmLogout(false)} />
+        </>
+      }
+    />
+  ) : (
     <>
       {(status === 'connecting' || status == 'unreachable') && (
         <VerticalPanel
@@ -57,27 +67,19 @@ export default function NetworkError() {
           IconBtn={
             <SquareIconButton
               Icon={LogOut}
-              onPress={() =>
-                open(
-                  <AlertModal
-                    title="Are you sure?"
-                    description="You will be disconnected from the server"
-                    status="warning"
-                    controls={<TextButton text="Yes" onPress={disconnect} />}
-                  />,
-                  { ...DEFAULT_MODAL, style: { zIndex: 100 } },
-                )
-              }
+              onPress={() => setConfirmLogout(true)}
             />
           }
         />
       )}
       {status == 'stopped' && (
-        <ModalContainer title={'Change IP address'}>
+        <ModalContainer title={'Change server location'}>
           {clinicStore.hasSelectedClinic() ? (
             <Input
               control={control}
+              hint="Enter the IP address of the server"
               name="ip"
+              label="IP address"
               type="text"
               defaultValue={clinicStore
                 .getSelectedClinic()
