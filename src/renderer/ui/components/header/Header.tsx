@@ -33,12 +33,12 @@ export default function Header({
       {title && (
         <span
           css={{
-            fontSize: typeof title != 'string' ? title?.fontSize : 18,
-            color: typeof title != 'string' ? title?.fontColor : color.white,
-            fontWeight: typeof title != 'string' ? title?.fontWeight : 600,
+            fontSize: typeof title != 'string' ? title.fontSize : 18,
+            color: typeof title != 'string' ? title.fontColor : color.white,
+            fontWeight: typeof title != 'string' ? title.fontWeight : 600,
           }}
         >
-          {typeof title == 'string' ? title : title?.text}
+          {typeof title == 'string' ? title : title.text}
         </span>
       )}
       {buttonNode}
