@@ -14,13 +14,15 @@ interface SocketState {
     | 'connecting'
     | 'unreachable'
     | 'disconnected'
-    | 'stopped';
+    | 'stopped'
+    | 'locked';
   connect: () => void;
   reAuthorize: () => void;
   stop: () => void;
   disconnect: () => void;
   reconnect: () => void;
   unreachable: () => void;
+  lock: () => void;
   connected: () => void;
   reconnecting: () => void;
   pseudoConnect: (url: string) => void;
@@ -39,7 +41,11 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
         state.socket?.disconnect().close();
         return { status: 'disconnected' };
       }
-      if (state.status == undefined || state.status == 'stopped') {
+      if (
+        state.socket == undefined ||
+        state.status == undefined ||
+        state.status == 'stopped'
+      ) {
         const url = useClinicsStore
           .getState()
           .getSelectedClinic().serverLocation;
@@ -51,20 +57,20 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
         Logger.log('Socket', 'Initializing socket connection');
         socket.on('connected', () => {
           Logger.log('Socket', 'Connected');
-          useConnectionStore.getState().connected();
+          get().connected();
         });
         socket.on('disconnect', () => {
           Logger.log('Socket', 'disconnect');
-          useConnectionStore.getState().reconnecting();
+          get().reconnecting();
         });
         socket.on('reconnect', () => {
           Logger.log('Socket', 'reconnect');
-          useConnectionStore.getState().connected();
+          get().connected();
         });
 
         socket.io.on('reconnect_attempt', (attempt) => {
           if (attempt > 3) {
-            useConnectionStore.getState().unreachable();
+            get().unreachable();
           }
 
           Logger.warn('Socket', 'Trying to reconnect', attempt);
@@ -86,14 +92,15 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
       if (state.socket) {
         state.socket.auth = { token: useAuthStore.getState().accessToken };
         state.socket.connect();
-        return { ...state, status: 'connecting' };
-      } else return { status: 'disconnected' };
+        return { status: 'connecting' };
+      }
+      return { status: 'disconnected', socket: undefined, url: undefined };
     });
   },
   stop: () => {
     set((state) => {
       state.socket?.disconnect();
-      return { ...state, status: 'stopped' };
+      return { status: 'stopped' };
     });
   },
   reconnect() {
@@ -102,25 +109,31 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
   },
 
   disconnect: () => {
-    set((state) => {
+    set(() => {
       useClinicsStore.getState().setSelectedClinic();
+      useAuthStore.getState().discard();
       dispatch({ type: 'REST' });
-      state.socket?.removeAllListeners();
-      state.socket?.disconnect().close();
-      return { status: 'disconnected' };
+      get().socket?.removeAllListeners();
+      get().socket?.disconnect().close();
+      return { status: 'disconnected', socket: undefined, url: undefined };
     });
   },
   connected: () => {
-    set((state) => ({ ...state, status: 'connected' }));
+    set(() => ({ status: 'connected' }));
   },
   reconnecting: () => {
-    set((state) => {
-      return { ...state, status: 'connecting' };
+    set(() => {
+      return { status: 'connecting' };
     });
   },
   unreachable: () => {
-    set((state) => {
-      return { ...state, status: 'unreachable' };
+    set(() => {
+      return { status: 'unreachable' };
+    });
+  },
+  lock: () => {
+    set(() => {
+      return { status: 'locked' };
     });
   },
 
