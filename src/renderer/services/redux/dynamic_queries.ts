@@ -49,7 +49,7 @@ export const refreshTokens = async () => {
     //TODO SHow a detailed error to the user when this happen
     Logger.error('refreshTokens', 'Refreshing failed ⚰️:', e);
     //authStore.discard();
-    useConnectionStore.getState().unreachable();
+    useConnectionStore.getState().lock();
     release();
     return false;
   }

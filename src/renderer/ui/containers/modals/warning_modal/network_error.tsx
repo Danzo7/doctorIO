@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import LogOut from 'toSvg/logOut.svg?icon';
-
 import Input from '@components/inputs/input';
 import { useClinicsStore } from '@stores/clinicsStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
@@ -32,7 +31,6 @@ export default function NetworkError() {
     resolver: zodResolver(schema),
   });
   const [confirmLogout, setConfirmLogout] = useState(false);
-
   return confirmLogout ? (
     <AlertModal
       title="Are you sure?"
@@ -110,6 +108,23 @@ export default function NetworkError() {
             <ErrorPanel />
           )}
         </ModalContainer>
+      )}
+      {status == 'locked' && (
+        <AlertModal
+          title="Account is Locked"
+          description="To unlock your account, you must provide your secret key"
+          status="warning"
+          controls={
+            <>
+              <TextButton text="Unlock" backgroundColor={color.good_green} />
+              <TextButton
+                text="Disconnect"
+                backgroundColor={color.hot_red}
+                onPress={() => setConfirmLogout(true)}
+              />
+            </>
+          }
+        />
       )}
     </>
   );
