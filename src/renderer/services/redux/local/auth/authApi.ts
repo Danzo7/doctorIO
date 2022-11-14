@@ -85,7 +85,6 @@ const authApi = createApi({
       async onQueryStarted(id, { queryFulfilled }) {
         try {
           await queryFulfilled;
-          useAuthStore.getState().discard();
           useConnectionStore.getState().disconnect();
         } catch (err) {
           //console.log(err);
