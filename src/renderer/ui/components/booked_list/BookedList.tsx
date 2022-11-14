@@ -2,16 +2,16 @@ import BookedItem from './booked_item';
 import PreviewList from '@components/preview_list';
 import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/AppointmentApi';
 import LoadingSpinner from '@components/loading_spinner';
-import SimpleInfoContainer from '@components/simple_info_container';
-import TextButton from '@components/buttons/text_button';
-import color from '@assets/styles/color';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import VerticalPanel from '@components/vertical_panel';
+import Schedule from 'toSvg/schedule.svg?icon';
 import AddSearchToBooked from '@containers/modals/add_search_to_booked';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { useOverlay } from '@libs/overlay/useOverlay';
 
 export default function BookedList({}) {
   const { data, isSuccess, isLoading } = useGetBookedAppointmentQuery();
   const { open } = useOverlay();
+
   return (
     <PreviewList title="Booked appointment">
       {isLoading ? (
@@ -20,15 +20,19 @@ export default function BookedList({}) {
         data.length > 0 ? (
           data.map((props, index) => <BookedItem {...props} key={index} />)
         ) : (
-          <SimpleInfoContainer text="No booked appointments">
-            <TextButton
-              text="Book appointment"
-              backgroundColor={color.good_green}
-              onPress={() => {
+          <VerticalPanel
+            title="No booked appointments"
+            description="Start by booking an appointment. "
+            Icon={<Schedule width={'80%'} height="50%" />}
+            backgroundColor={'none'}
+            padding={'15px 0px 0 0px'}
+            action={{
+              text: 'Book appointment',
+              onClick() {
                 open(<AddSearchToBooked />, DEFAULT_MODAL);
-              }}
-            />
-          </SimpleInfoContainer>
+              },
+            }}
+          />
         )
       ) : (
         <span css={{ alignSelf: 'center' }}>error</span>
