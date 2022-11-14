@@ -1,6 +1,5 @@
 import VerticalPanel from '@components/vertical_panel';
-import LogOut from 'toSvg/logOut.svg?icon';
-import randomSvgFaces from 'toSvg/randomSvgFaces.svg?icon';
+import RandomSvgFaces from 'toSvg/randomSvgFaces.svg?icon';
 import './style/index.scss';
 interface ErrorPanelProps {}
 export default function ErrorPanel({}: ErrorPanelProps) {
@@ -9,9 +8,7 @@ export default function ErrorPanel({}: ErrorPanelProps) {
       title="Oops"
       description="Something went wrong."
       action={{ text: 'Refresh the page', onClick: () => {} }}
-      IconBtn={{ icon: LogOut, onClick: () => {} }}
-      Icon={randomSvgFaces}
-      iconSize={100}
+      Icon={<RandomSvgFaces />}
     />
   );
 }
