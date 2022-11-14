@@ -1,5 +1,6 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import Header from '@components/header';
+import SimpleInfoContainer from '@components/simple_info_container';
 import AddDrugModal from '@containers/modals/add_drug_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
@@ -36,6 +37,9 @@ export default function PrescriptionTab({}: PrescriptionTabProps) {
         }
       />
       <MedicamentTable editable drugList={drugs} />
+      {drugs.length == 0 && (
+        <SimpleInfoContainer text="No drug are added yet" alignSelf="stretch" />
+      )}
     </div>
   );
 }
