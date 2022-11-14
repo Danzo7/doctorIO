@@ -60,7 +60,7 @@ module.exports = {
     'no-empty-pattern': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
-    'unused-imports/no-unused-imports': 'warn',
+    'unused-imports/no-unused-imports': 'off',
     '@typescript-eslint/naming-convention': [
       'error',
       {
