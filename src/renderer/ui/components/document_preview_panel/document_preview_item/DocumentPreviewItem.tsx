@@ -8,49 +8,14 @@ import { format } from 'date-fns';
 import { DATE_ONLY } from '@constants/data_format';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import WarningModal from '@containers/modals/warning_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { color } from '@assets/styles/color';
 
 import { useRef } from 'react';
-import {
-  useDeleteDocumentMutation,
-  useDownloadDocumentMutation,
-} from '@redux/instance/record/medical_document_api';
+import { useDownloadDocumentMutation } from '@redux/instance/record/medical_document_api';
 import AlertModal from '@containers/modals/dialog_modal';
 import TextButton from '@components/buttons/text_button';
-//TODO move to file
-const DeleteDocumentModal = ({
-  fileName,
-  id,
-  onSucceed,
-}: {
-  fileName: string;
-  id: string;
-  onSucceed?: () => void;
-}) => {
-  const [deleting, { isLoading }] = useDeleteDocumentMutation();
-
-  return (
-    <AlertModal
-      title={`You are about to delete ${fileName} ? `}
-      description="the file will no longer be available after this action "
-      status="warning"
-      controls={
-        <TextButton
-          text={`${isLoading ? 'Deleting...' : 'Delete'}`}
-          backgroundColor={color.hot_red}
-          disabled={isLoading}
-          width="100%"
-          onPress={() => {
-            deleting({ id }).then(() => {
-              onSucceed?.();
-            });
-          }}
-        />
-      }
-    />
-  );
-};
+import DeleteDocumentModal from '@containers/modals/delete_document_modal';
 
 export default function DocumentPreviewItem({
   fileName,
@@ -94,9 +59,16 @@ export default function DocumentPreviewItem({
           consumedError.current = false;
           if (statusRef.current == 'LOST') {
             open(
-              <WarningModal
+              <AlertModal
+                status="error"
                 title="Document Lost"
                 description="This document is lost. Please contact the administrator."
+                controls={
+                  <TextButton
+                    text="Confirm"
+                    backgroundColor={color.good_green}
+                  />
+                }
               />,
               {
                 ...DEFAULT_MODAL,
@@ -115,7 +87,7 @@ export default function DocumentPreviewItem({
               fileName={fileName}
               onSucceed={close}
             />,
-            DEFAULT_MODAL,
+            { ...FIT_MODAL, style: { maxWidth: '30%' }, closeBtn: undefined },
           );
         }}
       />
