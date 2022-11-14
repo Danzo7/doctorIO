@@ -99,7 +99,7 @@ export default function AppointmentsQueue() {
                     });
                   },
                 }}
-                Icon={<WaitingRoom width={'80%'} height={'100%'} />}
+                Icon={<WaitingRoom width={'70%'} height={'100%'} />}
                 backgroundColor={'none'}
                 padding={'15px 0 0 15px'}
               />
