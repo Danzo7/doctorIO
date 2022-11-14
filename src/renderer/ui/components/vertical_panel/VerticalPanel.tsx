@@ -1,8 +1,7 @@
-import { FunctionComponent, ReactNode, SVGProps } from 'react';
+import { ReactNode } from 'react';
 import './style/index.scss';
 interface VerticalPanelProps {
-  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
-  iconSize?: number | string;
+  Icon: ReactNode;
   title: string;
   description: string;
   action?: { text: string; onClick?: () => void };
@@ -10,7 +9,6 @@ interface VerticalPanelProps {
 }
 export default function VerticalPanel({
   Icon,
-  iconSize = 40,
   title,
   description,
   action,
@@ -18,11 +16,13 @@ export default function VerticalPanel({
 }: VerticalPanelProps) {
   return (
     <div className="vertical-panel">
-      <Icon width={iconSize} height={iconSize} />
+      {Icon}
       <span>{title}</span>
       <div className="description-div">
-        <span>{description}</span>
-        {action && <span onClick={action.onClick}>{action.text}</span>}
+        <span>
+          {description}{' '}
+          {action && <span onClick={action.onClick}>{action.text}</span>}
+        </span>
       </div>
       <div className="top-left-btn">{IconBtn}</div>
     </div>
