@@ -60,92 +60,100 @@ export default function MedicalSession({}: MedicalSessionProps) {
     <LoadingSpinner />
   ) : isSuccess && patientId ? (
     <div className="medical-session">
-      <MedicalSessionSideBar
-        test={queueStateQuery.data?.selected?.test}
-        patientId={patientId}
-      />
+      {
+        <>
+          <MedicalSessionSideBar
+            test={queueStateQuery.data?.selected?.test}
+            patientId={patientId}
+          />
 
-      <div className="content-container">
-        <Header
-          title={{ text: 'Session', fontSize: 20, fontWeight: 600 }}
-          buttonNode={
-            <PatientSmallCard
-              age={data.age}
-              firstName={data.firstName}
-              lastName={data.lastName}
-              patId={patientId}
+          <div className="content-container">
+            <Header
+              title={{ text: 'Session', fontSize: 20, fontWeight: 600 }}
+              buttonNode={
+                <PatientSmallCard
+                  age={data.age}
+                  firstName={data.firstName}
+                  lastName={data.lastName}
+                  patId={patientId}
+                />
+              }
             />
-          }
-        />
-        <TabMenu items={['prescription', 'notice']}>
-          <PrescriptionTab />
-          <DiagnosisTab />
-        </TabMenu>
-        <BorderSeparator direction="horizontal" />
-        <SessionParameter />
-        <div className="controls-div">
-          <DarkLightCornerButton
-            text="Print..."
-            onPress={(e) => {
-              if (e)
-                openTooltip(
-                  [
-                    {
-                      text: 'Notice',
-                    },
-                    {
-                      text: 'Prescription',
-                      onPress: () => {
-                        open(
-                          <PrintedLayout
-                            patientName={data.firstName + ' ' + data.lastName}
-                            patientAge={data.age}
-                            drugList={
-                              useMedicalSessionStore.getState().session
-                                .prescription
-                            }
-                            doctorName={
-                              myMemberDetailQuery.data?.name ?? 'John doe'
-                            }
-                          />,
-                          {
-                            closeOnClickOutside: true,
-                            closeOnBlur: true,
-                            isDimmed: true,
-                            clickThrough: false,
+            <TabMenu items={['prescription', 'notice']}>
+              <PrescriptionTab />
+              <DiagnosisTab />
+            </TabMenu>
+            <BorderSeparator direction="horizontal" />
+            <SessionParameter />
+            <div className="controls-div">
+              <DarkLightCornerButton
+                text="Print..."
+                onPress={(e) => {
+                  if (e)
+                    openTooltip(
+                      [
+                        {
+                          text: 'Notice',
+                        },
+                        {
+                          text: 'Prescription',
+                          onPress: () => {
+                            open(
+                              <PrintedLayout
+                                patientName={
+                                  data.firstName + ' ' + data.lastName
+                                }
+                                patientAge={data.age}
+                                drugList={
+                                  useMedicalSessionStore.getState().session
+                                    .prescription
+                                }
+                                doctorName={
+                                  myMemberDetailQuery.data?.name ?? 'John doe'
+                                }
+                              />,
+                              {
+                                closeOnClickOutside: true,
+                                closeOnBlur: true,
+                                isDimmed: true,
+                                clickThrough: false,
+                              },
+                            );
                           },
-                        );
-                      },
-                    },
-                    {
-                      text: 'Both',
-                    },
-                  ],
-                  e.currentTarget,
-                  true,
-                );
-            }}
-          />
-          <TextButton
-            text="Finish"
-            backgroundColor={color.good_green}
-            width={170}
-            onPress={openEndSessionModal}
-          />
-        </div>
-      </div>
+                        },
+                        {
+                          text: 'Both',
+                        },
+                      ],
+                      e.currentTarget,
+                      true,
+                    );
+                }}
+              />
+              <TextButton
+                text="Finish"
+                backgroundColor={color.good_green}
+                width={170}
+                onPress={openEndSessionModal}
+              />
+            </div>
+          </div>
+        </>
+      }
     </div>
   ) : (
-    <VerticalPanel
-      title="No queue item is selected"
-      description="Please go back to the queue page and try again."
-      Icon={<RandomSvgFaces width={100} height={100} />}
-      action={{
-        text: 'Back home',
-        onClick: () => {
-          navigate('/');
-        },
-      }}
-    />
+    <div className="no-queue-item" css={{ alignSelf: 'center' }}>
+      <VerticalPanel
+        title="No appointment is selected"
+        description="You need to select an appointment from the queue. "
+        Icon={<RandomSvgFaces width={100} height={100} />}
+        action={{
+          text: 'Back home',
+          onClick: () => {
+            navigate('/');
+          },
+        }}
+      />
+    </div>
   );
 }
