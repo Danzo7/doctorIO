@@ -11,7 +11,7 @@ import {
 } from 'react';
 import './style/index.scss';
 import SquareIconButton from '@components/buttons/square_icon_button';
-import { css } from '@emotion/react';
+import { css, CSSObject } from '@emotion/react';
 import { createPopper, Modifier, OptionsGeneric } from '@popperjs/core';
 import { useRouteChange } from '@libs/HistoryBlocker';
 import { ActionProps } from '@components/poppers/tooltip';
@@ -86,6 +86,7 @@ export interface OverlayOptions {
   onClose?: () => void;
   width?: number | string;
   height?: number | string;
+  style?: CSSObject;
   popperTarget?: HTMLElement | PopperTargetType;
   closeMethod?: () => void;
   defaultCloseFallback?: boolean;
@@ -127,13 +128,13 @@ export function OverlayItem({
   transition = 'zoom',
   onClose,
   defaultCloseFallback = true,
+  style,
 }: OverlayItemProps) {
   const closeOverlay = () => {
     onClose?.();
     if (closeMethod) closeMethod();
     else if (defaultCloseFallback) Overlay.close();
   };
-
   return (
     <>
       {backdropColor !== false && (
@@ -158,8 +159,8 @@ export function OverlayItem({
       <div
         className="layer"
         css={{
+          ...style,
           width: width,
-
           height: height,
           position: position && 'absolute',
           top: position?.top,
