@@ -44,7 +44,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
                     onPress={() => {
                       DisconnectMember();
                       close();
-                      navigate('/clinic/all');
+                      navigate('/');
                     }}
                   />
                 }
