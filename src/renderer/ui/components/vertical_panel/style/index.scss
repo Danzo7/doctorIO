@@ -4,13 +4,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
     gap: 10px;
-    background: $secondarycolor;
     border-radius: 7px;
     position: relative;
-    flex-grow: 1;
-    align-self: stretch;
+    align-self: center;
+    height: fit-content;
 
     > span {
         font-size: 18px;
@@ -26,9 +24,10 @@
             font-size: 14px;
             font-weight: '400';
             color:$textgray;
+            text-align: center;
 
             > span {
-                font-size: 14px;
+                font-size: inherit;
                 font-weight: '400';
                 color:$textgray;
                 text-decoration: underline;
