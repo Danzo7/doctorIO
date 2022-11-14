@@ -69,7 +69,10 @@ declare module '*.png' {
  * Predifined variables from webpack to Tell if we are in electron or web
  */
 declare const FROM_ELECTRON: boolean;
-
+interface ServerError {
+  errorCode: number;
+  message: string;
+}
 /* CUSTOM: ADD YOUR OWN HERE */
 declare module 'pixrem';
 declare module 'postcss-opacity';

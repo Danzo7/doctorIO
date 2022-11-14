@@ -85,13 +85,7 @@ interface Test {
   bloodPressure: number;
 }
 
-interface ServerError {
-  statusCode: number;
-  message: string | string[];
-  error: string;
-}
 export type {
-  ServerError,
   BookedAppointment,
   Patient,
   PatientBrief,
