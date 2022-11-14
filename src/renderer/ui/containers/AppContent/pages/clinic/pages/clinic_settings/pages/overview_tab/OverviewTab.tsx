@@ -3,14 +3,21 @@ import OverviewInfoForm from './overview_info_form';
 import './style/index.scss';
 import { useGetClinicQuery } from '@redux/clinic/clinicApi';
 import LoadingSpinner from '@components/loading_spinner';
+import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
 
 interface OverviewTabProps {}
 export default function OverviewTab({}: OverviewTabProps) {
-  const { data, isSuccess, isLoading } = useGetClinicQuery();
+  const getMembersQuery = useGetMembersQuery();
+  const { data, isSuccess, isLoading, isUninitialized } = useGetClinicQuery(
+    undefined,
+    {
+      skip: !getMembersQuery.isSuccess,
+    },
+  );
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || isUninitialized ? (
         <LoadingSpinner />
       ) : (
         isSuccess && (
@@ -20,7 +27,7 @@ export default function OverviewTab({}: OverviewTabProps) {
               address={data.address}
               avatar={data.avatar}
               connectionCount={data.connectionCount}
-              memberCount={data.memberCount}
+              memberCount={getMembersQuery.data!.length}
               patientCount={data.patientCount}
               preferences={data.preferences}
               serviceStatus={data.serviceStatus}
