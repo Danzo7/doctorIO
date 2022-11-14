@@ -9,7 +9,7 @@ export default function ErrorPanel({}: ErrorPanelProps) {
       title="Oops"
       description="Something went wrong."
       action={{ text: 'Refresh the page', onClick: () => {} }}
-      IconBtn={LogOut}
+      IconBtn={{ icon: LogOut, onClick: () => {} }}
       Icon={randomSvgFaces}
       iconSize={100}
     />
