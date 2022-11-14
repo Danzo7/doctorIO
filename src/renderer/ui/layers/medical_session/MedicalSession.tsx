@@ -2,11 +2,12 @@ import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import TextButton from '@components/buttons/text_button';
-import ErrorPanel from '@components/error_panel';
+import RandomSvgFaces from 'toSvg/randomSvgFaces.svg?icon';
 import Header from '@components/header';
 import LoadingSpinner from '@components/loading_spinner';
 import PrintedLayout from '@components/printed_layout';
 import TabMenu from '@components/tab_menu';
+import VerticalPanel from '@components/vertical_panel';
 import EndSession from '@containers/modals/end_session';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
@@ -135,6 +136,16 @@ export default function MedicalSession({}: MedicalSessionProps) {
       </div>
     </div>
   ) : (
-    <ErrorPanel iconSize={100} />
+    <VerticalPanel
+      title="No queue item is selected"
+      description="Please go back to the queue page and try again."
+      Icon={<RandomSvgFaces width={100} height={100} />}
+      action={{
+        text: 'Back home',
+        onClick: () => {
+          navigate('/');
+        },
+      }}
+    />
   );
 }
