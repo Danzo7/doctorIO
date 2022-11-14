@@ -36,6 +36,7 @@ export default function BookedAppointmentPanel({}) {
           Icon={<Schedule width={'80%'} height="50%" />}
           backgroundColor={'none'}
           padding={'15px 0px 0 0px'}
+          alignSelf="center"
           action={{
             text: 'Book appointment',
             onClick() {
