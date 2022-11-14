@@ -7,6 +7,7 @@ import QueueControls from '@components/queue_controls';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Backdrop from '@components/backdrop';
+import WaitingRoom from 'toSvg/waitingRoom.svg?icon';
 import {
   useGetIsQueueOwnerQuery,
   useGetQueueAppointmentsQuery,
@@ -15,8 +16,10 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
-import SimpleInfoContainer from '@components/simple_info_container';
 import PreviewList from '@components/preview_list';
+import VerticalPanel from '@components/vertical_panel';
+import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
+import { useOverlay } from '@libs/overlay/useOverlay';
 
 interface AppointmentQueueSmallProps {}
 
@@ -31,6 +34,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [ResumeQueue] = useResumeQueueMutation();
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);
+  const { open, close } = useOverlay();
   return getQueueAppointmentsQuery.isUninitialized ||
     getQueueAppointmentsQuery.isLoading ? (
     <LoadingSpinner />
@@ -57,7 +61,25 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
           }
         >
           {appointments.length == 0 && state != 'PAUSED' ? (
-            <SimpleInfoContainer text="Empty" />
+            <VerticalPanel
+              title="Queue is empty"
+              description="Start by adding a patient to the queue. "
+              action={{
+                text: 'Add queue item',
+                onClick: () => {
+                  open(<QueueAddSearchModal />, {
+                    closeOnClickOutside: true,
+                    isDimmed: true,
+                    clickThrough: false,
+                    closeBtn: 'inner',
+                    width: '30%',
+                  });
+                },
+              }}
+              Icon={<WaitingRoom width={'80%'} height={'100%'} />}
+              backgroundColor={'none'}
+              padding={'15px 0 0 0'}
+            />
           ) : (
             <Backdrop
               when={state == 'PAUSED'}

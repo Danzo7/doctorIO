@@ -3,6 +3,7 @@ import IconicButton from '@components/buttons/iconic_button';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
+import { Overlay } from '@libs/overlay';
 import { useUploadFileMutation } from '@redux/instance/record/medical_document_api';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Upload from 'toSvg/link.svg?icon';
@@ -31,6 +32,7 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
     fd.append('file', data.files[0]);
     uploadFile({ patientId, data: fd }).then(() => {
       reset();
+      Overlay.close();
     });
   };
   //UI better handle errors / change button color to red on error for 1sec with scss animation / disable btn if input is empty / show error msg on error

@@ -1,4 +1,4 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import './style/index.scss';
 import XMark from 'toSvg/x_mark.svg?icon';
 import GoodMark from 'toSvg/good_mark.svg?icon';
@@ -20,6 +20,8 @@ export default function StatusIcon({
       css={{
         width: size,
         height: size,
+        minWidth: size,
+        minHeight: size,
         borderRadius: borderRadius ?? '100%',
         backgroundColor:
           status == 'Success'

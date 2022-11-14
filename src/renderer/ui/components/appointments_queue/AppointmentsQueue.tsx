@@ -3,6 +3,7 @@ import QueueItemWide from './components/queue_item/queue_item_wide';
 import ScrollView from '@components/scroll_view';
 import TextButton from '@components/buttons/text_button';
 import CabinState from '@components/cabin_state';
+import WaitingRoom from 'toSvg/waitingRoom.svg?icon';
 import { useScroller } from '@libs/hooks/useScroller';
 import Arrow from 'toSvg/arrow.svg?icon';
 import './style/index.scss';
@@ -17,15 +18,17 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
-import SimpleInfoContainer from '@components/simple_info_container';
 import BorderSeparator from '@components/border_separator';
 import TabMenu from '@components/tab_menu';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import LinkedRole from '@components/linked_role';
+import { useOverlay } from '@libs/overlay/useOverlay';
+import VerticalPanel from '@components/vertical_panel';
+import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
-
+  const { open, close } = useOverlay();
   const queueStateQuery = useGetQueueStateQuery();
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
@@ -81,7 +84,25 @@ export default function AppointmentsQueue() {
             <CabinState state={state} selected={selected} />
             <BorderSeparator direction="vertical" />
             {appointments.length == 0 && state != 'PAUSED' ? (
-              <SimpleInfoContainer text="Queue is empty" alignSelf="center" />
+              <VerticalPanel
+                title="Queue is empty"
+                description="Start by adding a patient to the queue. "
+                action={{
+                  text: 'Add queue item',
+                  onClick: () => {
+                    open(<QueueAddSearchModal />, {
+                      closeOnClickOutside: true,
+                      isDimmed: true,
+                      clickThrough: false,
+                      closeBtn: 'inner',
+                      width: '30%',
+                    });
+                  },
+                }}
+                Icon={<WaitingRoom width={'80%'} height={'100%'} />}
+                backgroundColor={'none'}
+                padding={'15px 0 0 15px'}
+              />
             ) : (
               <div className="wrapper">
                 <Backdrop
