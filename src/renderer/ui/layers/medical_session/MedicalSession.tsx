@@ -2,14 +2,12 @@ import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import TextButton from '@components/buttons/text_button';
+import ErrorPanel from '@components/error_panel';
 import Header from '@components/header';
 import LoadingSpinner from '@components/loading_spinner';
 import PrintedLayout from '@components/printed_layout';
 import TabMenu from '@components/tab_menu';
-import AlertModal from '@containers/modals/dialog_modal';
 import EndSession from '@containers/modals/end_session';
-import { DEFAULT_MODAL } from '@libs/overlay';
-import { ModalPortal } from '@libs/overlay/OverlayContainer';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import { useGetQueueStateQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
@@ -137,16 +135,6 @@ export default function MedicalSession({}: MedicalSessionProps) {
       </div>
     </div>
   ) : (
-    <ModalPortal onClose={() => navigate('/')} {...DEFAULT_MODAL}>
-      <AlertModal
-        title="Error on the session page"
-        status="error"
-        description={
-          queueStateQuery.data?.state !== 'IN_PROGRESS'
-            ? 'No queue item is selected'
-            : 'Something went wrong'
-        }
-      />
-    </ModalPortal>
+    <ErrorPanel />
   );
 }
