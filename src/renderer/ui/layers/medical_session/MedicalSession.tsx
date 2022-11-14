@@ -135,6 +135,6 @@ export default function MedicalSession({}: MedicalSessionProps) {
       </div>
     </div>
   ) : (
-    <ErrorPanel />
+    <ErrorPanel iconSize={100} />
   );
 }
