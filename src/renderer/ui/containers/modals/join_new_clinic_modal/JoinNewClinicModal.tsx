@@ -10,7 +10,6 @@ import { useState } from 'react';
 import { Overlay } from '@libs/overlay';
 import { nanoid } from '@reduxjs/toolkit';
 import LoadingSpinner from '@components/loading_spinner';
-import { ServerError } from '@models/instance.model';
 import CopyField from '@components/copy_field';
 import { useUserStore } from '@stores/userStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
@@ -28,13 +27,12 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
     mode: 'onSubmit',
     defaultValues: { key: '' },
   });
-  const errorMsg = isError
+  const serverError = isError
     ? ((error as any)?.data?.message as ServerError)
     : undefined;
   const [internalError, setError] = useState('');
   const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
     let location;
-    console.log('key :', key);
     try {
       location =
         key.length > 0 ? parseInviteKey(key).location : '127.0.0.1:3000';
@@ -100,11 +98,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
             if (internalError.length > 0) setError('');
           }}
           errorMessage={
-            internalError.length > 0
-              ? internalError
-              : Array.isArray(errorMsg)
-              ? errorMsg[0]
-              : errorMsg
+            internalError.length > 0 ? internalError : serverError?.message
           }
           leading={<Key />}
           type="text"
