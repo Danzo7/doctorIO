@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
@@ -7,6 +6,7 @@ import './index.scss';
 import { Provider } from 'react-redux';
 import Taskbar from '@components/taskbar';
 import store from '@store';
+import { ErrorBoundary } from '@layers/error_layer';
 
 const app = document.getElementById('app-mount');
 const root = createRoot(app as HTMLElement);
@@ -14,12 +14,14 @@ const Routing = FROM_ELECTRON ? HashRouter : BrowserRouter;
 
 root.render(
   <StrictMode>
-    {FROM_ELECTRON && <Taskbar />}
-    <Provider store={store}>
-      <Routing>
-        <App />
-      </Routing>
-    </Provider>
+    <ErrorBoundary>
+      {FROM_ELECTRON && <Taskbar />}
+      <Provider store={store}>
+        <Routing>
+          <App />
+        </Routing>
+      </Provider>
+    </ErrorBoundary>
   </StrictMode>,
 );
 
