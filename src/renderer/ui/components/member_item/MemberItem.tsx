@@ -24,8 +24,8 @@ export default function MemberItem({
   status,
 }: MemberBrief) {
   const { openTooltip, open } = useOverlay();
-  const [AssignRole, AssignResult] = useAssignRoleMutation();
-  const [RevokeRole, RevokeResult] = useRevokeRoleMutation();
+  const [AssignRole] = useAssignRoleMutation();
+  const [RevokeRole] = useRevokeRoleMutation();
   return (
     <div className="member-item">
       <div className="item-container">
