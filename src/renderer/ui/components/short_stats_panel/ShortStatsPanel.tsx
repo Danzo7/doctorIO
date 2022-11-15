@@ -3,7 +3,7 @@ import MiniStats from '@components/mini_stats';
 import './style/index.scss';
 import exclamation from 'toSvg/exclamation.svg?icon';
 import colors from '@colors';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import MemberBigCard from '@containers/modals/member_big_card';
@@ -66,10 +66,7 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
                     imgSrc={data.avatar}
                     alt={data.name + data.id}
                     onClick={() => {
-                      open(<MemberBigCard id={data.id} />, {
-                        ...DEFAULT_MODAL,
-                        width: '20%',
-                      });
+                      open(<MemberBigCard id={data.id} />, FIT_MODAL);
                     }}
                   />
                 )

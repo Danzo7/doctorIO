@@ -39,10 +39,7 @@ export default function MemberActionControls({
           width={40}
           iconSize={15}
           onPress={() => {
-            open(<MemberBigCard id={id} />, {
-              ...DEFAULT_MODAL,
-              width: '20%',
-            });
+            open(<MemberBigCard id={id} />, FIT_MODAL);
           }}
         />
       )}
