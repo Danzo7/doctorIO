@@ -5,9 +5,6 @@
     align-items: center;
     padding: 10px;
     gap: 10px;
-    background: $darkerseccolor;
-    border: 1px solid $bordercolor;
-    border-radius: 7px;
 
     > .fullName-id-container {
         display: flex;
@@ -31,12 +28,5 @@
             font-size: 15px;
             color:$textgray
         }
-    }
-    > .bottom-controls  {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1vw;
     }
 }
