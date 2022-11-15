@@ -28,13 +28,13 @@
             > span {
                 font-size: inherit;
                 font-weight: '400';
-                color:$textgray;
-                text-decoration: underline;
+                color: $coldblue;
+
                 cursor: pointer;
                 white-space:nowrap ;
 
                 &:hover {
-                    color: $coldblue;
+                    text-decoration: underline;
                 }
             }
         }
