@@ -19,6 +19,7 @@ export const DEFAULT_MODAL: OverlayOptions = {
   isDimmed: true,
   clickThrough: false,
   closeBtn: 'inner',
+  style: { minWidth: '20%', minHeight: '10%' },
 };
 export const STOP_MODAL: OverlayOptions = {
   width: '30%',
@@ -31,4 +32,5 @@ export const FIT_MODAL: OverlayOptions = {
   isDimmed: true,
   clickThrough: false,
   closeBtn: 'inner',
+  style: { minWidth: '20%', minHeight: '10%' },
 };
