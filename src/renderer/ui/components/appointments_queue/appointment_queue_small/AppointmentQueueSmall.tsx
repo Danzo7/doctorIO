@@ -34,10 +34,12 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [ResumeQueue] = useResumeQueueMutation();
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);
-  const { open, close } = useOverlay();
+  const { open } = useOverlay();
   return getQueueAppointmentsQuery.isUninitialized ||
     getQueueAppointmentsQuery.isLoading ? (
-    <LoadingSpinner />
+    <div>
+      <LoadingSpinner />
+    </div>
   ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
       const { state } = queueStateQuery.data as QueueState;
