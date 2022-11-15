@@ -35,7 +35,7 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
       Overlay.close();
     });
   };
-  //UI better handle errors / change button color to red on error for 1sec with scss animation / disable btn if input is empty / show error msg on error
+
   //UI add a notification overlay when upload success
   return (
     <ModalContainer
@@ -44,11 +44,7 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
       gap={10}
       controls={
         <TextButton
-          text={
-            isLoading //FIXME loading sometimes stuck
-              ? 'Uploading...'
-              : 'Upload'
-          }
+          text={isLoading ? 'Uploading...' : 'Upload'}
           disabled={isLoading || files?.length == undefined}
           backgroundColor={color.good_green}
           width="fit-content"

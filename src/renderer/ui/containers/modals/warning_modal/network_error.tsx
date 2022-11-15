@@ -24,7 +24,6 @@ const schema = z.object({
     ),
 });
 export default function NetworkError() {
-  //TODO refactor the entire component
   const { status, disconnect, stop, reconnect } = useConnectionStore();
   const clinicStore = useClinicsStore();
   const { control, handleSubmit } = useForm<{ ip: string }>({

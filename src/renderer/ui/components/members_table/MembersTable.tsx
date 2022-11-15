@@ -2,7 +2,6 @@ import MemberItem from '@components/member_item';
 import './style/index.scss';
 import { MemberBrief } from '@models/server.models';
 interface MembersTableProps {
-  //FIXME no props only redux
   list: MemberBrief[];
 }
 export default function MembersTable({ list }: MembersTableProps) {

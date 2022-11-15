@@ -49,7 +49,7 @@ export default function MemberItem({
         <SmallRoleList
           roleList={roles}
           onAdd={(role) => {
-            //FIXME fetch error
+            //FIXME  show errorToast on fetch error
             AssignRole({ memberId: id, roleId: role.id });
           }}
           onDelete={(role) => {
