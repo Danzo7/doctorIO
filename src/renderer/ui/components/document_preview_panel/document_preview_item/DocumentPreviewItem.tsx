@@ -35,15 +35,15 @@ export default function DocumentPreviewItem({
   }
   if (downError?.errorCode && !consumedError.current) {
     consumedError.current = true;
-    //TODO convert to error modal
+
     open(
-      <WarningModal
+      <AlertModal
+        status="error"
         title={`${downError.message}`}
         description={downError.message as string}
       />,
-      {
-        ...DEFAULT_MODAL,
-      },
+
+      DEFAULT_MODAL,
     );
   }
 
