@@ -21,6 +21,7 @@ export default function DiagnosisTab() {
   });
 
   const [isSaved, setIsSaved] = useState(false);
+
   return (
     <div className="notice-tab">
       <Input
@@ -28,10 +29,13 @@ export default function DiagnosisTab() {
         name="diagnosis"
         control={control}
         placeholder="write something..."
+        onChange={() => {
+          setIsSaved(false);
+        }}
       />
       <div className="save-btn-wrapper">
         <TextButton
-          text={isSaved ? 'Saved' : 'Save'} //TODO  autosave
+          text={isSaved ? 'Saved' : 'Save'}
           backgroundColor={isSaved ? color.good_green : color.secondary_color}
           fontSize={14}
           onPress={() => {
