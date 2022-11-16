@@ -30,11 +30,17 @@ export default function EndSession({ patientId }: EndSessionProps) {
           padding=" 5px 15px"
           onPress={async () => {
             await EndNext({
-              diagnosis: currentSession.diagnosis,
-              prescription: currentSession.prescription.map(
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                ({ id, ...other }) => other,
-              ),
+              diagnosis:
+                currentSession.diagnosis?.length > 0
+                  ? currentSession.diagnosis
+                  : undefined,
+              prescription:
+                currentSession.prescription?.length > 0
+                  ? currentSession.prescription.map(
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                      ({ id, ...other }) => other,
+                    )
+                  : undefined,
               payment:
                 sessionParameters.payment?.value &&
                 sessionParameters.payment?.isHandPayment &&

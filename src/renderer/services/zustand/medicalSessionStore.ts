@@ -4,7 +4,7 @@ import create from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 interface MedicalSessionStore {
-  session: Session;
+  session: Required<Session>;
   sessionParameter: {
     booked?: Date;
     payment?: { value: number; isHandPayment: boolean };
@@ -24,7 +24,7 @@ interface MedicalSessionStore {
 export const useMedicalSessionStore = create<MedicalSessionStore>()(
   immer((set) => ({
     sessionParameter: {},
-    session: { prescription: [] },
+    session: { diagnosis: '', prescription: [] },
     setDiagnosis: (text) =>
       set((state) => {
         state.session.diagnosis = text;

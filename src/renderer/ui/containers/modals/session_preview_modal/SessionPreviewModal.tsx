@@ -2,7 +2,6 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
 import PrintedLayout from '@components/printed_layout';
-import SimpleInfoContainer from '@components/simple_info_container';
 import TabMenu from '@components/tab_menu';
 import { TimeLineDiagnosis } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
@@ -25,14 +24,16 @@ export default function SessionPreviewModal({
 }: SessionPreviewModalProps) {
   const { open } = useOverlay();
   const { isSuccess, isLoading, data } = useGetClinicQuery();
-
+  const { prescription } = session;
   return (
     <ModalContainer
       title="Session preview"
       controls={
         patientAge != undefined &&
         patientName &&
-        memberName && (
+        memberName &&
+        prescription &&
+        data && (
           <TextButton
             text="Print..."
             backgroundColor={color.lighter_background}
@@ -42,12 +43,11 @@ export default function SessionPreviewModal({
             borderColor={color.border_color}
             disabled={isLoading && !isSuccess}
             onPress={() =>
-              data &&
               open(
                 <PrintedLayout
                   patientName={patientName}
                   patientAge={patientAge}
-                  drugList={session.prescription}
+                  drugList={prescription}
                   doctorName={memberName}
                 />,
                 {
@@ -64,21 +64,16 @@ export default function SessionPreviewModal({
     >
       <div className="tab-menu-container">
         <TabMenu
-          items={['prescription', 'Diagnosis']}
+          items={Object.keys(session)}
           borderBottom={false}
           menuItemsAlignment="center"
         >
-          {session.prescription.length > 0 ? (
+          {session.prescription && (
             <MedicamentTable drugList={session.prescription} />
-          ) : (
-            <SimpleInfoContainer text="No prescription" />
           )}
-
-          <TimeLineDiagnosis
-            diagnosis={
-              session.diagnosis ? session.diagnosis : 'No diagnosis added '
-            }
-          />
+          {session.diagnosis && (
+            <TimeLineDiagnosis diagnosis={session.diagnosis} />
+          )}
         </TabMenu>
       </div>
     </ModalContainer>

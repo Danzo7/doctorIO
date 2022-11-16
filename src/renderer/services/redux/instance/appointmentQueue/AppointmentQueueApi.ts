@@ -166,7 +166,7 @@ const appointmentQueueApi = createApi({
       {
         diagnosis?: string;
         subject?: string;
-        prescription: Omit<Drug, 'id'>[];
+        prescription?: Omit<Drug, 'id'>[];
         payment?: number;
       }
     >({

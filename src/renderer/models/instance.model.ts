@@ -39,7 +39,7 @@ interface PatientBrief {
 }
 
 interface Session {
-  prescription: Drug[];
+  prescription?: Drug[];
   diagnosis?: string;
   //here we can add more types for a session(example a file or scanner)
 }
