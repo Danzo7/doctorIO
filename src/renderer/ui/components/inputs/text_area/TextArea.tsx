@@ -8,7 +8,7 @@ interface TextAreaProps extends ControllerProps {
   placeholder?: string;
 }
 export default forwardRef(function TextArea(
-  { defaultValue, fieldState, field, placeholder }: TextAreaProps,
+  { defaultValue, fieldState, field, placeholder, onChanged }: TextAreaProps,
   ref,
 ) {
   //const [changed, setChanged] = useState(false);
@@ -19,11 +19,11 @@ export default forwardRef(function TextArea(
       <textarea
         defaultValue={defaultValue}
         placeholder={placeholder}
+        {...others}
         onChange={(e) => {
-          onChange?.(e);
+          onChanged?.(e);
           // setChanged(true);
         }}
-        {...others}
         ref={ref as any}
       />
 
