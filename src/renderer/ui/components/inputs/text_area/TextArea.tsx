@@ -8,7 +8,7 @@ interface TextAreaProps extends ControllerProps {
   placeholder?: string;
 }
 export default forwardRef(function TextArea(
-  { defaultValue, fieldState, field, placeholder, onChanged }: TextAreaProps,
+  { defaultValue, field, placeholder, onChanged }: TextAreaProps,
   ref,
 ) {
   //const [changed, setChanged] = useState(false);
@@ -19,24 +19,13 @@ export default forwardRef(function TextArea(
       <textarea
         defaultValue={defaultValue}
         placeholder={placeholder}
-        {...others}
         onChange={(e) => {
-          onChanged?.(e);
-          // setChanged(true);
+          onChange?.(e);
+          onChanged?.(e.target.value);
         }}
+        {...others}
         ref={ref as any}
       />
-
-      {/* {changed && (
-        <div className="save-btn-wrapper">
-          <TextButton
-            text="Save"
-            backgroundColor={color.secondary_color}
-            fontSize={14}
-            disabled={fieldState?.error}
-          />
-        </div>
-      )} */}
     </div>
   );
 });

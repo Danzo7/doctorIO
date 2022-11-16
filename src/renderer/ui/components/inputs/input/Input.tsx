@@ -218,16 +218,12 @@ export default function Input<T extends FieldValues = FieldValues>({
                   return <Timepicker field={field} onChanged={onChange} />;
 
                 if (type == 'textarea') {
-                  const { onChange: onChanged, ...others } = field;
                   return (
                     <TextArea
                       field={field}
                       placeholder={placeholder}
                       ref={ref}
-                      onChanged={(e) => {
-                        onChanged(e.target.value);
-                        onChange?.(e.target.value as any);
-                      }}
+                      onChanged={onChange}
                     />
                   );
                 }
