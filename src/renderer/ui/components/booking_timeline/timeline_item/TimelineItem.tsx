@@ -83,8 +83,8 @@ export default function TimelineItem({
               onPress={() => {
                 if (
                   data &&
-                  session.prescription.length > 0 &&
-                  session.diagnosis != undefined
+                  (session.prescription.length > 0 ||
+                    session.diagnosis != undefined)
                 )
                   open(
                     <SessionPreviewModal

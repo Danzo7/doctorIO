@@ -2,6 +2,7 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
 import PrintedLayout from '@components/printed_layout';
+import SimpleInfoContainer from '@components/simple_info_container';
 import TabMenu from '@components/tab_menu';
 import { TimeLineDiagnosis } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
@@ -63,18 +64,21 @@ export default function SessionPreviewModal({
     >
       <div className="tab-menu-container">
         <TabMenu
-          items={
-            ['prescription', session.diagnosis && 'Diagnosis'].filter(
-              Boolean,
-            ) as string[]
-          }
+          items={['prescription', 'Diagnosis']}
           borderBottom={false}
           menuItemsAlignment="center"
         >
-          <MedicamentTable drugList={session.prescription} />
-          {session.diagnosis && (
-            <TimeLineDiagnosis diagnosis={session.diagnosis} />
+          {session.prescription.length > 0 ? (
+            <MedicamentTable drugList={session.prescription} />
+          ) : (
+            <SimpleInfoContainer text="No prescription" />
           )}
+
+          <TimeLineDiagnosis
+            diagnosis={
+              session.diagnosis ? session.diagnosis : 'No diagnosis added '
+            }
+          />
         </TabMenu>
       </div>
     </ModalContainer>
