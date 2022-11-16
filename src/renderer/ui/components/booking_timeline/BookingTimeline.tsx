@@ -4,16 +4,7 @@ import PreviewList from '@components/preview_list';
 import { Appointment } from '@models/instance.model';
 import './style/index.scss';
 import TimelineItem from './timeline_item';
-interface BookedItem {
-  id: number;
-  state: 'done' | 'done-booked' | 'upcoming' | 'missed';
-  bookDate?: Date;
-  date?: Date;
-  sessionId?: number;
-  subject?: string;
-  member: { memberId: number; memberName: string };
-  assignedBy: { memberId: number; memberName: string };
-}
+
 interface BookingTimelineProps {
   patientId: number;
   appointments: Appointment[];
