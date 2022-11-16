@@ -37,12 +37,12 @@ export default function AddMedicalTestModal({
 
   return (
     <ModalContainer
-      title="Medical testa"
+      title="Biometric screening"
       onSubmit={handleSubmit(onSubmit)}
       controls={
         <>
           <TextButton
-            text={'Add Test'}
+            text={'Add Biometric screening'}
             backgroundColor={colors.good_green}
             radius={7}
             fontSize={14}
