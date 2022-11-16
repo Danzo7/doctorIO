@@ -27,6 +27,8 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useGetPatientAppointmentsQuery } from '@redux/instance/Appointment/AppointmentApi';
 import TextButton from '@components/buttons/text_button';
+import ErrorPanel from '@components/error_panel';
+import SimpleInfoContainer from '@components/simple_info_container';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -60,7 +62,7 @@ export default function Record({}: RecordProps) {
   if (result.isError || result.isSuccess) errorRef.current = serverError;
   const { isFetching, isSuccess, data } = useGetPatientDetailQuery(
     Number(patientId),
-  ); //FIXME Handle errors
+  );
   const res = useGetPatientAppointmentsQuery(Number(patientId));
   if (watchSearchField !== searchRef.current) {
     isDirty.current = true;
@@ -142,9 +144,11 @@ export default function Record({}: RecordProps) {
                     />
                   }
                 />
-                <PatientSpecificsCard
-                  data={selectedPatient.test ? selectedPatient.test : []}
-                />
+                {selectedPatient.test ? (
+                  <PatientSpecificsCard data={selectedPatient.test} />
+                ) : (
+                  <SimpleInfoContainer text="No Biometric screening" />
+                )}
                 <BookingTimeline
                   appointments={res.data ?? []}
                   patientId={Number(patientId)}
@@ -173,7 +177,7 @@ export default function Record({}: RecordProps) {
       ) : isFetching ? (
         <LoadingSpinner />
       ) : (
-        <div>Something went wrong</div>
+        <ErrorPanel />
       )}
     </div>
   );
