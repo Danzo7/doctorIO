@@ -57,7 +57,7 @@ export default function TabMenu({
           </div>
         </div>
       </div>
-      {children?.find((child, index) => index == selected)}
+      {children?.filter(Boolean)?.find((child, index) => index == selected)}
     </>
   );
 }
