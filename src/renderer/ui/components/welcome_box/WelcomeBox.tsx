@@ -6,8 +6,9 @@ import Pattern from 'toSvg/pattern.svg';
 import { differenceInHours } from 'date-fns/esm';
 import { parseISO } from 'date-fns';
 import { useUserSettingsStore } from '@stores/userSettingsStore';
+import { useUserStore } from '@stores/userStore';
 interface WelcomeBoxProps {
-  message: string;
+  message?: string;
 }
 function WelcomeBox({ message }: WelcomeBoxProps) {
   const settings = useUserSettingsStore();
@@ -38,7 +39,17 @@ function WelcomeBox({ message }: WelcomeBoxProps) {
           <div className="content">
             <Pattern css={{ position: 'absolute', left: -10 }} />
             <Svg css={{ height: '100%', width: 'auto' }} />
-            <span>{message}</span>
+            <span>
+              {message
+                ? message
+                : `Welcome ${
+                    useUserStore.getState().gender == 'male' ? 'mr' : 'ms'
+                  } ${
+                    useUserStore.getState().firstName +
+                    ' ' +
+                    useUserStore.getState().lastName
+                  }`}
+            </span>
           </div>
           <div
             className="hide-btn"
