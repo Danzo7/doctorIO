@@ -49,7 +49,11 @@ interface TextButtonProps {
     | 'end'
     | 'flex-end'
     | 'flex-start'
-    | 'start';
+    | 'start'
+    | 'space-around'
+    | 'space-between'
+    | 'space-evenly'
+    | 'stretch';
   itemsDirection?: 'row' | 'row-reverse';
   alignSelf?:
     | 'center'
