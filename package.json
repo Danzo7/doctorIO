@@ -57,6 +57,7 @@
     "react-router-dom": "6.3.0",
     "react-to-print": "^2.14.8",
     "react-transition-group": "^4.4.5",
+    "react-viewport-list": "^6.1.0",
     "socket.io-client": "^4.5.3",
     "zod": "^3.19.1",
     "zustand": "^4.1.4"
