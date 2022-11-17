@@ -10,12 +10,13 @@ import { useGetPaymentsQuery } from '@redux/instance/Appointment/AppointmentApi'
 import LoadingSpinner from '@components/loading_spinner';
 import BorderSeparator from '@components/border_separator';
 import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import SimpleInfoContainer from '@components/simple_info_container';
+import VerticalPanel from '@components/vertical_panel';
+import Coins from 'toSvg/coins.svg?icon';
 
 interface PaymentQueueProps {}
 export default function PaymentQueue({}: PaymentQueueProps) {
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
-  const { data, isSuccess, isLoading, error } = useGetPaymentsQuery();
+  const { data, isSuccess, isLoading } = useGetPaymentsQuery();
   const appointmentsQuery = useGetQueueAppointmentsQuery();
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const smallInfoCardData = {
@@ -63,7 +64,12 @@ export default function PaymentQueue({}: PaymentQueueProps) {
             </TextButton>
           </div>
         ) : (
-          <SimpleInfoContainer text="No pending payments" alignSelf="center" />
+          <VerticalPanel
+            title="No pending payments"
+            Icon={<Coins width="20%" height="20%" />}
+            backgroundColor={'none'}
+            padding={0}
+          />
         )}
       </div>
     </div>
