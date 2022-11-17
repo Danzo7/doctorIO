@@ -4,7 +4,7 @@ import './style/index.scss';
 interface VerticalPanelProps {
   Icon: ReactNode;
   title: string;
-  description: string;
+  description?: string;
   action?: { text: string; onClick?: () => void };
   IconBtn?: ReactNode;
   backgroundColor?: string;
