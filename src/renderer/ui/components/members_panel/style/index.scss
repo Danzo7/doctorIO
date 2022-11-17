@@ -19,27 +19,19 @@
     }
   }
   > .members-list-container {
-    overflow-y: scroll;
+    will-change: transform;
 
-    > .members-list {
-      padding-right: 10px;
+    overflow-y: scroll;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 5px;
+    >div{
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-items: stretch;
       gap: 5px;
-
-      > .members-filter-container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        > span {
-          font-weight: 400;
-          font-size: 18px;
-          color: $white;
-        }
-      }
     }
   }
 }
