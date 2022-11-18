@@ -63,7 +63,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
       {
         <>
           <MedicalSessionSideBar
-            test={queueStateQuery.data?.selected?.test}
+            biometricScreening={queueStateQuery.data?.selected?.test}
             patientId={patientId}
           />
 

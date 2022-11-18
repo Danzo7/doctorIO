@@ -10,7 +10,6 @@ import TextIconButton from '@components/buttons/text_icon_button';
 import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
-import { Test } from '@models/instance.model';
 import useNavigation from '@libs/hooks/useNavigation';
 import {
   useDeleteAppointmentMutation,
@@ -19,6 +18,7 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 import TimeAgo from '@components/time_ago';
+import { BiometricScreening } from '@models/instance.model';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -26,7 +26,7 @@ interface QueueItemWideProps {
   number: number;
   state?: string;
   width?: number;
-  test?: Test;
+  biometricScreening?: BiometricScreening;
   appointmentId: number;
 }
 
@@ -38,7 +38,7 @@ function QueueItemWide({
   state,
   width,
   appointmentId,
-  test,
+  biometricScreening,
 }: QueueItemWideProps) {
   const { open, openTooltip, close } = useOverlay();
 
@@ -121,13 +121,15 @@ function QueueItemWide({
           <TextIconButton
             Icon={view}
             text={
-              test ? 'View Biometric screening' : 'Start Biometric screening'
+              biometricScreening
+                ? 'View Biometric screening'
+                : 'Start Biometric screening'
             }
             color={colors.cold_blue}
             onPress={() => {
               open(
-                test ? (
-                  <DiagnosisPreview data={test} />
+                biometricScreening ? (
+                  <DiagnosisPreview data={biometricScreening} />
                 ) : (
                   <AddMedicalTestModal
                     onSubmit={(data) => {

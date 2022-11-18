@@ -137,7 +137,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                           name={patientName}
                           number={position}
                           timeAgo={date}
-                          test={test}
+                          biometricScreening={test}
                           opened={selected == index}
                           appointmentId={appointmentId}
                         />

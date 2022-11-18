@@ -160,7 +160,7 @@ export default function AppointmentsQueue() {
                               number={position}
                               timeAgo={date}
                               width={150}
-                              test={test}
+                              biometricScreening={test}
                               appointmentId={appointmentId}
                             />
                           </li>

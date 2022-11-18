@@ -19,7 +19,7 @@ interface AppointmentQueueItem {
   patientName: string;
   date: Date;
   position: number;
-  test?: Test;
+  test?: BiometricScreening;
   appointmentId: number;
 }
 interface Patient {
@@ -29,7 +29,7 @@ interface Patient {
   registerDate: Date;
   gender: 'male' | 'female';
   age: number;
-  test?: Test;
+  test?: BiometricScreening;
   nextAppointment?: Date;
   status: boolean;
 }
@@ -77,7 +77,7 @@ interface MedicalHistory {
   description: string;
   date: Date;
 }
-interface Test {
+interface BiometricScreening {
   weight: number;
   height: number;
   bloodType: 'A' | 'B' | 'AB' | 'O';
@@ -94,7 +94,7 @@ export type {
   Session,
   MedicalDocument,
   MedicalHistory,
-  Test,
+  BiometricScreening,
   Drug,
   QueueState,
   Appointment_v2 as Appointment,
