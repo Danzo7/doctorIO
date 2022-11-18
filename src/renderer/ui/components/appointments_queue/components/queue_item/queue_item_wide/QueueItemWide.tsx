@@ -10,7 +10,6 @@ import TextIconButton from '@components/buttons/text_icon_button';
 import DiagnosisPreview from '@containers/modals/diagnosis_preview';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
-import { formatDistance } from 'date-fns';
 import { Test } from '@models/instance.model';
 import useNavigation from '@libs/hooks/useNavigation';
 import {
@@ -19,6 +18,7 @@ import {
   useUpdateTestMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
+import TimeAgo from '@components/time_ago';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -90,7 +90,7 @@ function QueueItemWide({
       <div className="content">
         <div className="pat-info">
           <span>{name}</span>
-          <span>{formatDistance(timeAgo, new Date())} ago</span>
+          <TimeAgo timeAgo={timeAgo} />
         </div>
         <div className="buttons-hover-lock">
           {isOwner && (

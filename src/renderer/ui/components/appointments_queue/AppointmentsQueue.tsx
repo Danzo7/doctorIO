@@ -28,7 +28,7 @@ import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
-  const { open, close } = useOverlay();
+  const { open } = useOverlay();
   const queueStateQuery = useGetQueueStateQuery();
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
