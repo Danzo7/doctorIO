@@ -1,21 +1,23 @@
 import AppointmentHistoryPanel from '@components/appointment_history_panel';
 import MedicalHistory from '@components/medical_history';
 import PreviewInfo from '@components/preview_info';
-import { Test } from '@models/instance.model';
+import { BiometricScreening } from '@models/instance.model';
 import './style/index.scss';
 
 interface MedicalSessionSideBarProps {
   patientId: number;
-  test?: Test;
+  biometricScreening?: BiometricScreening;
 }
 export default function MedicalSessionSideBar({
   patientId,
-  test,
+  biometricScreening,
 }: MedicalSessionSideBarProps) {
   return (
     <div className="medical-session-side-bar">
       <div className="medical-session-side-bar-content">
-        {test && <PreviewInfo title="Diagnosis" data={test} />}
+        {biometricScreening && (
+          <PreviewInfo title="Diagnosis" data={biometricScreening} />
+        )}
 
         <MedicalHistory patientId={patientId} />
         <AppointmentHistoryPanel patientId={patientId} />

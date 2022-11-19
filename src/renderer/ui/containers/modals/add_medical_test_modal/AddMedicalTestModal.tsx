@@ -3,11 +3,11 @@ import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import ModalContainer from '@components/modal_container';
-import { Test } from '../../../../models/instance.model';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Inputix } from '@components/inputs/input/Input';
 import { numericString } from '@helpers/zod.helper';
+import { BiometricScreening } from '@models/instance.model';
 
 const schema = z.object({
   weight: numericString(z.number().optional()),
@@ -18,13 +18,13 @@ const schema = z.object({
   Rh: z.boolean(),
 });
 interface AddMedicalTestModalProps {
-  onSubmit: SubmitHandler<Test>;
+  onSubmit: SubmitHandler<BiometricScreening>;
 }
 
 export default function AddMedicalTestModal({
   onSubmit,
 }: AddMedicalTestModalProps) {
-  const { control, handleSubmit } = useForm<Test>({
+  const { control, handleSubmit } = useForm<BiometricScreening>({
     resolver: zodResolver(schema),
     defaultValues: {
       bloodType: 'A',

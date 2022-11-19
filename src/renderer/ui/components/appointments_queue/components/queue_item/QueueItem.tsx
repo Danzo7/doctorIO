@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './style/index.scss';
 import QueueItemSmall from './queue_item_small';
 import QueueItemWide from './queue_item_wide';
-import { Test } from '@models/instance.model';
+import { BiometricScreening } from '@models/instance.model';
 
 interface QueueItemProps {
   id: number;
@@ -11,7 +11,7 @@ interface QueueItemProps {
   number: number;
   state?: string;
   width?: number;
-  test?: Test;
+  biometricScreening?: BiometricScreening;
   opened?: boolean;
   appointmentId: number;
 }
@@ -22,7 +22,7 @@ function QueueItem({
   state,
   timeAgo,
   opened,
-  test,
+  biometricScreening,
   width,
   appointmentId,
 }: QueueItemProps) {
@@ -49,7 +49,7 @@ function QueueItem({
             number={number}
             timeAgo={timeAgo}
             width={width}
-            test={test}
+            biometricScreening={biometricScreening}
             appointmentId={appointmentId}
             state={state}
           />

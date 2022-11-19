@@ -3,7 +3,7 @@ import {
   AppointmentQueueItem,
   Drug,
   QueueState,
-  Test,
+  BiometricScreening,
 } from '@models/instance.model';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
@@ -92,7 +92,7 @@ const appointmentQueueApi = createApi({
     }),
     addQueueAppointment: builder.mutation<
       AppointmentQueueItem[],
-      { patientId: number; test?: Partial<Test> }
+      { patientId: number; test?: Partial<BiometricScreening> }
     >({
       query: (body) => {
         return {
@@ -103,7 +103,10 @@ const appointmentQueueApi = createApi({
       },
     }),
     //PATCH
-    updateTest: builder.mutation<boolean, { position: number } & Test>({
+    updateTest: builder.mutation<
+      boolean,
+      { position: number } & BiometricScreening
+    >({
       query: (body) => {
         return {
           url: `/item`,

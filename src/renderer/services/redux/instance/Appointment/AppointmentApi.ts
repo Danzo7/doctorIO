@@ -2,7 +2,7 @@ import {
   Appointment,
   BookedAppointment,
   Drug,
-  Test,
+  BiometricScreening,
 } from '@models/instance.model';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
@@ -87,7 +87,7 @@ const appointmentApi = createApi({
     }),
     AssignAppointmentToQueue: builder.mutation<
       true,
-      { appointmentId: number; test?: Test }
+      { appointmentId: number; test?: BiometricScreening }
     >({
       query: ({ appointmentId, test }) => {
         return {
