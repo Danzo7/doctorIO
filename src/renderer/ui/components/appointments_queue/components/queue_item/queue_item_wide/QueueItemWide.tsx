@@ -120,9 +120,7 @@ function QueueItemWide({
           )}
           <TextIconButton
             Icon={view}
-            text={
-              test ? 'View Biometric screening' : 'Start Biometric screening'
-            }
+            text={test ? 'View tests' : 'add tests'}
             color={colors.cold_blue}
             onPress={() => {
               open(

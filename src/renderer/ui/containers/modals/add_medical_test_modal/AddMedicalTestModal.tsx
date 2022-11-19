@@ -42,7 +42,7 @@ export default function AddMedicalTestModal({
       controls={
         <>
           <TextButton
-            text={'Add Biometric screening'}
+            text={'Save Biometrics'}
             backgroundColor={colors.good_green}
             radius={7}
             fontSize={14}
