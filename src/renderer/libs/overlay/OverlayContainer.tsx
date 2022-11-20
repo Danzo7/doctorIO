@@ -16,6 +16,7 @@ import { createPopper, Modifier, OptionsGeneric } from '@popperjs/core';
 import { useRouteChange } from '@libs/HistoryBlocker';
 import { ActionProps } from '@components/poppers/tooltip';
 import { createPortal } from 'react-dom';
+import { getOverlayNode, Overlay_u, useIsOpen } from '@stores/overlayStore';
 interface OverlayContainerProps {}
 export const OverlayContext = createContext<{
   open?: (target: ReactNode, props: OverlayOptions) => void;
@@ -66,6 +67,17 @@ export function OverlayContainer({}: OverlayContainerProps) {
     </div>
   );
 }
+export function OverlayContainer_Unstable({}: OverlayContainerProps) {
+  const id = useIsOpen();
+  useRouteChange(() => Overlay_u.clear());
+
+  return (
+    <div className="overlay-container">
+      <div>{id && getOverlayNode(id)}</div>
+    </div>
+  );
+}
+
 type Position = {
   top?: number | string;
   bottom?: number | string;
