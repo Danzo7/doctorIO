@@ -1,6 +1,7 @@
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 import type { Middleware } from '@reduxjs/toolkit';
 import { Logger } from '@libs/Logger';
+import { toast } from '@stores/overlayStore';
 
 /**
  * Log a warning and show a toast!
@@ -10,6 +11,7 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
     const serverError: ServerError | undefined = action?.payload?.data;
     if (serverError) {
+      toast(serverError.message, 'error', 5000);
       Logger.error('Middleware', 'Server error', serverError);
     }
   }
