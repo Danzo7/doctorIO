@@ -1,17 +1,29 @@
 @use '~styles/appColors' as *;
 .alert-toast {
     display: flex;
-flex-direction: row;
-align-items: center;
-gap: 10px;
-background-color: $secondarycolor;
-padding-right:  10px;
-border-radius: 9px;
-width: fit-content;
-align-self: center;
-
-> span {
-font-size: 14px;
-color: $white;
-}
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    background-color: $secondarycolor;
+    padding-right:  10px;
+    border-radius: 9px;
+    width: fit-content;
+    min-width: 20%;
+    align-self: center;
+    > span {
+        font-size: 14px;
+        color: $white;
+    }
+    @keyframes slideIn {
+        0% {
+            transform: translate(0,20vh);
+        }
+        100% { transform: translate(0,0); }
+    }
+    @keyframes slideOut {
+        0% {
+            transform: translate(0,0);
+        }
+        100% { transform: translate(0,20vh); }
+    }
 }
