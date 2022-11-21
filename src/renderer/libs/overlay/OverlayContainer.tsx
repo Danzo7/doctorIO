@@ -16,7 +16,13 @@ import { createPopper, Modifier, OptionsGeneric } from '@popperjs/core';
 import { useRouteChange } from '@libs/HistoryBlocker';
 import { ActionProps } from '@components/poppers/tooltip';
 import { createPortal } from 'react-dom';
-import { getOverlayNode, Overlay_u, useIsOpen } from '@stores/overlayStore';
+import {
+  getOverlayNode,
+  Overlay_u,
+  useIsOpen,
+  useOpenTooltipId,
+} from '@stores/overlayStore';
+import ToastContainer from '@libs/toast_container';
 interface OverlayContainerProps {}
 export const OverlayContext = createContext<{
   open?: (target: ReactNode, props: OverlayOptions) => void;
@@ -47,7 +53,6 @@ export function OverlayContainer({}: OverlayContainerProps) {
 
   const removePortal = useCallback((portal?: React.ReactPortal) => {
     if (portal) {
-      //FIXME use zustand/vanilla instead of static Overlay class
       //Temporary fix with "setTimeout" for dirty state when removing a portal while updating with usePrompt while updating a component
       setTimeout(
         () => setrender((old) => old.filter((item) => item !== portal)),
@@ -67,14 +72,32 @@ export function OverlayContainer({}: OverlayContainerProps) {
     </div>
   );
 }
+export function TooltipContainer() {
+  const id = useOpenTooltipId();
+  return (
+    <>
+      {id && (
+        <div className="overlay-container">
+          <div>{getOverlayNode(id)}</div>
+        </div>
+      )}
+    </>
+  );
+}
 export function OverlayContainer_Unstable({}: OverlayContainerProps) {
   const id = useIsOpen();
   useRouteChange(() => Overlay_u.clear());
 
   return (
-    <div className="overlay-container">
-      <div>{id && getOverlayNode(id)}</div>
-    </div>
+    <>
+      {id && (
+        <div className="overlay-container">
+          <div>{getOverlayNode(id)}</div>
+        </div>
+      )}
+      {<ToastContainer />}
+      {<TooltipContainer />}
+    </>
   );
 }
 
