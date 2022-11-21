@@ -219,15 +219,29 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
     });
   },
 
-  toast: (text, status, timeout = 1000) => {
+  toast: (text, status, timeout, idd) => {
     Logger.log('toast', get().toasts.length);
-    const id = nanoid();
-    set((state) => ({
-      toasts: [
-        ...state.toasts,
-        { text, status, id, timeout, close: () => get().closeToast(id) },
-      ],
-    }));
+    const id = idd || nanoid();
+
+    set((state) => {
+      if (state.toasts.length > 5) {
+        Logger.warn('toast', 'Toast limit reached. an item will be removed');
+        state.toasts = state.toasts.slice(1);
+      }
+      state.toasts = state.toasts.filter((t) => t.id != id);
+      return {
+        toasts: [
+          ...state.toasts,
+          {
+            text,
+            status,
+            id,
+            timeout: timeout || 5000,
+            close: () => get().closeToast(id),
+          },
+        ],
+      };
+    });
   },
 }));
 export const useIsOpen = () => useOverlayStore((state) => state.openId);
@@ -270,5 +284,9 @@ export const Overlay_u = {
       .open(),
 };
 export const useToast = () => useOverlayStore((state) => state.toasts);
-export const toast = (text: string, status: 'error' | 'Success' | 'warning') =>
-  useOverlayStore.getState().toast(text, status);
+export const toast = (
+  text: string,
+  status: 'error' | 'Success' | 'warning',
+  timeout?: number,
+  id?: string,
+) => useOverlayStore.getState().toast(text, status, timeout, id);
