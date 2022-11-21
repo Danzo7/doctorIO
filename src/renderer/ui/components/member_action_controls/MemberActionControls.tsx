@@ -3,16 +3,16 @@ import colors, { color } from '@assets/styles/color';
 import IdCard from 'toSvg/id_card.svg?icon';
 import Messages from 'toSvg/messages_small.svg?icon';
 import Call_Icon from 'toSvg/phone.svg?icon';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import MemberBigCard from '@containers/modals/member_big_card';
 import useNavigation from '@libs/hooks/useNavigation';
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
-import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
+import { FIT_MODAL } from '@libs/overlay';
 import { IS_PREVIEW } from '@constants/env';
 import { MemberBrief } from '@models/server.models';
 import Can from '@ability/index';
 import AlertModal from '@containers/modals/dialog_modal';
+import { Overlay_u } from '@stores/overlayStore';
 
 interface MemberActionControlsProps {
   dmId?: number;
@@ -27,7 +27,6 @@ export default function MemberActionControls({
   notFriend,
   id,
 }: MemberActionControlsProps & Pick<MemberBrief, 'id'>) {
-  const { open } = useOverlay();
   const { navigate } = useNavigation();
 
   return (
@@ -39,7 +38,7 @@ export default function MemberActionControls({
           width={40}
           iconSize={15}
           onPress={() => {
-            open(<MemberBigCard id={id} />, FIT_MODAL);
+            Overlay_u.quickOpen(<MemberBigCard id={id} />, FIT_MODAL);
           }}
         />
       )}
@@ -53,7 +52,7 @@ export default function MemberActionControls({
             iconSize={15}
             onPress={() => {
               if (notFriend)
-                open(
+                Overlay_u.quickOpen(
                   <AlertModal
                     title="Start a conversation"
                     description="This is the first time you are messaging this user. You have to wait for them to accept your request."
