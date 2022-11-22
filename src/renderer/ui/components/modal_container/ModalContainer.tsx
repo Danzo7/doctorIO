@@ -47,7 +47,7 @@ export default function ModalContainer({
       ) : (
         <>
           <Header title={title} />
-          <div className="inputs-container">{children}</div>
+          <div className="modal-body">{children}</div>
           {controls && <div className="control">{controls}</div>}
         </>
       )}

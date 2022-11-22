@@ -5,9 +5,11 @@
     align-items: stretch;
     padding: 15px;
     background: $secondarycolor;
+    border:1px solid $darkerseccolor;
+
     border-radius: 7px;
 
-    > .inputs-container {
+    > .modal-body {
         display: flex;
         flex-grow: 1;
         align-self: stretch;
