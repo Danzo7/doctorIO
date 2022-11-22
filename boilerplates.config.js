@@ -43,4 +43,21 @@ FirstStory.args = {};
       ],
     ],
   },
+  {
+    name: 'zustand',
+    variants: ['storeName'],
+    template: [
+      [
+        '{{storeName}cc}Store.ts',
+        `import create from 'zustand';
+
+interface {{storeName}pc}State {}
+
+export const use{{storeName}pc}Store = create<{{storeName}pc}State>(
+  (set) => ({}),
+);
+`,
+      ],
+    ],
+  },
 ];
