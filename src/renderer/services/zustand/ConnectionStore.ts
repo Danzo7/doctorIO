@@ -1,10 +1,13 @@
+import QueueNotificationModal from '@containers/modals/queue_notification_modal';
 import { Logger } from '@libs/Logger';
+import { AppointmentQueueItem } from '@models/instance.model';
 import { refreshTokens } from '@redux/dynamic_queries';
 import { dispatch } from '@store';
 import { io, Socket } from 'socket.io-client';
 import create from 'zustand';
 import { useAuthStore } from './authStore';
 import { useClinicsStore } from './clinicsStore';
+import { Overlay_u } from './overlayStore';
 
 interface SocketState {
   socket?: Socket;
@@ -82,6 +85,33 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
             if (refreshed) useConnectionStore.getState().reAuthorize();
           }
         });
+
+        //TODO move to a server listeners function
+        socket.on(
+          'notifyAssist',
+          (data: {
+            state: 'IN_PROGRESS' | 'WAITING';
+            queueItem: AppointmentQueueItem;
+          }) => {
+            if (data.state == 'WAITING')
+              Overlay_u.init(
+                {
+                  node: QueueNotificationModal({
+                    name: data.queueItem.patientName,
+                    position: data.queueItem.position,
+                  }),
+                  props: {
+                    isDimmed: true,
+                    closeOnClickOutside: true,
+                    transition: 'appear-right',
+                  },
+                },
+                'queueNotification',
+              ).open(undefined, undefined, { force: true });
+            else if (data.state == 'IN_PROGRESS')
+              Overlay_u.close('queueNotification');
+          },
+        );
 
         return { url, socket, status: 'connecting' };
       } else return state;
