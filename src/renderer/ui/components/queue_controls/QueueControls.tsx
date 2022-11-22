@@ -5,7 +5,6 @@ import PauseIcon from 'toSvg/pause.svg?icon';
 import AddIcon from 'toSvg/add.svg?icon';
 import ResetIcon from 'toSvg/reset.svg?icon';
 import './style/index.scss';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
 import TextButton from '@components/buttons/text_button';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
@@ -18,13 +17,13 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
 import AlertModal from '@containers/modals/dialog_modal';
+import { Overlay_u } from '@stores/overlayStore';
 
 interface QueueControlsProps {
   state: QueueState['state'];
   isOwner: boolean;
 }
 export default function QueueControls({ state, isOwner }: QueueControlsProps) {
-  const { open, close } = useOverlay();
   const [PauseQueue] = usePauseQueueMutation();
   const [ResumeQueue] = useResumeQueueMutation();
   const [resetQueue] = useResetQueueMutation();
@@ -38,13 +37,16 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
           radius={7}
           iconSize={11}
           onPress={() => {
-            open(<QueueAddSearchModal />, {
-              closeOnClickOutside: true,
-              isDimmed: true,
-              clickThrough: false,
-              closeBtn: 'inner',
-              width: '30%',
-            });
+            Overlay_u.init({
+              node: <QueueAddSearchModal />,
+              props: {
+                closeOnClickOutside: true,
+                isDimmed: true,
+                clickThrough: false,
+                closeBtn: 'inner',
+                width: '30%',
+              },
+            }).open();
           }}
         />
       )}
@@ -56,7 +58,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
           radius={7}
           iconSize={14}
           onPress={() => {
-            open(
+            Overlay_u.quickOpen(
               <AlertModal
                 title="Are you sure you want to reset the queue count ? "
                 description="By applying the reset, the queue count will start from zero. "
@@ -100,7 +102,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
             radius={7}
             iconSize={10}
             onPress={() => {
-              open(
+              Overlay_u.quickOpen(
                 <AlertModal
                   title="You are going to resume the Queue"
                   description="Allowed members will be able to add to the Queue again"
@@ -130,7 +132,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
                 radius={7}
                 iconSize={10}
                 onPress={() => {
-                  open(<NextPatient />, {
+                  Overlay_u.quickOpen(<NextPatient />, {
                     width: '30%',
                     closeOnClickOutside: true,
                     isDimmed: true,
@@ -147,7 +149,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
               radius={7}
               iconSize={10}
               onPress={() => {
-                open(
+                Overlay_u.quickOpen(
                   <AlertModal
                     title="Are you sure you want to pause?"
                     description="By pausing the queue no more patient will be accepted"

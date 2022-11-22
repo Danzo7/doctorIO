@@ -5,7 +5,6 @@ import './style/index.scss';
 import Input from '@components/inputs/input';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
 import { DEFAULT_MODAL } from '@libs/overlay';
@@ -15,6 +14,7 @@ import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Overlay_u } from '@stores/overlayStore';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -37,7 +37,6 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
     mode: 'onSubmit',
     defaultValues: { searchField: '' },
   });
-  const { open } = useOverlay();
   const [trigger, result] = useLazyFindPatientByName2Query();
 
   const errorRef = useRef<ServerError>();
@@ -59,7 +58,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
             fontWeight={700}
             borderColor={color.border_color}
             onPress={() => {
-              open(<AddPatientModal />, DEFAULT_MODAL);
+              Overlay_u.quickOpen(<AddPatientModal />, DEFAULT_MODAL);
             }}
           />
         ) : errorRef.current == undefined && result.isFetching ? (
