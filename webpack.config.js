@@ -125,7 +125,14 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
           type: 'asset/resource',
         },
         {
-          test: [/\.(woff|tff)$/],
+          test: /\.mp3/,
+          type: 'asset/resource',
+          generator: {
+            filename: 'audio/[contenthash][ext][query]',
+          },
+        },
+        {
+          test: [/\.(woff|ttf)$/],
           type: 'asset/resource',
           generator: {
             filename: 'font/[hash][ext][query]',
