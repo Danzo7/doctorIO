@@ -5,6 +5,8 @@ import { OverlayItem, OverlayOptions } from '@libs/overlay';
 import { nanoid } from '@reduxjs/toolkit';
 import { ComponentProps, ReactNode } from 'react';
 import create from 'zustand';
+import shallow from 'zustand/shallow';
+
 type Item = {
   node?: ReactNode;
   id: string;
@@ -21,6 +23,7 @@ interface OverlayState {
   items: Item[];
   openId?: string;
   openTooltipId?: string;
+  _forceRerender: boolean;
   toasts: (ComponentProps<typeof AlertToast> & {
     id: string;
   })[];
@@ -32,10 +35,9 @@ interface OverlayState {
   open: (
     target?: Target,
     id?: string,
-    closePrevious?: boolean,
+    data?: { closePrevious?: boolean; force?: boolean },
   ) => Pick<OverlayState, 'close' | 'hide'>;
   hide: (id?: string) => Pick<OverlayState, 'close' | 'open'>;
-
   close: (id?: string) => void;
   getNode: (id: string) => ReactNode | undefined;
   getIndex: (id: string) => number | undefined;
@@ -52,6 +54,7 @@ interface OverlayState {
 const useOverlayStore = create<OverlayState>((set, get) => ({
   items: [],
   toasts: [],
+  _forceRerender: false,
   getNode: (id: string) => {
     const item = get().items.find((i) => i.id === id);
     return item?.node;
@@ -69,7 +72,7 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
         ? target({
             close,
             hide: () => get().hide(id),
-            open: (tg) => get().open(tg, id),
+            open: (tg, _, force) => get().open(tg, id, force),
           })
         : target;
     const item: Item = {
@@ -99,11 +102,11 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
     });
     return {
       close,
-      open: (tg) => get().open(tg, id),
+      open: (tg, _, force) => get().open(tg, id, force),
       hide: () => get().hide(id),
     };
   },
-  open: (target, id, closePrevious) => {
+  open: (target, id, data) => {
     Logger.log('openOverlay', get().items.length);
     if (get().items.length === 0)
       Logger.warn('openOverlay', "No items in overlay, can't open");
@@ -119,7 +122,7 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
               ? target({
                   close,
                   hide: () => get().hide(id),
-                  open: (tg) => get().open(tg, id),
+                  open: (tg, _, force) => get().open(tg, id, force),
                 })
               : target;
           item.node = OverlayItem({
@@ -129,15 +132,26 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
           });
         }
         if (item.isTooltip) {
-          set(() => {
-            return { openTooltipId: item?.id };
+          set((state) => {
+            return {
+              openTooltipId: item?.id,
+              _forceRerender: data?.force
+                ? !state._forceRerender
+                : state._forceRerender,
+            };
           });
         } else {
           item.previousId =
-            get().openId != item.id && !closePrevious
+            get().openId != item.id && !data?.closePrevious
               ? get().openId
               : undefined;
-          if (item.node != undefined) set(() => ({ openId: id }));
+          if (item.node != undefined)
+            set((state) => ({
+              openId: id,
+              _forceRerender: data?.force
+                ? !state._forceRerender
+                : state._forceRerender,
+            }));
           else Logger.warn('openOverlay', 'Item was not initialized');
         }
       } else
@@ -244,7 +258,14 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
     });
   },
 }));
-export const useIsOpen = () => useOverlayStore((state) => state.openId);
+export const useIsOpen = () =>
+  useOverlayStore(
+    (state) => ({
+      openId: state.openId,
+      _forceRerender: state._forceRerender,
+    }),
+    shallow,
+  ).openId;
 export const useOpenTooltipId = () =>
   useOverlayStore((state) => state.openTooltipId);
 
@@ -254,6 +275,7 @@ export const Overlay_u = {
   init: (target?: Target, id?: string) =>
     useOverlayStore.getState().init(target, id),
   clear: () => useOverlayStore.getState().clear(),
+  close: (id?: string) => useOverlayStore.getState().close(id),
   quickOpen: (node: ReactNode, props?: OverlayOptions) =>
     useOverlayStore.getState().init({ node, props }).open(),
   openTooltip: (
