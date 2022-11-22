@@ -19,6 +19,9 @@ const clinicApi = createApi({
         return { url: '', body: { ...body }, method: 'PATCH' };
       },
       invalidatesTags: ['clinic'],
+      // onQueryStarted: (arg, { dispatch, queryFulfilled }) => {
+      // const {data}=await queryFulfilled;
+      // useClinicsStore.getState().//TODO: Set selected clinic info from data
     }),
   }),
 });
