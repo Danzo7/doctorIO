@@ -65,6 +65,10 @@ declare module '*.png' {
   const ref: string;
   export default ref;
 }
+declare module '*.mp3' {
+  const ref: string;
+  export default ref;
+}
 /**
  * Predifined variables from webpack to Tell if we are in electron or web
  */
