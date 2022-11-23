@@ -27,6 +27,7 @@ export default function SessionPreviewModal({
   const { prescription } = session;
   return (
     <ModalContainer
+      gap={0}
       title="Session preview"
       controls={
         patientAge != undefined &&
