@@ -1,9 +1,7 @@
 import { color } from '@assets/styles/color';
 import StatusIcon from '@components/status_icon';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './style/index.scss';
-import Notification from '@assets/audio/notification.mp3';
-import TextButton from '@components/buttons/text_button';
 
 interface AlertToastProps {
   status: 'Success' | 'warning' | 'error';
