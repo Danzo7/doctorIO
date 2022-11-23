@@ -22,21 +22,23 @@ import DiagnosisTab from './pages/diagnosis_tab';
 import PrescriptionTab from './pages/prescription_tab';
 import SessionParameter from './pages/session_parameter';
 import './style/index.scss';
+import { useRef } from 'react';
 
 interface MedicalSessionProps {}
 
 export default function MedicalSession({}: MedicalSessionProps) {
   const queueStateQuery = useGetQueueStateQuery();
+
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
   });
   const navigate = useNavigate();
-  const patientId = queueStateQuery.isSuccess
-    ? queueStateQuery.data.selected?.patientId &&
-      queueStateQuery.data.state == 'IN_PROGRESS'
+  const patientId =
+    queueStateQuery.isSuccess &&
+    queueStateQuery.data.selected?.patientId != undefined &&
+    queueStateQuery.data.state == 'IN_PROGRESS'
       ? queueStateQuery.data.selected.patientId
-      : undefined
-    : undefined;
+      : undefined;
   const { isLoading, data, isSuccess, isUninitialized } =
     useGetPatientDetailQuery(patientId ?? skipToken);
   const { open, openTooltip } = useOverlay();
@@ -53,12 +55,18 @@ export default function MedicalSession({}: MedicalSessionProps) {
       });
     else throw new Error('patientId is undefined');
   };
+  const render = useRef(queueStateQuery.isSuccess);
 
-  return isLoading ||
-    (patientId != undefined && isUninitialized) ||
-    queueStateQuery.isLoading ? (
+  const renderSpinner =
+    render.current ||
+    queueStateQuery.isFetching ||
+    (!isUninitialized && isLoading);
+
+  render.current = false;
+
+  return renderSpinner ? (
     <LoadingSpinner />
-  ) : isSuccess && patientId ? (
+  ) : isSuccess && patientId != undefined ? (
     <div className="medical-session">
       {
         <>
