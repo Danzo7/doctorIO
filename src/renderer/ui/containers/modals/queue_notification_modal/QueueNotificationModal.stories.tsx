@@ -5,8 +5,11 @@ export default {
   title: 'QueueNotificationModal',
   component: QueueNotificationModal,
 };
-const Template: Story<ComponentProps<typeof QueueNotificationModal>> = (args) => (
-  <QueueNotificationModal {...args} />
-);
-export const FirstStory = Template
-FirstStory.args = {};
+const Template: Story<ComponentProps<typeof QueueNotificationModal>> = (
+  args,
+) => <QueueNotificationModal {...args} />;
+export const FirstStory = Template;
+FirstStory.args = {
+  name: 'john doe',
+  position: 5,
+};

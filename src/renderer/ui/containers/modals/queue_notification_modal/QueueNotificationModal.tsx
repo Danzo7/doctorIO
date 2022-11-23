@@ -1,6 +1,9 @@
 import ModalContainer from '@components/modal_container';
 import './style/index.scss';
 import Attention from '@assets/audio/attention.mp3';
+import NotAButton from '@components/not_a_button';
+import { color } from '@assets/styles/color';
+import NumberIcon from '@components/number_icon';
 interface QueueNotificationModalProps {
   name: string;
   position: number;
@@ -10,12 +13,18 @@ export default function QueueNotificationModal({
   position,
 }: QueueNotificationModalProps) {
   return (
-    //UI make it look like good
-
-    <ModalContainer title={'Queue notification'}>
+    <ModalContainer gap={0}>
       <div className="queue-notification-modal">
-        Please notify the patient {name} with position {position} in the queue
-        to meet the doctor.
+        <span>Attention</span>
+        <NotAButton borderColor={color.good_green}>
+          <div className="queue-not-aButton">
+            <NumberIcon value={position} />
+            <span>{name}</span>
+          </div>
+        </NotAButton>
+        <span className="last-span">
+          Please notify the patient to meet the doctor
+        </span>
         <audio
           src={Attention}
           ref={(e) => {
