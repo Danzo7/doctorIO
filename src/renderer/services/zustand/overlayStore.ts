@@ -16,9 +16,17 @@ type Item = {
   previousId?: string;
   overlayType?: OverlayType;
 };
+type ControlReturnVoids = {
+  open: (data?: {
+    closePrevious?: boolean;
+    force?: boolean;
+  }) => Pick<ControlReturnVoids, 'close' | 'hide'>;
+  hide: () => Pick<ControlReturnVoids, 'close' | 'open'>;
+  close: () => void;
+};
 type Target =
   | { node: ReactNode; props?: OverlayOptions }
-  | ((props: Pick<OverlayState, 'close' | 'hide' | 'open'>) => {
+  | ((props: Pick<ControlReturnVoids, 'close' | 'hide' | 'open'>) => {
       node: ReactNode;
       props?: OverlayOptions;
     });
@@ -34,13 +42,12 @@ interface OverlayState {
     target?: Target,
     id?: string,
     config?: { type: OverlayType },
-  ) => Pick<OverlayState, 'close' | 'hide' | 'open'>;
+  ) => Pick<ControlReturnVoids, 'close' | 'hide' | 'open'> & { id: string };
   open: (
-    target?: Target,
     id?: string,
     data?: { closePrevious?: boolean; force?: boolean },
-  ) => Pick<OverlayState, 'close' | 'hide'>;
-  hide: (id?: string) => Pick<OverlayState, 'close' | 'open'>;
+  ) => Pick<ControlReturnVoids, 'close' | 'hide'>;
+  hide: (id?: string) => Pick<ControlReturnVoids, 'close' | 'open'>;
   close: (id?: string) => void;
   getNode: (id: string) => ReactNode | undefined;
   getIndex: (id: string) => number | undefined;
@@ -70,47 +77,54 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
   },
   init: (target, idd, config = { type: OverlayType.MODAL }) => {
     Logger.log('InitOverlay', 'Total items: ' + get().items.length);
-    const id: string = idd ?? nanoid();
-    const plainTarget =
-      typeof target === 'function'
-        ? target({
-            close: () => get().close(id),
-            hide: () => get().hide(id),
-            open: (tg, _, force) => get().open(tg, id, force),
-          })
-        : target;
-    const item: Item = {
-      node: plainTarget
-        ? OverlayItem({
-            children: plainTarget.node,
-            ...plainTarget.props,
-            onClose: () => get().close(id),
-          })
-        : undefined,
-      id,
-      overlayType: config.type,
-    };
+    let id: string;
+    if (idd && get().getIndex(idd) !== undefined && !target) {
+      id = idd;
+      Logger.log('InitOverlay', 'Item already exists');
+    } else {
+      id = idd ?? nanoid();
+      const plainTarget =
+        typeof target === 'function'
+          ? target({
+              close: () => get().close(id),
+              hide: () => get().hide(id),
+              open: (data) => get().open(id, data),
+            })
+          : target;
+      const item: Item = {
+        node: plainTarget
+          ? OverlayItem({
+              children: plainTarget.node,
+              ...plainTarget.props,
+              onClose: () => get().close(id),
+            })
+          : undefined,
+        id,
+        overlayType: config.type,
+      };
 
-    set((state) => {
-      if (state.items.length > 16) {
-        Logger.warn(
-          'initOverlay',
-          'Overlay limit reached. an item will be removed',
-        );
-        return { items: [...state.items.slice(1), item] };
-      }
-      const oldItem = state.getIndex(id);
-      if (oldItem != undefined) state.items[oldItem] = item;
-      else state.items.push(item);
-      return { items: [...state.items] };
-    });
+      set((state) => {
+        if (state.items.length > 16) {
+          Logger.warn(
+            'initOverlay',
+            'Overlay limit reached. an item will be removed',
+          );
+          return { items: [...state.items.slice(1), item] };
+        }
+        const oldItem = state.getIndex(id);
+        if (oldItem != undefined) state.items[oldItem] = item;
+        else state.items.push(item);
+        return { items: [...state.items] };
+      });
+    }
     return {
       close: () => get().close(id),
-      open: (tg, _, force) => get().open(tg, id, force),
+      open: (data) => get().open(id, data),
       hide: () => get().hide(id),
+      id,
     };
   },
-  open: (target, id, data) => {
+  open: (id, data) => {
     if (get().items.length === 0)
       Logger.warn('openOverlay', "No items in overlay, can't open");
     else {
@@ -129,22 +143,6 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
           const item = index
             ? state.items[index]
             : state.items[state.items.length - 1];
-          if (target != undefined) {
-            const plainTarget =
-              typeof target === 'function'
-                ? target({
-                    close: () => state.close(id),
-                    hide: () => state.hide(id),
-                    open: (tg, _, force) => state.open(tg, id, force),
-                  })
-                : target;
-            item.node = OverlayItem({
-              children: plainTarget.node,
-              onClose: () => state.close(id),
-              ...plainTarget.props,
-            });
-          }
-
           item.previousId =
             item.overlayType == OverlayType.MODAL &&
             state.openOverlayId?.modalId != item.id &&
@@ -263,7 +261,7 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
     }
     return {
       close: () => get().close(id),
-      open: (target) => get().open(target, id),
+      open: () => get().open(id),
     };
   },
   isOpen: (id) => {
@@ -336,22 +334,44 @@ export const useOpenHelptipId = () =>
 export const getOverlayNode = (id: string) =>
   useOverlayStore.getState().getNode(id);
 export const Overlay_u = {
-  init: (target?: Target, id?: string, config?: { type: OverlayType }) =>
+  init: (target: Target, id?: string, config?: { type: OverlayType }) =>
     useOverlayStore.getState().init(target, id, config),
   clear: () => useOverlayStore.getState().clear(),
   close: (id?: string) => useOverlayStore.getState().close(id),
-  quickOpen: (node: ReactNode, props?: OverlayOptions) =>
-    useOverlayStore.getState().init({ node, props }).open(),
+  modal: (
+    node:
+      | ReactNode
+      | ((
+          props: Pick<ControlReturnVoids, 'open' | 'hide' | 'close'>,
+        ) => ReactNode),
+    props?: OverlayOptions,
+    id?: string,
+  ) =>
+    useOverlayStore.getState().init(
+      (prop) => ({
+        node: typeof node == 'function' ? node(prop) : node,
+        props,
+      }),
+      id,
+    ),
+  toast: (
+    text: string,
+    status: 'error' | 'Success' | 'warning',
+    timeout?: number,
+    id?: string,
+  ) => useOverlayStore.getState().toast(text, status, timeout, id),
   openTooltip: (
-    target: (props: Pick<OverlayState, 'close'>) => ActionProps[] | ReactNode,
+    target: (
+      props: Pick<ControlReturnVoids, 'close' | 'hide' | 'open'>,
+    ) => ActionProps[] | ReactNode,
     popperTarget: HTMLElement,
     autoClose?: true,
   ) =>
     useOverlayStore
       .getState()
       .init(
-        ({ close }) => {
-          const node = target({ close });
+        ({ close, open, hide }) => {
+          const node = target({ close, open, hide });
           return {
             node: !Array.isArray(node)
               ? node
@@ -373,9 +393,5 @@ export const Overlay_u = {
       .open(),
 };
 export const useToast = () => useOverlayStore((state) => state.toasts);
-export const toast = (
-  text: string,
-  status: 'error' | 'Success' | 'warning',
-  timeout?: number,
-  id?: string,
-) => useOverlayStore.getState().toast(text, status, timeout, id);
+export const toast = Overlay_u.toast;
+export const modal = Overlay_u.modal;
