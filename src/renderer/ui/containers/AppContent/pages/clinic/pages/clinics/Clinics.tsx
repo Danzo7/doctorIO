@@ -4,7 +4,7 @@ import ClinicItem from '@components/clinic_item';
 import ConnectMemberModal from '@containers/modals/connect_member_modal';
 import JoinNewClinicModal from '@containers/modals/join_new_clinic_modal';
 import useNavigation from '@libs/hooks/useNavigation';
-import { FIT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useClinicsStore } from '@stores/clinicsStore';
 import './style/index.scss';
@@ -26,7 +26,10 @@ export default function Clinics() {
             onClick={() => {
               if (clinics.getSelectedIndex() == index) toParent();
               else
-                open(<ConnectMemberModal selectedIndex={index} />, FIT_MODAL);
+                open(
+                  <ConnectMemberModal selectedIndex={index} />,
+                  DEFAULT_MODAL,
+                );
             }}
           />
         ))}
@@ -38,7 +41,7 @@ export default function Clinics() {
             borderColor={colors.border_color}
             radius={7}
             backgroundColor={colors.darkersec_color}
-            onPress={() => open(<JoinNewClinicModal />, FIT_MODAL)}
+            onPress={() => open(<JoinNewClinicModal />, DEFAULT_MODAL)}
           />
         </div>
       </div>

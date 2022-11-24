@@ -1,0 +1,14 @@
+@use '~styles/appColors' as *;
+.number-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 100%;
+
+    > span {
+        font-weight: 700;
+        font-size: 21px;
+        line-height: 24px;
+    }
+}

@@ -67,7 +67,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
             backgroundColor={color.good_green}
             fontSize={13}
             fontWeight={700}
-            alignSelf="center"
+            width="100%"
             padding={5}
             blank
           />

@@ -9,6 +9,7 @@ import { useConnectMemberMutation } from '@redux/local/auth/authApi';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useClinicsStore } from '@stores/clinicsStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
+import { useState } from 'react';
 interface Inputs {
   key: string;
 }
@@ -21,7 +22,11 @@ export default function ConnectMemberModal({
   const { navigate } = useNavigation();
   const clinics = useClinicsStore();
 
-  const [ConnectMember] = useConnectMemberMutation();
+  const [ConnectMember, res] = useConnectMemberMutation();
+  const serverError = res.isError
+    ? ((res.error as any)?.data?.message as ServerError)
+    : undefined;
+  const [internalError, setError] = useState('');
   const { control, handleSubmit } = useForm<{
     key: string;
   }>({
@@ -40,12 +45,15 @@ export default function ConnectMemberModal({
       if (result.data) {
         clinics.setSelectedClinic(selectedIndex);
         useConnectionStore.getState().connect();
-
         navigate('/');
+        Overlay.close();
+      } else {
+        const castedErr = (result.error as any)?.data as ServerError;
+        if (castedErr?.errorCode == 1000) {
+          setError('Wrong Secret key ');
+        }
       }
     });
-
-    Overlay.close();
   };
 
   return (
@@ -71,6 +79,12 @@ export default function ConnectMemberModal({
         leading={<Key />}
         type="text"
         hint="The Secret key is needed to connect"
+        onChange={() => {
+          if (internalError.length > 0) setError('');
+        }}
+        errorMessage={
+          internalError.length > 0 ? internalError : serverError?.message
+        }
       />
     </ModalContainer>
   );
