@@ -5,6 +5,7 @@ import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { Overlay } from '@libs/overlay';
 import { useUploadFileMutation } from '@redux/instance/record/medical_document_api';
+import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Upload from 'toSvg/link.svg?icon';
 import { z, TypeOf } from 'zod';
@@ -25,18 +26,24 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
   const serverError: ServerError | undefined = (error as any)
     ?.data as ServerError;
   const files = watch('files');
-
+  const [internalError, setError] = useState('');
   const onSubmit: SubmitHandler<IFile> = (data) => {
     if (data.files.length === 0) return;
     const fd = new FormData();
     fd.append('file', data.files[0]);
-    uploadFile({ patientId, data: fd }).then(() => {
-      reset();
-      Overlay.close();
+    uploadFile({ patientId, data: fd }).then((result: any) => {
+      if (result.data) {
+        reset();
+        Overlay.close();
+      } else {
+        const castedErr = (result.error as any)?.data as ServerError;
+        if (castedErr?.errorCode == 1201) {
+          setError('you are trying to upload unsupported file type.');
+        }
+      }
     });
   };
 
-  //UI add a notification overlay when upload success
   return (
     <ModalContainer
       onSubmit={handleSubmit(onSubmit)}
@@ -57,7 +64,6 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
       }
     >
       <Input
-        errorMessage={serverError?.message as string}
         type={'file'}
         control={control}
         name="files"
@@ -70,6 +76,12 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
             backgroundColor={color.cold_blue}
             Icon={<Upload css={{ transform: 'rotate(-45deg)' }} />}
           />
+        }
+        onChange={() => {
+          if (internalError.length > 0) setError('');
+        }}
+        errorMessage={
+          internalError.length > 0 ? internalError : serverError?.message
         }
       />
     </ModalContainer>
