@@ -13,15 +13,66 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
     api?: string,
     endpoint?: string,
   ): string | undefined {
-    if (api === 'patientApi' && errorCode == 1300) return undefined;
-    if (api === 'patientApi' && errorCode == 1200) return 'Wrong input';
-    if (api === 'roleApi' && errorCode == 1105)
-      return (
-        'You do not have permission to ' +
-        (endpoint === 'UpdateRole' ? 'update this role' : 'perform this action')
-      );
+    switch (errorCode) {
+      case 1000:
+      case 1001:
+      case 1002:
+      case 1003:
+      case 1004:
+      case 1005:
+      case 1006:
+      case 1007:
+      case 1008:
+      case 1009:
+      case 1010:
+      case 1100:
+      case 1101:
+      case 1102:
+      case 1103:
+      case 1104:
+      case 1200:
+      case 1201:
+      case 1300:
+        return undefined;
+        break;
 
-    return 'Unknown error: ' + errorCode;
+      case 1105:
+        return (
+          'You do not have permission to ' +
+          (endpoint === 'UpdateRole'
+            ? 'update this role'
+            : 'perform this action')
+        );
+        break;
+      case 1106:
+        return "You don't have the necessary relationship with this role to perform this action.";
+        break;
+      case 1107:
+        return "You don't have the right permissions to perform this action";
+        break;
+      case 1108:
+        return 'No queue';
+        break;
+      case 1109:
+        return endpoint == 'UpdateRole'
+          ? 'You are not allowed to update this role'
+          : 'You are not allowed to create this role';
+        break;
+      case 1301:
+        if (endpoint == 'AssignAppointmentToQueue')
+          return 'Patient already in queue';
+        break;
+      case 1302:
+        return 'Not acceptable';
+        break;
+      case 1400:
+        return 'Something went wrong';
+        break;
+
+      default:
+        return 'Unknown error: ' + errorCode;
+        break;
+    }
   }
   if (isRejectedWithValue(action)) {
     const serverError: ServerError | undefined = action?.payload?.data;
@@ -31,8 +82,8 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
         action?.type?.split('/')?.[0],
         action?.meta?.arg?.endpointName,
       );
-      if (errorMessage) toast(errorMessage, 'error', 5000); //TODO: filter errorCode and display a local message
       Logger.error('Middleware', 'Server error', { serverError, action });
+      if (errorMessage) toast(errorMessage, 'error', 5000); //TODO: filter errorCode and display a local message
     }
   }
   return next(action);
