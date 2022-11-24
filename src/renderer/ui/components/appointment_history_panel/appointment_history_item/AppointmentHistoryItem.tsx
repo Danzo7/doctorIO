@@ -19,7 +19,7 @@ export default function AppointmentHistoryItem({
       primaryText={date ? format(date, DATE_ONLY) : ''}
       secondaryText={subject ? subject : 'Untitled'}
     >
-      {session && (
+      {session && Object.keys(session).length > 0 && (
         <SquareIconButton
           Icon={AppointmentHistoryIcon}
           onPress={() => {
