@@ -9,7 +9,7 @@ import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import LoadingSpinner from '@components/loading_spinner';
 import { FIT_MODAL } from '@libs/overlay';
 import MemberBigCard from '@containers/modals/member_big_card';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@stores/overlayStore';
 interface SearchProfileProps {}
 export default function SearchProfile({}: SearchProfileProps) {
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
@@ -27,7 +27,7 @@ export default function SearchProfile({}: SearchProfileProps) {
             imgSrc={data.avatar}
             alt={data.name + data.id}
             onClick={() => {
-              Overlay_u.quickOpen(<MemberBigCard id={data.id} />, FIT_MODAL);
+              modal(<MemberBigCard id={data.id} />, FIT_MODAL).open();
             }}
           />
         )

@@ -7,7 +7,7 @@ import { io, Socket } from 'socket.io-client';
 import create from 'zustand';
 import { useAuthStore } from './authStore';
 import { useClinicsStore } from './clinicsStore';
-import { Overlay_u } from './overlayStore';
+import { modal, Overlay_u } from './overlayStore';
 
 interface SocketState {
   socket?: Socket;
@@ -94,20 +94,18 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
             queueItem: AppointmentQueueItem;
           }) => {
             if (data.state == 'WAITING')
-              Overlay_u.init(
+              modal(
+                QueueNotificationModal({
+                  name: data.queueItem.patientName,
+                  position: data.queueItem.position,
+                }),
                 {
-                  node: QueueNotificationModal({
-                    name: data.queueItem.patientName,
-                    position: data.queueItem.position,
-                  }),
-                  props: {
-                    isDimmed: true,
-                    closeOnClickOutside: true,
-                    transition: 'appear-right',
-                  },
+                  isDimmed: true,
+                  closeOnClickOutside: true,
+                  transition: 'appear-right',
                 },
                 'queueNotification',
-              ).open(undefined, undefined, { force: true });
+              ).open({ force: true });
             else if (data.state == 'IN_PROGRESS')
               Overlay_u.close('queueNotification');
           },

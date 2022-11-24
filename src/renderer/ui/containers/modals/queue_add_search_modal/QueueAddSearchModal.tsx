@@ -14,7 +14,7 @@ import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@stores/overlayStore';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -58,7 +58,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
             fontWeight={700}
             borderColor={color.border_color}
             onPress={() => {
-              Overlay_u.quickOpen(<AddPatientModal />, DEFAULT_MODAL);
+              modal(<AddPatientModal />, DEFAULT_MODAL).open();
             }}
           />
         ) : errorRef.current == undefined && result.isFetching ? (

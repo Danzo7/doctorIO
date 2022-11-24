@@ -12,7 +12,7 @@ import { IS_PREVIEW } from '@constants/env';
 import { MemberBrief } from '@models/server.models';
 import Can from '@ability/index';
 import AlertModal from '@containers/modals/dialog_modal';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@stores/overlayStore';
 
 interface MemberActionControlsProps {
   dmId?: number;
@@ -39,7 +39,7 @@ export default function MemberActionControls({
           width={40}
           iconSize={15}
           onPress={() => {
-            Overlay_u.quickOpen(<MemberBigCard id={id} />, FIT_MODAL);
+            modal(<MemberBigCard id={id} />, FIT_MODAL).open();
           }}
         />
       )}
@@ -54,7 +54,7 @@ export default function MemberActionControls({
             iconSize={15}
             onPress={() => {
               if (notFriend)
-                Overlay_u.quickOpen(
+                modal(
                   <AlertModal
                     title="Start a conversation"
                     description="This is the first time you are messaging this user. You have to wait for them to accept your request."
@@ -67,7 +67,7 @@ export default function MemberActionControls({
                     status="warning"
                   />,
                   FIT_MODAL,
-                );
+                ).open();
               else navigate(`${messagesRoutePath + dmId}`);
             }}
           />
