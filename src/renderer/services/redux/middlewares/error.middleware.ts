@@ -1,4 +1,4 @@
-import { isRejectedWithValue } from '@reduxjs/toolkit';
+import { isRejectedWithValue, isFulfilled } from '@reduxjs/toolkit';
 import type { Middleware } from '@reduxjs/toolkit';
 import { Logger } from '@libs/Logger';
 import { toast } from '@stores/overlayStore';
@@ -83,7 +83,23 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
         action?.meta?.arg?.endpointName,
       );
       Logger.error('Middleware', 'Server error', { serverError, action });
-      if (errorMessage) toast(errorMessage, 'error', 5000); //TODO: filter errorCode and display a local message
+      if (errorMessage) toast(errorMessage, 'error', 5000);
+    }
+  }
+  if (
+    isFulfilled(action) &&
+    action.meta.arg.type == 'mutation' &&
+    action?.payload
+  ) {
+    console.log('action', action);
+    switch (action.meta.arg.endpointName) {
+      case 'uploadFile':
+        toast('upload success', 'Success', 2000);
+        break;
+
+      default:
+        toast(action.meta.arg.endpointName, 'Success', 2000);
+        break;
     }
   }
   return next(action);
