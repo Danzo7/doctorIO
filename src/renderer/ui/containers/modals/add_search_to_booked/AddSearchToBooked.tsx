@@ -6,7 +6,6 @@ import PresentationItem from '@components/presentation_item';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '../book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useFindPatientByNameMutation } from '@redux/instance/record/patient_api';
@@ -33,7 +32,6 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
     ?.data as ServerError;
   if (result.isError || result.isSuccess) errorRef.current = serverError;
 
-  const { open } = useOverlay();
   return (
     <ModalContainer
       title="Select a patient"
