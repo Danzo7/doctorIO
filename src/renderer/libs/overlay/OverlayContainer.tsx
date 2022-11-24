@@ -1,5 +1,5 @@
 import { Overlay } from './overlay';
-import back from 'toSvg/arrow_line.svg?icon';
+import back from 'toSvg/x_mark.svg?icon';
 
 import {
   createContext,
@@ -19,7 +19,8 @@ import { createPortal } from 'react-dom';
 import {
   getOverlayNode,
   Overlay_u,
-  useIsOpen,
+  useIsOpenModal,
+  useOpenHelptipId,
   useOpenTooltipId,
 } from '@stores/overlayStore';
 import ToastContainer from '@libs/toast_container';
@@ -77,6 +78,31 @@ export function TooltipContainer() {
   return (
     <>
       {id && (
+        <div className="overlay-container" css={{ zIndex: 2 }}>
+          <div>{getOverlayNode(id)}</div>
+        </div>
+      )}
+    </>
+  );
+}
+
+export function HelptipContainer() {
+  const hId = useOpenHelptipId();
+  return (
+    <>
+      {hId && (
+        <div className="overlay-container" css={{ zIndex: 30 }}>
+          <div>{getOverlayNode(hId)}</div>
+        </div>
+      )}
+    </>
+  );
+}
+function ModalContainer() {
+  const id = useIsOpenModal();
+  return (
+    <>
+      {id && (
         <div className="overlay-container">
           <div>{getOverlayNode(id)}</div>
         </div>
@@ -85,18 +111,14 @@ export function TooltipContainer() {
   );
 }
 export function OverlayContainer_Unstable({}: OverlayContainerProps) {
-  const id = useIsOpen();
   useRouteChange(() => Overlay_u.clear());
 
   return (
     <>
-      {id && (
-        <div className="overlay-container">
-          <div>{getOverlayNode(id)}</div>
-        </div>
-      )}
-      {<ToastContainer />}
-      {<TooltipContainer />}
+      <HelptipContainer />
+      <ModalContainer />
+      <ToastContainer />
+      <TooltipContainer />
     </>
   );
 }
@@ -235,7 +257,11 @@ export function OverlayItem({
             }`}
           >
             {typeof closeBtn == 'string' ? (
-              <SquareIconButton onPress={() => closeOverlay()} Icon={back} />
+              <SquareIconButton
+                onPress={() => closeOverlay()}
+                Icon={back}
+                tip="Close"
+              />
             ) : (
               closeBtn.placement
             )}
