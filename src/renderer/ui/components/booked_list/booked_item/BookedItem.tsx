@@ -61,6 +61,7 @@ function BookedItem({
       </div>
       <SquareIconButton
         Icon={threeDots}
+        tip="More"
         onPress={(e) => {
           if (e)
             openTooltip(

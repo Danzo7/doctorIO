@@ -8,7 +8,10 @@ interface DmHistoryProps {
 }
 export default function DmHistory({ list }: DmHistoryProps) {
   return (
-    <PreviewList title="DM’s" buttonNode={<SquareIconButton Icon={add} />}>
+    <PreviewList
+      title="DM’s"
+      buttonNode={<SquareIconButton Icon={add} tip="New DM" />}
+    >
       {list.length > 0
         ? list.map(({ dmAvatar, dmId, lastMessage, dmName }, index) => (
             <LastDmMessage

@@ -22,6 +22,7 @@ export default function AppointmentHistoryItem({
       {session && (
         <SquareIconButton
           Icon={AppointmentHistoryIcon}
+          tip="View Session"
           onPress={() => {
             open(<SessionPreviewModal session={session} />, {
               closeOnClickOutside: true,

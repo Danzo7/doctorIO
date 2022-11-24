@@ -53,6 +53,7 @@ function QueueItemWide({
       <div className="back-container">
         <div className="back">
           <SquareIconButton
+            tip="More"
             Icon={threeDots}
             onPress={(e) => {
               if (e)

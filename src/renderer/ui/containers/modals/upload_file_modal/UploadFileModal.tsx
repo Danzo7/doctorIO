@@ -64,6 +64,7 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
         disabled={isLoading}
         trailing={
           <IconicButton
+            tip="Upload"
             blank
             width={25}
             radius={7}

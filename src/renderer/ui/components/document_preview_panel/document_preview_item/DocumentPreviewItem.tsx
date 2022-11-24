@@ -53,6 +53,7 @@ export default function DocumentPreviewItem({
       secondaryText={format(date, DATE_ONLY)}
     >
       <SquareIconButton
+        tip="View Document"
         Icon={statusRef.current == 'LOST' ? damaged : AppointmentHistoryIcon}
         iconColor={statusRef.current == 'LOST' ? color.text_gray : undefined}
         onPress={() => {
@@ -80,6 +81,7 @@ export default function DocumentPreviewItem({
 
       <SquareIconButton
         Icon={TrashCan}
+        tip="Delete Document"
         onPress={() => {
           open(
             <DeleteDocumentModal

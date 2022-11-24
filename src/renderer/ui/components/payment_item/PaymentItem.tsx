@@ -23,6 +23,7 @@ export default function PaymentItem({
       <div className="payment-controls">
         <IconicButton
           Icon={Print}
+          tip="Print Receipt"
           iconType="fill"
           iconColor={color.text_gray}
           iconAfterColor={color.white}

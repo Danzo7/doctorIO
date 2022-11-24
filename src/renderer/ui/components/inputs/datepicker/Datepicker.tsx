@@ -38,11 +38,13 @@ export default function Datepicker({
         <div className="header">
           {yearControl && (
             <SquareIconButton
+              tip="Decrease Year"
               onPress={decreaseYear}
               Icon={<Arrow css={{ transform: 'rotate(90deg)' }} />}
             />
           )}
           <SquareIconButton
+            tip="Decrease Month"
             onPress={decreaseMonth}
             Icon={<Arrow css={{ transform: 'rotate(90deg)' }} />}
           />
@@ -54,11 +56,13 @@ export default function Datepicker({
             })}
           </span>
           <SquareIconButton
+            tip="Increase Month"
             onPress={increaseMonth}
             Icon={<Arrow css={{ transform: 'rotate(-90deg)' }} />}
           />
           {yearControl && (
             <SquareIconButton
+              tip="Increase Year"
               onPress={increaseYear}
               Icon={<Arrow css={{ transform: 'rotate(-90deg)' }} />}
             />

@@ -41,7 +41,7 @@ export default function Chat({}: ChatProps) {
     ]);
     reset({ message: '' });
   };
-  const { data, isSuccess, error, isLoading } = useGetMyMemberDetailQuery();
+  const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
   return (
     <div className="chat">
       {dmId}
@@ -51,6 +51,7 @@ export default function Chat({}: ChatProps) {
           status={contactMember.status}
         />
         <IconicButton
+          tip="Start a voice call"
           Icon={Call_Icon}
           backgroundColor={colors.secondary_color}
           afterBgColor={colors.good_green}

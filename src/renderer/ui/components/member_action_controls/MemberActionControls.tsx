@@ -34,6 +34,7 @@ export default function MemberActionControls({
       {showCard && (
         <IconicButton
           Icon={IdCard}
+          tip="View Profile"
           afterBgColor={colors.light}
           width={40}
           iconSize={15}
@@ -46,6 +47,7 @@ export default function MemberActionControls({
         <Can I="have" a="messages">
           <IconicButton
             Icon={Messages}
+            tip="Message"
             afterBgColor={notFriend ? colors.cold_red : colors.light}
             backgroundColor={notFriend ? colors.hot_red : undefined}
             width={40}
@@ -73,6 +75,7 @@ export default function MemberActionControls({
       )}
       <IconicButton
         Icon={Call_Icon}
+        tip="Start voice call"
         afterBgColor={colors.good_green}
         width={40}
         iconSize={15}

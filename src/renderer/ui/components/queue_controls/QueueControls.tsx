@@ -31,10 +31,11 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
     <div className="queue-controls">
       {state !== 'PAUSED' && (
         <IconicButton
+          tip="Add a patient"
           Icon={AddIcon}
           backgroundColor={color.cold_blue}
           width={25}
-          radius={7}
+          radius={5}
           iconSize={11}
           onPress={() => {
             Overlay_u.init({
@@ -52,10 +53,11 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
       )}
       {state === 'EMPTY' && (
         <IconicButton
+          tip="Restart queue"
           Icon={ResetIcon}
           backgroundColor={color.hot_purple}
           width={25}
-          radius={7}
+          radius={5}
           iconSize={14}
           onPress={() => {
             Overlay_u.quickOpen(
@@ -96,10 +98,11 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
       {isOwner &&
         (state == 'PAUSED' ? (
           <IconicButton
+            tip="Resume queue"
             Icon={playIcon}
             backgroundColor={color.cold_blue}
             width={25}
-            radius={7}
+            radius={5}
             iconSize={10}
             onPress={() => {
               Overlay_u.quickOpen(
@@ -126,6 +129,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
           <>
             {state != 'EMPTY' && (
               <IconicButton
+                tip="Next patient"
                 Icon={NextIcon}
                 backgroundColor={color.good_green}
                 width={25}
@@ -143,6 +147,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
               />
             )}
             <IconicButton
+              tip="Pause queue"
               Icon={PauseIcon}
               backgroundColor={color.hot_red}
               width={25}

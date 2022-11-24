@@ -71,6 +71,7 @@ export default function NetworkError() {
           }
           IconBtn={
             <SquareIconButton
+              tip="Disconnect"
               Icon={LogOut}
               onPress={() => setConfirmLogout(true)}
             />

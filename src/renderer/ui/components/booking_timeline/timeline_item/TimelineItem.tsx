@@ -76,6 +76,7 @@ export default function TimelineItem({
           {session && Object.keys(session).length > 0 && (
             <SquareIconButton
               Icon={View}
+              tip="View Session"
               disabled={isLoading || !isSuccess}
               onPress={() => {
                 open(
