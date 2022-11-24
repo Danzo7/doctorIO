@@ -13,6 +13,7 @@ import { useFindPatientByNameMutation } from '@redux/instance/record/patient_api
 import LoadingSpinner from '@components/loading_spinner';
 import { useRef } from 'react';
 import { PatientBrief } from '@models/instance.model';
+import { Overlay_u } from '@stores/overlayStore';
 
 interface SearchInput {
   searchField: string;
@@ -57,7 +58,7 @@ export default function AddSearchToBooked({}: AddSearchToBookedProps) {
                     fontSize={13}
                     fontWeight={600}
                     onPress={() => {
-                      open(
+                      Overlay_u.quickOpen(
                         <BookAppointmentModal
                           patientName={pat.name}
                           id={pat.id}
