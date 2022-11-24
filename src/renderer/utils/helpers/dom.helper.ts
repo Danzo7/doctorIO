@@ -3,6 +3,11 @@ export const blurWithin = (
   callback: () => void,
 ) => {
   if (!event.currentTarget?.contains(event.relatedTarget)) {
-    callback();
+    if (event.relatedTarget?.className.includes('layer'))
+      (event.relatedTarget as HTMLElement).onblur = () => {
+        console.log(event);
+        event.target?.focus();
+      };
+    else callback();
   }
 };
