@@ -54,15 +54,18 @@ export default function SmallRoleList({
             onPress={(e) => {
               if (e)
                 Overlay_u.openTooltip(
-                  <AddRoleTooltip
-                    skipRoles={roleList}
-                    onSelect={(role) => {
-                      onAdd?.(role);
-                      close();
-                    }}
-                    lvl={data.lvl}
-                  />,
+                  ({ close }) => (
+                    <AddRoleTooltip
+                      skipRoles={roleList}
+                      onSelect={(role) => {
+                        onAdd?.(role);
+                        close();
+                      }}
+                      lvl={data.lvl}
+                    />
+                  ),
                   e.currentTarget,
+                  true,
                 );
             }}
           />

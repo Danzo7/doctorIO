@@ -8,7 +8,7 @@ import {
   useState,
   MouseEvent,
 } from 'react';
-import { Overlay_u } from '@stores/overlayStore';
+import { OverlayType, Overlay_u } from '@stores/overlayStore';
 type IconProps = {
   svg: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
   iconColor?: string;
@@ -271,7 +271,7 @@ function TextButton({
               },
             },
             'helper',
-            { isHelpTip: true },
+            { type: OverlayType.HELPTIP },
           ).open();
       }}
       onMouseLeave={() => {
