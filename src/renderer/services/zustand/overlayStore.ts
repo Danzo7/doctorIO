@@ -319,7 +319,9 @@ export const useIsOpenModal = () =>
       openId: state.openOverlayId?.modalId,
       _forceRerender: state._forceRerender,
     }),
-    (oldState, newState) => oldState.openId == newState.openId,
+    (oldState, newState) =>
+      oldState.openId == newState.openId &&
+      oldState._forceRerender == newState._forceRerender,
   ).openId;
 export const useOpenTooltipId = () =>
   useOverlayStore(
