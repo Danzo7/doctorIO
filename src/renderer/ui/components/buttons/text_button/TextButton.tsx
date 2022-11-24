@@ -255,6 +255,7 @@ function TextButton({
                     marginBottom: 5,
                     marginTop: 5,
                     borderRadius: 5,
+                    pointerEvents: 'none',
                   }}
                 >
                   {tip}
@@ -268,6 +269,8 @@ function TextButton({
                 clickThrough: true,
                 closeOnClickOutside: true,
                 closeOnBlur: true,
+                backdropColor: false,
+                clickable: false,
               },
             },
             'helper',
