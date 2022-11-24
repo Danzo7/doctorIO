@@ -5,13 +5,14 @@ import { OverlayItem, OverlayOptions } from '@libs/overlay';
 import { nanoid } from '@reduxjs/toolkit';
 import { ComponentProps, ReactNode } from 'react';
 import create from 'zustand';
-import shallow from 'zustand/shallow';
 
 type Item = {
   node?: ReactNode;
   id: string;
   previousId?: string;
   isTooltip?: boolean;
+  isHelpTip?: boolean;
+  isModal?: boolean;
 };
 type Target =
   | { node: ReactNode; props?: OverlayOptions }
@@ -21,8 +22,8 @@ type Target =
     });
 interface OverlayState {
   items: Item[];
-  openId?: string;
-  openTooltipId?: string;
+  openOverlayId: { modalId?: string; tooltipId?: string; helpTipId?: string };
+
   _forceRerender: boolean;
   toasts: (ComponentProps<typeof AlertToast> & {
     id: string;
@@ -30,7 +31,7 @@ interface OverlayState {
   init: (
     target?: Target,
     id?: string,
-    isTooltip?: boolean,
+    config?: { isTooltip?: boolean; isHelpTip?: boolean; isModal?: boolean },
   ) => Pick<OverlayState, 'close' | 'hide' | 'open'>;
   open: (
     target?: Target,
@@ -41,6 +42,7 @@ interface OverlayState {
   close: (id?: string) => void;
   getNode: (id: string) => ReactNode | undefined;
   getIndex: (id: string) => number | undefined;
+  isOpen: (id: string) => boolean;
   clear: () => void;
   toast: (
     message: string,
@@ -53,6 +55,7 @@ interface OverlayState {
 
 const useOverlayStore = create<OverlayState>((set, get) => ({
   items: [],
+  openOverlayId: {},
   toasts: [],
   _forceRerender: false,
   getNode: (id: string) => {
@@ -63,14 +66,20 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
     const index = get().items.findIndex((it) => it.id === id);
     return index >= 0 ? index : undefined;
   },
-  init: (target, idd, isTooltip) => {
-    Logger.log('InitOverlay', get().items.length);
+  init: (target, idd, config = { isModal: true }) => {
+    if (
+      Number(config?.isTooltip) +
+        Number(config?.isHelpTip) +
+        Number(config?.isModal) >
+      1
+    )
+      throw new Error('Only one of isTooltip, isHelpTip, isModal can be true');
+    Logger.log('InitOverlay', 'Total items: ' + get().items.length);
     const id: string = idd ?? nanoid();
-    const close = () => get().close(id);
     const plainTarget =
       typeof target === 'function'
         ? target({
-            close,
+            close: () => get().close(id),
             hide: () => get().hide(id),
             open: (tg, _, force) => get().open(tg, id, force),
           })
@@ -84,7 +93,9 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
           })
         : undefined,
       id,
-      isTooltip,
+      isTooltip: config?.isTooltip,
+      isHelpTip: config?.isHelpTip,
+      isModal: config?.isModal,
     };
 
     set((state) => {
@@ -101,66 +112,72 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
       return { items: [...state.items] };
     });
     return {
-      close,
+      close: () => get().close(id),
       open: (tg, _, force) => get().open(tg, id, force),
       hide: () => get().hide(id),
     };
   },
   open: (target, id, data) => {
-    Logger.log('openOverlay', get().items.length);
     if (get().items.length === 0)
       Logger.warn('openOverlay', "No items in overlay, can't open");
     else {
-      let item: Item | undefined;
-      if (id == undefined) item = get().items[get().items.length - 1];
-      else item = get().items.find((i) => i.id === id);
+      Logger.log(
+        'OpenOverlay',
+        'Open overlay with id: "' +
+          id +
+          '", Total items: ' +
+          get().items.length,
+      );
+      const index = id ? get().getIndex(id) : undefined;
+      if (index == undefined && id)
+        Logger.warn('openOverlay', 'No item with id: "' + id + '"');
+      else {
+        set((state) => {
+          const item = index
+            ? state.items[index]
+            : state.items[state.items.length - 1];
+          if (target != undefined) {
+            const plainTarget =
+              typeof target === 'function'
+                ? target({
+                    close: () => state.close(id),
+                    hide: () => state.hide(id),
+                    open: (tg, _, force) => state.open(tg, id, force),
+                  })
+                : target;
+            item.node = OverlayItem({
+              children: plainTarget.node,
+              onClose: () => state.close(id),
+              ...plainTarget.props,
+            });
+          }
 
-      if (item != undefined) {
-        if (target != undefined) {
-          const plainTarget =
-            typeof target === 'function'
-              ? target({
-                  close,
-                  hide: () => get().hide(id),
-                  open: (tg, _, force) => get().open(tg, id, force),
-                })
-              : target;
-          item.node = OverlayItem({
-            children: plainTarget.node,
-            onClose: () => get().close(id),
-            ...plainTarget.props,
-          });
-        }
-        if (item.isTooltip) {
-          set((state) => {
+          item.previousId =
+            item.isModal &&
+            state.openOverlayId?.modalId != item.id &&
+            !data?.closePrevious
+              ? state.openOverlayId?.modalId
+              : undefined;
+
+          if (item.node != undefined) {
+            const openOverlay = state.openOverlayId;
+            if (item.isModal) openOverlay.modalId = item.id;
+            else if (item.isTooltip) openOverlay.tooltipId = item.id;
+            else if (item.isHelpTip) openOverlay.helpTipId = item.id;
             return {
-              openTooltipId: item?.id,
+              openOverlayId: openOverlay,
               _forceRerender: data?.force
                 ? !state._forceRerender
                 : state._forceRerender,
             };
-          });
-        } else {
-          item.previousId =
-            get().openId != item.id && !data?.closePrevious
-              ? get().openId
-              : undefined;
-          if (item.node != undefined)
-            set((state) => ({
-              openId: id,
-              _forceRerender: data?.force
-                ? !state._forceRerender
-                : state._forceRerender,
-            }));
-          else Logger.warn('openOverlay', 'Item was not initialized');
-        }
-      } else
-        Logger.warn(
-          'openOverlay',
-          'No item found with id "' +
-            id +
-            '". Maybe the item was closed before',
-        );
+          } else
+            Logger.warn(
+              'openOverlay',
+              `Overlay "${id}" has not been initialized`,
+            );
+          return {};
+        });
+      }
     }
     return {
       close: () => get().close(id),
@@ -169,60 +186,84 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
   },
 
   close: (id) => {
-    Logger.log('closeOverlay', get().items.length - 1);
+    Logger.log(
+      'closeOverlay',
+      'Closing' + (id ? id : 'the last overlay'),
+      get().items.length - 1,
+    );
     if (get().items.length === 0) {
       Logger.warn('closeOverlay', 'There are no items to close');
-      if (get().openId != undefined) set(() => ({ openId: undefined }));
+      if (get().openOverlayId) set(() => ({ openOverlayId: {} }));
       return;
     }
-    if (id == undefined) {
+    const index = id ? get().getIndex(id) : undefined;
+    if (id && index == undefined)
+      Logger.warn('closeOverlay', 'No item found with id "' + id + '"');
+    else {
       set((state) => {
-        const items = [...state.items];
-        const deleted = items.pop();
+        const items = state.items;
+        const item = items[index ?? items.length - 1];
+        const openOverlayId = state.openOverlayId;
+        if (item?.isModal && item.id == openOverlayId.modalId)
+          openOverlayId.modalId = item.previousId;
+        else if (item?.isTooltip && item.id == openOverlayId.tooltipId)
+          openOverlayId.tooltipId = undefined;
+        else if (item?.isHelpTip && item.id == openOverlayId.helpTipId)
+          openOverlayId.helpTipId = undefined;
         return {
-          items,
-          openId: state.openId == deleted?.id ? undefined : state.openId,
+          items: items.filter((i) => i.id != item.id),
+          openOverlayId,
         };
       });
-    } else {
-      const index = get().getIndex(id);
-      if (index != undefined)
-        set((state) => {
-          return {
-            items: state.items.filter(({ id: ids }) => ids != id),
-            openId:
-              state.openId == id ? state.items[index].previousId : state.openId,
-            openTooltipId:
-              state.openTooltipId == id ? undefined : state.openTooltipId,
-          };
-        });
-      else
-        Logger.warn(
-          'closeOverlay',
-          'No item found with id "' +
-            id +
-            '". Maybe the item was closed before',
-        );
     }
   },
   hide: (id) => {
     Logger.log('hideOverlay', get().items.length);
-    if (get().openId == id || id == undefined) {
-      set((state) => ({
-        openId: get().openId == id ? undefined : state.openId,
-        openTooltipId:
-          get().openTooltipId == id ? undefined : state.openTooltipId,
-      }));
-    } else Logger.warn('hideOverlay', ' id "' + id + '" is not open.');
+    if (get().items.length === 0)
+      Logger.warn('hideOverlay', 'There are no items to hide');
+    else {
+      const index = id ? get().getIndex(id) : undefined;
+      if (id && index == undefined) {
+        Logger.warn(`Item with id ${id} not found`);
+      } else {
+        const item = index
+          ? get().items[index]
+          : get().items[get().items.length - 1];
 
+        set((state) => {
+          const openOverlayId = state.openOverlayId;
+          if (item?.isModal && item.id == openOverlayId.modalId)
+            openOverlayId.modalId = item.previousId;
+          else if (item?.isTooltip && item.id == openOverlayId.tooltipId)
+            openOverlayId.tooltipId = undefined;
+          else if (item?.isHelpTip && item.id == openOverlayId.helpTipId)
+            openOverlayId.helpTipId = undefined;
+
+          return {
+            openOverlayId,
+          };
+        });
+      }
+    }
     return {
       close: () => get().close(id),
       open: (target) => get().open(target, id),
     };
   },
+  isOpen: (id) => {
+    const index = get().getIndex(id);
+    if (
+      index != undefined &&
+      (get().items[index].isModal ||
+        get().items[index].isTooltip ||
+        get().items[index].isHelpTip)
+    )
+      return true;
+    else return false;
+  },
   clear: () => {
     Logger.log('clearOverlay', get().items.length);
-    set(() => ({ items: [], openId: undefined }));
+    set(() => ({ items: [], openOverlayId: {} }));
   },
   closeToast: (id) => {
     Logger.log('closeToast', get().toasts.length - 1);
@@ -258,22 +299,32 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
     });
   },
 }));
-export const useIsOpen = () =>
+export const useIsOpenModal = () =>
   useOverlayStore(
     (state) => ({
-      openId: state.openId,
+      openId: state.openOverlayId?.modalId,
       _forceRerender: state._forceRerender,
     }),
-    shallow,
+    (oldState, newState) => oldState.openId == newState.openId,
   ).openId;
 export const useOpenTooltipId = () =>
-  useOverlayStore((state) => state.openTooltipId);
-
+  useOverlayStore(
+    (state) => ({ openId: state.openOverlayId?.tooltipId }),
+    (oldState, newState) => oldState.openId == newState.openId,
+  ).openId;
+export const useOpenHelptipId = () =>
+  useOverlayStore(
+    (state) => ({ openId: state.openOverlayId?.helpTipId }),
+    (oldState, newState) => oldState.openId == newState.openId,
+  ).openId;
 export const getOverlayNode = (id: string) =>
   useOverlayStore.getState().getNode(id);
 export const Overlay_u = {
-  init: (target?: Target, id?: string) =>
-    useOverlayStore.getState().init(target, id),
+  init: (
+    target?: Target,
+    id?: string,
+    config?: { isTooltip?: boolean; isHelpTip?: boolean; isModal?: boolean },
+  ) => useOverlayStore.getState().init(target, id, config),
   clear: () => useOverlayStore.getState().clear(),
   close: (id?: string) => useOverlayStore.getState().close(id),
   quickOpen: (node: ReactNode, props?: OverlayOptions) =>
@@ -301,7 +352,7 @@ export const Overlay_u = {
           },
         }),
         undefined,
-        true,
+        { isTooltip: true },
       )
       .open(),
 };
