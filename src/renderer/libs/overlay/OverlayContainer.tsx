@@ -163,6 +163,7 @@ export interface OverlayOptions {
     | 'appear-top'
     | 'appear-bottom';
   autoFocus?: boolean;
+  clickable?: boolean;
 }
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
@@ -186,6 +187,7 @@ export function OverlayItem({
   onClose,
   defaultCloseFallback = true,
   style,
+  clickable = true,
 }: OverlayItemProps) {
   const closeOverlay = () => {
     onClose?.();
@@ -225,6 +227,7 @@ export function OverlayItem({
           left: position?.left,
           right: position?.right,
           animation: transition && `${transition} .1s forwards ease-out`,
+          pointerEvents: clickable ? 'all' : 'none',
         }}
         {...(autoFocus ? { tabIndex: -1 } : {})}
         onBlur={
