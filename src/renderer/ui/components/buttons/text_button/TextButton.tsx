@@ -1,5 +1,5 @@
 import './style/index.scss';
-import colors from '@colors';
+import colors, { color } from '@colors';
 import useLongPress from '@libs/hooks/useLongPress';
 import {
   FunctionComponent,
@@ -8,6 +8,7 @@ import {
   useState,
   MouseEvent,
 } from 'react';
+import { Overlay_u } from '@stores/overlayStore';
 type IconProps = {
   svg: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
   iconColor?: string;
@@ -72,6 +73,7 @@ interface TextButtonProps {
     | 'wait'
     | 'move'
     | 'crosshair';
+  tip?: string;
 }
 function TextButton({
   className,
@@ -102,6 +104,7 @@ function TextButton({
   onHold,
   cursor = 'pointer',
   blank,
+  tip,
 }: TextButtonProps) {
   const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
   const [startHold, cancelHold] = useLongPress({
@@ -239,6 +242,42 @@ function TextButton({
           : undefined
       }
       disabled={disabled}
+      onMouseEnter={(e) => {
+        if (tip)
+          Overlay_u.init(
+            {
+              node: (
+                <div
+                  className="text-button-tooltip"
+                  css={{
+                    padding: 5,
+                    background: color.good_black,
+                    marginBottom: 5,
+                    marginTop: 5,
+                    borderRadius: 5,
+                  }}
+                >
+                  {tip}
+                </div>
+              ),
+              props: {
+                popperTarget: {
+                  target: e.currentTarget,
+                  options: { placement: 'top' },
+                },
+                clickThrough: true,
+                closeOnClickOutside: true,
+                closeOnBlur: true,
+              },
+            },
+            'helper',
+            { isHelpTip: true },
+          ).open();
+      }}
+      onMouseLeave={() => {
+        if (tip) Overlay_u.close('helper');
+      }}
+      aria-label={tip}
     >
       <>
         {children}
