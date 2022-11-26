@@ -1,0 +1,30 @@
+@use '~styles/appColors' as *;
+.tab-component {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1;
+    align-items: stretch;
+    align-self: stretch;
+
+    >.tab-menu-bar{
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+
+        >  .menu-labels {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+
+    > .menu-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        align-items: stretch;
+        align-self: stretch;
+    }
+}
