@@ -1,12 +1,12 @@
 import TextButton from '@components/buttons/text_button';
 import { color } from '@colors';
 import PresentationItem from '@components/presentation_item';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { PatientBrief } from '@models/instance.model';
-import { DEFAULT_MODAL, Overlay } from '@libs/overlay';
+import { DEFAULT_MODAL } from '@libs/overlay';
 import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment/AppointmentApi';
+import { modal, Overlay_u } from '@stores/overlayStore';
 
 interface RecentAppsItemProps {
   appointmentId?: number;
@@ -16,7 +16,6 @@ export default function RecentAppsItem({
   name,
   appointmentId,
 }: PatientBrief & RecentAppsItemProps) {
-  const { open } = useOverlay();
   const [addAppointment] = useAddQueueAppointmentMutation();
   const [AssignAppointmentToQueue] = useAssignAppointmentToQueueMutation();
 
@@ -27,25 +26,29 @@ export default function RecentAppsItem({
         backgroundColor={color.cold_blue}
         radius={7}
         onPress={() => {
-          open(
-            <AddMedicalTestModal
-              onSubmit={(data) => {
-                if (appointmentId)
-                  AssignAppointmentToQueue({
-                    appointmentId: appointmentId,
-                    test: data,
-                  });
-                else
-                  addAppointment({
-                    patientId: id,
-                    test: data,
-                  });
-
-                Overlay.close();
-              }}
-            />,
+          modal(
+            () => (
+              <AddMedicalTestModal
+                onSubmit={(data) => {
+                  if (appointmentId)
+                    AssignAppointmentToQueue({
+                      appointmentId: appointmentId,
+                      test: data,
+                    }).then((res: any) => {
+                      if (res?.data) Overlay_u.clear();
+                    });
+                  else
+                    addAppointment({
+                      patientId: id,
+                      test: data,
+                    }).then((res: any) => {
+                      if (res?.data) Overlay_u.clear();
+                    });
+                }}
+              />
+            ),
             DEFAULT_MODAL,
-          );
+          ).open();
         }}
       />
       <TextButton
@@ -56,13 +59,15 @@ export default function RecentAppsItem({
           if (appointmentId)
             AssignAppointmentToQueue({
               appointmentId: appointmentId,
+            }).then((res: any) => {
+              if (res?.data) Overlay_u.clear();
             });
           else
             addAppointment({
               patientId: id,
+            }).then((res: any) => {
+              if (res?.data) Overlay_u.clear();
             });
-
-          Overlay.close();
         }}
       />
     </PresentationItem>

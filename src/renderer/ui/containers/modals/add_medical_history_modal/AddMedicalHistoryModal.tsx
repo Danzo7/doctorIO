@@ -48,17 +48,6 @@ export default function AddMedicalHistoryModal({
     })
       .then(() => {
         Overlay.close();
-        open(
-          <AlertToast
-            status="Success"
-            text="New medical history added successfully"
-          />,
-          {
-            ...DEFAULT_MODAL,
-            position: { bottom: '10%' },
-            closeBtn: undefined,
-          },
-        );
       })
       .then(() => {
         setTimeout(() => {

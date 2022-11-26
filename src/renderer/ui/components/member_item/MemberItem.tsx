@@ -14,6 +14,7 @@ import {
   useAssignRoleMutation,
   useRevokeRoleMutation,
 } from '@redux/clinic/rbac/role/roleApi';
+import { Overlay_u } from '@stores/overlayStore';
 
 export default function MemberItem({
   avatar,
@@ -49,7 +50,6 @@ export default function MemberItem({
         <SmallRoleList
           roleList={roles}
           onAdd={(role) => {
-            //FIXME  show errorToast on fetch error
             AssignRole({ memberId: id, roleId: role.id });
           }}
           onDelete={(role) => {
@@ -64,8 +64,8 @@ export default function MemberItem({
           tip="More"
           onPress={(e) => {
             if (e)
-              openTooltip(
-                [
+              Overlay_u.openTooltip(
+                () => [
                   {
                     text: 'show profile',
                     onPress: () => {

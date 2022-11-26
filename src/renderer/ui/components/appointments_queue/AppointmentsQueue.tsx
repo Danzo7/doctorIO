@@ -22,13 +22,12 @@ import BorderSeparator from '@components/border_separator';
 import TabMenu from '@components/tab_menu';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import LinkedRole from '@components/linked_role';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
+import { modal } from '@stores/overlayStore';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
-  const { open } = useOverlay();
   const queueStateQuery = useGetQueueStateQuery();
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
@@ -90,13 +89,13 @@ export default function AppointmentsQueue() {
                 action={{
                   text: 'Add queue item',
                   onClick: () => {
-                    open(<QueueAddSearchModal />, {
+                    modal(() => <QueueAddSearchModal />, {
                       closeOnClickOutside: true,
                       isDimmed: true,
                       clickThrough: false,
                       closeBtn: 'inner',
                       width: '30%',
-                    });
+                    }).open();
                   },
                 }}
                 Icon={<WaitingRoom width={'70%'} height={'100%'} />}

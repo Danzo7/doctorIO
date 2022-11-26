@@ -10,6 +10,7 @@ import { useBookAppointmentMutation } from '@redux/instance/Appointment/Appointm
 import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { DATE_ONLY } from '@constants/data_format';
+import { Overlay_u } from '@stores/overlayStore';
 
 type Inputs = {
   subject: string;
@@ -34,7 +35,7 @@ export default function BookAppointmentModal({
       body: { date: date, subject: subject },
     });
 
-    Overlay.close();
+    Overlay_u.clear();
   };
 
   return (

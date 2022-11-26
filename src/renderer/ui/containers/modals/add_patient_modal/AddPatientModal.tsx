@@ -5,8 +5,8 @@ import { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { useAddPatientMutation } from '@redux/instance/record/patient_api';
+import { modal } from '@stores/overlayStore';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import AddSelectedToQueueModal from '../add_selected_to_queue_modal';
@@ -38,7 +38,6 @@ export default function AddPatientModal({}: AddPatientModalProps) {
     },
   });
 
-  const { open } = useOverlay();
   const [addPatient] = useAddPatientMutation();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     const { firstName, lastName, gender, birthDate } = formData;
@@ -50,10 +49,10 @@ export default function AddPatientModal({}: AddPatientModalProps) {
     })
       .unwrap()
       .then((patient) => {
-        open(
-          <AddSelectedToQueueModal id={patient.id} name={patient.name} />,
+        modal(
+          () => <AddSelectedToQueueModal id={patient.id} name={patient.name} />,
           DEFAULT_MODAL,
-        );
+        ).open();
       });
   };
 

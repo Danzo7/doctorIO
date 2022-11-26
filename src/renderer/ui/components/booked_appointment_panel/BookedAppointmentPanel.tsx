@@ -3,14 +3,13 @@ import PreviewList from '@components/preview_list';
 import VerticalPanel from '@components/vertical_panel';
 import AddSearchToBooked from '@containers/modals/add_search_to_booked';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/AppointmentApi';
 import BookedAppointmentItem from './booked_appointment_item';
 import Schedule from 'toSvg/schedule.svg?icon';
+import { modal } from '@stores/overlayStore';
 
 export default function BookedAppointmentPanel({}) {
   const { data, isSuccess } = useGetBookedAppointmentQuery();
-  const { open } = useOverlay();
   return (
     <PreviewList
       flexGrow
@@ -19,7 +18,7 @@ export default function BookedAppointmentPanel({}) {
         <DarkLightCornerButton
           text="Add"
           onPress={() => {
-            open(<AddSearchToBooked />, DEFAULT_MODAL);
+            modal(<AddSearchToBooked />, DEFAULT_MODAL).open();
           }}
         />
       }
@@ -40,7 +39,7 @@ export default function BookedAppointmentPanel({}) {
           action={{
             text: 'Book appointment',
             onClick() {
-              open(<AddSearchToBooked />, DEFAULT_MODAL);
+              modal(<AddSearchToBooked />, DEFAULT_MODAL).open();
             },
           }}
         />

@@ -3,7 +3,6 @@ import Panding from 'toSvg/pending.svg';
 import InQueue from 'toSvg/in_queue.svg';
 import threeDots from 'toSvg/threedots.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
 import { formatDistance } from 'date-fns';
 import { BookedAppointment } from '@models/instance.model';
@@ -14,6 +13,7 @@ import { color } from '@assets/styles/color';
 import { useCancelAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import { useDeleteAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAbility } from '@stores/abilityStore';
+import { modal, Overlay_u } from '@stores/overlayStore';
 
 function BookedItem({
   patientName,
@@ -23,7 +23,6 @@ function BookedItem({
   state,
   patientId,
 }: BookedAppointment) {
-  const { openTooltip, open, close } = useOverlay();
   const { navigate } = useNavigation();
   const [deleteAppointment] = useDeleteAppointmentMutation();
   const [CancelAppointment] = useCancelAppointmentMutation();
@@ -64,43 +63,43 @@ function BookedItem({
         tip="More"
         onPress={(e) => {
           if (e)
-            openTooltip(
-              [
-                state == 'PANDING' && {
-                  text: 'Add to queue',
-                  onPress: () => {
-                    open(
-                      <AddSelectedToQueueModal
-                        id={patientId}
-                        name={patientName}
-                        appointmentId={id}
-                      />,
-                      DEFAULT_MODAL,
-                    );
+            Overlay_u.openTooltip(
+              () =>
+                [
+                  state == 'PANDING' && {
+                    text: 'Add to queue',
+                    onPress: () => {
+                      modal(
+                        <AddSelectedToQueueModal
+                          id={patientId}
+                          name={patientName}
+                          appointmentId={id}
+                        />,
+                        DEFAULT_MODAL,
+                      ).open();
+                    },
                   },
-                },
-                abilities.can('view', 'records') && {
-                  text: 'View records',
-                  onPress: () => {
-                    navigate('/records/' + patientId, { replace: true });
+                  abilities.can('view', 'records') && {
+                    text: 'View records',
+                    onPress: () => {
+                      navigate('/records/' + patientId, { replace: true });
+                    },
                   },
-                },
-                {
-                  text: state == 'IN_QUEUE' ? 'Remove' : 'Cancel',
-                  onPress: () => {
-                    if (state == 'IN_QUEUE') {
-                      deleteAppointment({
-                        roleId: 1,
-                        appointmentId: id,
-                      });
-                    } else {
-                      CancelAppointment(id);
-                    }
-                    close();
+                  {
+                    text: state == 'IN_QUEUE' ? 'Remove' : 'Cancel',
+                    onPress: () => {
+                      if (state == 'IN_QUEUE') {
+                        deleteAppointment({
+                          roleId: 1,
+                          appointmentId: id,
+                        });
+                      } else {
+                        CancelAppointment(id);
+                      }
+                    },
+                    type: 'warning',
                   },
-                  type: 'warning',
-                },
-              ].filter(Boolean) as any,
+                ].filter(Boolean) as any,
               e.currentTarget,
               true,
             );

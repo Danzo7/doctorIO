@@ -13,7 +13,6 @@ import { modal } from '@stores/overlayStore';
 interface SearchProfileProps {}
 export default function SearchProfile({}: SearchProfileProps) {
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
-  const { open } = useOverlay();
 
   return (
     <div className="search-profile">
@@ -42,14 +41,18 @@ export default function SearchProfile({}: SearchProfileProps) {
           backgroundColor={colors.silver_gray}
           radius={7}
           onPress={() =>
-            open(<QueueAddSearchModal />, {
-              closeOnClickOutside: true,
-              isDimmed: true,
-              clickThrough: false,
-              position: { top: '30%' },
-              width: '30%',
-              closeBtn: 'inner',
-            })
+            modal(
+              <QueueAddSearchModal />,
+              {
+                closeOnClickOutside: true,
+                isDimmed: true,
+                clickThrough: false,
+                position: { top: '30%' },
+                width: '30%',
+                closeBtn: 'inner',
+              },
+              'queueAddSearchModal',
+            ).open()
           }
         />
       </div>

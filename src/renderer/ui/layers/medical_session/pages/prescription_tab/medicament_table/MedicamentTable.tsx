@@ -11,10 +11,10 @@ import {
 } from '@tanstack/react-table';
 import './style/index.scss';
 import AddDrugModal from '@containers/modals/add_drug_modal';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { Drug } from '@models/instance.model';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
+import { modal } from '@stores/overlayStore';
 
 interface MedicamentTableProps {
   editable?: true;
@@ -26,7 +26,6 @@ export default function MedicamentTable({
   editable,
   drugList,
 }: MedicamentTableProps) {
-  const { open, close } = useOverlay();
   const [sorting, setSorting] = useState<SortingState>([]);
   const columns = [
     table.accessor('name', {
@@ -64,25 +63,27 @@ export default function MedicamentTable({
               text="Edit"
               isActive={true}
               onPress={() => {
-                open(
-                  <AddDrugModal
-                    defaultValues={{
-                      name: row.getValue('name'),
-                      qts: row.getValue('qts'),
-                      dosage: row.getValue('dosage'),
-                      duration: row.getValue('duration'),
-                      description: row.getValue('description'),
-                      id: getValue(),
-                    }}
-                    onSubmit={(data) => {
-                      useMedicalSessionStore
-                        .getState()
-                        .updateDrug(getValue(), data);
-                      close();
-                    }}
-                  />,
+                modal(
+                  ({ close }) => (
+                    <AddDrugModal
+                      defaultValues={{
+                        name: row.getValue('name'),
+                        qts: row.getValue('qts'),
+                        dosage: row.getValue('dosage'),
+                        duration: row.getValue('duration'),
+                        description: row.getValue('description'),
+                        id: getValue(),
+                      }}
+                      onSubmit={(data) => {
+                        useMedicalSessionStore
+                          .getState()
+                          .updateDrug(getValue(), data);
+                        close();
+                      }}
+                    />
+                  ),
                   DEFAULT_MODAL,
-                );
+                ).open();
               }}
             />
           </div>
