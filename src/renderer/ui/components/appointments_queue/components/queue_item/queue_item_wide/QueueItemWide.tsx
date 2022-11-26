@@ -8,7 +8,6 @@ import invite from 'toSvg/enter.svg?icon';
 import view from 'toSvg/view_test.svg?icon';
 import TextIconButton from '@components/buttons/text_icon_button';
 import DiagnosisPreview from '@containers/modals/diagnosis_preview';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import NextPatient from '@containers/modals/next_patient';
 import useNavigation from '@libs/hooks/useNavigation';
 import {
@@ -19,6 +18,7 @@ import {
 import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 import TimeAgo from '@components/time_ago';
 import { BiometricScreening } from '@models/instance.model';
+import { modal, Overlay_u } from '@stores/overlayStore';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -40,8 +40,6 @@ function QueueItemWide({
   appointmentId,
   biometricScreening,
 }: QueueItemWideProps) {
-  const { open, openTooltip, close } = useOverlay();
-
   const { data: isOwner, isSuccess } = useGetIsQueueOwnerQuery();
   const [deleteAppointment] = useDeleteAppointmentMutation();
   const [updateTest] = useUpdateTestMutation();
@@ -57,8 +55,8 @@ function QueueItemWide({
             Icon={threeDots}
             onPress={(e) => {
               if (e)
-                openTooltip(
-                  [
+                Overlay_u.openTooltip(
+                  () => [
                     ...(isSuccess && isOwner
                       ? [
                           {
@@ -77,7 +75,6 @@ function QueueItemWide({
                           roleId: 1,
                           appointmentId,
                         });
-                        close();
                       },
                     },
                   ],
@@ -100,14 +97,16 @@ function QueueItemWide({
               text="invite in"
               color={colors.good_green}
               onPress={() => {
-                open(
-                  <NextPatient
-                    invitedPatient={{
-                      patientName: name,
-                      position: number,
-                      arrivalTime: timeAgo,
-                    }}
-                  />,
+                modal(
+                  () => (
+                    <NextPatient
+                      invitedPatient={{
+                        patientName: name,
+                        position: number,
+                        arrivalTime: timeAgo,
+                      }}
+                    />
+                  ),
                   {
                     width: '30%',
                     closeOnClickOutside: true,
@@ -115,7 +114,7 @@ function QueueItemWide({
                     clickThrough: false,
                     closeBtn: 'inner',
                   },
-                );
+                ).open();
               }}
             />
           )}
@@ -124,17 +123,18 @@ function QueueItemWide({
             text={biometricScreening ? 'View tests' : 'add tests'}
             color={colors.cold_blue}
             onPress={() => {
-              open(
-                biometricScreening ? (
-                  <DiagnosisPreview data={biometricScreening} />
-                ) : (
-                  <AddMedicalTestModal
-                    onSubmit={(data) => {
-                      updateTest({ ...data, position: number });
-                      close();
-                    }}
-                  />
-                ),
+              modal(
+                ({ close }) =>
+                  biometricScreening ? (
+                    <DiagnosisPreview data={biometricScreening} />
+                  ) : (
+                    <AddMedicalTestModal
+                      onSubmit={(data) => {
+                        updateTest({ ...data, position: number });
+                        close();
+                      }}
+                    />
+                  ),
                 {
                   closeOnClickOutside: true,
                   isDimmed: true,
@@ -142,7 +142,7 @@ function QueueItemWide({
                   width: '30%',
                   closeBtn: 'inner',
                 },
-              );
+              ).open();
             }}
           />
         </div>

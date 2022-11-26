@@ -23,6 +23,7 @@ import PrescriptionTab from './pages/prescription_tab';
 import SessionParameter from './pages/session_parameter';
 import './style/index.scss';
 import { useRef } from 'react';
+import TabComponent from '@components/tab_component';
 
 interface MedicalSessionProps {}
 
@@ -87,10 +88,21 @@ export default function MedicalSession({}: MedicalSessionProps) {
                 />
               }
             />
-            <TabMenu items={['prescription', 'notice']}>
+            {/* <TabMenu items={['prescription', 'notice']}>
               <PrescriptionTab />
               <DiagnosisTab />
-            </TabMenu>
+            </TabMenu> */}
+            <TabComponent
+              foldedItems={[
+                { label: 'Preview', content: <div>Radio</div> },
+                { label: 'Bilans', content: <div>Bilans</div> },
+                { label: 'Preview', content: <div>Preview</div> },
+              ]}
+              items={[
+                { label: 'Prescription', content: <PrescriptionTab /> },
+                { label: 'Notice', content: <DiagnosisTab /> },
+              ]}
+            />
             <BorderSeparator direction="horizontal" />
             <SessionParameter />
             <div className="controls-div">
