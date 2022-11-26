@@ -16,7 +16,7 @@ export default function CheckGroupItem({
     <TextButton
       text={label}
       type="button"
-      backgroundColor={checked ? color.cold_blue : undefined}
+      backgroundColor={checked ? color.cold_blue : color.lighter_background}
       borderColor={color.border_color}
       onPress={onSelect}
       afterBgColor={!checked ? color.light : color.cold_blue}
