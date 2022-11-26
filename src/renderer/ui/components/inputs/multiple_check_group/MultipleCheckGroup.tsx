@@ -6,14 +6,15 @@ interface MultipleCheckGroupProps extends ControllerProps {
   items: string[];
   value?: number[];
   disabled?: boolean;
+  onlyOne?: boolean;
 }
 export default function MultipleCheckGroup({
   items,
   value,
   onChanged,
   field,
-  fieldState,
   disabled,
+  onlyOne,
 }: MultipleCheckGroupProps) {
   const [checkedItems, setCheckedItems] = useState<number[]>(value ?? []);
   const isChecked = (index: number) => {
@@ -28,9 +29,15 @@ export default function MultipleCheckGroup({
       onChanged?.(itms.map((inx) => items[inx]));
       field.onChange?.(itms.map((inx) => items[inx]));
     } else {
-      setCheckedItems([...checkedItems, index]);
-      onChanged?.([...checkedItems, index].map((inx) => items[inx]));
-      field.onChange?.([...checkedItems, index].map((inx) => items[inx]));
+      if (onlyOne) {
+        setCheckedItems([index]);
+        onChanged?.(items[index]);
+        field.onChange?.(items[index]);
+      } else {
+        setCheckedItems([...checkedItems, index]);
+        onChanged?.([...checkedItems, index].map((inx) => items[inx]));
+        field.onChange?.([...checkedItems, index].map((inx) => items[inx]));
+      }
     }
   };
   return (
