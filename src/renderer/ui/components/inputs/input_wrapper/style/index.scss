@@ -6,6 +6,19 @@
   flex-direction: row;
   align-items: center;
   gap: 5px;
+  >.untouched-item{
+    position: absolute;
+    background: $bordercolor;
+    display: flex;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    justify-content: center;
+    align-items: center;
+    ~ div{
+      pointer-events: none;
+      filter: blur(10px);
+    }
+  }
   >.input-content{
     opacity: $opacityBlur;
     flex-grow: 1;

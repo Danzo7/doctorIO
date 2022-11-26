@@ -1,6 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { color } from '@assets/styles/color';
-import { MouseEventHandler, ReactNode, WheelEventHandler } from 'react';
+import {
+  MouseEventHandler,
+  ReactNode,
+  useState,
+  WheelEventHandler,
+} from 'react';
 import './style/index.scss';
 
 export interface InputWrapperProps {
@@ -20,6 +25,7 @@ export interface InputWrapperProps {
   noFocus?: true;
   height?: number | string;
   disabled?: boolean;
+  touchFirst?: boolean;
 }
 
 export default function InputWrapper({
@@ -39,7 +45,9 @@ export default function InputWrapper({
   fillContainer,
   noFocus,
   height = 40,
+  touchFirst = false,
 }: InputWrapperProps) {
+  const [isTouched, setIsTouched] = useState(!touchFirst);
   const paddedLeading = leading && (
     <div
       css={{
@@ -76,10 +84,22 @@ export default function InputWrapper({
         width: !fillContainer ? 'fit-content' : undefined,
         minWidth: maxWidth,
         height: height,
+        ...(!isTouched ? { position: 'relative', overflow: 'hidden' } : {}),
       }}
     >
       {
         <>
+          {!isTouched && (
+            <div
+              className="untouched-item"
+              onClick={() => {
+                setIsTouched(true);
+              }}
+            >
+              Edit
+            </div>
+          )}
+
           {paddedLeading}
           <div
             className="input-content"
