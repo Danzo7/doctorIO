@@ -1,7 +1,7 @@
 import minus from 'toSvg/minus.svg?icon';
 import add from 'toSvg/add.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import InputWrapper from '../input_wrapper/InputWrapper';
+import InputWrapper, { InputWrapperProps } from '../input_wrapper/InputWrapper';
 import { forwardRef } from 'react';
 import AutoSizeInput from '../auto_size_input';
 import { color } from '@assets/styles/color';
@@ -18,6 +18,7 @@ interface NumberInputProps extends ControllerProps {
   unit?: string;
   disabled?: boolean;
   isOptional?: boolean;
+  touchFirst?: true;
 }
 export default forwardRef(function NumberInput(
   {
@@ -32,7 +33,7 @@ export default forwardRef(function NumberInput(
     fieldState,
     disabled,
     isOptional = false,
-
+    touchFirst,
     rules = { max: 100, min: 0, maxLength: 1000 },
   }: NumberInputProps,
   ref: any,
@@ -86,10 +87,10 @@ export default forwardRef(function NumberInput(
       fillContainer={fillContainer}
       inputAlignment={inputAlignment}
       disabled={disabled}
+      touchFirst={touchFirst}
       onClick={(e) => {
         e.preventDefault();
-        const input = e.currentTarget?.children[1]
-          .children[0] as HTMLInputElement;
+        const input = e.currentTarget?.querySelector('input');
 
         const end = input?.value?.length ?? 0;
         input?.setSelectionRange(end, end);

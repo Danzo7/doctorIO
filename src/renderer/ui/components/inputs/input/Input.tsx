@@ -26,6 +26,7 @@ import TextArea from '../text_area';
 import { InputWrapperProps } from '../input_wrapper/InputWrapper';
 import { DatepickerProps } from '../datepicker/Datepicker';
 import MultipleCheckGroup from '../multiple_check_group';
+import IconicSwitch from '../iconic_switch';
 export const InputControllerContext = createContext<{
   control: Control<any> | undefined;
   onChange?: (value: any) => void;
@@ -85,7 +86,8 @@ type InputProps<
     | 'textarea'
     | HTMLInputTypeAttribute
     | DateField
-    | MultiCheck;
+    | MultiCheck
+    | 'IconicSwitch';
   hint?: string;
   label?: string;
   leading?: ReactNode;
@@ -106,6 +108,8 @@ type InputProps<
   shouldUnregister?: boolean;
   defaultValue?: FieldPathValue<TFieldValues, TName>;
   errorMessage?: string;
+  autoFocus?: true;
+  touchFirst?: true;
 };
 export default function Input<T extends FieldValues = FieldValues>({
   type = 'text',
@@ -128,6 +132,8 @@ export default function Input<T extends FieldValues = FieldValues>({
   errorMessage,
   background,
   radius,
+  autoFocus,
+  touchFirst,
 }: InputProps<T> & Partial<InputWrapperProps>) {
   const { control: controlC } = useContext(InputControllerContext);
   if (!controlC && !control) {
@@ -147,6 +153,8 @@ export default function Input<T extends FieldValues = FieldValues>({
   });
   return type == 'checkbox' ? (
     <Checkbox label={label} field={field} ref={ref} disabled={disabled} />
+  ) : type == 'IconicSwitch' ? (
+    <IconicSwitch field={field} onChanged={onChange} />
   ) : (
     <InputContainer
       fillContainer={fillContainer}
@@ -156,6 +164,7 @@ export default function Input<T extends FieldValues = FieldValues>({
       label={label}
       grow={grow}
       disabled={disabled}
+      autoFocus={autoFocus}
     >
       {(type as NumericInput)?.type == 'numeric' ? (
         <NumberInput
@@ -169,15 +178,7 @@ export default function Input<T extends FieldValues = FieldValues>({
           ref={ref}
           fieldState={fieldState}
           disabled={disabled}
-        />
-      ) : (type as MultiCheck)?.type == 'multiCheck' ? (
-        <MultipleCheckGroup
-          field={field}
-          items={(type as MultiCheck).options}
-          fieldState={fieldState}
-          rules={rules}
-          onChanged={onChange}
-          disabled={disabled}
+          touchFirst={touchFirst}
         />
       ) : (
         <InputWrapper
@@ -189,6 +190,7 @@ export default function Input<T extends FieldValues = FieldValues>({
           height={type == 'textarea' ? '100%' : undefined}
           background={background}
           radius={radius}
+          touchFirst={touchFirst}
         >
           {children
             ? children
@@ -200,11 +202,22 @@ export default function Input<T extends FieldValues = FieldValues>({
                       icon={trailing}
                       placeholder={placeholder}
                       field={field}
+                      onChanged={onChange}
                       ref={ref}
                       fieldState={fieldState}
                     />
                   );
-
+                if ((type as MultiCheck)?.type == 'multiCheck')
+                  return (
+                    <MultipleCheckGroup
+                      field={field}
+                      items={(type as MultiCheck).options}
+                      fieldState={fieldState}
+                      rules={rules}
+                      onChanged={onChange}
+                      disabled={disabled}
+                    />
+                  );
                 if (type == 'date' || (type as DateField)?.type == 'date')
                   return (
                     <Datepicker
