@@ -9,6 +9,7 @@ interface InputContainerProps {
   grow?: boolean;
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
   disabled?: boolean;
+  autoFocus?: true;
 }
 export default function InputContainer({
   label,
@@ -19,6 +20,7 @@ export default function InputContainer({
   hintAlignment,
   grow,
   disabled,
+  autoFocus,
 }: InputContainerProps) {
   return (
     <div
@@ -28,6 +30,15 @@ export default function InputContainer({
         cursor: disabled ? 'not-allowed' : 'auto',
       }}
       className={`input-container${errorMessage ? ' error' : ''}`}
+      ref={
+        autoFocus
+          ? (e) => {
+              setTimeout(() => {
+                e?.querySelector('input')?.focus();
+              }, 0);
+            }
+          : undefined
+      }
     >
       <>
         {label && <span>{label}</span>}
