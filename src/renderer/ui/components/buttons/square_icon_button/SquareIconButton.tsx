@@ -4,7 +4,7 @@ import IconicButton from '../iconic_button';
 function SquareIconButton(
   props: Omit<
     ComponentProps<typeof IconicButton>,
-    'backgroundColor' | 'width' | 'padding' | 'radius'
+    'width' | 'padding' | 'radius'
   >,
 ) {
   return (
