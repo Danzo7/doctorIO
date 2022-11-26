@@ -13,8 +13,8 @@ import {
 
 function MembersPreview({ name, id, status, avatar, roles }: MemberBrief) {
   const [hideFooter, setHideFooter] = useState(true);
-  const [AssignRole, AssignResult] = useAssignRoleMutation();
-  const [RevokeRole, RevokeResult] = useRevokeRoleMutation();
+  const [AssignRole] = useAssignRoleMutation();
+  const [RevokeRole] = useRevokeRoleMutation();
   return (
     <div
       tabIndex={-1}
@@ -42,8 +42,8 @@ function MembersPreview({ name, id, status, avatar, roles }: MemberBrief) {
             <SmallRoleList
               roleList={roles}
               onAdd={(role) => {
-                //FIXME fetch error
                 AssignRole({ memberId: id, roleId: role.id });
+                setHideFooter(true);
               }}
               onDelete={(role) => {
                 RevokeRole({ memberId: id, roleId: role.id });
