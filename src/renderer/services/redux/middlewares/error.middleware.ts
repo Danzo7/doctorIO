@@ -59,7 +59,10 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
           : 'You are not allowed to create this role';
         break;
       case 1301:
-        if (endpoint == 'AssignAppointmentToQueue')
+        if (
+          endpoint == 'AssignAppointmentToQueue' ||
+          endpoint == 'addQueueAppointment'
+        )
           return 'Patient already in queue';
         break;
       case 1302:
@@ -94,9 +97,82 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
     console.log('action', action);
     switch (action.meta.arg.endpointName) {
       case 'uploadFile':
-        toast('upload success', 'Success', 2000);
+        toast('File uploaded successfully', 'Success', 2000);
         break;
 
+      case 'deleteDocument':
+        toast('File deleted successfully', 'Success', 2000);
+        break;
+      case 'connectMember':
+        toast('Connected', 'Success', 2000);
+        break;
+      case 'addQueueAppointment':
+      case 'AssignAppointmentToQueue':
+        toast('Patient added to the queue successfully', 'Success', 2000);
+        break;
+      case 'updateTest':
+        toast('Biometric screening added successfully', 'Success', 2000);
+        break;
+      case 'confirmPayment':
+        toast('Payment handed successfully', 'Success', 2000);
+        break;
+
+      case 'addPatient':
+        toast('New patient added successfully', 'Success', 2000);
+        break;
+
+      case 'resumeQueue':
+        toast('Queue is resumed successfully', 'Success', 2000);
+        break;
+
+      case 'pauseQueue':
+        toast('Queue is paused successfully', 'Success', 2000);
+        break;
+      case 'notifyQueue':
+        toast('Queue is notified successfully', 'Success', 2000);
+        break;
+      case 'resetQueue':
+        toast('Reset queue count', 'Success', 2000);
+        break;
+
+      case 'progressQueueState':
+        toast('New session started', 'Success', 2000);
+        break;
+      case 'endNext':
+        toast('Session ended', 'Success', 2000);
+        break;
+
+      case 'bookAppointment':
+        toast('New appointment is booked successfully', 'Success', 2000);
+        break;
+
+      case 'deleteAppointment':
+        toast('The appointment is removed successfully', 'Success', 2000);
+        break;
+      case 'cancelAppointment':
+        toast('The appointment is canceled successfully', 'Success', 2000);
+        break;
+      case 'addMedicalHistory':
+        toast('New medical history added successfully', 'Success', 2000);
+        break;
+      case 'updateClinicOverview':
+        toast('The Clinic information updated successfully', 'Success', 2000);
+        break;
+      case 'createInvitation':
+        toast('Invitation key generated successfully', 'Success', 2000);
+        break;
+      case 'assignRole':
+        toast('Role assigned successfully', 'Success', 2000);
+        break;
+      case 'revokeRole':
+        toast('Role revoked successfully', 'Success', 2000);
+        break;
+      case 'UpdateRole':
+        toast('Role updated successfully', 'Success', 2000);
+        break;
+
+      case 'findPatientByName':
+        break;
       default:
         toast(action.meta.arg.endpointName, 'Success', 2000);
         break;
