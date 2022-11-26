@@ -24,10 +24,13 @@ interface AddMedicalTestModalProps {
 export default function AddMedicalTestModal({
   onSubmit,
 }: AddMedicalTestModalProps) {
-  const { control, handleSubmit } = useForm<BiometricScreening>({
+  const {
+    control,
+    handleSubmit,
+    formState: { touchedFields, dirtyFields },
+  } = useForm<BiometricScreening>({
     resolver: zodResolver(schema),
     defaultValues: {
-      bloodType: 'A',
       bloodPressure: 0,
       Rh: false,
       height: 0,
@@ -38,7 +41,20 @@ export default function AddMedicalTestModal({
   return (
     <ModalContainer
       title="Biometric screening"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((data) =>
+        onSubmit(
+          Object.fromEntries(
+            Object.keys({
+              ...touchedFields,
+              ...dirtyFields,
+              ...(dirtyFields?.bloodType ? { Rh: true } : {}),
+            }).map((key) => [
+              key as keyof BiometricScreening,
+              data[key as keyof BiometricScreening],
+            ]),
+          ) as unknown as BiometricScreening,
+        ),
+      )}
       controls={
         <>
           <TextButton
@@ -60,27 +76,32 @@ export default function AddMedicalTestModal({
           label="Weight"
           name="weight"
           control={control}
+          touchFirst
         />
         <Input
           type={{ type: 'numeric', unit: 'cm', step: 1 }}
           rules={{ max: 750, minLength: 0 }}
           label="Height"
           name="height"
+          touchFirst
         />
         <Input
           type={{ type: 'numeric', unit: 'mmHg' }}
           label="Blood pressure"
           name="bloodPressure"
+          touchFirst
         />
         <Input
           type={{
-            type: 'select',
+            type: 'multiCheck',
             options: ['A', 'B', 'AB', 'O'],
           }}
+          background="transparent"
           label="Blood type"
           name="bloodType"
+          placeholder="Select a blood type"
+          leading={<Input type="IconicSwitch" control={control} name="Rh" />}
         />
-        <Input type="checkbox" label="RH" name="Rh" />
       </Inputix>
     </ModalContainer>
   );
