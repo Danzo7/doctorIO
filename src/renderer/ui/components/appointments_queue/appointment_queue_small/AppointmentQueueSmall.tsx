@@ -19,7 +19,8 @@ import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
 import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
-import { useOverlay } from '@libs/overlay/useOverlay';
+import RefetchPanel from '@components/refetch_panel';
+import { modal } from '@stores/overlayStore';
 
 interface AppointmentQueueSmallProps {}
 
@@ -34,7 +35,6 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [ResumeQueue] = useResumeQueueMutation();
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);
-  const { open } = useOverlay();
   return getQueueAppointmentsQuery.isUninitialized ||
     getQueueAppointmentsQuery.isLoading ? (
     <div>
@@ -69,13 +69,13 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
               action={{
                 text: 'Add queue item',
                 onClick: () => {
-                  open(<QueueAddSearchModal />, {
+                  modal(() => <QueueAddSearchModal />, {
                     closeOnClickOutside: true,
                     isDimmed: true,
                     clickThrough: false,
                     closeBtn: 'inner',
                     width: '30%',
-                  });
+                  }).open();
                 },
               }}
               Icon={<WaitingRoom width={'80%'} height={'100%'} />}
@@ -151,6 +151,6 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       );
     })()
   ) : (
-    <div>Error</div>
+    <RefetchPanel action={getQueueAppointmentsQuery.refetch} />
   );
 }

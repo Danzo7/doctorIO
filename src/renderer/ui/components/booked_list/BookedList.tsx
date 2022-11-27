@@ -2,15 +2,17 @@ import BookedItem from './booked_item';
 import PreviewList from '@components/preview_list';
 import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/AppointmentApi';
 import LoadingSpinner from '@components/loading_spinner';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import VerticalPanel from '@components/vertical_panel';
 import Schedule from 'toSvg/schedule.svg?icon';
 import AddSearchToBooked from '@containers/modals/add_search_to_booked';
 import { DEFAULT_MODAL } from '@libs/overlay';
+import { modal } from '@stores/overlayStore';
+import RandomSvgFaces from 'toSvg/randomSvgFaces.svg?icon';
+import RefetchPanel from '@components/refetch_panel';
 
 export default function BookedList({}) {
-  const { data, isSuccess, isLoading } = useGetBookedAppointmentQuery();
-  const { open } = useOverlay();
+  const { data, isSuccess, isLoading, refetch } =
+    useGetBookedAppointmentQuery();
 
   return (
     <PreviewList title="Booked appointment">
@@ -29,13 +31,13 @@ export default function BookedList({}) {
             action={{
               text: 'Book appointment',
               onClick() {
-                open(<AddSearchToBooked />, DEFAULT_MODAL);
+                modal(() => <AddSearchToBooked />, DEFAULT_MODAL).open();
               },
             }}
           />
         )
       ) : (
-        <span css={{ alignSelf: 'center' }}>error</span>
+        <RefetchPanel action={refetch} />
       )}
     </PreviewList>
   );

@@ -25,6 +25,7 @@ import LinkedRole from '@components/linked_role';
 import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { modal } from '@stores/overlayStore';
+import RefetchPanel from '@components/refetch_panel';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
@@ -184,6 +185,6 @@ export default function AppointmentsQueue() {
       );
     })()
   ) : (
-    <div>Error</div>
+    <RefetchPanel action={getQueueAppointmentsQuery.refetch} />
   );
 }

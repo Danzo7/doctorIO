@@ -7,9 +7,10 @@ import { useGetBookedAppointmentQuery } from '@redux/instance/Appointment/Appoin
 import BookedAppointmentItem from './booked_appointment_item';
 import Schedule from 'toSvg/schedule.svg?icon';
 import { modal } from '@stores/overlayStore';
+import RefetchPanel from '@components/refetch_panel';
 
 export default function BookedAppointmentPanel({}) {
-  const { data, isSuccess } = useGetBookedAppointmentQuery();
+  const { data, isSuccess, refetch } = useGetBookedAppointmentQuery();
   return (
     <PreviewList
       flexGrow
@@ -28,7 +29,7 @@ export default function BookedAppointmentPanel({}) {
         data.map((props, index) => (
           <BookedAppointmentItem {...props} key={index} />
         ))
-      ) : (
+      ) : isSuccess ? (
         <VerticalPanel
           title="No booked appointments"
           description="Start by booking an appointment. "
@@ -43,6 +44,8 @@ export default function BookedAppointmentPanel({}) {
             },
           }}
         />
+      ) : (
+        <RefetchPanel action={refetch} />
       )}
     </PreviewList>
   );
