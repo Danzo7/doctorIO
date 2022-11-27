@@ -95,6 +95,7 @@ export default function AddMedicalTestModal({
           type={{
             type: 'multiCheck',
             options: ['A', 'B', 'AB', 'O'],
+            onlyOne: true,
           }}
           background="transparent"
           label="Blood type"

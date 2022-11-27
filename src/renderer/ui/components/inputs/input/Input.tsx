@@ -73,7 +73,8 @@ type DateField = {
 >;
 type MultiCheck = {
   type: 'multiCheck';
-  options: any[];
+  options: string[];
+  onlyOne?: boolean;
 };
 type InputProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -216,6 +217,7 @@ export default function Input<T extends FieldValues = FieldValues>({
                       rules={rules}
                       onChanged={onChange}
                       disabled={disabled}
+                      onlyOne={(type as MultiCheck).onlyOne}
                     />
                   );
                 if (type == 'date' || (type as DateField)?.type == 'date')
