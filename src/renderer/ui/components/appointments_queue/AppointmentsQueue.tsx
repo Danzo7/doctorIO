@@ -26,6 +26,7 @@ import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { modal } from '@stores/overlayStore';
 import RefetchPanel from '@components/refetch_panel';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
@@ -53,13 +54,13 @@ export default function AppointmentsQueue() {
 
       return (
         <div className="appointments-queue">
-          {myMemberDetailQuery.isSuccess && (
+          {myMemberDetailQuery.isSuccess && myMemberDetailQuery.data.queues && (
             <>
               <TabMenu
-                onChanged={() => {
-                  //TODO change the queue by api call
+                onChanged={({ index }) => {
+                  useQueueSelectionStore.getState().setSelectedQueue(index);
                 }}
-                items={myMemberDetailQuery.data.roles.map((role) => role.name)}
+                items={myMemberDetailQuery.data.queues.map(({ name }) => name)}
               />
 
               <Header
