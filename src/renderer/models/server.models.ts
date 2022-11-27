@@ -13,7 +13,14 @@ interface Member {
   phone?: string;
   publicKey?: string;
   isOwner?: boolean;
+  queues?: MemberQueue[];
 }
+export type MemberQueue = {
+  id: number;
+  roleId: number;
+  name: string;
+  owner: boolean;
+};
 type RoleBrief = Pick<
   Role,
   'name' | 'id' | 'priority' | 'description' | 'masterRole'
