@@ -25,12 +25,11 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
   const [NotifyQueue] = useNotifyQueueMutation();
   const [StartNext] = useStartNextMutation();
   const [notified, setNotified] = useState(false);
-  const { data, isSuccess, isError, error, isFetching, isLoading } =
-    useGetNextQueueItemQuery();
+  const { data, isSuccess, isFetching, isLoading } = useGetNextQueueItemQuery();
   const [ProgressQueueState] = useProgressQueueStateMutation();
 
   return isLoading && isFetching ? (
-    <LoadingSpinner />
+    <ModalContainer isLoading={isLoading} />
   ) : isSuccess ? (
     <ModalContainer
       title={invitedPatient?.position ? 'Invite patient' : 'Next patient'}
