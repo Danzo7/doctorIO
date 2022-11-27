@@ -7,6 +7,7 @@ import appointmentQueueApi from '@redux/instance/appointmentQueue/AppointmentQue
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { useAbilityStore } from '@stores/abilityStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 import { parseISO } from 'date-fns';
 import { Socket } from 'socket.io-client';
 import roleApi from '../role/roleApi';
@@ -96,6 +97,14 @@ const memberApi = createApi({
     getMyMemberDetail: builder.query<Member, void>({
       query: () => '/me/',
       providesTags: ['me'],
+      onQueryStarted: async (_, { queryFulfilled }) => {
+        try {
+          const { data: res } = await queryFulfilled;
+          useQueueSelectionStore.getState().setQueues(res.queues ?? []);
+        } catch (e: any) {
+          Logger.error('MemberApi', e);
+        }
+      },
     }),
   }),
 });
