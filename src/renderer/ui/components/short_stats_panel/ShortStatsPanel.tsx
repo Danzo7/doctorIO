@@ -3,7 +3,7 @@ import MiniStats from '@components/mini_stats';
 import './style/index.scss';
 import exclamation from 'toSvg/exclamation.svg?icon';
 import colors from '@colors';
-import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
+import { FIT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import MemberBigCard from '@containers/modals/member_big_card';
@@ -13,9 +13,11 @@ import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/A
 import Header from '@components/header';
 import { useAbility } from '@stores/abilityStore';
 import { Badged } from '@components/badge/Badge';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 interface ShortStatsPanelProps {}
 export default function ShortStatsPanel({}: ShortStatsPanelProps) {
-  const appointmentsQuery = useGetQueueAppointmentsQuery();
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+  const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue);
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const timeSortList = ['Today', 'Monthly'];
   const miniStatsList = [
@@ -43,7 +45,7 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
       Icon: exclamation,
     },
   ];
-  const { data, isSuccess, error, isLoading } = useGetMyMemberDetailQuery();
+  const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
   const { open } = useOverlay();
   const abilities = useAbility();
   return (

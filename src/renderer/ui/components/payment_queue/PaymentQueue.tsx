@@ -12,12 +12,15 @@ import BorderSeparator from '@components/border_separator';
 import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import VerticalPanel from '@components/vertical_panel';
 import Coins from 'toSvg/coins.svg?icon';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 interface PaymentQueueProps {}
 export default function PaymentQueue({}: PaymentQueueProps) {
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
   const { data, isSuccess, isLoading } = useGetPaymentsQuery();
-  const appointmentsQuery = useGetQueueAppointmentsQuery();
+  const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue);
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const smallInfoCardData = {
     'In queue': count.toString(),
@@ -43,7 +46,7 @@ export default function PaymentQueue({}: PaymentQueueProps) {
               <Arrow css={{ transform: 'rotate(90deg)' }} />
             </TextButton>
             <ScrollView refs={ref} gap={10}>
-              {data.map(({ appointmentId, amount, name, date }, index) => (
+              {data.map(({ appointmentId, amount, name }, index) => (
                 <li key={appointmentId + index}>
                   <PaymentItem
                     patientFullName={name}

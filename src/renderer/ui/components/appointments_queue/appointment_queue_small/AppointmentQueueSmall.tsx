@@ -21,17 +21,23 @@ import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import RefetchPanel from '@components/refetch_panel';
 import { modal } from '@stores/overlayStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 interface AppointmentQueueSmallProps {}
 
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+
   const queueStateQuery = useGetQueueStateQuery();
   const isQueueOwnerQuery = useGetIsQueueOwnerQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
   });
-  const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(undefined, {
-    skip: !isQueueOwnerQuery.isSuccess,
-  });
+  const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(
+    selectedQueue,
+    {
+      skip: !isQueueOwnerQuery.isSuccess,
+    },
+  );
   const [ResumeQueue] = useResumeQueueMutation();
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);

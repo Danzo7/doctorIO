@@ -11,6 +11,7 @@ import {
   usePauseQueueMutation,
   useGetQueueStateQuery,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 import './style/index.scss';
 interface SmallClinicStatusProps {
   hasViewClinic?: true;
@@ -19,12 +20,14 @@ interface SmallClinicStatusProps {
 export default function SmallClinicStatus({
   hasViewClinic,
 }: SmallClinicStatusProps) {
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+
   const { data, isSuccess } = useGetQueueStateQuery();
   const [ResumeQueue] = useResumeQueueMutation();
   const [PauseQueue] = usePauseQueueMutation();
   const { navigate } = useNavigation();
   const ownershipData = useGetIsQueueOwnerQuery();
-  const appointmentsQuery = useGetQueueAppointmentsQuery();
+  const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue);
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const isOwner = ownershipData.isSuccess ? ownershipData.data : undefined;
 

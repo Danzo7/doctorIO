@@ -30,6 +30,7 @@ import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
   const queueStateQuery = useGetQueueStateQuery();
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
@@ -37,9 +38,12 @@ export default function AppointmentsQueue() {
   const isQueueOwnerQuery = useGetIsQueueOwnerQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
   });
-  const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(undefined, {
-    skip: !isQueueOwnerQuery.isSuccess,
-  });
+  const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(
+    selectedQueue,
+    {
+      skip: !isQueueOwnerQuery.isSuccess,
+    },
+  );
   const [ResumeQueue] = useResumeQueueMutation();
 
   return getQueueAppointmentsQuery.isLoading &&
@@ -60,12 +64,22 @@ export default function AppointmentsQueue() {
                 onChanged={({ index }) => {
                   useQueueSelectionStore.getState().setSelectedQueue(index);
                 }}
-                items={myMemberDetailQuery.data.queues.map(({ name }) => name)}
+                items={useQueueSelectionStore
+                  .getState()
+                  .queues.map(({ name }) => name)}
+                defaultSelected={
+                  useQueueSelectionStore.getState().selectedQueue
+                }
               />
 
               <Header
                 leftComponent={
-                  <LinkedRole linkedText="Queue List" linkedRole={'doctor'} />
+                  <LinkedRole
+                    linkedText="Queue List"
+                    linkedRole={
+                      useQueueSelectionStore.getState().getSelectedQueue().name
+                    }
+                  />
                 }
                 buttonNode={
                   <QueueControls

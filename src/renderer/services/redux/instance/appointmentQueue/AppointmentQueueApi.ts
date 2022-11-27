@@ -46,8 +46,8 @@ const appointmentQueueApi = createApi({
         };
       },
     }), //Avoid using this endpoint
-    getQueueAppointments: builder.query<AppointmentQueueItem[], void>({
-      query: () => `/item`,
+    getQueueAppointments: builder.query<AppointmentQueueItem[], number>({
+      query: (index) => `/item` + (index ? `?selectedQueue=${index}` : ''),
       providesTags: ['item', 'queue'],
       transformResponse: (
         response: (Omit<AppointmentQueueItem, 'date'> & { date: string })[],
