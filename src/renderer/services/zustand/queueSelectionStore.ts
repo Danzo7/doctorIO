@@ -6,6 +6,7 @@ interface QueueSelectionState {
   selectedQueue: number;
   setSelectedQueue: (index: number) => void;
   getSelectedQueue: () => MemberQueue;
+  getQueueByRoleId: (roleId: number) => MemberQueue | undefined;
   setQueues: (queues: MemberQueue[]) => void;
 }
 
@@ -18,5 +19,8 @@ export const useQueueSelectionStore = create<QueueSelectionState>(
       return get().queues[get().selectedQueue];
     },
     setQueues: (queues: MemberQueue[]) => set({ queues }),
+    getQueueByRoleId: (roleId: number) => {
+      return get().queues.find((queue) => queue.roleId === roleId);
+    },
   }),
 );
