@@ -7,6 +7,7 @@ import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment/AppointmentApi';
 import { modal, Overlay_u } from '@stores/overlayStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 interface RecentAppsItemProps {
   appointmentId?: number;
@@ -16,6 +17,7 @@ export default function RecentAppsItem({
   name,
   appointmentId,
 }: PatientBrief & RecentAppsItemProps) {
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
   const [addAppointment] = useAddQueueAppointmentMutation();
   const [AssignAppointmentToQueue] = useAssignAppointmentToQueueMutation();
 
@@ -32,15 +34,19 @@ export default function RecentAppsItem({
                 onSubmit={(data) => {
                   if (appointmentId)
                     AssignAppointmentToQueue({
-                      appointmentId: appointmentId,
+                      selectedQueue: selectedQueue,
+                      id: appointmentId,
                       test: data,
                     }).then((res: any) => {
                       if (res?.data) Overlay_u.clear();
                     });
                   else
                     addAppointment({
-                      patientId: id,
-                      test: data,
+                      selectedQueue: selectedQueue,
+                      body: {
+                        patientId: id,
+                        test: data,
+                      },
                     }).then((res: any) => {
                       if (res?.data) Overlay_u.clear();
                     });
@@ -58,13 +64,17 @@ export default function RecentAppsItem({
         onPress={() => {
           if (appointmentId)
             AssignAppointmentToQueue({
-              appointmentId: appointmentId,
+              selectedQueue: selectedQueue,
+              id: appointmentId,
             }).then((res: any) => {
               if (res?.data) Overlay_u.clear();
             });
           else
             addAppointment({
-              patientId: id,
+              selectedQueue: selectedQueue,
+              body: {
+                patientId: id,
+              },
             }).then((res: any) => {
               if (res?.data) Overlay_u.clear();
             });

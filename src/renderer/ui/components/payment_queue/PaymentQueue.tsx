@@ -19,7 +19,7 @@ export default function PaymentQueue({}: PaymentQueueProps) {
   const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
 
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
-  const { data, isSuccess, isLoading } = useGetPaymentsQuery();
+  const { data, isSuccess, isLoading } = useGetPaymentsQuery(selectedQueue);
   const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue);
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const smallInfoCardData = {

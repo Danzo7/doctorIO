@@ -18,12 +18,16 @@ import {
 import { QueueState } from '@models/instance.model';
 import AlertModal from '@containers/modals/dialog_modal';
 import { modal } from '@stores/overlayStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 interface QueueControlsProps {
   state: QueueState['state'];
   isOwner: boolean;
 }
 export default function QueueControls({ state, isOwner }: QueueControlsProps) {
+  const selectedQueue = useQueueSelectionStore(
+    (queueState) => queueState.selectedQueue,
+  );
   const [PauseQueue] = usePauseQueueMutation();
   const [ResumeQueue] = useResumeQueueMutation();
   const [resetQueue] = useResetQueueMutation();
@@ -80,7 +84,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
                         text="Confirm"
                         backgroundColor={color.hot_red}
                         onPress={() => {
-                          resetQueue();
+                          resetQueue(selectedQueue);
                           close();
                         }}
                       />
@@ -119,7 +123,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
                         text="Resume"
                         backgroundColor={color.good_green}
                         onPress={() => {
-                          ResumeQueue();
+                          ResumeQueue(selectedQueue);
                           close();
                         }}
                       />
@@ -178,7 +182,7 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
                             text="Confirm"
                             backgroundColor={color.hot_red}
                             onPress={() => {
-                              PauseQueue();
+                              PauseQueue(selectedQueue);
                               close();
                             }}
                           />

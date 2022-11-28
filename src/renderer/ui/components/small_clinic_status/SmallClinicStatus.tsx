@@ -22,11 +22,11 @@ export default function SmallClinicStatus({
 }: SmallClinicStatusProps) {
   const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
 
-  const { data, isSuccess } = useGetQueueStateQuery();
+  const { data, isSuccess } = useGetQueueStateQuery(selectedQueue);
   const [ResumeQueue] = useResumeQueueMutation();
   const [PauseQueue] = usePauseQueueMutation();
   const { navigate } = useNavigation();
-  const ownershipData = useGetIsQueueOwnerQuery();
+  const ownershipData = useGetIsQueueOwnerQuery(selectedQueue);
   const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue);
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const isOwner = ownershipData.isSuccess ? ownershipData.data : undefined;
@@ -64,8 +64,8 @@ export default function SmallClinicStatus({
                     disabled={!(isAllowed || isOwner)}
                     isChecked={data.state != 'PAUSED'}
                     onChange={() => {
-                      if (data.state == 'PAUSED') ResumeQueue();
-                      else PauseQueue();
+                      if (data.state == 'PAUSED') ResumeQueue(selectedQueue);
+                      else PauseQueue(selectedQueue);
                     }}
                   />
                 )}

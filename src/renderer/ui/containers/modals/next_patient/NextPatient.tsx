@@ -12,20 +12,22 @@ import {
   useProgressQueueStateMutation,
   useStartNextMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import LoadingSpinner from '@components/loading_spinner';
 import { Overlay } from '@libs/overlay';
 import AlertModal from '../dialog_modal';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 interface NextPatientProps {
   invitedPatient?: { patientName: string; arrivalTime: Date; position: number };
 }
 
 export default function NextPatient({ invitedPatient }: NextPatientProps) {
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
   const { navigate } = useNavigation();
   const [NotifyQueue] = useNotifyQueueMutation();
   const [StartNext] = useStartNextMutation();
   const [notified, setNotified] = useState(false);
-  const { data, isSuccess, isFetching, isLoading } = useGetNextQueueItemQuery();
+  const { data, isSuccess, isFetching, isLoading } =
+    useGetNextQueueItemQuery(selectedQueue);
   const [ProgressQueueState] = useProgressQueueStateMutation();
 
   return isLoading && isFetching ? (
@@ -42,9 +44,12 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
             fontSize={13}
             fontWeight={700}
             onPress={() => {
-              NotifyQueue(
-                invitedPatient ? invitedPatient.position : data.position,
-              );
+              NotifyQueue({
+                selectedQueue: selectedQueue,
+                position: invitedPatient
+                  ? invitedPatient.position
+                  : data.position,
+              });
               setNotified(true);
             }}
           />
@@ -58,9 +63,12 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
             fontWeight={700}
             onPress={() => {
               if (invitedPatient) {
-                ProgressQueueState(invitedPatient.position);
+                ProgressQueueState({
+                  selectedQueue: selectedQueue,
+                  position: invitedPatient.position,
+                });
               } else {
-                StartNext();
+                StartNext(selectedQueue);
               }
               navigate('session');
             }}

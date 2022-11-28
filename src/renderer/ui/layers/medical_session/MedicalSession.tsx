@@ -24,11 +24,13 @@ import SessionParameter from './pages/session_parameter';
 import './style/index.scss';
 import { useRef } from 'react';
 import TabComponent from '@components/tab_component';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 interface MedicalSessionProps {}
 
 export default function MedicalSession({}: MedicalSessionProps) {
-  const queueStateQuery = useGetQueueStateQuery();
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+  const queueStateQuery = useGetQueueStateQuery(selectedQueue);
 
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,

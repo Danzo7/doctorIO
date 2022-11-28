@@ -28,8 +28,8 @@ interface AppointmentQueueSmallProps {}
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
 
-  const queueStateQuery = useGetQueueStateQuery();
-  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(undefined, {
+  const queueStateQuery = useGetQueueStateQuery(selectedQueue);
+  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(selectedQueue, {
     skip: !queueStateQuery.isSuccess,
   });
   const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(
@@ -106,7 +106,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                       text="Resume"
                       backgroundColor={color.good_green}
                       onPress={() => {
-                        ResumeQueue();
+                        ResumeQueue(selectedQueue);
                       }}
                     />
                   )}

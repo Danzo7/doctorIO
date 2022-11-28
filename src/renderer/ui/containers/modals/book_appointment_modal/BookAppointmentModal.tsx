@@ -3,14 +3,13 @@ import TextPair from '@components/text_pair/TextPair';
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
-
 import ModalContainer from '@components/modal_container';
-import { Overlay } from '@libs/overlay';
 import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { DATE_ONLY } from '@constants/data_format';
 import { Overlay_u } from '@stores/overlayStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 type Inputs = {
   subject: string;
@@ -24,13 +23,16 @@ export default function BookAppointmentModal({
   patientName,
   id,
 }: BookAppointmentModalProps) {
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
   const [BookAppointment, _] = useBookAppointmentMutation();
   const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onSubmit',
     defaultValues: { date: new Date(), subject: '' },
   });
   const onSubmit: SubmitHandler<Inputs> = ({ date, subject }) => {
+    // console.log({ selectedQueue, id });
     BookAppointment({
+      selectedQueue: selectedQueue,
       patientId: id,
       body: { date: date, subject: subject },
     });

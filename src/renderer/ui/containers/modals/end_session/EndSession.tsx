@@ -6,10 +6,12 @@ import { useEndNextMutation } from '@redux/instance/appointmentQueue/Appointment
 import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 import AlertModal from '../dialog_modal';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 interface EndSessionProps {
   patientId: number;
 }
 export default function EndSession({ patientId }: EndSessionProps) {
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
   const { navigate } = useNavigation();
   const [EndNext] = useEndNextMutation();
   const [bookAppointment] = useBookAppointmentMutation();
@@ -30,27 +32,31 @@ export default function EndSession({ patientId }: EndSessionProps) {
           padding=" 5px 15px"
           onPress={async () => {
             await EndNext({
-              diagnosis:
-                currentSession.diagnosis?.length > 0
-                  ? currentSession.diagnosis
-                  : undefined,
-              prescription:
-                currentSession.prescription?.length > 0
-                  ? currentSession.prescription.map(
-                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                      ({ id, ...other }) => other,
-                    )
-                  : undefined,
-              payment:
-                sessionParameters.payment?.value &&
-                sessionParameters.payment?.isHandPayment &&
-                sessionParameters.payment?.value > 0
-                  ? sessionParameters.payment.value
-                  : undefined,
+              selectedQueue,
+              body: {
+                diagnosis:
+                  currentSession.diagnosis?.length > 0
+                    ? currentSession.diagnosis
+                    : undefined,
+                prescription:
+                  currentSession.prescription?.length > 0
+                    ? currentSession.prescription.map(
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                        ({ id, ...other }) => other,
+                      )
+                    : undefined,
+                payment:
+                  sessionParameters.payment?.value &&
+                  sessionParameters.payment?.isHandPayment &&
+                  sessionParameters.payment?.value > 0
+                    ? sessionParameters.payment.value
+                    : undefined,
+              },
             });
 
             if (sessionParameters.booked)
               await bookAppointment({
+                selectedQueue: selectedQueue,
                 body: {
                   date: sessionParameters.booked,
                   subject: 'follow up',

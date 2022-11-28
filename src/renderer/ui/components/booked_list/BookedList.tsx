@@ -7,12 +7,13 @@ import Schedule from 'toSvg/schedule.svg?icon';
 import AddSearchToBooked from '@containers/modals/add_search_to_booked';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { modal } from '@stores/overlayStore';
-import RandomSvgFaces from 'toSvg/randomSvgFaces.svg?icon';
 import RefetchPanel from '@components/refetch_panel';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 export default function BookedList({}) {
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
   const { data, isSuccess, isLoading, refetch } =
-    useGetBookedAppointmentQuery();
+    useGetBookedAppointmentQuery(selectedQueue);
 
   return (
     <PreviewList title="Booked appointment">

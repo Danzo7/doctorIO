@@ -19,6 +19,7 @@ import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 import TimeAgo from '@components/time_ago';
 import { BiometricScreening } from '@models/instance.model';
 import { modal, Overlay_u } from '@stores/overlayStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -40,7 +41,10 @@ function QueueItemWide({
   appointmentId,
   biometricScreening,
 }: QueueItemWideProps) {
-  const { data: isOwner, isSuccess } = useGetIsQueueOwnerQuery();
+  const selectedQueue = useQueueSelectionStore(
+    (queueState) => queueState.selectedQueue,
+  );
+  const { data: isOwner, isSuccess } = useGetIsQueueOwnerQuery(selectedQueue);
   const [deleteAppointment] = useDeleteAppointmentMutation();
   const [updateTest] = useUpdateTestMutation();
 
@@ -72,7 +76,7 @@ function QueueItemWide({
                       type: 'warning',
                       onPress: () => {
                         deleteAppointment({
-                          roleId: 1,
+                          selectedQueue,
                           appointmentId,
                         });
                       },
@@ -130,7 +134,10 @@ function QueueItemWide({
                   ) : (
                     <AddMedicalTestModal
                       onSubmit={(data) => {
-                        updateTest({ ...data, position: number });
+                        updateTest({
+                          selectedQueue: selectedQueue,
+                          body: { ...data, position: number },
+                        });
                         close();
                       }}
                     />

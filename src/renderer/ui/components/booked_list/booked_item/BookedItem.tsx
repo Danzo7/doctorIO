@@ -14,6 +14,7 @@ import { useCancelAppointmentMutation } from '@redux/instance/Appointment/Appoin
 import { useDeleteAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAbility } from '@stores/abilityStore';
 import { modal, Overlay_u } from '@stores/overlayStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 function BookedItem({
   patientName,
@@ -23,6 +24,9 @@ function BookedItem({
   state,
   patientId,
 }: BookedAppointment) {
+  const selectedQueue = useQueueSelectionStore(
+    (queueState) => queueState.selectedQueue,
+  );
   const { navigate } = useNavigation();
   const [deleteAppointment] = useDeleteAppointmentMutation();
   const [CancelAppointment] = useCancelAppointmentMutation();
@@ -90,7 +94,8 @@ function BookedItem({
                     onPress: () => {
                       if (state == 'IN_QUEUE') {
                         deleteAppointment({
-                          roleId: 1,
+                          selectedQueue,
+
                           appointmentId: id,
                         });
                       } else {

@@ -31,11 +31,11 @@ import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
   const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
-  const queueStateQuery = useGetQueueStateQuery();
+  const queueStateQuery = useGetQueueStateQuery(selectedQueue);
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
   });
-  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(undefined, {
+  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(selectedQueue, {
     skip: !queueStateQuery.isSuccess,
   });
   const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(
@@ -138,7 +138,7 @@ export default function AppointmentsQueue() {
                           text="Resume"
                           backgroundColor={color.good_green}
                           onPress={() => {
-                            ResumeQueue();
+                            ResumeQueue(selectedQueue);
                           }}
                         />
                       )}

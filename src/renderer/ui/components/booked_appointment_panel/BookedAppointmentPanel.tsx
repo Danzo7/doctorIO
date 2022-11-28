@@ -8,9 +8,13 @@ import BookedAppointmentItem from './booked_appointment_item';
 import Schedule from 'toSvg/schedule.svg?icon';
 import { modal } from '@stores/overlayStore';
 import RefetchPanel from '@components/refetch_panel';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 export default function BookedAppointmentPanel({}) {
-  const { data, isSuccess, refetch } = useGetBookedAppointmentQuery();
+  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+  const { data, isSuccess, refetch } =
+    useGetBookedAppointmentQuery(selectedQueue);
+
   return (
     <PreviewList
       flexGrow
