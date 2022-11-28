@@ -11,6 +11,19 @@
         font-size: 18px;
         color:$white;
     }
+    > .role-span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 5px;
+        background-color: $hotpurple;
+        border-radius: 5px;
+        > span {
+            font-weight: 500;
+            font-size: 12px;
+            color: $white;
+        }
+    }
 
     > .last-span {
         font-weight: 400;
