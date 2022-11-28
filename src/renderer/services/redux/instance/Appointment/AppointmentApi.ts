@@ -14,8 +14,9 @@ const appointmentApi = createApi({
   tagTypes: ['booked', 'payment'],
   endpoints: (builder) => ({
     //GET
-    getBookedAppointment: builder.query<BookedAppointment[], void>({
-      query: () => `/book`,
+    getBookedAppointment: builder.query<BookedAppointment[], number>({
+      query: (queueIndex) =>
+        `/book` + (queueIndex ? `?selectedQueue=${queueIndex}` : ''),
       providesTags: ['booked'],
       transformResponse: (
         response: (Omit<BookedAppointment, 'bookedFor'> & {
@@ -44,24 +45,33 @@ const appointmentApi = createApi({
     }),
     getPayments: builder.query<
       { appointmentId: number; name: string; amount: number; date: Date }[],
-      void
-    >({ query: () => '/payment', providesTags: ['payment'] }),
+      number
+    >({
+      query: (queueIndex) =>
+        '/payment' + (queueIndex ? `?selectedQueue=${queueIndex}` : ''),
+      providesTags: ['payment'],
+    }),
 
     confirmPayment: builder.mutation<Appointment, number>({
       query: (id) => {
-        return { url: `/payment?id=${id}`, method: 'DELETE' };
+        return { url: `/payment`, method: 'DELETE', params: { id } };
       },
     }),
 
     bookAppointment: builder.mutation<
       any,
-      { patientId: number; body: { date: Date; subject?: string } }
+      {
+        selectedQueue: number;
+        patientId: number;
+        body: { date: Date; subject?: string };
+      }
     >({
-      query: ({ patientId, body }) => {
+      query: ({ selectedQueue, patientId, body }) => {
         return {
-          url: `/book?patientId=${patientId}`,
+          url: `/book`,
           method: 'POST',
           body: { ...body },
+          params: { patientId, selectedQueue },
         };
       },
     }),
@@ -69,7 +79,8 @@ const appointmentApi = createApi({
     setAppointmentDone: builder.mutation<
       void,
       {
-        appointmentId: number;
+        selectedQueue: number;
+        id: number;
         body: {
           diagnosis: string;
           subject?: string;
@@ -77,31 +88,38 @@ const appointmentApi = createApi({
         };
       }
     >({
-      query: ({ appointmentId, body }) => {
+      query: ({ selectedQueue, id, body }) => {
         return {
-          url: `?id=${appointmentId}`,
+          url: ``,
           body: { ...body },
           method: 'PATCH',
+          params: { id, selectedQueue },
         };
       },
     }),
     AssignAppointmentToQueue: builder.mutation<
       true,
-      { appointmentId: number; test?: BiometricScreening }
+      {
+        selectedQueue: number;
+        id: number;
+        test?: BiometricScreening;
+      }
     >({
-      query: ({ appointmentId, test }) => {
+      query: ({ selectedQueue, id, test }) => {
         return {
-          url: `/assign?id=${appointmentId}`,
+          url: `/assign`,
           method: 'PATCH',
           body: { ...test },
+          params: { id, selectedQueue },
         };
       },
     }),
     cancelAppointment: builder.mutation<void, number>({
-      query: (appointmentId) => {
+      query: (id) => {
         return {
-          url: `/cancel?id=${appointmentId}`,
+          url: `/cancel`,
           method: 'PATCH',
+          params: { id },
         };
       },
     }),
