@@ -62,22 +62,53 @@ const memberApi = createApi({
             dispatch(memberApi.util.invalidateTags(['members']));
           });
 
-          ws.on('queue', (tags: ('booked' | 'state' | 'queue' | 'item')[]) => {
-            if (tags[0] === 'booked') {
-              const [__, ...tag] = tags;
-              dispatch(appointmentQueueApi.util.invalidateTags(tag as any));
-              dispatch(appointmentApi.util.invalidateTags(['booked']));
-            } else
-              dispatch(appointmentQueueApi.util.invalidateTags(tags as any));
-          });
+          ws.on(
+            'queue',
+            ({
+              tags,
+              queueId,
+            }: {
+              tags: ('booked' | 'state' | 'queue' | 'item')[];
+              queueId: number;
+            }) => {
+              if (
+                useQueueSelectionStore.getState().getSelectedQueue().id ===
+                queueId
+              ) {
+                if (tags[0] === 'booked') {
+                  const [__, ...tag] = tags;
+                  dispatch(appointmentQueueApi.util.invalidateTags(tag as any));
+                  dispatch(appointmentApi.util.invalidateTags(['booked']));
+                } else
+                  dispatch(
+                    appointmentQueueApi.util.invalidateTags(tags as any),
+                  );
+              }
+            },
+          );
 
-          ws.on('appointment', (tags: ('payment' | 'booked' | 'item')[]) => {
-            if (tags[0] === 'item') {
-              const [__, ...tag] = tags;
-              dispatch(appointmentQueueApi.util.invalidateTags(['item']));
-              dispatch(appointmentApi.util.invalidateTags(tag as any));
-            } else dispatch(appointmentApi.util.invalidateTags(tags as any));
-          });
+          ws.on(
+            'appointment',
+            ({
+              queueId,
+              tags,
+            }: {
+              tags: ('payment' | 'booked' | 'item')[];
+              queueId: number;
+            }) => {
+              if (
+                useQueueSelectionStore.getState().getSelectedQueue().id ===
+                queueId
+              ) {
+                if (tags[0] === 'item') {
+                  const [__, ...tag] = tags;
+                  dispatch(appointmentQueueApi.util.invalidateTags(['item']));
+                  dispatch(appointmentApi.util.invalidateTags(tag as any));
+                } else
+                  dispatch(appointmentApi.util.invalidateTags(tags as any));
+              }
+            },
+          );
           ws.on('role', (data: 'self' | 'setting' | 'assign') => {
             if (data == 'self') {
               dispatch(memberApi.util.invalidateTags(['me']));
