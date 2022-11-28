@@ -12,9 +12,9 @@ import {
   useProgressQueueStateMutation,
   useStartNextMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
-import { Overlay } from '@libs/overlay';
 import AlertModal from '../dialog_modal';
 import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import { Overlay_u } from '@stores/overlayStore';
 
 interface NextPatientProps {
   invitedPatient?: { patientName: string; arrivalTime: Date; position: number };
@@ -96,7 +96,7 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
           text="Close"
           backgroundColor={color.cold_blue}
           onPress={() => {
-            Overlay.close();
+            Overlay_u.close();
           }}
         />
       }
