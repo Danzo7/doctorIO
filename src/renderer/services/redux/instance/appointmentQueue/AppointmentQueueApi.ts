@@ -15,9 +15,13 @@ const appointmentQueueApi = createApi({
   tagTypes: ['state', 'queue', 'item'],
   endpoints: (builder) => ({
     //GET
-    getQueueInfo: builder.query<AppointmentQueue, void>({
-      query: () => ``,
-      providesTags: ['state', 'queue', 'item'],
+    getQueueInfo: builder.query<AppointmentQueue, number>({
+      query: (selectedQueue) => {
+        return {
+          url: ``,
+          params: { selectedQueue },
+        };
+      },
       transformResponse: (
         response: Omit<AppointmentQueue, 'appointments' | 'selected'> & {
           selected?: Omit<AppointmentQueueItem, 'date'> & { date: string };
@@ -58,8 +62,8 @@ const appointmentQueueApi = createApi({
         }));
       },
     }),
-    getQueueState: builder.query<QueueState, void>({
-      query: () => `/state`,
+    getQueueState: builder.query<QueueState, number>({
+      query: (index) => `/state` + (index ? `?selectedQueue=${index}` : ''),
       providesTags: ['state', 'queue'],
       transformResponse: ({
         selected,
@@ -76,13 +80,13 @@ const appointmentQueueApi = createApi({
         };
       },
     }),
-    getIsQueueOwner: builder.query<boolean, void>({
+    getIsQueueOwner: builder.query<boolean, number>({
       providesTags: ['queue'],
 
-      query: () => `/ownership`,
+      query: (index) => `/ownership` + (index ? `?selectedQueue=${index}` : ''),
     }),
-    getNextQueueItem: builder.query<AppointmentQueueItem, void>({
-      query: () => `/item/next`,
+    getNextQueueItem: builder.query<AppointmentQueueItem, number>({
+      query: (index) => `/item/next` + (index ? `?selectedQueue=${index}` : ''),
       providesTags: ['queue'],
       transformResponse: (
         response: Omit<AppointmentQueueItem, 'date'> & { date: string },
@@ -92,105 +96,141 @@ const appointmentQueueApi = createApi({
     }),
     addQueueAppointment: builder.mutation<
       AppointmentQueueItem[],
-      { patientId: number; test?: Partial<BiometricScreening> }
+      {
+        selectedQueue: number;
+        body: { patientId: number; test?: Partial<BiometricScreening> };
+      }
     >({
-      query: (body) => {
+      query: ({ selectedQueue, body }) => {
         return {
           url: `/item`,
           method: 'POST',
           body: { ...body },
+          params: { selectedQueue },
         };
       },
     }),
     //PATCH
     updateTest: builder.mutation<
       boolean,
-      { position: number } & BiometricScreening
+      { selectedQueue: number; body: { position: number } & BiometricScreening }
     >({
-      query: (body) => {
+      query: ({ selectedQueue, body }) => {
         return {
           url: `/item`,
           method: 'PATCH',
           body: { ...body },
+          params: { selectedQueue },
         };
       },
     }),
     updateQueueState: builder.mutation<
       boolean,
       {
-        state: 'IDLE' | 'WAITING' | 'IN_PROGRESS' | 'PAUSED';
-        position?: number;
+        selectedQueue: number;
+        body: {
+          state: 'IDLE' | 'WAITING' | 'IN_PROGRESS' | 'PAUSED';
+          position?: number;
+        };
       }
     >({
-      query: (body) => {
-        return { url: `/state`, method: 'PATCH', body: { ...body } };
+      query: ({ selectedQueue, body }) => {
+        return {
+          url: `/state`,
+          method: 'PATCH',
+          body: { ...body },
+          params: {
+            selectedQueue,
+          },
+        };
       },
     }),
-    pauseQueue: builder.mutation<boolean, void>({
-      query: () => ({
+    pauseQueue: builder.mutation<boolean, number>({
+      query: (selectedQueue) => ({
         url: `/state/pause`,
         method: 'PATCH',
+        params: { selectedQueue },
       }),
     }),
-    resumeQueue: builder.mutation<boolean, void>({
-      query: () => ({
+    resumeQueue: builder.mutation<boolean, number>({
+      query: (selectedQueue) => ({
         url: `/state/idle`,
         method: 'PATCH',
+        params: { selectedQueue },
       }),
     }),
-    notifyQueue: builder.mutation<boolean, number>({
-      query: (position) => ({
+    notifyQueue: builder.mutation<
+      boolean,
+      { selectedQueue: number; position: number }
+    >({
+      query: ({ selectedQueue, position }) => ({
         url: `/state/notify`,
         method: 'PATCH',
         body: { position: position },
+        params: { selectedQueue },
       }),
     }),
-    progressQueueState: builder.mutation<boolean, number>({
-      query: (position) => ({
+    progressQueueState: builder.mutation<
+      boolean,
+      { selectedQueue: number; position: number }
+    >({
+      query: ({ selectedQueue, position }) => ({
         url: `/state/progress`,
         method: 'PATCH',
         body: { position: position },
+        params: { selectedQueue },
       }),
     }),
-    notifyNext: builder.mutation<boolean, void>({
-      query: () => ({
+    notifyNext: builder.mutation<boolean, number>({
+      query: (selectedQueue) => ({
         url: `/state/notify/next`,
         method: 'PATCH',
+        params: { selectedQueue },
       }),
     }),
-    startNext: builder.mutation<boolean, void>({
-      query: () => ({
+    startNext: builder.mutation<boolean, number>({
+      query: (selectedQueue) => ({
         url: `/state/start/next`,
         method: 'PATCH',
+        params: { selectedQueue },
       }),
     }),
     endNext: builder.mutation<
       QueueState,
       {
-        diagnosis?: string;
-        subject?: string;
-        prescription?: Omit<Drug, 'id'>[];
-        payment?: number;
+        selectedQueue: number;
+        body: {
+          diagnosis?: string;
+          subject?: string;
+          prescription?: Omit<Drug, 'id'>[];
+          payment?: number;
+        };
       }
     >({
-      query: (body) => ({
+      query: ({ selectedQueue, body }) => ({
         url: `/state/end/next`,
         method: 'PATCH',
         body: { ...body },
+        params: { selectedQueue },
       }),
     }),
     //DELETE
-    resetQueue: builder.mutation<boolean, void>({
-      query: () => ({ url: ``, method: 'DELETE' }),
+    resetQueue: builder.mutation<boolean, number>({
+      query: (selectedQueue) => ({
+        url: ``,
+        method: 'DELETE',
+        params: { selectedQueue },
+      }),
     }),
     deleteAppointment: builder.mutation<
       AppointmentQueueItem[],
-      { roleId: number; appointmentId: number }
+      { selectedQueue: number; appointmentId: number }
     >({
-      query: ({ appointmentId }) => {
+      query: ({ selectedQueue, appointmentId }) => {
         return {
-          url: `/item?appointmentId=${appointmentId}`,
+          url: `/item`,
           method: 'DELETE',
+          params: { appointmentId, selectedQueue },
         };
       },
     }),
