@@ -8,6 +8,7 @@ import create from 'zustand';
 import { useAuthStore } from './authStore';
 import { useClinicsStore } from './clinicsStore';
 import { modal, Overlay_u } from './overlayStore';
+import { useQueueSelectionStore } from './queueSelectionStore';
 
 interface SocketState {
   socket?: Socket;
@@ -92,12 +93,17 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
           (data: {
             state: 'IN_PROGRESS' | 'WAITING';
             queueItem: AppointmentQueueItem;
+            roleId: number;
           }) => {
             if (data.state == 'WAITING')
               modal(
                 QueueNotificationModal({
                   name: data.queueItem.patientName,
                   position: data.queueItem.position,
+                  queueName:
+                    useQueueSelectionStore
+                      .getState()
+                      .getQueueByRoleId(data.roleId)?.name ?? 'unknown',
                 }),
                 {
                   isDimmed: true,
