@@ -19,21 +19,17 @@ import {
 import { QueueState } from '@models/instance.model';
 import LoadingSpinner from '@components/loading_spinner';
 import BorderSeparator from '@components/border_separator';
-import TabMenu from '@components/tab_menu';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import LinkedRole from '@components/linked_role';
 import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { modal } from '@stores/overlayStore';
 import RefetchPanel from '@components/refetch_panel';
-import {
-  useQueueSelectionStore,
-  useSelectedQueue,
-} from '@stores/queueSelectionStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
-  const selectedQueue = useSelectedQueue();
+  const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
   const queueStateQuery = useGetQueueStateQuery(selectedQueue);
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
@@ -49,7 +45,7 @@ export default function AppointmentsQueue() {
   );
   const [ResumeQueue] = useResumeQueueMutation();
 
-  return getQueueAppointmentsQuery.isLoading &&
+  return getQueueAppointmentsQuery.isLoading ||
     getQueueAppointmentsQuery.isUninitialized ? (
     <LoadingSpinner />
   ) : getQueueAppointmentsQuery.isSuccess ? (
@@ -63,16 +59,6 @@ export default function AppointmentsQueue() {
         <div className="appointments-queue">
           {myMemberDetailQuery.isSuccess && myMemberDetailQuery.data.queues && (
             <>
-              <TabMenu
-                onChanged={({ index }) => {
-                  useQueueSelectionStore.getState().setSelectedQueue(index);
-                }}
-                items={useQueueSelectionStore
-                  .getState()
-                  .queues.map(({ name }) => name)}
-                defaultSelected={selectedQueue}
-              />
-
               <Header
                 leftComponent={
                   <LinkedRole
