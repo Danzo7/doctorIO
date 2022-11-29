@@ -21,7 +21,13 @@ const medicalHistoryApi = createApi({
         });
       },
 
-      query: (patId) => `?patientId=${patId}`,
+      query: (patientId) => {
+        return {
+          url: '',
+          params: { patientId },
+        };
+      },
+
       providesTags: ['MedicalHistory'],
     }),
     //POST
@@ -30,9 +36,10 @@ const medicalHistoryApi = createApi({
       { patientId: number; body: { date: Date; description: string } }
     >({
       query: ({ patientId, body }) => ({
-        url: `?patientId=${patientId}`,
+        url: ``,
         method: 'POST',
         body: { ...body },
+        params: { patientId },
       }),
       invalidatesTags: ['MedicalHistory'],
     }),
