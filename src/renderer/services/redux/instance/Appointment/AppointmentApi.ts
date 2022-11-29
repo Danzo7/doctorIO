@@ -17,8 +17,13 @@ const appointmentApi = createApi({
   endpoints: (builder) => ({
     //GET
     getBookedAppointment: builder.query<BookedAppointment[], number>({
-      query: (queueIndex) =>
-        `/book` + (queueIndex ? `?selectedQueue=${queueIndex}` : ''),
+      query: (selectedQueue) => {
+        return {
+          url: `/book`,
+          params: { selectedQueue },
+        };
+      },
+
       providesTags: ['booked'],
       transformResponse: (
         response: (Omit<BookedAppointment, 'bookedFor'> & {
@@ -32,7 +37,13 @@ const appointmentApi = createApi({
       },
     }),
     getPatientAppointments: builder.query<Appointment[], number>({
-      query: (patientId: number) => `?patientId=${patientId}`,
+      query: (patientId: number) => {
+        return {
+          url: '',
+          params: { patientId },
+        };
+      },
+
       transformResponse: (response: Appointment[]) => {
         return response.map(({ bookedFor, date, bookedIn, ...other }) => ({
           ...other,
@@ -49,8 +60,13 @@ const appointmentApi = createApi({
       { appointmentId: number; name: string; amount: number; date: Date }[],
       number
     >({
-      query: (queueIndex) =>
-        '/payment' + (queueIndex ? `?selectedQueue=${queueIndex}` : ''),
+      query: (selectedQueue) => {
+        return {
+          url: '/payment',
+          params: { selectedQueue },
+        };
+      },
+
       providesTags: ['payment'],
     }),
 
