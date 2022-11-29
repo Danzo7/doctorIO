@@ -31,6 +31,7 @@ export const useQueueSelectionStore = create<QueueSelectionState>()(
       });
     },
     getQueueByRoleId: (roleId: number) => {
+      console.log({ roleId, q: get().queues });
       return get().queues.find((queue) => queue.roleId === roleId);
     },
   }),
