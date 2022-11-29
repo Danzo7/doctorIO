@@ -4,6 +4,7 @@ import { Member, MemberBrief, PermKeys } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
 import appointmentApi from '@redux/instance/Appointment/AppointmentApi';
 import appointmentQueueApi from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import { store } from '@redux/store';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { useAbilityStore } from '@stores/abilityStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
@@ -132,6 +133,19 @@ const memberApi = createApi({
         try {
           const { data: res } = await queryFulfilled;
           useQueueSelectionStore.getState().setQueues(res.queues ?? []);
+          useQueueSelectionStore.subscribe((state, prev) => {
+            if (
+              state.queues?.[state.selectedQueue]?.id !==
+              prev.queues?.[prev.selectedQueue]?.id
+            ) {
+              store.dispatch(
+                appointmentQueueApi.util.invalidateTags(['queue']),
+              );
+              store.dispatch(
+                appointmentApi.util.invalidateTags(['booked', 'payment']),
+              );
+            }
+          });
         } catch (e: any) {
           Logger.error('MemberApi', e);
         }
