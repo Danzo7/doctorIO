@@ -8,10 +8,10 @@ import AddSearchToBooked from '@containers/modals/add_search_to_booked';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { modal } from '@stores/overlayStore';
 import RefetchPanel from '@components/refetch_panel';
-import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import { useSelectedQueue } from '@stores/queueSelectionStore';
 
 export default function BookedList({}) {
-  const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
+  const selectedQueue = useSelectedQueue();
   const { data, isSuccess, isLoading, refetch } =
     useGetBookedAppointmentQuery(selectedQueue);
 

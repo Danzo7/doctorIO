@@ -18,16 +18,15 @@ import {
 import { QueueState } from '@models/instance.model';
 import AlertModal from '@containers/modals/dialog_modal';
 import { modal } from '@stores/overlayStore';
-import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import { useSelectedQueue } from '@stores/queueSelectionStore';
 
 interface QueueControlsProps {
   state: QueueState['state'];
   isOwner: boolean;
 }
 export default function QueueControls({ state, isOwner }: QueueControlsProps) {
-  const selectedQueue = useQueueSelectionStore(
-    (queueState) => queueState.selectedQueue,
-  );
+  const selectedQueue = useSelectedQueue();
+
   const [PauseQueue] = usePauseQueueMutation();
   const [ResumeQueue] = useResumeQueueMutation();
   const [resetQueue] = useResetQueueMutation();

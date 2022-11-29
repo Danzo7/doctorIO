@@ -13,10 +13,10 @@ import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/A
 import Header from '@components/header';
 import { useAbility } from '@stores/abilityStore';
 import { Badged } from '@components/badge/Badge';
-import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import { useSelectedQueue } from '@stores/queueSelectionStore';
 interface ShortStatsPanelProps {}
 export default function ShortStatsPanel({}: ShortStatsPanelProps) {
-  const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
+  const selectedQueue = useSelectedQueue();
   const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue);
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const timeSortList = ['Today', 'Monthly'];

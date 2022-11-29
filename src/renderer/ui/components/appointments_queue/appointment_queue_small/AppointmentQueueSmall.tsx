@@ -21,12 +21,12 @@ import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import RefetchPanel from '@components/refetch_panel';
 import { modal } from '@stores/overlayStore';
-import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import { useSelectedQueue } from '@stores/queueSelectionStore';
 
 interface AppointmentQueueSmallProps {}
 
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
-  const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
+  const selectedQueue = useSelectedQueue();
 
   const queueStateQuery = useGetQueueStateQuery(selectedQueue);
   const isQueueOwnerQuery = useGetIsQueueOwnerQuery(selectedQueue, {
