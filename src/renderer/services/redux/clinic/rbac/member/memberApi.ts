@@ -34,7 +34,11 @@ const memberApi = createApi({
       query: (id) => `/${id}`,
     }),
     getMemberDetail: builder.query<Member, number>({
-      query: (id) => `/detail?id=${id}`,
+      query: (id) => ({
+        url: `detail`,
+        params: { id },
+      }),
+
       providesTags: ['members'],
       transformResponse: (
         response: Omit<Member, 'joinDate'> & { joinDate: string },
