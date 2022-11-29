@@ -59,7 +59,7 @@ const roleApi = createApi({
       }
     >({
       query: ({ id, body }) => {
-        return { url: `?id=${id}`, method: 'PATCH', body: { ...body } };
+        return { url: ``, method: 'PATCH', body: { ...body }, params: { id } };
       },
       invalidatesTags: ['roles'],
     }),
@@ -84,7 +84,6 @@ const roleApi = createApi({
       invalidatesTags: ['roles'],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
-          //UTIL  just good stuff :   memberApi.util.resetApiState
           await queryFulfilled;
           dispatch(memberApi.util.invalidateTags(['members']));
         } catch (err) {
@@ -99,7 +98,6 @@ const roleApi = createApi({
       invalidatesTags: ['roles'],
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
-          //UTIL  just good stuff :   memberApi.util.resetApiState
           await queryFulfilled;
           dispatch(memberApi.util.invalidateTags(['members']));
         } catch (err) {
@@ -113,7 +111,6 @@ export default roleApi;
 export const {
   useCreateNewRoleMutation,
   useGetBriefRolesQuery,
-
   useUpdateRoleMutation,
   useGetRoleByIdQuery,
   useLazyGetRoleByIdQuery,
