@@ -3,7 +3,6 @@ import UserProfileStatus from '@components/user_profile_status';
 import Search from 'toSvg/search.svg?icon';
 import colors from '@colors';
 import './style/index.scss';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import LoadingSpinner from '@components/loading_spinner';

@@ -6,7 +6,6 @@ import RandomSvgFaces from 'toSvg/randomSvgFaces.svg?icon';
 import Header from '@components/header';
 import LoadingSpinner from '@components/loading_spinner';
 import PrintedLayout from '@components/printed_layout';
-import TabMenu from '@components/tab_menu';
 import VerticalPanel from '@components/vertical_panel';
 import EndSession from '@containers/modals/end_session';
 import { useOverlay } from '@libs/overlay/useOverlay';
@@ -24,12 +23,12 @@ import SessionParameter from './pages/session_parameter';
 import './style/index.scss';
 import { useRef } from 'react';
 import TabComponent from '@components/tab_component';
-import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import { useSelectedQueue } from '@stores/queueSelectionStore';
 
 interface MedicalSessionProps {}
 
 export default function MedicalSession({}: MedicalSessionProps) {
-  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+  const selectedQueue = useSelectedQueue();
   const queueStateQuery = useGetQueueStateQuery(selectedQueue);
 
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {

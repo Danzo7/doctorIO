@@ -1,11 +1,10 @@
 import { color } from '@assets/styles/color';
-import AlertToast from '@components/alert_toast';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { DATE_ONLY } from '@constants/data_format';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DEFAULT_MODAL, Overlay } from '@libs/overlay';
+import { Overlay } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
 import { SubmitHandler, useForm } from 'react-hook-form';

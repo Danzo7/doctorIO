@@ -9,7 +9,7 @@ import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { DATE_ONLY } from '@constants/data_format';
 import { Overlay_u } from '@stores/overlayStore';
-import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import { useSelectedQueue } from '@stores/queueSelectionStore';
 
 type Inputs = {
   subject: string;
@@ -23,7 +23,7 @@ export default function BookAppointmentModal({
   patientName,
   id,
 }: BookAppointmentModalProps) {
-  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+  const selectedQueue = useSelectedQueue();
   const [BookAppointment, _] = useBookAppointmentMutation();
   const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onSubmit',

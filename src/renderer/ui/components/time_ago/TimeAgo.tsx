@@ -1,5 +1,5 @@
 import { formatDistance } from 'date-fns';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 interface TimeAgoProps {
   timeAgo: Date;
 }

@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof LinkedRole>> = (args) => (
   <LinkedRole {...args} />
 );
-export const FirstStory = Template
+export const FirstStory = Template;
 FirstStory.args = {};

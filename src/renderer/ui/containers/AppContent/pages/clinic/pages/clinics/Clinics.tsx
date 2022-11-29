@@ -4,7 +4,7 @@ import ClinicItem from '@components/clinic_item';
 import ConnectMemberModal from '@containers/modals/connect_member_modal';
 import JoinNewClinicModal from '@containers/modals/join_new_clinic_modal';
 import useNavigation from '@libs/hooks/useNavigation';
-import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL } from '@libs/overlay';
 import { useOverlay } from '@libs/overlay/useOverlay';
 import { useClinicsStore } from '@stores/clinicsStore';
 import './style/index.scss';

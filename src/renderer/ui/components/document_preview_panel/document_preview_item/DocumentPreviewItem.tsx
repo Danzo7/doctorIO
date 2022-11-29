@@ -7,7 +7,6 @@ import { MedicalDocument } from '@models/instance.model';
 import { format } from 'date-fns';
 import { DATE_ONLY } from '@constants/data_format';
 import { useOverlay } from '@libs/overlay/useOverlay';
-import WarningModal from '@containers/modals/warning_modal';
 import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { color } from '@assets/styles/color';
 

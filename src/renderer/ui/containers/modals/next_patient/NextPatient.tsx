@@ -13,7 +13,7 @@ import {
   useStartNextMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import AlertModal from '../dialog_modal';
-import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import { useSelectedQueue } from '@stores/queueSelectionStore';
 import { Overlay_u } from '@stores/overlayStore';
 
 interface NextPatientProps {
@@ -21,7 +21,7 @@ interface NextPatientProps {
 }
 
 export default function NextPatient({ invitedPatient }: NextPatientProps) {
-  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+  const selectedQueue = useSelectedQueue();
   const { navigate } = useNavigation();
   const [NotifyQueue] = useNotifyQueueMutation();
   const [StartNext] = useStartNextMutation();

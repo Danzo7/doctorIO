@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof DeleteDocumentModal>> = (args) => (
   <DeleteDocumentModal {...args} />
 );
-export const FirstStory = Template
+export const FirstStory = Template;
 FirstStory.args = {};

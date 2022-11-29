@@ -1,7 +1,7 @@
 import minus from 'toSvg/minus.svg?icon';
 import add from 'toSvg/add.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import InputWrapper, { InputWrapperProps } from '../input_wrapper/InputWrapper';
+import InputWrapper from '../input_wrapper/InputWrapper';
 import { forwardRef } from 'react';
 import AutoSizeInput from '../auto_size_input';
 import { color } from '@assets/styles/color';

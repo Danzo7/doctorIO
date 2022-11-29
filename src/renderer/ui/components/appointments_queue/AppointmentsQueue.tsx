@@ -26,11 +26,14 @@ import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { modal } from '@stores/overlayStore';
 import RefetchPanel from '@components/refetch_panel';
-import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import {
+  useQueueSelectionStore,
+  useSelectedQueue,
+} from '@stores/queueSelectionStore';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
-  const selectedQueue = useQueueSelectionStore((state) => state.selectedQueue);
+  const selectedQueue = useSelectedQueue();
   const queueStateQuery = useGetQueueStateQuery(selectedQueue);
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
