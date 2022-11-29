@@ -9,15 +9,15 @@ import MembersTab from './pages/members_tab';
 import TimingAndSchedule from './pages/timing_and_schedule';
 import PreferencesTab from './pages/preferences_tab';
 import AuditLogTab from './pages/audit_log_tab';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import TextButton from '@components/buttons/text_button';
 import { FIT_MODAL } from '@libs/overlay';
 import { useDisconnectMemberMutation } from '@redux/local/auth/authApi';
 import AlertModal from '@containers/modals/dialog_modal';
+import { modal } from '@stores/overlayStore';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
-  const { open, close } = useOverlay();
+
   const [DisconnectMember] = useDisconnectMemberMutation();
   return (
     <div className="clinic-settings">
@@ -32,23 +32,25 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
           fontColor={colors.hot_red}
           isActive={true}
           onPress={() => {
-            open(
-              <AlertModal
-                title="are you sure you want to disconnect ?"
-                description="you will be disconnected from the clinic after confirming"
-                status="warning"
-                controls={
-                  <TextButton
-                    text="Confirm"
-                    backgroundColor={colors.hot_red}
-                    onPress={() => {
-                      DisconnectMember();
-                      close();
-                      navigate('/');
-                    }}
-                  />
-                }
-              ></AlertModal>,
+            modal(
+              ({ close }) => (
+                <AlertModal
+                  title="are you sure you want to disconnect ?"
+                  description="you will be disconnected from the clinic after confirming"
+                  status="warning"
+                  controls={
+                    <TextButton
+                      text="Confirm"
+                      backgroundColor={colors.hot_red}
+                      onPress={() => {
+                        DisconnectMember();
+                        close();
+                        navigate('/');
+                      }}
+                    />
+                  }
+                ></AlertModal>
+              ),
               FIT_MODAL,
             );
           }}

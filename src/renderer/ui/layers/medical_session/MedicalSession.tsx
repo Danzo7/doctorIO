@@ -8,7 +8,6 @@ import LoadingSpinner from '@components/loading_spinner';
 import PrintedLayout from '@components/printed_layout';
 import VerticalPanel from '@components/vertical_panel';
 import EndSession from '@containers/modals/end_session';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import { useGetQueueStateQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
@@ -24,6 +23,7 @@ import './style/index.scss';
 import { useRef } from 'react';
 import TabComponent from '@components/tab_component';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
+import { modal, Overlay_u } from '@stores/overlayStore';
 
 interface MedicalSessionProps {}
 
@@ -43,18 +43,17 @@ export default function MedicalSession({}: MedicalSessionProps) {
       : undefined;
   const { isLoading, data, isSuccess, isUninitialized } =
     useGetPatientDetailQuery(patientId ?? skipToken);
-  const { open, openTooltip } = useOverlay();
 
   const openEndSessionModal = () => {
     if (patientId)
-      open(<EndSession patientId={patientId} />, {
+      modal(() => <EndSession patientId={patientId} />, {
         closeOnClickOutside: true,
         isDimmed: true,
         clickThrough: false,
         position: { top: '30%' },
         width: '30%',
         closeBtn: 'inner',
-      });
+      }).open();
     else throw new Error('patientId is undefined');
   };
   const render = useRef(queueStateQuery.isSuccess);
@@ -111,35 +110,37 @@ export default function MedicalSession({}: MedicalSessionProps) {
                 text="Print..."
                 onPress={(e) => {
                   if (e)
-                    openTooltip(
-                      [
+                    Overlay_u.openTooltip(
+                      () => [
                         {
                           text: 'Notice',
                         },
                         {
                           text: 'Prescription',
                           onPress: () => {
-                            open(
-                              <PrintedLayout
-                                patientName={
-                                  data.firstName + ' ' + data.lastName
-                                }
-                                patientAge={data.age}
-                                drugList={
-                                  useMedicalSessionStore.getState().session
-                                    .prescription
-                                }
-                                doctorName={
-                                  myMemberDetailQuery.data?.name ?? 'John doe'
-                                }
-                              />,
+                            modal(
+                              () => (
+                                <PrintedLayout
+                                  patientName={
+                                    data.firstName + ' ' + data.lastName
+                                  }
+                                  patientAge={data.age}
+                                  drugList={
+                                    useMedicalSessionStore.getState().session
+                                      .prescription
+                                  }
+                                  doctorName={
+                                    myMemberDetailQuery.data?.name ?? 'John doe'
+                                  }
+                                />
+                              ),
                               {
                                 closeOnClickOutside: true,
                                 closeOnBlur: true,
                                 isDimmed: true,
                                 clickThrough: false,
                               },
-                            );
+                            ).open();
                           },
                         },
                         {

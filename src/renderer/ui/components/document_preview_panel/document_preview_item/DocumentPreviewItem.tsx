@@ -6,15 +6,14 @@ import damaged from 'toSvg/damaged.svg?icon';
 import { MedicalDocument } from '@models/instance.model';
 import { format } from 'date-fns';
 import { DATE_ONLY } from '@constants/data_format';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { color } from '@assets/styles/color';
-
 import { useRef } from 'react';
 import { useDownloadDocumentMutation } from '@redux/instance/record/medical_document_api';
 import AlertModal from '@containers/modals/dialog_modal';
 import TextButton from '@components/buttons/text_button';
 import DeleteDocumentModal from '@containers/modals/delete_document_modal';
+import { modal } from '@stores/overlayStore';
 
 export default function DocumentPreviewItem({
   fileName,
@@ -22,7 +21,6 @@ export default function DocumentPreviewItem({
   status,
   date,
 }: MedicalDocument) {
-  const { open, close } = useOverlay();
   const statusRef = useRef(status);
   const consumedError = useRef(false);
   const [download, result] = useDownloadDocumentMutation();
@@ -35,15 +33,17 @@ export default function DocumentPreviewItem({
   if (downError?.errorCode && !consumedError.current) {
     consumedError.current = true;
 
-    open(
-      <AlertModal
-        status="error"
-        title={`${downError.message}`}
-        description={downError.message as string}
-      />,
+    modal(
+      () => (
+        <AlertModal
+          status="error"
+          title={`${downError.message}`}
+          description={downError.message as string}
+        />
+      ),
 
       DEFAULT_MODAL,
-    );
+    ).open();
   }
 
   return (
@@ -58,22 +58,24 @@ export default function DocumentPreviewItem({
         onPress={() => {
           consumedError.current = false;
           if (statusRef.current == 'LOST') {
-            open(
-              <AlertModal
-                status="error"
-                title="Document Lost"
-                description="This document is lost. Please contact the administrator."
-                controls={
-                  <TextButton
-                    text="Confirm"
-                    backgroundColor={color.good_green}
-                  />
-                }
-              />,
+            modal(
+              () => (
+                <AlertModal
+                  status="error"
+                  title="Document Lost"
+                  description="This document is lost. Please contact the administrator."
+                  controls={
+                    <TextButton
+                      text="Confirm"
+                      backgroundColor={color.good_green}
+                    />
+                  }
+                />
+              ),
               {
                 ...DEFAULT_MODAL,
               },
-            );
+            ).open();
           } else download({ id, name: fileName });
         }}
       />
@@ -82,14 +84,16 @@ export default function DocumentPreviewItem({
         Icon={TrashCan}
         tip="Delete Document"
         onPress={() => {
-          open(
-            <DeleteDocumentModal
-              id={id}
-              fileName={fileName}
-              onSucceed={close}
-            />,
+          modal(
+            ({ close }) => (
+              <DeleteDocumentModal
+                id={id}
+                fileName={fileName}
+                onSucceed={close}
+              />
+            ),
             { ...FIT_MODAL, style: { maxWidth: '30%' }, closeBtn: undefined },
-          );
+          ).open();
         }}
       />
     </PreviewWithControls>

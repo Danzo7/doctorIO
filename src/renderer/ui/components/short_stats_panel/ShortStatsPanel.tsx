@@ -4,7 +4,6 @@ import './style/index.scss';
 import exclamation from 'toSvg/exclamation.svg?icon';
 import colors from '@colors';
 import { FIT_MODAL } from '@libs/overlay';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import MemberBigCard from '@containers/modals/member_big_card';
 import LoadingSpinner from '@components/loading_spinner';
@@ -14,6 +13,7 @@ import Header from '@components/header';
 import { useAbility } from '@stores/abilityStore';
 import { Badged } from '@components/badge/Badge';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
+import { modal } from '@stores/overlayStore';
 interface ShortStatsPanelProps {}
 export default function ShortStatsPanel({}: ShortStatsPanelProps) {
   const selectedQueue = useSelectedQueue();
@@ -46,7 +46,7 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
     },
   ];
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
-  const { open } = useOverlay();
+
   const abilities = useAbility();
   return (
     <div className="short-stats-panel">
@@ -68,7 +68,10 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
                     imgSrc={data.avatar}
                     alt={data.name + data.id}
                     onClick={() => {
-                      open(<MemberBigCard id={data.id} />, FIT_MODAL);
+                      modal(
+                        () => <MemberBigCard id={data.id} />,
+                        FIT_MODAL,
+                      ).open();
                     }}
                   />
                 )

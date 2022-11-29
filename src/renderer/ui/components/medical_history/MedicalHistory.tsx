@@ -4,8 +4,8 @@ import PreviewList from '@components/preview_list';
 import PreviewWithControls from '@components/preview_with_controls';
 import { DATE_ONLY } from '@constants/data_format';
 import AddMedicalHistoryModal from '@containers/modals/add_medical_history_modal';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetMedicalHistoryQuery } from '@redux/instance/record/medical_history_api';
+import { modal } from '@stores/overlayStore';
 import { format } from 'date-fns';
 
 interface MedicalHistoryProps {
@@ -14,7 +14,6 @@ interface MedicalHistoryProps {
 export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
   const { isLoading, isSuccess, error, data, isFetching } =
     useGetMedicalHistoryQuery(patientId);
-  const { open } = useOverlay();
 
   return (
     <PreviewList
@@ -25,13 +24,13 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
           text="Add"
           blend
           onPress={() => {
-            open(<AddMedicalHistoryModal patientId={patientId} />, {
+            modal(() => <AddMedicalHistoryModal patientId={patientId} />, {
               closeOnClickOutside: true,
               isDimmed: true,
               clickThrough: false,
               closeBtn: 'inner',
               width: '30%',
-            });
+            }).open();
           }}
         />
       }

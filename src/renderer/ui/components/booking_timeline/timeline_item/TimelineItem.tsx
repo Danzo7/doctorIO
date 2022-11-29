@@ -4,12 +4,12 @@ import TextPair from '@components/text_pair';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import View from 'toSvg/view_test.svg?icon';
 import { color } from '@assets/styles/color';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import SessionPreviewModal from '@containers/modals/session_preview_modal';
 import { format } from 'date-fns';
 import { DATE_ONLY, TIME_ONLY } from '@constants/data_format';
 import { Appointment } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
+import { modal } from '@stores/overlayStore';
 
 export default function TimelineItem({
   bookedIn,
@@ -30,7 +30,7 @@ export default function TimelineItem({
       : state == 'upcoming' || state == 'opened'
       ? color.warm_orange
       : color.cold_blue;
-  const { open } = useOverlay();
+
   const { isLoading, data, isSuccess } = useGetPatientDetailQuery(patientId);
   return (
     <div className="timeline-item">
@@ -79,13 +79,15 @@ export default function TimelineItem({
               tip="View Session"
               disabled={isLoading || !isSuccess}
               onPress={() => {
-                open(
-                  <SessionPreviewModal
-                    session={session}
-                    memberName={member?.memberName || 'unknown'}
-                    patientAge={data?.age}
-                    patientName={data?.firstName + ' ' + data?.lastName}
-                  />,
+                modal(
+                  () => (
+                    <SessionPreviewModal
+                      session={session}
+                      memberName={member?.memberName || 'unknown'}
+                      patientAge={data?.age}
+                      patientName={data?.firstName + ' ' + data?.lastName}
+                    />
+                  ),
                   {
                     closeOnClickOutside: true,
                     isDimmed: true,
@@ -93,7 +95,7 @@ export default function TimelineItem({
                     closeBtn: 'inner',
                     width: '50%',
                   },
-                );
+                ).open();
               }}
             />
           )}

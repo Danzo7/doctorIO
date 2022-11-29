@@ -4,7 +4,6 @@ import IsOwner from 'toSvg/host.svg';
 import threeDots from 'toSvg/threedots.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import SmallRoleList from '@components/members_preview/small_role_list';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import MemberBigCard from '@containers/modals/member_big_card';
 import { FIT_MODAL } from '@libs/overlay';
 import { MemberBrief } from '@models/server.models';
@@ -14,7 +13,7 @@ import {
   useAssignRoleMutation,
   useRevokeRoleMutation,
 } from '@redux/clinic/rbac/role/roleApi';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal, Overlay_u } from '@stores/overlayStore';
 
 export default function MemberItem({
   avatar,
@@ -24,7 +23,6 @@ export default function MemberItem({
   roles,
   status,
 }: MemberBrief) {
-  const { openTooltip, open } = useOverlay();
   const [AssignRole] = useAssignRoleMutation();
   const [RevokeRole] = useRevokeRoleMutation();
   return (
@@ -69,7 +67,7 @@ export default function MemberItem({
                   {
                     text: 'show profile',
                     onPress: () => {
-                      open(<MemberBigCard id={id} />, FIT_MODAL);
+                      modal(() => <MemberBigCard id={id} />, FIT_MODAL).open();
                     },
                   },
                 ],

@@ -4,9 +4,8 @@ import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
 import { DATE_ONLY } from '@constants/data_format';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Overlay } from '@libs/overlay';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
+import { Overlay_u } from '@stores/overlayStore';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import './style/index.scss';
@@ -38,21 +37,15 @@ export default function AddMedicalHistoryModal({
     resolver: zodResolver(schema),
     defaultValues: { description: '', selectedDate: new Date() },
   });
-  const { open } = useOverlay();
+
   const [addMedicalHistory] = useAddMedicalHistoryMutation();
   const onSubmit: SubmitHandler<Data> = ({ description, selectedDate }) => {
     addMedicalHistory({
       patientId: patientId,
       body: { date: selectedDate, description: description },
-    })
-      .then(() => {
-        Overlay.close();
-      })
-      .then(() => {
-        setTimeout(() => {
-          Overlay.close();
-        }, 2000);
-      });
+    }).then(() => {
+      Overlay_u.close();
+    });
   };
 
   return (

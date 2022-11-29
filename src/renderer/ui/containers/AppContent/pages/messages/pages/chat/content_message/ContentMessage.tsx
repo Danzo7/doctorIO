@@ -1,7 +1,7 @@
 import CircleAvatar from '@components/avatars/circle_avatar';
 import MemberCard from '@components/member_card';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { Message } from '@models/local.models';
+import { modal } from '@stores/overlayStore';
 import { formatRelative } from 'date-fns';
 import './style/index.scss';
 interface ContentMessageProps {
@@ -20,7 +20,6 @@ function ContentMessage({
   memberId,
   status,
 }: ContentMessageProps) {
-  const { open } = useOverlay();
   return (
     <div
       className={`content-message ${
@@ -33,19 +32,21 @@ function ContentMessage({
           alt={name + memberId}
           width={40}
           onClick={(e) => {
-            open(
-              <MemberCard
-                id={id}
-                name={name}
-                avatar={avatar}
-                status={status}
-              />,
+            modal(
+              () => (
+                <MemberCard
+                  id={id}
+                  name={name}
+                  avatar={avatar}
+                  status={status}
+                />
+              ),
               {
                 popperTarget: e.currentTarget,
                 clickThrough: true,
                 closeOnBlur: true,
               },
-            );
+            ).open();
           }}
         />
       </div>
@@ -54,19 +55,21 @@ function ContentMessage({
         <div className="title-container">
           <span
             onClick={(e) => {
-              open(
-                <MemberCard
-                  id={id}
-                  name={name}
-                  avatar={avatar}
-                  status={status}
-                />,
+              modal(
+                () => (
+                  <MemberCard
+                    id={id}
+                    name={name}
+                    avatar={avatar}
+                    status={status}
+                  />
+                ),
                 {
                   popperTarget: e.currentTarget,
                   clickThrough: true,
                   closeOnBlur: true,
                 },
-              );
+              ).open();
             }}
           >
             {name}

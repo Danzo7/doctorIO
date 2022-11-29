@@ -13,7 +13,6 @@ import { useForm } from 'react-hook-form';
 import search from 'toSvg/search.svg?icon';
 import './style/index.scss';
 import { Patient, PatientBrief } from '@models/instance.model';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import BookAppointmentModal from '@containers/modals/book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useParams } from 'react-router-dom';
@@ -29,6 +28,7 @@ import { useGetPatientAppointmentsQuery } from '@redux/instance/Appointment/Appo
 import TextButton from '@components/buttons/text_button';
 import ErrorPanel from '@components/error_panel';
 import SimpleInfoContainer from '@components/simple_info_container';
+import { modal } from '@stores/overlayStore';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -53,7 +53,7 @@ export default function Record({}: RecordProps) {
   const isDirty = useRef(false);
   const watchSearchField = watch('searchField');
   const { navigate } = useNavigation();
-  const { open } = useOverlay();
+
   const { patientId } = useParams();
   const [trigger, result] = useLazyFindPatientByName2Query();
   const errorRef = useRef<ServerError>();
@@ -153,17 +153,19 @@ export default function Record({}: RecordProps) {
                   appointments={res.data ?? []}
                   patientId={Number(patientId)}
                   onPress={() => {
-                    open(
-                      <BookAppointmentModal
-                        id={Number(patientId)}
-                        patientName={
-                          selectedPatient.firstName +
-                          ' ' +
-                          selectedPatient.lastName
-                        }
-                      />,
+                    modal(
+                      () => (
+                        <BookAppointmentModal
+                          id={Number(patientId)}
+                          patientName={
+                            selectedPatient.firstName +
+                            ' ' +
+                            selectedPatient.lastName
+                          }
+                        />
+                      ),
                       DEFAULT_MODAL,
-                    );
+                    ).open();
                   }}
                 />
               </div>

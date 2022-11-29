@@ -2,8 +2,8 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import PreviewWithControls from '@components/preview_with_controls';
 import { DATE_ONLY } from '@constants/data_format';
 import SessionPreviewModal from '@containers/modals/session_preview_modal';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { Appointment } from '@models/instance.model';
+import { modal } from '@stores/overlayStore';
 import { format } from 'date-fns';
 import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 
@@ -12,8 +12,6 @@ export default function AppointmentHistoryItem({
   subject,
   session,
 }: Pick<Appointment, 'date' | 'subject' | 'session'>) {
-  const { open } = useOverlay();
-
   return (
     <PreviewWithControls
       primaryText={date ? format(date, DATE_ONLY) : ''}
@@ -24,13 +22,13 @@ export default function AppointmentHistoryItem({
           Icon={AppointmentHistoryIcon}
           tip="View Session"
           onPress={() => {
-            open(<SessionPreviewModal session={session} />, {
+            modal(() => <SessionPreviewModal session={session} />, {
               closeOnClickOutside: true,
               isDimmed: true,
               clickThrough: false,
               closeBtn: 'inner',
               width: '30%',
-            });
+            }).open();
           }}
         />
       )}

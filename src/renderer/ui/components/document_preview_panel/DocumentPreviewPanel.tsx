@@ -2,8 +2,8 @@ import DarkLightCornerButton from '@components/buttons/dark_light_corner_button'
 import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
 import UploadFileModal from '@containers/modals/upload_file_modal';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { useGetMedicalDocumentsQuery } from '@redux/instance/record/medical_document_api';
+import { modal } from '@stores/overlayStore';
 import DocumentPreviewItem from './document_preview_item';
 interface DocumentPreviewPanelProps {
   patientId: number;
@@ -13,7 +13,7 @@ export default function DocumentPreviewPanel({
 }: DocumentPreviewPanelProps) {
   const { isSuccess, isError, isLoading, data, isFetching } =
     useGetMedicalDocumentsQuery(patientId);
-  const { open } = useOverlay();
+
   return (
     <PreviewList
       maxHeight={300}
@@ -23,19 +23,19 @@ export default function DocumentPreviewPanel({
         <DarkLightCornerButton
           text="Upload"
           onPress={() => {
-            open(<UploadFileModal patientId={patientId} />, {
+            modal(() => <UploadFileModal patientId={patientId} />, {
               closeOnClickOutside: true,
               isDimmed: true,
               clickThrough: false,
               closeBtn: 'inner',
               width: '30%',
-            });
+            }).open();
           }}
         />
       }
     >
       {isError ? (
-        <div>error</div>
+        <div>error</div> //TODO show error panel
       ) : isLoading || isFetching ? (
         <LoadingSpinner />
       ) : (

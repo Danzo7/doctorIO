@@ -5,9 +5,9 @@ import PrintedLayout from '@components/printed_layout';
 import TabMenu from '@components/tab_menu';
 import { TimeLineDiagnosis } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
-import { useOverlay } from '@libs/overlay/useOverlay';
 import { Session } from '@models/instance.model';
 import { useGetClinicQuery } from '@redux/clinic/clinicApi';
+import { modal } from '@stores/overlayStore';
 import './style/index.scss';
 
 interface SessionPreviewModalProps {
@@ -22,7 +22,6 @@ export default function SessionPreviewModal({
   patientAge,
   memberName,
 }: SessionPreviewModalProps) {
-  const { open } = useOverlay();
   const { isSuccess, isLoading, data } = useGetClinicQuery();
   const { prescription } = session;
   return (
@@ -44,20 +43,22 @@ export default function SessionPreviewModal({
             borderColor={color.border_color}
             disabled={isLoading && !isSuccess}
             onPress={() =>
-              open(
-                <PrintedLayout
-                  patientName={patientName}
-                  patientAge={patientAge}
-                  drugList={prescription}
-                  doctorName={memberName}
-                />,
+              modal(
+                () => (
+                  <PrintedLayout
+                    patientName={patientName}
+                    patientAge={patientAge}
+                    drugList={prescription}
+                    doctorName={memberName}
+                  />
+                ),
                 {
                   closeOnClickOutside: true,
                   closeOnBlur: true,
                   isDimmed: true,
                   clickThrough: false,
                 },
-              )
+              ).open()
             }
           />
         )
