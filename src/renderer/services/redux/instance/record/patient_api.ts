@@ -10,23 +10,35 @@ const patientApi = createApi({
     //Patient
     //GET
     getPatient: builder.query<PatientBrief, number>({
-      query: (patId) => `?id=${patId}`,
+      query: (id) => {
+        return {
+          url: '',
+          params: { id },
+        };
+      },
     }),
-    getPatients: builder.query<PatientBrief, any>({
+    getPatients: builder.query<PatientBrief, void>({
       query: () => ``,
       providesTags: ['patient'],
     }),
     findPatientByName: builder.mutation<PatientBrief[], string>({
       query: (name: string) => ({
-        url: `find?name=${name}`,
+        url: `find`,
         method: 'GET',
+        params: { name },
       }),
     }),
     findPatientByName2: builder.query<PatientBrief[], string>({
-      query: (name: string) => `find?name=${name}`,
+      query: (name: string) => ({
+        url: `find`,
+        params: { name },
+      }),
     }),
     getPatientDetail: builder.query<Patient, number>({
-      query: (patId) => `detail?id=${patId}`,
+      query: (id) => ({
+        url: `detail`,
+        params: { id },
+      }),
     }),
     //POST
     addPatient: builder.mutation<
