@@ -36,4 +36,3 @@ export const useQueueSelectionStore = create<QueueSelectionState>()(
   }),
 );
 export const useSelectedQueue = () => useQueueSelectionStore().selectedQueue;
-export const selectedQueue = useQueueSelectionStore.getState().selectedQueue;

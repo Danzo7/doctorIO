@@ -8,9 +8,10 @@ import BookedAppointmentItem from './booked_appointment_item';
 import Schedule from 'toSvg/schedule.svg?icon';
 import { modal } from '@stores/overlayStore';
 import RefetchPanel from '@components/refetch_panel';
-import { selectedQueue } from '@stores/queueSelectionStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 export default function BookedAppointmentPanel({}) {
+  const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
   const { data, isSuccess, refetch } =
     useGetBookedAppointmentQuery(selectedQueue);
 

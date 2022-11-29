@@ -12,11 +12,11 @@ import BorderSeparator from '@components/border_separator';
 import { useGetQueueAppointmentsQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import VerticalPanel from '@components/vertical_panel';
 import Coins from 'toSvg/coins.svg?icon';
-import { useSelectedQueue } from '@stores/queueSelectionStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 interface PaymentQueueProps {}
 export default function PaymentQueue({}: PaymentQueueProps) {
-  const selectedQueue = useSelectedQueue();
+  const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
   const { ref, gotoFirst, gotoLast, next, previous } = useScroller(10);
   const { data, isSuccess, isLoading } = useGetPaymentsQuery(selectedQueue);
   const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue);
