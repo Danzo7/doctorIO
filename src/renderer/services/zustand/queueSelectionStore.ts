@@ -10,7 +10,7 @@ interface QueueSelectionState {
   setQueues: (queues: MemberQueue[]) => void;
 }
 
-export const useQueueSelectionStore = create<QueueSelectionState>(
+export const useQueueSelectionStore = create<QueueSelectionState>()(
   (set, get) => ({
     queues: [],
     selectedQueue: 0,
@@ -18,9 +18,21 @@ export const useQueueSelectionStore = create<QueueSelectionState>(
     getSelectedQueue: () => {
       return get().queues[get().selectedQueue];
     },
-    setQueues: (queues: MemberQueue[]) => set({ queues }),
+    setQueues: (queues: MemberQueue[]) => {
+      set((state) => {
+        const currentId = state.queues[state.selectedQueue]?.id;
+        const index = currentId
+          ? queues.findIndex((queue) => queue.id === currentId)
+          : 0;
+        return {
+          queues,
+          selectedQueue: index === -1 ? 0 : index,
+        };
+      });
+    },
     getQueueByRoleId: (roleId: number) => {
       return get().queues.find((queue) => queue.roleId === roleId);
     },
   }),
 );
+export const useSelectedQueue = () => useQueueSelectionStore().selectedQueue;
