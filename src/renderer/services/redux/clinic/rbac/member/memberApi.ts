@@ -112,8 +112,8 @@ const memberApi = createApi({
           ws.on('role', (data: 'self' | 'setting' | 'assign') => {
             if (data == 'self') {
               dispatch(memberApi.util.invalidateTags(['me']));
-              dispatch(roleApi.util.invalidateTags(['roles']));
-              dispatch(appointmentQueueApi.util.invalidateTags(['queue']));
+              //   dispatch(roleApi.util.invalidateTags(['roles']));
+              //  dispatch(appointmentQueueApi.util.invalidateTags(['queue']));
             }
             if (data == 'setting') {
               dispatch(roleApi.util.invalidateTags(['roles']));
