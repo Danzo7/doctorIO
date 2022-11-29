@@ -52,7 +52,13 @@ const appointmentQueueApi = createApi({
       },
     }), //Avoid using this endpoint
     getQueueAppointments: builder.query<AppointmentQueueItem[], number>({
-      query: (index) => `/item` + (index ? `?selectedQueue=${index}` : ''),
+      query: (selectedQueue) => {
+        return {
+          url: `/item`,
+          params: { selectedQueue },
+        };
+      },
+
       providesTags: ['item', 'queue'],
       transformResponse: (
         response: (Omit<AppointmentQueueItem, 'date'> & { date: string })[],
@@ -64,7 +70,13 @@ const appointmentQueueApi = createApi({
       },
     }),
     getQueueState: builder.query<QueueState, number>({
-      query: (index) => `/state` + (index ? `?selectedQueue=${index}` : ''),
+      query: (selectedQueue) => {
+        return {
+          url: `/state`,
+          params: { selectedQueue },
+        };
+      },
+
       providesTags: ['state', 'queue'],
       transformResponse: ({
         selected,
@@ -84,10 +96,21 @@ const appointmentQueueApi = createApi({
     getIsQueueOwner: builder.query<boolean, number>({
       providesTags: ['queue'],
 
-      query: (index) => `/ownership` + (index ? `?selectedQueue=${index}` : ''),
+      query: (selectedQueue) => {
+        return {
+          url: `/ownership`,
+          params: { selectedQueue },
+        };
+      },
     }),
     getNextQueueItem: builder.query<AppointmentQueueItem, number>({
-      query: (index) => `/item/next` + (index ? `?selectedQueue=${index}` : ''),
+      query: (selectedQueue) => {
+        return {
+          url: `/item/next`,
+          params: { selectedQueue },
+        };
+      },
+
       providesTags: ['queue'],
       transformResponse: (
         response: Omit<AppointmentQueueItem, 'date'> & { date: string },
