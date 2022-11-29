@@ -64,7 +64,7 @@ interface TextButtonProps {
     | 'flex-start'
     | 'start'
     | 'stretch';
-  blank?: true;
+  blank?: boolean;
   cursor?:
     | 'pointer'
     | 'default'
