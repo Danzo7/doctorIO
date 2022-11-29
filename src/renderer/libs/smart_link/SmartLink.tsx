@@ -56,6 +56,12 @@ export default function SmartLink({
   const isMatch = checkMatches();
   return (
     <Link
+      onClick={(e) => {
+        if (isMatch) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }}
       to={
         typeof to == 'string'
           ? to

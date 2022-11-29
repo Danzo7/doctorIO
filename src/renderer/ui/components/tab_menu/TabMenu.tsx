@@ -27,8 +27,10 @@ export default function TabMenu({
   }, [defaultSelected]);
 
   function setTab(index: number) {
-    setSelected(index);
-    onChanged?.({ item: items[index], index: index });
+    if (index != selected) {
+      setSelected(index);
+      onChanged?.({ item: items[index], index: index });
+    }
   }
   return (
     <>

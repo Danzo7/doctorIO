@@ -24,7 +24,6 @@ export default function TabComponent({
   borderBottom = true,
   menuItemsAlignment = 'flex-start',
   defaultSelected = 0,
-  onAdd,
   foldedItems,
 }: TabComponentProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(defaultSelected);
@@ -44,14 +43,15 @@ export default function TabComponent({
           css={{ justifyContent: menuItemsAlignment }}
           className="menu-labels"
         >
-          {allTabs.length &&
-            allTabs.length > 0 &&
+          {allTabs.length > 0 &&
             allTabs.map(({ label }, index) => (
               <DarkLightCornerButton
                 key={index}
                 text={label}
                 isActive={activeTabIndex == index}
-                onPress={() => setActiveTabIndex(index)}
+                onPress={() => {
+                  if (index != activeTabIndex) setActiveTabIndex(index);
+                }}
               />
             ))}
           {foldRef.current && foldRef.current.length > 0 && (
@@ -73,14 +73,6 @@ export default function TabComponent({
                     e.currentTarget,
                     true,
                   );
-
-                // const newTabs = allTabs;
-                // newTabs.push({
-                //   label: 'New Tab',
-                //   content: <div> New Tab</div>,
-                // });
-                // setAllTabs(newTabs);
-                // setActiveTabIndex(newTabs.length - 1);
               }}
             />
           )}
