@@ -1,7 +1,7 @@
 import colors from '@assets/styles/color';
 import { Badged } from '@components/badge/Badge';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import './style/index.scss';
 interface TabMenuProps {
   items: Array<string>;
@@ -22,6 +22,10 @@ export default function TabMenu({
   previews,
 }: TabMenuProps) {
   const [selected, setSelected] = useState(defaultSelected);
+  useEffect(() => {
+    setSelected(defaultSelected);
+  }, [defaultSelected]);
+
   function setTab(index: number) {
     setSelected(index);
     onChanged?.({ item: items[index], index: index });
