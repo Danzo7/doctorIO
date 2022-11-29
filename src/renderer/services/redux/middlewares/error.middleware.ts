@@ -58,6 +58,8 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
           : 'Conflict';
       case 1302:
         return 'Not acceptable';
+      case 1303:
+        return 'The queue is not empty';
       case 1400:
         return 'Something went wrong';
 
