@@ -70,9 +70,7 @@ export default function AppointmentsQueue() {
                 items={useQueueSelectionStore
                   .getState()
                   .queues.map(({ name }) => name)}
-                defaultSelected={
-                  useQueueSelectionStore.getState().selectedQueue
-                }
+                defaultSelected={selectedQueue}
               />
 
               <Header
