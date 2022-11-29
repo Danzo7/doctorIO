@@ -43,38 +43,26 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
             ? 'update this role'
             : 'perform this action')
         );
-        break;
       case 1106:
         return "You don't have the necessary relationship with this role to perform this action.";
-        break;
       case 1107:
         return "You don't have the right permissions to perform this action";
-        break;
       case 1108:
         return 'No queue';
-        break;
       case 1109:
-        return endpoint == 'UpdateRole'
-          ? 'You are not allowed to update this role'
-          : 'You are not allowed to create this role';
-        break;
+        return 'You do not have permission to perform this action';
       case 1301:
-        if (
-          endpoint == 'AssignAppointmentToQueue' ||
+        return endpoint == 'AssignAppointmentToQueue' ||
           endpoint == 'addQueueAppointment'
-        )
-          return 'Patient already in queue';
-        break;
+          ? 'Patient already in queue'
+          : 'Conflict';
       case 1302:
         return 'Not acceptable';
-        break;
       case 1400:
         return 'Something went wrong';
-        break;
 
       default:
         return 'Unknown error: ' + errorCode;
-        break;
     }
   }
   if (isRejectedWithValue(action)) {
@@ -92,9 +80,9 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (
     isFulfilled(action) &&
     action.meta.arg.type == 'mutation' &&
-    action?.payload
+    action.payload
   ) {
-    console.log('action', action);
+    Logger.info('Middleware', 'action', action);
     switch (action.meta.arg.endpointName) {
       case 'uploadFile':
         toast('File uploaded successfully', 'Success', 2000);
