@@ -6,12 +6,12 @@ import { useEndNextMutation } from '@redux/instance/appointmentQueue/Appointment
 import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 import AlertModal from '../dialog_modal';
-import { useSelectedQueue } from '@stores/queueSelectionStore';
+import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 interface EndSessionProps {
   patientId: number;
 }
 export default function EndSession({ patientId }: EndSessionProps) {
-  const selectedQueue = useSelectedQueue();
+  const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
   const { navigate } = useNavigation();
   const [EndNext] = useEndNextMutation();
   const [bookAppointment] = useBookAppointmentMutation();
