@@ -8,27 +8,23 @@ import { useAbility } from '@stores/abilityStore';
 import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 import './style/index.scss';
 
-function QueueSelector() {
-  const { selectedQueue, setSelectedQueue, queues } = useQueueSelectionStore();
-  return (
-    <TabMenu
-      onChanged={({ index }) => {
-        setSelectedQueue(index);
-      }}
-      items={queues.map(({ name }) => name)}
-      defaultSelected={selectedQueue}
-    />
-  );
-}
-
 interface QueuesProps {}
 export default function Queues({}: QueuesProps) {
   const ability = useAbility();
+  const { selectedQueue, setSelectedQueue, queues } = useQueueSelectionStore();
+
   return ability.can('have', 'queue') || ability.can('manage', 'queue') ? (
     <div className="queues">
       <span>Appointment Queue</span>
       <div className="queues-header">
-        <QueueSelector />
+        <TabMenu
+          onChanged={({ index }) => {
+            setSelectedQueue(index);
+          }}
+          items={queues.map(({ name }) => name)}
+          defaultSelected={selectedQueue}
+        />
+
         <AppointmentsQueue />
         <PaymentQueue />
       </div>

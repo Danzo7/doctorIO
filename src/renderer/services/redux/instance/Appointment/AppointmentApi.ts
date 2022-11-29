@@ -12,6 +12,8 @@ const appointmentApi = createApi({
   reducerPath: 'AppointmentApi',
   baseQuery: StaticQueries.appointment.query,
   tagTypes: ['booked', 'payment'],
+  refetchOnMountOrArgChange: true,
+  refetchOnFocus: true,
   endpoints: (builder) => ({
     //GET
     getBookedAppointment: builder.query<BookedAppointment[], number>({

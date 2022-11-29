@@ -13,6 +13,7 @@ const appointmentQueueApi = createApi({
   reducerPath: 'AppointmentQueueApi',
   baseQuery: StaticQueries.queue.query,
   tagTypes: ['state', 'queue', 'item'],
+  refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({
     //GET
     getQueueInfo: builder.query<AppointmentQueue, number>({
