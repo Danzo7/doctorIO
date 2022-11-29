@@ -19,14 +19,21 @@ const medicalDocumentApi = createApi({
           };
         });
       },
-      query: (patId) => `?patientId=${patId}`,
+      query: (patientId) => {
+        return {
+          url: ``,
+          params: { patientId },
+        };
+      },
+
       providesTags: ['MedicalDocument'],
     }),
     downloadDocument: builder.mutation<any, { id: string; name: string }>({
       queryFn: async ({ id, name }, _, __, baseQuery) => {
         const result = await baseQuery({
           mode: 'cors',
-          url: `/download?id=${id}`,
+          url: `/download`,
+          params: { id },
           responseHandler: async (response) => {
             if (response.ok) {
               const blob = await response.blob();
@@ -51,8 +58,9 @@ const medicalDocumentApi = createApi({
     //POST
     deleteDocument: builder.mutation<any, { id: string }>({
       query: ({ id }) => ({
-        url: `?id=${id}`,
+        url: ``,
         method: 'DELETE',
+        params: { id },
       }),
       invalidatesTags: ['MedicalDocument'],
     }),
@@ -61,9 +69,10 @@ const medicalDocumentApi = createApi({
       { patientId: number; data: FormData }
     >({
       query: ({ patientId, data }) => ({
-        url: `/upload?patientId=${patientId}`,
+        url: `/upload`,
         method: 'POST',
         body: data,
+        params: { patientId },
       }),
       invalidatesTags: ['MedicalDocument'],
     }),
