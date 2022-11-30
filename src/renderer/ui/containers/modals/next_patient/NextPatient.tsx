@@ -62,15 +62,15 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
             fontSize={13}
             fontWeight={700}
             onPress={() => {
-              if (invitedPatient) {
-                ProgressQueueState({
-                  selectedQueue: selectedQueue,
-                  position: invitedPatient.position,
-                });
-              } else {
-                StartNext(selectedQueue);
-              }
-              navigate('session');
+              (invitedPatient
+                ? ProgressQueueState({
+                    selectedQueue: selectedQueue,
+                    position: invitedPatient.position,
+                  })
+                : StartNext(selectedQueue)
+              ).then(() => {
+                navigate('session');
+              });
             }}
           />
         </div>
