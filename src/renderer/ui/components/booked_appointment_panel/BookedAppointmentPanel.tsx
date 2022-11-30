@@ -18,6 +18,7 @@ export default function BookedAppointmentPanel({}) {
   return (
     <PreviewList
       flexGrow
+      maxHeight={275} // UI we need a better solution for the height and scroll problem
       title="Booked Appointment"
       buttonNode={
         <DarkLightCornerButton
