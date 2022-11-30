@@ -7,6 +7,7 @@ import { useBookAppointmentMutation } from '@redux/instance/Appointment/Appointm
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 import AlertModal from '../dialog_modal';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
+import { Overlay_u } from '@stores/overlayStore';
 interface EndSessionProps {
   patientId: number;
 }
@@ -23,50 +24,62 @@ export default function EndSession({ patientId }: EndSessionProps) {
       description="Are you sure you want to finish the session ?"
       status="warning"
       controls={
-        <TextButton
-          text="Confirm"
-          fontSize={14}
-          fontColor={color.white}
-          fontWeight={700}
-          backgroundColor={color.good_green}
-          padding=" 5px 15px"
-          onPress={async () => {
-            await EndNext({
-              selectedQueue,
-              body: {
-                diagnosis:
-                  currentSession.diagnosis?.length > 0
-                    ? currentSession.diagnosis
-                    : undefined,
-                prescription:
-                  currentSession.prescription?.length > 0
-                    ? currentSession.prescription.map(
-                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                        ({ id, ...other }) => other,
-                      )
-                    : undefined,
-                payment:
-                  sessionParameters.payment?.value &&
-                  sessionParameters.payment?.isHandPayment &&
-                  sessionParameters.payment?.value > 0
-                    ? sessionParameters.payment.value
-                    : undefined,
-              },
-            });
-
-            if (sessionParameters.booked)
-              await bookAppointment({
-                selectedQueue: selectedQueue,
+        <>
+          <TextButton
+            text="Cancel"
+            backgroundColor={color.cold_blue}
+            fontSize={14}
+            fontWeight={700}
+            padding=" 5px 15px"
+            onPress={() => {
+              Overlay_u.close();
+            }}
+          />
+          <TextButton
+            text="Confirm"
+            fontSize={14}
+            fontColor={color.white}
+            fontWeight={700}
+            backgroundColor={color.good_green}
+            padding=" 5px 15px"
+            onPress={async () => {
+              await EndNext({
+                selectedQueue,
                 body: {
-                  date: sessionParameters.booked,
-                  subject: 'follow up',
+                  diagnosis:
+                    currentSession.diagnosis?.length > 0
+                      ? currentSession.diagnosis
+                      : undefined,
+                  prescription:
+                    currentSession.prescription?.length > 0
+                      ? currentSession.prescription.map(
+                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                          ({ id, ...other }) => other,
+                        )
+                      : undefined,
+                  payment:
+                    sessionParameters.payment?.value &&
+                    sessionParameters.payment?.isHandPayment &&
+                    sessionParameters.payment?.value > 0
+                      ? sessionParameters.payment.value
+                      : undefined,
                 },
-                patientId: patientId,
               });
-            useMedicalSessionStore.getState().clear();
-            navigate('queue');
-          }}
-        />
+
+              if (sessionParameters.booked)
+                await bookAppointment({
+                  selectedQueue: selectedQueue,
+                  body: {
+                    date: sessionParameters.booked,
+                    subject: 'follow up',
+                  },
+                  patientId: patientId,
+                });
+              useMedicalSessionStore.getState().clear();
+              navigate('queue');
+            }}
+          />
+        </>
       }
     ></AlertModal>
   );
