@@ -4,12 +4,12 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Overlay } from '@libs/overlay';
 import { useConnectMemberMutation } from '@redux/local/auth/authApi';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useClinicsStore } from '@stores/clinicsStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
 import { useState } from 'react';
+import { Overlay_u } from '@stores/overlayStore';
 interface Inputs {
   key: string;
 }
@@ -46,7 +46,7 @@ export default function ConnectMemberModal({
         clinics.setSelectedClinic(selectedIndex);
         useConnectionStore.getState().connect();
         navigate('/');
-        Overlay.close();
+        Overlay_u.close();
       } else {
         const castedErr = (result.error as any)?.data as ServerError;
         if (castedErr?.errorCode == 1000) {
