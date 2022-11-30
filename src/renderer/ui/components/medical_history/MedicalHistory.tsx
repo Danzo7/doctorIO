@@ -2,6 +2,7 @@ import DarkLightCornerButton from '@components/buttons/dark_light_corner_button'
 import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
 import PreviewWithControls from '@components/preview_with_controls';
+import RefetchPanel from '@components/refetch_panel';
 import { DATE_ONLY } from '@constants/data_format';
 import AddMedicalHistoryModal from '@containers/modals/add_medical_history_modal';
 import { useGetMedicalHistoryQuery } from '@redux/instance/record/medical_history_api';
@@ -12,7 +13,7 @@ interface MedicalHistoryProps {
   patientId: number;
 }
 export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
-  const { isLoading, isSuccess, error, data, isFetching } =
+  const { isLoading, isSuccess, data, refetch } =
     useGetMedicalHistoryQuery(patientId);
 
   return (
@@ -38,8 +39,7 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
     >
       {isLoading ? (
         <LoadingSpinner />
-      ) : (
-        isSuccess &&
+      ) : isSuccess ? (
         data.map((med, index) => (
           <PreviewWithControls
             primaryText={med.description}
@@ -47,6 +47,8 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
             key={index}
           />
         ))
+      ) : (
+        <RefetchPanel action={refetch} />
       )}
     </PreviewList>
   );

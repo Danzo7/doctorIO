@@ -1,6 +1,7 @@
 import Can from '@ability/index';
 import DarkAddButton from '@components/buttons/dark_add_button';
 import LoadingSpinner from '@components/loading_spinner';
+import RefetchPanel from '@components/refetch_panel';
 import CreateInvitationModal from '@containers/modals/create_invitation_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useGetBriefRolesQuery } from '@redux/clinic/rbac/role/roleApi';
@@ -11,7 +12,7 @@ import './style/index.scss';
 
 interface MembersTabProps {}
 export default function MembersTab({}: MembersTabProps) {
-  const { data, isLoading, isSuccess, error } = useGetBriefRolesQuery();
+  const { data, isLoading, isSuccess, refetch } = useGetBriefRolesQuery();
   return (
     <div className="members-tab">
       <div className="add-member-wrapper">
@@ -32,7 +33,7 @@ export default function MembersTab({}: MembersTabProps) {
       ) : isSuccess ? (
         data.map((role, index) => <RoleMembers {...role} key={index} />)
       ) : (
-        <div> No roles </div> //UI show better comp
+        <RefetchPanel action={refetch} />
       )}
     </div>
   );

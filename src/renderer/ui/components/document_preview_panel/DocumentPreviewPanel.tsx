@@ -1,6 +1,7 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
+import RefetchPanel from '@components/refetch_panel';
 import UploadFileModal from '@containers/modals/upload_file_modal';
 import { useGetMedicalDocumentsQuery } from '@redux/instance/record/medical_document_api';
 import { modal } from '@stores/overlayStore';
@@ -11,7 +12,7 @@ interface DocumentPreviewPanelProps {
 export default function DocumentPreviewPanel({
   patientId,
 }: DocumentPreviewPanelProps) {
-  const { isSuccess, isError, isLoading, data, isFetching } =
+  const { isSuccess, isError, isLoading, data, isFetching, refetch } =
     useGetMedicalDocumentsQuery(patientId);
 
   return (
@@ -35,7 +36,7 @@ export default function DocumentPreviewPanel({
       }
     >
       {isError ? (
-        <div>error</div> //TODO show error panel
+        <RefetchPanel action={refetch} />
       ) : isLoading || isFetching ? (
         <LoadingSpinner />
       ) : (
