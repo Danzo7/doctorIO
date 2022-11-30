@@ -26,7 +26,7 @@ export default function SessionPreviewModal({
   const { prescription } = session;
   return (
     <ModalContainer
-      gap={0}
+      gap={5}
       title="Session preview"
       controls={
         patientAge != undefined &&
@@ -36,9 +36,9 @@ export default function SessionPreviewModal({
         data && (
           <TextButton
             text="Print..."
-            backgroundColor={color.lighter_background}
-            padding="10px 15px"
-            fontSize={13}
+            backgroundColor={color.good_green}
+            padding="5px 10px"
+            fontSize={14}
             fontWeight={700}
             borderColor={color.border_color}
             disabled={isLoading && !isSuccess}
