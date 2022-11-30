@@ -70,7 +70,6 @@ export default function AddMedicalTestModal({
       }
     >
       <Inputix control={control}>
-        {/* TODO must add a toggle to enable each input and add a button to add more custom inputs */}
         <Input
           type={{ type: 'numeric', unit: 'kg' }}
           label="Weight"
