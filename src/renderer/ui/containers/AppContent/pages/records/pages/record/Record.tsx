@@ -1,13 +1,7 @@
 import BookingTimeline from '@components/booking_timeline';
-import DocumentPreviewPanel from '@components/document_preview_panel';
 import Input from '@components/inputs/input';
-import {
-  PatientInfoCard,
-  PatientSpecificsCard,
-} from '@components/patient_card';
-import MiniPatientCard from '@components/patient_card/mini_patient_card';
+import { PatientInfoCard } from '@components/patient_card';
 import RecordInfoItem from '@components/record_info_item';
-import MedicalHistory from '@components/medical_history';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useForm } from 'react-hook-form';
 import search from 'toSvg/search.svg?icon';
@@ -29,6 +23,9 @@ import TextButton from '@components/buttons/text_button';
 import ErrorPanel from '@components/error_panel';
 import SimpleInfoContainer from '@components/simple_info_container';
 import { modal } from '@stores/overlayStore';
+import VitalsPanel from '@components/vitals_panel';
+import DocumentPreviewPanel from '@components/document_preview_panel';
+import MedicalHistory from '@components/medical_history';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -124,54 +121,53 @@ export default function Record({}: RecordProps) {
           const selectedPatient = data as Patient;
 
           return (
-            <div className="record-content">
-              <div className="record-infos">
-                <PatientInfoCard
-                  birthDate={new Date()}
-                  activeStatus={selectedPatient.status}
-                  registerDate={new Date()}
-                  gender={selectedPatient.gender}
-                  LeftComp={
-                    <MiniPatientCard
-                      patientFullName={
-                        selectedPatient.firstName +
-                        ' ' +
-                        selectedPatient.lastName
-                      }
-                      patientId={'#' + patientId}
-                      numPostAppointment={res.data?.length ?? 0}
-                      nextAppointmentDate={selectedPatient.nextAppointment}
-                    />
-                  }
-                />
-                {selectedPatient.test ? (
-                  <PatientSpecificsCard data={selectedPatient.test} />
-                ) : (
-                  <SimpleInfoContainer text="No Biometric screening" />
-                )}
-                <BookingTimeline
-                  appointments={res.data ?? []}
-                  patientId={Number(patientId)}
-                  onPress={() => {
-                    modal(
-                      () => (
-                        <BookAppointmentModal
-                          id={Number(patientId)}
-                          patientName={
-                            selectedPatient.firstName +
-                            ' ' +
-                            selectedPatient.lastName
-                          }
-                        />
-                      ),
-                      DEFAULT_MODAL,
-                    ).open();
-                  }}
-                />
-              </div>
+            <div className="record-layouts">
               <div className="record-side-info">
-                <MedicalHistory patientId={Number(patientId)} />
-                <DocumentPreviewPanel patientId={Number(patientId)} />
+                <PatientInfoCard
+                  patientFullName={
+                    selectedPatient.firstName + ' ' + selectedPatient.lastName
+                  }
+                  patientId={'#' + patientId}
+                  birthDate={selectedPatient.birthDate}
+                  activeStatus={selectedPatient.status}
+                  registerDate={selectedPatient.registerDate}
+                  gender={selectedPatient.gender}
+                  numPostAppointment={res.data?.length ?? 0}
+                  nextAppointmentDate={selectedPatient.nextAppointment}
+                />
+
+                <div className="scroll-div">
+                  <DocumentPreviewPanel patientId={Number(patientId)} />
+                  <MedicalHistory patientId={Number(patientId)} />
+                </div>
+              </div>
+              <div className="record-content">
+                <div className="record-infos">
+                  {selectedPatient.test ? (
+                    <VitalsPanel data={selectedPatient.test} />
+                  ) : (
+                    <SimpleInfoContainer text="No Biometric screening" />
+                  )}
+                  <BookingTimeline
+                    appointments={res.data ?? []}
+                    patientId={Number(patientId)}
+                    onPress={() => {
+                      modal(
+                        () => (
+                          <BookAppointmentModal
+                            id={Number(patientId)}
+                            patientName={
+                              selectedPatient.firstName +
+                              ' ' +
+                              selectedPatient.lastName
+                            }
+                          />
+                        ),
+                        DEFAULT_MODAL,
+                      ).open();
+                    }}
+                  />
+                </div>
               </div>
             </div>
           );
