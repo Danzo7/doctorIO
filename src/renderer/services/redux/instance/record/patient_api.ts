@@ -47,14 +47,16 @@ const patientApi = createApi({
         > & {
           birthDate: string;
           registerDate: string;
-          nextAppointment: string;
+          nextAppointment?: string;
         },
       ) => {
         return {
           ...response,
           birthDate: parseISO(response.birthDate),
           registerDate: parseISO(response.registerDate),
-          nextAppointment: parseISO(response.nextAppointment),
+          nextAppointment: response.nextAppointment
+            ? parseISO(response.nextAppointment)
+            : undefined,
         };
       },
     }),
