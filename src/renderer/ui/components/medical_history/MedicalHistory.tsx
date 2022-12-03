@@ -20,6 +20,7 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
     <PreviewList
       maxHeight={300}
       title="Medical history"
+      overflow="visible"
       buttonNode={
         <DarkLightCornerButton
           text="Add"
@@ -35,7 +36,6 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
           }}
         />
       }
-      notScrollable
     >
       {isLoading ? (
         <LoadingSpinner />

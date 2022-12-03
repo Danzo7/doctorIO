@@ -19,6 +19,7 @@ export default function DocumentPreviewPanel({
     <PreviewList
       maxHeight={300}
       flexGrow
+      overflow="visible"
       title="Documents"
       buttonNode={
         <DarkLightCornerButton

@@ -113,7 +113,7 @@ export default function AuditLogTab({}: AuditLogTabProps) {
         maxHeight={700}
         title="Logs"
         noBorder
-        notScrollable
+        overflow="visible"
         buttonNode={
           <div
             css={{

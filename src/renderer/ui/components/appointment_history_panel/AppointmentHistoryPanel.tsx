@@ -19,7 +19,7 @@ export default function AppointmentHistoryPanel({
     <PreviewList
       title="Post appointment"
       buttonNode={<DarkLightCornerButton text="View all" blend />} //FEATURE  implement View All function
-      notScrollable
+      overflow="visible"
     >
       {isLoading || isFetching ? (
         <LoadingSpinner />
