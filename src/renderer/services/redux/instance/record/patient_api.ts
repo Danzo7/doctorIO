@@ -1,6 +1,7 @@
 import { Patient, PatientBrief } from '@models/instance.model';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { parseISO } from 'date-fns';
 
 const patientApi = createApi({
   reducerPath: 'patientApi',
@@ -39,6 +40,23 @@ const patientApi = createApi({
         url: `detail`,
         params: { id },
       }),
+      transformResponse: (
+        response: Omit<
+          Patient,
+          'birthDate' | 'registerDate' | 'nextAppointment'
+        > & {
+          birthDate: string;
+          registerDate: string;
+          nextAppointment: string;
+        },
+      ) => {
+        return {
+          ...response,
+          birthDate: parseISO(response.birthDate),
+          registerDate: parseISO(response.registerDate),
+          nextAppointment: parseISO(response.nextAppointment),
+        };
+      },
     }),
     //POST
     addPatient: builder.mutation<
