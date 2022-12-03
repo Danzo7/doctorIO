@@ -56,6 +56,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       return (
         <PreviewList
           title="Queue list"
+          overflow="visible"
           buttonNode={
             <QueueControls
               {...{
