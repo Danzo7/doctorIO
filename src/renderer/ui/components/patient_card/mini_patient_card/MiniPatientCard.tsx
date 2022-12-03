@@ -1,4 +1,4 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import TextPair from '@components/text_pair/TextPair';
 import { DATE_ONLY } from '@constants/data_format';

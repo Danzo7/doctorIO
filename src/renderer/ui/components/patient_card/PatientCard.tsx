@@ -1,18 +1,22 @@
+import { color } from '@assets/styles/color';
+import BorderSeparator from '@components/border_separator';
+import TextPair from '@components/text_pair/TextPair';
 import { DATE_ONLY } from '@constants/data_format';
 import { format } from 'date-fns';
-import { ReactNode } from 'react';
 import KeyValueItem from './key_value_item';
 import './style/index.scss';
 interface PatientSpecificProps {
   data: { [key: string]: any };
 }
 interface PatientInfoProps {
+  patientFullName: string;
+  patientId: string;
   birthDate: Date;
   registerDate: Date;
   activeStatus: boolean;
   gender: 'male' | 'female';
-
-  LeftComp?: ReactNode;
+  numPostAppointment: number;
+  nextAppointmentDate?: Date;
 }
 export function PatientSpecificsCard({ data }: PatientSpecificProps) {
   return (
@@ -26,35 +30,88 @@ export function PatientSpecificsCard({ data }: PatientSpecificProps) {
   );
 }
 export function PatientInfoCard({
+  patientFullName,
+  patientId,
   activeStatus,
   birthDate,
   gender,
   registerDate,
-  LeftComp,
+  numPostAppointment,
+  nextAppointmentDate,
 }: PatientInfoProps) {
   return (
     <div className="patient-card ">
-      {LeftComp}
+      <TextPair
+        alignItems="center"
+        first={{
+          text: patientFullName,
+          fontSize: 15,
+          fontColor: color.white,
+          fontWeight: '600',
+        }}
+        second={{
+          text: patientId,
+          fontSize: 12,
+          fontColor: color.text_gray,
+          fontWeight: '600',
+        }}
+      />
+      <BorderSeparator direction="horizontal" />
       <div className="key-value-items">
         <KeyValueItem
           primaryText={'Birthday'}
           secondaryText={format(birthDate, DATE_ONLY)}
-          width="50%"
+          width="fit-content"
         />
         <KeyValueItem
           primaryText={'Gender'}
           secondaryText={gender}
-          width="50%"
+          width="fit-content"
         />
         <KeyValueItem
-          width="50%"
+          width="fit-content"
           primaryText={'Register date'}
           secondaryText={format(registerDate, DATE_ONLY)}
         />
         <KeyValueItem
           primaryText={'Status'}
           secondaryText={activeStatus ? 'active' : 'off'}
-          width="50%"
+          width="fit-content"
+        />
+      </div>
+      <div className="mini-patient-bottom-container">
+        <TextPair
+          alignItems="center"
+          first={{
+            text: numPostAppointment.toString(),
+            fontSize: 15,
+            fontColor: color.white,
+            fontWeight: '700',
+          }}
+          second={{
+            text: 'Post Appointment',
+            fontSize: 13,
+            fontColor: color.text_gray,
+            fontWeight: '600',
+          }}
+        />
+        <BorderSeparator direction="vertical" />
+        <TextPair
+          alignItems="center"
+          first={{
+            text: nextAppointmentDate
+              ? format(nextAppointmentDate, DATE_ONLY)
+              : 'No',
+            fontSize: 15,
+            fontColor: color.white,
+            fontWeight: '700',
+          }}
+          second={{
+            text: 'Upcoming',
+            fontSize: 13,
+            fontColor: color.text_gray,
+            fontWeight: '600',
+          }}
         />
       </div>
     </div>
