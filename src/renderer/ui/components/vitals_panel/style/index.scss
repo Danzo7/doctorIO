@@ -1,0 +1,13 @@
+@use '~styles/appColors' as *;
+.vitals-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+
+    > .vital-items-div {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+}
