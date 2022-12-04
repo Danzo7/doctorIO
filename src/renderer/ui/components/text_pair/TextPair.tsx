@@ -12,6 +12,8 @@ interface TextPairProps {
   alignItems?: 'flex-start' | 'flex-end' | 'center';
   flexGrow?: true;
   flexible?: true;
+  gap?: number;
+  width?: number | string;
 }
 export default function TextPair({
   first,
@@ -20,17 +22,19 @@ export default function TextPair({
   alignItems,
   flexGrow,
   flexible,
+  gap = 5,
+  width,
 }: TextPairProps) {
   return (
     <div
       css={{
         display: 'flex',
-        gap: 5,
+        gap: gap,
         flexDirection: reversed ? 'column-reverse' : 'column',
         alignItems: alignItems,
         flexGrow: flexGrow ? 1 : 0,
         flex: flexible && '1 0 0',
-        width: flexible && 0,
+        width: flexible ? 0 : width,
         overflow: 'hidden',
       }}
     >
