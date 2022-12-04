@@ -1,0 +1,17 @@
+@use '~styles/appColors' as *;
+.date-span {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    padding:  5px ;
+    border-radius: 5px;
+    background-color: $silvergray;
+    width: fit-content;
+
+    > span {
+        font-weight: 600;
+        font-size: 10px;
+        color: $white;
+    }
+}
