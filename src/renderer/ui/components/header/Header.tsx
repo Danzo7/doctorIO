@@ -15,6 +15,7 @@ interface HeaderProps {
   alignItems?: string;
   titleColor?: string;
   flexGrow?: number;
+  padding?: number | string;
 }
 export default function Header({
   buttonNode,
@@ -22,11 +23,12 @@ export default function Header({
   alignItems = 'baseline',
   flexGrow = 0,
   leftComponent,
+  padding,
 }: HeaderProps) {
   return (
     <div
       className="header"
-      css={{ alignItems: alignItems, flexGrow: flexGrow }}
+      css={{ alignItems: alignItems, flexGrow: flexGrow, padding: padding }}
     >
       {leftComponent}
 
