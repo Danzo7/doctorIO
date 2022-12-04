@@ -1,0 +1,18 @@
+@use '~styles/appColors' as *;
+.note-item {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    align-items: stretch;
+    border-radius: 7px;
+    padding: 10px;
+
+    > .note-value-div {
+
+        > span {
+            font-weight: 400;
+            font-size: 15px;
+            color: $textgray;
+        }
+    }
+}
