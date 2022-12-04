@@ -89,6 +89,7 @@ export default function QueueAddSearchModal({}: QueueAddSearchModalProps) {
         })}
       >
         <Input
+          autoFocus
           errorMessage={
             errorRef.current?.errorCode == 1200
               ? 'Invalid input. Must be the first and last name or the patient id'
