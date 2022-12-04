@@ -20,7 +20,7 @@ export default function PreviewList({
   noBorder,
   gap = 5,
   maxHeight,
-  overflow = 'hidden',
+  overflow = 'auto',
   width,
   flexGrow,
 }: PreviewListProps) {
