@@ -1,12 +1,11 @@
 import BookingTimeline from '@components/booking_timeline';
 import Input from '@components/inputs/input';
-import { PatientInfoCard } from '@components/patient_card';
 import RecordInfoItem from '@components/record_info_item';
 import useNavigation from '@libs/hooks/useNavigation';
 import { useForm } from 'react-hook-form';
 import search from 'toSvg/search.svg?icon';
 import './style/index.scss';
-import { Patient, PatientBrief } from '@models/instance.model';
+import { PatientBrief } from '@models/instance.model';
 import BookAppointmentModal from '@containers/modals/book_appointment_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useParams } from 'react-router-dom';
@@ -24,6 +23,8 @@ import ErrorPanel from '@components/error_panel';
 import SimpleInfoContainer from '@components/simple_info_container';
 import { modal } from '@stores/overlayStore';
 import VitalsPanel from '@components/vitals_panel';
+import NotesPanel from '@components/notes_panel';
+import { PatientInfoCard } from '@components/patient_card';
 import DocumentPreviewPanel from '@components/document_preview_panel';
 import MedicalHistory from '@components/medical_history';
 
@@ -65,118 +66,114 @@ export default function Record({}: RecordProps) {
     isDirty.current = true;
     searchRef.current = '';
   }
+
   return (
     <div className="record">
-      <form
-        onSubmit={handleSubmit((value) => {
-          if (searchRef.current != value.searchField) {
-            searchRef.current = value.searchField;
-            isDirty.current = false;
-            trigger(searchRef.current, false);
-          }
-        })}
-      >
-        <Input
-          disabled={result.isFetching}
-          errorMessage={
-            isDirty.current
-              ? undefined
-              : errorRef.current?.errorCode == 1200
-              ? 'Invalid input. Must be the first and last name or the patient id'
-              : errorRef.current?.errorCode == 1300
-              ? 'No patient found'
-              : undefined
-          }
-          placeholder="Enter patient Id"
-          trailing={<TextButton Icon={search} blank />}
-          type={'search'}
-          name="searchField"
-          control={control}
-          grow={false}
-        />
-      </form>
+      {isSuccess && (
+        <div className="record-side-info">
+          <PatientInfoCard
+            patientFullName={data.firstName + ' ' + data.lastName}
+            patientId={'#' + patientId}
+            birthDate={data.birthDate}
+            activeStatus={data.status}
+            registerDate={data.registerDate}
+            gender={data.gender}
+            numPostAppointment={res.data?.length ?? 0}
+            nextAppointmentDate={data.nextAppointment}
+          />
 
-      {result.isSuccess &&
-      !result.isFetching &&
-      !isDirty.current &&
-      result.data.filter(
-        (patient: PatientBrief) => patient.id == Number(patientId),
-      ).length == 0 ? (
-        result.data.map(
-          (pat) =>
-            pat.id != Number(patientId) && (
-              <RecordInfoItem
-                key={pat.id}
-                id={pat.id}
-                name={pat.name}
-                onViewRecord={() => {
-                  setValue('searchField', '');
-                  navigate(`/records/${pat.id}`);
-                }}
-              />
-            ),
-        )
-      ) : isSuccess ? (
-        (() => {
-          const selectedPatient = data as Patient;
-
-          return (
-            <div className="record-layouts">
-              <div className="record-side-info">
-                <PatientInfoCard
-                  patientFullName={
-                    selectedPatient.firstName + ' ' + selectedPatient.lastName
-                  }
-                  patientId={'#' + patientId}
-                  birthDate={selectedPatient.birthDate}
-                  activeStatus={selectedPatient.status}
-                  registerDate={selectedPatient.registerDate}
-                  gender={selectedPatient.gender}
-                  numPostAppointment={res.data?.length ?? 0}
-                  nextAppointmentDate={selectedPatient.nextAppointment}
-                />
-
-                <div className="scroll-div">
-                  <DocumentPreviewPanel patientId={Number(patientId)} />
-                  <MedicalHistory patientId={Number(patientId)} />
-                </div>
-              </div>
-              <div className="record-content">
-                <div className="record-infos">
-                  {selectedPatient.test ? (
-                    <VitalsPanel data={selectedPatient.test} />
-                  ) : (
-                    <SimpleInfoContainer text="No Biometric screening" />
-                  )}
-                  <BookingTimeline
-                    appointments={res.data ?? []}
-                    patientId={Number(patientId)}
-                    onPress={() => {
-                      modal(
-                        () => (
-                          <BookAppointmentModal
-                            id={Number(patientId)}
-                            patientName={
-                              selectedPatient.firstName +
-                              ' ' +
-                              selectedPatient.lastName
-                            }
-                          />
-                        ),
-                        DEFAULT_MODAL,
-                      ).open();
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          );
-        })()
-      ) : isFetching ? (
-        <LoadingSpinner />
-      ) : (
-        <ErrorPanel />
+          <div className="scroll-div">
+            <DocumentPreviewPanel patientId={Number(patientId)} />
+            <MedicalHistory patientId={Number(patientId)} />
+          </div>
+        </div>
       )}
+      <div className="content">
+        <form
+          onSubmit={handleSubmit((value) => {
+            if (searchRef.current != value.searchField) {
+              searchRef.current = value.searchField;
+              isDirty.current = false;
+              trigger(searchRef.current, false);
+            }
+          })}
+        >
+          <Input
+            disabled={result.isFetching}
+            errorMessage={
+              isDirty.current
+                ? undefined
+                : errorRef.current?.errorCode == 1200
+                ? 'Invalid input. Must be the first and last name or the patient id'
+                : errorRef.current?.errorCode == 1300
+                ? 'No patient found'
+                : undefined
+            }
+            placeholder="Enter patient Id"
+            trailing={<TextButton Icon={search} blank />}
+            type={'search'}
+            name="searchField"
+            control={control}
+            grow={false}
+          />
+        </form>
+
+        {result.isSuccess &&
+        !result.isFetching &&
+        !isDirty.current &&
+        result.data.filter(
+          (patient: PatientBrief) => patient.id == Number(patientId),
+        ).length == 0 ? (
+          result.data.map(
+            (pat) =>
+              pat.id != Number(patientId) && (
+                <RecordInfoItem
+                  key={pat.id}
+                  id={pat.id}
+                  name={pat.name}
+                  onViewRecord={() => {
+                    setValue('searchField', '');
+                    navigate(`/records/${pat.id}`);
+                  }}
+                />
+              ),
+          )
+        ) : isSuccess ? (
+          <div className="record-content">
+            <div className="top-right-div">
+              {data.test ? (
+                <VitalsPanel data={data.test} />
+              ) : (
+                <SimpleInfoContainer text="No Biometric screening" />
+              )}
+              <NotesPanel
+                date={new Date()}
+                note="Just a notdggggggggggggggggggggggggggggggggge"
+              />
+            </div>
+
+            <BookingTimeline
+              appointments={res.data ?? []}
+              patientId={Number(patientId)}
+              onPress={() => {
+                modal(
+                  () => (
+                    <BookAppointmentModal
+                      id={Number(patientId)}
+                      patientName={data.firstName + ' ' + data.lastName}
+                    />
+                  ),
+                  DEFAULT_MODAL,
+                ).open();
+              }}
+            />
+          </div>
+        ) : isFetching ? (
+          <LoadingSpinner />
+        ) : (
+          <ErrorPanel />
+        )}
+      </div>
     </div>
   );
 }

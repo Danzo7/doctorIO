@@ -1,58 +1,58 @@
 @use '~styles/appColors' as *;
+
 .record {
     display: flex;
-    flex-direction: column;
     align-items: stretch;
-    gap: 20px;
-    align-self: stretch;
-    padding-top: 5px;
-    overflow: hidden;
+    flex-direction: row;
+    flex-grow: 1;
+    gap: 1vw;
+    height: 100%;
 
-    > .record-layouts {
+    >.record-side-info {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        background: $lighterbackground;
+        border-radius: 17px;
+        padding: 10px;
+        width :300px;
+        overflow: hidden;
+        align-self: stretch;
+        height: 100%;
+
+        > .scroll-div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-self: stretch;
+            flex-grow: 1;
+            overflow: auto;
+        }
+    }
+
+    > .content {
+
+        display: flex;
+        flex-direction: column;
         align-items: stretch;
         gap: 20px;
         align-self: stretch;
+        padding-top: 5px;
         overflow: hidden;
-
-        >.record-side-info{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            background: $lighterbackground;
-            border-radius: 17px;
-            padding: 10px;
-            width :300px;
-            overflow: hidden;
-            align-self: stretch;
-            height: 100%;
-
-            > .scroll-div {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                align-self: stretch;
-                flex-grow: 1;
-                overflow: auto;
-            }
-        }
+        flex-grow: 1;
 
         > .record-content{
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: stretch;
-            gap: 30px;
+            gap: 20px;
+            overflow: hidden;
 
-            > .record-infos {
+            > .top-right-div {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: stretch;
-                gap: 20px;
-                flex-grow: 1;
-                align-self: stretch;
-                flex-basis: 60%;
             }
         }
     }
