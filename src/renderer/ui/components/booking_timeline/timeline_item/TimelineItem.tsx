@@ -44,6 +44,7 @@ export default function TimelineItem({
       <div className="event">
         <WideCard borderColor={selectedColor}>
           <TextPair
+            gap={2}
             first={
               state == 'canceled' && bookedFor
                 ? 'Booked appointment'
@@ -64,11 +65,19 @@ export default function TimelineItem({
             }
           />
 
-          {subject && <TextPair first={subject} second="Subject" reversed />}
+          {subject && (
+            <TextPair gap={2} first={subject} second="Subject" reversed />
+          )}
           {member && (
-            <TextPair first={member.memberName} second="Treated by" reversed />
+            <TextPair
+              gap={2}
+              first={member.memberName}
+              second="Treated by"
+              reversed
+            />
           )}
           <TextPair
+            gap={2}
             first={assignedBy?.memberName}
             second="Assigned by"
             reversed
@@ -101,7 +110,7 @@ export default function TimelineItem({
           )}
           {((state == 'done' && !bookedFor) ||
             (state != 'done' && state != 'done-booked')) && (
-            <TextPair second="State" first={state} reversed />
+            <TextPair gap={2} second="State" first={state} reversed />
           )}
         </WideCard>
 
@@ -116,10 +125,11 @@ export default function TimelineItem({
             />
             <WideCard borderColor={selectedColor}>
               <TextPair
+                gap={2}
                 first="Booked appointment"
                 second={format(bookedIn, DATE_ONLY)}
               />
-              <TextPair second="State" first={state} reversed />
+              <TextPair gap={2} second="State" first={state} reversed />
             </WideCard>
           </>
         )}
