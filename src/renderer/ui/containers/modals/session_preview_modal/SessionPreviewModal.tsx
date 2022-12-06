@@ -2,7 +2,8 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
 import PrintedLayout from '@components/printed_layout';
-import TabMenu from '@components/tab_menu';
+import SessionPreviewItem from '@components/session_preview_item';
+import TabComponent from '@components/tab_component';
 import { TimeLineDiagnosis } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
 import { Session } from '@models/instance.model';
@@ -15,18 +16,28 @@ interface SessionPreviewModalProps {
   patientName?: string;
   patientAge?: number;
   memberName?: string;
+  bookedBy?: string;
+  treatedBy?: string;
+  bookedIn?: Date;
+  treatedIn?: Date;
+  subject?: string;
 }
 export default function SessionPreviewModal({
   session,
   patientName,
   patientAge,
   memberName,
+  bookedBy,
+  treatedBy,
+  bookedIn,
+  treatedIn,
+  subject,
 }: SessionPreviewModalProps) {
   const { isSuccess, isLoading, data } = useGetClinicQuery();
   const { prescription } = session;
   return (
     <ModalContainer
-      gap={5}
+      gap={15}
       title="Session preview"
       controls={
         patientAge != undefined &&
@@ -65,18 +76,28 @@ export default function SessionPreviewModal({
       }
     >
       <div className="tab-menu-container">
-        <TabMenu
-          items={Object.keys(session)}
+        <SessionPreviewItem
+          bookedBy={bookedBy}
+          bookedIn={bookedIn}
+          treatedBy={treatedBy}
+          treatedIn={treatedIn}
+          subject={subject}
+        />
+        <TabComponent
           borderBottom={false}
-          menuItemsAlignment="center"
-        >
-          {session.prescription && (
-            <MedicamentTable drugList={session.prescription} />
-          )}
-          {session.diagnosis && (
-            <TimeLineDiagnosis diagnosis={session.diagnosis} />
-          )}
-        </TabMenu>
+          items={
+            [
+              session.prescription && {
+                label: 'Prescription',
+                content: <MedicamentTable drugList={session.prescription} />,
+              },
+              session.diagnosis && {
+                label: 'Notice',
+                content: <TimeLineDiagnosis diagnosis={session.diagnosis} />,
+              },
+            ].filter(Boolean) as any
+          }
+        />
       </div>
     </ModalContainer>
   );

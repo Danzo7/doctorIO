@@ -19,6 +19,7 @@ interface PatientInfoProps {
   nextAppointmentDate?: Date;
 }
 export function PatientSpecificsCard({ data }: PatientSpecificProps) {
+  //TODO remove dead code
   return (
     <div className="patient-card ">
       <div className="key-value-items">
