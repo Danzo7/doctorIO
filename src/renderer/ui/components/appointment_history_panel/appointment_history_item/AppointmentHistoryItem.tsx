@@ -11,7 +11,22 @@ export default function AppointmentHistoryItem({
   date,
   subject,
   session,
-}: Pick<Appointment, 'date' | 'subject' | 'session'>) {
+  assignedBy,
+  bookedIn,
+  bookedFor,
+  member,
+  patientName,
+  patientAge,
+}: Pick<
+  Appointment,
+  | 'date'
+  | 'subject'
+  | 'session'
+  | 'assignedBy'
+  | 'bookedIn'
+  | 'bookedFor'
+  | 'member'
+> & { patientName: string; patientAge: number }) {
   return (
     <PreviewWithControls
       primaryText={date ? format(date, DATE_ONLY) : ''}
@@ -22,13 +37,26 @@ export default function AppointmentHistoryItem({
           Icon={AppointmentHistoryIcon}
           tip="View Session"
           onPress={() => {
-            modal(() => <SessionPreviewModal session={session} />, {
-              closeOnClickOutside: true,
-              isDimmed: true,
-              clickThrough: false,
-              closeBtn: 'inner',
-              width: '30%',
-            }).open();
+            modal(
+              () => (
+                <SessionPreviewModal
+                  session={session}
+                  bookedBy={assignedBy.memberName}
+                  bookedIn={bookedIn}
+                  memberName={member?.memberName}
+                  subject={subject}
+                  patientName={patientName}
+                  patientAge={patientAge}
+                />
+              ),
+              {
+                closeOnClickOutside: true,
+                isDimmed: true,
+                clickThrough: false,
+                closeBtn: 'inner',
+                width: '50%',
+              },
+            ).open();
           }}
         />
       )}
