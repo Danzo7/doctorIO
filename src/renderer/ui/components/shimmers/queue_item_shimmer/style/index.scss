@@ -1,0 +1,13 @@
+@use '~styles/appColors' as *;
+.queue-item-shimmer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: 200px;
+    background: $silvergray;
+    border-radius: 11px;
+    width: 50px;
+    overflow: hidden;
+    padding: 5px;
+}
