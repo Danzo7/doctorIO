@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+.session-preview-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 15px;
+    justify-content: space-between;
+    background: $darkerseccolor;
+    border-radius: 10px;
+}
