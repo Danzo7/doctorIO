@@ -57,10 +57,13 @@ interface Appointment_v2 {
   bookedIn: Date;
   date?: Date;
   session?: Session;
-  diagnosis?: string;
+  diagnosis?: string; //TODO remove this field
   state: 'done' | 'done-booked' | 'missed' | 'upcoming' | 'opened' | 'canceled';
 }
-
+export type AppointmentBrief = Pick<
+  Appointment_v2,
+  'assignedBy' | 'state' | 'subject' | 'bookedFor' | 'date'
+> & { id: number };
 interface MedicalDocument {
   id: string;
   fileName: string;

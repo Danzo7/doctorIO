@@ -3,6 +3,7 @@ import {
   BookedAppointment,
   Drug,
   BiometricScreening,
+  AppointmentBrief,
 } from '@models/instance.model';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
@@ -36,7 +37,7 @@ const appointmentApi = createApi({
         }));
       },
     }),
-    getPatientAppointments: builder.query<Appointment[], number>({
+    getPatientAppointments: builder.query<AppointmentBrief[], number>({
       query: (patientId: number) => {
         return {
           url: '',
@@ -44,17 +45,35 @@ const appointmentApi = createApi({
         };
       },
 
-      transformResponse: (response: Appointment[]) => {
-        return response.map(({ bookedFor, date, bookedIn, ...other }) => ({
+      transformResponse: (response: AppointmentBrief[]) => {
+        return response.map(({ bookedFor, date, ...other }) => ({
           ...other,
           bookedFor: bookedFor
             ? parseISO(bookedFor as any as string)
             : undefined,
           date: date ? parseISO(date as any as string) : undefined,
-          bookedIn: parseISO(bookedIn as any as string),
         }));
       },
       providesTags: ['booked'],
+    }),
+    getAppointmentDetail: builder.query<Appointment, number>({
+      query: (id: number) => {
+        return {
+          url: '/detail',
+          params: { id },
+        };
+      },
+      transformResponse: ({
+        bookedFor,
+        date,
+        bookedIn,
+        ...other
+      }: Appointment) => ({
+        ...other,
+        bookedFor: bookedFor ? parseISO(bookedFor as any as string) : undefined,
+        date: date ? parseISO(date as any as string) : undefined,
+        bookedIn: parseISO(bookedIn as any as string),
+      }),
     }),
     getPayments: builder.query<
       { appointmentId: number; name: string; amount: number; date: Date }[],
@@ -154,4 +173,5 @@ export const {
   useCancelAppointmentMutation,
   useGetPaymentsQuery,
   useConfirmPaymentMutation,
+  useGetAppointmentDetailQuery,
 } = appointmentApi;
