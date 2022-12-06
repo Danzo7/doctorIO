@@ -7,21 +7,19 @@ import { color } from '@assets/styles/color';
 import SessionPreviewModal from '@containers/modals/session_preview_modal';
 import { format } from 'date-fns';
 import { DATE_ONLY, TIME_ONLY } from '@constants/data_format';
-import { Appointment } from '@models/instance.model';
+import { AppointmentBrief } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { modal } from '@stores/overlayStore';
 
 export default function TimelineItem({
-  bookedIn,
   state,
   subject,
   assignedBy,
-  member,
   bookedFor,
   date,
-  session,
   patientId,
-}: Appointment & { patientId: number }) {
+  id,
+}: AppointmentBrief & { patientId: number }) {
   const selectedColor =
     state == 'done-booked'
       ? color.good_green
@@ -68,21 +66,14 @@ export default function TimelineItem({
           {subject && (
             <TextPair gap={2} first={subject} second="Subject" reversed />
           )}
-          {member && (
-            <TextPair
-              gap={2}
-              first={member.memberName}
-              second="Treated by"
-              reversed
-            />
-          )}
+
           <TextPair
             gap={2}
             first={assignedBy?.memberName}
             second="Assigned by"
             reversed
           />
-          {session && Object.keys(session).length > 0 && (
+          {date && (
             <SquareIconButton
               Icon={View}
               tip="View Session"
@@ -91,13 +82,9 @@ export default function TimelineItem({
                 modal(
                   () => (
                     <SessionPreviewModal
-                      session={session}
-                      memberName={member?.memberName || 'unknown'}
+                      id={id}
                       patientAge={data?.age}
                       patientName={data?.firstName + ' ' + data?.lastName}
-                      bookedBy={assignedBy.memberName}
-                      bookedIn={date}
-                      subject={subject}
                     />
                   ),
                   {
@@ -117,7 +104,7 @@ export default function TimelineItem({
           )}
         </WideCard>
 
-        {state == 'done-booked' && (
+        {/* {state == 'done-booked' && (
           <>
             <div
               css={{
@@ -135,7 +122,7 @@ export default function TimelineItem({
               <TextPair gap={2} second="State" first={state} reversed />
             </WideCard>
           </>
-        )}
+        )} */}
       </div>
     </div>
   );

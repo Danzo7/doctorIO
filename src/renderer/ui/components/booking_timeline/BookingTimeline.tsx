@@ -1,13 +1,13 @@
 import { color } from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import PreviewList from '@components/preview_list';
-import { Appointment } from '@models/instance.model';
+import { AppointmentBrief } from '@models/instance.model';
 import './style/index.scss';
 import TimelineItem from './timeline_item';
 
 interface BookingTimelineProps {
   patientId: number;
-  appointments: Appointment[];
+  appointments: AppointmentBrief[];
   onPress?: () => void;
 }
 

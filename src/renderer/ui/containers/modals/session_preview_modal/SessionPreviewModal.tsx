@@ -6,45 +6,32 @@ import SessionPreviewItem from '@components/session_preview_item';
 import TabComponent from '@components/tab_component';
 import { TimeLineDiagnosis } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
-import { Session } from '@models/instance.model';
-import { useGetClinicQuery } from '@redux/clinic/clinicApi';
+import { useGetAppointmentDetailQuery } from '@redux/instance/Appointment/AppointmentApi';
 import { modal } from '@stores/overlayStore';
 import './style/index.scss';
 
 interface SessionPreviewModalProps {
-  session: Session;
+  id: number;
   patientName?: string;
   patientAge?: number;
-  memberName?: string;
-  bookedBy?: string;
-  treatedBy?: string;
-  bookedIn?: Date;
-  treatedIn?: Date;
-  subject?: string;
 }
 export default function SessionPreviewModal({
-  session,
-  patientName,
+  id,
   patientAge,
-  memberName,
-  bookedBy,
-  treatedBy,
-  bookedIn,
-  treatedIn,
-  subject,
+  patientName,
 }: SessionPreviewModalProps) {
-  const { isSuccess, isLoading, data } = useGetClinicQuery();
-  const { prescription } = session;
+  const { data, isFetching } = useGetAppointmentDetailQuery(id);
+  console.log(data);
   return (
     <ModalContainer
+      isLoading={isFetching}
       gap={15}
       title="Session preview"
       controls={
+        data &&
         patientAge != undefined &&
         patientName &&
-        memberName &&
-        prescription &&
-        data && (
+        data.session?.prescription && (
           <TextButton
             text="Print..."
             backgroundColor={color.good_green}
@@ -52,15 +39,14 @@ export default function SessionPreviewModal({
             fontSize={14}
             fontWeight={700}
             borderColor={color.border_color}
-            disabled={isLoading && !isSuccess}
             onPress={() =>
               modal(
                 () => (
                   <PrintedLayout
                     patientName={patientName}
                     patientAge={patientAge}
-                    drugList={prescription}
-                    doctorName={memberName}
+                    drugList={data.session!.prescription!}
+                    doctorName={data.member?.memberName ?? 'Fix me'}
                   />
                 ),
                 {
@@ -75,30 +61,38 @@ export default function SessionPreviewModal({
         )
       }
     >
-      <div className="tab-menu-container">
-        <SessionPreviewItem
-          bookedBy={bookedBy}
-          bookedIn={bookedIn}
-          treatedBy={treatedBy}
-          treatedIn={treatedIn}
-          subject={subject}
-        />
-        <TabComponent
-          borderBottom={false}
-          items={
-            [
-              session.prescription && {
-                label: 'Prescription',
-                content: <MedicamentTable drugList={session.prescription} />,
-              },
-              session.diagnosis && {
-                label: 'Notice',
-                content: <TimeLineDiagnosis diagnosis={session.diagnosis} />,
-              },
-            ].filter(Boolean) as any
-          }
-        />
-      </div>
+      {data && (
+        <div className="tab-menu-container">
+          <SessionPreviewItem
+            bookedBy={data.assignedBy?.memberName}
+            bookedIn={data.bookedFor ?? data.bookedIn}
+            treatedBy={data.member?.memberName}
+            treatedIn={data.date}
+            subject={data.subject}
+          />
+          {data.session && (
+            <TabComponent
+              borderBottom={false}
+              items={
+                [
+                  data.session.prescription && {
+                    label: 'Prescription',
+                    content: (
+                      <MedicamentTable drugList={data.session.prescription} />
+                    ),
+                  },
+                  data.session.diagnosis && {
+                    label: 'Notice',
+                    content: (
+                      <TimeLineDiagnosis diagnosis={data.session.diagnosis} />
+                    ),
+                  },
+                ].filter(Boolean) as any
+              }
+            />
+          )}
+        </div>
+      )}
     </ModalContainer>
   );
 }
