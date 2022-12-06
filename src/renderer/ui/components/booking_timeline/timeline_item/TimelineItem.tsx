@@ -10,6 +10,7 @@ import { DATE_ONLY, TIME_ONLY } from '@constants/data_format';
 import { AppointmentBrief } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { modal } from '@stores/overlayStore';
+import NotAButton from '@components/not_a_button';
 
 export default function TimelineItem({
   state,
@@ -21,13 +22,17 @@ export default function TimelineItem({
   id,
 }: AppointmentBrief & { patientId: number }) {
   const selectedColor =
-    state == 'done-booked'
-      ? color.good_green
-      : state == 'missed' || state == 'canceled'
+    state.phase == 'done'
+      ? state.isBooked
+        ? color.good_green
+        : color.cold_blue
+      : state.phase == 'missed' || state.phase == 'canceled'
       ? color.cold_red
-      : state == 'upcoming' || state == 'opened'
+      : state.phase == 'upcoming' ||
+        state.phase == 'opened' ||
+        state.phase == 'in queue'
       ? color.warm_orange
-      : color.cold_blue;
+      : color.white;
 
   const { isLoading, data, isSuccess } = useGetPatientDetailQuery(patientId);
   return (
@@ -41,88 +46,78 @@ export default function TimelineItem({
       />
       <div className="event">
         <WideCard borderColor={selectedColor}>
-          <TextPair
-            gap={2}
-            first={
-              state == 'canceled' && bookedFor
-                ? 'Booked appointment'
-                : state == 'canceled'
-                ? 'Unprogrammed appointment'
-                : date
-                ? format(date, DATE_ONLY)
-                : state == 'opened'
-                ? 'Unprogrammed appointment'
-                : 'Booked appointment'
-            }
-            second={
-              date
-                ? format(date, TIME_ONLY)
-                : bookedFor
-                ? format(bookedFor, DATE_ONLY)
-                : 'Not programed'
-            }
-          />
+          <>
+            <NotAButton
+              fontSize={12}
+              backgroundColor={selectedColor}
+              text={state.phase}
+              padding={5}
+              radius={5}
+              fontWeight={400}
+            />
+            {state.isBooked && state.phase != 'upcoming' && (
+              <NotAButton
+                fontSize={12}
+                backgroundColor={color.hot_purple}
+                text="booked"
+                padding={5}
+                radius={5}
+                fontWeight={400}
+              />
+            )}
+          </>
+          {date && (
+            <TextPair
+              gap={2}
+              first={format(date, DATE_ONLY)}
+              second={format(date, TIME_ONLY)}
+            />
+          )}
 
-          {subject && (
+          {subject && state.phase != 'canceled' && (
             <TextPair gap={2} first={subject} second="Subject" reversed />
           )}
+          {bookedFor && (
+            <TextPair
+              gap={2}
+              first={format(bookedFor, DATE_ONLY)}
+              second={'Booked for'}
+              reversed
+            />
+          )}
+          {state.phase != 'canceled' && state.phase != 'missed' && (
+            <TextPair
+              gap={2}
+              first={assignedBy.memberName}
+              second="Assigned by"
+              reversed
+            />
+          )}
 
-          <TextPair
-            gap={2}
-            first={assignedBy?.memberName}
-            second="Assigned by"
-            reversed
+          <SquareIconButton
+            Icon={View}
+            tip="View Session"
+            disabled={isLoading || !isSuccess}
+            onPress={() => {
+              modal(
+                () => (
+                  <SessionPreviewModal
+                    id={id}
+                    patientAge={data?.age}
+                    patientName={data?.firstName + ' ' + data?.lastName}
+                  />
+                ),
+                {
+                  closeOnClickOutside: true,
+                  isDimmed: true,
+                  clickThrough: false,
+                  closeBtn: 'inner',
+                  width: '50%',
+                },
+              ).open();
+            }}
           />
-          {date && (
-            <SquareIconButton
-              Icon={View}
-              tip="View Session"
-              disabled={isLoading || !isSuccess}
-              onPress={() => {
-                modal(
-                  () => (
-                    <SessionPreviewModal
-                      id={id}
-                      patientAge={data?.age}
-                      patientName={data?.firstName + ' ' + data?.lastName}
-                    />
-                  ),
-                  {
-                    closeOnClickOutside: true,
-                    isDimmed: true,
-                    clickThrough: false,
-                    closeBtn: 'inner',
-                    width: '50%',
-                  },
-                ).open();
-              }}
-            />
-          )}
-          {((state == 'done' && !bookedFor) ||
-            (state != 'done' && state != 'done-booked')) && (
-            <TextPair gap={2} second="State" first={state} reversed />
-          )}
         </WideCard>
-
-        {/* {state == 'done-booked' && (
-          <>
-            <div
-              css={{
-                borderLeft: `3px solid ${selectedColor}`,
-                height: 5,
-                marginLeft: 10,
-              }}
-            />
-            <WideCard borderColor={selectedColor}>
-              <TextPair
-                gap={2}
-                first="Booked appointment"
-                second={format(bookedIn, DATE_ONLY)}
-              />
-              <TextPair gap={2} second="State" first={state} reversed />
-            </WideCard>
-          </>
-        )} */}
       </div>
     </div>
   );

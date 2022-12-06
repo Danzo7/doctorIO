@@ -26,7 +26,7 @@ export default function AppointmentHistoryPanel({
       ) : (
         isSuccess &&
         data
-          .filter((app) => app.state == 'done' || app.state == 'done-booked')
+          .filter((app) => app.state.phase == 'done') //TODO implement filter function in server
           .slice(-3)
           .map(({ date, subject, id }, index) => (
             <AppointmentHistoryItem

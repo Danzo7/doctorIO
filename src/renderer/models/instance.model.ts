@@ -58,7 +58,10 @@ interface Appointment_v2 {
   date?: Date;
   session?: Session;
   diagnosis?: string; //TODO remove this field
-  state: 'done' | 'done-booked' | 'missed' | 'upcoming' | 'opened' | 'canceled';
+  state: {
+    phase: 'done' | 'missed' | 'upcoming' | 'opened' | 'canceled' | 'in queue';
+    isBooked: boolean;
+  };
 }
 export type AppointmentBrief = Pick<
   Appointment_v2,

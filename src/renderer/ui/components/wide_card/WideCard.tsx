@@ -1,3 +1,4 @@
+import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import { Fragment, ReactNode } from 'react';
 import './style/index.scss';
@@ -23,7 +24,7 @@ export default function WideCard({ borderColor, children }: WideCardProps) {
           <Fragment key={index}>
             {child}
             {index != arr.length - 1 && (
-              <BorderSeparator color={borderColor} direction="vertical" />
+              <BorderSeparator color={color.silver_gray} direction="vertical" />
             )}
           </Fragment>
         ))}

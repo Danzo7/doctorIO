@@ -15,5 +15,5 @@ FirstStory.args = {
     memberId: 1,
     memberName: 'John Doe',
   },
-  state: 'canceled',
+  state: { phase: 'canceled', isBooked: false },
 };
