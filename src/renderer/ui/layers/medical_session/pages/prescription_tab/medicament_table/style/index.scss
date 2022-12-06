@@ -1,6 +1,6 @@
 @use '~styles/appColors' as *;
 .medicament-table {
-    border:1px solid $bordercolor;
+    border:2px solid $bordercolor;
     overflow: hidden;
     border-radius: 7px;
 
@@ -35,10 +35,12 @@
         >tbody{
             >tr{
 
-                border-top: 1px solid $bordercolor;
+                border-top: 2px solid $bordercolor;
+
                 >td{
                     padding: 5px 15px;
                     color:$textgray;
+                    background-color: $darkerseccolor;
                 }
             }
         }

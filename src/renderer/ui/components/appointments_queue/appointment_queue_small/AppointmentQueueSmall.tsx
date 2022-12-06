@@ -15,13 +15,14 @@ import {
   useResumeQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
-import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
 import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import RefetchPanel from '@components/refetch_panel';
 import { modal } from '@stores/overlayStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
+import ShimmerDiv from '@components/shimmers/shimmer_div';
+import QueueItemShimmer from '@components/shimmers/queue_item_shimmer';
 
 interface AppointmentQueueSmallProps {}
 
@@ -43,9 +44,17 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const { ref, gotoFrom } = useScroller(10);
   return getQueueAppointmentsQuery.isUninitialized ||
     getQueueAppointmentsQuery.isLoading ? (
-    <div>
-      <LoadingSpinner />
-    </div>
+    <PreviewList
+      title="Queue list"
+      overflow="visible"
+      buttonNode={<ShimmerDiv width={25} height={25} />}
+    >
+      <div css={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+        <QueueItemShimmer />
+        <QueueItemShimmer />
+        <QueueItemShimmer />
+      </div>
+    </PreviewList>
   ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
       const { state } = queueStateQuery.data as QueueState;

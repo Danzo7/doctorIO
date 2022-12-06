@@ -95,6 +95,9 @@ export default function TimelineItem({
                       memberName={member?.memberName || 'unknown'}
                       patientAge={data?.age}
                       patientName={data?.firstName + ' ' + data?.lastName}
+                      bookedBy={assignedBy.memberName}
+                      bookedIn={date}
+                      subject={subject}
                     />
                   ),
                   {

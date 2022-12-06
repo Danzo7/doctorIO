@@ -48,7 +48,7 @@ export default function MedicamentTable({
     }),
 
     table.accessor('description', {
-      header: 'description',
+      header: 'Description',
       footer: (props) => props.column.id,
     }),
 
