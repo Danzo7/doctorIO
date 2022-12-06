@@ -17,7 +17,6 @@ import {
   useResumeQueueMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
-import LoadingSpinner from '@components/loading_spinner';
 import BorderSeparator from '@components/border_separator';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import LinkedRole from '@components/linked_role';
@@ -26,6 +25,9 @@ import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { modal } from '@stores/overlayStore';
 import RefetchPanel from '@components/refetch_panel';
 import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import PreviewList from '@components/preview_list';
+import QueueItemWideShimmer from '@components/shimmers/queue_item_wide_shimmer';
+import ShimmerDiv from '@components/shimmers/shimmer_div';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
@@ -47,7 +49,17 @@ export default function AppointmentsQueue() {
 
   return getQueueAppointmentsQuery.isLoading ||
     getQueueAppointmentsQuery.isUninitialized ? (
-    <LoadingSpinner />
+    <PreviewList
+      title="Queue list"
+      overflow="visible"
+      buttonNode={<ShimmerDiv width={25} height={25} />}
+    >
+      <div css={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+        <QueueItemWideShimmer />
+        <QueueItemWideShimmer />
+        <QueueItemWideShimmer />
+      </div>
+    </PreviewList>
   ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
       const { state, selected } = queueStateQuery.data as QueueState;
