@@ -22,6 +22,10 @@ interface AppointmentQueueItem {
   test?: BiometricScreening;
   appointmentId: number;
 }
+export interface BloodType {
+  group: 'A' | 'B' | 'AB' | 'O';
+  rh: boolean;
+}
 interface Patient {
   firstName: string;
   lastName: string;
@@ -32,6 +36,7 @@ interface Patient {
   test?: BiometricScreening;
   nextAppointment?: Date;
   status: boolean;
+  bloodType?: BloodType;
 }
 interface PatientBrief {
   id: number;
@@ -80,9 +85,7 @@ interface MedicalHistory {
 interface BiometricScreening {
   weight: number;
   height: number;
-  bloodType: 'A' | 'B' | 'AB' | 'O';
-  Rh: boolean;
-  bloodPressure: number;
+  bloodPressure: number; // [key: string]: any;
 }
 
 export type {

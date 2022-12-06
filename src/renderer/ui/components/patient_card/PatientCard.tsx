@@ -2,6 +2,7 @@ import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import TextPair from '@components/text_pair/TextPair';
 import { DATE_ONLY } from '@constants/data_format';
+import { BloodType } from '@models/instance.model';
 import { format } from 'date-fns';
 import KeyValueItem from './key_value_item';
 import './style/index.scss';
@@ -13,7 +14,7 @@ interface PatientInfoProps {
   patientId: string;
   birthDate: Date;
   registerDate: Date;
-  activeStatus: boolean;
+  bloodType?: BloodType;
   gender: 'male' | 'female';
   numPostAppointment: number;
   nextAppointmentDate?: Date;
@@ -22,9 +23,31 @@ export function PatientSpecificsCard({ data }: PatientSpecificProps) {
   return (
     <div className="patient-card ">
       <div className="key-value-items">
-        {Object.entries(data).map(([key, value]) => (
-          <KeyValueItem primaryText={key} secondaryText={value} key={key} />
-        ))}
+        {Object.entries(data).map(([key, value]) =>
+          key === 'bloodType' ? (
+            <TextPair
+              gap={2}
+              width={'30%'}
+              first={{
+                text: key,
+                fontSize: 12,
+                fontWeight: 600,
+                fontColor: color.silver_gray,
+              }}
+              second={{
+                text: (value as BloodType).rh
+                  ? '+'
+                  : '-' + (value as BloodType).group,
+                fontSize: 15,
+                fontWeight: 700,
+                fontColor: color.cold_blue,
+              }}
+              key={key}
+            />
+          ) : (
+            <KeyValueItem primaryText={key} secondaryText={value} key={key} />
+          ),
+        )}
       </div>
     </div>
   );
@@ -32,7 +55,7 @@ export function PatientSpecificsCard({ data }: PatientSpecificProps) {
 export function PatientInfoCard({
   patientFullName,
   patientId,
-  activeStatus,
+  bloodType,
   birthDate,
   gender,
   registerDate,
@@ -73,11 +96,23 @@ export function PatientInfoCard({
           primaryText={'Register date'}
           secondaryText={format(registerDate, DATE_ONLY)}
         />
-        <KeyValueItem
-          primaryText={'Status'}
-          secondaryText={activeStatus ? 'active' : 'off'}
-          width="fit-content"
-        />
+        {bloodType && (
+          <TextPair
+            gap={2}
+            first={{
+              text: 'Blood type',
+              fontSize: 12,
+              fontWeight: 600,
+              fontColor: color.silver_gray,
+            }}
+            second={{
+              text: (bloodType.rh ? '+' : '-') + bloodType.group,
+              fontSize: 15,
+              fontWeight: 700,
+              fontColor: color.cold_blue,
+            }}
+          />
+        )}
       </div>
       <div className="mini-patient-bottom-container">
         <TextPair

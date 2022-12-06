@@ -1,4 +1,4 @@
-import { Patient, PatientBrief } from '@models/instance.model';
+import { BloodType, Patient, PatientBrief } from '@models/instance.model';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { parseISO } from 'date-fns';
@@ -68,6 +68,7 @@ const patientApi = createApi({
         lastName: string;
         birthDate: Date;
         sex: 'male' | 'female';
+        bloodType?: BloodType;
       }
     >({
       query: (body) => ({ url: ``, method: 'POST', body: body }),

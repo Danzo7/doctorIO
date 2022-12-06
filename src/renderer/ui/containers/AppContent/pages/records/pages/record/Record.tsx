@@ -75,7 +75,7 @@ export default function Record({}: RecordProps) {
             patientFullName={data.firstName + ' ' + data.lastName}
             patientId={'#' + patientId}
             birthDate={data.birthDate}
-            activeStatus={data.status}
+            bloodType={data.bloodType}
             registerDate={data.registerDate}
             gender={data.gender}
             numPostAppointment={res.data?.length ?? 0}

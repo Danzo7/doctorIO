@@ -12,9 +12,8 @@ export default function VitalsPanel({ data }: VitalsPanelProps) {
   const transformData = Object.entries(data)
     .map(([key, value]) => {
       let unit = undefined;
-      let tValue = value;
-      if (key == 'Rh') return false;
-      if (key == 'bloodType') tValue += data.Rh ? '+' : '-';
+      if (key == 'Rh') return false; //FIXME Clean this later
+      if (key == 'bloodType') return false; //FIXME Clean this later
       switch (key as keyof BiometricScreening) {
         case 'weight':
           unit = 'kg';
@@ -29,7 +28,7 @@ export default function VitalsPanel({ data }: VitalsPanelProps) {
         default:
           break;
       }
-      return { name: sentenceCase(key), value: tValue, unit };
+      return { name: sentenceCase(key), value, unit };
     })
     .filter(Boolean) as ComponentProps<typeof VitalItem>[];
   return (

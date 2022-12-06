@@ -11,11 +11,8 @@ import { BiometricScreening } from '@models/instance.model';
 
 const schema = z.object({
   weight: numericString(z.number().optional()),
-
   height: numericString(z.number().optional()),
   bloodPressure: numericString(z.number().optional()),
-  bloodType: z.enum(['A', 'B', 'AB', 'O']),
-  Rh: z.boolean(),
 });
 interface AddMedicalTestModalProps {
   onSubmit: SubmitHandler<BiometricScreening>;
@@ -32,7 +29,6 @@ export default function AddMedicalTestModal({
     resolver: zodResolver(schema),
     defaultValues: {
       bloodPressure: 0,
-      Rh: false,
       height: 0,
       weight: 0,
     },
@@ -47,7 +43,6 @@ export default function AddMedicalTestModal({
             Object.keys({
               ...touchedFields,
               ...dirtyFields,
-              ...(dirtyFields?.bloodType ? { Rh: true } : {}),
             }).map((key) => [
               key as keyof BiometricScreening,
               data[key as keyof BiometricScreening],
@@ -89,18 +84,6 @@ export default function AddMedicalTestModal({
           label="Blood pressure"
           name="bloodPressure"
           touchFirst
-        />
-        <Input
-          type={{
-            type: 'multiCheck',
-            options: ['A', 'B', 'AB', 'O'],
-            onlyOne: true,
-          }}
-          background="transparent"
-          label="Blood type"
-          name="bloodType"
-          placeholder="Select a blood type"
-          leading={<Input type="IconicSwitch" control={control} name="Rh" />}
         />
       </Inputix>
     </ModalContainer>

@@ -11,12 +11,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import AddSelectedToQueueModal from '../add_selected_to_queue_modal';
 
-type Inputs = {
-  firstName: string;
-  lastName: string;
-  gender: string;
-  birthDate: Date;
-};
 const schema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
@@ -24,7 +18,10 @@ const schema = z.object({
   birthDate: z.preprocess((arg) => {
     if (typeof arg == 'string' || arg instanceof Date) return new Date(arg);
   }, z.date()),
+  bloodGroup: z.enum(['A', 'B', 'AB', 'O']),
+  rh: z.boolean(),
 });
+type Inputs = z.infer<typeof schema>;
 interface AddPatientModalProps {}
 export default function AddPatientModal({}: AddPatientModalProps) {
   const { control, handleSubmit } = useForm<Inputs>({
@@ -35,17 +32,18 @@ export default function AddPatientModal({}: AddPatientModalProps) {
       gender: 'male',
       firstName: '',
       lastName: '',
+      rh: true,
     },
   });
-
   const [addPatient] = useAddPatientMutation();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    const { firstName, lastName, gender, birthDate } = formData;
+    const { firstName, lastName, gender, birthDate, bloodGroup, rh } = formData;
     addPatient({
       firstName: firstName,
       lastName: lastName,
       birthDate: birthDate,
       sex: gender == ('male' || 'female') ? gender : 'male',
+      bloodType: bloodGroup ? { group: bloodGroup, rh: rh } : undefined,
     })
       .unwrap()
       .then((patient) => {
@@ -90,6 +88,18 @@ export default function AddPatientModal({}: AddPatientModalProps) {
           type={{ type: 'date', yearControl: true, only: 'before' }}
           label="Birthday"
           name="birthDate"
+        />
+        <Input
+          type={{
+            type: 'multiCheck',
+            options: ['A', 'B', 'AB', 'O'],
+            onlyOne: true,
+          }}
+          background="transparent"
+          label="Blood type"
+          name="bloodGroup"
+          placeholder="Select a blood type"
+          leading={<Input type="IconicSwitch" control={control} name="rh" />}
         />
       </Inputix>
     </ModalContainer>
