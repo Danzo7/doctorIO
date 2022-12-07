@@ -23,6 +23,7 @@ import { modal } from '@stores/overlayStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 import ShimmerDiv from '@components/shimmers/shimmer_div';
 import QueueItemShimmer from '@components/shimmers/queue_item_shimmer';
+import LoadingSpinner from '@components/loading_spinner';
 
 interface AppointmentQueueSmallProps {}
 
@@ -43,7 +44,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);
   return getQueueAppointmentsQuery.isUninitialized ||
-    getQueueAppointmentsQuery.isFetching ? (
+    getQueueAppointmentsQuery.isLoading ? (
     <PreviewList
       title="Queue list"
       overflow="visible"
@@ -71,108 +72,114 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       const appointments = getQueueAppointmentsQuery.data;
 
       return (
-        <PreviewList
-          title="Queue list"
-          overflow="visible"
-          buttonNode={
-            <QueueControls
-              {...{
-                state:
-                  appointments.length == 0 && state != 'PAUSED'
-                    ? 'EMPTY'
-                    : state,
-                isOwner,
-              }}
-            />
-          }
+        <Backdrop
+          when={getQueueAppointmentsQuery.isFetching}
+          node={<LoadingSpinner />}
         >
-          {appointments.length == 0 && state != 'PAUSED' ? (
-            <VerticalPanel
-              title="Queue is empty"
-              description="Start by adding a patient to the queue. "
-              height={217}
-              action={{
-                text: 'Add queue item',
-                onClick: () => {
-                  modal(() => <QueueAddSearchModal />, {
-                    closeOnClickOutside: true,
-                    isDimmed: true,
-                    clickThrough: false,
-                    closeBtn: 'inner',
-                    width: '30%',
-                  }).open();
-                },
-              }}
-              Icon={<WaitingRoom width={'80%'} height={'100%'} />}
-              backgroundColor={'none'}
-              padding={'15px 0 0 0'}
-            />
-          ) : (
-            <Backdrop
-              when={state == 'PAUSED'}
-              backdropItems={
-                <>
-                  <span css={{ fontSize: 14 }}>
-                    Queue is paused
-                    {!isOwner && (
-                      <>
-                        {' by'} <span css={{ fontWeight: 600 }}>The owner</span>
-                      </>
-                    )}
-                  </span>
-                  {isOwner && (
-                    <TextButton
-                      text="Resume"
-                      backgroundColor={color.good_green}
-                      onPress={() => {
-                        ResumeQueue(selectedQueue);
-                      }}
-                    />
-                  )}
-                </>
-              }
-            >
-              <ScrollView refs={ref} gap={10}>
-                {appointments &&
-                  appointments.map(
-                    (
-                      {
-                        date,
-                        patientId,
-                        patientName,
-                        test,
-                        position,
-                        appointmentId,
-                      },
-                      index,
-                    ) => (
-                      <div
-                        key={patientId.toString() + index}
-                        onClick={() => {
-                          if (selected == index) setSelected(-1);
-                          else {
-                            if (selected > appointments.length - 1) return;
-                            gotoFrom(index, selected);
-                            setSelected(index);
-                          }
+          <PreviewList
+            title="Queue list"
+            overflow="visible"
+            buttonNode={
+              <QueueControls
+                {...{
+                  state:
+                    appointments.length == 0 && state != 'PAUSED'
+                      ? 'EMPTY'
+                      : state,
+                  isOwner,
+                }}
+              />
+            }
+          >
+            {appointments.length == 0 && state != 'PAUSED' ? (
+              <VerticalPanel
+                title="Queue is empty"
+                description="Start by adding a patient to the queue. "
+                height={217}
+                action={{
+                  text: 'Add queue item',
+                  onClick: () => {
+                    modal(() => <QueueAddSearchModal />, {
+                      closeOnClickOutside: true,
+                      isDimmed: true,
+                      clickThrough: false,
+                      closeBtn: 'inner',
+                      width: '30%',
+                    }).open();
+                  },
+                }}
+                Icon={<WaitingRoom width={'80%'} height={'100%'} />}
+                backgroundColor={'none'}
+                padding={'15px 0 0 0'}
+              />
+            ) : (
+              <Backdrop
+                when={state == 'PAUSED'}
+                node={
+                  <>
+                    <span css={{ fontSize: 14 }}>
+                      Queue is paused
+                      {!isOwner && (
+                        <>
+                          {' by'}{' '}
+                          <span css={{ fontWeight: 600 }}>The owner</span>
+                        </>
+                      )}
+                    </span>
+                    {isOwner && (
+                      <TextButton
+                        text="Resume"
+                        backgroundColor={color.good_green}
+                        onPress={() => {
+                          ResumeQueue(selectedQueue);
                         }}
-                      >
-                        <QueueItem
-                          id={patientId}
-                          name={patientName}
-                          number={position}
-                          timeAgo={date}
-                          biometricScreening={test}
-                          opened={selected == index}
-                          appointmentId={appointmentId}
-                        />
-                      </div>
-                    ),
-                  )}
-              </ScrollView>
-            </Backdrop>
-          )}
-        </PreviewList>
+                      />
+                    )}
+                  </>
+                }
+              >
+                <ScrollView refs={ref} gap={10}>
+                  {appointments &&
+                    appointments.map(
+                      (
+                        {
+                          date,
+                          patientId,
+                          patientName,
+                          test,
+                          position,
+                          appointmentId,
+                        },
+                        index,
+                      ) => (
+                        <div
+                          key={patientId.toString() + index}
+                          onClick={() => {
+                            if (selected == index) setSelected(-1);
+                            else {
+                              if (selected > appointments.length - 1) return;
+                              gotoFrom(index, selected);
+                              setSelected(index);
+                            }
+                          }}
+                        >
+                          <QueueItem
+                            id={patientId}
+                            name={patientName}
+                            number={position}
+                            timeAgo={date}
+                            biometricScreening={test}
+                            opened={selected == index}
+                            appointmentId={appointmentId}
+                          />
+                        </div>
+                      ),
+                    )}
+                </ScrollView>
+              </Backdrop>
+            )}
+          </PreviewList>
+        </Backdrop>
       );
     })()
   ) : (
