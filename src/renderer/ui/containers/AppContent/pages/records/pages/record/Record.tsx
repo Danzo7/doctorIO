@@ -24,9 +24,7 @@ import SimpleInfoContainer from '@components/simple_info_container';
 import { modal } from '@stores/overlayStore';
 import VitalsPanel from '@components/vitals_panel';
 import NotesPanel from '@components/notes_panel';
-import { PatientInfoCard } from '@components/patient_card';
-import DocumentPreviewPanel from '@components/document_preview_panel';
-import MedicalHistory from '@components/medical_history';
+import RecordInfoSideBar from './record_info_side_bar';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -70,23 +68,11 @@ export default function Record({}: RecordProps) {
   return (
     <div className="record">
       {isSuccess && (
-        <div className="record-side-info">
-          <PatientInfoCard
-            patientFullName={data.firstName + ' ' + data.lastName}
-            patientId={'#' + patientId}
-            birthDate={data.birthDate}
-            bloodType={data.bloodType}
-            registerDate={data.registerDate}
-            gender={data.gender}
-            numPostAppointment={res.data?.length ?? 0}
-            nextAppointmentDate={data.nextAppointment}
-          />
-
-          <div className="scroll-div">
-            <DocumentPreviewPanel patientId={Number(patientId)} />
-            <MedicalHistory patientId={Number(patientId)} />
-          </div>
-        </div>
+        <RecordInfoSideBar
+          data={data}
+          patientId={Number(patientId)}
+          numPostAppointment={res.data?.length ?? 0}
+        />
       )}
       <div className="content">
         <form
@@ -144,6 +130,7 @@ export default function Record({}: RecordProps) {
               {data.test ? (
                 <VitalsPanel data={data.test} />
               ) : (
+                //TODO add the ability to add vitals from here
                 <SimpleInfoContainer text="No Biometric screening" />
               )}
               <NotesPanel
