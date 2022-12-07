@@ -1,0 +1,24 @@
+@use '~styles/appColors' as *;
+.record-info-side-bar {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background: $lighterbackground;
+    border-radius: 17px;
+    padding: 10px;
+    width :300px;
+    overflow: hidden;
+    align-self: stretch;
+    height: 100%;
+
+    > .scroll-div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-self: stretch;
+        flex-grow: 1;
+        overflow: auto;
+    }
+}
