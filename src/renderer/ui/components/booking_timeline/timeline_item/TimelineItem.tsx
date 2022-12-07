@@ -11,6 +11,9 @@ import { AppointmentBrief } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { modal } from '@stores/overlayStore';
 import NotAButton from '@components/not_a_button';
+import CircleAvatar from '@components/avatars/circle_avatar';
+import MemberBigCard from '@containers/modals/member_big_card';
+import { DEFAULT_MODAL } from '@libs/overlay';
 
 export default function TimelineItem({
   state,
@@ -85,14 +88,31 @@ export default function TimelineItem({
               reversed
             />
           )}
-          {state.phase != 'canceled' && state.phase != 'missed' && (
-            <TextPair
-              gap={2}
-              first={assignedBy.memberName}
-              second="Assigned by"
-              reversed
-            />
-          )}
+          {state.phase != 'canceled' &&
+            state.phase != 'missed' && ( //TODO check if its me show me
+              <TextPair
+                gap={2}
+                first={
+                  //TODO move to a separated component
+                  <div css={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <CircleAvatar
+                      src=""
+                      alt={assignedBy.memberName}
+                      width={30}
+                      onClick={() =>
+                        modal(
+                          <MemberBigCard id={assignedBy.memberId} />,
+                          DEFAULT_MODAL,
+                        ).open()
+                      }
+                    />
+                    <span css={{ fontSize: 17 }}>{assignedBy.memberName}</span>
+                  </div>
+                }
+                second="Assigned by"
+                reversed
+              />
+            )}
 
           <SquareIconButton
             Icon={View}
