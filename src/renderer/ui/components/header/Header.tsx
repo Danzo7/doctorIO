@@ -20,7 +20,7 @@ interface HeaderProps {
 export default function Header({
   buttonNode,
   title,
-  alignItems = 'baseline',
+  alignItems = 'center',
   flexGrow = 0,
   leftComponent,
   padding,
