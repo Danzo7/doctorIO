@@ -58,7 +58,6 @@ export default function SmallRoleList({
                     <AddRoleTooltip
                       skipRoles={roleList}
                       onSelect={(role) => {
-                        console.log('pressed', role);
                         onAdd?.(role);
                         close();
                       }}
