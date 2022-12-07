@@ -21,7 +21,6 @@ export default function SessionPreviewModal({
   patientName,
 }: SessionPreviewModalProps) {
   const { data, isFetching } = useGetAppointmentDetailQuery(id);
-  console.log(data);
   return (
     <ModalContainer
       isLoading={isFetching}
