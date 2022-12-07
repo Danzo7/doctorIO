@@ -25,9 +25,7 @@ import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { modal } from '@stores/overlayStore';
 import RefetchPanel from '@components/refetch_panel';
 import { useQueueSelectionStore } from '@stores/queueSelectionStore';
-import PreviewList from '@components/preview_list';
-import QueueItemWideShimmer from '@components/shimmers/queue_item_wide_shimmer';
-import ShimmerDiv from '@components/shimmers/shimmer_div';
+import AppointmentsQueueShimmer from '@components/shimmers/appointments_queue_shimmer';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
@@ -49,17 +47,7 @@ export default function AppointmentsQueue() {
 
   return getQueueAppointmentsQuery.isLoading ||
     getQueueAppointmentsQuery.isUninitialized ? (
-    <PreviewList
-      title="Queue list"
-      overflow="visible"
-      buttonNode={<ShimmerDiv width={25} height={25} />}
-    >
-      <div css={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
-        <QueueItemWideShimmer />
-        <QueueItemWideShimmer />
-        <QueueItemWideShimmer />
-      </div>
-    </PreviewList>
+    <AppointmentsQueueShimmer />
   ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
       const { state, selected } = queueStateQuery.data as QueueState;
@@ -68,145 +56,150 @@ export default function AppointmentsQueue() {
       const appointments = getQueueAppointmentsQuery.data;
 
       return (
-        <div
-          className="appointments-queue"
-          css={
-            getQueueAppointmentsQuery.isFetching
-              ? {
-                  opacity: 0.2,
-                  pointerEvents: 'none',
-                  cursor: 'progress',
-                }
-              : {}
-          }
-        >
-          {myMemberDetailQuery.isSuccess && myMemberDetailQuery.data.queues && (
-            <>
-              <Header
-                leftComponent={
-                  <LinkedRole
-                    linkedText="Queue List"
-                    linkedRole={
-                      useQueueSelectionStore.getState().getSelectedQueue().name
-                    }
-                  />
-                }
-                buttonNode={
-                  <QueueControls
-                    {...{
-                      state:
-                        appointments.length == 0 && state != 'PAUSED'
-                          ? 'EMPTY'
-                          : state,
-                      isOwner,
-                    }}
-                  />
-                }
-              />
-            </>
-          )}
-          <div className="appointments-queue-content">
-            <CabinState state={state} selected={selected} />
-            <BorderSeparator direction="vertical" />
-            {appointments.length == 0 && state != 'PAUSED' ? (
-              <VerticalPanel
-                title="Queue is empty"
-                description="Start by adding a patient to the queue. "
-                action={{
-                  text: 'Add queue item',
-                  onClick: () => {
-                    modal(() => <QueueAddSearchModal />, {
-                      closeOnClickOutside: true,
-                      isDimmed: true,
-                      clickThrough: false,
-                      closeBtn: 'inner',
-                      width: '30%',
-                    }).open();
-                  },
-                }}
-                Icon={<WaitingRoom width={'70%'} height={'100%'} />}
-                backgroundColor={'none'}
-                padding={'15px 0 0 15px'}
-              />
-            ) : (
-              <div className="wrapper">
-                <Backdrop
-                  when={state == 'PAUSED'}
-                  backdropItems={
-                    <>
-                      <span css={{ fontSize: 15 }}>
-                        Queue is paused
-                        {!isOwner && (
-                          <>
-                            {' by '}
-                            <span css={{ fontWeight: 600 }}>The owner</span>
-                          </>
-                        )}
-                      </span>
-                      {isOwner && (
-                        <TextButton
-                          text="Resume"
-                          backgroundColor={color.good_green}
-                          onPress={() => {
-                            ResumeQueue(selectedQueue);
-                          }}
-                        />
-                      )}
-                    </>
+        <>
+          <div
+            className="appointments-queue"
+            css={
+              getQueueAppointmentsQuery.isFetching
+                ? {
+                    opacity: 0.2,
+                    pointerEvents: 'none',
+                    cursor: 'progress',
                   }
-                >
-                  <div className="queue-list">
-                    <TextButton
-                      borderColor={colors.border_color}
-                      padding="30px 10px"
-                      afterBgColor={colors.darkersec_color}
-                      onHold={gotoFirst}
-                    >
-                      <Arrow css={{ transform: 'rotate(90deg)' }} />
-                    </TextButton>
-
-                    <ScrollView refs={ref} gap={10}>
-                      {appointments.map(
-                        (
-                          {
-                            date,
-                            patientId,
-                            patientName,
-                            test,
-                            position,
-                            appointmentId,
-                          },
-                          index,
-                        ) => (
-                          <li key={patientId.toString() + index}>
-                            <QueueItemWide
-                              id={patientId}
-                              name={patientName}
-                              number={position}
-                              timeAgo={date}
-                              width={150}
-                              biometricScreening={test}
-                              appointmentId={appointmentId}
-                            />
-                          </li>
-                        ),
-                      )}
-                    </ScrollView>
-                    <TextButton
-                      borderColor={colors.border_color}
-                      padding="30px 10px"
-                      afterBgColor={colors.darkersec_color}
-                      onPress={next}
-                      onHold={gotoLast}
-                    >
-                      <Arrow css={{ transform: 'rotate(-90deg)' }} />
-                    </TextButton>
-                  </div>
-                </Backdrop>
-              </div>
+                : {}
+            }
+          >
+            {myMemberDetailQuery.isSuccess && myMemberDetailQuery.data.queues && (
+              <>
+                <Header
+                  alignItems="center"
+                  leftComponent={
+                    <LinkedRole
+                      linkedText="Queue List"
+                      linkedRole={
+                        useQueueSelectionStore.getState().getSelectedQueue()
+                          .name
+                      }
+                    />
+                  }
+                  buttonNode={
+                    <QueueControls
+                      {...{
+                        state:
+                          appointments.length == 0 && state != 'PAUSED'
+                            ? 'EMPTY'
+                            : state,
+                        isOwner,
+                      }}
+                    />
+                  }
+                />
+              </>
             )}
+            <div className="appointments-queue-content">
+              <CabinState state={state} selected={selected} />
+              <BorderSeparator direction="vertical" />
+              {appointments.length == 0 && state != 'PAUSED' ? (
+                <VerticalPanel
+                  height={217}
+                  title="Queue is empty"
+                  description="Start by adding a patient to the queue. "
+                  action={{
+                    text: 'Add queue item',
+                    onClick: () => {
+                      modal(() => <QueueAddSearchModal />, {
+                        closeOnClickOutside: true,
+                        isDimmed: true,
+                        clickThrough: false,
+                        closeBtn: 'inner',
+                        width: '30%',
+                      }).open();
+                    },
+                  }}
+                  Icon={<WaitingRoom width={'70%'} height={'50%'} />}
+                  backgroundColor={'none'}
+                  padding={'15px 0 0 15px'}
+                />
+              ) : (
+                <div className="wrapper">
+                  <Backdrop
+                    when={state == 'PAUSED'}
+                    backdropItems={
+                      <>
+                        <span css={{ fontSize: 15 }}>
+                          Queue is paused
+                          {!isOwner && (
+                            <>
+                              {' by '}
+                              <span css={{ fontWeight: 600 }}>The owner</span>
+                            </>
+                          )}
+                        </span>
+                        {isOwner && (
+                          <TextButton
+                            text="Resume"
+                            backgroundColor={color.good_green}
+                            onPress={() => {
+                              ResumeQueue(selectedQueue);
+                            }}
+                          />
+                        )}
+                      </>
+                    }
+                  >
+                    <div className="queue-list">
+                      <TextButton
+                        borderColor={colors.border_color}
+                        padding="30px 10px"
+                        afterBgColor={colors.darkersec_color}
+                        onHold={gotoFirst}
+                      >
+                        <Arrow css={{ transform: 'rotate(90deg)' }} />
+                      </TextButton>
+
+                      <ScrollView refs={ref} gap={10}>
+                        {appointments.map(
+                          (
+                            {
+                              date,
+                              patientId,
+                              patientName,
+                              test,
+                              position,
+                              appointmentId,
+                            },
+                            index,
+                          ) => (
+                            <li key={patientId.toString() + index}>
+                              <QueueItemWide
+                                id={patientId}
+                                name={patientName}
+                                number={position}
+                                timeAgo={date}
+                                width={150}
+                                biometricScreening={test}
+                                appointmentId={appointmentId}
+                              />
+                            </li>
+                          ),
+                        )}
+                      </ScrollView>
+                      <TextButton
+                        borderColor={colors.border_color}
+                        padding="30px 10px"
+                        afterBgColor={colors.darkersec_color}
+                        onPress={next}
+                        onHold={gotoLast}
+                      >
+                        <Arrow css={{ transform: 'rotate(-90deg)' }} />
+                      </TextButton>
+                    </div>
+                  </Backdrop>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       );
     })()
   ) : (
