@@ -1,3 +1,4 @@
+import color from '@assets/styles/color';
 import DateSwitcher from '@components/date_switcher';
 import Header from '@components/header';
 import VitalItem from '@components/vital_item';
@@ -36,7 +37,11 @@ export default function VitalsPanel({ data }: VitalsPanelProps) {
       <Header title="Vitals" />
       <div className="vital-items-div">
         {transformData.map((vital, index) => (
-          <VitalItem {...vital} key={index} />
+          <VitalItem
+            backgroundColor={color.border_color}
+            {...vital}
+            key={index}
+          />
         ))}
       </div>
 
