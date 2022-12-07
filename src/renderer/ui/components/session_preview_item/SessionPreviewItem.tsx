@@ -1,133 +1,70 @@
 import { color } from '@assets/styles/color';
-import BorderSeparator from '@components/border_separator';
+import NotAButton from '@components/not_a_button';
 import TextPair from '@components/text_pair/TextPair';
 import { DATE_ONLY } from '@constants/data_format';
+import { Appointment } from '@models/instance.model';
 import { format } from 'date-fns';
 import './style/index.scss';
-interface SessionPreviewItemProps {
-  bookedBy: string;
-  bookedIn: Date;
-  bookedFor?: Date;
-  treatedBy?: string;
-  treatedIn?: Date;
-  subject?: string;
-  state: {
-    phase: 'done' | 'missed' | 'upcoming' | 'opened' | 'canceled' | 'in queue';
-    isBooked: boolean;
-  };
-}
-export default function SessionPreviewItem({
-  bookedBy,
-  treatedBy,
-  bookedIn,
-  treatedIn,
-  subject,
-  state,
-  bookedFor,
-}: SessionPreviewItemProps) {
-  return (
-    <div className="session-preview-item">
-      {state.phase == 'upcoming' ||
-      state.phase == 'in queue' ||
-      state.phase == 'opened' ? (
-        <>
-          <TextPair
-            gap={2}
-            first={{
-              text: 'Created by',
-              fontSize: 12,
-              fontWeight: 600,
-              fontColor: color.text_gray,
-            }}
-            second={{
-              text: bookedBy,
-              fontSize: 15,
-              fontWeight: 600,
-              fontColor: color.white,
-            }}
-          />
-          <BorderSeparator direction="vertical" />
-          <TextPair
-            gap={2}
-            first={{
-              text: 'Created in',
-              fontSize: 12,
-              fontWeight: 600,
-              fontColor: color.text_gray,
-            }}
-            second={{
-              text: format(bookedIn, DATE_ONLY),
-              fontSize: 15,
-              fontWeight: 600,
-              fontColor: color.white,
-            }}
-          />
-          <BorderSeparator direction="vertical" />
-          {bookedFor && (
-            <>
-              <TextPair
-                gap={2}
-                first={{
-                  text: 'Booked for',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  fontColor: color.text_gray,
-                }}
-                second={{
-                  text: format(bookedFor, DATE_ONLY),
-                  fontSize: 15,
-                  fontWeight: 600,
-                  fontColor: color.white,
-                }}
-              />
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          {treatedBy && (
-            <>
-              <TextPair
-                gap={2}
-                first={{
-                  text: state.phase == 'done' ? 'Treated by' : 'Canceled by',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  fontColor: color.text_gray,
-                }}
-                second={{
-                  text: treatedBy,
-                  fontSize: 15,
-                  fontWeight: 600,
-                  fontColor: color.white,
-                }}
-              />
-              <BorderSeparator direction="vertical" />
-            </>
-          )}
 
-          {treatedIn && (
-            <TextPair
-              gap={2}
-              first={{
-                text: state.phase == 'done' ? 'Treated in' : 'Canceled in',
-                fontSize: 12,
-                fontWeight: 600,
-                fontColor: color.text_gray,
-              }}
-              second={{
-                text: format(treatedIn, DATE_ONLY),
-                fontSize: 15,
-                fontWeight: 600,
-                fontColor: color.white,
-              }}
-            />
-          )}
-        </>
-      )}
-      {subject && (
-        <>
-          <BorderSeparator direction="vertical" />
+export default function SessionPreviewItem({
+  assignedBy,
+  member,
+  queue,
+  state,
+  bookedIn,
+  bookedFor,
+  date,
+  subject,
+}: Appointment) {
+  const selectedColor =
+    state.phase == 'done'
+      ? state.isBooked
+        ? color.good_green
+        : color.cold_blue
+      : state.phase == 'missed' || state.phase == 'canceled'
+      ? color.cold_red
+      : state.phase == 'upcoming' ||
+        state.phase == 'opened' ||
+        state.phase == 'in queue'
+      ? color.warm_orange
+      : color.white;
+  return (
+    <div className="session-preview">
+      <div className="session-preview-item">
+        <TextPair
+          gap={2}
+          first={{
+            text: 'Type',
+            fontSize: 12,
+            fontWeight: 600,
+            fontColor: color.text_gray,
+          }}
+          second={{
+            text: state.isBooked ? 'Booked' : 'Directly assigned',
+            fontSize: 15,
+            fontWeight: 600,
+            fontColor: color.white,
+          }}
+        />
+
+        {bookedFor && (
+          <TextPair
+            gap={2}
+            first={{
+              text: 'Booked for',
+              fontSize: 12,
+              fontWeight: 600,
+              fontColor: color.text_gray,
+            }}
+            second={{
+              text: format(bookedFor, DATE_ONLY),
+              fontSize: 15,
+              fontWeight: 600,
+              fontColor: color.white,
+            }}
+          />
+        )}
+        {subject && (
           <TextPair
             gap={2}
             first={{
@@ -143,7 +80,117 @@ export default function SessionPreviewItem({
               fontColor: color.white,
             }}
           />
-        </>
+        )}
+
+        <TextPair
+          gap={2}
+          first={{
+            text: 'State',
+            fontSize: 12,
+            fontWeight: 600,
+            fontColor: color.text_gray,
+          }}
+          second={
+            <NotAButton
+              fontSize={12}
+              backgroundColor={selectedColor}
+              text={state.phase}
+              padding={5}
+              radius={5}
+              fontWeight={700}
+            />
+          }
+        />
+
+        {queue && (
+          <TextPair
+            gap={2}
+            first={{
+              text: 'Queue',
+              fontSize: 12,
+              fontWeight: 600,
+              fontColor: color.text_gray,
+            }}
+            second={{
+              text: queue.name,
+              fontSize: 15,
+              fontWeight: 600,
+              fontColor: color.white,
+            }}
+          />
+        )}
+      </div>
+
+      <div className="session-preview-item">
+        <TextPair
+          gap={2}
+          first={{
+            text: 'Created by',
+            fontSize: 12,
+            fontWeight: 600,
+            fontColor: color.text_gray,
+          }}
+          second={{
+            text: assignedBy.memberName,
+            fontSize: 15,
+            fontWeight: 600,
+            fontColor: color.white,
+          }}
+        />
+
+        <TextPair
+          gap={2}
+          first={{
+            text: 'Created in',
+            fontSize: 12,
+            fontWeight: 600,
+            fontColor: color.text_gray,
+          }}
+          second={{
+            text: format(bookedIn, DATE_ONLY),
+            fontSize: 15,
+            fontWeight: 600,
+            fontColor: color.white,
+          }}
+        />
+      </div>
+      {date && (
+        <div className="session-preview-item">
+          {member && (
+            <TextPair
+              gap={2}
+              first={{
+                text: state.phase == 'done' ? 'Treated by' : 'Canceled by',
+                fontSize: 12,
+                fontWeight: 600,
+                fontColor: color.text_gray,
+              }}
+              second={{
+                text: member.memberName,
+                fontSize: 15,
+                fontWeight: 600,
+                fontColor: color.white,
+              }}
+            />
+          )}
+          {
+            <TextPair
+              gap={2}
+              first={{
+                text: state.phase == 'done' ? 'Treated in' : 'Canceled in',
+                fontSize: 12,
+                fontWeight: 600,
+                fontColor: color.text_gray,
+              }}
+              second={{
+                text: format(date, DATE_ONLY),
+                fontSize: 15,
+                fontWeight: 600,
+                fontColor: color.white,
+              }}
+            />
+          }
+        </div>
       )}
     </div>
   );

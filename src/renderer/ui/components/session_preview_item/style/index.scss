@@ -1,11 +1,16 @@
 @use '~styles/appColors' as *;
-.session-preview-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 10px 15px;
-    background: $darkerseccolor;
-    border-radius: 10px;
-    gap: 15px;
-    width: fit-content;
-}
+.session-preview{
+    display: grid;
+    grid-auto-columns: auto;
+    gap:10px;
+    >:first-of-type{
+        grid-column: 1/3;
+    }
+    >.session-preview-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border: 1px solid $silvergray;
+        border-radius: 10px;
+        gap: 15px;
+    }}
