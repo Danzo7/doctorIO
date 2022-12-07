@@ -1,13 +1,13 @@
 import './style/index.scss';
 interface BackdropProps {
   children: React.ReactNode;
-  backdropItems?: React.ReactNode;
+  node?: React.ReactNode;
   when?: boolean | 'blur';
   filter?: string;
 }
 export default function Backdrop({
   children,
-  backdropItems,
+  node,
   when,
   filter = 'blur(4px) brightness(0.5)',
 }: BackdropProps) {
@@ -32,7 +32,7 @@ export default function Backdrop({
             : undefined,
       }}
     >
-      {when && <div className="backdrop">{backdropItems}</div>}
+      {when && <div className="backdrop">{node}</div>}
       {children}
     </div>
   );
