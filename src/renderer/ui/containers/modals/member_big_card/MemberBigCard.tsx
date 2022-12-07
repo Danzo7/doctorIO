@@ -15,7 +15,7 @@ import {
 import ModalContainer from '@components/modal_container';
 
 export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
-  const { data, isSuccess, isLoading, error } = useGetMemberDetailQuery(id);
+  const { data, isSuccess, isLoading } = useGetMemberDetailQuery(id);
   const [AssignRole] = useAssignRoleMutation();
   const [RevokeRole] = useRevokeRoleMutation();
 
@@ -37,82 +37,88 @@ export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
             <span>{data.name}</span>
             <span>#{data.id}</span>
           </div>
-          <TextPair
-            first={{ text: 'Age', fontSize: 15, fontColor: color.text_gray }}
-            second={{
-              text: data.age.toString(),
-              fontSize: 17,
-              fontColor: color.white,
-            }}
-            alignItems={'center'}
-          />
-          <TextPair
-            first={{ text: 'Gender', fontSize: 15, fontColor: color.text_gray }}
-            second={{
-              text: data.gender,
-              fontSize: 17,
-              fontColor: color.white,
-            }}
-            alignItems={'center'}
-          />
-          {data.phone && (
+          <div className="member-big-card-info">
             <TextPair
-              first={{
-                text: 'Phone number',
-                fontSize: 15,
-                fontColor: color.text_gray,
-              }}
+              first={{ text: 'Age', fontSize: 15, fontColor: color.text_gray }}
               second={{
-                text: data.phone,
+                text: data.age.toString(),
                 fontSize: 17,
                 fontColor: color.white,
               }}
               alignItems={'center'}
             />
-          )}
-          {data.address && (
             <TextPair
               first={{
-                text: 'Address',
+                text: 'Gender',
                 fontSize: 15,
                 fontColor: color.text_gray,
               }}
               second={{
-                text: data.address,
+                text: data.gender,
                 fontSize: 17,
                 fontColor: color.white,
               }}
               alignItems={'center'}
             />
-          )}
-          <TextPair
-            first={{
-              text: 'Join date',
-              fontSize: 15,
-              fontColor: color.text_gray,
-            }}
-            second={{
-              text: format(data.joinDate, DATE_ONLY),
-              fontSize: 17,
-              fontColor: color.white,
-            }}
-            alignItems={'center'}
-          />
-          {data.addedBy && (
+            {data.phone && (
+              <TextPair
+                first={{
+                  text: 'Phone number',
+                  fontSize: 15,
+                  fontColor: color.text_gray,
+                }}
+                second={{
+                  text: data.phone,
+                  fontSize: 17,
+                  fontColor: color.white,
+                }}
+                alignItems={'center'}
+              />
+            )}
+            {data.address && (
+              <TextPair
+                first={{
+                  text: 'Address',
+                  fontSize: 15,
+                  fontColor: color.text_gray,
+                }}
+                second={{
+                  text: data.address,
+                  fontSize: 17,
+                  fontColor: color.white,
+                }}
+                alignItems={'center'}
+              />
+            )}
             <TextPair
               first={{
-                text: 'Added by',
+                text: 'Join date',
                 fontSize: 15,
                 fontColor: color.text_gray,
               }}
               second={{
-                text: data.addedBy.name,
+                text: format(data.joinDate, DATE_ONLY),
                 fontSize: 17,
                 fontColor: color.white,
               }}
               alignItems={'center'}
             />
-          )}
+            {data.addedBy && (
+              <TextPair
+                first={{
+                  text: 'Added by',
+                  fontSize: 15,
+                  fontColor: color.text_gray,
+                }}
+                second={{
+                  text: data.addedBy.name,
+                  fontSize: 17,
+                  fontColor: color.white,
+                }}
+                alignItems={'center'}
+              />
+            )}
+          </div>
           <div className="role-container">
             <span>Role</span>
             <SmallRoleList

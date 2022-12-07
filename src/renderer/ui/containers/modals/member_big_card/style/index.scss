@@ -17,6 +17,15 @@
             color: $white;
         }
     }
+
+    >.member-big-card-info {
+        display: grid;
+        grid-template-columns: auto auto;
+        column-gap: 75px;
+        row-gap: 10px;
+        flex-grow: 1;
+        padding: 10px 0;
+    }
     > .role-container {
         display: flex;
         flex-direction: column;
