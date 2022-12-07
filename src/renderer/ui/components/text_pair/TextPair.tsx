@@ -41,7 +41,7 @@ export default function TextPair({
       <span
         css={{
           fontSize: typeof first != 'string' ? first?.fontSize : 17,
-          fontWeight: typeof first != 'string' ? first?.fontWeight : 600,
+          fontWeight: typeof first != 'string' ? first?.fontWeight : 400,
           color: typeof first != 'string' ? first?.fontColor : color.white,
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
@@ -54,7 +54,7 @@ export default function TextPair({
       <span
         css={{
           fontSize: typeof second != 'string' ? second?.fontSize : 12,
-          fontWeight: typeof second != 'string' ? second?.fontWeight : 600,
+          fontWeight: typeof second != 'string' ? second?.fontWeight : 400,
           color:
             typeof second != 'string'
               ? second?.fontColor ?? color.text_gray
