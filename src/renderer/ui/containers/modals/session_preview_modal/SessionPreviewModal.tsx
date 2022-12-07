@@ -62,15 +62,7 @@ export default function SessionPreviewModal({
     >
       {data && (
         <div className="tab-menu-container">
-          <SessionPreviewItem
-            bookedBy={data.assignedBy?.memberName}
-            bookedIn={data.bookedFor ?? data.bookedIn}
-            treatedBy={data.member?.memberName}
-            treatedIn={data.date}
-            subject={data.subject}
-            state={data.state}
-            bookedFor={data.bookedFor}
-          />
+          <SessionPreviewItem {...data} />
           {data.session && (
             <TabComponent
               borderBottom={false}
