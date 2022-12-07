@@ -21,8 +21,7 @@ import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import RefetchPanel from '@components/refetch_panel';
 import { modal } from '@stores/overlayStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
-import ShimmerDiv from '@components/shimmers/shimmer_div';
-import QueueItemShimmer from '@components/shimmers/queue_item_shimmer';
+import AppointmentQueueSmallShimmer from '@components/shimmers/appointment_queue_small_shimmer';
 import LoadingSpinner from '@components/loading_spinner';
 
 interface AppointmentQueueSmallProps {}
@@ -45,25 +44,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const { ref, gotoFrom } = useScroller(10);
   return getQueueAppointmentsQuery.isUninitialized ||
     getQueueAppointmentsQuery.isLoading ? (
-    <PreviewList
-      title="Queue list"
-      overflow="visible"
-      buttonNode={<ShimmerDiv width={25} height={25} />}
-    >
-      <div
-        css={{
-          display: 'flex',
-          flexDirection: 'row',
-          gap: 10,
-          paddingBottom: 10,
-          overflowX: 'scroll',
-        }}
-      >
-        <QueueItemShimmer />
-        <QueueItemShimmer />
-        <QueueItemShimmer />
-      </div>
-    </PreviewList>
+    <AppointmentQueueSmallShimmer />
   ) : getQueueAppointmentsQuery.isSuccess ? (
     (() => {
       const { state } = queueStateQuery.data as QueueState;
