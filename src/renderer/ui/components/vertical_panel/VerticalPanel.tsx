@@ -10,6 +10,7 @@ interface VerticalPanelProps {
   backgroundColor?: string;
   padding?: number | string;
   alignSelf?: 'center' | 'stretch' | 'start' | 'end';
+  height?: number | string;
 }
 export default function VerticalPanel({
   Icon,
@@ -20,6 +21,7 @@ export default function VerticalPanel({
   backgroundColor = color.secondary_color,
   padding = 20,
   alignSelf,
+  height,
 }: VerticalPanelProps) {
   return (
     <div
@@ -30,6 +32,7 @@ export default function VerticalPanel({
         boxShadow:
           backgroundColor == 'none' ? undefined : `0 0 5px 2px ${color.darker}`,
         alignSelf: alignSelf,
+        height,
       }}
     >
       {Icon}
