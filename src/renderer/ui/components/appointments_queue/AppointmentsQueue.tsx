@@ -68,7 +68,18 @@ export default function AppointmentsQueue() {
       const appointments = getQueueAppointmentsQuery.data;
 
       return (
-        <div className="appointments-queue">
+        <div
+          className="appointments-queue"
+          css={
+            getQueueAppointmentsQuery.isFetching
+              ? {
+                  opacity: 0.2,
+                  pointerEvents: 'none',
+                  cursor: 'progress',
+                }
+              : {}
+          }
+        >
           {myMemberDetailQuery.isSuccess && myMemberDetailQuery.data.queues && (
             <>
               <Header

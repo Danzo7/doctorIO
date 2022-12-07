@@ -43,13 +43,21 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const [selected, setSelected] = useState(-1);
   const { ref, gotoFrom } = useScroller(10);
   return getQueueAppointmentsQuery.isUninitialized ||
-    getQueueAppointmentsQuery.isLoading ? (
+    getQueueAppointmentsQuery.isFetching ? (
     <PreviewList
       title="Queue list"
       overflow="visible"
       buttonNode={<ShimmerDiv width={25} height={25} />}
     >
-      <div css={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+      <div
+        css={{
+          display: 'flex',
+          flexDirection: 'row',
+          gap: 10,
+          paddingBottom: 10,
+          overflowX: 'scroll',
+        }}
+      >
         <QueueItemShimmer />
         <QueueItemShimmer />
         <QueueItemShimmer />
@@ -82,6 +90,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
             <VerticalPanel
               title="Queue is empty"
               description="Start by adding a patient to the queue. "
+              height={217}
               action={{
                 text: 'Add queue item',
                 onClick: () => {
