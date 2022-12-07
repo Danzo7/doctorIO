@@ -11,11 +11,12 @@ export default function DarkAddButton(
 ) {
   return (
     <IconicButton
+      tip="Add a role"
       radius={7}
       padding={5}
       width={'fit-content'}
       borderColor={color.border_color}
-      Icon={<Add height={13} width={13} />}
+      Icon={<Add height={11} width={11} />}
       {...props}
     />
   );
