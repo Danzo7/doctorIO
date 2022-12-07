@@ -54,6 +54,7 @@ interface Appointment_v2 {
   member?: { memberId: number; memberName: string };
   subject: string;
   bookedFor?: Date;
+  queue?: { id: number; name: string };
   bookedIn: Date;
   date?: Date;
   session?: Session;
