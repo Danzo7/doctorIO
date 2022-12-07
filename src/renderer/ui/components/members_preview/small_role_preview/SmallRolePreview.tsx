@@ -15,7 +15,7 @@ function SmallRolePreview({
 }: SmallRolePreviewProps) {
   return (
     <TextButton
-      borderColor={color.border_color}
+      backgroundColor={color.border_color}
       onPress={canRemove ? onClick : undefined}
       cursor={canRemove ? 'pointer' : 'default'}
       afterBgColor={canRemove ? color.hot_red : undefined}
