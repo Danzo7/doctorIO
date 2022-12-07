@@ -78,7 +78,9 @@ export default function TabComponent({
           )}
         </div>
       </div>
-      <div className="menu-content">{allTabs[activeTabIndex].content} </div>
+      {allTabs.length > 0 && (
+        <div className="menu-content">{allTabs[activeTabIndex].content} </div>
+      )}
     </div>
   );
 }
