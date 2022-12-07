@@ -293,6 +293,7 @@ function TextButton({
             color: !disabled ? fontColor : colors.text_gray,
             fontSize: fontSize,
             fontWeight: fontWeight,
+            lineHeight: fontSize + 'px', //TODO: Testing
           }}
         >
           {text}
