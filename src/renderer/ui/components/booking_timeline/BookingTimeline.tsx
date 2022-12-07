@@ -38,7 +38,7 @@ export default function BookingTimeline({
         noBorder
       >
         {appointments.map((app, index) => (
-          <TimelineItem key={index} {...app} patientId={patientId} />
+          <TimelineItem key={index} {...app} patientId={patientId} /> //TODO show vertical panel when empty
         ))}
       </PreviewList>
     </div>
