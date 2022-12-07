@@ -13,7 +13,7 @@ import { modal } from '@stores/overlayStore';
 import NotAButton from '@components/not_a_button';
 import CircleAvatar from '@components/avatars/circle_avatar';
 import MemberBigCard from '@containers/modals/member_big_card';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 
 export default function TimelineItem({
   state,
@@ -124,13 +124,7 @@ export default function TimelineItem({
                     patientName={data?.firstName + ' ' + data?.lastName}
                   />
                 ),
-                {
-                  closeOnClickOutside: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                  closeBtn: 'inner',
-                  width: '50%',
-                },
+                FIT_MODAL,
               ).open();
             }}
           />
