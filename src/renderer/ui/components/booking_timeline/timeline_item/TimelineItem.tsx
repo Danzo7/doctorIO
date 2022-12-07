@@ -91,23 +91,20 @@ export default function TimelineItem({
           {state.phase != 'canceled' &&
             state.phase != 'missed' && ( //TODO check if its me show me
               <TextPair
-                gap={2}
+                gap={3}
                 first={
                   //TODO move to a separated component
-                  <div css={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <CircleAvatar
-                      src=""
-                      alt={assignedBy.memberName}
-                      width={30}
-                      onClick={() =>
-                        modal(
-                          <MemberBigCard id={assignedBy.memberId} />,
-                          DEFAULT_MODAL,
-                        ).open()
-                      }
-                    />
-                    <span css={{ fontSize: 17 }}>{assignedBy.memberName}</span>
-                  </div>
+                  <CircleAvatar
+                    src=""
+                    alt={assignedBy.memberName}
+                    width={25}
+                    onClick={() =>
+                      modal(
+                        <MemberBigCard id={assignedBy.memberId} />,
+                        DEFAULT_MODAL,
+                      ).open()
+                    }
+                  />
                 }
                 second="Assigned by"
                 reversed
