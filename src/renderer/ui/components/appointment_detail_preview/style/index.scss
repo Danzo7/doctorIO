@@ -1,16 +1,18 @@
 @use '~styles/appColors' as *;
-.session-preview{
+.appointment-detail-preview{
     display: grid;
     grid-auto-columns: auto;
     gap:10px;
-    >:first-of-type{
-        grid-column: 1/3;
-    }
-    >.session-preview-item {
+
+    >div {
         display: flex;
         align-items: center;
         padding: 10px 15px;
         border: 1px solid $silvergray;
         border-radius: 10px;
         gap: 15px;
-    }}
+    }
+    >div:first-of-type{
+        grid-column: 1/3;
+    }
+}

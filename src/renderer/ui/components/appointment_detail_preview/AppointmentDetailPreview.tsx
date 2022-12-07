@@ -6,7 +6,7 @@ import { Appointment } from '@models/instance.model';
 import { format } from 'date-fns';
 import './style/index.scss';
 
-export default function SessionPreviewItem({
+export default function AppointmentDetailPreview({
   assignedBy,
   member,
   queue,
@@ -29,8 +29,8 @@ export default function SessionPreviewItem({
       ? color.warm_orange
       : color.white;
   return (
-    <div className="session-preview">
-      <div className="session-preview-item">
+    <div className="appointment-detail-preview">
+      <div>
         <TextPair
           gap={2}
           first={{
@@ -121,7 +121,7 @@ export default function SessionPreviewItem({
         )}
       </div>
 
-      <div className="session-preview-item">
+      <div>
         <TextPair
           gap={2}
           first={{
@@ -155,7 +155,7 @@ export default function SessionPreviewItem({
         />
       </div>
       {date && (
-        <div className="session-preview-item">
+        <div>
           {member && (
             <TextPair
               gap={2}

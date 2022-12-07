@@ -2,7 +2,7 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
 import PrintedLayout from '@components/printed_layout';
-import SessionPreviewItem from '@components/session_preview_item';
+import AppointmentDetailPreview from '@components/appointment_detail_preview';
 import TabComponent from '@components/tab_component';
 import { TimeLineDiagnosis } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
@@ -44,6 +44,7 @@ export default function SessionPreviewModal({
                   <PrintedLayout
                     patientName={patientName}
                     patientAge={patientAge}
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     drugList={data.session!.prescription!}
                     doctorName={data.member?.memberName ?? 'Fix me'}
                   />
@@ -62,7 +63,7 @@ export default function SessionPreviewModal({
     >
       {data && (
         <div className="tab-menu-container">
-          <SessionPreviewItem {...data} />
+          <AppointmentDetailPreview {...data} />
           {data.session && (
             <TabComponent
               borderBottom={false}
