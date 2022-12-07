@@ -68,6 +68,8 @@ export default function SessionPreviewModal({
             treatedBy={data.member?.memberName}
             treatedIn={data.date}
             subject={data.subject}
+            state={data.state}
+            bookedFor={data.bookedFor}
           />
           {data.session && (
             <TabComponent
