@@ -1,4 +1,4 @@
-import { color } from '@assets/styles/color';
+import color from '@assets/styles/color';
 import DarkAddButton from '@components/buttons/dark_add_button';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import { Overlay_u } from '@stores/overlayStore';
@@ -33,11 +33,12 @@ export default function TabComponent({
     <div className="tab-component">
       <div
         className="tab-menu-bar"
-        css={
-          borderBottom
-            ? { borderBottom: `1px solid ${color.border_color}` }
-            : undefined
-        }
+        css={{
+          borderBottom: borderBottom
+            ? `1px solid ${color.border_color}`
+            : 'none',
+          paddingBottom: borderBottom ? 10 : 0,
+        }}
       >
         <div
           css={{ justifyContent: menuItemsAlignment }}
