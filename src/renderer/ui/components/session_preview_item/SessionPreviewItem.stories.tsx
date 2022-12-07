@@ -10,9 +10,9 @@ const Template: Story<ComponentProps<typeof SessionPreviewItem>> = (args) => (
 );
 export const FirstStory = Template;
 FirstStory.args = {
-  BookedBy: 'Aymen Daouadji',
-  TreatedBy: 'Aymen Daouadji',
-  BookedIn: new Date(),
-  TreatedIn: new Date(),
-  Subject: 'Dead',
+  bookedBy: 'strng',
+  bookedIn: new Date(),
+  treatedBy: 'strng',
+  treatedIn: new Date(),
+  subject: 'Dead',
 };
