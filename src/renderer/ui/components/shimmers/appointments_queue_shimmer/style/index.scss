@@ -1,0 +1,41 @@
+@use '~styles/appColors' as *;
+.appointments-queue-shimmer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    > .appointments-shimmer-content {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        > .cabin-shimmer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            > span {
+                font-weight: 600;
+                font-size: 14px;
+                color: $textgray;
+                align-self: flex-start
+            }
+        }
+
+        > .shimmer-items-div {
+
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+        }
+    }
+}
+
+.shimmer-controls {
+
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
