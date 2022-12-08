@@ -1,3 +1,4 @@
+import color from '@assets/styles/color';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import { ReactNode, useState } from 'react';
 import './style/index.scss';
@@ -32,6 +33,9 @@ export default function VerticalTab({
             allTabs.map(({ label }, index) => (
               <DarkLightCornerButton
                 padding={'10px 40px 10px 10px'}
+                fontSize={18}
+                fontWeight={600}
+                fontColor={color.text_gray}
                 key={index}
                 text={label}
                 isActive={activeTabIndex == index}
