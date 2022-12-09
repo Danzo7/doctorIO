@@ -1,7 +1,9 @@
 import {
   createContext,
+  FunctionComponent,
   HTMLInputTypeAttribute,
   ReactNode,
+  SVGProps,
   useContext,
 } from 'react';
 import {
@@ -73,8 +75,20 @@ type DateField = {
 >;
 type MultiCheck = {
   type: 'multiCheck';
-  options: string[];
+
   onlyOne?: boolean;
+  groupItemType:
+    | {
+        name: 'TextButton';
+        options: string[];
+      }
+    | {
+        name: 'ThemePreferenceItem';
+        options: {
+          label: string;
+          preview: FunctionComponent<SVGProps<SVGSVGElement>>;
+        }[];
+      };
 };
 type InputProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -88,7 +102,8 @@ type InputProps<
     | HTMLInputTypeAttribute
     | DateField
     | MultiCheck
-    | 'IconicSwitch';
+    | 'IconicSwitch'
+    | 'RoundedCheckbox';
   hint?: string;
   label?: string;
   leading?: ReactNode;
@@ -96,6 +111,7 @@ type InputProps<
   children?: ReactNode;
   placeholder?: string;
   fillContainer?: true;
+  height?: number | string;
   onChange?: (value: FieldPathValue<TFieldValues, TName>) => void;
   grow?: boolean;
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
@@ -134,6 +150,7 @@ export default function Input<T extends FieldValues = FieldValues>({
   background,
   radius,
   autoFocus,
+  height,
   touchFirst,
 }: InputProps<T> & Partial<InputWrapperProps>) {
   const { control: controlC } = useContext(InputControllerContext);
@@ -188,7 +205,7 @@ export default function Input<T extends FieldValues = FieldValues>({
           trailing={trailing}
           fillContainer
           disabled={disabled}
-          height={type == 'textarea' ? '100%' : undefined}
+          height={type == 'textarea' ? '100%' : height}
           background={background}
           radius={radius}
           touchFirst={touchFirst}
@@ -211,8 +228,8 @@ export default function Input<T extends FieldValues = FieldValues>({
                 if ((type as MultiCheck)?.type == 'multiCheck')
                   return (
                     <MultipleCheckGroup
+                      type={(type as MultiCheck).groupItemType}
                       field={field}
-                      items={(type as MultiCheck).options}
                       fieldState={fieldState}
                       rules={rules}
                       onChanged={onChange}
