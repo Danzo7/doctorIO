@@ -1,0 +1,13 @@
+@use '~styles/appColors' as *;
+.security-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    > .note-span {
+        font-weight: 600;
+        font-size: 13px;
+        color: $silvergray;
+    }
+}
