@@ -8,9 +8,9 @@ interface CheckGroupItemProps {
 }
 export default function CheckGroupItem({
   checked,
-  label,
   onSelect,
   disabled,
+  label,
 }: CheckGroupItemProps) {
   return (
     <TextButton
