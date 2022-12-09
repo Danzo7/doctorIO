@@ -1,0 +1,26 @@
+@use '~styles/appColors' as *;
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+
+    > span {
+
+        font-weight: 600;
+        font-size: 22px;
+        color: $white;
+    }
+
+    > .settings-content {
+        display: flex;
+        flex-direction: row;
+        width: fit-content;
+        background: $secondarycolor;
+        border: 1px solid $bordercolor;
+        border-radius: 7px;
+        align-self: center;
+        padding:15px 10px ;
+        max-width: 700px;
+        min-width: 700px;
+    }
+}
