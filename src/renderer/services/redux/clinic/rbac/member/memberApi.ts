@@ -132,6 +132,12 @@ const memberApi = createApi({
     getMyMemberDetail: builder.query<Member, void>({
       query: () => '/me/',
       providesTags: ['me'],
+
+      transformResponse: (
+        response: Omit<Member, 'joinDate'> & { joinDate: string },
+      ) => {
+        return { ...response, joinDate: parseISO(response.joinDate) };
+      },
       onQueryStarted: async (_, { queryFulfilled }) => {
         try {
           const { data: res } = await queryFulfilled;
