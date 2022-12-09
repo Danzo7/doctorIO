@@ -17,7 +17,7 @@ function AppMenu({}: AppMenuProps) {
     ability.can('view', 'records') && getItem('records'),
     //    isAllowed('ability.canManageDataCollection', permissions) && getItem('database'),
     getItem('clinic'),
-    //  getItem('settings'),
+    getItem('settings'),
   ].filter(Boolean) as { name: MenuKeys; svg: any }[];
 
   return (

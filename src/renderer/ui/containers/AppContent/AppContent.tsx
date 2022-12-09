@@ -10,6 +10,7 @@ const Queues = lazy(() => import('./pages/queues'));
 const Records = lazy(() => import('./pages/records'));
 const Data = lazy(() => import('./pages/data'));
 const Statistics = lazy(() => import('./pages/statistics'));
+const Settings = lazy(() => import('./pages/settings'));
 //const Settings = lazy(() => import('./pages/settings'));
 
 interface AppContentProps {}
@@ -98,6 +99,14 @@ function AppContent({}: AppContentProps) {
             }
           />
         }
+        <Route
+          path="settings/"
+          element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <Settings />
+            </Suspense>
+          }
+        />
         <Route path="*" element={<Navigate to={''} replace={true} />} />
       </Routes>
     </div>
