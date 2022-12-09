@@ -32,10 +32,12 @@ export default function VerticalTab({
           {allTabs.length > 0 &&
             allTabs.map(({ label }, index) => (
               <DarkLightCornerButton
-                padding={'10px 40px 10px 10px'}
                 fontSize={18}
                 fontWeight={600}
                 fontColor={color.text_gray}
+                alignment="flex-start"
+                padding={10}
+                width={170}
                 key={index}
                 text={label}
                 isActive={activeTabIndex == index}
