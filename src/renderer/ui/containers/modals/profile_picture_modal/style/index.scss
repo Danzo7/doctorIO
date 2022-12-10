@@ -1,0 +1,30 @@
+@use '~styles/appColors' as *;
+.profile-picture-modal {
+}
+
+.profile-picture-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 1;
+    align-self: stretch;
+    align-items: center;
+
+    > span {
+        font-size: 14px;
+        font-weight: '400';
+        color: $coldblue;
+        cursor: pointer;
+        white-space:nowrap ;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.logo-changer-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
