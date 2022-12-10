@@ -1,0 +1,31 @@
+@use '~styles/appColors' as *;
+
+.update-controls-div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    > span {
+        font-size: 12px;
+        font-weight: '400';
+        color:$textgray;
+
+        > span {
+            font-size: inherit;
+            font-weight: '400';
+            color: $coldblue;
+            cursor: pointer;
+            white-space:nowrap ;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.update-input-div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
