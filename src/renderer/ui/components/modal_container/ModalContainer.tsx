@@ -46,7 +46,7 @@ export default function ModalContainer({
         <LoadingSpinner />
       ) : (
         <>
-          <Header title={title} />
+          <Header title={title} padding={0} />
           <div className="modal-body">{children}</div>
           {controls && <div className="control">{controls}</div>}
         </>

@@ -1,6 +1,10 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import SettingOption from '@components/setting_option';
+import ChangeSecretModal from '@containers/modals/change_secret_modal';
+import PasswordFormModal from '@containers/modals/password_form_modal';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import { modal } from '@stores/overlayStore';
 import { useState } from 'react';
 import './style/index.scss';
 interface SecurityTabProps {}
@@ -22,6 +26,11 @@ export default function SecurityTab({}: SecurityTabProps) {
             borderColor={color.border_color}
             afterBgColor={color.darkersec_color}
             afterFontColor={color.cold_red}
+            onPress={() => {
+              modal(<ChangeSecretModal />, {
+                ...DEFAULT_MODAL,
+              }).open();
+            }}
           />
         }
       />
@@ -41,6 +50,11 @@ export default function SecurityTab({}: SecurityTabProps) {
             afterBgColor={color.darkersec_color}
             afterFontColor={color.cold_red}
             disabled={!password}
+            onPress={() => {
+              modal(<PasswordFormModal registration={false} />, {
+                ...DEFAULT_MODAL,
+              }).open();
+            }}
           />
         }
       />
