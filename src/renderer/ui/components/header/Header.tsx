@@ -23,7 +23,7 @@ export default function Header({
   alignItems = 'center',
   flexGrow = 0,
   leftComponent,
-  padding,
+  padding = '0 5px 0 5px ',
 }: HeaderProps) {
   return (
     <div
