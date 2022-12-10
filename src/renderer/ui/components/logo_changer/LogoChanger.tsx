@@ -4,7 +4,7 @@ import './style/index.scss';
 import AddImage from 'toSvg/add_image.svg?icon';
 import { useState } from 'react';
 interface LogoChangerProps {
-  src: string;
+  src?: string;
   width: number;
   onChange?: (src: string) => void;
 }
