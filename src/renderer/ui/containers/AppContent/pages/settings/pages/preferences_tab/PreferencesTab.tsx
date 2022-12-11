@@ -80,6 +80,8 @@ export default function PreferencesTab({}: PreferencesTabProps) {
             type={{
               type: 'multiCheck',
               onlyOne: true,
+              mustOne: true,
+              selected: [2],
               options: ['English', 'Francais', 'العربية'],
             }}
           />
