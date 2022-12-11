@@ -52,7 +52,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
                 ></AlertModal>
               ),
               FIT_MODAL,
-            );
+            ).open();
           }}
         />
       </div>
