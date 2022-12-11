@@ -1,32 +1,20 @@
-import ThemePreferenceItem from '@components/theme_preference_item';
-import { FunctionComponent, SVGProps, useState } from 'react';
+import { useState } from 'react';
 import { ControllerProps } from '../input';
 import CheckGroupItem from './check_group_item';
 import './style/index.scss';
 interface MultipleCheckGroupProps extends ControllerProps {
+  items: string[];
   value?: number[];
   disabled?: boolean;
   onlyOne?: boolean;
-  type:
-    | {
-        name: 'TextButton';
-        options: string[];
-      }
-    | {
-        name: 'ThemePreferenceItem';
-        options: {
-          label: string;
-          preview: FunctionComponent<SVGProps<SVGSVGElement>>;
-        }[];
-      };
 }
 export default function MultipleCheckGroup({
+  items,
   value,
   onChanged,
   field,
   disabled,
   onlyOne,
-  type,
 }: MultipleCheckGroupProps) {
   const [checkedItems, setCheckedItems] = useState<number[]>(value ?? []);
   const isChecked = (index: number) => {
@@ -38,56 +26,37 @@ export default function MultipleCheckGroup({
     if (isChecked(index)) {
       const itms = checkedItems.filter((checkedItem) => index != checkedItem);
       setCheckedItems(itms);
-      onChanged?.(itms.map((inx) => type.options[inx]));
-      field.onChange?.(itms.map((inx) => type.options[inx]));
+      onChanged?.(itms.map((inx) => items[inx]));
+      field.onChange?.(itms.map((inx) => items[inx]));
     } else {
       if (onlyOne) {
         setCheckedItems([index]);
-        onChanged?.(type.options[index]);
-        field.onChange?.(type.options[index]);
+        onChanged?.(items[index]);
+        field.onChange?.(items[index]);
       } else {
         setCheckedItems([...checkedItems, index]);
-        onChanged?.([...checkedItems, index].map((inx) => type.options[inx]));
-        field.onChange?.(
-          [...checkedItems, index].map((inx) => type.options[inx]),
-        );
+        onChanged?.([...checkedItems, index].map((inx) => items[inx]));
+        field.onChange?.([...checkedItems, index].map((inx) => items[inx]));
       }
     }
   };
   return (
     <div className="multiple-check-group">
-      {type.name == 'TextButton' &&
-        type.options.map((text, index) => (
-          <CheckGroupItem
-            label={text}
-            checked={
-              checkedItems.find((item) => item === index) == undefined
-                ? false
-                : true
-            }
-            disabled={disabled}
-            onSelect={() => {
-              handleSelect(index);
-            }}
-            key={index}
-          />
-        ))}
-      {type.name == 'ThemePreferenceItem' &&
-        type.options.map(({ label, preview }, index) => (
-          <ThemePreferenceItem
-            key={index}
-            label={label}
-            Preview={preview}
-            checked={
-              checkedItems.find((item) => item === index) == undefined
-                ? false
-                : true
-            }
-            onSelect={() => {
-              handleSelect(index);
-            }}
-          />
-        ))}
+      {items.map((text, index) => (
+        <CheckGroupItem
+          label={text}
+          checked={
+            checkedItems.find((item) => item === index) == undefined
+              ? false
+              : true
+          }
+          disabled={disabled}
+          onSelect={() => {
+            handleSelect(index);
+          }}
+          key={index}
+        />
+      ))}
     </div>
   );
 }

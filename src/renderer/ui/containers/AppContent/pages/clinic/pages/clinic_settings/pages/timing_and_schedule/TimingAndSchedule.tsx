@@ -100,7 +100,7 @@ export default function TimingAndSchedule({}: TimingAndScheduleProps) {
         <Input
           type={{
             type: 'multiCheck',
-            groupItemType: { name: 'TextButton', options: days },
+            options: days,
           }}
           control={control}
           name="workingDays"

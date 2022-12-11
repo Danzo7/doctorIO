@@ -42,7 +42,7 @@ export default function SessionParameter({}: SessionParameterProps) {
       ? {
           value:
             Number(fields.payment.reduce((a, b) => Number(a) + Number(b), 0)) +
-            Number(fields.customCost),
+            Number(fields.customCost), //TODO check if NaN
           isHandPayment: fields.handPayment,
         }
       : undefined,
@@ -76,10 +76,7 @@ export default function SessionParameter({}: SessionParameterProps) {
         <Input
           control={control}
           name="payment"
-          type={{
-            type: 'multiCheck',
-            groupItemType: { name: 'TextButton', options: payments },
-          }}
+          type={{ type: 'multiCheck', options: payments }}
           disabled={!canPay}
         ></Input>
         <span>Custom :</span>

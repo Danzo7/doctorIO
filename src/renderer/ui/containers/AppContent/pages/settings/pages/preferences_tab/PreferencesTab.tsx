@@ -80,11 +80,7 @@ export default function PreferencesTab({}: PreferencesTabProps) {
             type={{
               type: 'multiCheck',
               onlyOne: true,
-
-              groupItemType: {
-                name: 'TextButton',
-                options: ['English', 'Francais', 'العربية'],
-              },
+              options: ['English', 'Francais', 'العربية'],
             }}
           />
         }

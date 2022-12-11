@@ -92,12 +92,8 @@ export default function AddPatientModal({}: AddPatientModalProps) {
         <Input
           type={{
             type: 'multiCheck',
-
+            options: ['A', 'B', 'AB', 'O'],
             onlyOne: true,
-            groupItemType: {
-              name: 'TextButton',
-              options: ['A', 'B', 'AB', 'O'],
-            },
           }}
           background="transparent"
           label="Blood type"
