@@ -1,6 +1,4 @@
 @use '~styles/appColors' as *;
-.change-secret-modal {
-}
 .update-controls-div {
     display: flex;
     flex-direction: column;
@@ -11,10 +9,9 @@
         font-size: 12px;
         color: $textgray;
     }
-}
-
-.update-input-div {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    .update-input-div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 }

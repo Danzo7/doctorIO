@@ -1,6 +1,4 @@
 @use '~styles/appColors' as *;
-.profile-picture-modal {
-}
 
 .profile-picture-controls {
     display: flex;
@@ -21,10 +19,9 @@
             text-decoration: underline;
         }
     }
-}
-
-.logo-changer-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    .logo-changer-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

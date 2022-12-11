@@ -3,12 +3,12 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-}
-.date-format-inputs {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex-grow: 1;
-    align-self: stretch;
-    gap: 10px;
+    .date-format-inputs {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        flex-grow: 1;
+        align-self: stretch;
+        gap: 10px;
+    }
 }
