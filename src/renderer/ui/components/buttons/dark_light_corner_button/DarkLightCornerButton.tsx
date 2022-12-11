@@ -22,7 +22,6 @@ function DarkLightCornerButton({
   >) {
   return (
     <TextButton
-      {...others}
       fontColor={fontColor}
       fontSize={14}
       backgroundColor={isActive && !blend ? colors.darkersec_color : undefined}
@@ -30,6 +29,7 @@ function DarkLightCornerButton({
       afterBgColor={!blend ? colors.darkersec_color : colors.secondary_color}
       afterBorderColor={!blend ? colors.border_color : undefined}
       radius={7}
+      {...others}
     />
   );
 }
