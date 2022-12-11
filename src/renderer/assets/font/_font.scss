@@ -1,0 +1,96 @@
+@mixin fonts{
+    @font-face {
+        font-family: 'Sarabun';
+        src: url(./assets/font/latin/Sarabun-Thin.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 250;
+    }
+    @font-face {
+        font-family: 'Sarabun';
+        src: url(./assets/font/latin/Sarabun-ExtraLight.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 275;
+    }
+    @font-face {
+        font-family: 'Sarabun';
+        src: url(./assets/font/latin/Sarabun-Light.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 300;
+    }
+    @font-face {
+        font-family: 'Sarabun';
+        src: url(./assets/font/latin/Sarabun-Regular.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 400;
+    }
+    @font-face {
+        font-family: 'Sarabun';
+        src: url(./assets/font/latin/Sarabun-Medium.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 500;
+    }
+
+    @font-face {
+        font-family: 'Sarabun';
+        src: url(./assets/font/latin/Sarabun-SemiBold.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 600;
+    }
+    @font-face {
+        font-family: 'Sarabun';
+        src: url(./assets/font/latin/Sarabun-Bold.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 700;
+    }
+    @font-face {
+        font-family: 'Sarabun';
+        src: url(./assets/font/latin/Sarabun-ExtraBold.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 800;
+    }
+
+    /* arabic font */
+    @font-face {
+        font-family: 'noto';
+        src: url(./assets/font/arabic/NotoSansArabic-Thin.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 100;
+        unicode-range: U+0600-06FF;
+    }
+
+    @font-face {
+        font-family: 'noto';
+        src: url(./assets/font/arabic/NotoSansArabic-Light.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 300;
+        unicode-range: U+0600-06FF;
+    }
+    @font-face {
+        font-family: 'noto';
+        src: url(./assets/font/arabic/NotoSansArabic-Regular.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 400;
+        unicode-range: U+0600-06FF;
+    }
+    @font-face {
+        font-family: 'noto';
+        src: url(./assets/font/arabic/NotoSansArabic-Medium.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 500;
+        unicode-range: U+0600-06FF;
+    }
+    @font-face {
+        font-family: 'noto';
+        src: url(./assets/font/arabic/NotoSansArabic-SemiBold.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 600;
+        unicode-range: U+0600-06FF;
+    }
+    @font-face {
+        font-family: 'noto';
+        src: url(./assets/font/arabic/NotoSansArabic-Bold.ttf) format('truetype');
+        font-style: normal;
+        font-weight: 700;
+        unicode-range: U+0600-06FF;
+    }
+}

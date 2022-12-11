@@ -146,6 +146,7 @@ module.exports = ({ mode } = { mode: process.env.mode }) => {
         ...aliasResolver({
           ...tsconfig.compilerOptions.paths,
           styles: ['./src/renderer/assets/styles'],
+          font: ['./src/renderer/assets/font'],
           icon: ['./src/renderer/assets/icon'],
         }),
       },
