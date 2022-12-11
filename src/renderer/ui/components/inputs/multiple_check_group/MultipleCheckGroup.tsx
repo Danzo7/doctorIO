@@ -3,20 +3,24 @@ import { ControllerProps } from '../input';
 import CheckGroupItem from './check_group_item';
 import './style/index.scss';
 interface MultipleCheckGroupProps extends ControllerProps {
-  items: string[];
-  value?: number[];
+  options: string[];
+  selected?: number[];
   disabled?: boolean;
   onlyOne?: boolean;
+  mustOne?: boolean;
 }
 export default function MultipleCheckGroup({
-  items,
-  value,
+  options,
+  selected,
   onChanged,
   field,
   disabled,
   onlyOne,
+  mustOne,
 }: MultipleCheckGroupProps) {
-  const [checkedItems, setCheckedItems] = useState<number[]>(value ?? []);
+  const [checkedItems, setCheckedItems] = useState<number[]>(
+    selected ?? (mustOne ? [0] : []),
+  );
   const isChecked = (index: number) => {
     return checkedItems.find((item) => item === index) == undefined
       ? false
@@ -24,25 +28,27 @@ export default function MultipleCheckGroup({
   };
   const handleSelect = (index: number) => {
     if (isChecked(index)) {
-      const itms = checkedItems.filter((checkedItem) => index != checkedItem);
-      setCheckedItems(itms);
-      onChanged?.(itms.map((inx) => items[inx]));
-      field.onChange?.(itms.map((inx) => items[inx]));
+      const items = checkedItems.filter((checkedItem) => index != checkedItem);
+      if (mustOne && items.length == 0) return;
+
+      setCheckedItems(items);
+      onChanged?.(items.map((inx) => options[inx]));
+      field.onChange?.(items.map((inx) => options[inx]));
     } else {
       if (onlyOne) {
         setCheckedItems([index]);
-        onChanged?.(items[index]);
-        field.onChange?.(items[index]);
+        onChanged?.(options[index]);
+        field.onChange?.(options[index]);
       } else {
         setCheckedItems([...checkedItems, index]);
-        onChanged?.([...checkedItems, index].map((inx) => items[inx]));
-        field.onChange?.([...checkedItems, index].map((inx) => items[inx]));
+        onChanged?.([...checkedItems, index].map((inx) => options[inx]));
+        field.onChange?.([...checkedItems, index].map((inx) => options[inx]));
       }
     }
   };
   return (
     <div className="multiple-check-group">
-      {items.map((text, index) => (
+      {options.map((text, index) => (
         <CheckGroupItem
           label={text}
           checked={

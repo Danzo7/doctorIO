@@ -1,4 +1,5 @@
 import {
+  ComponentProps,
   createContext,
   HTMLInputTypeAttribute,
   ReactNode,
@@ -73,9 +74,10 @@ type DateField = {
 >;
 type MultiCheck = {
   type: 'multiCheck';
-  options: string[];
-  onlyOne?: boolean;
-};
+} & Pick<
+  ComponentProps<typeof MultipleCheckGroup>,
+  'onlyOne' | 'mustOne' | 'options' | 'selected'
+>;
 type InputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -212,12 +214,11 @@ export default function Input<T extends FieldValues = FieldValues>({
                   return (
                     <MultipleCheckGroup
                       field={field}
-                      items={(type as MultiCheck).options}
                       fieldState={fieldState}
                       rules={rules}
                       onChanged={onChange}
                       disabled={disabled}
-                      onlyOne={(type as MultiCheck).onlyOne}
+                      {...(type as MultiCheck)}
                     />
                   );
                 if (type == 'date' || (type as DateField)?.type == 'date')
