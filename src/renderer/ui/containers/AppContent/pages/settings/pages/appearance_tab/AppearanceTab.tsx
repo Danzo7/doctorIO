@@ -1,46 +1,32 @@
-import Input from '@components/inputs/input';
+import { color } from '@assets/styles/color';
+import Radio from '@components/inputs/radio';
 import SettingOption from '@components/setting_option';
-import { useForm } from 'react-hook-form';
+import ThemePreferenceItem from '@components/theme_preference_item';
 import Theme01 from 'toSvg/theme01.svg?icon';
 import Theme02 from 'toSvg/theme02.svg?icon';
 import './style/index.scss';
 
-interface Inputs {
-  theme: 'Nighty (default)' | 'Coming soon...';
-}
 interface AppearanceTabProps {}
 export default function AppearanceTab({}: AppearanceTabProps) {
-  const { control } = useForm<Inputs>({
-    defaultValues: {
-      theme: 'Nighty (default)',
-    },
-  });
+  //TODO link store
   return (
-    <div className="appearance-tab">
-      <SettingOption
-        title="Theme preferences"
-        description="Choose how clinicord looks to you."
-        controls={
-          <Input
-            control={control}
-            name="theme"
-            background="none"
-            height="fit-content"
-            type={{
-              type: 'multiCheck',
-              onlyOne: true, //FIXME  fix problem when clicking on the selected choice again
-
-              groupItemType: {
-                name: 'ThemePreferenceItem',
-                options: [
-                  { label: 'Nighty (default)', preview: Theme01 },
-                  { label: 'Coming soon...', preview: Theme02 },
-                ],
-              },
-            }}
+    <SettingOption
+      title="Theme preferences"
+      description="Choose how clinicord looks to you."
+      controls={
+        <div className="appearance-tab">
+          <ThemePreferenceItem
+            Preview={Theme01}
+            negaBackground={color.good_black} //an opposite color of background to make the preview more visible
+            input={<Radio isChecked label="Nighty (default)" group="theme" />}
           />
-        }
-      />
-    </div>
+          <ThemePreferenceItem
+            Preview={Theme02}
+            negaBackground={color.background}
+            input={<Radio label="Coming soon..." group="theme" disabled />}
+          />
+        </div>
+      }
+    />
   );
 }
