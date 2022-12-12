@@ -147,6 +147,14 @@ const memberApi = createApi({
         }
       },
     }),
+    setAvatar: builder.mutation<boolean, { data: FormData }>({
+      query: ({ data }) => ({
+        url: `/avatar`,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['me'],
+    }),
   }),
 });
 export default memberApi;
@@ -157,4 +165,5 @@ export const {
   useGetMemberDetailQuery,
   useGetMyMemberDetailQuery,
   useLazyGetMemberByIdQuery,
+  useSetAvatarMutation,
 } = memberApi;
