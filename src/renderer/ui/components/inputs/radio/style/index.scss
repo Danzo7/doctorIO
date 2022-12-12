@@ -29,8 +29,11 @@
             transition: background 0.2s ease-in-out;
         }
         &:disabled{
+            cursor: no-drop;
+
             +label{
                 color: $silvergray;
+                cursor: no-drop;
             }
             &:before {
                 background: $silvergray;
