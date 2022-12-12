@@ -4,6 +4,7 @@ import SVG from 'react-inlinesvg';
 import { createAvatar } from '@dicebear/avatars';
 import * as style from '@dicebear/avatars-initials-sprites';
 import { useConnectionStore } from '@stores/ConnectionStore';
+import { AVATAR_PATH } from '@constants/resources';
 
 interface CircleAvatarProps {
   src?: string;
@@ -40,11 +41,7 @@ function CircleAvatar({
             width: width,
             height: width,
           }}
-          src={
-            useConnectionStore.getState().getUrl() +
-            '/clinic/member/avatar/' +
-            src
-          }
+          src={useConnectionStore.getState().getUrl() + AVATAR_PATH + src}
           onError={() => {
             setIsError(true);
           }}
