@@ -8,14 +8,10 @@ import {
 } from '@redux/clinic/rbac/member/memberApi';
 import { useState } from 'react';
 import './style/index.scss';
-interface ProfilePictureModalProps {
-  registration: boolean;
-}
-export default function ProfilePictureModal({
-  registration,
-}: ProfilePictureModalProps) {
+interface ProfilePictureModalProps {}
+export default function ProfilePictureModal({}: ProfilePictureModalProps) {
   const [setAvatar] = useSetAvatarMutation();
-  const [formData, setFormData] = useState<FormData>();
+  const [formData, setFormData] = useState<string>();
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
   return (
     <ModalContainer
@@ -24,26 +20,33 @@ export default function ProfilePictureModal({
       controls={
         <div className="profile-picture-controls">
           <TextButton
-            text="Upload"
+            text="Select"
             backgroundColor={color.cold_blue}
             fontSize={12}
             fontWeight={700}
             padding={'5px 15px'}
             disabled={!formData}
             onPress={() => {
-              if (formData) setAvatar({ data: formData });
+              // modal(
+              //   <CropPictureModal
+              //     src={formData}
+              //     onSave={(img) => {
+              //       setAvatar({ data: img });
+              //     }}
+              //   />,
+              //   FIT_MODAL,
+              // ).open();
               //FEATURE:update avatar in electron local file system
             }}
           />
-          {registration && (
-            <span
-              onClick={() => {
-                //TODO: close current modal
-              }}
-            >
-              Skip
-            </span>
-          )}
+
+          <span
+            onClick={() => {
+              //TODO: close current modal
+            }}
+          >
+            Skip
+          </span>
         </div>
       }
     >
@@ -51,16 +54,10 @@ export default function ProfilePictureModal({
         <div className="logo-changer-wrapper">
           <LogoChanger
             width={100}
-            src={
-              formData && formData.get('file')
-                ? URL.createObjectURL(formData.get('file') as File)
-                : data.avatar
-            }
+            src={formData || data.avatar}
             alt={data.name}
             onChange={(newSrc) => {
-              const fd = new FormData();
-              fd.append('file', newSrc);
-              setFormData(fd);
+              setFormData(URL.createObjectURL(newSrc));
             }}
             direct={!!formData}
           />
