@@ -7,7 +7,7 @@ import './style/index.scss';
 interface ModalContainerProps {
   title?: string;
   isLoading?: boolean;
-
+  className?: string;
   onSubmit?: React.FormEventHandler<HTMLFormElement>;
   controls?: ReactNode;
   children?: ReactNode;
@@ -33,12 +33,13 @@ export default function ModalContainer({
   controls,
   gap = 20,
   isLoading,
+  className = '',
 }: ModalContainerProps) {
   const Container = onSubmit ? Form : Div;
 
   return (
     <Container
-      className="modal-container"
+      className={`modal-container ${className}`}
       css={{ gap: gap }}
       onSubmit={onSubmit as any}
     >
