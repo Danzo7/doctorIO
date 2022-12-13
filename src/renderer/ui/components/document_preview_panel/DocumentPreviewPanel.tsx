@@ -7,7 +7,7 @@ import UploadFileModal from '@containers/modals/upload_file_modal';
 import { useGetMedicalDocumentsQuery } from '@redux/instance/record/medical_document_api';
 import { modal } from '@stores/overlayStore';
 import DocumentPreviewItem from './document_preview_item';
-import Schedule from 'toSvg/schedule.svg?icon';
+import NoFile from 'toSvg/no_files.svg?icon';
 interface DocumentPreviewPanelProps {
   patientId: number;
 }
@@ -53,9 +53,9 @@ export default function DocumentPreviewPanel({
           <VerticalPanel
             title="No Documents available"
             description="Start by upload a document. "
-            Icon={<Schedule width={'80%'} height="50%" />} //UI change the Icon to document icon
+            Icon={<NoFile width={'40%'} height="40%" />}
             backgroundColor={'none'}
-            padding={'15px 0px 0 0px'}
+            padding={0}
             action={{
               text: 'Upload document',
               onClick: openUploadFileModal,

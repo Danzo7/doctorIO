@@ -9,7 +9,7 @@ import AddMedicalHistoryModal from '@containers/modals/add_medical_history_modal
 import { useGetMedicalHistoryQuery } from '@redux/instance/record/medical_history_api';
 import { modal } from '@stores/overlayStore';
 import { format } from 'date-fns';
-import Schedule from 'toSvg/schedule.svg?icon';
+import NoHistory from 'toSvg/no_history.svg?icon';
 interface MedicalHistoryProps {
   patientId: number;
 }
@@ -54,9 +54,9 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
           <VerticalPanel
             title="No medical history available"
             description="Start by add a medical history. "
-            Icon={<Schedule width={'80%'} height="50%" />} //UI change the Icon to medical history icon
+            Icon={<NoHistory width={'40%'} height="40%" />}
             backgroundColor={'none'}
-            padding={'15px 0px 0 0px'}
+            padding={0}
             action={{
               text: 'add medical history',
               onClick: openAddMedicalHistoryModal,
