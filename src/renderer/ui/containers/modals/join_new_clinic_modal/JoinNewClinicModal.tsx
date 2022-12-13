@@ -7,12 +7,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRegisterMutation } from '@redux/local/auth/authApi';
 import { parseInviteKey } from '@helpers/crypto/parse';
 import { useState } from 'react';
-import { Overlay } from '@libs/overlay';
 import { nanoid } from '@reduxjs/toolkit';
 import LoadingSpinner from '@components/loading_spinner';
 import CopyField from '@components/copy_field';
 import { useUserStore } from '@stores/userStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
+import { Overlay_u } from '@stores/overlayStore';
 interface Inputs {
   key: string;
 }
@@ -80,7 +80,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
             alignSelf="center"
             padding={5}
             onPress={() => {
-              Overlay.close();
+              Overlay_u.close();
             }}
           />
         )
