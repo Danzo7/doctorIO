@@ -12,8 +12,8 @@ export const FirstStory = Template;
 FirstStory.args = {
   date: new Date('2022-08-19T18:14:15.472Z'),
   assignedBy: {
-    memberId: 1,
-    memberName: 'John Doe',
+    id: 1,
+    name: 'John Doe',
   },
   state: { phase: 'canceled', isBooked: false },
 };

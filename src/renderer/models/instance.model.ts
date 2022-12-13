@@ -1,3 +1,5 @@
+import { Member } from './server.models';
+
 interface BookedAppointment {
   id: number;
   bookedFor: Date;
@@ -50,8 +52,8 @@ interface Session {
 }
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface Appointment_v2 {
-  assignedBy: { memberId: number; memberName: string };
-  member?: { memberId: number; memberName: string };
+  assignedBy: Pick<Member, 'id' | 'avatar' | 'name'>;
+  member?: Pick<Member, 'id' | 'avatar' | 'name'>;
   subject: string;
   bookedFor?: Date;
   queue?: { id: number; name: string };

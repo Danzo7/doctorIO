@@ -95,12 +95,12 @@ export default function TimelineItem({
                 first={
                   //TODO move to a separated component
                   <CircleAvatar
-                    src=""
-                    alt={assignedBy.memberName}
+                    src={assignedBy.avatar}
+                    alt={assignedBy.name}
                     width={25}
                     onClick={() =>
                       modal(
-                        <MemberBigCard id={assignedBy.memberId} />,
+                        <MemberBigCard id={assignedBy.id} />,
                         DEFAULT_MODAL,
                       ).open()
                     }

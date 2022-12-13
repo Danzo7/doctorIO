@@ -46,7 +46,7 @@ export default function SessionPreviewModal({
                     patientAge={patientAge}
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     drugList={data.session!.prescription!}
-                    doctorName={data.member?.memberName ?? 'Fix me'}
+                    doctorName={data.member?.name ?? 'Unknown'}
                   />
                 ),
                 {

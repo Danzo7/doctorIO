@@ -131,7 +131,7 @@ export default function AppointmentDetailPreview({
             fontColor: color.text_gray,
           }}
           second={{
-            text: assignedBy.memberName,
+            text: assignedBy.name,
             fontSize: 15,
             fontWeight: 600,
             fontColor: color.white,
@@ -166,7 +166,7 @@ export default function AppointmentDetailPreview({
                 fontColor: color.text_gray,
               }}
               second={{
-                text: member.memberName,
+                text: member.name,
                 fontSize: 15,
                 fontWeight: 600,
                 fontColor: color.white,
