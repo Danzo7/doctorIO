@@ -1,0 +1,9 @@
+@use '~styles/appColors' as *;
+.crop-picture-modal {
+    .crop-content {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+}
