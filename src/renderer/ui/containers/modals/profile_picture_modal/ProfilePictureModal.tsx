@@ -8,8 +8,12 @@ import {
 } from '@redux/clinic/rbac/member/memberApi';
 import { useState } from 'react';
 import './style/index.scss';
-interface ProfilePictureModalProps {}
-export default function ProfilePictureModal({}: ProfilePictureModalProps) {
+interface ProfilePictureModalProps {
+  registration: boolean;
+}
+export default function ProfilePictureModal({
+  registration,
+}: ProfilePictureModalProps) {
   const [setAvatar] = useSetAvatarMutation();
   const [formData, setFormData] = useState<FormData>();
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
@@ -19,13 +23,6 @@ export default function ProfilePictureModal({}: ProfilePictureModalProps) {
       title="Set a profile picture"
       controls={
         <div className="profile-picture-controls">
-          <span
-            onClick={() => {
-              //TODO: close current modal
-            }}
-          >
-            Skip
-          </span>
           <TextButton
             text="Upload"
             backgroundColor={color.cold_blue}
@@ -38,6 +35,15 @@ export default function ProfilePictureModal({}: ProfilePictureModalProps) {
               //FEATURE:update avatar in electron local file system
             }}
           />
+          {registration && (
+            <span
+              onClick={() => {
+                //TODO: close current modal
+              }}
+            >
+              Skip
+            </span>
+          )}
         </div>
       }
     >

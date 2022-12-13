@@ -2,7 +2,7 @@
 
 .profile-picture-controls {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
     flex-grow: 1;
     align-self: stretch;
@@ -19,9 +19,9 @@
             text-decoration: underline;
         }
     }
-    .logo-changer-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+}
+.logo-changer-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

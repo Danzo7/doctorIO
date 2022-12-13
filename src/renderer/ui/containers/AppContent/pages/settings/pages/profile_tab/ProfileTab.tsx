@@ -24,7 +24,7 @@ export default function ProfileTab({}: ProfileTabProps) {
         width={100}
         alt={data.name}
         onClick={() => {
-          modal(<ProfilePictureModal />, FIT_MODAL).open();
+          modal(<ProfilePictureModal registration={false} />, FIT_MODAL).open();
         }}
       />
       <div className="fullName-id-container">
