@@ -6,13 +6,17 @@ import { useState } from 'react';
 interface LogoChangerProps {
   src?: string;
   width: number;
-  onChange?: (src: string) => void;
+  alt: string;
+  onChange?: (src: File) => void;
+  direct?: boolean;
 }
 
 export default function LogoChanger({
   src,
   width = 100,
   onChange,
+  alt,
+  direct,
 }: LogoChangerProps) {
   const [selectedImage, setSelectedImage] = useState(src);
   const uploadImage = () => {
@@ -21,7 +25,7 @@ export default function LogoChanger({
     input.onchange = (_) => {
       const files: FileList = input.files as FileList;
       setSelectedImage(URL.createObjectURL(files[0]));
-      onChange?.(URL.createObjectURL(files[0]));
+      onChange?.(files[0]);
     };
     input.click();
   };
@@ -41,8 +45,9 @@ export default function LogoChanger({
         <CircleAvatar
           src={selectedImage}
           width={width}
-          alt="Change Logo"
+          alt={alt}
           border={`${(width * 5) / 100}px solid ${color.hot_purple} `}
+          direct={direct}
         />
       </div>
       <span className="change-logo-span">Change Icon</span>

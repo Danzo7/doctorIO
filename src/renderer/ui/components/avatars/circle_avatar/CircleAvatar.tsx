@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 import './style/index.scss';
 import SVG from 'react-inlinesvg';
 import { createAvatar } from '@dicebear/avatars';
@@ -13,6 +13,7 @@ interface CircleAvatarProps {
   radius?: number | string;
   border?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  direct?: boolean;
 }
 function CircleAvatar({
   src,
@@ -21,11 +22,16 @@ function CircleAvatar({
   radius = '100%',
   border,
   onClick,
+  direct,
 }: CircleAvatarProps) {
   const avatar = createAvatar(style, {
     seed: alt,
   });
   const [isError, setIsError] = useState(false);
+  useEffect(() => {
+    if (isError) setIsError(false);
+    else return;
+  }, [isError, src]);
   return (
     <div
       className={`circle-avatar ${onClick ? 'clickable' : ''}`}
@@ -41,7 +47,11 @@ function CircleAvatar({
             width: width,
             height: width,
           }}
-          src={useConnectionStore.getState().getUrl() + AVATAR_PATH + src}
+          src={
+            (!direct
+              ? useConnectionStore.getState().getUrl() + AVATAR_PATH
+              : '') + src
+          }
           onError={() => {
             setIsError(true);
           }}
