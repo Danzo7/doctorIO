@@ -2,7 +2,6 @@ import { color } from '@assets/styles/color';
 import CircleAvatar from '@components/avatars/circle_avatar';
 import './style/index.scss';
 import AddImage from 'toSvg/add_image.svg?icon';
-import { useState } from 'react';
 interface LogoChangerProps {
   src?: string;
   width: number;
@@ -18,13 +17,12 @@ export default function LogoChanger({
   alt,
   direct,
 }: LogoChangerProps) {
-  const [selectedImage, setSelectedImage] = useState(src);
   const uploadImage = () => {
     const input = document.createElement('input');
     input.type = 'file';
     input.onchange = (_) => {
       const files: FileList = input.files as FileList;
-      setSelectedImage(URL.createObjectURL(files[0]));
+
       onChange?.(files[0]);
     };
     input.click();
@@ -43,7 +41,7 @@ export default function LogoChanger({
       </div>
       <div className="circle-avatar-wrapper">
         <CircleAvatar
-          src={selectedImage}
+          src={src}
           width={width}
           alt={alt}
           border={`${(width * 5) / 100}px solid ${color.hot_purple} `}
