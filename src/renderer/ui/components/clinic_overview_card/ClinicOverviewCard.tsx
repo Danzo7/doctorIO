@@ -18,6 +18,7 @@ export default function ClinicOverviewCard(clinicInfo: Clinic) {
       <LogoChanger
         src={avatar}
         width={100}
+        alt={name}
         // onChange={(newSrc) => {
         //   dispatch(changeLogo(newSrc));
         // }}
