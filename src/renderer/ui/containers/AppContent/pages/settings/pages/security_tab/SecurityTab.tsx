@@ -29,6 +29,7 @@ export default function SecurityTab({}: SecurityTabProps) {
             onPress={() => {
               modal(<ChangeSecretModal />, {
                 ...DEFAULT_MODAL,
+                width: '25%',
               }).open();
             }}
           />
@@ -53,6 +54,7 @@ export default function SecurityTab({}: SecurityTabProps) {
             onPress={() => {
               modal(<PasswordFormModal registration={false} />, {
                 ...DEFAULT_MODAL,
+                width: '25%',
               }).open();
             }}
           />
