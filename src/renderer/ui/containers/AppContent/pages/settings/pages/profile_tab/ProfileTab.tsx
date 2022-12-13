@@ -4,7 +4,10 @@ import LoadingSpinner from '@components/loading_spinner';
 import TextPair from '@components/text_pair/TextPair';
 import UserProfileStatus from '@components/user_profile_status';
 import { DATE_ONLY } from '@constants/data_format';
+import ProfilePictureModal from '@containers/modals/profile_picture_modal';
+import { FIT_MODAL } from '@libs/overlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
+import { modal } from '@stores/overlayStore';
 import { format } from 'date-fns';
 import Edit from 'toSvg/pencil.svg?icon';
 import './style/index.scss';
@@ -20,6 +23,9 @@ export default function ProfileTab({}: ProfileTabProps) {
         status={data.status}
         width={100}
         alt={data.name}
+        onClick={() => {
+          modal(<ProfilePictureModal />, FIT_MODAL).open();
+        }}
       />
       <div className="fullName-id-container">
         <span>{data.name}</span>
