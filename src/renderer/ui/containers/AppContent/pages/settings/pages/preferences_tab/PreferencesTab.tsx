@@ -3,33 +3,21 @@ import BorderSeparator from '@components/border_separator';
 import CheckboxTile from '@components/checkbox_tile';
 import Input from '@components/inputs/input';
 import SettingOption from '@components/setting_option';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { DATE_DAY, DATE_ONLY } from '@constants/data_format';
+import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import './style/index.scss';
 
-const schema = z.object({
-  language: z.enum(['English', 'Francais', 'العربية']),
-  date: z.enum(['dd MMM yyyy', 'EEEE, dd MMM', 'dd MMM yyyy, h:mm aa']),
-});
 //TODO add time and day options
 interface Inputs {
-  language: 'English' | 'Francais' | 'العربية';
-  date: 'dd MMM yyyy' | 'EEEE, dd MMM' | 'dd MMM yyyy, h:mm aa';
+  language: string;
+  date: string;
   time: string;
   day: string;
 }
 interface PreferencesTabProps {}
 export default function PreferencesTab({}: PreferencesTabProps) {
-  const { control } = useForm<Inputs>({
-    defaultValues: {
-      language: 'English',
-      date: 'dd MMM yyyy',
-    },
-    resolver: zodResolver(schema),
-  });
-  const [autoStart, setAutoStart] = useState(false);
+  const { control } = useForm<Inputs>({});
   return (
     <div className="preferences-tab">
       <SettingOption
@@ -45,9 +33,21 @@ export default function PreferencesTab({}: PreferencesTabProps) {
               type={{
                 type: 'select',
                 options: [
-                  'dd MMM yyyy',
-                  'EEEE, dd MMM',
-                  'dd MMM yyyy, h:mm aa',
+                  format(new Date(), DATE_ONLY),
+                  format(new Date(), 'MM/dd/yyyy'),
+                  format(new Date(), 'yyyy/mm/dd'),
+                ],
+              }}
+            />
+            <Input
+              control={control}
+              label="Day"
+              name="day"
+              type={{
+                type: 'select',
+                options: [
+                  format(new Date(), DATE_DAY),
+                  format(new Date(), 'EEEE dd MMM'),
                 ],
               }}
             />
@@ -55,15 +55,7 @@ export default function PreferencesTab({}: PreferencesTabProps) {
               control={control}
               label="Time"
               name="time"
-              placeholder="Time"
-              type={{ type: 'select', options: [] }}
-            />
-            <Input
-              control={control}
-              label="Day"
-              name="day"
-              placeholder="Day"
-              type={{ type: 'select', options: [] }}
+              type={{ type: 'select', options: ['24h', '12h'] }}
             />
           </div>
         }
@@ -81,7 +73,7 @@ export default function PreferencesTab({}: PreferencesTabProps) {
               type: 'multiCheck',
               onlyOne: true,
               mustOne: true,
-              selected: [2],
+              selected: [0],
               options: ['English', 'Francais', 'العربية'],
             }}
           />
@@ -91,8 +83,6 @@ export default function PreferencesTab({}: PreferencesTabProps) {
       <CheckboxTile
         primaryText="Start with windows"
         secondaryText="Auto start when system boot."
-        isChecked={autoStart}
-        onChange={setAutoStart}
       />
     </div>
   );
