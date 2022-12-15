@@ -6,7 +6,7 @@ import View from 'toSvg/view_test.svg?icon';
 import { color } from '@assets/styles/color';
 import SessionPreviewModal from '@containers/modals/session_preview_modal';
 import { format } from 'date-fns';
-import { DATE_ONLY, TIME_ONLY } from '@constants/data_format';
+import { DATE_ONLY, TIME_ONLY_24H } from '@constants/data_format';
 import { AppointmentBrief } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { modal } from '@stores/overlayStore';
@@ -73,7 +73,7 @@ export default function TimelineItem({
             <TextPair
               gap={2}
               first={format(date, DATE_ONLY)}
-              second={format(date, TIME_ONLY)}
+              second={format(date, TIME_ONLY_24H)}
             />
           )}
 
