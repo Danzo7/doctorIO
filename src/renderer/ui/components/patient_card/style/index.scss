@@ -7,7 +7,8 @@
     gap: 10px;
     border: 1px solid $bordercolor;
     border-radius: 20px;
-    width: fit-content;
+    align-self: stretch;
+    position: relative;
 
     > .key-value-items {
 

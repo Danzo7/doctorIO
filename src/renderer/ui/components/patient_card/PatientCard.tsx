@@ -1,11 +1,13 @@
 import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
+import IconicButton from '@components/buttons/iconic_button';
 import TextPair from '@components/text_pair/TextPair';
 import { DATE_ONLY } from '@constants/data_format';
 import { BloodType } from '@models/instance.model';
 import { format } from 'date-fns';
 import KeyValueItem from './key_value_item';
 import './style/index.scss';
+import Edit from 'toSvg/pencil.svg?icon';
 interface PatientSpecificProps {
   data: { [key: string]: any };
 }
@@ -65,6 +67,15 @@ export function PatientInfoCard({
 }: PatientInfoProps) {
   return (
     <div className="patient-card ">
+      <IconicButton
+        css={{ position: 'absolute', right: 10 }}
+        tip="Edit"
+        blank
+        width={25}
+        radius={7}
+        backgroundColor={color.cold_blue}
+        Icon={<Edit width={10} height={10} />}
+      />
       <TextPair
         alignItems="center"
         first={{
