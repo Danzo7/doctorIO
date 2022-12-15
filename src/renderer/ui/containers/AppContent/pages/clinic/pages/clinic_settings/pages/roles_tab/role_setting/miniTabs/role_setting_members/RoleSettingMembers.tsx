@@ -25,15 +25,15 @@ export default function RoleSettingMembers(props: RoleBrief) {
         <LoadingSpinner />
       ) : isSuccess ? (
         list.length > 0 ? (
-          <MembersTable roleId={id} />
+          <MembersTable {...props} />
         ) : (
           <VerticalPanel
-            description="No members were found."
+            description="No members were found. "
             backgroundColor="none"
             action={{
               text: 'Add members to this role.',
               onClick: () => {
-                modal(() => <CreateInvitationModal selectedRole={props} />, {
+                modal(() => <CreateInvitationModal defaultValues={[props]} />, {
                   ...DEFAULT_MODAL,
                   position: { top: '30%' },
                 }).open();

@@ -22,10 +22,10 @@ interface Inputs {
   searchField: string;
 }
 interface CreateInvitationModalProps {
-  selectedRole?: RoleBrief;
+  defaultValues?: RoleBrief[];
 }
 export default function CreateInvitationModal({
-  selectedRole,
+  defaultValues = [],
 }: CreateInvitationModalProps) {
   const {
     control,
@@ -40,8 +40,6 @@ export default function CreateInvitationModal({
   );
   const { data, isLoading, error, isSuccess } = useGetMembersQuery();
   const [CreateInvitation, invResult] = useCreateInvitationMutation();
-  let defaultValues: RoleBrief[] = [];
-  defaultValues = selectedRole ? [selectedRole] : [];
   const [roles, setRoles] = useState<RoleBrief[]>(defaultValues);
 
   return (

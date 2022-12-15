@@ -7,10 +7,9 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
 import LoadingSpinner from '@components/loading_spinner';
 import RefetchPanel from '@components/refetch_panel';
-interface MembersTableProps {
-  roleId: number;
-}
-export default function MembersTable({ roleId }: MembersTableProps) {
+import { RoleBrief } from '@models/server.models';
+
+export default function MembersTable(role: RoleBrief) {
   const { data, isLoading, isSuccess, refetch } = useGetMembersQuery();
 
   return (
@@ -20,7 +19,7 @@ export default function MembersTable({ roleId }: MembersTableProps) {
       ) : isSuccess ? (
         (() => {
           const list = data.filter(({ roles }) =>
-            roles.find(({ id: rId }) => roleId == rId),
+            roles.find(({ id: rId }) => role.id == rId),
           );
 
           return (
@@ -46,15 +45,19 @@ export default function MembersTable({ roleId }: MembersTableProps) {
                 </div>
               ) : (
                 <VerticalPanel
-                  description="No members were found."
+                  description="Role is empty. "
                   backgroundColor="none"
+                  padding={0}
                   action={{
                     text: 'Add members to this role.',
                     onClick: () => {
-                      modal(() => <CreateInvitationModal />, {
-                        ...DEFAULT_MODAL,
-                        position: { top: '30%' },
-                      }).open();
+                      modal(
+                        () => <CreateInvitationModal defaultValues={[role]} />,
+                        {
+                          ...DEFAULT_MODAL,
+                          position: { top: '30%' },
+                        },
+                      ).open();
                     },
                   }}
                 />
