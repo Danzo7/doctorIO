@@ -53,7 +53,7 @@ export default function DocumentPreviewPanel({
           <VerticalPanel
             title="No Documents available"
             description="Start by upload a document. "
-            Icon={<NoFile width={'40%'} height="40%" />}
+            Icon={<NoFile width="40%" height="40%" />}
             backgroundColor={'none'}
             padding={0}
             action={{

@@ -26,7 +26,7 @@ export default function BookedList({}) {
           <VerticalPanel
             title="No booked appointments"
             description="Start by booking an appointment. "
-            Icon={<Schedule width={'80%'} height="50%" />}
+            Icon={<Schedule width={'60%'} height="60%" />}
             backgroundColor={'none'}
             padding={'15px 0px 0 0px'}
             action={{
