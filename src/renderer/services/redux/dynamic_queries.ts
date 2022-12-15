@@ -69,6 +69,7 @@ export class DynamicBaseQuery {
   ) => {
     if (!useConnectionStore.getState().url)
       return {
+        meta: { arg: args, requestId: '0' },
         error: {
           status: -1,
           data: {
@@ -99,6 +100,35 @@ export class DynamicBaseQuery {
     });
 
     let result = await rawBaseQuery(args, api, extraOptions);
+    if (result.error && 'error' in result.error) {
+      let status: number;
+      switch (result.error.status) {
+        case 'FETCH_ERROR':
+          status = 4001;
+          break;
+        case 'PARSING_ERROR':
+          status = 4002;
+          break;
+        case 'TIMEOUT_ERROR':
+          status = 4003;
+          break;
+        case 'CUSTOM_ERROR':
+          status = 4004;
+          break;
+      }
+
+      return {
+        ...result,
+        error: {
+          data: {
+            errorCode: status,
+            message: 'Internal Client Error',
+          },
+          status: status,
+        },
+      };
+    }
+
     if ((result.error?.data as ServerError)?.errorCode == 1007) {
       const refreshed = await refreshTokens();
       if (refreshed) result = await rawBaseQuery(args, api, extraOptions);
