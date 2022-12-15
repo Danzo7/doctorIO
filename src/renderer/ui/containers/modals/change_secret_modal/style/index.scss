@@ -13,5 +13,11 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+
+        > .error-span {
+            color: $hotred;
+            font-size: 13px;
+            font-weight: 600;
+        }
     }
 }
