@@ -2,8 +2,8 @@ import { color } from '@assets/styles/color';
 import { ReactNode } from 'react';
 import './style/index.scss';
 interface VerticalPanelProps {
-  Icon: ReactNode;
-  title: string;
+  Icon?: ReactNode;
+  title?: string;
   description?: string;
   action?: { text: string; onClick?: () => void };
   IconBtn?: ReactNode;
