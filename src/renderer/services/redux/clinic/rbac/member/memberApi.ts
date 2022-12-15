@@ -147,6 +147,24 @@ const memberApi = createApi({
         }
       },
     }),
+    updateMember: builder.mutation<
+      boolean,
+      {
+        name?: string;
+        age?: number;
+        gender?: 'male' | 'female';
+        phone?: string;
+        address?: string;
+        publicKey?: string;
+      }
+    >({
+      query: (body) => ({ url: '', body: body, method: 'PATCH' }),
+      invalidatesTags: ['me'],
+    }),
+    updateMemberSecret: builder.mutation<
+      boolean,
+      { oldSecret: string; newSecret: string }
+    >({ query: (body) => ({ url: 'secret', body: body, method: 'PATCH' }) }),
     setAvatar: builder.mutation<boolean, { data: FormData }>({
       query: ({ data }) => ({
         url: `/avatar`,
@@ -166,4 +184,6 @@ export const {
   useGetMyMemberDetailQuery,
   useLazyGetMemberByIdQuery,
   useSetAvatarMutation,
+  useUpdateMemberMutation,
+  useUpdateMemberSecretMutation,
 } = memberApi;
