@@ -38,18 +38,18 @@ export default function ChangeSecretModal({}: ChangeSecretModalProps) {
       UpdateMemberSecretMutation({
         oldSecret: oldSecretKey,
         newSecret: newSecretKey,
-      }).then((result: any) => {
-        if (result.data) {
+      }).then((result) => {
+        if ('data' in result) {
           Overlay_u.close();
         } else {
           const castedErr = (result.error as any)?.data as ServerError;
-          if (castedErr?.errorCode == 1200) {
-            setError(castedErr?.message);
-          }
+          if (castedErr?.errorCode == 1000)
+            setError('The old secret key is incorrect');
+          else setError('An error occurred, please try again');
         }
       });
     else {
-      setError("Secret Key confirmation doesn't match the password");
+      setError("secret keys don't match each other");
     }
   };
   return (

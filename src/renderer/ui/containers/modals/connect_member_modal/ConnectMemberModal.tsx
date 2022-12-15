@@ -41,17 +41,19 @@ export default function ConnectMemberModal({
       useClinicsStore.getState().clinicData.clinics[selectedIndex]
         .serverLocation;
     useConnectionStore.getState().pseudoConnect(location);
-    ConnectMember({ memberId: memId, secretKey: key }).then((result: any) => {
-      if (result.data) {
+    ConnectMember({ memberId: memId, secretKey: key }).then((result) => {
+      if ('data' in result) {
         clinics.setSelectedClinic(selectedIndex);
         useConnectionStore.getState().connect();
         navigate('/');
         Overlay_u.close();
       } else {
-        const castedErr = (result.error as any)?.data as ServerError;
-        if (castedErr?.errorCode == 1000) {
-          setError('Wrong Secret key ');
-        }
+        if ('data' in result.error) {
+          const castedErr = result.error.data as ServerError;
+          if (castedErr?.errorCode == 1000) setError('Secret key is incorrect');
+          else if (castedErr?.errorCode == 4001)
+            setError('Server is not responding');
+        } else setError('something went wrong. please try again later');
       }
     });
   };
@@ -62,6 +64,7 @@ export default function ConnectMemberModal({
       title="Connect a member"
       controls={
         <TextButton
+          disabled={res.isLoading}
           text="Connect"
           backgroundColor={color.good_green}
           fontSize={13}
@@ -77,8 +80,9 @@ export default function ConnectMemberModal({
         name="key"
         control={control}
         leading={<Key />}
+        disabled={res.isLoading}
         type="text"
-        hint="The Secret key is needed to connect"
+        hint="Please enter the secret key"
         onChange={() => {
           if (internalError.length > 0) setError('');
         }}

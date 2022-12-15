@@ -31,15 +31,17 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
     if (data.files.length === 0) return;
     const fd = new FormData();
     fd.append('file', data.files[0]);
-    uploadFile({ patientId, data: fd }).then((result: any) => {
-      if (result.data) {
+    uploadFile({ patientId, data: fd }).then((result) => {
+      if ('data' in result) {
         reset();
         Overlay.close();
       } else {
         const castedErr = (result.error as any)?.data as ServerError;
-        if (castedErr?.errorCode == 1201) {
-          setError('you are trying to upload unsupported file type.');
-        }
+        if (castedErr?.errorCode == 1201)
+          setError(
+            'The file must be a pdf or an image, with a maximum size of 25MB',
+          );
+        else setError('An error occurred, please try again');
       }
     });
   };
