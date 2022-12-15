@@ -74,7 +74,7 @@ const authApi = createApi({
           });
           dispatch({ type: 'RESET' });
         } catch (e) {
-          throw new Error("Error while connecting to member's account");
+          //
         }
       },
     }),
