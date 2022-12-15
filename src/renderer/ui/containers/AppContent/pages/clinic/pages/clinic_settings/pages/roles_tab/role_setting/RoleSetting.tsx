@@ -1,6 +1,7 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import LoadingSpinner from '@components/loading_spinner';
+import RefetchPanel from '@components/refetch_panel';
 import TabMenu from '@components/tab_menu';
 import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
 import { mapIndexFromPermissions } from '@helpers/permission.helper';
@@ -121,17 +122,27 @@ export default function RoleSetting({}: RoleSettingProps) {
     >
       {isLoading ? (
         <LoadingSpinner />
-      ) : isSuccess ? (
+      ) : isSuccess && data ? (
         <TabMenu items={['General', 'Permissions', 'Members']}>
           <RoleSettingGeneral
             slaveRole={data?.slaveRole}
             id={Number(roleIdParam)}
           />
           {<PermissionList />}
-          <RoleSettingMembers id={Number(roleIdParam)} />
+          <RoleSettingMembers
+            id={Number(roleIdParam)}
+            name={data?.name}
+            priority={data.priority}
+            description={data?.description}
+            masterRole={data?.masterRole}
+          />
         </TabMenu>
       ) : (
-        <div> mafihach </div>
+        <RefetchPanel
+          action={() => {
+            trigger(Number(roleIdParam) as any);
+          }}
+        />
       )}
     </div>
   );

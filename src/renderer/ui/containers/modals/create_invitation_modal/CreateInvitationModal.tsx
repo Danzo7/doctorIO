@@ -21,7 +21,12 @@ import './style/index.scss';
 interface Inputs {
   searchField: string;
 }
-export default function CreateInvitationModal() {
+interface CreateInvitationModalProps {
+  selectedRole?: RoleBrief;
+}
+export default function CreateInvitationModal({
+  selectedRole,
+}: CreateInvitationModalProps) {
   const {
     control,
     watch,
@@ -35,7 +40,9 @@ export default function CreateInvitationModal() {
   );
   const { data, isLoading, error, isSuccess } = useGetMembersQuery();
   const [CreateInvitation, invResult] = useCreateInvitationMutation();
-  const [roles, setRoles] = useState<RoleBrief[]>([]);
+  let defaultValues: RoleBrief[] = [];
+  defaultValues = selectedRole ? [selectedRole] : [];
+  const [roles, setRoles] = useState<RoleBrief[]>(defaultValues);
 
   return (
     <ModalContainer

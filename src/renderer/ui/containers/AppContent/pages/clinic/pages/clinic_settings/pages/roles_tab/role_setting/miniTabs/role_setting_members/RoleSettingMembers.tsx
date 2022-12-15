@@ -1,13 +1,17 @@
+import LoadingSpinner from '@components/loading_spinner';
 import MembersTable from '@components/members_table';
+import VerticalPanel from '@components/vertical_panel';
+import CreateInvitationModal from '@containers/modals/create_invitation_modal';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import { RoleBrief } from '@models/server.models';
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
+import { modal } from '@stores/overlayStore';
 
 import './style/index.scss';
 
-interface RoleSettingMembersProps {
-  id: number;
-}
-export default function RoleSettingMembers({ id }: RoleSettingMembersProps) {
-  const { data, isLoading, isSuccess, error } = useGetMembersQuery();
+export default function RoleSettingMembers(props: RoleBrief) {
+  const { id } = props;
+  const { data, isLoading, isSuccess } = useGetMembersQuery();
 
   const list = isSuccess
     ? data.filter(
@@ -16,7 +20,29 @@ export default function RoleSettingMembers({ id }: RoleSettingMembersProps) {
     : [];
   return (
     <div className="role-setting-members">
-      <MembersTable list={list} />
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : isSuccess ? (
+        list.length > 0 ? (
+          <MembersTable roleId={id} />
+        ) : (
+          <VerticalPanel
+            description="No members were found."
+            backgroundColor="none"
+            action={{
+              text: 'Add members to this role.',
+              onClick: () => {
+                modal(() => <CreateInvitationModal selectedRole={props} />, {
+                  ...DEFAULT_MODAL,
+                  position: { top: '30%' },
+                }).open();
+              },
+            }}
+          />
+        )
+      ) : (
+        <div>error</div>
+      )}
     </div>
   );
 }
