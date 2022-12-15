@@ -160,6 +160,9 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
       case 'UpdateRole':
         toast('Role updated successfully', 'Success', 2000);
         break;
+      case 'updateMemberSecret':
+        toast('The secret key updated successfully', 'Success', 2000);
+        break;
 
       case 'findPatientByName':
         break;
