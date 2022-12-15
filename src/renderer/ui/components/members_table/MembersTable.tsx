@@ -6,11 +6,12 @@ import CreateInvitationModal from '@containers/modals/create_invitation_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
 import LoadingSpinner from '@components/loading_spinner';
+import RefetchPanel from '@components/refetch_panel';
 interface MembersTableProps {
   roleId: number;
 }
 export default function MembersTable({ roleId }: MembersTableProps) {
-  const { data, isLoading, isSuccess } = useGetMembersQuery();
+  const { data, isLoading, isSuccess, refetch } = useGetMembersQuery();
 
   return (
     <>
@@ -62,7 +63,7 @@ export default function MembersTable({ roleId }: MembersTableProps) {
           );
         })()
       ) : (
-        <div>error</div>
+        <RefetchPanel action={refetch} />
       )}
     </>
   );

@@ -1,5 +1,6 @@
 import LoadingSpinner from '@components/loading_spinner';
 import MembersTable from '@components/members_table';
+import RefetchPanel from '@components/refetch_panel';
 import VerticalPanel from '@components/vertical_panel';
 import CreateInvitationModal from '@containers/modals/create_invitation_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
@@ -11,7 +12,7 @@ import './style/index.scss';
 
 export default function RoleSettingMembers(props: RoleBrief) {
   const { id } = props;
-  const { data, isLoading, isSuccess } = useGetMembersQuery();
+  const { data, isLoading, isSuccess, refetch } = useGetMembersQuery();
 
   const list = isSuccess
     ? data.filter(
@@ -41,7 +42,7 @@ export default function RoleSettingMembers(props: RoleBrief) {
           />
         )
       ) : (
-        <div>error</div>
+        <RefetchPanel action={refetch} />
       )}
     </div>
   );

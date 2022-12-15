@@ -5,11 +5,12 @@ import { useSearchParams } from 'react-router-dom';
 import { useGetBriefRolesQuery } from '@redux/clinic/rbac/role/roleApi';
 import LoadingSpinner from '@components/loading_spinner';
 import Can from '@ability/index';
+import RefetchPanel from '@components/refetch_panel';
 
 export default function RoleList() {
   const [searchParams] = useSearchParams();
 
-  const { data, isLoading, isFetching, isSuccess, error } =
+  const { data, isLoading, isFetching, isSuccess, refetch } =
     useGetBriefRolesQuery();
 
   return (
@@ -32,7 +33,7 @@ export default function RoleList() {
             />
           ))
         ) : (
-          <div> not succeeded </div>
+          <RefetchPanel action={refetch} />
         )}
       </div>
     </div>
