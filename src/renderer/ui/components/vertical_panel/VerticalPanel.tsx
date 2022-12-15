@@ -36,14 +36,16 @@ export default function VerticalPanel({
       }}
     >
       {Icon}
-      <span>{title}</span>
-      <div className="description-div">
-        <span>
-          {description}
-          {action && <span onClick={action.onClick}>{action.text}</span>}
-        </span>
-      </div>
-      <div className="top-left-btn">{IconBtn}</div>
+      {title && <span>{title}</span>}
+      {(description || action) && (
+        <div className="description-div">
+          <span>
+            {description}
+            {action && <span onClick={action.onClick}>{action.text}</span>}
+          </span>
+        </div>
+      )}
+      {IconBtn && <div className="top-left-btn">{IconBtn}</div>}
     </div>
   );
 }
