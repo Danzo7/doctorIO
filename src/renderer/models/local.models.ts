@@ -1,13 +1,24 @@
-interface UserSettings {
-  language: 'en';
-  theme: 'Nighty';
+import {
+  LANG,
+  DATE_FORMAT,
+  DAY_FORMAT,
+  THEME,
+  TIME_FORMAT,
+} from '@constants/app_settings';
+
+interface AppSettings {
+  language: typeof LANG[number];
+  theme: typeof THEME[number];
+  dateFormat: typeof DATE_FORMAT[number];
+  timeFormat: typeof TIME_FORMAT[number];
+  dayFormat: typeof DAY_FORMAT[number];
   welcomeDismissedIn: string;
 }
 
 interface AppData {
   user: AppUser;
   clinicData: AppClinics;
-  appPreferences: UserSettings;
+  appPreferences: AppSettings;
 }
 export interface AppUser {
   userId?: string; //"machineId"
@@ -97,7 +108,7 @@ export type {
   DirectMessage,
   Message,
   LocalClinicData,
-  UserSettings,
+  AppSettings,
   MedicalSessionLocal,
   AppData,
 };

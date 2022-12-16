@@ -1,4 +1,5 @@
-const staticColors = {
+import { SETTINGS, useAppSettingsStore } from '@stores/appSettingsStore';
+const nighty = {
   cold_red: '#ff4b59',
   background: '#23315e',
   lighter_background: '#2c3964',
@@ -17,6 +18,30 @@ const staticColors = {
   darker: ' #00000020',
   light: '#ffffff20',
 };
+
+const drakula = {
+  cold_red: '#C5434D',
+  background: '#303030',
+  lighter_background: '#404040',
+  cold_blue: '#439297',
+  hot_red: '#C13E34',
+  good_green: '#1D7D58',
+  secondary_color: '#363636',
+  darkersec_color: '#262626',
+  border_color: '#ffffff0d',
+  hot_purple: '#4D8F87',
+  silver_gray: '#648D86',
+  white: '#ffffff',
+  text_gray: '#bdbdbd',
+  good_black: '#18191c',
+  warm_orange: '#f2994a',
+  darker: '#00000020',
+  light: '#ffffff20',
+};
+let staticColors = SETTINGS.theme === 'Nighty' ? nighty : drakula;
+useAppSettingsStore.subscribe((state) => {
+  staticColors = state.theme === 'Nighty' ? nighty : drakula;
+});
 const color = {
   cold_red: 'var(--cold-red)',
   background: 'var(--background)',
