@@ -22,7 +22,6 @@ import RefetchPanel from '@components/refetch_panel';
 import { modal } from '@stores/overlayStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 import AppointmentQueueSmallShimmer from '@components/shimmers/appointment_queue_small_shimmer';
-import LoadingSpinner from '@components/loading_spinner';
 
 interface AppointmentQueueSmallProps {}
 
@@ -53,10 +52,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       const appointments = getQueueAppointmentsQuery.data;
 
       return (
-        <Backdrop
-          when={getQueueAppointmentsQuery.isFetching}
-          node={<LoadingSpinner />}
-        >
+        <Backdrop when={getQueueAppointmentsQuery.isFetching}>
           <PreviewList
             title="Queue list"
             overflow="visible"

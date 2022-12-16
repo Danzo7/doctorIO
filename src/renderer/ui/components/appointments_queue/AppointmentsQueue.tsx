@@ -26,7 +26,6 @@ import { modal } from '@stores/overlayStore';
 import RefetchPanel from '@components/refetch_panel';
 import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 import AppointmentsQueueShimmer from '@components/shimmers/appointments_queue_shimmer';
-import LoadingSpinner from '@components/loading_spinner';
 
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
@@ -42,6 +41,7 @@ export default function AppointmentsQueue() {
     selectedQueue,
     {
       skip: !isQueueOwnerQuery.isSuccess,
+      refetchOnMountOrArgChange: true,
     },
   );
   const [ResumeQueue] = useResumeQueueMutation();
@@ -57,10 +57,7 @@ export default function AppointmentsQueue() {
       const appointments = getQueueAppointmentsQuery.data;
 
       return (
-        <Backdrop
-          when={getQueueAppointmentsQuery.isFetching}
-          node={<LoadingSpinner />}
-        >
+        <Backdrop when={getQueueAppointmentsQuery.isFetching}>
           <div className="appointments-queue">
             {myMemberDetailQuery.isSuccess && myMemberDetailQuery.data.queues && (
               <>
