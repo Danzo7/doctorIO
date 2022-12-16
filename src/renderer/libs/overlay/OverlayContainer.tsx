@@ -161,7 +161,8 @@ export interface OverlayOptions {
     | 'appear-right'
     | 'appear-left'
     | 'appear-top'
-    | 'appear-bottom';
+    | 'appear-bottom'
+    | 'none';
   autoFocus?: boolean;
   clickable?: boolean;
 }
@@ -226,7 +227,10 @@ export function OverlayItem({
           bottom: position?.bottom,
           left: position?.left,
           right: position?.right,
-          animation: transition && `${transition} .1s forwards ease-out`,
+          animation:
+            transition != 'none'
+              ? `${transition} .1s forwards ease-out`
+              : undefined,
           pointerEvents: clickable ? 'all' : 'none',
         }}
         {...(autoFocus ? { tabIndex: -1 } : {})}
