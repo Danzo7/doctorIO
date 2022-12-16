@@ -30,7 +30,7 @@ const drakula = {
   darkersec_color: '#262626',
   border_color: '#ffffff0d',
   hot_purple: '#4D8F87',
-  silver_gray: '#648D86',
+  silver_gray: '#5a6a67',
   white: '#ffffff',
   text_gray: '#bdbdbd',
   good_black: '#18191c',
