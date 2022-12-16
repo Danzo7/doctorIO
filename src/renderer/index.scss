@@ -23,12 +23,13 @@ input[type=file]::-webkit-file-upload-button {
 }
 
 :root {
-  --cold-red: #ff4b59;
   --background: #23315e;
   --lighter-background: #2c3964;
+  --cold-red: #ff4b59;
   --cold-blue: #01b9ca;
   --hot-red: #f44336;
   --good-green: #0acf83;
+  --warm-orange: #f2994a;
   --secondary-color: #344175;
   --darker-secondary-color: #29336a;
   --border-color: #3c4b7e;
@@ -37,7 +38,6 @@ input[type=file]::-webkit-file-upload-button {
   --white: #ffffff;
   --text-gray: #bdbdbd;
   --good-black: #18191c;
-  --warm-orange: #f2994a;
   --darker: #00000020;
   --light: #ffffff20;
 }

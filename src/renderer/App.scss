@@ -17,23 +17,24 @@
   padding: 2vh 1vw;
 
   background: $background;
-  &.joke {
-    --cold-red: #ff4b59;
-    --background: #303030;
-    --lighter-background: #ffffff14;
-    --cold-blue: #6bbbc2;
-    --hot-red: #f44336;
-    --good-green: #0acf83;
-    --secondary-color: #ffffff08;
-    --darker-secondary-color: #00000033;
-    --border-color: #ffffff0d;
-    --silver-gray: #ffffff2e;
-    --hot-purple: #80e0ff2e;
-    --white: #ffffff;
-    --text-gray: #bdbdbd;
-    --good-black: #18191c;
-    --warm-orange: #f2994a;
-    --darker: #00000020;
-    --light: #ffffff20;
+  &.drakula {
+    &,~div {
+      --background: #303030;
+      --lighter-background: #404040;
+      --cold-blue: #439297;
+      --hot-red: #C13E34;
+      --good-green: #1D7D58;
+      --warm-orange: #f2994a;
+      --cold-red: #C5434D;
+      --secondary-color: #363636;
+      --darker-secondary-color: #262626;
+      --border-color: #ffffff0d;
+      --silver-gray: #648D86;
+      --hot-purple: #4D8F87;
+      --white: #ffffff;
+      --text-gray: #bdbdbd;
+      --good-black: #18191c;
+      --light: #ffffff20;
+    }
   }
 }
