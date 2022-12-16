@@ -39,14 +39,14 @@ export default function ProfileTab({}: ProfileTabProps) {
         onChange={(newSrc) => {
           modal(
             <CropPictureModal
-              src={newSrc}
+              src={URL.createObjectURL(newSrc)}
               onSave={(img) => {
                 setAvatar({ data: img }).then(() => {
                   Overlay_u.close('avatarCropper');
                 });
               }}
             />,
-            DEFAULT_MODAL,
+            { ...DEFAULT_MODAL, transition: 'appear-bottom' },
             'avatarCropper',
           ).open();
         }}

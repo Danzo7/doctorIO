@@ -10,13 +10,12 @@ import { getImageFile } from '@components/cropper/getImageFile';
 
 interface CropPictureModalProps {
   onSave: (image: FormData) => void;
-  src: File;
+  src: string;
 }
 export default function CropPictureModal({
   onSave,
   src,
 }: CropPictureModalProps) {
-  const srcUrl = URL.createObjectURL(src);
   const [state, setState] = useState<{
     crop: Point;
     zoom: number;
@@ -53,7 +52,7 @@ export default function CropPictureModal({
           text="Save"
           onPress={async () => {
             if (!state.cropArea) return;
-            const fd = await getImageFile(srcUrl, state.cropArea);
+            const fd = await getImageFile(src, state.cropArea);
 
             if (!fd) return;
             onSave(fd);
@@ -71,7 +70,7 @@ export default function CropPictureModal({
           }}
         >
           <Croppers
-            image={srcUrl}
+            image={src}
             crop={state.crop}
             zoom={state.zoom}
             aspect={state.aspect}
