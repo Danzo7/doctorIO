@@ -12,7 +12,15 @@ interface SelectProps extends ControllerProps {
 }
 
 export default forwardRef(function Select(
-  { options, placeholder = '', icon, padding = 10, width, field }: SelectProps,
+  {
+    options,
+    placeholder = '',
+    icon,
+    padding = 10,
+    width,
+    field,
+    onChanged,
+  }: SelectProps,
   ref: any,
 ) {
   const [isOpen, setOpen] = useState(false);
@@ -61,6 +69,7 @@ export default forwardRef(function Select(
               key={e + index}
               onClick={() => {
                 field.onChange?.(options[index]);
+                onChanged?.(options[index]);
                 setOpen(false);
               }}
             >
