@@ -4,6 +4,8 @@ import SettingOption from '@components/setting_option';
 import ThemePreferenceItem from '@components/theme_preference_item';
 import { SETTINGS, useAppSettingsStore } from '@stores/appSettingsStore';
 import Theme01 from 'toSvg/theme01.svg?icon';
+import drakula from 'toSvg/drakula.svg?icon';
+
 import Theme02 from 'toSvg/theme02.svg?icon';
 import './style/index.scss';
 
@@ -31,7 +33,7 @@ export default function AppearanceTab({}: AppearanceTabProps) {
             }
           />
           <ThemePreferenceItem
-            Preview={Theme02}
+            Preview={drakula}
             negaBackground={color.background}
             input={
               <Radio
@@ -43,6 +45,11 @@ export default function AppearanceTab({}: AppearanceTabProps) {
                 }
               />
             }
+          />
+          <ThemePreferenceItem
+            Preview={Theme02}
+            negaBackground={color.background}
+            input={<Radio disabled label="Coming soon..." group="theme" />}
           />
         </div>
       }
