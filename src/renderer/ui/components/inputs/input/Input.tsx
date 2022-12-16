@@ -80,7 +80,7 @@ type MultiCheck = {
 >;
 type InputProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = {
   type:
     | SelectInput
@@ -98,23 +98,26 @@ type InputProps<
   children?: ReactNode;
   placeholder?: string;
   fillContainer?: true;
-  onChange?: (value: FieldPathValue<TFieldValues, TName>) => void;
+  onChange?: (value: FieldPathValue<TFieldValues, TFieldName>) => void;
   grow?: boolean;
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
   disabled?: boolean;
-  name: TName;
+  name: TFieldName;
   control?: Control<TFieldValues>;
   rules?: Omit<
-    RegisterOptions<TFieldValues, TName>,
+    RegisterOptions<TFieldValues, TFieldName>,
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
   shouldUnregister?: boolean;
-  defaultValue?: FieldPathValue<TFieldValues, TName>;
+  defaultValue?: FieldPathValue<TFieldValues, TFieldName>;
   errorMessage?: string;
   autoFocus?: true;
   touchFirst?: true;
 };
-export default function Input<T extends FieldValues = FieldValues>({
+export default function Input<
+  TFieldValues extends FieldValues = FieldValues,
+  TFieldName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
   type = 'text',
   hint,
   label,
@@ -137,7 +140,7 @@ export default function Input<T extends FieldValues = FieldValues>({
   radius,
   autoFocus,
   touchFirst,
-}: InputProps<T> & Partial<InputWrapperProps>) {
+}: InputProps<TFieldValues, TFieldName> & Partial<InputWrapperProps>) {
   const { control: controlC } = useContext(InputControllerContext);
   if (!controlC && !control) {
     throw new Error(
@@ -151,8 +154,8 @@ export default function Input<T extends FieldValues = FieldValues>({
     name,
     control: controlC || control,
     rules,
-    defaultValue,
     shouldUnregister,
+    ...(defaultValue ? { defaultValue } : {}),
   });
   return type == 'checkbox' ? (
     <Checkbox label={label} field={field} ref={ref} disabled={disabled} />
