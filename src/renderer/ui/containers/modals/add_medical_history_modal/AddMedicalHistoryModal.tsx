@@ -2,7 +2,8 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
 import { Overlay_u } from '@stores/overlayStore';
@@ -78,7 +79,7 @@ export default function AddMedicalHistoryModal({
           type={{
             type: 'date',
             yearControl: true,
-            dateFormat: DATE_ONLY,
+            dateFormat: SETTINGS.dateFormat,
             only: 'before',
           }}
           name="selectedDate"

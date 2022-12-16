@@ -8,7 +8,8 @@ import MemberBigCard from '@containers/modals/member_big_card';
 import { FIT_MODAL } from '@libs/overlay';
 import { MemberBrief } from '@models/server.models';
 import { format } from 'date-fns';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import {
   useAssignRoleMutation,
   useRevokeRoleMutation,
@@ -43,7 +44,7 @@ export default function MemberItem({
         </div>
 
         <div className="date-container">
-          <span>{format(joinDate, DATE_ONLY)}</span>
+          <span>{format(joinDate, SETTINGS.dateFormat)}</span>
         </div>
         <SmallRoleList
           roleList={roles}

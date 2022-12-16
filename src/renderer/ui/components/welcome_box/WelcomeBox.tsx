@@ -5,13 +5,13 @@ import Arrow from 'toSvg/arrow.svg';
 import Pattern from 'toSvg/pattern.svg';
 import { differenceInHours } from 'date-fns/esm';
 import { parseISO } from 'date-fns';
-import { useUserSettingsStore } from '@stores/userSettingsStore';
+import { useAppSettingsStore } from '@stores/appSettingsStore';
 import { useUserStore } from '@stores/userStore';
 interface WelcomeBoxProps {
   message?: string;
 }
 function WelcomeBox({ message }: WelcomeBoxProps) {
-  const settings = useUserSettingsStore();
+  const settings = useAppSettingsStore();
   const isDismiss =
     differenceInHours(new Date(), parseISO(settings.welcomeDismissedIn)) < 24;
   const [close, setCloseState] = useState({

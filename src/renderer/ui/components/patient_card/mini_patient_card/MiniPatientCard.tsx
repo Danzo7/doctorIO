@@ -1,7 +1,8 @@
 import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import TextPair from '@components/text_pair/TextPair';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import { format } from 'date-fns';
 import './style/index.scss';
 interface MiniPatientCardProps {
@@ -54,7 +55,7 @@ export default function MiniPatientCard({
           alignItems="center"
           first={{
             text: nextAppointmentDate
-              ? format(nextAppointmentDate, DATE_ONLY)
+              ? format(nextAppointmentDate, SETTINGS.dateFormat)
               : 'No',
             fontSize: 15,
             fontColor: color.white,

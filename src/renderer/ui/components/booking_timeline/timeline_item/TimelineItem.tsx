@@ -6,7 +6,7 @@ import View from 'toSvg/view_test.svg?icon';
 import { color } from '@assets/styles/color';
 import SessionPreviewModal from '@containers/modals/session_preview_modal';
 import { format } from 'date-fns';
-import { DATE_ONLY, TIME_ONLY_24H } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
 import { AppointmentBrief } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { modal } from '@stores/overlayStore';
@@ -24,6 +24,7 @@ export default function TimelineItem({
   patientId,
   id,
 }: AppointmentBrief & { patientId: number }) {
+  console.log(SETTINGS.dateFormat);
   const selectedColor =
     state.phase == 'done'
       ? state.isBooked
@@ -72,8 +73,8 @@ export default function TimelineItem({
           {date && (
             <TextPair
               gap={2}
-              first={format(date, DATE_ONLY)}
-              second={format(date, TIME_ONLY_24H)}
+              first={format(date, SETTINGS.dateFormat)}
+              second={format(date, SETTINGS.timeFormat)}
             />
           )}
 
@@ -83,7 +84,7 @@ export default function TimelineItem({
           {bookedFor && (
             <TextPair
               gap={2}
-              first={format(bookedFor, DATE_ONLY)}
+              first={format(bookedFor, SETTINGS.dateFormat)}
               second={'Booked for'}
               reversed
             />

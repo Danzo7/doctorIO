@@ -6,13 +6,13 @@ import SmallRoleList from '@components/members_preview/small_role_list';
 import MemberActionControls from '@components/member_action_controls';
 import { MemberBrief } from '@models/server.models';
 import { format } from 'date-fns';
-import { DATE_ONLY } from '@constants/data_format';
 import { useGetMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import {
   useAssignRoleMutation,
   useRevokeRoleMutation,
 } from '@redux/clinic/rbac/role/roleApi';
 import ModalContainer from '@components/modal_container';
+import { SETTINGS } from '@stores/appSettingsStore';
 
 export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
   const { data, isSuccess, isLoading } = useGetMemberDetailQuery(id);
@@ -97,7 +97,7 @@ export default function MemberBigCard({ id }: Pick<MemberBrief, 'id'>) {
                 fontColor: color.text_gray,
               }}
               second={{
-                text: format(data.joinDate, DATE_ONLY),
+                text: format(data.joinDate, SETTINGS.dateFormat),
                 fontSize: 17,
                 fontColor: color.white,
               }}

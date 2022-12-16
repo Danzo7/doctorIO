@@ -1,7 +1,8 @@
 import { color } from '@assets/styles/color';
 import NotAButton from '@components/not_a_button';
 import TextPair from '@components/text_pair/TextPair';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import { Appointment } from '@models/instance.model';
 import { format } from 'date-fns';
 import './style/index.scss';
@@ -57,7 +58,7 @@ export default function AppointmentDetailPreview({
               fontColor: color.text_gray,
             }}
             second={{
-              text: format(bookedFor, DATE_ONLY),
+              text: format(bookedFor, SETTINGS.dateFormat),
               fontSize: 15,
               fontWeight: 600,
               fontColor: color.white,
@@ -147,7 +148,7 @@ export default function AppointmentDetailPreview({
             fontColor: color.text_gray,
           }}
           second={{
-            text: format(bookedIn, DATE_ONLY),
+            text: format(bookedIn, SETTINGS.dateFormat),
             fontSize: 15,
             fontWeight: 600,
             fontColor: color.white,
@@ -183,7 +184,7 @@ export default function AppointmentDetailPreview({
                 fontColor: color.text_gray,
               }}
               second={{
-                text: format(date, DATE_ONLY),
+                text: format(date, SETTINGS.dateFormat),
                 fontSize: 15,
                 fontWeight: 600,
                 fontColor: color.white,

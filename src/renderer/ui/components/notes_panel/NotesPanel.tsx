@@ -3,7 +3,8 @@ import DarkLightCornerButton from '@components/buttons/dark_light_corner_button'
 import IconicButton from '@components/buttons/iconic_button';
 import DateSpan from '@components/date_span';
 import Header from '@components/header';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import { format } from 'date-fns';
 import './style/index.scss';
 import Edit from 'toSvg/pencil.svg?icon';
@@ -31,7 +32,7 @@ export default function NotesPanel({ date, note }: NotesPanelProps) {
         <span>{note}</span>
       </div>
       <Header
-        leftComponent={<DateSpan value={format(date, DATE_ONLY)} />}
+        leftComponent={<DateSpan value={format(date, SETTINGS.dateFormat)} />}
         buttonNode={
           <IconicButton
             tip="Edit"

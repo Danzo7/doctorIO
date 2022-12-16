@@ -5,7 +5,8 @@ import { ComponentProps } from 'react';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import Arrow from 'toSvg/arrow.svg?icon';
 import { ControllerProps } from '../input';
-import { DATE_DAY, DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 export interface DatepickerProps
   extends Omit<ComponentProps<typeof DatePickerReact>, 'onChange'> {
   yearControl?: boolean;
@@ -84,7 +85,11 @@ export default function Datepicker({
               only === 'before' ? date <= new Date() : date >= new Date()
           : undefined)
       }
-      dateFormat={props.dateFormat ?? yearControl ? DATE_ONLY : DATE_DAY}
+      dateFormat={
+        props.dateFormat ?? yearControl
+          ? SETTINGS.dateFormat
+          : SETTINGS.dayFormat
+      }
       selected={field.value}
       {...props}
       {...others}

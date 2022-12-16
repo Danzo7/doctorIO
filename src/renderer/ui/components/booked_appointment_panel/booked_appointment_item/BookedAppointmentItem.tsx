@@ -4,7 +4,8 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import TextButton from '@components/buttons/text_button';
 import NotAButton from '@components/not_a_button';
 import TextPair from '@components/text_pair/TextPair';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { BookedAppointment } from '@models/instance.model';
@@ -32,7 +33,7 @@ export default function BookedAppointmentItem({
       <BorderSeparator direction="vertical" />
       <TextPair
         second="Booked in"
-        first={format(bookedFor, DATE_ONLY)}
+        first={format(bookedFor, SETTINGS.dayFormat)}
         reversed
       />
       <BorderSeparator direction="vertical" />

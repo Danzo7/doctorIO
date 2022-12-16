@@ -4,7 +4,8 @@ import PreviewList from '@components/preview_list';
 import PreviewWithControls from '@components/preview_with_controls';
 import RefetchPanel from '@components/refetch_panel';
 import VerticalPanel from '@components/vertical_panel';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import AddMedicalHistoryModal from '@containers/modals/add_medical_history_modal';
 import { useGetMedicalHistoryQuery } from '@redux/instance/record/medical_history_api';
 import { modal } from '@stores/overlayStore';
@@ -46,7 +47,7 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
           data.map((med, index) => (
             <PreviewWithControls
               primaryText={med.description}
-              secondaryText={format(med.date, DATE_ONLY)}
+              secondaryText={format(med.date, SETTINGS.dateFormat)}
               key={index}
             />
           ))

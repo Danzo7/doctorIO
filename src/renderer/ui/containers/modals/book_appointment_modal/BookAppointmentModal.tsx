@@ -7,7 +7,8 @@ import ModalContainer from '@components/modal_container';
 import { useBookAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import { Overlay_u } from '@stores/overlayStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 
@@ -64,7 +65,7 @@ export default function BookAppointmentModal({
             type={{
               type: 'date',
               yearControl: false,
-              dateFormat: DATE_ONLY,
+              dateFormat: SETTINGS.dayFormat,
               only: 'after',
             }}
             control={control}

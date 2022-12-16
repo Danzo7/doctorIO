@@ -7,6 +7,7 @@ import './style/index.scss';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
+import { SETTINGS } from '@stores/appSettingsStore';
 const schema = z.object({
   payment: z.number().min(0).max(4000).array().optional(),
   customCost: z.number().optional(),
@@ -58,7 +59,7 @@ export default function SessionParameter({}: SessionParameterProps) {
       />
 
       <Input
-        type={{ type: 'date', only: 'after' }}
+        type={{ type: 'date', only: 'after', dateFormat: SETTINGS.dayFormat }}
         control={control}
         grow={false}
         name={'bookDate'}

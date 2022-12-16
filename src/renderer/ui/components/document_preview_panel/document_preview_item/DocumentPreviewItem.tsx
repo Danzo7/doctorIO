@@ -5,7 +5,8 @@ import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 import damaged from 'toSvg/damaged.svg?icon';
 import { MedicalDocument } from '@models/instance.model';
 import { format } from 'date-fns';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import { color } from '@assets/styles/color';
 import { useRef } from 'react';
@@ -49,7 +50,7 @@ export default function DocumentPreviewItem({
   return (
     <PreviewWithControls
       primaryText={fileName}
-      secondaryText={format(date, DATE_ONLY)}
+      secondaryText={format(date, SETTINGS.dateFormat)}
     >
       <SquareIconButton
         tip="View Document"

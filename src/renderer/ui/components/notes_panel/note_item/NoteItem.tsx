@@ -2,7 +2,8 @@ import { color } from '@assets/styles/color';
 import IconicButton from '@components/buttons/iconic_button';
 import DateSpan from '@components/date_span';
 import Header from '@components/header';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import { format } from 'date-fns';
 import Edit from 'toSvg/pencil.svg?icon';
 import './style/index.scss';
@@ -14,7 +15,7 @@ export default function NoteItem({ date, note }: NoteItemProps) {
   return (
     <div className="note-item">
       <Header
-        leftComponent={<DateSpan value={format(date, DATE_ONLY)} />}
+        leftComponent={<DateSpan value={format(date, SETTINGS.dateFormat)} />}
         buttonNode={
           <IconicButton
             tip="Edit"

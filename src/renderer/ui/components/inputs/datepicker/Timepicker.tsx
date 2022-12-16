@@ -1,7 +1,7 @@
 import DatePickerReact from 'react-datepicker';
 import './style/index.scss';
-import { TIME_ONLY_24H } from '@constants/data_format';
 import { ControllerProps } from '../input';
+import { SETTINGS } from '@stores/appSettingsStore';
 
 export default function Timepicker({ field, onChanged }: ControllerProps) {
   const { onChange, ...others } = field;
@@ -15,7 +15,7 @@ export default function Timepicker({ field, onChanged }: ControllerProps) {
         showTimeSelectOnly
         timeIntervals={15}
         timeCaption="Time"
-        dateFormat={TIME_ONLY_24H}
+        dateFormat={SETTINGS.timeFormat}
         preventOpenOnFocus
         onChange={(
           date: Date | [Date | null, Date | null] | null,

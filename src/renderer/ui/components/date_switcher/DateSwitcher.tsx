@@ -1,6 +1,7 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import { format } from 'date-fns';
 import Arrow from 'toSvg/arrow.svg?icon';
 import './style/index.scss';
@@ -34,7 +35,7 @@ export default function DateSwitcher({
         <Arrow css={{ transform: 'rotate(90deg)' }} />
       </TextButton>
       <div className="date-div">
-        <span>{format(date, DATE_ONLY)}</span>
+        <span>{format(date, SETTINGS.dateFormat)}</span>
       </div>
       <TextButton
         borderColor={color.border_color}

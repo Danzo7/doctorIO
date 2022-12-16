@@ -2,7 +2,8 @@ import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import IconicButton from '@components/buttons/iconic_button';
 import TextPair from '@components/text_pair/TextPair';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import { BloodType } from '@models/instance.model';
 import { format } from 'date-fns';
 import KeyValueItem from './key_value_item';
@@ -95,7 +96,7 @@ export function PatientInfoCard({
       <div className="key-value-items">
         <KeyValueItem
           primaryText={'Birthday'}
-          secondaryText={format(birthDate, DATE_ONLY)}
+          secondaryText={format(birthDate, SETTINGS.dateFormat)}
           width="fit-content"
         />
         <KeyValueItem
@@ -106,7 +107,7 @@ export function PatientInfoCard({
         <KeyValueItem
           width="fit-content"
           primaryText={'Register date'}
-          secondaryText={format(registerDate, DATE_ONLY)}
+          secondaryText={format(registerDate, SETTINGS.dateFormat)}
         />
         {bloodType && (
           <TextPair
@@ -147,7 +148,7 @@ export function PatientInfoCard({
           alignItems="center"
           first={{
             text: nextAppointmentDate
-              ? format(nextAppointmentDate, DATE_ONLY)
+              ? format(nextAppointmentDate, SETTINGS.dateFormat)
               : 'No',
             fontSize: 15,
             fontColor: color.white,

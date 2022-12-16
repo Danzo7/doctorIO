@@ -3,7 +3,8 @@ import IconicButton from '@components/buttons/iconic_button';
 import LoadingSpinner from '@components/loading_spinner';
 import LogoChanger from '@components/logo_changer';
 import TextPair from '@components/text_pair/TextPair';
-import { DATE_ONLY } from '@constants/data_format';
+import { SETTINGS } from '@stores/appSettingsStore';
+
 import CropPictureModal from '@containers/modals/crop_picture_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import {
@@ -114,7 +115,7 @@ export default function ProfileTab({}: ProfileTabProps) {
             fontColor: color.text_gray,
           }}
           second={{
-            text: format(data.joinDate, DATE_ONLY),
+            text: format(data.joinDate, SETTINGS.dateFormat),
             fontSize: 17,
             fontColor: color.white,
           }}
