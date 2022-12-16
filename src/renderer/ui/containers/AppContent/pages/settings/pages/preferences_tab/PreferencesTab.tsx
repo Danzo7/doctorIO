@@ -1,23 +1,68 @@
 import color from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
+import TextButton from '@components/buttons/text_button';
 import CheckboxTile from '@components/checkbox_tile';
 import Input from '@components/inputs/input';
 import SettingOption from '@components/setting_option';
-import { DATE_DAY, DATE_ONLY } from '@constants/data_format';
-import { format } from 'date-fns';
+import {
+  DATE_FORMAT,
+  DAY_FORMAT,
+  LANG,
+  TIME_FORMAT,
+} from '@constants/app_settings';
+import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
+import usePrompt from '@libs/HistoryBlocker';
+import { AppSettings } from '@models/local.models';
+import { SETTINGS, useAppSettingsStore } from '@stores/appSettingsStore';
+
 import { useForm } from 'react-hook-form';
 import './style/index.scss';
-
-//TODO add time and day options
-interface Inputs {
-  language: string;
-  date: string;
-  time: string;
-  day: string;
-}
 interface PreferencesTabProps {}
 export default function PreferencesTab({}: PreferencesTabProps) {
-  const { control } = useForm<Inputs>({});
+  const {
+    control,
+    getValues,
+    formState: { isDirty },
+    reset,
+  } = useForm<
+    Pick<AppSettings, 'dateFormat' | 'dayFormat' | 'language' | 'timeFormat'>
+  >({
+    defaultValues: {
+      dateFormat: SETTINGS.dateFormat,
+      dayFormat: SETTINGS.dayFormat,
+      language: SETTINGS.language,
+      timeFormat: SETTINGS.timeFormat,
+    },
+  });
+  usePrompt(
+    'Careful : you have unsaved changes !',
+    () => (
+      <SnakeBarActionsControls>
+        <TextButton
+          text="reset"
+          afterBgColor={color.darker}
+          onPress={() => {
+            reset();
+          }}
+        />
+        <TextButton
+          text="Save changes"
+          backgroundColor={color.good_green}
+          onPress={async () => {
+            useAppSettingsStore.getState().set(getValues());
+            reset({
+              dateFormat: SETTINGS.dateFormat,
+              dayFormat: SETTINGS.dayFormat,
+              language: SETTINGS.language,
+              timeFormat: SETTINGS.timeFormat,
+            });
+          }}
+        />
+      </SnakeBarActionsControls>
+    ),
+    isDirty,
+    isDirty,
+  );
   return (
     <div className="preferences-tab">
       <SettingOption
@@ -28,34 +73,30 @@ export default function PreferencesTab({}: PreferencesTabProps) {
             <Input
               control={control}
               label="Date"
-              name="date"
+              name="dateFormat"
               placeholder="Date"
               type={{
                 type: 'select',
-                options: [
-                  format(new Date(), DATE_ONLY),
-                  format(new Date(), 'MM/dd/yyyy'),
-                  format(new Date(), 'yyyy/mm/dd'),
-                ],
+                options: [...DATE_FORMAT],
               }}
             />
             <Input
               control={control}
               label="Day"
-              name="day"
+              name="dayFormat"
               type={{
                 type: 'select',
-                options: [
-                  format(new Date(), DATE_DAY),
-                  format(new Date(), 'EEEE dd MMM'),
-                ],
+                options: [...DAY_FORMAT],
               }}
             />
             <Input
               control={control}
               label="Time"
-              name="time"
-              type={{ type: 'select', options: ['24h', '12h'] }}
+              name="timeFormat"
+              type={{
+                type: 'select',
+                options: [...TIME_FORMAT],
+              }}
             />
           </div>
         }
@@ -73,8 +114,7 @@ export default function PreferencesTab({}: PreferencesTabProps) {
               type: 'multiCheck',
               onlyOne: true,
               mustOne: true,
-              selected: [0],
-              options: ['English', 'Francais', 'العربية'],
+              options: [...LANG],
             }}
           />
         }
