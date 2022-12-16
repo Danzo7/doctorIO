@@ -20,6 +20,7 @@ export default function LogoChanger({
   const uploadImage = () => {
     const input = document.createElement('input');
     input.type = 'file';
+    input.accept = 'image/*';
     input.onchange = (_) => {
       const files: FileList = input.files as FileList;
 
@@ -33,11 +34,7 @@ export default function LogoChanger({
         className="logo-changer-small-indicator"
         css={{ width: width * 0.3, height: width * 0.3 }}
       >
-        <AddImage
-          width={width / 8}
-          height={width / 8}
-          css={{ '>path': { fill: color.silver_gray } }}
-        />
+        <AddImage css={{ '>path': { fill: color.silver_gray } }} />
       </div>
       <div className="circle-avatar-wrapper">
         <CircleAvatar
