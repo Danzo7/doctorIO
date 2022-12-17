@@ -85,6 +85,7 @@ export class DynamicBaseQuery {
 
     const rawBaseQuery = fetchBaseQuery({
       baseUrl: baseUrl,
+      timeout: 5000,
       prepareHeaders: async (headers) => {
         const tokens = useAuthStore.getState();
         if (tokens.accessToken && tokens.refreshToken)
