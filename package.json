@@ -60,7 +60,7 @@
     "react-transition-group": "^4.4.5",
     "react-viewport-list": "^6.1.0",
     "socket.io-client": "^4.5.3",
-    "zod": "^3.19.1",
+    "zod": "^3.20.2",
     "zustand": "^4.1.4"
   },
   "devDependencies": {
