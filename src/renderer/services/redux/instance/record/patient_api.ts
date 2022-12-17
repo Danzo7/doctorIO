@@ -75,6 +75,7 @@ const patientApi = createApi({
       invalidatesTags: ['patient'],
     }),
   }),
+  //TODO add endpoint for : update Patient info
 });
 export default patientApi;
 export const {

@@ -21,6 +21,7 @@ interface PatientInfoProps {
   gender: 'male' | 'female';
   numPostAppointment: number;
   nextAppointmentDate?: Date;
+  onEdit: () => void;
 }
 export function PatientSpecificsCard({ data }: PatientSpecificProps) {
   //TODO remove dead code
@@ -65,6 +66,7 @@ export function PatientInfoCard({
   registerDate,
   numPostAppointment,
   nextAppointmentDate,
+  onEdit,
 }: PatientInfoProps) {
   return (
     <div className="patient-card ">
@@ -76,6 +78,7 @@ export function PatientInfoCard({
         radius={7}
         backgroundColor={color.cold_blue}
         Icon={<Edit width={10} height={10} />}
+        onPress={onEdit}
       />
       <TextPair
         alignItems="center"
