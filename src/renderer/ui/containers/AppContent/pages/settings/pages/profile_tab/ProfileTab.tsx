@@ -7,18 +7,14 @@ import { SETTINGS } from '@stores/appSettingsStore';
 
 import CropPictureModal from '@containers/modals/crop_picture_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import {
-  useGetMyMemberDetailQuery,
-  useSetAvatarMutation,
-} from '@redux/clinic/rbac/member/memberApi';
-import { modal, Overlay_u } from '@stores/overlayStore';
+import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
+import { modal, toast } from '@stores/overlayStore';
 import { format } from 'date-fns';
 import Edit from 'toSvg/pencil.svg?icon';
 import './style/index.scss';
 interface ProfileTabProps {}
 export default function ProfileTab({}: ProfileTabProps) {
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
-  const [setAvatar] = useSetAvatarMutation();
   return isLoading ? (
     <LoadingSpinner />
   ) : isSuccess ? (
@@ -36,16 +32,13 @@ export default function ProfileTab({}: ProfileTabProps) {
         width={100}
         src={data.avatar}
         alt={data.name}
-        onChange={(newSrc) => {
+        onChange={(file) => {
+          if (file.size > 1024 * 1024 * 5) {
+            toast('File size must be less than 5MB', 'error');
+            return;
+          }
           modal(
-            <CropPictureModal
-              src={URL.createObjectURL(newSrc)}
-              onSave={(img) => {
-                setAvatar({ data: img }).then(() => {
-                  Overlay_u.close('avatarCropper');
-                });
-              }}
-            />,
+            <CropPictureModal src={URL.createObjectURL(file)} />,
             { ...DEFAULT_MODAL, transition: 'appear-bottom' },
             'avatarCropper',
           ).open();

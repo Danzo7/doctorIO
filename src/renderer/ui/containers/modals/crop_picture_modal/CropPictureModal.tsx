@@ -4,18 +4,16 @@ import ModalContainer from '@components/modal_container';
 import './style/index.scss';
 import Croppers from 'react-easy-crop';
 import Slider from '@components/inputs/slider';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Area, Point } from 'react-easy-crop/types';
 import { getImageFile } from '@components/cropper/getImageFile';
+import { useSetAvatarMutation } from '@redux/clinic/rbac/member/memberApi';
+import { Overlay_u } from '@stores/overlayStore';
 
 interface CropPictureModalProps {
-  onSave: (image: FormData) => void;
   src: string;
 }
-export default function CropPictureModal({
-  onSave,
-  src,
-}: CropPictureModalProps) {
+export default function CropPictureModal({ src }: CropPictureModalProps) {
   const [state, setState] = useState<{
     crop: Point;
     zoom: number;
@@ -37,12 +35,40 @@ export default function CropPictureModal({
   const onZoomChange = (zoom: number) => {
     setState((prevState) => ({ ...prevState, zoom }));
   };
+  const [setAvatar, { isLoading, error, isError }] = useSetAvatarMutation();
+  const serverError: ServerError | undefined = (error as any)
+    ?.data as ServerError;
+  const [internalError, setError] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const upload = useCallback(() => {
+    setIsProcessing(true);
+    if (!state.cropArea) return;
+    getImageFile(src, state.cropArea)
+      .then((blob) => {
+        if (!blob) return setError('Something went wrong');
+        const data = new FormData();
+        data.append('file', blob);
+        setAvatar({ data })
+          .unwrap()
+          .then(() => Overlay_u.close('avatarCropper'));
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsProcessing(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsProcessing(false);
+      });
+  }, [setAvatar, src, state.cropArea]);
+
   return (
     <ModalContainer
       title="Crop profile picture"
       className="crop-picture-modal"
       controls={
         <TextButton
+          disabled={isLoading || isProcessing}
           backgroundColor={color.good_green}
           fontSize={14}
           fontWeight={700}
@@ -50,17 +76,13 @@ export default function CropPictureModal({
           blank
           type="submit"
           text="Save"
-          onPress={async () => {
-            if (!state.cropArea) return;
-            const fd = await getImageFile(src, state.cropArea);
-
-            if (!fd) return;
-            onSave(fd);
-          }}
+          onPress={upload}
         />
       }
     >
       <div className="crop-content">
+        {isError && <span>{serverError?.message}</span>}
+        {internalError.length > 0 && <span>{internalError}</span>}
         <div
           css={{
             position: 'relative',
@@ -82,7 +104,6 @@ export default function CropPictureModal({
             onZoomChange={onZoomChange}
           />
         </div>
-
         <Slider
           min={1}
           max={3}

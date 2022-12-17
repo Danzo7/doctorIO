@@ -32,15 +32,17 @@ export async function getImageFile(src: string, pixelCrop: Area) {
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
   ctx.putImageData(data, 0, 0);
-  return new Promise<FormData>((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (blob === null) {
-        reject('something went wrong');
-        return;
-      }
-      const fd = new FormData();
-      fd.set('file', blob, 'avatar.png');
-      resolve(fd);
-    }, 'image/png');
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob === null) {
+          reject('something went wrong');
+          return;
+        }
+        resolve(blob);
+      },
+      'image/webp',
+      0.8,
+    );
   });
 }

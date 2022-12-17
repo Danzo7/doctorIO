@@ -20,7 +20,7 @@ export default function LogoChanger({
   const uploadImage = () => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = 'image/*';
+    input.accept = 'image/png, image/jpeg';
     input.onchange = (_) => {
       const files: FileList = input.files as FileList;
 
