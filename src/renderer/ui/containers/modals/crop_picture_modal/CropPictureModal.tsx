@@ -6,9 +6,9 @@ import Croppers from 'react-easy-crop';
 import Slider from '@components/inputs/slider';
 import { useCallback, useState } from 'react';
 import { Area, Point } from 'react-easy-crop/types';
-import { getImageFile } from '@components/cropper/getImageFile';
 import { useSetAvatarMutation } from '@redux/clinic/rbac/member/memberApi';
 import { Overlay_u } from '@stores/overlayStore';
+import { getImageFile } from '@helpers/getImageFile';
 
 interface CropPictureModalProps {
   src: string;
