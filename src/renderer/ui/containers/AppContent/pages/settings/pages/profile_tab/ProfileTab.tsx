@@ -12,6 +12,8 @@ import { modal, toast } from '@stores/overlayStore';
 import { format } from 'date-fns';
 import Edit from 'toSvg/pencil.svg?icon';
 import './style/index.scss';
+import UserRegister from '@containers/modals/user_regisiter';
+
 interface ProfileTabProps {}
 export default function ProfileTab({}: ProfileTabProps) {
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
@@ -19,15 +21,6 @@ export default function ProfileTab({}: ProfileTabProps) {
     <LoadingSpinner />
   ) : isSuccess ? (
     <div className="profile-tab">
-      {/* <UserProfileStatus
-        imgSrc={data.avatar}
-        status={data.status}
-        width={100}
-        alt={data.name}
-        onClick={() => {
-          modal(<ProfilePictureModal registration={false} />, FIT_MODAL).open();
-        }}
-      /> */}
       <LogoChanger
         width={100}
         src={data.avatar}
@@ -137,7 +130,22 @@ export default function ProfileTab({}: ProfileTabProps) {
       <div className="edit-div-button">
         <IconicButton
           tip="Edit"
-          onPress={() => {}}
+          onPress={() => {
+            modal(
+              <UserRegister
+                defaultValues={{
+                  firstName: data.name.split(' ')[0],
+                  lastName: data.name.split(' ')[1],
+                  age: data.age,
+                  address: data.address ?? '',
+                  email: 'email@example.com',
+                  gender: data.gender,
+                  phone: data.phone ?? '',
+                }}
+              />,
+              DEFAULT_MODAL,
+            ).open();
+          }}
           blank
           width={25}
           radius={7}
