@@ -31,7 +31,7 @@ function CircleAvatar({
   useEffect(() => {
     if (isError) setIsError(false);
     else return;
-  }, [isError, src]);
+  }, [src]);
   return (
     <div
       className={`circle-avatar ${onClick ? 'clickable' : ''}`}
