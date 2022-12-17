@@ -3,6 +3,9 @@ import MedicalHistory from '@components/medical_history';
 import { PatientInfoCard } from '@components/patient_card';
 import { Patient } from '@models/instance.model';
 import './style/index.scss';
+import { modal } from '@stores/overlayStore';
+import AddPatientModal from '@containers/modals/add_patient_modal';
+import { DEFAULT_MODAL } from '@libs/overlay';
 interface RecordInfoSideBarProps {
   data: Patient;
   patientId: number;
@@ -24,6 +27,21 @@ export default function RecordInfoSideBar({
         gender={data.gender}
         numPostAppointment={numPostAppointment}
         nextAppointmentDate={data.nextAppointment}
+        onEdit={() => {
+          modal(
+            <AddPatientModal
+              defaultValues={{
+                firstName: data.firstName,
+                lastName: data.lastName,
+                gender: data.gender,
+                birthDate: data.birthDate,
+                bloodGroup: data?.bloodType?.group ?? 'A',
+                rh: data?.bloodType?.rh ?? true, //TODO fix bloodType is optional
+              }}
+            />,
+            DEFAULT_MODAL,
+          ).open();
+        }}
       />
 
       <div className="scroll-div">

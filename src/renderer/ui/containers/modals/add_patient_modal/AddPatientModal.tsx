@@ -22,12 +22,16 @@ const schema = z.object({
   rh: z.boolean(),
 });
 type Inputs = z.infer<typeof schema>;
-interface AddPatientModalProps {}
-export default function AddPatientModal({}: AddPatientModalProps) {
+interface AddPatientModalProps {
+  defaultValues?: Inputs;
+}
+export default function AddPatientModal({
+  defaultValues,
+}: AddPatientModalProps) {
   const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onChange',
     resolver: zodResolver(schema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       birthDate: new Date(),
       gender: 'male',
       firstName: '',
@@ -38,20 +42,25 @@ export default function AddPatientModal({}: AddPatientModalProps) {
   const [addPatient] = useAddPatientMutation();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     const { firstName, lastName, gender, birthDate, bloodGroup, rh } = formData;
-    addPatient({
-      firstName: firstName,
-      lastName: lastName,
-      birthDate: birthDate,
-      sex: gender == ('male' || 'female') ? gender : 'male',
-      bloodType: bloodGroup ? { group: bloodGroup, rh: rh } : undefined,
-    })
-      .unwrap()
-      .then((patient) => {
-        modal(
-          () => <AddSelectedToQueueModal id={patient.id} name={patient.name} />,
-          DEFAULT_MODAL,
-        ).open();
-      });
+    if (defaultValues) {
+      //TODO add updatePatient mutation
+    } else
+      addPatient({
+        firstName: firstName,
+        lastName: lastName,
+        birthDate: birthDate,
+        sex: gender == ('male' || 'female') ? gender : 'male',
+        bloodType: bloodGroup ? { group: bloodGroup, rh: rh } : undefined,
+      })
+        .unwrap()
+        .then((patient) => {
+          modal(
+            () => (
+              <AddSelectedToQueueModal id={patient.id} name={patient.name} />
+            ),
+            DEFAULT_MODAL,
+          ).open();
+        });
   };
 
   return (
