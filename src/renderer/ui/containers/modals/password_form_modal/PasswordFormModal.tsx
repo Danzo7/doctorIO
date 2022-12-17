@@ -6,6 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import './style/index.scss';
+import EyePassword from '@components/buttons/eye_password';
+import { useState } from 'react';
 
 const registrationSchema = z.object({
   password: z.string().min(1, 'The password is required'),
@@ -25,6 +27,9 @@ interface PasswordFormModalProps {
 export default function PasswordFormModal({
   registration,
 }: PasswordFormModalProps) {
+  const [showOldPass, setShowOldPass] = useState(false);
+  const [showNewPass, setShowNewPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
   const { control, handleSubmit } = useForm<Inputs>({
     mode: 'onChange',
     resolver: registration
@@ -77,37 +82,77 @@ export default function PasswordFormModal({
         {registration ? (
           <Inputix control={control}>
             <Input
-              type="text"
+              type={showNewPass ? 'text' : 'password'}
               label="The password"
               name="password"
               fillContainer
+              trailing={
+                <EyePassword
+                  value={showNewPass}
+                  onPress={() => {
+                    setShowNewPass(!showNewPass);
+                  }}
+                />
+              }
             />
             <Input
-              type="text"
+              type={showConfirmPass ? 'text' : 'password'}
               label="Repeat the password"
               name="repeatPassword"
               fillContainer
+              trailing={
+                <EyePassword
+                  value={showConfirmPass}
+                  onPress={() => {
+                    setShowConfirmPass(!showConfirmPass);
+                  }}
+                />
+              }
             />
           </Inputix>
         ) : (
           <Inputix control={control}>
             <Input
-              type="text"
+              type={showOldPass ? 'text' : 'password'}
               label="Old password"
               name="oldPassword"
               fillContainer
+              trailing={
+                <EyePassword
+                  value={showOldPass}
+                  onPress={() => {
+                    setShowOldPass(!showOldPass);
+                  }}
+                />
+              }
             />
             <Input
-              type="text"
+              type={showNewPass ? 'text' : 'password'}
               label="New password"
               name="newPassword"
               fillContainer
+              trailing={
+                <EyePassword
+                  value={showNewPass}
+                  onPress={() => {
+                    setShowNewPass(!showNewPass);
+                  }}
+                />
+              }
             />
             <Input
-              type="text"
+              type={showConfirmPass ? 'text' : 'password'}
               label="Repeat the new password"
               name="repeatNewPassword"
               fillContainer
+              trailing={
+                <EyePassword
+                  value={showConfirmPass}
+                  onPress={() => {
+                    setShowConfirmPass(!showConfirmPass);
+                  }}
+                />
+              }
             />
           </Inputix>
         )}
