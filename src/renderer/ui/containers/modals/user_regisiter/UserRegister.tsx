@@ -3,7 +3,7 @@ import TextButton from '@components/buttons/text_button';
 import Input, { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Overlay } from '@libs/overlay';
+import { Overlay_u } from '@stores/overlayStore';
 import { useUserStore } from '@stores/userStore';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -13,7 +13,7 @@ const schema = z.object({
   lastName: z.string().min(3, 'last name is required'),
   email: z.string().email({ message: 'Invalid email address' }),
   phoneNumber: z.string().min(8).optional(),
-  age: z.string().min(2),
+  age: z.coerce.string().min(2),
   address: z.string().min(3).optional(),
   gender: z.enum(['male', 'female']),
 });
@@ -26,12 +26,14 @@ interface Inputs {
   phone: string;
   address: string;
 }
-interface UserRegisterProps {}
+interface UserRegisterProps {
+  defaultValues?: Inputs;
+}
 
-export default function UserRegister({}: UserRegisterProps) {
+export default function UserRegister({ defaultValues }: UserRegisterProps) {
   const { control, handleSubmit } = useForm<Inputs>({
     resolver: zodResolver(schema),
-    defaultValues: {
+    defaultValues: defaultValues ?? {
       firstName: '',
       lastName: '',
       gender: 'male',
@@ -46,7 +48,8 @@ export default function UserRegister({}: UserRegisterProps) {
     setUser({
       ...formData,
     });
-    Overlay.close();
+    //TODO update user info in the server
+    Overlay_u.close();
   };
   return (
     <ModalContainer
