@@ -31,6 +31,7 @@ export default function RecordInfoSideBar({
           modal(
             <AddPatientModal
               defaultValues={{
+                patientId: patientId,
                 firstName: data.firstName,
                 lastName: data.lastName,
                 gender: data.gender,
