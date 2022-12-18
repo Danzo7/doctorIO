@@ -9,6 +9,6 @@ interface EyePasswordProps {
 }
 export default function EyePassword({ onPress, value }: EyePasswordProps) {
   return (
-    <IconicButton Icon={value ? NoEye : Eye} iconSize={20} onPress={onPress} />
+    <IconicButton Icon={!value ? NoEye : Eye} onPress={onPress} iconSize={17} />
   );
 }
