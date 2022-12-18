@@ -5,8 +5,11 @@ import { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { useAddPatientMutation } from '@redux/instance/record/patient_api';
-import { modal } from '@stores/overlayStore';
+import {
+  useAddPatientMutation,
+  useUpdatePatientDetailMutation,
+} from '@redux/instance/record/patient_api';
+import { Overlay_u, modal } from '@stores/overlayStore';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import AddSelectedToQueueModal from '../add_selected_to_queue_modal';
@@ -14,7 +17,7 @@ import AddSelectedToQueueModal from '../add_selected_to_queue_modal';
 const schema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
-  gender: z.string(),
+  gender: z.enum(['male', 'female']),
   birthDate: z.preprocess((arg) => {
     if (typeof arg == 'string' || arg instanceof Date) return new Date(arg);
   }, z.date()),
@@ -23,7 +26,7 @@ const schema = z.object({
 });
 type Inputs = z.infer<typeof schema>;
 interface AddPatientModalProps {
-  defaultValues?: Inputs;
+  defaultValues?: Inputs & { patientId: number };
 }
 export default function AddPatientModal({
   defaultValues,
@@ -40,10 +43,22 @@ export default function AddPatientModal({
     },
   });
   const [addPatient] = useAddPatientMutation();
+  const [updatePatientDetail] = useUpdatePatientDetailMutation();
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
     const { firstName, lastName, gender, birthDate, bloodGroup, rh } = formData;
     if (defaultValues) {
-      //TODO add updatePatient mutation
+      updatePatientDetail({
+        id: defaultValues.patientId,
+        body: {
+          firstName: firstName,
+          lastName: lastName,
+          sex: gender,
+          birthDate: birthDate,
+          bloodType: { group: bloodGroup, rh: rh },
+        },
+      }).then(() => {
+        Overlay_u.close();
+      });
     } else
       addPatient({
         firstName: firstName,
@@ -65,12 +80,12 @@ export default function AddPatientModal({
 
   return (
     <ModalContainer
-      title="New patient"
+      title={defaultValues ? 'Edit patient information' : 'New patient'}
       onSubmit={handleSubmit(onSubmit)}
       controls={
         <>
           <TextButton
-            text="Add patient"
+            text={defaultValues ? 'Update patient' : 'Add patient'}
             backgroundColor={color.good_green}
             fontSize={14}
             fontWeight={700}
