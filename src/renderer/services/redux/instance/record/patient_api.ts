@@ -74,8 +74,28 @@ const patientApi = createApi({
       query: (body) => ({ url: ``, method: 'POST', body: body }),
       invalidatesTags: ['patient'],
     }),
+    updatePatientDetail: builder.mutation<
+      true,
+      {
+        id: number;
+        body: {
+          firstName?: string;
+          lastName?: string;
+          birthDate?: Date;
+          sex?: 'male' | 'female';
+          bloodType?: BloodType;
+        };
+      }
+    >({
+      query: ({ id, body }) => ({
+        url: '',
+        body: body,
+        method: 'PATCH',
+        params: { id },
+      }),
+      invalidatesTags: ['patient'],
+    }),
   }),
-  //TODO add endpoint for : update Patient info
 });
 export default patientApi;
 export const {
@@ -86,4 +106,5 @@ export const {
   useLazyFindPatientByName2Query,
   useAddPatientMutation,
   useFindPatientByName2Query,
+  useUpdatePatientDetailMutation,
 } = patientApi;
