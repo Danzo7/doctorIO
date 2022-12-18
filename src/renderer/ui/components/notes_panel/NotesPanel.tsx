@@ -8,6 +8,9 @@ import { SETTINGS } from '@stores/appSettingsStore';
 import { format } from 'date-fns';
 import './style/index.scss';
 import Edit from 'toSvg/pencil.svg?icon';
+import { modal } from '@stores/overlayStore';
+import EditNoteModal from '@containers/modals/edit_note_modal';
+import { DEFAULT_MODAL } from '@libs/overlay';
 interface NotesPanelProps {
   date: Date;
   note: string;
@@ -18,13 +21,7 @@ export default function NotesPanel({ date, note }: NotesPanelProps) {
       <Header
         title="Notes"
         buttonNode={
-          <DarkLightCornerButton
-            text="All notes"
-            blend
-            onPress={() => {
-              //UI create Modal to edit or add notes
-            }}
-          />
+          <DarkLightCornerButton text="All notes" blend onPress={() => {}} />
         }
       />
 
@@ -36,7 +33,12 @@ export default function NotesPanel({ date, note }: NotesPanelProps) {
         buttonNode={
           <IconicButton
             tip="Edit"
-            onPress={() => {}}
+            onPress={() => {
+              modal(
+                <EditNoteModal defaultValue={note} />,
+                DEFAULT_MODAL,
+              ).open();
+            }}
             blank
             width={25}
             radius={7}
