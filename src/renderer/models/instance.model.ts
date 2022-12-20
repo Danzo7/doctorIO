@@ -92,9 +92,7 @@ interface MedicalHistory {
   date: Date;
 }
 interface BiometricScreening {
-  weight: number;
-  height: number;
-  bloodPressure: number; // [key: string]: any;
+  [key: string]: any;
 }
 
 export type {

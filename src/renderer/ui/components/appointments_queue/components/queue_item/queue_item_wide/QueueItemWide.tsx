@@ -135,7 +135,7 @@ function QueueItemWide({
                       onSubmit={(data) => {
                         updateTest({
                           selectedQueue: selectedQueue,
-                          body: { ...data, position: number },
+                          body: { vitals: data, position: number },
                         });
                         close();
                       }}

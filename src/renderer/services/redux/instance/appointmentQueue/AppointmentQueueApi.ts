@@ -121,7 +121,7 @@ const appointmentQueueApi = createApi({
       AppointmentQueueItem[],
       {
         selectedQueue: number;
-        body: { patientId: number; test?: Partial<BiometricScreening> };
+        body: { patientId: number; vitals?: Partial<BiometricScreening> };
       }
     >({
       query: ({ selectedQueue, body }) => {
@@ -136,7 +136,10 @@ const appointmentQueueApi = createApi({
     //PATCH
     updateTest: builder.mutation<
       boolean,
-      { selectedQueue: number; body: { position: number } & BiometricScreening }
+      {
+        selectedQueue: number;
+        body: { position: number; vitals: BiometricScreening };
+      }
     >({
       query: ({ selectedQueue, body }) => {
         return {
