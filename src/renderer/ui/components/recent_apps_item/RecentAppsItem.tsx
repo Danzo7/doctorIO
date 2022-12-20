@@ -45,7 +45,7 @@ export default function RecentAppsItem({
                       selectedQueue: selectedQueue,
                       body: {
                         patientId: id,
-                        test: data,
+                        vitals: data,
                       },
                     }).then((res: any) => {
                       if (res?.data) Overlay_u.clear();
