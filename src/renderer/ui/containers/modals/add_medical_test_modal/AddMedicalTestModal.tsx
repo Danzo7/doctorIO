@@ -8,45 +8,61 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Inputix } from '@components/inputs/input/Input';
 import { numericString } from '@helpers/zod.helper';
 import { BiometricScreening } from '@models/instance.model';
+import { sentenceCase } from '@helpers/string.helper';
+import { useAppSettingsStore } from '@stores/appSettingsStore';
+import { VitalField } from '@models/local.models';
+import IconicButton from '@components/buttons/iconic_button';
+import FieldIcon from 'toSvg/fields.svg?icon';
 
-const schema = z.object({
-  weight: numericString(z.number().optional()),
-  height: numericString(z.number().optional()),
-  bloodPressure: numericString(z.number().optional()),
-});
 interface AddMedicalTestModalProps {
   onSubmit: SubmitHandler<BiometricScreening>;
+}
+
+function fieldsToSchema(fields: VitalField[]) {
+  return fields.reduce(
+    (acc, field) => ({
+      fields: acc.fields,
+      schema: {
+        ...acc.schema,
+        [field.name]: numericString(z.number().optional()),
+      },
+      defaults: {
+        ...acc.defaults,
+        [field.name]: 0,
+      },
+    }),
+    { schema: {}, defaults: {}, fields } as {
+      schema: any;
+      defaults: BiometricScreening;
+      fields: VitalField[];
+    },
+  );
 }
 
 export default function AddMedicalTestModal({
   onSubmit,
 }: AddMedicalTestModalProps) {
+  const { schema, defaults, fields } = fieldsToSchema(
+    useAppSettingsStore.getState().vitalFields,
+  );
   const {
     control,
     handleSubmit,
     formState: { touchedFields, dirtyFields },
-  } = useForm<BiometricScreening>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      bloodPressure: 0,
-      height: 0,
-      weight: 0,
-    },
+  } = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(z.object(schema)),
+    defaultValues: defaults,
   });
-
   return (
     <ModalContainer
       title="Biometric screening"
-      onSubmit={handleSubmit((data) =>
+      onSubmit={handleSubmit((data: BiometricScreening) =>
         onSubmit(
           Object.fromEntries(
             Object.keys({
               ...touchedFields,
               ...dirtyFields,
-            }).map((key) => [
-              key as keyof BiometricScreening,
-              data[key as keyof BiometricScreening],
-            ]),
+            }).map((key) => [key, data[key]]),
           ) as unknown as BiometricScreening,
         ),
       )}
@@ -61,30 +77,28 @@ export default function AddMedicalTestModal({
             blank
             type="submit"
           />
+          <IconicButton
+            Icon={FieldIcon}
+            radius={5}
+            tip="Edit fields"
+            afterBgColor={colors.darker}
+            css={{ position: 'absolute', left: 10 }}
+          />
         </>
       }
     >
       <Inputix control={control}>
-        <Input
-          type={{ type: 'numeric', unit: 'kg' }}
-          label="Weight"
-          name="weight"
-          control={control}
-          touchFirst
-        />
-        <Input
-          type={{ type: 'numeric', unit: 'cm', step: 1 }}
-          rules={{ max: 750, minLength: 0 }}
-          label="Height"
-          name="height"
-          touchFirst
-        />
-        <Input
-          type={{ type: 'numeric', unit: 'mmHg' }}
-          label="Blood pressure"
-          name="bloodPressure"
-          touchFirst
-        />
+        {fields.map(
+          (field) =>
+            field.display && (
+              <Input
+                key={field.name}
+                type={{ type: 'numeric', unit: field.unit }}
+                label={sentenceCase(field.name)}
+                name={field.name}
+              />
+            ),
+        )}
       </Inputix>
     </ModalContainer>
   );
