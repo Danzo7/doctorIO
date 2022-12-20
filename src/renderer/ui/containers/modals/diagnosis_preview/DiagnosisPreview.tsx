@@ -1,9 +1,10 @@
 import ModalContainer from '@components/modal_container';
 import VitalItem from '@components/vital_item';
-import { sentenceCase } from '@helpers/string.helper';
+import { titleCase } from '@helpers/string.helper';
 import { BiometricScreening } from '@models/instance.model';
 import { ComponentProps } from 'react';
 import './style/index.scss';
+import { useAppSettingsStore } from '@stores/appSettingsStore';
 
 interface DiagnosisPreviewProps {
   data: BiometricScreening;
@@ -12,19 +13,11 @@ interface DiagnosisPreviewProps {
 export default function DiagnosisPreview({ data }: DiagnosisPreviewProps) {
   const transformData = Object.entries(data)
     .map(([key, value]) => {
-      let unit = undefined;
-      switch (key as keyof BiometricScreening) {
-        case 'weight':
-          unit = 'kg';
-          break;
-        case 'height':
-          unit = 'cm';
-          break;
-        case 'bloodPressure':
-          unit = 'mmhg';
-          break;
-      }
-      return { name: sentenceCase(key), value, unit };
+      const unit = useAppSettingsStore
+        .getState()
+        .vitalFields.find((vital) => vital.name == key)?.unit;
+
+      return { name: titleCase(key), value, unit };
     })
     .filter(Boolean) as ComponentProps<typeof VitalItem>[];
   return (

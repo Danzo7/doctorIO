@@ -1,5 +1,5 @@
 import PreviewList from '@components/preview_list';
-import { sentenceCase } from '@helpers/string.helper';
+import { titleCase } from '@helpers/string.helper';
 import { ReactNode } from 'react';
 import './style/index.scss';
 interface PreviewInfoProps {
@@ -18,7 +18,7 @@ export default function PreviewInfo({
       <div className="preview-list-container">
         {Object.entries(data).map(([key, value]) => (
           <div className="preview-list-row" key={key}>
-            <span>{sentenceCase(key)}</span>
+            <span>{titleCase(key)}</span>
             <span>{value}</span>
           </div>
         ))}

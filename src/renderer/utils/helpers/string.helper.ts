@@ -1,4 +1,4 @@
-export const sentenceCase = (val: string) =>
+export const titleCase = (val: string) =>
   val
     .replace(/([A-Z])/g, ' $1')
     .split(' ')

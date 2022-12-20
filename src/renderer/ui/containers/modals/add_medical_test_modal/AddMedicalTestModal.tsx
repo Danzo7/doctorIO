@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Inputix } from '@components/inputs/input/Input';
 import { numericString } from '@helpers/zod.helper';
 import { BiometricScreening } from '@models/instance.model';
-import { sentenceCase } from '@helpers/string.helper';
+import { titleCase } from '@helpers/string.helper';
 import { useAppSettingsStore } from '@stores/appSettingsStore';
 import { VitalField } from '@models/local.models';
 import IconicButton from '@components/buttons/iconic_button';
@@ -94,7 +94,7 @@ export default function AddMedicalTestModal({
               <Input
                 key={field.name}
                 type={{ type: 'numeric', unit: field.unit }}
-                label={sentenceCase(field.name)}
+                label={titleCase(field.name)}
                 name={field.name}
               />
             ),
