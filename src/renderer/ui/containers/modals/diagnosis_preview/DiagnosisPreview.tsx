@@ -13,8 +13,6 @@ export default function DiagnosisPreview({ data }: DiagnosisPreviewProps) {
   const transformData = Object.entries(data)
     .map(([key, value]) => {
       let unit = undefined;
-      if (key == 'Rh') return false; //FIXME Clean this later
-      if (key == 'bloodType') return false; //FIXME Clean this later
       switch (key as keyof BiometricScreening) {
         case 'weight':
           unit = 'kg';
@@ -24,9 +22,6 @@ export default function DiagnosisPreview({ data }: DiagnosisPreviewProps) {
           break;
         case 'bloodPressure':
           unit = 'mmhg';
-          break;
-
-        default:
           break;
       }
       return { name: sentenceCase(key), value, unit };
