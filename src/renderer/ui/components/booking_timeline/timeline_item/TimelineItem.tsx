@@ -11,9 +11,9 @@ import { AppointmentBrief } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
 import { modal } from '@stores/overlayStore';
 import NotAButton from '@components/not_a_button';
-import CircleAvatar from '@components/avatars/circle_avatar';
-import MemberBigCard from '@containers/modals/member_big_card';
 import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
+import SmallUserStatus from '@components/small_user_status';
+import MemberBigCard from '@containers/modals/member_big_card';
 
 export default function TimelineItem({
   state,
@@ -94,17 +94,16 @@ export default function TimelineItem({
               <TextPair
                 gap={3}
                 first={
-                  //TODO move to a separated component
-                  <CircleAvatar
-                    src={assignedBy.avatar}
+                  <SmallUserStatus
                     alt={assignedBy.name}
-                    width={25}
-                    onClick={() =>
+                    name={assignedBy.name}
+                    imgSrc={assignedBy.avatar}
+                    onClick={() => {
                       modal(
                         <MemberBigCard id={assignedBy.id} />,
                         DEFAULT_MODAL,
-                      ).open()
-                    }
+                      ).open();
+                    }}
                   />
                 }
                 second="Assigned by"

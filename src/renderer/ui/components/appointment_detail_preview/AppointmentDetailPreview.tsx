@@ -6,6 +6,10 @@ import { SETTINGS } from '@stores/appSettingsStore';
 import { Appointment } from '@models/instance.model';
 import { format } from 'date-fns';
 import './style/index.scss';
+import SmallUserStatus from '@components/small_user_status';
+import { modal } from '@stores/overlayStore';
+import MemberBigCard from '@containers/modals/member_big_card';
+import { DEFAULT_MODAL } from '@libs/overlay';
 
 export default function AppointmentDetailPreview({
   assignedBy,
@@ -131,12 +135,19 @@ export default function AppointmentDetailPreview({
             fontWeight: 600,
             fontColor: color.text_gray,
           }}
-          second={{
-            text: assignedBy.name,
-            fontSize: 15,
-            fontWeight: 600,
-            fontColor: color.white,
-          }}
+          second={
+            <SmallUserStatus
+              alt="member"
+              imgSrc={assignedBy.avatar}
+              name={assignedBy.name}
+              onClick={() => {
+                modal(
+                  <MemberBigCard id={assignedBy.id} />,
+                  DEFAULT_MODAL,
+                ).open();
+              }}
+            />
+          }
         />
 
         <TextPair
@@ -166,12 +177,19 @@ export default function AppointmentDetailPreview({
                 fontWeight: 600,
                 fontColor: color.text_gray,
               }}
-              second={{
-                text: member.name,
-                fontSize: 15,
-                fontWeight: 600,
-                fontColor: color.white,
-              }}
+              second={
+                <SmallUserStatus
+                  alt={member.name}
+                  imgSrc={member.avatar}
+                  name={member.name}
+                  onClick={() => {
+                    modal(
+                      <MemberBigCard id={member.id} />,
+                      DEFAULT_MODAL,
+                    ).open();
+                  }}
+                />
+              }
             />
           )}
           {
