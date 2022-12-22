@@ -11,6 +11,7 @@ interface VerticalPanelProps {
   padding?: number | string;
   alignSelf?: 'center' | 'stretch' | 'start' | 'end';
   height?: number | string;
+  flexGrow?: true;
 }
 export default function VerticalPanel({
   Icon,
@@ -22,6 +23,7 @@ export default function VerticalPanel({
   padding = 20,
   alignSelf,
   height,
+  flexGrow,
 }: VerticalPanelProps) {
   return (
     <div
@@ -33,6 +35,7 @@ export default function VerticalPanel({
           backgroundColor == 'none' ? undefined : `0 0 5px 2px ${color.darker}`,
         alignSelf: alignSelf,
         height,
+        flexGrow: flexGrow ? 1 : 0,
       }}
     >
       {Icon}
