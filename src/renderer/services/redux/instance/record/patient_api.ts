@@ -40,6 +40,7 @@ const patientApi = createApi({
         url: `detail`,
         params: { id },
       }),
+      providesTags: ['patient'],
       transformResponse: (
         response: Omit<
           Patient,
