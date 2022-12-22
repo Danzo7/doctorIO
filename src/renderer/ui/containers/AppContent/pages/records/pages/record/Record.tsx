@@ -67,43 +67,36 @@ export default function Record({}: RecordProps) {
 
   return (
     <div className="record">
-      {isSuccess && (
-        <RecordInfoSideBar
-          data={data}
-          patientId={Number(patientId)}
-          numPostAppointment={res.data?.length ?? 0}
+      <form
+        onSubmit={handleSubmit((value) => {
+          if (searchRef.current != value.searchField) {
+            searchRef.current = value.searchField;
+            isDirty.current = false;
+            trigger(searchRef.current, false);
+          }
+        })}
+      >
+        <Input
+          disabled={result.isFetching}
+          errorMessage={
+            isDirty.current
+              ? undefined
+              : errorRef.current?.errorCode == 1200
+              ? 'Invalid input. Must be the first and last name or the patient id'
+              : errorRef.current?.errorCode == 1300
+              ? 'No patient found'
+              : undefined
+          }
+          placeholder="Enter patient Id"
+          trailing={<TextButton Icon={search} blank />}
+          type={'search'}
+          name="searchField"
+          control={control}
+          grow={false}
         />
-      )}
-      <div className="content">
-        <form
-          onSubmit={handleSubmit((value) => {
-            if (searchRef.current != value.searchField) {
-              searchRef.current = value.searchField;
-              isDirty.current = false;
-              trigger(searchRef.current, false);
-            }
-          })}
-        >
-          <Input
-            disabled={result.isFetching}
-            errorMessage={
-              isDirty.current
-                ? undefined
-                : errorRef.current?.errorCode == 1200
-                ? 'Invalid input. Must be the first and last name or the patient id'
-                : errorRef.current?.errorCode == 1300
-                ? 'No patient found'
-                : undefined
-            }
-            placeholder="Enter patient Id"
-            trailing={<TextButton Icon={search} blank />}
-            type={'search'}
-            name="searchField"
-            control={control}
-            grow={false}
-          />
-        </form>
+      </form>
 
+      <div className="content">
         {result.isSuccess &&
         !result.isFetching &&
         !isDirty.current &&
@@ -125,41 +118,50 @@ export default function Record({}: RecordProps) {
               ),
           )
         ) : isSuccess ? (
-          <div className="record-content">
-            <div className="top-right-div">
-              {data.test ? (
-                <VitalsPanel data={data.test} />
-              ) : (
-                //TODO add the ability to add vitals from here
-                //TODO add the correct svg
-                <VerticalPanel
-                  title="No Biometric screening"
-                  backgroundColor="none"
-                  alignSelf="stretch"
+          <>
+            <RecordInfoSideBar
+              data={data}
+              patientId={Number(patientId)}
+              numPostAppointment={res.data?.length ?? 0}
+            />
+
+            <div className="record-content">
+              <div className="top-right-div">
+                {data.test ? (
+                  <VitalsPanel data={data.test} />
+                ) : (
+                  //TODO add the ability to add vitals from here
+                  //TODO add the correct svg
+                  <VerticalPanel
+                    title="No Biometric screening"
+                    backgroundColor="none"
+                    alignSelf="stretch"
+                    flexGrow
+                  />
+                )}
+                <NotesPanel
+                  date={new Date()}
+                  note="Just a notdggggggggggggggggggggggggggggggggge"
                 />
-              )}
-              <NotesPanel
-                date={new Date()}
-                note="Just a notdggggggggggggggggggggggggggggggggge"
+              </div>
+
+              <BookingTimeline
+                appointments={res.data ?? []}
+                patientId={Number(patientId)}
+                onPress={() => {
+                  modal(
+                    () => (
+                      <BookAppointmentModal
+                        id={Number(patientId)}
+                        patientName={data.firstName + ' ' + data.lastName}
+                      />
+                    ),
+                    DEFAULT_MODAL,
+                  ).open();
+                }}
               />
             </div>
-
-            <BookingTimeline
-              appointments={res.data ?? []}
-              patientId={Number(patientId)}
-              onPress={() => {
-                modal(
-                  () => (
-                    <BookAppointmentModal
-                      id={Number(patientId)}
-                      patientName={data.firstName + ' ' + data.lastName}
-                    />
-                  ),
-                  DEFAULT_MODAL,
-                ).open();
-              }}
-            />
-          </div>
+          </>
         ) : isFetching ? (
           <LoadingSpinner />
         ) : (
