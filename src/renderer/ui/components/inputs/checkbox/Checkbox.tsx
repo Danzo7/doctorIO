@@ -6,12 +6,21 @@ interface CheckboxProps extends ControllerProps {
   disabled?: boolean;
 }
 export default forwardRef(function Checkbox(
-  { label, field, disabled }: CheckboxProps,
+  { label, field, disabled, onChanged }: CheckboxProps,
   ref,
 ) {
   return (
     <div className={'checkbox' + (disabled ? ' disabled' : '')}>
-      <input type={'checkbox'} {...field} ref={ref as any} />
+      <input
+        type={'checkbox'}
+        {...field}
+        ref={ref as any}
+        checked={field.value}
+        onChange={(e) => {
+          field.onChange(e.target.checked);
+          onChanged?.(e.target.checked);
+        }}
+      />
       <span>{label}</span>
     </div>
   );

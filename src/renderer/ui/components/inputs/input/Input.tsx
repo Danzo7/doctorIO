@@ -158,7 +158,14 @@ export default function Input<
     ...(defaultValue ? { defaultValue } : {}),
   });
   return type == 'checkbox' ? (
-    <Checkbox label={label} field={field} ref={ref} disabled={disabled} />
+    <Checkbox
+      label={label}
+      field={field}
+      ref={ref}
+      disabled={disabled}
+      onChanged={onChange}
+      fieldState={fieldState}
+    />
   ) : type == 'IconicSwitch' ? (
     <IconicSwitch field={field} onChanged={onChange} />
   ) : (
