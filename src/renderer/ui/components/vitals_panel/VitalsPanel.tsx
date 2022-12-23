@@ -6,14 +6,14 @@ import { titleCase } from '@helpers/string.helper';
 import { BiometricScreening } from '@models/instance.model';
 import { ComponentProps } from 'react';
 import './style/index.scss';
-import { useAppSettingsStore } from '@stores/appSettingsStore';
+import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 interface VitalsPanelProps {
   data: BiometricScreening;
 }
 export default function VitalsPanel({ data }: VitalsPanelProps) {
   const transformData = Object.entries(data)
     .map(([key, value]) => {
-      const unit = useAppSettingsStore
+      const unit = useVitalFieldsStore
         .getState()
         .vitalFields.find((vital) => vital.name == key)?.unit;
       return { name: titleCase(key), value, unit };

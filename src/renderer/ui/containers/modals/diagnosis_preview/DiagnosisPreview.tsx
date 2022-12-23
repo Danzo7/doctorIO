@@ -4,7 +4,7 @@ import { titleCase } from '@helpers/string.helper';
 import { BiometricScreening } from '@models/instance.model';
 import { ComponentProps } from 'react';
 import './style/index.scss';
-import { useAppSettingsStore } from '@stores/appSettingsStore';
+import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 
 interface DiagnosisPreviewProps {
   data: BiometricScreening;
@@ -13,7 +13,7 @@ interface DiagnosisPreviewProps {
 export default function DiagnosisPreview({ data }: DiagnosisPreviewProps) {
   const transformData = Object.entries(data)
     .map(([key, value]) => {
-      const unit = useAppSettingsStore
+      const unit = useVitalFieldsStore
         .getState()
         .vitalFields.find((vital) => vital.name == key)?.unit;
 

@@ -5,7 +5,7 @@ import {
   THEME,
   TIME_FORMAT,
 } from '@constants/app_settings';
-export type VitalField = { name: string; unit: string; display?: true };
+export type VitalField = { name: string; unit: string; display?: boolean };
 
 interface AppSettings {
   language: typeof LANG[number];
@@ -14,7 +14,6 @@ interface AppSettings {
   timeFormat: typeof TIME_FORMAT[number];
   dayFormat: typeof DAY_FORMAT[number];
   welcomeDismissedIn: string;
-  vitalFields: VitalField[];
 }
 interface AppData {
   user: AppUser;

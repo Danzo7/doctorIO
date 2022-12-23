@@ -27,17 +27,6 @@ export const useAppSettingsStore = create<AppSettingsState>()(
       dateFormat: 'dd MMM yyyy',
       timeFormat: 'h:mm aa',
       dayFormat: 'EEEE, dd MMM',
-      vitalFields: [
-        { name: 'weight', unit: 'kg', display: true },
-        { name: 'height', unit: 'cm', display: true },
-        { name: 'bloodPressure', unit: 'mmHg', display: true },
-        { name: 'bloodSugar', unit: 'mg/dL', display: true },
-        { name: 'temperature', unit: '°C' },
-        { name: 'heartRate', unit: 'bpm' },
-        { name: 'respiratoryRate', unit: 'bpm' },
-        { name: 'oxygenSaturation', unit: '%' },
-        { name: 'pain', unit: 'out of 10' },
-      ],
       setDateFormat(dateFormat) {
         set({ dateFormat });
       },
