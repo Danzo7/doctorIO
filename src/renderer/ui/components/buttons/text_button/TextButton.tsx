@@ -271,6 +271,7 @@ function TextButton({
                 closeOnBlur: true,
                 backdropColor: false,
                 clickable: false,
+                autoFocus: false,
               },
             },
             'helper',
