@@ -6,13 +6,17 @@
     align-items: stretch;
     gap: 10px;
     padding: 0 1px;
-    > span{
+    >.field{
+        display: flex;
+        gap: 10px;
+    }
+    > span,>label{
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
     }
 
-    > span:first-of-type {
+    > label:first-of-type {
         font-weight: 500;
         font-size: 16px;
         color: $white;

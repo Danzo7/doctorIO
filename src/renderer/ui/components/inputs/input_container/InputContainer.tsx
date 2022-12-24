@@ -10,6 +10,8 @@ interface InputContainerProps {
   hintAlignment?: 'flex-end' | 'flex-start' | 'center';
   disabled?: boolean;
   autoFocus?: true;
+  name?: string;
+  direction?: 'vertical' | 'horizontal';
 }
 export default function InputContainer({
   label,
@@ -21,6 +23,8 @@ export default function InputContainer({
   grow,
   disabled,
   autoFocus,
+  name,
+  direction = 'vertical',
 }: InputContainerProps) {
   return (
     <div
@@ -41,8 +45,20 @@ export default function InputContainer({
       }
     >
       <>
-        {label && <span>{label}</span>}
-        {children}
+        <div
+          className="field"
+          css={{
+            flexDirection: direction === 'vertical' ? 'column' : 'row',
+            alignItems: direction === 'vertical' ? 'stretch' : 'center',
+          }}
+        >
+          {label && (
+            <label htmlFor={name}>
+              {label + (direction == 'horizontal' ? ':' : '')}
+            </label>
+          )}
+          {children}
+        </div>
         {errorMessage ? (
           <span>{errorMessage}</span>
         ) : (

@@ -114,6 +114,7 @@ type InputProps<
   autoFocus?: true;
   touchFirst?: true;
   border?: boolean;
+  direction?: 'vertical' | 'horizontal';
 };
 export default function Input<
   TFieldValues extends FieldValues = FieldValues,
@@ -142,6 +143,7 @@ export default function Input<
   autoFocus,
   touchFirst,
   border,
+  direction,
 }: InputProps<TFieldValues, TFieldName> & Partial<InputWrapperProps>) {
   const { control: controlC } = useContext(InputControllerContext);
   if (!controlC && !control) {
@@ -181,6 +183,8 @@ export default function Input<
       grow={grow}
       disabled={disabled}
       autoFocus={autoFocus}
+      direction={direction}
+      name={name}
     >
       {(type as NumericInput)?.type == 'numeric' ? (
         <NumberInput
