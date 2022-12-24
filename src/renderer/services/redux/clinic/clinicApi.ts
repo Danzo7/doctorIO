@@ -7,7 +7,7 @@ import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 const clinicApi = createApi({
   reducerPath: 'clinicApi',
   baseQuery: StaticQueries.clinic.query,
-  tagTypes: ['clinic'],
+  tagTypes: ['clinic', 'vitals'],
   endpoints: (builder) => ({
     getClinic: builder.query<Clinic, void>({
       query: () => '',
@@ -32,11 +32,13 @@ const clinicApi = createApi({
           useVitalFieldsStore.getState().syncFields(data.data);
         });
       },
+      providesTags: ['vitals'],
     }),
     createField: builder.mutation<boolean, VitalField>({
       query: (body) => {
         return { url: 'vital-fields', body: { ...body }, method: 'POST' };
       },
+      invalidatesTags: ['vitals'],
     }),
     updateField: builder.mutation<boolean, VitalField[]>({
       query: (body) => {
@@ -46,6 +48,7 @@ const clinicApi = createApi({
           method: 'PATCH',
         };
       },
+      invalidatesTags: ['vitals'],
     }),
   }),
 });
