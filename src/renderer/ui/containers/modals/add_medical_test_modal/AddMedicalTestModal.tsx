@@ -9,10 +9,7 @@ import { titleCase } from '@helpers/string.helper';
 import FieldIcon from 'toSvg/fields.svg?icon';
 import VerticalPanel from '@components/vertical_panel';
 import './style/index.scss';
-import {
-  useCreateFieldMutation,
-  useGetFieldsQuery,
-} from '@redux/clinic/clinicApi';
+import { useGetFieldsQuery } from '@redux/clinic/clinicApi';
 import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 import EditVitalsFieldsModal from '../edit_vitals_fields_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
@@ -27,7 +24,6 @@ export default function AddMedicalTestModal({
   const { vitalFields, switchField, isActive } = useVitalFieldsStore();
   const { control, handleSubmit } = useForm();
   const { isLoading, data: clinicFields, isSuccess } = useGetFieldsQuery();
-  const [create] = useCreateFieldMutation();
   const { control: con } = useForm();
 
   return (
