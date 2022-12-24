@@ -5,7 +5,7 @@ import {
   THEME,
   TIME_FORMAT,
 } from '@constants/app_settings';
-export type VitalField = { name: string; unit: string };
+export type VitalField = { name: string; unit: string; deleted?: boolean };
 
 interface AppSettings {
   language: typeof LANG[number];

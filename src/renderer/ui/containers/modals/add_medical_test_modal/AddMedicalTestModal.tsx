@@ -72,19 +72,22 @@ export default function AddMedicalTestModal({
                 />
 
                 <Inputix control={con}>
-                  {clinicFields.map(({ name }, i) => (
-                    <Input
-                      type={'checkbox'}
-                      name={name}
-                      label={name}
-                      key={name}
-                      border={true}
-                      defaultValue={isActive(name)}
-                      onChange={() => {
-                        switchField(clinicFields[i]);
-                      }}
-                    />
-                  ))}
+                  {clinicFields.map(
+                    ({ name, deleted }, i) =>
+                      !deleted && (
+                        <Input
+                          type={'checkbox'}
+                          name={name}
+                          label={name}
+                          key={name}
+                          border={true}
+                          defaultValue={isActive(name)}
+                          onChange={() => {
+                            switchField(clinicFields[i]);
+                          }}
+                        />
+                      ),
+                  )}
                 </Inputix>
               </div>
             }

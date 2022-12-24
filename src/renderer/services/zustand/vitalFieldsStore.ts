@@ -30,7 +30,7 @@ export const useVitalFieldsStore = create<VitalFieldsState>()(
       syncFields(fields: VitalField[]) {
         set((state) => ({
           vitalFields: state.vitalFields.filter((f) =>
-            fields.some((field) => field.name === f.name),
+            fields.some((field) => field.name === f.name && !field.deleted),
           ),
         }));
       },
