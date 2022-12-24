@@ -30,7 +30,13 @@ export default function AddVitalFieldItem({ onSave }: AddVitalFieldItemProps) {
     });
   };
   return (
-    <form className="add-vital-field-item" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="add-vital-field-item"
+      onSubmit={handleSubmit(onSubmit)}
+      ref={(e) => {
+        e?.scrollIntoView({ behavior: 'smooth' });
+      }}
+    >
       <Input
         name="name"
         label="Name"
