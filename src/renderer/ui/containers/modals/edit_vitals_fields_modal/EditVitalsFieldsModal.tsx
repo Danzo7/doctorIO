@@ -4,11 +4,13 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 import add from 'toSvg/add.svg?icon';
+import Cancel from 'toSvg/x_mark.svg?icon';
 import { useState } from 'react';
 import AddVitalFieldItem from '@components/add_vital_field_item';
 import { useGetFieldsQuery } from '@redux/clinic/clinicApi';
 import VerticalPanel from '@components/vertical_panel';
 import VitalFieldItem from '@components/vital_field_item';
+import { Overlay_u } from '@stores/overlayStore';
 
 interface EditVitalsFieldsModalProps {}
 export default function EditVitalsFieldsModal({}: EditVitalsFieldsModalProps) {
@@ -22,13 +24,11 @@ export default function EditVitalsFieldsModal({}: EditVitalsFieldsModalProps) {
         title="Edit Vitals fields"
         controls={
           <TextButton
-            text={'Save'}
-            backgroundColor={color.good_green}
+            text={'Close'}
+            backgroundColor={color.light}
             radius={7}
             fontSize={14}
-            width={'60%'}
-            blank
-            type="submit"
+            onPress={() => Overlay_u.close()}
           />
         }
       >
@@ -62,8 +62,8 @@ export default function EditVitalsFieldsModal({}: EditVitalsFieldsModalProps) {
             </div>
 
             <TextButton
-              text="new field"
-              Icon={add}
+              text={addField ? 'Cancel' : 'new field'}
+              Icon={addField ? <Cancel width={10} height={10} /> : add}
               afterBgColor={color.darkersec_color}
               fontSize={14}
               fontWeight={500}
