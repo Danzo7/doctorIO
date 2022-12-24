@@ -15,6 +15,7 @@ interface TextPairProps {
   flexible?: true;
   gap?: number;
   width?: number | string;
+  flexDirection?: 'row' | 'column';
 }
 export default function TextPair({
   first: fir,
@@ -25,6 +26,7 @@ export default function TextPair({
   flexible,
   gap = 5,
   width,
+  flexDirection = 'column',
 }: TextPairProps) {
   const secEl = isValidElement(sec) ? sec : undefined;
   const second = sec as string | (TextType & { border?: boolean });
@@ -35,7 +37,14 @@ export default function TextPair({
       css={{
         display: 'flex',
         gap: gap,
-        flexDirection: reversed ? 'column-reverse' : 'column',
+        flexDirection:
+          flexDirection == 'column'
+            ? reversed
+              ? 'column-reverse'
+              : 'column'
+            : reversed
+            ? 'row-reverse'
+            : 'row',
         alignItems: alignItems,
         flexGrow: flexGrow ? 1 : 0,
         flex: flexible && '1 0 0',
