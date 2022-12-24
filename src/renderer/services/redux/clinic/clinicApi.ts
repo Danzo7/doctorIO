@@ -23,7 +23,34 @@ const clinicApi = createApi({
       // const {data}=await queryFulfilled;
       // useClinicsStore.getState().//TODO: Set selected clinic info from data
     }),
+    getFields: builder.query<
+      { id: number; name: string; unit: string }[],
+      void
+    >({
+      query: () => 'vital-fields',
+    }),
+    createField: builder.mutation<boolean, { name: string; unit: string }>({
+      query: (body) => {
+        return { url: 'vital-fields', body: { ...body }, method: 'POST' };
+      },
+    }),
+    updateField: builder.mutation<
+      boolean,
+      { id: number; name: string; unit: string }
+    >({
+      query: (body) => {
+        return {
+          url: `vital-fields/${body.id}`,
+          body: { ...body },
+          method: 'PATCH',
+        };
+      },
+    }),
   }),
 });
 export default clinicApi;
-export const { useGetClinicQuery, useUpdateClinicOverviewMutation } = clinicApi;
+export const {
+  useGetClinicQuery,
+  useUpdateClinicOverviewMutation,
+  useGetFieldsQuery,
+} = clinicApi;
