@@ -1,56 +1,38 @@
-import { Logger } from '@libs/Logger';
 import { VitalField } from '@models/local.models';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface VitalFieldsState {
   vitalFields: VitalField[];
-  getActiveFields: () => VitalField[];
-  activateField: (name: string) => void;
-  deactivateField: (name: string) => void;
-  switchField: (name: string) => void;
+  switchField: (field: VitalField) => void;
+  isActive: (name: string) => boolean;
+  syncFields: (fields: VitalField[]) => void;
 }
 export const useVitalFieldsStore = create<VitalFieldsState>()(
   persist(
     (set, get) => ({
-      vitalFields: [
-        { name: 'weight', unit: 'kg', display: true },
-        { name: 'height', unit: 'cm', display: true },
-        { name: 'bloodPressure', unit: 'mmHg', display: true },
-        { name: 'bloodSugar', unit: 'mg/dL', display: true },
-        { name: 'temperature', unit: '°C' },
-        { name: 'heartRate', unit: 'bpm' },
-        { name: 'respiratoryRate', unit: 'bpm' },
-        { name: 'oxygenSaturation', unit: '%' },
-        { name: 'pain', unit: 'out of 10' },
-      ],
-      getActiveFields() {
-        return get().vitalFields.filter((field) => field.display);
-      },
-      activateField(name: string) {
-        const fields = get().vitalFields;
-        const index = fields.findIndex((field) => field.name === name);
-        if (!index) Logger.error('vitalStore', 'Field not found');
-        if (!fields[index].display) {
-          fields[index].display = true;
+      vitalFields: [],
+      switchField(field: VitalField) {
+        if (get().isActive(field.name)) {
+          set({
+            vitalFields: get().vitalFields.filter((f) => f.name !== field.name),
+          });
+        } else {
+          const fields = get().vitalFields;
+          fields.push(field);
           set({ vitalFields: fields });
         }
       },
-      deactivateField(name: string) {
+      isActive(name: string) {
         const fields = get().vitalFields;
-        const index = fields.findIndex((field) => field.name === name);
-        if (!index) Logger.error('vitalStore', 'Field not found');
-        if (fields[index].display) {
-          fields[index].display = undefined;
-          set({ vitalFields: fields });
-        }
+        return fields.some((field) => field.name === name);
       },
-      switchField(name: string) {
-        const fields = get().vitalFields;
-        const index = fields.findIndex((field) => field.name === name);
-        if (!index) Logger.error('vitalStore', 'Field not found');
-        fields[index].display = !fields[index].display;
-        set({ vitalFields: fields });
+      syncFields(fields: VitalField[]) {
+        set((state) => ({
+          vitalFields: state.vitalFields.filter((f) =>
+            fields.some((field) => field.name === f.name),
+          ),
+        }));
       },
     }),
 

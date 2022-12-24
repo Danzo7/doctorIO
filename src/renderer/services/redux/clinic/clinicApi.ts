@@ -1,6 +1,8 @@
+import { VitalField } from '@models/local.models';
 import { Clinic } from '@models/server.models';
 import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 
 const clinicApi = createApi({
   reducerPath: 'clinicApi',
@@ -23,24 +25,23 @@ const clinicApi = createApi({
       // const {data}=await queryFulfilled;
       // useClinicsStore.getState().//TODO: Set selected clinic info from data
     }),
-    getFields: builder.query<
-      { id: number; name: string; unit: string }[],
-      void
-    >({
+    getFields: builder.query<VitalField[], void>({
       query: () => 'vital-fields',
+      onQueryStarted: (arg, { queryFulfilled }) => {
+        queryFulfilled.then((data) => {
+          useVitalFieldsStore.getState().syncFields(data.data);
+        });
+      },
     }),
-    createField: builder.mutation<boolean, { name: string; unit: string }>({
+    createField: builder.mutation<boolean, VitalField>({
       query: (body) => {
         return { url: 'vital-fields', body: { ...body }, method: 'POST' };
       },
     }),
-    updateField: builder.mutation<
-      boolean,
-      { id: number; name: string; unit: string }
-    >({
+    updateField: builder.mutation<boolean, VitalField[]>({
       query: (body) => {
         return {
-          url: `vital-fields/${body.id}`,
+          url: `vital-fields`,
           body: { ...body },
           method: 'PATCH',
         };
@@ -53,4 +54,5 @@ export const {
   useGetClinicQuery,
   useUpdateClinicOverviewMutation,
   useGetFieldsQuery,
+  useCreateFieldMutation,
 } = clinicApi;
