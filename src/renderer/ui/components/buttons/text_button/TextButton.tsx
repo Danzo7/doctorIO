@@ -74,6 +74,7 @@ interface TextButtonProps {
     | 'move'
     | 'crosshair';
   tip?: string;
+  unFocusable?: boolean;
 }
 function TextButton({
   className,
@@ -105,6 +106,7 @@ function TextButton({
   cursor = 'pointer',
   blank,
   tip,
+  unFocusable,
 }: TextButtonProps) {
   const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
   const [startHold, cancelHold] = useLongPress({
@@ -286,6 +288,7 @@ function TextButton({
         if (tip) Overlay_u.close('helper');
       }}
       aria-label={tip}
+      tabIndex={unFocusable ? -1 : 0}
     >
       <>
         {children}
