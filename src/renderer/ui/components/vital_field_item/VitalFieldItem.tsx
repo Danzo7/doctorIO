@@ -62,8 +62,8 @@ export default function VitalFieldItem({
           blank
           width={25}
           radius={7}
-          backgroundColor={color.cold_blue}
-          Icon={<Edit width={10} height={10} />}
+          afterBgColor={color.cold_blue}
+          Icon={<Edit width={12} height={12} />}
         />
       </div>
     </div>
