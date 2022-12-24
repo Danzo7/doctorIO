@@ -29,8 +29,9 @@ export default forwardRef(function Checkbox(
           field.onChange(e.target.checked);
           onChanged?.(e.target.checked);
         }}
+        id={field.name}
       />
-      <span>{label}</span>
+      <label htmlFor={field.name}>{label}</label>
     </div>
   );
 });
