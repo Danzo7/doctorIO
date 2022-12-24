@@ -77,17 +77,15 @@ export default function AddMedicalTestModal({
           ),
         )}
         controls={
-          <>
-            <TextButton
-              text={'Save Biometrics'}
-              backgroundColor={colors.good_green}
-              radius={7}
-              fontSize={14}
-              width={'60%'}
-              blank
-              type="submit"
-            />
-          </>
+          <TextButton
+            text={'Save Biometrics'}
+            backgroundColor={colors.good_green}
+            radius={7}
+            fontSize={14}
+            width={'60%'}
+            blank
+            type="submit"
+          />
         }
       >
         <div className="content">
@@ -106,6 +104,9 @@ export default function AddMedicalTestModal({
                 borderColor={colors.border_color}
                 padding={'10px'}
                 itemsDirection="row-reverse"
+                onPress={() => {
+                  //TODO open editVitalFieldsModal
+                }}
               />
 
               <Inputix control={con}>
