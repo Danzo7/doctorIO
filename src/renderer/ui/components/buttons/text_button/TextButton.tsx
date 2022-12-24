@@ -204,13 +204,17 @@ function TextButton({
       onClick={
         onHold == undefined
           ? (e) => {
+              if (tip) Overlay_u.close('helper');
+
               if (!blank) {
                 e.preventDefault();
                 e.stopPropagation();
               }
               onPress?.(e);
             }
-          : undefined
+          : () => {
+              if (tip) Overlay_u.close('helper');
+            }
       }
       onMouseDown={
         onHold != undefined
