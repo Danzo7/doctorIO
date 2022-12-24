@@ -1,0 +1,24 @@
+@use '~styles/appColors' as *;
+.vital-field-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 10px;
+    justify-content: space-between;
+    border: 1px solid $silvergray;
+    border-radius: 7px;
+
+    > .vitals-info-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    > .vitals-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+}
