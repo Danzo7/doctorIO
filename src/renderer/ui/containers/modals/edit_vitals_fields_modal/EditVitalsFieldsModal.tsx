@@ -15,6 +15,7 @@ import { Overlay_u } from '@stores/overlayStore';
 interface EditVitalsFieldsModalProps {}
 export default function EditVitalsFieldsModal({}: EditVitalsFieldsModalProps) {
   const { isLoading, data: clinicFields, isSuccess } = useGetFieldsQuery();
+
   const { isActive, switchField } = useVitalFieldsStore();
   const [addField, showAddField] = useState(false);
   return (
@@ -43,9 +44,6 @@ export default function EditVitalsFieldsModal({}: EditVitalsFieldsModalProps) {
                       name={field.name}
                       unit={field.unit}
                       display={isActive(field.name)}
-                      onEdit={() => {
-                        //TODO make this editable
-                      }}
                       onChangeDisplay={() => {
                         switchField(field);
                       }}
