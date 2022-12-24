@@ -113,6 +113,7 @@ type InputProps<
   errorMessage?: string;
   autoFocus?: true;
   touchFirst?: true;
+  border?: boolean;
 };
 export default function Input<
   TFieldValues extends FieldValues = FieldValues,
@@ -140,6 +141,7 @@ export default function Input<
   radius,
   autoFocus,
   touchFirst,
+  border,
 }: InputProps<TFieldValues, TFieldName> & Partial<InputWrapperProps>) {
   const { control: controlC } = useContext(InputControllerContext);
   if (!controlC && !control) {
@@ -165,6 +167,7 @@ export default function Input<
       disabled={disabled}
       onChanged={onChange}
       fieldState={fieldState}
+      border={border}
     />
   ) : type == 'IconicSwitch' ? (
     <IconicSwitch field={field} onChanged={onChange} />
