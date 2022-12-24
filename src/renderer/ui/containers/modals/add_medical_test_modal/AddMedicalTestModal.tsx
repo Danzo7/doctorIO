@@ -32,7 +32,15 @@ export default function AddMedicalTestModal({
       <ModalContainer
         isLoading={isLoading}
         title="Biometric screening"
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit((data) => {
+          //filter active fields
+          onSubmit(
+            vitalFields.reduce(
+              (acc, field) => ({ ...acc, [field.name]: +data[field.name] }),
+              {},
+            ),
+          );
+        })}
         controls={
           <TextButton
             text={'Save Biometrics'}
@@ -107,6 +115,11 @@ export default function AddMedicalTestModal({
                       key={field.name}
                       type={{ type: 'numeric', unit: field.unit }}
                       label={titleCase(field.name)}
+                      rules={{
+                        required: true,
+                        min: 0,
+                        max: 1000,
+                      }}
                       name={field.name}
                       defaultValue={'0'}
                     />
