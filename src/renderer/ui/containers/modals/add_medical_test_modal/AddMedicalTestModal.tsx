@@ -125,7 +125,12 @@ export default function AddMedicalTestModal({
             </div>
           }
 
-          <div className="fields">
+          <div
+            className="fields"
+            css={{
+              justifyContent: fields.length > 0 ? 'flex-start' : 'center',
+            }}
+          >
             {fields.length > 0 ? (
               <Inputix control={control}>
                 {fields.map(
