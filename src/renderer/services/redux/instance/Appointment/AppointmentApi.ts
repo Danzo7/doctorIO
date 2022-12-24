@@ -146,7 +146,7 @@ const appointmentApi = createApi({
         return {
           url: `/assign`,
           method: 'PATCH',
-          body: { ...test },
+          body: { vitals: test },
           params: { id, selectedQueue },
         };
       },
