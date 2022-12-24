@@ -58,6 +58,7 @@ const clinicApi = createApi({
           method: 'DELETE',
         };
       },
+      invalidatesTags: ['vitals'],
     }),
   }),
 });
