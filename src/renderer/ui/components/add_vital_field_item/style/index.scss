@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+.add-vital-field-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 10px;
+    gap: 5px;
+    border: 1px solid $silvergray;
+    border-radius: 7px;
+}
