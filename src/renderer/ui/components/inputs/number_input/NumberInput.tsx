@@ -107,11 +107,18 @@ export default forwardRef(function NumberInput(
           tip="Decrease"
           Icon={minus}
           onPress={decrease}
+          unFocusable
           blank
         />
       }
       trailing={
-        <SquareIconButton tip="Increase" Icon={add} onPress={increase} blank />
+        <SquareIconButton
+          tip="Increase"
+          Icon={add}
+          onPress={increase}
+          blank
+          unFocusable
+        />
       }
     >
       <AutoSizeInput
