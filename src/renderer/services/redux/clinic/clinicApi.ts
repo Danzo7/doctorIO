@@ -50,6 +50,15 @@ const clinicApi = createApi({
       },
       invalidatesTags: ['vitals'],
     }),
+    deleteField: builder.mutation<boolean, string>({
+      query: (name) => {
+        return {
+          url: `vital-fields`,
+          body: { name },
+          method: 'DELETE',
+        };
+      },
+    }),
   }),
 });
 export default clinicApi;
@@ -58,4 +67,6 @@ export const {
   useUpdateClinicOverviewMutation,
   useGetFieldsQuery,
   useCreateFieldMutation,
+  useDeleteFieldMutation,
+  useUpdateFieldMutation,
 } = clinicApi;
