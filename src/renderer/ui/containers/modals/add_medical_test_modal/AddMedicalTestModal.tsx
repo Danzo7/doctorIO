@@ -14,6 +14,9 @@ import {
   useGetFieldsQuery,
 } from '@redux/clinic/clinicApi';
 import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
+import EditVitalsFieldsModal from '../edit_vitals_fields_modal';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import { modal } from '@stores/overlayStore';
 interface AddMedicalTestModalProps {
   onSubmit: SubmitHandler<BiometricScreening>;
 }
@@ -72,10 +75,10 @@ export default function AddMedicalTestModal({
                   padding={'10px'}
                   itemsDirection="row-reverse"
                   onPress={() => {
-                    create({
-                      name: 'test',
-                      unit: 'mg/dl',
-                    });
+                    modal(<EditVitalsFieldsModal />, {
+                      ...DEFAULT_MODAL,
+                      width: '35%',
+                    }).open();
                   }}
                 />
 

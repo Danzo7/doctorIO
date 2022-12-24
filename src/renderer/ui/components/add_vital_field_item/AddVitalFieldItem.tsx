@@ -5,28 +5,29 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import IconicButton from '@components/buttons/iconic_button';
 import Mark from 'toSvg/good_mark.svg?icon';
+import { useCreateFieldMutation } from '@redux/clinic/clinicApi';
 
 const schema = z.object({
   name: z.string().min(3),
   unit: z.string().min(1),
 });
-type Inputs = {
-  name: string;
-  unit: string;
-};
+
 interface AddVitalFieldItemProps {
   onSave?: () => void;
 }
+type Inputs = z.infer<typeof schema>;
 export default function AddVitalFieldItem({ onSave }: AddVitalFieldItemProps) {
-  const { control, handleSubmit } = useForm<z.infer<typeof schema>>({
+  const [createFieldMutation] = useCreateFieldMutation();
+  const { control, handleSubmit } = useForm<Inputs>({
     defaultValues: {
       name: '',
       unit: '',
     },
   });
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    console.log({ formData });
-    onSave?.();
+    createFieldMutation(formData).then(() => {
+      onSave?.();
+    });
   };
   return (
     <form className="add-vital-field-item" onSubmit={handleSubmit(onSubmit)}>
@@ -45,7 +46,7 @@ export default function AddVitalFieldItem({ onSave }: AddVitalFieldItemProps) {
         control={control}
       />
       <IconicButton
-        tip="Edit"
+        tip="save"
         blank
         width={25}
         radius={7}
