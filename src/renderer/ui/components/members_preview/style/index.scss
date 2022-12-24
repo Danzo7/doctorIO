@@ -50,8 +50,13 @@
   &-hidden {
     gap: 0;
     >div:last-child {
+
       visibility: hidden;
-      max-height:0
+      max-height:
+      0;
+      >div{
+        display: none;
+      }
     }
     .members-preview>.arrow-container> svg > path {
       transform: unset;
