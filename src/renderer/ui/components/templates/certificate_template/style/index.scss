@@ -1,0 +1,87 @@
+@use '~styles/appColors' as *;
+
+@mixin normalFontStyle {
+    font-size: 16px;
+    font-weight: 500;
+    color: $goodblack;
+}
+.certificate-template {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+    background: $white;
+    max-width: 640px;
+    gap: 15px;
+
+    > .text-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        border-top: 1px solid $bordercolor;
+
+        > span {
+            @include normalFontStyle()
+        }
+    }
+
+    > .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height:400px;
+
+        > span {
+            @include normalFontStyle()
+        }
+
+        > span:first-of-type{
+            align-self: flex-start;
+        }
+    }
+
+    > .text-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        > .doctor-info-div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            > span {
+                @include normalFontStyle()
+            }
+
+            > .clinic-name-ar {
+                direction: rtl;
+                max-width: 250px;
+            }
+            > .clinic-name-en {
+                max-width: 250px;
+            }
+        }
+
+        > .day-place-info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            align-self: flex-start;
+
+            > span {
+                @include normalFontStyle()
+            }
+        }
+    }
+
+    > .content-title {
+        font-size: 23px;
+        font-weight: 700;
+        color: $goodblack;
+        text-decoration: underline;
+        text-decoration-color:$bordercolor;
+        align-self: center;
+    }
+}
