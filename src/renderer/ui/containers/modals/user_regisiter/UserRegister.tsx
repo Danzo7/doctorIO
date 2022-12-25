@@ -3,6 +3,7 @@ import TextButton from '@components/buttons/text_button';
 import Input, { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useUpdateMemberMutation } from '@redux/clinic/rbac/member/memberApi';
 import { Overlay_u } from '@stores/overlayStore';
 import { useUserStore } from '@stores/userStore';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -31,7 +32,11 @@ interface UserRegisterProps {
 }
 
 export default function UserRegister({ defaultValues }: UserRegisterProps) {
-  const { control, handleSubmit } = useForm<Inputs>({
+  const {
+    control,
+    handleSubmit,
+    formState: { dirtyFields },
+  } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: defaultValues ?? {
       firstName: '',
@@ -44,12 +49,18 @@ export default function UserRegister({ defaultValues }: UserRegisterProps) {
     },
   });
   const setUser = useUserStore((state) => state.setUser);
-  const onSubmit: SubmitHandler<Inputs> = (formData) => {
+  const [updateMember, { isLoading }] = useUpdateMemberMutation();
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
     setUser({
-      ...formData,
+      ...data,
     });
-    //TODO update user info in the server
-    Overlay_u.close();
+    const modifiedData = Object.keys(dirtyFields).reduce(
+      (acc, key) => ({ ...acc, key: data[key as keyof Inputs] }),
+      {},
+    );
+    updateMember(modifiedData).then(() => {
+      Overlay_u.close();
+    });
   };
   return (
     <ModalContainer
@@ -57,7 +68,8 @@ export default function UserRegister({ defaultValues }: UserRegisterProps) {
       title="User Registration"
       controls={
         <TextButton
-          text={'Register'}
+          text={defaultValues ? 'Update' : 'Register'}
+          disabled={isLoading}
           backgroundColor={color.good_green}
           radius={7}
           fontSize={14}

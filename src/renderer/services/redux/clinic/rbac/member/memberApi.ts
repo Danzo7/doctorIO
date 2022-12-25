@@ -11,6 +11,7 @@ import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 import { parseISO } from 'date-fns';
 import { Socket } from 'socket.io-client';
 import roleApi from '../role/roleApi';
+import { useUserStore } from '@stores/userStore';
 
 const memberApi = createApi({
   reducerPath: 'memberApi',
@@ -138,26 +139,21 @@ const memberApi = createApi({
       ) => {
         return { ...response, joinDate: parseISO(response.joinDate) };
       },
-      onQueryStarted: async (_, { queryFulfilled }) => {
+      onQueryStarted: async (_, { queryFulfilled, dispatch }) => {
         try {
           const { data: res } = await queryFulfilled;
           useQueueSelectionStore.getState().setQueues(res.queues ?? []);
+          //sync local member store
+          const localMember = useUserStore.getState().syncMemberToUser(res);
+          if (localMember) {
+            dispatch(memberApi.endpoints.updateMember.initiate(localMember));
+          }
         } catch (e: any) {
           Logger.error('MemberApi', e);
         }
       },
     }),
-    updateMember: builder.mutation<
-      boolean,
-      {
-        name?: string;
-        age?: number;
-        gender?: 'male' | 'female';
-        phone?: string;
-        address?: string;
-        publicKey?: string;
-      }
-    >({
+    updateMember: builder.mutation<boolean, Partial<Member>>({
       query: (body) => ({ url: '', body: body, method: 'PATCH' }),
       invalidatesTags: ['me'],
     }),
