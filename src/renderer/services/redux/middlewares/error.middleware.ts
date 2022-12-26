@@ -160,6 +160,12 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
       case 'UpdateRole':
         toast('Role updated successfully', 'Success', 2000);
         break;
+      case 'updateMember':
+        toast('Member information updated successfully', 'Success', 2000);
+        break;
+      case 'setAvatar':
+        toast('Member avatar updated successfully', 'Success', 2000);
+        break;
       case 'updateMemberSecret':
         toast('The secret key updated successfully', 'Success', 2000);
         break;
