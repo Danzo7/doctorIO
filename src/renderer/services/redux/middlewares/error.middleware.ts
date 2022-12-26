@@ -166,6 +166,9 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
       case 'setAvatar':
         toast('Member avatar updated successfully', 'Success', 2000);
         break;
+      case 'updatePatientDetail':
+        toast('Patient information updated successfully', 'Success', 2000);
+        break;
       case 'updateMemberSecret':
         toast('The secret key updated successfully', 'Success', 2000);
         break;
