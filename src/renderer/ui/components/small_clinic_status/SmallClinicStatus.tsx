@@ -13,6 +13,7 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 import './style/index.scss';
+import { useAbility } from '@stores/abilityStore';
 interface SmallClinicStatusProps {
   hasViewClinic?: true;
 }
@@ -20,13 +21,21 @@ interface SmallClinicStatusProps {
 export default function SmallClinicStatus({
   hasViewClinic,
 }: SmallClinicStatusProps) {
+  const abilities = useAbility();
+
   const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
-  const { data, isSuccess } = useGetQueueStateQuery(selectedQueue);
+  const { data, isSuccess } = useGetQueueStateQuery(selectedQueue, {
+    skip: !(abilities.can('have', 'queue') || abilities.can('manage', 'queue')),
+  });
   const [ResumeQueue] = useResumeQueueMutation();
   const [PauseQueue] = usePauseQueueMutation();
   const { navigate } = useNavigation();
-  const ownershipData = useGetIsQueueOwnerQuery(selectedQueue);
-  const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue);
+  const ownershipData = useGetIsQueueOwnerQuery(selectedQueue, {
+    skip: !(abilities.can('have', 'queue') || abilities.can('manage', 'queue')),
+  });
+  const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue, {
+    skip: !(abilities.can('have', 'queue') || abilities.can('manage', 'queue')),
+  });
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const isOwner = ownershipData.isSuccess ? ownershipData.data : undefined;
 
