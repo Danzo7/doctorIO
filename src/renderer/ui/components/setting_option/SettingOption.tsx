@@ -5,7 +5,7 @@ import './style/index.scss';
 interface SettingOptionProps {
   title: string;
   description: string;
-
+  gap?: number;
   controls?: ReactNode;
   useToggleButton?: {
     isChecked?: boolean;
@@ -17,9 +17,10 @@ export default function SettingOption({
   description,
   controls,
   useToggleButton,
+  gap = 10,
 }: SettingOptionProps) {
   return (
-    <div className="setting-option">
+    <div className="setting-option" css={{ gap: gap }}>
       <Header
         title={title}
         padding={0}

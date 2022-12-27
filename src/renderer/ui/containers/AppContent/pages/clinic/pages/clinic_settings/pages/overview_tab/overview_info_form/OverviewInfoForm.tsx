@@ -25,9 +25,9 @@ export default function OverviewInfoForm(defaults: Clinic) {
   } = useForm<Inputs>({
     defaultValues: {
       name: defaults?.name,
-      description: defaults?.description,
+      description: defaults?.description ?? '',
       address: defaults?.address,
-      phone: defaults?.phone,
+      phone: defaults?.phone ?? '',
     },
     mode: 'onChange',
   });

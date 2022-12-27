@@ -14,13 +14,23 @@ import { useAbility } from '@stores/abilityStore';
 import { Badged } from '@components/badge/Badge';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 import { modal } from '@stores/overlayStore';
+import { FunctionComponent, SVGProps } from 'react';
 interface ShortStatsPanelProps {}
 export default function ShortStatsPanel({}: ShortStatsPanelProps) {
+  const abilities = useAbility();
   const selectedQueue = useSelectedQueue();
-  const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue);
+  const appointmentsQuery = useGetQueueAppointmentsQuery(selectedQueue, {
+    skip: !(abilities.can('have', 'queue') || abilities.can('manage', 'queue')),
+  });
   const count = appointmentsQuery.isSuccess ? appointmentsQuery.data.length : 0;
   const timeSortList = ['Today', 'Monthly'];
-  const miniStatsList = [
+  const miniStatsList: {
+    text: string;
+    value: number;
+    Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
+    backgroundColor: string;
+    percentage?: number;
+  }[] = [
     {
       text: 'Revenue',
       value: 1.4,
@@ -39,15 +49,14 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
       Icon: exclamation,
       backgroundColor: colors.hot_red,
     },
-    {
+    (abilities.can('have', 'queue') || abilities.can('manage', 'queue')) && {
       text: 'Queue',
       value: count,
       Icon: exclamation,
     },
-  ];
+  ].filter(Boolean) as any;
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();
 
-  const abilities = useAbility();
   return (
     <div className="short-stats-panel">
       <Header
