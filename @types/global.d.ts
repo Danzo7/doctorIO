@@ -1,7 +1,11 @@
 /* eslint-disable no-undef */
 /* Use this file to declare any custom file extensions for importing */
 /* Use this folder to also add/extend a package d.ts file, if needed. */
-
+/*Webpack Defining Variables*/
+declare const APP_WEBPACK_ENTRY: string;
+declare const APP_PRELOAD_WEBPACK_ENTRY: string;
+declare const IS_ELECTRON: boolean;
+declare const IS_DEV: boolean;
 /* CSS MODULES */
 declare module '*.module.css' {
   const classes: { [key: string]: string };
