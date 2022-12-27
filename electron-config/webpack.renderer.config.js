@@ -1,5 +1,4 @@
-const webpackDefault = require('../webpack.config')();
-const webpack = require('webpack');
+const webpackDefault = require('../webpack.config');
 
 module.exports = {
   output: {
@@ -8,12 +7,6 @@ module.exports = {
   mode: webpackDefault.mode,
   devtool: webpackDefault.devtool,
   module: webpackDefault.module,
-  plugins: [
-    new webpack.DefinePlugin({
-      //Setting environment variables
-      FROM_ELECTRON: JSON.stringify(true),
-    }),
-    ...webpackDefault.plugins,
-  ],
+  plugins: webpackDefault.plugins,
   resolve: webpackDefault.resolve,
 };

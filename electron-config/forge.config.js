@@ -18,12 +18,12 @@ module.exports = {
     },
   ],
   plugins: [
-    [
-      'electron-webpack-forge',
-      {
+    {
+      name: 'electron-webpack-forge',
+      config: {
         output: 'build',
         mainConfig: './electron-config/webpack.main.config.js',
-        devContentSecurityPolicy: `default-src * 'self' 'unsafe-inline' data:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' data:`,
+        devContentSecurityPolicy: `default-src * 'self' 'unsafe-inline' data:; script-src * 'self' 'unsafe-eval' 'unsafe-inline' data: blob:; connect-src * 'self' 'unsafe-eval' 'unsafe-inline' data: blob:; img-src * 'self' 'unsafe-eval' 'unsafe-inline' data: blob:; style-src * 'self' 'unsafe-eval' 'unsafe-inline' data: blob:;`,
 
         renderer: {
           config: './electron-config/webpack.renderer.config.js',
@@ -40,6 +40,6 @@ module.exports = {
           ],
         },
       },
-    ],
+    },
   ],
 };

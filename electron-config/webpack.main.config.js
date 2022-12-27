@@ -1,4 +1,6 @@
-const webpackDefault = require('../webpack.config')();
+const { definedVariables } = require('./env.config');
+
+const webpackDefault = require('../webpack.config');
 
 module.exports = {
   /**
@@ -41,6 +43,7 @@ module.exports = {
     ],
   },
   resolve: webpackDefault.resolve,
+  plugins: [definedVariables],
   // devServer:webpackDefault.devServer,
   // devtool:webpackDefault.devtool,
   // target:webpackDefault.target
