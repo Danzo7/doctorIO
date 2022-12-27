@@ -49,6 +49,10 @@ export default function ChangeSecretModal({}: ChangeSecretModalProps) {
           const castedErr = (result.error as any)?.data as ServerError;
           if (castedErr?.errorCode == 1000)
             setError('The old secret key is incorrect');
+          if (castedErr?.errorCode == 1200)
+            setError(
+              'The password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one special character',
+            );
           else setError('An error occurred, please try again');
         }
       });
