@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import './style/index.scss';
-import EyePassword from '@components/buttons/eye_password';
 
 const schema = z.object({
   oldSecretKey: z.string().min(1, 'Old Secret Key is required'),
@@ -30,9 +29,7 @@ export default function ChangeSecretModal({}: ChangeSecretModalProps) {
   });
   const [UpdateMemberSecretMutation] = useUpdateMemberSecretMutation();
   const [internalError, setError] = useState('');
-  const [showOldPass, setShowOldPass] = useState(false);
-  const [showNewPass, setShowNewPass] = useState(false);
-  const [showConfirmPass, setShowConfirmPass] = useState(false);
+
   const onSubmit: SubmitHandler<Inputs> = ({
     oldSecretKey,
     newSecretKey,
@@ -85,48 +82,24 @@ export default function ChangeSecretModal({}: ChangeSecretModalProps) {
         <div className="update-input-div">
           <Inputix control={control}>
             <Input
-              type={showOldPass ? 'text' : 'password'}
+              type="password"
               label="Old secret key"
               name="oldSecretKey"
-              trailing={
-                <EyePassword
-                  value={showOldPass}
-                  onPress={() => {
-                    setShowOldPass(!showOldPass);
-                  }}
-                />
-              }
               fillContainer
             />
             <Input
-              type={showNewPass ? 'text' : 'password'}
+              type="password"
               label="New secret key"
               name="newSecretKey"
               fillContainer
-              trailing={
-                <EyePassword
-                  value={showNewPass}
-                  onPress={() => {
-                    setShowNewPass(!showNewPass);
-                  }}
-                />
-              }
               onChange={() => {
                 if (internalError.length > 0) setError('');
               }}
             />
             <Input
-              type={showConfirmPass ? 'text' : 'password'}
+              type="password"
               label="Repeat secret key"
               name="repeatSecretKey"
-              trailing={
-                <EyePassword
-                  value={showConfirmPass}
-                  onPress={() => {
-                    setShowConfirmPass(!showConfirmPass);
-                  }}
-                />
-              }
               fillContainer
               onChange={() => {
                 if (internalError.length > 0) setError('');
