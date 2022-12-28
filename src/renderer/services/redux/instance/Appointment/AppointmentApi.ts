@@ -5,13 +5,13 @@ import {
   BiometricScreening,
   AppointmentBrief,
 } from '@models/instance.model';
-import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { createQuery } from '@stores/staticQueriesStore';
 import { parseISO } from 'date-fns';
 
 const appointmentApi = createApi({
   reducerPath: 'AppointmentApi',
-  baseQuery: StaticQueries.appointment.query,
+  baseQuery: createQuery('record/appointment').query,
   tagTypes: ['booked', 'payment'],
   refetchOnMountOrArgChange: true,
   refetchOnFocus: true,

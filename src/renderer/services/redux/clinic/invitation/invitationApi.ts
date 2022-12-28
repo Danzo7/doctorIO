@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { createQuery } from '@stores/staticQueriesStore';
 
 const invitationApi = createApi({
   reducerPath: 'invitationApi',
-  baseQuery: StaticQueries.invitation.query,
+  baseQuery: createQuery('clinic/invite').query,
   endpoints: (builder) => ({
     getInvitation: builder.query<
       {

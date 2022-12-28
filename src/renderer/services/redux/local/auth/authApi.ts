@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { parseInviteKey } from '@helpers/crypto/parse';
 import { authType } from '@models/auth.type';
-import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { useAuthStore } from '@stores/authStore';
 import { useClinicsStore } from '@stores/clinicsStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
+import { createQuery } from '@stores/staticQueriesStore';
 
 const authApi = createApi({
   reducerPath: 'authApi',
-  baseQuery: StaticQueries.authQuery.query,
+  baseQuery: createQuery('auth').query,
   endpoints: (builder) => ({
     register: builder.mutation<
       authType,

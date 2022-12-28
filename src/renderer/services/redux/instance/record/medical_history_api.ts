@@ -1,11 +1,11 @@
 import { MedicalHistory } from '@models/instance.model';
-import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { createQuery } from '@stores/staticQueriesStore';
 import { parseISO } from 'date-fns';
 
 const medicalHistoryApi = createApi({
   reducerPath: 'medicalHistoryApi',
-  baseQuery: StaticQueries.medicalHistory.query,
+  baseQuery: createQuery('record/history').query,
 
   tagTypes: ['MedicalHistory'],
   endpoints: (builder) => ({

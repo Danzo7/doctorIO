@@ -1,12 +1,12 @@
 import { VitalField } from '@models/local.models';
 import { Clinic } from '@models/server.models';
-import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { createQuery } from '@stores/staticQueriesStore';
 import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 
 const clinicApi = createApi({
   reducerPath: 'clinicApi',
-  baseQuery: StaticQueries.clinic.query,
+  baseQuery: createQuery('clinic').query,
   tagTypes: ['clinic', 'vitals'],
   endpoints: (builder) => ({
     getClinic: builder.query<Clinic, void>({

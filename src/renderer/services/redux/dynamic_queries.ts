@@ -137,25 +137,3 @@ export class DynamicBaseQuery {
     return result;
   };
 }
-
-export class StaticQueries {
-  static readonly authQuery = new DynamicBaseQuery('auth');
-
-  static readonly queue = new DynamicBaseQuery('queue');
-
-  static readonly appointment = new DynamicBaseQuery('record/appointment');
-
-  static readonly medicalHistory = new DynamicBaseQuery('record/history');
-
-  static readonly medicalDocument = new DynamicBaseQuery('record/document');
-
-  static readonly patient = new DynamicBaseQuery('record/patient');
-
-  static readonly roles = new DynamicBaseQuery('clinic/role');
-
-  static readonly members = new DynamicBaseQuery('clinic/member');
-
-  static readonly invitation = new DynamicBaseQuery('clinic/invite');
-
-  static readonly clinic = new DynamicBaseQuery('clinic');
-}
