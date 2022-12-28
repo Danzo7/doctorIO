@@ -30,7 +30,9 @@
     "check-sass": " npx stylelint \"src/**/*.{css,sass,scss}\"",
     "fix-sass": " npx stylelint \"src/**/*.{css,sass,scss}\" --fix",
     "build-storybook": "build-storybook",
-    "test": "web-test-runner \"src/**/*.test.tsx\""
+    "test": "web-test-runner \"src/**/*.test.tsx\"",
+    "tauri:build": "tauri build",
+    "tauri:dev": "tauri dev"
   },
   "dependencies": {
     "@casl/ability": "^6.3.3",
@@ -62,7 +64,8 @@
     "react-viewport-list": "6.3.0-beta.0",
     "socket.io-client": "^4.5.4",
     "zod": "^3.20.2",
-    "zustand": "^4.1.5"
+    "zustand": "^4.1.5",
+    "@tauri-apps/api": "^1.2.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
@@ -157,6 +160,6 @@
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1",
-    "webpack-electron-reload": "^1.0.1"
+    "@tauri-apps/cli": "^1.2.2"
   }
 }

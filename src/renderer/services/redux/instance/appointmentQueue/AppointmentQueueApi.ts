@@ -5,13 +5,13 @@ import {
   QueueState,
   BiometricScreening,
 } from '@models/instance.model';
-import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { createQuery } from '@stores/staticQueriesStore';
 import { parseISO } from 'date-fns';
 
 const appointmentQueueApi = createApi({
   reducerPath: 'AppointmentQueueApi',
-  baseQuery: StaticQueries.queue.query,
+  baseQuery: createQuery('queue').query,
   tagTypes: ['state', 'queue', 'item'],
   endpoints: (builder) => ({
     //GET

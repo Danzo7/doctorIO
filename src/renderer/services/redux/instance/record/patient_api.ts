@@ -1,11 +1,11 @@
 import { BloodType, Patient, PatientBrief } from '@models/instance.model';
-import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/query/react';
+import { createQuery } from '@stores/staticQueriesStore';
 import { parseISO } from 'date-fns';
 
 const patientApi = createApi({
   reducerPath: 'patientApi',
-  baseQuery: StaticQueries.patient.query,
+  baseQuery: createQuery('record/patient').query,
   tagTypes: ['patient', 'MedicalHistory', 'MedicalDocument'],
   endpoints: (builder) => ({
     //Patient

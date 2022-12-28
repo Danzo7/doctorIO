@@ -11,11 +11,10 @@ import { ErrorBoundary } from '@layers/error_layer';
 const app = document.getElementById('app-mount');
 const root = createRoot(app as HTMLElement);
 const Routing = FROM_ELECTRON ? HashRouter : BrowserRouter;
-
 root.render(
   <StrictMode>
     <ErrorBoundary>
-      {FROM_ELECTRON && <Taskbar />}
+      {IS_DESKTOP && <Taskbar />}
       <Provider store={store}>
         <Routing>
           <App />

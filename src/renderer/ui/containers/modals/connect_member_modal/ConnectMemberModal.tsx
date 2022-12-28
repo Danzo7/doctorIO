@@ -15,9 +15,11 @@ interface Inputs {
 }
 interface ConnectMemberModalProps {
   selectedIndex: number;
+  onCancel?: () => void;
 }
 export default function ConnectMemberModal({
   selectedIndex,
+  onCancel,
 }: ConnectMemberModalProps) {
   const { navigate } = useNavigation();
   const clinics = useClinicsStore();
@@ -34,7 +36,6 @@ export default function ConnectMemberModal({
     defaultValues: { key: '' },
   });
   const onSubmit: SubmitHandler<Inputs> = async ({ key }) => {
-    //TODO: If fail to connect to clinic, handle selected change and show error
     const memId =
       useClinicsStore.getState().clinicData.clinics[selectedIndex].memberId;
     const location =
@@ -43,10 +44,13 @@ export default function ConnectMemberModal({
     useConnectionStore.getState().pseudoConnect(location);
     ConnectMember({ memberId: memId, secretKey: key }).then((result) => {
       if ('data' in result) {
-        clinics.setSelectedClinic(selectedIndex);
-        useConnectionStore.getState().connect();
-        navigate('/');
-        Overlay_u.close();
+        if (onCancel) useConnectionStore.getState().connected();
+        else {
+          clinics.setSelectedClinic(selectedIndex);
+          useConnectionStore.getState().connect();
+          navigate('/');
+          Overlay_u.close();
+        }
       } else {
         if ('data' in result.error) {
           const castedErr = result.error.data as ServerError;
@@ -61,19 +65,25 @@ export default function ConnectMemberModal({
   return (
     <ModalContainer
       onSubmit={handleSubmit(onSubmit)}
-      title="Connect a member"
+      title={onCancel ? 'Reconnect to clinic' : 'Connect to Clinic'}
       controls={
-        <TextButton
-          disabled={res.isLoading}
-          text="Connect"
-          backgroundColor={color.good_green}
-          fontSize={13}
-          fontWeight={700}
-          alignSelf="center"
-          padding={5}
-          blank
-          type="submit"
-        />
+        <>
+          <TextButton
+            disabled={res.isLoading}
+            text="Connect"
+            backgroundColor={color.good_green}
+            blank
+            type="submit"
+          />
+          {onCancel && (
+            <TextButton
+              text="Cancel"
+              backgroundColor={color.light}
+              blank
+              onPress={onCancel}
+            />
+          )}
+        </>
       }
     >
       <Input
@@ -81,8 +91,8 @@ export default function ConnectMemberModal({
         control={control}
         leading={<Key />}
         disabled={res.isLoading}
-        type="text"
-        hint="Please enter the secret key"
+        type="password"
+        hint="please enter your secret key"
         onChange={() => {
           if (internalError.length > 0) setError('');
         }}

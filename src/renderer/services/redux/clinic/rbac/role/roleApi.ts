@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { PermKeys, Role, RoleBrief } from '@models/server.models';
-import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import memberApi from '../member/memberApi';
+import { createQuery } from '@stores/staticQueriesStore';
 
 const roleApi = createApi({
   reducerPath: 'roleApi',
-  baseQuery: StaticQueries.roles.query,
+  baseQuery: createQuery('clinic/role').query,
   tagTypes: ['roles'],
   endpoints: (builder) => ({
     getBriefRoles: builder.query<RoleBrief[], void>({

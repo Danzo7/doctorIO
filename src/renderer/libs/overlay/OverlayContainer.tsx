@@ -137,9 +137,9 @@ export interface OverlayOptions {
   isDimmed?: boolean;
   clickThrough?: boolean;
   backdropColor?: string | false;
-  closeOnClickOutside?: true;
+  closeOnClickOutside?: boolean;
   position?: Position;
-  closeOnBlur?: true;
+  closeOnBlur?: boolean;
   onClose?: () => void;
   width?: number | string;
   height?: number | string;
@@ -165,6 +165,7 @@ export interface OverlayOptions {
     | 'none';
   autoFocus?: boolean;
   clickable?: boolean;
+  closable?: boolean;
 }
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
@@ -189,11 +190,13 @@ export function OverlayItem({
   defaultCloseFallback = true,
   style,
   clickable = true,
+  closable = true,
 }: OverlayItemProps) {
   const closeOverlay = () => {
+    if (!closable) return;
     onClose?.();
     if (closeMethod) closeMethod();
-    else if (defaultCloseFallback) Overlay.close();
+    else if (defaultCloseFallback) Overlay_u.close();
   };
   return (
     <>
@@ -207,7 +210,7 @@ export function OverlayItem({
             pointerEvents: clickThrough ? 'none' : 'all',
           })}
           onClick={
-            closeOnClickOutside
+            closable && closeOnClickOutside
               ? (e) => {
                   closeOverlay();
                   e.stopPropagation();
@@ -235,7 +238,7 @@ export function OverlayItem({
         }}
         {...(autoFocus ? { tabIndex: -1 } : {})}
         onBlur={
-          closeOnBlur
+          closable && closeOnBlur
             ? (event) => {
                 if (!event.currentTarget.contains(event.relatedTarget)) {
                   closeOverlay();
@@ -257,7 +260,7 @@ export function OverlayItem({
           }
         }}
       >
-        {closeBtn && (
+        {closable && closeBtn && (
           <div
             className={`close-btn ${
               typeof closeBtn == 'string' ? closeBtn : closeBtn.placement

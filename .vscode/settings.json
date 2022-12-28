@@ -6,6 +6,7 @@
     "Panding",
     "reduxjs",
     "Scroller",
+    "Tauri",
     "vmin"
   ],
   "npm.exclude": ["**/out/**"],

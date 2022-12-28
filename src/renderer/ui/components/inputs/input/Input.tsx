@@ -28,6 +28,7 @@ import { InputWrapperProps } from '../input_wrapper/InputWrapper';
 import { DatepickerProps } from '../datepicker/Datepicker';
 import MultipleCheckGroup from '../multiple_check_group';
 import IconicSwitch from '../iconic_switch';
+import PasswordInput from '../password_input';
 export const InputControllerContext = createContext<{
   control: Control<any> | undefined;
   onChange?: (value: any) => void;
@@ -199,6 +200,20 @@ export default function Input<
           fieldState={fieldState}
           disabled={disabled}
           touchFirst={touchFirst}
+        />
+      ) : type == 'password' ? (
+        <PasswordInput
+          field={field}
+          ref={ref}
+          touchFirst={touchFirst}
+          disabled={disabled}
+          fieldState={fieldState}
+          rules={rules}
+          background={background}
+          leading={leading}
+          onChanged={onChange}
+          placeholder={placeholder}
+          radius={radius}
         />
       ) : (
         <InputWrapper

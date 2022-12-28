@@ -4,8 +4,11 @@
 /*Webpack Defining Variables*/
 declare const APP_WEBPACK_ENTRY: string;
 declare const APP_PRELOAD_WEBPACK_ENTRY: string;
-declare const IS_ELECTRON: boolean;
 declare const IS_DEV: boolean;
+declare const FROM_ELECTRON: boolean;
+declare const FROM_TAURI: boolean;
+declare const IS_DESKTOP: boolean;
+
 /* CSS MODULES */
 declare module '*.module.css' {
   const classes: { [key: string]: string };
@@ -76,7 +79,6 @@ declare module '*.mp3' {
 /**
  * Predifined variables from webpack to Tell if we are in electron or web
  */
-declare const FROM_ELECTRON: boolean;
 interface ServerError {
   errorCode: number;
   message: string;

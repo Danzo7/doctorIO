@@ -1,11 +1,11 @@
 import { MedicalDocument } from '@models/instance.model';
-import { StaticQueries } from '@redux/dynamic_queries';
 import { createApi, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
+import { createQuery } from '@stores/staticQueriesStore';
 import { parseISO } from 'date-fns';
 
 const medicalDocumentApi = createApi({
   reducerPath: 'medicalDocumentApi',
-  baseQuery: StaticQueries.medicalDocument.query,
+  baseQuery: createQuery('record/document').query,
   tagTypes: ['MedicalDocument'],
   endpoints: (builder) => ({
     getMedicalDocuments: builder.query<MedicalDocument[], number>({

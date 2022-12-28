@@ -1,7 +1,6 @@
 import { buildAbilityFor } from '@ability/utils';
 import { Logger } from '@libs/Logger';
 import { Member, MemberBrief, PermKeys } from '@models/server.models';
-import { StaticQueries } from '@redux/dynamic_queries';
 import appointmentApi from '@redux/instance/Appointment/AppointmentApi';
 import appointmentQueueApi from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
@@ -12,10 +11,11 @@ import { parseISO } from 'date-fns';
 import { Socket } from 'socket.io-client';
 import roleApi from '../role/roleApi';
 import { useUserStore } from '@stores/userStore';
+import { createQuery } from '@stores/staticQueriesStore';
 
 const memberApi = createApi({
   reducerPath: 'memberApi',
-  baseQuery: StaticQueries.members.query,
+  baseQuery: createQuery('clinic/member').query,
   tagTypes: ['members', 'me'],
   endpoints: (builder) => ({
     getMembers: builder.query<MemberBrief[], void>({
