@@ -194,9 +194,9 @@ export function OverlayItem({
 }: OverlayItemProps) {
   const closeOverlay = () => {
     if (!closable) return;
-    onClose?.();
-    if (closeMethod) closeMethod();
-    else if (defaultCloseFallback) Overlay_u.close();
+    if (onClose) onClose();
+    // if (closeMethod) closeMethod();
+    else if (defaultCloseFallback) Overlay.close();
   };
   return (
     <>
