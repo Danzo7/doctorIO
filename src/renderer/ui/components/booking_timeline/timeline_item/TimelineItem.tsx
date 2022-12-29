@@ -24,7 +24,6 @@ export default function TimelineItem({
   patientId,
   id,
 }: AppointmentBrief & { patientId: number }) {
-  console.log(SETTINGS.dateFormat);
   const selectedColor =
     state.phase == 'done'
       ? state.isBooked
