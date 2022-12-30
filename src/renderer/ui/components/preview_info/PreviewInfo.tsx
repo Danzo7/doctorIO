@@ -1,7 +1,7 @@
 import PreviewList from '@components/preview_list';
-import { titleCase } from '@helpers/string.helper';
 import { ReactNode } from 'react';
 import './style/index.scss';
+import { sentenceCase } from '@shipengine/capitalization';
 interface PreviewInfoProps {
   title: string;
   buttonNode?: ReactNode;
@@ -18,7 +18,7 @@ export default function PreviewInfo({
       <div className="preview-list-container">
         {Object.entries(data).map(([key, value]) => (
           <div className="preview-list-row" key={key}>
-            <span>{titleCase(key)}</span>
+            <span>{sentenceCase(key)}</span>
             <span>{value}</span>
           </div>
         ))}

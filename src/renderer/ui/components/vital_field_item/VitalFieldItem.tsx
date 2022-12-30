@@ -5,7 +5,7 @@ import { color } from '@assets/styles/color';
 import TrashCan from 'toSvg/trash_can.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import { useDeleteFieldMutation } from '@redux/clinic/clinicApi';
-import { titleCase } from '@helpers/string.helper';
+import { sentenceCase } from '@shipengine/capitalization';
 interface VitalFieldItemProps {
   onChangeDisplay: () => void;
   display?: boolean;
@@ -33,7 +33,7 @@ export default function VitalFieldItem({
             fontColor: color.text_gray,
           }}
           second={{
-            text: titleCase(name),
+            text: sentenceCase(name),
             fontSize: 15,
             fontWeight: 500,
             fontColor: color.white,

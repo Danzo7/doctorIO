@@ -2,12 +2,12 @@ import { color } from '@assets/styles/color';
 import DateSwitcher from '@components/date_switcher';
 import Header from '@components/header';
 import VitalItem from '@components/vital_item';
-import { titleCase } from '@helpers/string.helper';
 import { BiometricScreening } from '@models/instance.model';
 import { ComponentProps } from 'react';
 import './style/index.scss';
 import LoadingSpinner from '@components/loading_spinner';
 import { useGetFieldsQuery } from '@redux/clinic/clinicApi';
+import { sentenceCase } from '@shipengine/capitalization';
 interface VitalsPanelProps {
   data: BiometricScreening;
 }
@@ -19,7 +19,7 @@ export default function VitalsPanel({ data }: VitalsPanelProps) {
       .map(([key, value]) => {
         const unit = clinicFields.find((vital) => vital.name == key)?.unit;
 
-        return { name: titleCase(key), value, unit };
+        return { name: sentenceCase(key), value, unit };
       })
       .filter(Boolean) as ComponentProps<typeof VitalItem>[];
   return (

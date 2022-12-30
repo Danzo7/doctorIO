@@ -6,6 +6,7 @@ import { z } from 'zod';
 import IconicButton from '@components/buttons/iconic_button';
 import Mark from 'toSvg/good_mark.svg?icon';
 import { useCreateFieldMutation } from '@redux/clinic/clinicApi';
+import { camelCase } from '@shipengine/capitalization';
 
 const schema = z.object({
   name: z.string().min(3),
@@ -25,7 +26,10 @@ export default function AddVitalFieldItem({ onSave }: AddVitalFieldItemProps) {
     },
   });
   const onSubmit: SubmitHandler<Inputs> = (formData) => {
-    createFieldMutation(formData).then(() => {
+    createFieldMutation({
+      name: camelCase(formData.name),
+      unit: formData.unit,
+    }).then(() => {
       onSave?.();
     });
   };

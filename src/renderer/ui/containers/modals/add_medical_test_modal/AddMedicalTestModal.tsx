@@ -5,7 +5,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import ModalContainer from '@components/modal_container';
 import { Inputix } from '@components/inputs/input/Input';
 import { BiometricScreening } from '@models/instance.model';
-import { titleCase } from '@helpers/string.helper';
 import FieldIcon from 'toSvg/fields.svg?icon';
 import VerticalPanel from '@components/vertical_panel';
 import './style/index.scss';
@@ -14,6 +13,7 @@ import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 import EditVitalsFieldsModal from '../edit_vitals_fields_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { modal } from '@stores/overlayStore';
+import { sentenceCase } from '@shipengine/capitalization';
 interface AddMedicalTestModalProps {
   onSubmit: SubmitHandler<BiometricScreening>;
 }
@@ -85,7 +85,7 @@ export default function AddMedicalTestModal({
                         <Input
                           type={'checkbox'}
                           name={name}
-                          label={name}
+                          label={sentenceCase(name)}
                           key={name}
                           border={true}
                           defaultValue={isActive(name)}
@@ -113,7 +113,7 @@ export default function AddMedicalTestModal({
                       fillContainer
                       key={field.name}
                       type={{ type: 'numeric', unit: field.unit }}
-                      label={titleCase(field.name)}
+                      label={sentenceCase(field.name)}
                       rules={{
                         required: true,
                         min: 0,
