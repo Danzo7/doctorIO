@@ -50,7 +50,7 @@ export default function UserRegister({ defaultValues }: UserRegisterProps) {
   });
   const setUser = useUserStore((state) => state.setUser);
   const [updateMember, { isLoading }] = useUpdateMemberMutation();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setUser({
       ...data,
     });
@@ -58,9 +58,8 @@ export default function UserRegister({ defaultValues }: UserRegisterProps) {
       (acc, key) => ({ ...acc, key: data[key as keyof Inputs] }),
       {},
     );
-    updateMember(modifiedData).then(() => {
-      Overlay_u.close();
-    });
+    if (defaultValues) await updateMember(modifiedData);
+    Overlay_u.close();
   };
   return (
     <ModalContainer
