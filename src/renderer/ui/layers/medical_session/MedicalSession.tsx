@@ -94,14 +94,10 @@ export default function MedicalSession({}: MedicalSessionProps) {
             </TabMenu> */}
             <TabComponent
               foldedItems={[
-                { label: 'Preview', content: <div>Radio</div> },
-                { label: 'Bilans', content: <div>Bilans</div> },
-                { label: 'Preview', content: <div>Preview</div> },
-              ]}
-              items={[
                 { label: 'Prescription', content: <PrescriptionTab /> },
                 { label: 'Notice', content: <DiagnosisTab /> },
               ]}
+              items={[]}
             />
             <BorderSeparator direction="horizontal" />
             <SessionParameter />
