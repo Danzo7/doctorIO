@@ -1,9 +1,10 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import DarkAddButton from '@components/buttons/dark_add_button';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import { Overlay_u } from '@stores/overlayStore';
-import { ReactNode, useRef, useState } from 'react';
+import { MouseEvent, ReactNode, useRef, useState } from 'react';
 import './style/index.scss';
+import VerticalPanel from '@components/vertical_panel';
 
 interface TabType {
   label: string;
@@ -18,6 +19,7 @@ interface TabComponentProps {
   borderBottom?: boolean;
   onAdd?: (newTab: TabType) => void;
   foldedItems?: TabType[];
+  flexGrow?: number;
 }
 export default function TabComponent({
   items,
@@ -25,12 +27,37 @@ export default function TabComponent({
   menuItemsAlignment = 'flex-start',
   defaultSelected = 0,
   foldedItems,
+  flexGrow = 1,
 }: TabComponentProps) {
-  const [activeTabIndex, setActiveTabIndex] = useState(defaultSelected);
-  const [allTabs, setAllTabs] = useState(items);
+  const [{ items: allTabs, defaultSelected: activeTabIndex }, setAllTabs] =
+    useState({
+      items,
+      defaultSelected,
+    });
   const foldRef = useRef(foldedItems);
+  const switchFoldToTab = (e?: MouseEvent<HTMLButtonElement>) => {
+    if (e)
+      Overlay_u.openTooltip(
+        () =>
+          foldRef?.current?.map((item) => ({
+            text: item.label,
+            onPress: () => {
+              foldRef.current = foldRef.current?.filter(
+                (foldItem) => foldItem != item,
+              );
+              setAllTabs((prev) => ({
+                items: [...prev.items, item],
+                defaultSelected: prev.items.length,
+              }));
+            },
+          })),
+        e.currentTarget,
+        true,
+      );
+  };
+
   return (
-    <div className="tab-component">
+    <div className="tab-component" css={{ flexGrow: flexGrow }}>
       <div
         className="tab-menu-bar"
         css={{
@@ -51,36 +78,27 @@ export default function TabComponent({
                 text={label}
                 isActive={activeTabIndex == index}
                 onPress={() => {
-                  if (index != activeTabIndex) setActiveTabIndex(index);
+                  if (index != activeTabIndex)
+                    setAllTabs((prev) => ({ ...prev, defaultSelected: index }));
                 }}
               />
             ))}
           {foldRef.current && foldRef.current.length > 0 && (
-            <DarkAddButton
-              onPress={(e) => {
-                //TODO add onAdd function prop instead of this static way
-                if (e)
-                  Overlay_u.openTooltip(
-                    () =>
-                      foldRef?.current?.map((item) => ({
-                        text: item.label,
-                        onPress: () => {
-                          foldRef.current = foldRef.current?.filter(
-                            (foldItem) => foldItem != item,
-                          );
-                          setAllTabs([...allTabs, item]);
-                        },
-                      })),
-                    e.currentTarget,
-                    true,
-                  );
-              }}
-            />
+            <DarkAddButton onPress={switchFoldToTab} />
           )}
         </div>
       </div>
-      {allTabs.length > 0 && (
-        <div className="menu-content">{allTabs[activeTabIndex].content} </div>
+      {allTabs.length > 0 ? (
+        <div className="menu-content">{allTabs[activeTabIndex]?.content} </div>
+      ) : (
+        <VerticalPanel
+          backgroundColor="none"
+          description="No options added. "
+          action={{
+            text: 'add option',
+            onClick: switchFoldToTab,
+          }}
+        />
       )}
     </div>
   );
