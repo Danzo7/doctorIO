@@ -13,6 +13,7 @@ import useNavigation from '@libs/hooks/useNavigation';
 import {
   useDeleteAppointmentMutation,
   useGetIsQueueOwnerQuery,
+  useGetQueueStateQuery,
   useUpdateTestMutation,
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
@@ -42,7 +43,10 @@ function QueueItemWide({
   biometricScreening,
 }: QueueItemWideProps) {
   const selectedQueue = useSelectedQueue();
-
+  const queueStateQuery = useGetQueueStateQuery(selectedQueue);
+  const queueState = queueStateQuery.isSuccess
+    ? queueStateQuery.data
+    : undefined;
   const { data: isOwner, isSuccess } = useGetIsQueueOwnerQuery(selectedQueue);
   const [deleteAppointment] = useDeleteAppointmentMutation();
   const [updateTest] = useUpdateTestMutation();
@@ -97,27 +101,38 @@ function QueueItemWide({
           {isOwner && (
             <TextIconButton
               Icon={invite}
-              text="invite in"
+              text={
+                queueState?.selected?.appointmentId == appointmentId &&
+                queueState.state == 'IN_PROGRESS'
+                  ? 'Continue'
+                  : 'invite in'
+              }
               color={colors.good_green}
               onPress={() => {
-                modal(
-                  () => (
-                    <NextPatient
-                      invitedPatient={{
-                        patientName: name,
-                        position: number,
-                        arrivalTime: timeAgo,
-                      }}
-                    />
-                  ),
-                  {
-                    width: '30%',
-                    closeOnClickOutside: true,
-                    isDimmed: true,
-                    clickThrough: false,
-                    closeBtn: 'inner',
-                  },
-                ).open();
+                if (
+                  queueState?.selected?.appointmentId == appointmentId &&
+                  queueState.state == 'IN_PROGRESS'
+                )
+                  navigate('/session');
+                else
+                  modal(
+                    () => (
+                      <NextPatient
+                        invitedPatient={{
+                          patientName: name,
+                          position: number,
+                          arrivalTime: timeAgo,
+                        }}
+                      />
+                    ),
+                    {
+                      width: '30%',
+                      closeOnClickOutside: true,
+                      isDimmed: true,
+                      clickThrough: false,
+                      closeBtn: 'inner',
+                    },
+                  ).open();
               }}
             />
           )}
