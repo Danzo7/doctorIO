@@ -56,7 +56,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
       }).open();
     else throw new Error('patientId is undefined');
   };
-  const render = useRef(queueStateQuery.isSuccess);
+  const render = useRef(false);
 
   const renderSpinner =
     render.current ||
@@ -93,6 +93,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
               <DiagnosisTab />
             </TabMenu> */}
             <TabComponent
+              flexGrow={0}
               foldedItems={[
                 { label: 'Prescription', content: <PrescriptionTab /> },
                 { label: 'Notice', content: <DiagnosisTab /> },
