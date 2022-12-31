@@ -39,24 +39,7 @@ type Role = {
   slaveRole?: RoleBrief;
 };
 
-type PermKeys =
-  | 'CAN_HAVE_ADMIN'
-  | 'CAN_ADD_MEMBERS'
-  | 'CAN_MANAGE_ROLE'
-  | 'CAN_VIEW_PATIENTSLIST'
-  | 'CAN_ADD_PATIENT'
-  | 'CAN_MANAGE_PATIENT'
-  | 'CAN_HAVE_QUEUE'
-  | 'CAN_MANAGE_QUEUE'
-  | 'CAN_ADD_DRUGS'
-  | 'CAN_VIEW_CLINIC_INSIGHT'
-  | 'CAN_MANAGE_DATA_COLLECTION'
-  | 'CAN_VIEW_RECORDS'
-  | 'CAN_MANAGE_MEMBERS'
-  | 'CAN_REMOVE_MEMBERS'
-  | 'CAN_MANAGE_CLINIC'
-  | 'CAN_HAVE_MESSAGES';
-export const permList: PermKeys[] = [
+export const permList = [
   'CAN_HAVE_ADMIN', //0
   'CAN_ADD_MEMBERS', //1
   'CAN_MANAGE_ROLE', //2
@@ -73,7 +56,8 @@ export const permList: PermKeys[] = [
   'CAN_MANAGE_CLINIC', //13
   'CAN_HAVE_MESSAGES', //14
   'CAN_MANAGE_QUEUE', //15
-];
+] as const;
+type PermKeys = typeof permList[number];
 type RolePermissions = Partial<Record<PermKeys, true>>;
 interface Permission<T> {
   name: string;
