@@ -1,11 +1,14 @@
 import { color } from '@assets/styles/color';
-import { ReactNode } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import './style/index.scss';
 interface VerticalPanelProps {
   Icon?: ReactNode;
   title?: string;
   description?: string;
-  action?: { text: string; onClick?: () => void };
+  action?: {
+    text: string;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  };
   IconBtn?: ReactNode;
   backgroundColor?: string;
   padding?: number | string;
