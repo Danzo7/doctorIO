@@ -30,7 +30,9 @@ import AppointmentsQueueShimmer from '@components/shimmers/appointments_queue_sh
 export default function AppointmentsQueue() {
   const { ref, gotoFirst, gotoLast, next } = useScroller(10);
   const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
-  const queueStateQuery = useGetQueueStateQuery(selectedQueue);
+  const queueStateQuery = useGetQueueStateQuery(selectedQueue, {
+    refetchOnMountOrArgChange: true,
+  });
   const myMemberDetailQuery = useGetMyMemberDetailQuery(undefined, {
     skip: !queueStateQuery.isSuccess,
   });

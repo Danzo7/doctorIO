@@ -28,7 +28,9 @@ interface AppointmentQueueSmallProps {}
 export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   const selectedQueue = useSelectedQueue();
 
-  const queueStateQuery = useGetQueueStateQuery(selectedQueue);
+  const queueStateQuery = useGetQueueStateQuery(selectedQueue, {
+    refetchOnMountOrArgChange: true,
+  });
   const isQueueOwnerQuery = useGetIsQueueOwnerQuery(selectedQueue, {
     skip: !queueStateQuery.isSuccess,
   });
