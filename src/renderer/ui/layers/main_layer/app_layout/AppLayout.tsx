@@ -11,7 +11,10 @@ import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_acti
 import useNavigation from '@libs/hooks/useNavigation';
 import { ModalPortal } from '@libs/overlay/OverlayContainer';
 import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
-import { useGetQueueStateQuery } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
+import {
+  useGetQueueStateQuery,
+  useGetIsQueueOwnerQuery,
+} from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAbility } from '@stores/abilityStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 interface AppLayoutProps {}
@@ -19,12 +22,19 @@ export default function AppLayout({}: AppLayoutProps) {
   const abilities = useAbility();
   const { isLoading, isSuccess } = useGetMyPermissionQuery();
   const selectedQueue = useSelectedQueue();
-  const queueStateQuery = useGetQueueStateQuery(selectedQueue, {
-    skip: !(abilities.can('have', 'queue') || abilities.can('manage', 'queue')),
+  const isQueueOwnerQuery = useGetIsQueueOwnerQuery(selectedQueue, {
+    skip: !isSuccess,
   });
+  const queueStateQuery = useGetQueueStateQuery(selectedQueue, {
+    skip:
+      !(abilities.can('have', 'queue') || abilities.can('manage', 'queue')) ||
+      !isQueueOwnerQuery.data,
+  });
+
   const state = queueStateQuery.isSuccess
     ? queueStateQuery.data.state
     : undefined;
+
   const { navigate } = useNavigation();
 
   return isLoading ? (

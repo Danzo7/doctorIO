@@ -20,6 +20,7 @@ interface TabComponentProps {
   onAdd?: (newTab: TabType) => void;
   foldedItems?: TabType[];
   flexGrow?: number;
+  showVerticalPanel?: true;
 }
 export default function TabComponent({
   items,
@@ -28,6 +29,7 @@ export default function TabComponent({
   defaultSelected = 0,
   foldedItems,
   flexGrow = 1,
+  showVerticalPanel,
 }: TabComponentProps) {
   const [{ items: allTabs, defaultSelected: activeTabIndex }, setAllTabs] =
     useState({
@@ -91,14 +93,16 @@ export default function TabComponent({
       {allTabs.length > 0 ? (
         <div className="menu-content">{allTabs[activeTabIndex]?.content} </div>
       ) : (
-        <VerticalPanel
-          backgroundColor="none"
-          description="No options added. "
-          action={{
-            text: 'add option',
-            onClick: switchFoldToTab,
-          }}
-        />
+        showVerticalPanel && (
+          <VerticalPanel
+            backgroundColor="none"
+            description="No options added. "
+            action={{
+              text: 'add option',
+              onClick: switchFoldToTab,
+            }}
+          />
+        )
       )}
     </div>
   );

@@ -93,6 +93,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
               <DiagnosisTab />
             </TabMenu> */}
             <TabComponent
+              showVerticalPanel
               flexGrow={0}
               foldedItems={[
                 { label: 'Prescription', content: <PrescriptionTab /> },
