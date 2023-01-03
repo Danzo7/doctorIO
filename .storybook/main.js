@@ -1,4 +1,4 @@
-const webpackConfig = require('../webpack.config')({ mode: 'development' });
+const webpackConfig = require('../webpack.config');
 module.exports = {
   webpackFinal: async (config) => {
     return {
@@ -25,9 +25,12 @@ module.exports = {
   ],
   framework: '@storybook/react',
   features: {
-    emotionAlias: false, // <----------------------------- here
+    emotionAlias: false,
   },
   core: {
     builder: 'webpack5',
+  },
+  experiments: {
+    topLevelAwait: true,
   },
 };
