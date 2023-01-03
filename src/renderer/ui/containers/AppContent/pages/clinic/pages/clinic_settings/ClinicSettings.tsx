@@ -14,6 +14,7 @@ import { FIT_MODAL } from '@libs/overlay';
 import { useDisconnectMemberMutation } from '@redux/local/auth/authApi';
 import AlertModal from '@containers/modals/dialog_modal';
 import { modal } from '@stores/overlayStore';
+import TemplateTab from './pages/template_tab';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {
   const navigate = useNavigate();
@@ -65,6 +66,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
             name: 'Timing and Schedule',
             route: { route: 'TimingAndSchedule', exact: true },
           },
+          'Template',
           'Preferences',
           {
             name: 'Audit log',
@@ -80,6 +82,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
         <Route path="Overview" element={<OverviewTab />} />
         <Route path="Members" element={<MembersTab />} />
         <Route path="TimingAndSchedule" element={<TimingAndSchedule />} />
+        <Route path="Template" element={<TemplateTab />} />
         <Route path="Preferences" element={<PreferencesTab />} />
         <Route path="AuditLog" element={<AuditLogTab />} />
       </Routes>
