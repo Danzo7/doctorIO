@@ -4,12 +4,12 @@ import CheckboxTile from '@components/checkbox_tile';
 import { preferences } from '@constants/permissions';
 import { Fragment } from 'react';
 import './style/index.scss';
-import SettingOption from '@components/setting_option';
 import { modal } from '@stores/overlayStore';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import EditVitalsFieldsModal from '@containers/modals/edit_vitals_fields_modal';
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
+import SettingOption from '@components/setting_option';
 interface PreferencesTabProps {}
 export default function PreferencesTab({}: PreferencesTabProps) {
   return (
@@ -25,8 +25,22 @@ export default function PreferencesTab({}: PreferencesTabProps) {
           <BorderSeparator direction="horizontal" />
         </Fragment>
       ))}
+
       <SettingOption
-        gap={5}
+        flexDirection="row"
+        gap={2}
+        title={{
+          text: 'Vital fields',
+          fontSize: 15,
+          fontWeight: 600,
+          fontColor: color.white,
+        }}
+        description={{
+          text: 'Vital fields are useful when collecting patient vital information. You can add custom fields to vital form.',
+          fontSize: 14,
+          fontWeight: 500,
+          fontColor: color.text_gray,
+        }}
         controls={
           <TextButton
             text="Change..."
@@ -40,13 +54,11 @@ export default function PreferencesTab({}: PreferencesTabProps) {
             onPress={() => {
               modal(<EditVitalsFieldsModal />, {
                 ...DEFAULT_MODAL,
-                width: '25%',
+                width: '35%',
               }).open();
             }}
           />
         }
-        title="Vital fields"
-        description="Vital fields are useful when collecting patient vital information. You can add custom fields to vital form."
       />
     </div>
   );
