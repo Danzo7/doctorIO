@@ -2,11 +2,10 @@
 .setting-option {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    align-self: stretch;
 
-    > .description-span {
-        font-weight: 600;
-        font-size: 13px;
-        color: $silvergray;
+    > .setting-option-content {
+        display: flex;
     }
 }
