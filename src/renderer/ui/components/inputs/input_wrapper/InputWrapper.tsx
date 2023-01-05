@@ -105,7 +105,7 @@ export default function InputWrapper({
             className="input-content"
             css={{
               justifyContent: inputAlignment,
-              paddingLeft: leading ? undefined : 10,
+              paddingLeft: leading ? undefined : padding,
             }}
           >
             {children}
