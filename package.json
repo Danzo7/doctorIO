@@ -46,8 +46,6 @@
     "@shipengine/capitalization": "^1.2.1",
     "@tanstack/react-table": "^8.7.4",
     "@tauri-apps/api": "^1.2.0",
-    "@udecode/plate-basic-elements": "^18.13.0",
-    "@udecode/plate-core": "^18.13.0",
     "async-mutex": "^0.4.0",
     "chalk": "^5.2.0",
     "date-fns": "^2.29.3",
