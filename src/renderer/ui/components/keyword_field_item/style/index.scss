@@ -1,0 +1,24 @@
+@use '~styles/appColors' as *;
+.keyword-field-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 10px;
+    justify-content: space-between;
+    border: 1px solid $silvergray;
+    border-radius: 7px;
+
+    > .keywords-info-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    > .keyword-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+}

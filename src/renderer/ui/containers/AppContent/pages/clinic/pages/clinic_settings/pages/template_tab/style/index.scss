@@ -1,11 +1,8 @@
 @use '~styles/appColors' as *;
-.setting-option {
+.template-tab {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    align-self: stretch;
-
-    > .setting-option-content {
-        display: flex;
-    }
+    flex-grow: 1;
+    gap: 15px;
 }
