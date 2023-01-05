@@ -9,6 +9,8 @@ import {
   MouseEvent,
 } from 'react';
 import { OverlayType, Overlay_u } from '@stores/overlayStore';
+import styled from '@emotion/styled';
+
 type IconProps = {
   svg: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
   iconColor?: string;
@@ -38,6 +40,7 @@ interface TextButtonProps {
   afterFontColor?: string;
   radius?: number | string;
   padding?: string | number;
+  onMouseDown?: PressHandler;
   onPress?: PressHandler;
   onHold?: () => void;
   width?: number | string;
@@ -75,6 +78,7 @@ interface TextButtonProps {
     | 'crosshair';
   tip?: string;
   unFocusable?: boolean;
+  fake?: boolean;
 }
 function TextButton({
   className,
@@ -107,6 +111,8 @@ function TextButton({
   blank,
   tip,
   unFocusable,
+  onMouseDown,
+  fake,
 }: TextButtonProps) {
   const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
   const [startHold, cancelHold] = useLongPress({
@@ -136,9 +142,9 @@ function TextButton({
     }
     return Node as ReactNode;
   };
-
+  const Wrapper = fake ? styled.span() : styled.button();
   return (
-    <button
+    <Wrapper
       type={type}
       className={`text-button${isHold ? ' hold' : ''} ${className || ''}`}
       css={{
@@ -203,32 +209,23 @@ function TextButton({
           },
         },
       }}
-      onClick={
-        onHold == undefined
-          ? (e) => {
-              if (tip) Overlay_u.close('helper');
+      onClick={(e) => {
+        if (tip) Overlay_u.close('helper');
 
-              if (!blank) {
-                e.preventDefault();
-                e.stopPropagation();
-              }
-              onPress?.(e);
-            }
-          : () => {
-              if (tip) Overlay_u.close('helper');
-            }
-      }
-      onMouseDown={
-        onHold != undefined
-          ? (e) => {
-              if (!blank) {
-                e.preventDefault();
-                e.stopPropagation();
-              }
-              startHold?.();
-            }
-          : undefined
-      }
+        if (!blank) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        if (!onHold) onPress?.(e);
+      }}
+      onMouseDown={(e) => {
+        if (!blank) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        startHold?.();
+        onMouseDown?.();
+      }}
       onMouseUp={
         onHold != undefined
           ? (e) => {
@@ -301,13 +298,14 @@ function TextButton({
             color: !disabled ? fontColor : colors.text_gray,
             fontSize: fontSize,
             fontWeight: fontWeight,
-            lineHeight: fontSize + 'px', //TODO: Testing
+            lineHeight: fontSize + 'px',
           }}
+          contentEditable={false}
         >
           {text}
         </span>
       )}
-    </button>
+    </Wrapper>
   );
 }
 

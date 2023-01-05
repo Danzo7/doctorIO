@@ -6,7 +6,7 @@ function NotAButton({
   ...props
 }: Omit<
   ComponentProps<typeof TextButton>,
-  'onPress' | 'onHold' | 'disabled' | 'blank' | 'cursor'
+  'onPress' | 'onHold' | 'blank' | 'cursor'
 > & { color?: string }) {
   return (
     <TextButton
@@ -15,7 +15,9 @@ function NotAButton({
       borderColor={color ?? props.borderColor}
       fontColor={color ?? props.fontColor}
       activeBgColor={'transparent' ?? props.activeBgColor}
+      width={props.width ?? 'fit-content'}
       blank
+      fake
     />
   );
 }

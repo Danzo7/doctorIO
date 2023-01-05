@@ -1,7 +1,7 @@
 @use '~styles/appColors' as *;
 @use '~styles/constants' as *;
 .text-button {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
