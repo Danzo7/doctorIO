@@ -17,6 +17,7 @@ const nighty = {
   warm_orange: '#f2994a',
   darker: ' #00000020',
   light: '#ffffff20',
+  coldBlack: '#374151',
 };
 
 const drakula = {
@@ -60,6 +61,7 @@ const color = {
   warm_orange: 'var(--warm-orange)',
   darker: 'var(--darker)',
   light: 'var(--light)',
+  coldBlack: 'var(--cold-black)',
 };
 export default color;
 export { color, staticColors };
