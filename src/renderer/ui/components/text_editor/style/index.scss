@@ -1,0 +1,23 @@
+@use '~styles/appColors' as *;
+.text-editor {
+    background-color: $darkerseccolor;
+    border: 1px solid $bordercolor;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+    >.editable-container{
+        padding: 30px 30px 0px;
+        height: 100%;
+        >.editable-content{
+            background-color: $white;
+            box-shadow: 0px 0px 10px 0px $darker;
+            padding:15px;
+            height: 100%;
+            >div{
+                height: 100%;
+                overflow: auto;
+            }
+        }
+    }
+}
