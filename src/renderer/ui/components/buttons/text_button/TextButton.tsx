@@ -219,12 +219,8 @@ function TextButton({
         if (!onHold) onPress?.(e);
       }}
       onMouseDown={(e) => {
-        if (!blank) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
         startHold?.();
-        onMouseDown?.();
+        onMouseDown?.(e);
       }}
       onMouseUp={
         onHold != undefined
