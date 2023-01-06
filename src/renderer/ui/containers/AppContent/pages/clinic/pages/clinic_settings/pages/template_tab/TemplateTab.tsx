@@ -8,6 +8,7 @@ import TextButton from '@components/buttons/text_button';
 import { modal } from '@stores/overlayStore';
 import TemplateKeywordsModal from '@containers/modals/template_keywords_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
+import HelpPanel from '@components/help_panel';
 interface TemplateTabProps {}
 export default function TemplateTab({}: TemplateTabProps) {
   const { control } = useForm<{ paperSize: 'A4' | 'A5' }>({
@@ -16,101 +17,111 @@ export default function TemplateTab({}: TemplateTabProps) {
 
   return (
     <div className="template-tab">
-      <SettingOption
-        gap={2}
-        flexDirection="row"
-        title={{
-          text: 'Template editor',
-          fontSize: 15,
-          fontWeight: 600,
-          fontColor: color.white,
-        }}
-        description={{
-          text: 'The template is used during printing.',
-          fontSize: 14,
-          fontWeight: 500,
-          fontColor: color.text_gray,
-        }}
-        controls={
-          <TextButton
-            text="Open editor"
-            fontColor={color.white}
-            fontSize={13}
-            fontWeight={600}
-            backgroundColor={color.darkersec_color}
-            radius={7}
-            borderColor={color.border_color}
-            afterBgColor={color.darkersec_color}
-            onPress={() => {
-              //TODO Open editor
-            }}
-          />
-        }
-      />
-      <BorderSeparator direction="horizontal" />
-      <SettingOption
-        flexDirection="row"
-        gap={2}
-        title={{
-          text: 'Define autofill text',
-          fontSize: 15,
-          fontWeight: 600,
-          fontColor: color.white,
-        }}
-        description={{
-          text: 'The defined text is used to autofill a notice text....',
-          fontSize: 14,
-          fontWeight: 500,
-          fontColor: color.text_gray,
-        }}
-        controls={
-          <TextButton
-            text="Edit"
-            fontColor={color.white}
-            fontSize={13}
-            fontWeight={600}
-            backgroundColor={color.darkersec_color}
-            radius={7}
-            borderColor={color.border_color}
-            afterBgColor={color.darkersec_color}
-            onPress={() => {
-              modal(<TemplateKeywordsModal />, {
-                ...DEFAULT_MODAL,
-                width: '35%',
-              }).open();
-            }}
-          />
-        }
-      />
+      <div className="template-tab-content">
+        <SettingOption
+          gap={2}
+          flexDirection="row"
+          title={{
+            text: 'Template editor',
+            fontSize: 15,
+            fontWeight: 600,
+            fontColor: color.white,
+          }}
+          description={{
+            text: 'The template is used during printing.',
+            fontSize: 14,
+            fontWeight: 500,
+            fontColor: color.text_gray,
+          }}
+          controls={
+            <TextButton
+              text="Open editor"
+              fontColor={color.white}
+              fontSize={13}
+              fontWeight={600}
+              backgroundColor={color.darkersec_color}
+              radius={7}
+              borderColor={color.border_color}
+              afterBgColor={color.darkersec_color}
+              onPress={() => {
+                //TODO Open editor
+              }}
+            />
+          }
+        />
+        <BorderSeparator direction="horizontal" />
+        <SettingOption
+          flexDirection="row"
+          gap={2}
+          title={{
+            text: 'Define autofill text',
+            fontSize: 15,
+            fontWeight: 600,
+            fontColor: color.white,
+          }}
+          description={{
+            text: 'The defined text is used to autofill a notice text....',
+            fontSize: 14,
+            fontWeight: 500,
+            fontColor: color.text_gray,
+          }}
+          controls={
+            <TextButton
+              text="Edit"
+              fontColor={color.white}
+              fontSize={13}
+              fontWeight={600}
+              backgroundColor={color.darkersec_color}
+              radius={7}
+              borderColor={color.border_color}
+              afterBgColor={color.darkersec_color}
+              onPress={() => {
+                modal(<TemplateKeywordsModal />, {
+                  ...DEFAULT_MODAL,
+                  width: '35%',
+                }).open();
+              }}
+            />
+          }
+        />
 
-      <BorderSeparator direction="horizontal" />
-      <SettingOption
-        gap={5}
-        title={{
-          text: 'Paper size',
-          fontSize: 15,
-          fontWeight: 600,
-          fontColor: color.white,
-        }}
-        description={{
-          text: 'Select the size of the paper to print on.',
-          fontSize: 14,
-          fontWeight: 500,
-          fontColor: color.text_gray,
-        }}
-        controls={
-          <Input
-            control={control}
-            background="none"
-            name="paperSize"
-            type={{
-              type: 'multiCheck',
-              onlyOne: true,
-              mustOne: true,
-              options: ['A4', 'A5'],
-            }}
-          />
-        }
+        <BorderSeparator direction="horizontal" />
+        <SettingOption
+          gap={5}
+          title={{
+            text: 'Paper size',
+            fontSize: 15,
+            fontWeight: 600,
+            fontColor: color.white,
+          }}
+          description={{
+            text: 'Select the size of the paper to print on.',
+            fontSize: 14,
+            fontWeight: 500,
+            fontColor: color.text_gray,
+          }}
+          controls={
+            <Input
+              control={control}
+              background="none"
+              name="paperSize"
+              type={{
+                type: 'multiCheck',
+                onlyOne: true,
+                mustOne: true,
+                options: ['A4', 'A5'],
+              }}
+            />
+          }
+        />
+      </div>
+      <HelpPanel
+        title="Predefined Keywords" //TODO correct the text values
+        description="The software provide a predefined keywords that can be used in a text area to automatically insert a known value. It is similar to tags in social medial and other platforms$"
+        textList={[
+          '“@” is the mention keyword, It automatically finish the following known values: (Patient name, Doctor name, Date, bDate, age)',
+          '“/” Is used to auto fill the notice with a defined text.',
+        ]}
       />
     </div>
   );
