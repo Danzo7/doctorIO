@@ -11,24 +11,24 @@
     > .preview-spans{
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         flex: 1 0 0;
         width: 0;
 
         > span {
-            font-weight: 600;
+            font-weight: 400;
             font-size: 14px;
             color: $textgray;
-             overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
 
             +span {
                 font-weight: 400;
-                font-size: 12px;
-                 overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+                font-size: 10px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }
