@@ -28,17 +28,28 @@ export default function BookedAppointmentItem({
   const [CancelAppointment] = useCancelAppointmentMutation();
   return (
     <div className="booked-appointment-item">
-      <TextPair second="Patient" first={patientName} reversed />
+      <TextPair
+        gap={2}
+        second="Patient"
+        first={{ text: patientName, fontSize: 14 }}
+        reversed
+      />
 
       <BorderSeparator direction="vertical" />
       <TextPair
+        gap={2}
         second="Booked in"
-        first={format(bookedFor, SETTINGS.dayFormat)}
+        first={{ text: format(bookedFor, SETTINGS.dayFormat), fontSize: 14 }}
         reversed
       />
       <BorderSeparator direction="vertical" />
       {bookedBy && (
-        <TextPair second="Booked by" first={bookedBy.memberName} reversed />
+        <TextPair
+          gap={2}
+          second="Booked by"
+          first={{ text: bookedBy.memberName, fontSize: 14 }}
+          reversed
+        />
       )}
       <BorderSeparator direction="vertical" />
       {state == 'PANDING' ? (
