@@ -4,10 +4,11 @@
     flex-direction: row;
     align-items: center;
     gap: 5px;
+    cursor: pointer;
 
     > span {
         font-style: normal;
-        font-weight: 700;
+        font-weight: 500;
         font-size: 14px;
         color: $white;
     }
