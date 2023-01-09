@@ -7,6 +7,7 @@ import { useConnectionStore } from '@stores/ConnectionStore';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AppLayout from './app_layout';
+import TextEditor from '@components/text_editor';
 
 interface MainLayerProps {}
 export default function MainLayer({}: MainLayerProps) {
@@ -23,6 +24,19 @@ export default function MainLayer({}: MainLayerProps) {
   ) : status == 'connected' ? (
     <Routes>
       <Route path="session" element={<MedicalSession />} />
+      <Route
+        path="templateEditor"
+        element={
+          <TextEditor
+            initialValue={[
+              {
+                type: 'p',
+                children: [{ text: 'This is editable ' }],
+              },
+            ]}
+          />
+        }
+      />
       <Route path="*" element={<AppLayout />} />
     </Routes>
   ) : (
