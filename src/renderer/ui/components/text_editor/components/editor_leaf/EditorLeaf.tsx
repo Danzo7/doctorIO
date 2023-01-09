@@ -28,7 +28,9 @@ export default function EditorLeaf({
   }
 
   if (leaf.underline) {
-    children = <u css={style}>{children}</u>;
+    children = (
+      <u css={{ ...style, textDecorationColor: color.coldBlack }}>{children}</u>
+    );
   }
 
   return (
