@@ -20,8 +20,10 @@ import AlignLeft from 'toSvg/text_left.svg?icon';
 import AlignCenter from 'toSvg/text_center.svg?icon';
 import AlignRight from 'toSvg/text_right.svg?icon';
 import TableIcon from 'toSvg/text_table.svg?icon';
+import AddImage from 'toSvg/add_image.svg?icon';
 import InputWrapper from '@components/inputs/input_wrapper';
 import AutoSizeInput from '@components/inputs/auto_size_input';
+import { insertImage } from '@components/text_editor/helper';
 
 interface EditorToolbarProps {}
 const isBlockActive = (
@@ -178,7 +180,7 @@ const insertTable = (editor: CustomEditor) => {
 
 export default function EditorToolbar({}: EditorToolbarProps) {
   const editor = useSlate();
-
+  // const editorStatic = useSlateStatic();
   return (
     <div className="editor-toolbar">
       <SquareIconButton
@@ -278,6 +280,23 @@ export default function EditorToolbar({}: EditorToolbarProps) {
         unFocusable
         iconColor={isAlignActive(editor, 'right') ? color.white : color.light}
         Icon={AlignRight}
+      />
+      <SquareIconButton
+        onMouseDown={(event) => {
+          event?.preventDefault();
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = 'image/png, image/jpeg';
+
+          input.click();
+          input.onchange = (_) => {
+            const files: FileList = input.files as FileList;
+            const file = URL.createObjectURL(files[0]);
+            insertImage(editor, file);
+          };
+        }}
+        unFocusable
+        Icon={AddImage}
       />
     </div>
   );
