@@ -9,8 +9,11 @@ import { modal } from '@stores/overlayStore';
 import TemplateKeywordsModal from '@containers/modals/template_keywords_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import HelpPanel from '@components/help_panel';
+import useNavigation from '@libs/hooks/useNavigation';
+
 interface TemplateTabProps {}
 export default function TemplateTab({}: TemplateTabProps) {
+  const { navigate } = useNavigation();
   const { control } = useForm<{ paperSize: 'A4' | 'A5' }>({
     defaultValues: { paperSize: 'A4' },
   });
@@ -44,7 +47,7 @@ export default function TemplateTab({}: TemplateTabProps) {
               borderColor={color.border_color}
               afterBgColor={color.darkersec_color}
               onPress={() => {
-                //TODO Open editor
+                navigate('/templateEditor');
               }}
             />
           }
