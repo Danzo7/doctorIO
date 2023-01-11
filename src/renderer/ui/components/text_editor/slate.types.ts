@@ -10,13 +10,15 @@ export const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'] as const;
 export const TABLE_TYPES = ['table', 'tr', 'td'] as const;
 export type TableElement = {
   type: typeof TABLE_TYPES[number];
-  children: (Omit<CustomElement, 'children' | 'type'> & {
-    type: 'tr';
-    children: (Omit<CustomElement, 'children' | 'type'> & {
-      type: 'td';
-      children: CustomElement[];
-    })[];
-  })[];
+  children: TableRowElement[];
+};
+export type TableRowElement = {
+  type: 'tr';
+  children: TableCellElement[];
+};
+export type TableCellElement = {
+  type: 'td';
+  children: CustomElement[];
 };
 export type ComponentElement = {
   type: 'react';
@@ -37,6 +39,8 @@ export type CustomElement =
           | ComponentElement
         ))
       | TableElement
+      | TableRowElement
+      | TableCellElement
     ) & {
       inline?: boolean;
       void?: boolean;
