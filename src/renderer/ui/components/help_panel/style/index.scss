@@ -1,0 +1,51 @@
+@use '~styles/appColors' as *;
+.help-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 20px;
+    gap: 5px;
+    background: $secondarycolor;
+    border-radius: 5px;
+
+    > .help-panel-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+
+        > span {
+            font-weight: 700;
+            font-size: 18px;
+            color: $white;
+        }
+    }
+    > .help-panel-content{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+
+        > ul {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin: 0;
+            padding:0;
+            > li {
+                list-style-type: circle;
+                list-style-position: inside;
+                > span {
+                    font-weight: 400;
+                    font-size: 16px;
+                    color: $textgray;
+                }
+            }
+        }
+        > span:first-of-type {
+            font-weight: 400;
+            font-size: 16px;
+            color: $textgray;
+        }
+    }
+}

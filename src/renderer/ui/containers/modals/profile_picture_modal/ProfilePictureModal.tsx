@@ -10,6 +10,7 @@ import { useState } from 'react';
 import './style/index.scss';
 interface ProfilePictureModalProps {}
 export default function ProfilePictureModal({}: ProfilePictureModalProps) {
+  //TODO delete this component (useless)
   const [setAvatar] = useSetAvatarMutation();
   const [formData, setFormData] = useState<string>();
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();

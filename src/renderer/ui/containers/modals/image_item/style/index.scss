@@ -1,0 +1,8 @@
+@use '~styles/appColors' as *;
+.image-item {
+
+    width: fit-content;
+    border-radius: 7px;
+    overflow: hidden;
+    cursor: pointer;
+}

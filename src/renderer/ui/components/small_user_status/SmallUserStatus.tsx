@@ -20,12 +20,11 @@ export default function SmallUserStatus({
   onClick,
 }: SmallUserStatusProps) {
   return (
-    <div className="small-user-status">
+    <div onClick={onClick} className="small-user-status">
       <UserProfileStatus
         alt={alt}
         imgSrc={imgSrc}
         avatarRadius={avatarRadius}
-        onClick={onClick}
         status={status}
         width={width}
       />

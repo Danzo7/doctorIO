@@ -30,6 +30,42 @@ const Tag = ({ text }: { text: string }) => {
     />
   );
 };
+const Image = ({ url, onPress }: { url: string; onPress: () => void }) => {
+  const selected = useSelected();
+  const focused = useFocused();
+  return (
+    <div contentEditable={false} css={{ position: 'relative' }}>
+      <img
+        src={url}
+        css={{
+          display: 'block',
+          maxWidth: '100%',
+          maxHeight: '20em',
+          boxShadow: selected && focused ? '0 0 0 3px #B4D5FF' : 'none',
+        }}
+      />
+      <div
+        css={{
+          display: selected && focused ? 'inline' : 'none',
+          position: 'absolute',
+          top: '0.5em',
+          left: '0.5em',
+          backgroundColor: color.white,
+        }}
+      >
+        <SquareIconButton
+          borderColor={color.cold_red}
+          iconColor={color.cold_red}
+          afterBgColor={color.cold_red}
+          Icon={trashCan}
+          iconAfterColor={color.white}
+          unFocusable
+          onPress={onPress}
+        />
+      </div>
+    </div>
+  );
+};
 export default function EditorElement({
   attributes,
   children,
@@ -157,6 +193,31 @@ export default function EditorElement({
             {children} <Tag text={element.tag} />
           </span>
         </>
+      );
+    case 'image':
+      return (
+        <div
+          css={{
+            backgroundImage: `url(${element.url})  `,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            height: 500,
+            resize: 'both',
+            overflow: 'auto',
+          }}
+          {...attributes}
+        >
+          {children}
+          {/* <Image
+            url={element.url}
+            onPress={() => {
+              Transforms.removeNodes(editor, {
+                at: [],
+                match: (n) => n === element,
+              });
+            }}
+          /> */}
+        </div>
       );
     case 'react':
       return (

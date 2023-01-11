@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+.edit-keyword-value-modal {
+
+    .edit-keyword-value-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}

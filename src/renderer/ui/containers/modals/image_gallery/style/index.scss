@@ -1,0 +1,27 @@
+@use '~styles/appColors' as *;
+.image-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+    overflow: hidden;
+    background: $secondarycolor;
+    border:1px solid $darkerseccolor;
+    border-radius: 7px;
+    padding: 15px;
+
+    > .images-container {
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        flex-wrap: wrap;
+        overflow-y: scroll;
+        max-height: 500px;
+    }
+
+    > .empty-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

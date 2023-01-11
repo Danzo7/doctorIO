@@ -34,7 +34,7 @@ export default function SettingOption({
   controls,
   useToggleButton,
   flexDirection = 'column',
-  gap = 10,
+  gap = 5,
 }: SettingOptionProps) {
   return (
     <div className="setting-option" css={{ gap: gap }}>

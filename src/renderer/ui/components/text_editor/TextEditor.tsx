@@ -16,7 +16,7 @@ import Tooltip from '@components/poppers/tooltip';
 import { Overlay_u, modal } from '@stores/overlayStore';
 import EditorLeaf from './components/editor_leaf';
 import EditorElement from './components/editor_element';
-import { withMentions, withTables } from './helper';
+import { withImages, withMentions, withTables } from './helper';
 
 interface TextEditorProps {
   initialValue: CustomElement[];
@@ -32,7 +32,10 @@ const CHARACTERS = [
 
 export default function TextEditor({ initialValue }: TextEditorProps) {
   const editor = useMemo(
-    () => withTables(withMentions(withHistory(withReact(createEditor())))),
+    () =>
+      withImages(
+        withTables(withMentions(withHistory(withReact(createEditor())))),
+      ),
     [],
   );
 

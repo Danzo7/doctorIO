@@ -72,18 +72,26 @@ export default function TimelineItem({
           {date && (
             <TextPair
               gap={2}
-              first={format(date, SETTINGS.dateFormat)}
+              first={{ text: format(date, SETTINGS.dateFormat), fontSize: 14 }}
               second={format(date, SETTINGS.timeFormat)}
             />
           )}
 
           {subject && state.phase != 'canceled' && (
-            <TextPair gap={2} first={subject} second="Subject" reversed />
+            <TextPair
+              gap={2}
+              first={{ text: subject, fontSize: 14 }}
+              second="Subject"
+              reversed
+            />
           )}
           {bookedFor && (
             <TextPair
               gap={2}
-              first={format(bookedFor, SETTINGS.dateFormat)}
+              first={{
+                text: format(bookedFor, SETTINGS.dateFormat),
+                fontSize: 14,
+              }}
               second={'Booked for'}
               reversed
             />

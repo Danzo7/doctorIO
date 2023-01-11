@@ -31,12 +31,22 @@ export type TagElement = {
 export type TextElement = {
   type: typeof BLOCK_TYPE[number] | typeof EMPTY_SPACE_TYPE;
 };
+
+export type EmptyText = {
+  text: string;
+};
+
+export type ImageElement = {
+  type: 'image';
+  url: string;
+};
 export type CustomElement =
   | (
       | ({ children: CustomText[] } & (
           | TagElement
           | TextElement
           | ComponentElement
+          | ImageElement
         ))
       | TableElement
       | TableRowElement

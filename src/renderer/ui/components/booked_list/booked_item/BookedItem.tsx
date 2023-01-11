@@ -36,13 +36,13 @@ function BookedItem({
         <TextPair
           first={{
             text: patientName,
-            fontSize: 15,
+            fontSize: 14,
             fontWeight: '600',
             fontColor: color.white,
           }}
           second={{
             text: formatDistance(bookedFor, new Date()) + ' ago',
-            fontSize: 12,
+            fontSize: 10,
             fontWeight: '400',
             fontColor: color.text_gray,
           }}

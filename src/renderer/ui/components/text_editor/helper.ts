@@ -130,3 +130,44 @@ export const withLayout = (editor: CustomEditor) => {
 
   return editor;
 };
+
+export const insertImage = (editor: CustomEditor, url: string) => {
+  const text = { text: '' };
+  const image: CustomElement = { type: 'image', url, children: [text] };
+  Transforms.insertNodes(editor, image);
+};
+
+export const withImages = (editor: CustomEditor) => {
+  const { insertData, isVoid } = editor;
+
+  editor.isVoid = (element) => {
+    return element.void ?? isVoid(element);
+  };
+
+  editor.insertData = (data) => {
+    const text = data.getData('text/plain');
+    const { files } = data;
+
+    if (files && files.length > 0) {
+      for (const file of files) {
+        const reader = new FileReader();
+        const [mime] = file.type.split('/');
+
+        if (mime === 'image') {
+          reader.addEventListener('load', () => {
+            const url = reader.result;
+            insertImage(editor, url as any);
+          });
+
+          reader.readAsDataURL(file);
+        }
+      }
+    } else if (text) {
+      insertImage(editor, text);
+    } else {
+      insertData(data);
+    }
+  };
+
+  return editor;
+};
