@@ -3,6 +3,7 @@ import './style/index.scss';
 import Header from '@components/header';
 import ImageItem from '../image_item';
 import { color } from '@assets/styles/color';
+import VerticalPanel from '@components/vertical_panel';
 
 const itemData: { url: string; alt: string }[] = [
   {
@@ -58,6 +59,17 @@ const itemData: { url: string; alt: string }[] = [
 interface ImageGalleryProps {}
 export default function ImageGallery({}: ImageGalleryProps) {
   //TODO add APi functions
+  const uploadLocalImage = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/png, image/jpeg';
+    input.click();
+    input.onchange = (_) => {
+      const files: FileList = input.files as FileList;
+      const file = URL.createObjectURL(files[0]);
+      //TODO add url to api
+    };
+  };
   return (
     <div className="image-gallery">
       <Header
@@ -68,24 +80,25 @@ export default function ImageGallery({}: ImageGalleryProps) {
             fontSize={14}
             fontColor={color.white}
             fontWeight={400}
-            onPress={() => {
-              const input = document.createElement('input');
-              input.type = 'file';
-              input.accept = 'image/png, image/jpeg';
-              input.click();
-              input.onchange = (_) => {
-                const files: FileList = input.files as FileList;
-                const file = URL.createObjectURL(files[0]);
-                //TODO add url to api
-              };
-            }}
+            onPress={uploadLocalImage}
           />
         }
       />
-      <div className="images-container">
-        {itemData.map(({ alt, url }, index) => (
-          <ImageItem key={index} url={url} alt={alt} />
-        ))}
+      <div
+        className={itemData.length > 0 ? 'images-container' : 'empty-container'}
+      >
+        {itemData.length > 0 ? (
+          itemData.map(({ alt, url }, index) => (
+            <ImageItem key={index} url={url} alt={alt} />
+          ))
+        ) : (
+          <VerticalPanel
+            title="No images were found"
+            description="Please start add image locally. "
+            action={{ text: 'Add local image', onClick: uploadLocalImage }}
+            backgroundColor="none"
+          />
+        )}
       </div>
     </div>
   );
