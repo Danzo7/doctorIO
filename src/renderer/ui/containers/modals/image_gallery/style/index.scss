@@ -18,4 +18,10 @@
         overflow-y: scroll;
         max-height: 500px;
     }
+
+    > .empty-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
