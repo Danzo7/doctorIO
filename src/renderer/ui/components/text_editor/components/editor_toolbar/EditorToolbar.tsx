@@ -24,6 +24,7 @@ import AddImage from 'toSvg/add_image.svg?icon';
 import InputWrapper from '@components/inputs/input_wrapper';
 import AutoSizeInput from '@components/inputs/auto_size_input';
 import { insertImage } from '@components/text_editor/helper';
+import { TablesEditor } from '@components/text_editor/slate-tables';
 
 interface EditorToolbarProps {}
 const isBlockActive = (
@@ -115,68 +116,6 @@ const changeSize = (editor: CustomEditor, action: 'increase' | 'decrease') => {
   else if (action === 'increase' && current <= 128)
     Editor.addMark(editor, 'fontSize', current + 1);
 };
-const insertTable = (editor: CustomEditor) => {
-  const table: CustomElement = {
-    type: 'table',
-    children: [
-      {
-        type: 'tr',
-        children: [
-          {
-            type: 'td',
-            children: [
-              {
-                type: 'p',
-                children: [
-                  {
-                    text: '',
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: 'td',
-            children: [
-              {
-                type: 'p',
-                children: [
-                  {
-                    text: '',
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            type: 'td',
-            children: [
-              {
-                type: 'p',
-                children: [
-                  {
-                    text: '',
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
-  const emptyElement: CustomElement = {
-    type: 'p',
-    children: [
-      {
-        text: '',
-      },
-    ],
-  };
-
-  Transforms.insertNodes(editor, [table, emptyElement]);
-  Transforms.move(editor, { unit: 'line', distance: 3, reverse: true });
-};
 
 export default function EditorToolbar({}: EditorToolbarProps) {
   const editor = useSlate();
@@ -248,7 +187,7 @@ export default function EditorToolbar({}: EditorToolbarProps) {
       <SquareIconButton
         onMouseDown={(event) => {
           event?.preventDefault();
-          insertTable(editor);
+          TablesEditor.insertTable(editor);
         }}
         unFocusable
         iconColor={color.white}

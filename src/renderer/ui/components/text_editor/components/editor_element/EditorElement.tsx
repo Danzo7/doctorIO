@@ -11,6 +11,7 @@ import { elementIsEmpty } from '@components/text_editor/helper';
 import TextButton from '@components/buttons/text_button';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import trashCan from 'toSvg/trash_can.svg?icon';
+import { TablesEditor } from '@libs/slate-tables';
 import { Transforms } from 'slate';
 const Tag = ({ text }: { text: string }) => {
   const selected = useSelected();
@@ -30,42 +31,7 @@ const Tag = ({ text }: { text: string }) => {
     />
   );
 };
-const Image = ({ url, onPress }: { url: string; onPress: () => void }) => {
-  const selected = useSelected();
-  const focused = useFocused();
-  return (
-    <div contentEditable={false} css={{ position: 'relative' }}>
-      <img
-        src={url}
-        css={{
-          display: 'block',
-          maxWidth: '100%',
-          maxHeight: '20em',
-          boxShadow: selected && focused ? '0 0 0 3px #B4D5FF' : 'none',
-        }}
-      />
-      <div
-        css={{
-          display: selected && focused ? 'inline' : 'none',
-          position: 'absolute',
-          top: '0.5em',
-          left: '0.5em',
-          backgroundColor: color.white,
-        }}
-      >
-        <SquareIconButton
-          borderColor={color.cold_red}
-          iconColor={color.cold_red}
-          afterBgColor={color.cold_red}
-          Icon={trashCan}
-          iconAfterColor={color.white}
-          unFocusable
-          onPress={onPress}
-        />
-      </div>
-    </div>
-  );
-};
+//TODO split to multiple components and determine type using "is" (like slate-table)
 export default function EditorElement({
   attributes,
   children,
@@ -110,10 +76,7 @@ export default function EditorElement({
                 iconAfterColor={color.white}
                 unFocusable
                 onPress={() => {
-                  Transforms.removeNodes(editor, {
-                    at: [],
-                    match: (n) => n === element,
-                  });
+                  TablesEditor.removeTable(editor);
                 }}
               />
             </span>
@@ -196,28 +159,52 @@ export default function EditorElement({
       );
     case 'image':
       return (
-        <div
-          css={{
-            backgroundImage: `url(${element.url})  `,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            height: 500,
-            resize: 'both',
-            overflow: 'auto',
-          }}
-          {...attributes}
-        >
+        <span css={{ position: 'relative' }} {...attributes}>
           {children}
-          {/* <Image
-            url={element.url}
-            onPress={() => {
-              Transforms.removeNodes(editor, {
-                at: [],
-                match: (n) => n === element,
-              });
+          <img
+            css={{
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              height: element.size,
+              width: element.size,
             }}
-          /> */}
-        </div>
+            src={element.url}
+          ></img>
+          {selected && (
+            <div
+              css={{
+                display: 'flex',
+                gap: 5,
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                backgroundColor: color.coldBlack,
+                borderRadius: 7,
+                padding: '5px 10px',
+              }}
+            >
+              <SquareIconButton
+                borderColor={color.cold_red}
+                iconColor={color.cold_red}
+                afterBgColor={color.cold_red}
+                Icon={trashCan}
+                iconAfterColor={color.white}
+                unFocusable
+                onPress={() => {
+                  Transforms.removeNodes(editor, {
+                    at: [],
+                    match: (n) => n === element,
+                  });
+                }}
+              />
+              {/* TODO:Change with icons */}
+              <TextButton text="x1" borderColor={color.cold_blue} />
+              <TextButton text="x2" borderColor={color.cold_blue} />
+              <TextButton text="x3" borderColor={color.cold_blue} />
+              <TextButton text="Origin" borderColor={color.cold_blue} />
+            </div>
+          )}
+        </span>
       );
     case 'react':
       return (

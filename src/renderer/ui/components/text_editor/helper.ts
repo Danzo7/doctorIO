@@ -133,41 +133,56 @@ export const withLayout = (editor: CustomEditor) => {
 
 export const insertImage = (editor: CustomEditor, url: string) => {
   const text = { text: '' };
-  const image: CustomElement = { type: 'image', url, children: [text] };
+  const image: CustomElement = {
+    type: 'image',
+    url,
+    children: [text],
+    inline: true,
+    void: true,
+    size: 250,
+  };
   Transforms.insertNodes(editor, image);
 };
 
 export const withImages = (editor: CustomEditor) => {
-  const { insertData, isVoid } = editor;
+  const { insertData, isVoid, isInline, markableVoid } = editor;
+
+  editor.isInline = (element) => {
+    return element.inline ?? isInline(element);
+  };
 
   editor.isVoid = (element) => {
     return element.void ?? isVoid(element);
   };
 
-  editor.insertData = (data) => {
-    const text = data.getData('text/plain');
-    const { files } = data;
-
-    if (files && files.length > 0) {
-      for (const file of files) {
-        const reader = new FileReader();
-        const [mime] = file.type.split('/');
-
-        if (mime === 'image') {
-          reader.addEventListener('load', () => {
-            const url = reader.result;
-            insertImage(editor, url as any);
-          });
-
-          reader.readAsDataURL(file);
-        }
-      }
-    } else if (text) {
-      insertImage(editor, text);
-    } else {
-      insertData(data);
-    }
+  editor.markableVoid = (element) => {
+    return element.inline ?? markableVoid(element);
   };
+
+  // editor.insertData = (data) => {
+  //   const text = data.getData('text/plain');
+  //   const { files } = data;
+
+  //   if (files && files.length > 0) {
+  //     for (const file of files) {
+  //       const reader = new FileReader();
+  //       const [mime] = file.type.split('/');
+
+  //       if (mime === 'image') {
+  //         reader.addEventListener('load', () => {
+  //           const url = reader.result;
+  //           insertImage(editor, url as any);
+  //         });
+
+  //         reader.readAsDataURL(file);
+  //       }
+  //     }
+  //   } else if (text) {
+  //     insertImage(editor, text);
+  //   } else {
+  //     insertData(data);
+  //   }
+  // };
 
   return editor;
 };

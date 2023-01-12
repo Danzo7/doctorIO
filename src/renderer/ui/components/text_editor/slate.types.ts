@@ -2,24 +2,24 @@ import { ReactNode } from 'react';
 import { BaseEditor } from 'slate';
 import { HistoryEditor } from 'slate-history';
 import { ReactEditor } from 'slate-react';
+import {
+  TableCellElement,
+  TableEditor,
+  TableElement,
+  TableRowElement,
+} from './slate-tables/types';
+export * from './slate-tables/types';
 
-export type CustomEditor = BaseEditor & ReactEditor & HistoryEditor;
+export type TableHeader = 'first_row' | 'first_column';
+
+export type CustomEditor = BaseEditor &
+  ReactEditor &
+  HistoryEditor &
+  TableEditor;
 export const EMPTY_SPACE_TYPE = 'empty' as const;
 export const BLOCK_TYPE = ['p', 'bq', 'bl', 'h1', 'h2', 'li', 'nl'] as const;
 export const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'] as const;
-export const TABLE_TYPES = ['table', 'tr', 'td'] as const;
-export type TableElement = {
-  type: typeof TABLE_TYPES[number];
-  children: TableRowElement[];
-};
-export type TableRowElement = {
-  type: 'tr';
-  children: TableCellElement[];
-};
-export type TableCellElement = {
-  type: 'td';
-  children: CustomElement[];
-};
+
 export type ComponentElement = {
   type: 'react';
   node: ReactNode;
@@ -32,13 +32,10 @@ export type TextElement = {
   type: typeof BLOCK_TYPE[number] | typeof EMPTY_SPACE_TYPE;
 };
 
-export type EmptyText = {
-  text: string;
-};
-
 export type ImageElement = {
   type: 'image';
   url: string;
+  size: number;
 };
 export type CustomElement =
   | (

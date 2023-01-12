@@ -16,7 +16,8 @@ import Tooltip from '@components/poppers/tooltip';
 import { Overlay_u, modal } from '@stores/overlayStore';
 import EditorLeaf from './components/editor_leaf';
 import EditorElement from './components/editor_element';
-import { withImages, withMentions, withTables } from './helper';
+import { withImages, withMentions } from './helper';
+import { onKeyDown, withTables } from './slate-tables';
 
 interface TextEditorProps {
   initialValue: CustomElement[];
@@ -134,6 +135,7 @@ export default function TextEditor({ initialValue }: TextEditorProps) {
               renderLeaf={renderLeaf}
               renderElement={renderElement}
               autoFocus
+              onKeyDown={(e) => onKeyDown(e, editor)}
             />
           </div>
         </div>
