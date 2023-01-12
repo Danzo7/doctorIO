@@ -11,6 +11,7 @@ interface NoteItemProps {
   date: Date;
   note: string;
 }
+//TODO: remove or use
 export default function NoteItem({ date, note }: NoteItemProps) {
   return (
     <div className="note-item">
