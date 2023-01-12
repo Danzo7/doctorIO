@@ -10,9 +10,10 @@
     flex-grow: 1;
     overflow: hidden;
 
-    > .note-value-div {
+    >   .note-value-div {
+        overflow: hidden;
+        text-overflow: ellipsis;
         padding: 10px 5px;
-        max-width: 300px;
 
         > span {
             font-weight: 400;
