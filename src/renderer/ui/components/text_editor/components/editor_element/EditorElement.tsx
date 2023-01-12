@@ -11,8 +11,8 @@ import { elementIsEmpty } from '@components/text_editor/helper';
 import TextButton from '@components/buttons/text_button';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import trashCan from 'toSvg/trash_can.svg?icon';
-import { TablesEditor } from '@libs/slate-tables';
 import { Transforms } from 'slate';
+import { TablesEditor } from '@components/text_editor/slate-tables';
 const Tag = ({ text }: { text: string }) => {
   const selected = useSelected();
   const focused = useFocused();
