@@ -1,9 +1,19 @@
-import { Editor, Point, Range, Element, Transforms, NodeEntry } from 'slate';
+import {
+  Editor,
+  Point,
+  Range,
+  Element,
+  Transforms,
+  NodeEntry,
+  Node,
+} from 'slate';
 import {
   CustomEditor,
   CustomElement,
+  CustomText,
   FormattedText,
   TABLE_TYPES,
+  TextElement,
 } from './slate.types';
 
 export const elementIsEmpty = (element: CustomElement) => {
@@ -113,74 +123,23 @@ export const enforceType = (
     });
   }
 };
+export const isTextNode = (
+  node: Node,
+): node is TextElement & { children: CustomText[] } => {
+  return 'children' in node && 'text' in node.children[0];
+};
 export const withLayout = (editor: CustomEditor) => {
-  const { normalizeNode } = editor;
+  // const { normalizeNode } = editor;
 
-  editor.normalizeNode = ([node, path]) => {
-    const lastChild = editor.children[editor.children.length - 1];
-    if (Element.isElement(lastChild) && lastChild.type === 'table') {
-      const paragraph: CustomElement = {
-        type: 'p',
-        children: [{ text: '' }],
-      };
-      Transforms.insertNodes(editor, paragraph);
-      return normalizeNode([node, path]);
-    }
-  };
-
-  return editor;
-};
-
-export const insertImage = (editor: CustomEditor, url: string) => {
-  const text = { text: '' };
-  const image: CustomElement = {
-    type: 'image',
-    url,
-    children: [text],
-    inline: true,
-    void: true,
-    size: 250,
-  };
-  Transforms.insertNodes(editor, image);
-};
-
-export const withImages = (editor: CustomEditor) => {
-  const { insertData, isVoid, isInline, markableVoid } = editor;
-
-  editor.isInline = (element) => {
-    return element.inline ?? isInline(element);
-  };
-
-  editor.isVoid = (element) => {
-    return element.void ?? isVoid(element);
-  };
-
-  editor.markableVoid = (element) => {
-    return element.inline ?? markableVoid(element);
-  };
-
-  // editor.insertData = (data) => {
-  //   const text = data.getData('text/plain');
-  //   const { files } = data;
-
-  //   if (files && files.length > 0) {
-  //     for (const file of files) {
-  //       const reader = new FileReader();
-  //       const [mime] = file.type.split('/');
-
-  //       if (mime === 'image') {
-  //         reader.addEventListener('load', () => {
-  //           const url = reader.result;
-  //           insertImage(editor, url as any);
-  //         });
-
-  //         reader.readAsDataURL(file);
-  //       }
-  //     }
-  //   } else if (text) {
-  //     insertImage(editor, text);
-  //   } else {
-  //     insertData(data);
+  // editor.normalizeNode = ([node, path]) => {
+  //   const lastChild = editor.children[editor.children.length - 1];
+  //   if (Element.isElement(lastChild) && lastChild.type === 'table') {
+  //     const paragraph: CustomElement = {
+  //       type: 'p',
+  //       children: [{ text: '' }],
+  //     };
+  //     Transforms.insertNodes(editor, paragraph);
+  //     return normalizeNode([node, path]);
   //   }
   // };
 

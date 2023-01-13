@@ -13,6 +13,8 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import trashCan from 'toSvg/trash_can.svg?icon';
 import { Transforms } from 'slate';
 import { TablesEditor } from '@components/text_editor/slate-tables';
+import { ComponentProps, useCallback, useEffect, useRef } from 'react';
+import { ImageEditor } from '@components/text_editor/slate-image/ImageEditor';
 const Tag = ({ text }: { text: string }) => {
   const selected = useSelected();
   const focused = useFocused();
@@ -31,6 +33,62 @@ const Tag = ({ text }: { text: string }) => {
     />
   );
 };
+//TODO move to btns
+const DraggableButton = ({
+  onDrag,
+  ...others
+}: {
+  onDrag: ({ x, y }: { x: number; y: number }) => void;
+} & ComponentProps<typeof TextButton>) => {
+  const ref = useRef({ x: 0, y: 0 });
+
+  const drag = useCallback(
+    (e: MouseEvent) => {
+      const x = e.clientX - ref.current.x;
+      const y = e.clientY - ref.current.y;
+      onDrag({ x, y });
+    },
+    [onDrag],
+  );
+
+  const draging = useCallback(
+    (e: MouseEvent) => {
+      if (ref.current.x || ref.current.y) drag(e);
+    },
+    [drag],
+  );
+  useEffect(() => {
+    return () => {
+      ref.current = { x: 0, y: 0 };
+      document.removeEventListener('mousemove', draging);
+    };
+  }, []);
+
+  return (
+    <TextButton
+      {...others}
+      onMouseUp={(e) => {
+        others.onMouseUp?.(e);
+        ref.current = { x: 0, y: 0 };
+        document.removeEventListener('mousemove', draging);
+      }}
+      onMouseDown={(e) => {
+        document.addEventListener(
+          'mouseup',
+          () => {
+            ref.current = { x: 0, y: 0 };
+            document.removeEventListener('mousemove', draging);
+          },
+          { once: true },
+        );
+        others.onMouseDown?.(e);
+        ref.current = { x: e?.clientX ?? 0, y: e?.clientY ?? 0 };
+        document.addEventListener('mousemove', draging);
+      }}
+    />
+  );
+};
+
 //TODO split to multiple components and determine type using "is" (like slate-table)
 export default function EditorElement({
   attributes,
@@ -39,6 +97,8 @@ export default function EditorElement({
 }: RenderElementProps) {
   const selected = useSelected();
   const editor = useSlate();
+  const ref = useRef<HTMLElement>(document.querySelector('.editable-content'));
+
   const style: Interpolation<Theme> = {
     textAlign: (element as any)?.align,
     ...(elementIsEmpty(element) &&
@@ -94,7 +154,7 @@ export default function EditorElement({
             }}
             {...attributes}
           >
-            {children}
+            <tbody>{children}</tbody>
           </table>
         </div>
       );
@@ -159,51 +219,151 @@ export default function EditorElement({
       );
     case 'image':
       return (
-        <span css={{ position: 'relative' }} {...attributes}>
+        <span {...attributes} css={{ padding: '0 10px' }}>
           {children}
-          <img
+          <div
             css={{
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
-              height: element.size,
-              width: element.size,
+              display: 'inline-block',
+              position: 'relative',
             }}
-            src={element.url}
-          ></img>
-          {selected && (
-            <div
-              css={{
-                display: 'flex',
-                gap: 5,
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                backgroundColor: color.coldBlack,
-                borderRadius: 7,
-                padding: '5px 10px',
-              }}
-            >
-              <SquareIconButton
-                borderColor={color.cold_red}
-                iconColor={color.cold_red}
-                afterBgColor={color.cold_red}
-                Icon={trashCan}
-                iconAfterColor={color.white}
-                unFocusable
-                onPress={() => {
-                  Transforms.removeNodes(editor, {
-                    at: [],
-                    match: (n) => n === element,
-                  });
+          >
+            {selected && ref.current && (
+              <div
+                css={{
+                  display: 'inline-block',
                 }}
-              />
-              {/* TODO:Change with icons */}
-              <TextButton text="x1" borderColor={color.cold_blue} />
-              <TextButton text="x2" borderColor={color.cold_blue} />
-              <TextButton text="x3" borderColor={color.cold_blue} />
-              <TextButton text="Origin" borderColor={color.cold_blue} />
-            </div>
-          )}
+              >
+                <DraggableButton
+                  backgroundColor={color.hot_red}
+                  padding={5}
+                  css={{ position: 'absolute', top: -5, left: -5 }}
+                  onDrag={(client) => {
+                    ImageEditor.setImageSize(editor, element, {
+                      width: element.width - client.y,
+                      height: element.height - client.y,
+                    });
+                  }}
+                />
+                <DraggableButton
+                  backgroundColor={color.hot_red}
+                  padding={5}
+                  css={{ position: 'absolute', bottom: 0, left: -5 }}
+                  onDrag={(client) => {
+                    ImageEditor.setImageSize(editor, element, {
+                      width: element.width + client.y,
+                      height: element.height + client.y,
+                    });
+                  }}
+                />
+                <DraggableButton
+                  backgroundColor={color.hot_red}
+                  padding={5}
+                  css={{ position: 'absolute', top: -5, right: -5 }}
+                  onDrag={(client) => {
+                    ImageEditor.setImageSize(editor, element, {
+                      width: element.width + client.x,
+                      height: element.height + client.x,
+                    });
+                  }}
+                />
+                <DraggableButton
+                  backgroundColor={color.hot_red}
+                  padding={5}
+                  css={{ position: 'absolute', bottom: '50%', right: -5 }}
+                  onDrag={(client) => {
+                    ImageEditor.setImageSize(editor, element, {
+                      width: element.width + client.x,
+                      height: element.height,
+                    });
+                  }}
+                />
+                <DraggableButton
+                  backgroundColor={color.hot_red}
+                  padding={5}
+                  css={{ position: 'absolute', bottom: 0, right: '50%' }}
+                  onDrag={(client) => {
+                    ImageEditor.setImageSize(editor, element, {
+                      width: element.width,
+                      height: element.height + client.y,
+                    });
+                  }}
+                />
+                <DraggableButton
+                  backgroundColor={color.hot_red}
+                  padding={5}
+                  css={{ position: 'absolute', top: -5, right: '50%' }}
+                  onDrag={(client) => {
+                    ImageEditor.setImageSize(editor, element, {
+                      width: element.width,
+                      height: element.height - client.y,
+                    });
+                  }}
+                />
+                <DraggableButton
+                  backgroundColor={color.hot_red}
+                  padding={5}
+                  css={{ position: 'absolute', bottom: '50%', left: -5 }}
+                  onDrag={(client) => {
+                    ImageEditor.setImageSize(editor, element, {
+                      width: element.width - client.x,
+                      height: element.height,
+                    });
+                  }}
+                />
+                <DraggableButton
+                  backgroundColor={color.hot_red}
+                  padding={5}
+                  css={{ position: 'absolute', bottom: 0, right: -5 }}
+                  onDrag={(client) => {
+                    ImageEditor.setImageSize(editor, element, {
+                      width: element.width + client.x,
+                      height: element.height + client.y,
+                    });
+                  }}
+                />
+              </div>
+            )}
+            <img
+              width={element.width}
+              height={element.height}
+              src={element.url}
+              css={{ filter: selected ? 'brightness(0.5)' : 'none' }}
+            ></img>
+            {selected && (
+              <div
+                css={{
+                  display: 'flex',
+                  gap: 5,
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  backgroundColor: color.coldBlack,
+                  borderRadius: 7,
+                  padding: '5px 10px',
+                }}
+              >
+                <SquareIconButton
+                  borderColor={color.cold_red}
+                  iconColor={color.cold_red}
+                  afterBgColor={color.cold_red}
+                  Icon={trashCan}
+                  iconAfterColor={color.white}
+                  unFocusable
+                  onPress={() => {
+                    Transforms.removeNodes(editor, {
+                      at: [],
+                      match: (n) => n === element,
+                    });
+                  }}
+                />
+                {/* TODO:Change with icons */}
+                <TextButton text="x1" borderColor={color.cold_blue} />
+                <TextButton text="x2" borderColor={color.cold_blue} />
+                <TextButton text="x3" borderColor={color.cold_blue} />
+                <TextButton text="Origin" borderColor={color.cold_blue} />
+              </div>
+            )}
+          </div>
         </span>
       );
     case 'react':

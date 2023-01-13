@@ -23,8 +23,8 @@ import TableIcon from 'toSvg/text_table.svg?icon';
 import AddImage from 'toSvg/add_image.svg?icon';
 import InputWrapper from '@components/inputs/input_wrapper';
 import AutoSizeInput from '@components/inputs/auto_size_input';
-import { insertImage } from '@components/text_editor/helper';
 import { TablesEditor } from '@components/text_editor/slate-tables';
+import { ImageEditor } from '@components/text_editor/slate-image/ImageEditor';
 
 interface EditorToolbarProps {}
 const isBlockActive = (
@@ -231,7 +231,7 @@ export default function EditorToolbar({}: EditorToolbarProps) {
           input.onchange = (_) => {
             const files: FileList = input.files as FileList;
             const file = URL.createObjectURL(files[0]);
-            insertImage(editor, file);
+            ImageEditor.insertImage(editor, file);
           };
         }}
         unFocusable

@@ -8,7 +8,9 @@ import {
   TableElement,
   TableRowElement,
 } from './slate-tables/types';
+import { ImageElement } from './slate-image/types';
 export * from './slate-tables/types';
+export * from './slate-image/types';
 
 export type TableHeader = 'first_row' | 'first_column';
 
@@ -32,11 +34,6 @@ export type TextElement = {
   type: typeof BLOCK_TYPE[number] | typeof EMPTY_SPACE_TYPE;
 };
 
-export type ImageElement = {
-  type: 'image';
-  url: string;
-  size: number;
-};
 export type CustomElement =
   | (
       | ({ children: CustomText[] } & (

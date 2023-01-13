@@ -16,8 +16,9 @@ import Tooltip from '@components/poppers/tooltip';
 import { Overlay_u, modal } from '@stores/overlayStore';
 import EditorLeaf from './components/editor_leaf';
 import EditorElement from './components/editor_element';
-import { withImages, withMentions } from './helper';
+import { withLayout, withMentions } from './helper';
 import { onKeyDown, withTables } from './slate-tables';
+import { withImages } from './slate-image';
 
 interface TextEditorProps {
   initialValue: CustomElement[];
@@ -35,7 +36,9 @@ export default function TextEditor({ initialValue }: TextEditorProps) {
   const editor = useMemo(
     () =>
       withImages(
-        withTables(withMentions(withHistory(withReact(createEditor())))),
+        withLayout(
+          withTables(withMentions(withHistory(withReact(createEditor())))),
+        ),
       ),
     [],
   );
@@ -64,6 +67,7 @@ export default function TextEditor({ initialValue }: TextEditorProps) {
             const beforeRange = before && Editor.range(editor, before, start);
             const beforeText =
               beforeRange && Editor.string(editor, beforeRange);
+            if (!beforeText) return;
             const beforeMatch = beforeText && beforeText.match(/^@(\w+)$/);
             const after = Editor.after(editor, start);
             const afterRange = Editor.range(editor, start, after);
@@ -123,7 +127,7 @@ export default function TextEditor({ initialValue }: TextEditorProps) {
               ).open({ force: true });
               return;
             } else {
-              Overlay_u.close('honobri');
+              // Overlay_u.close('honobri');
             }
           }
         }}
