@@ -7,6 +7,8 @@ import {
   SVGProps,
   useState,
   MouseEvent,
+  forwardRef,
+  LegacyRef,
 } from 'react';
 import { OverlayType, Overlay_u } from '@stores/overlayStore';
 import styled from '@emotion/styled';
@@ -22,7 +24,8 @@ export type IconType =
   | FunctionComponent<SVGProps<SVGSVGElement>>
   | IconProps
   | ReactNode;
-interface TextButtonProps {
+interface TextButtonProps
+  extends Partial<Omit<HTMLButtonElement, 'disabled' | 'type' | 'children'>> {
   className?: string;
   text?: string;
   Icon?: IconType;
@@ -41,6 +44,7 @@ interface TextButtonProps {
   radius?: number | string;
   padding?: string | number;
   onMouseDown?: PressHandler;
+  onMouseUp?: PressHandler;
   onPress?: PressHandler;
   onHold?: () => void;
   width?: number | string;
@@ -80,40 +84,45 @@ interface TextButtonProps {
   unFocusable?: boolean;
   fake?: boolean;
 }
-function TextButton({
-  className,
-  text,
-  Icon,
-  fontColor,
-  fontSize = 14,
-  fontWeight = 600,
-  backgroundColor = 'transparent',
-  borderColor = 'transparent',
-  borderWidth = 1,
-  radius = 7,
-  afterBgColor,
-  afterBorderColor,
-  afterFontColor,
-  width,
-  height,
-  children,
-  padding,
-  onPress,
-  activeBgColor = colors.light,
-  type,
-  activeBorderColor,
-  disabled = false,
-  alignment,
-  alignSelf,
-  itemsDirection,
-  onHold,
-  cursor = 'pointer',
-  blank,
-  tip,
-  unFocusable,
-  onMouseDown,
-  fake,
-}: TextButtonProps) {
+export default forwardRef(function TextButton(
+  {
+    className,
+    text,
+    Icon,
+    fontColor,
+    fontSize = 14,
+    fontWeight = 600,
+    backgroundColor = 'transparent',
+    borderColor = 'transparent',
+    borderWidth = 1,
+    radius = 7,
+    afterBgColor,
+    afterBorderColor,
+    afterFontColor,
+    width,
+    height,
+    children,
+    padding,
+    onPress,
+    activeBgColor = colors.light,
+    type,
+    activeBorderColor,
+    disabled = false,
+    alignment,
+    alignSelf,
+    itemsDirection,
+    onHold,
+    cursor = 'pointer',
+    blank,
+    tip,
+    unFocusable,
+    onMouseDown,
+    onMouseUp,
+    fake,
+    ...others
+  }: TextButtonProps,
+  ref: LegacyRef<HTMLButtonElement>,
+) {
   const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
   const [startHold, cancelHold] = useLongPress({
     onEndHold: onHold
@@ -145,6 +154,8 @@ function TextButton({
   const Wrapper = fake ? styled.span() : styled.button();
   return (
     <Wrapper
+      {...(others as any)}
+      ref={ref}
       type={type}
       className={`text-button${isHold ? ' hold' : ''} ${className || ''}`}
       css={{
@@ -222,17 +233,14 @@ function TextButton({
         startHold?.();
         onMouseDown?.(e);
       }}
-      onMouseUp={
-        onHold != undefined
-          ? (e) => {
-              if (!blank) {
-                e.preventDefault();
-                e.stopPropagation();
-              }
-              cancelHold?.();
-            }
-          : undefined
-      }
+      onMouseUp={(e) => {
+        if (!blank) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        onMouseUp?.();
+        if (!onHold) cancelHold?.();
+      }}
       onAnimationEnd={
         onHold != undefined
           ? () => {
@@ -303,6 +311,4 @@ function TextButton({
       )}
     </Wrapper>
   );
-}
-
-export default TextButton;
+});
