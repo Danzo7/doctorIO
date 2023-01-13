@@ -2,6 +2,7 @@ import type { Editor } from 'slate';
 
 import { withNormalization } from './withNormalization';
 import { TableCellElement, TableElement, TableRowElement } from './types';
+import { withTablesDeleteBehavior, withTablesCopyPasteBehavior } from './core';
 
 export function withTables<T extends Editor>(editor: T) {
   const tablesEditor = Object.assign(editor, {
@@ -96,5 +97,7 @@ export function withTables<T extends Editor>(editor: T) {
     },
   }) as T;
 
-  return withNormalization(tablesEditor);
+  return withTablesDeleteBehavior(
+    withTablesCopyPasteBehavior(withNormalization(tablesEditor)),
+  );
 }
