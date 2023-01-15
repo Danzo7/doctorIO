@@ -130,6 +130,13 @@ export default function EditorElement({
           {element.node}
         </>
       );
+    case 'span':
+      return (
+        <span css={style} {...attributes}>
+          {children}
+        </span>
+      );
+
     default:
       return (
         <p

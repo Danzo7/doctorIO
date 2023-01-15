@@ -137,7 +137,7 @@ export default function EditorToolbar({}: EditorToolbarProps) {
       </div>
       <div className="block">
         <SquareIconButton
-          tip="Add Table"
+          tip="Insert Table"
           onMouseDown={(event) => {
             event?.preventDefault();
             TablesEditor.insertTable(editor);
@@ -147,7 +147,7 @@ export default function EditorToolbar({}: EditorToolbarProps) {
           Icon={TableIcon}
         />
         <SquareIconButton
-          tip="Add Image"
+          tip="Insert Image"
           iconColor={color.silver_gray}
           onMouseDown={(event) => {
             event?.preventDefault();

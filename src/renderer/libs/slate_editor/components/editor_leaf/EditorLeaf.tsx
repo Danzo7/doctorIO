@@ -12,7 +12,7 @@ export default function EditorLeaf({
       fontSize: (leaf.fontSize ?? 12) + 'pt',
       listStyleType: 'auto',
       fontFamily: "'Roboto', sans-serif",
-      color: color.coldBlack,
+      color: leaf.color ?? color.coldBlack,
     },
   };
   if (leaf.bold) {
@@ -29,7 +29,9 @@ export default function EditorLeaf({
 
   if (leaf.underline) {
     children = (
-      <u css={{ ...style, textDecorationColor: color.coldBlack }}>{children}</u>
+      <u css={{ ...style, textDecorationColor: leaf.color ?? color.coldBlack }}>
+        {children}
+      </u>
     );
   }
 

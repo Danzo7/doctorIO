@@ -1,7 +1,4 @@
-import {
-  CustomEditor,
-  CustomElement,
-} from '@libs/slate_editor/slate.types';
+import { CustomEditor, CustomElement } from '@libs/slate_editor/slate.types';
 import { Transforms } from 'slate';
 
 export const insertImage = (
@@ -15,11 +12,10 @@ export const insertImage = (
     height: number;
   },
 ) => {
-  const text = { text: ' ' };
   const image: CustomElement = {
     type: 'image',
     url,
-    children: [text],
+    children: [{ text: ' ' }],
     inline: true,
     void: true,
     width: width,

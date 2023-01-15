@@ -33,7 +33,7 @@ export default function TagBlock({
   return behavior == 'attribute' ? (
     <NotAButton
       css={{
-        border: '3px solid ' + color.warm_orange,
+        border: '2px solid ' + color.warm_orange,
       }}
       padding={2}
       radius={2}
@@ -51,14 +51,14 @@ export default function TagBlock({
                 alignItems: 'center',
                 display: 'flex',
                 gap: 5,
-                color: color.coldBlack,
+                color: text.color ?? color.coldBlack,
                 fontSize: text.fontSize + 'pt',
                 '> svg>path': {
                   fill: color.warm_orange,
                 },
               }}
             >
-              <TagIcon fill={color.good_black} />
+              <TagIcon fill={text.color ?? color.coldBlack} />
               {text.text}
             </span>,
           ),

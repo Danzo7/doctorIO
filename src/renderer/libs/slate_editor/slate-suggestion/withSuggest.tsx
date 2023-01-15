@@ -60,9 +60,14 @@ export const withSuggestion = (
                 void: true,
               };
 
-              Transforms.insertNodes(editor, [element], {
-                voids: true,
-              });
+              Transforms.insertNodes(editor, [
+                element,
+                {
+                  type: 'span',
+                  children: [{ ...prev, text: '' }],
+                  inline: true,
+                },
+              ]);
               ReactEditor.focus(editor);
             },
           }));

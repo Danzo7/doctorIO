@@ -23,7 +23,16 @@ export type CustomEditor = BaseEditor &
   HistoryEditor &
   TableEditor;
 export const EMPTY_SPACE_TYPE = 'empty' as const;
-export const BLOCK_TYPE = ['p', 'bq', 'bl', 'h1', 'h2', 'li', 'nl'] as const;
+export const BLOCK_TYPE = [
+  'p',
+  'bq',
+  'bl',
+  'h1',
+  'h2',
+  'li',
+  'nl',
+  'span',
+] as const;
 export const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'] as const;
 export type ElementCommons = {
   inline?: boolean;
@@ -63,7 +72,11 @@ export const TEXT_FORMAT_TYPES = [
   'subscript',
 ] as const;
 
-export type FormattedText = { text: string; fontSize?: number } & {
+export type FormattedText = {
+  text: string;
+  fontSize?: number;
+  color?: string;
+} & {
   [key in typeof TEXT_FORMAT_TYPES[number]]?: boolean;
 };
 export type CustomText = FormattedText;
