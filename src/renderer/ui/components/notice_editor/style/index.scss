@@ -1,0 +1,37 @@
+@use '~styles/appColors' as *;
+@use '~styles/constants' as *;
+
+.notice-editor{
+    background-color: $darkerseccolor;
+    border: 1px solid $bordercolor;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+    align-items: stretch;
+    align-self: stretch;
+    border-radius: 10px;
+    &:focus-within{
+        @include idle;
+        border: 1px solid $hotpurple;
+    }
+
+    >.editable-container{
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        >div{
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            padding: 10px ;
+            max-height: 200px;
+            height: 200px;
+            display: flex;
+            align-items: stretch;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+    }
+}
