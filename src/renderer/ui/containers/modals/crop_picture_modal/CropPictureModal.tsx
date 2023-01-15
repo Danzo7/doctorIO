@@ -8,7 +8,7 @@ import { useCallback, useState } from 'react';
 import { Area, Point } from 'react-easy-crop/types';
 import { useSetAvatarMutation } from '@redux/clinic/rbac/member/memberApi';
 import { Overlay_u } from '@stores/overlayStore';
-import { getImageFile } from '@helpers/getImageFile';
+import { getImageFile } from '@helpers/image.helper';
 
 interface CropPictureModalProps {
   src: string;
