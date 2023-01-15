@@ -38,12 +38,7 @@ export default function TemplateEditor({ initialValue }: TemplateEditorProps) {
       withImages(
         withLayout(
           withDynamicContent(
-            withTables(
-              withSuggestion(withHistory(withReact(createEditor())), {
-                suggestions: CHARACTERS,
-                keyword: '/',
-              }),
-            ),
+            withTables(withSuggestion(withHistory(withReact(createEditor())))),
           ),
         ),
       ),
