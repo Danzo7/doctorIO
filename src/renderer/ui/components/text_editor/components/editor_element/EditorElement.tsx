@@ -68,7 +68,7 @@ const Tag = ({ text: [text] }: { text: FormattedText[] }) => {
               }}
             >
               <TagIcon fill={color.good_black} />
-              text.text
+              {text.text}
             </span>,
           ),
         ),
@@ -192,7 +192,7 @@ export default function EditorElement({
       );
     case 'td':
       return (
-        <td colSpan={1} css={{ ...style }} {...attributes}>
+        <td colSpan={1} css={{ ...style }} {...attributes} valign="top">
           {children}
         </td>
       );
