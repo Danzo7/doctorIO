@@ -1,19 +1,19 @@
 import { CustomEditor } from '../slate.types';
 
 export const withImages = (editor: CustomEditor) => {
-  const { isVoid, isInline, markableVoid } = editor;
+  // const { isVoid, isInline, markableVoid } = editor;
 
-  editor.isInline = (element) => {
-    return element.inline ?? isInline(element);
-  };
+  // editor.isInline = (element) => {
+  //   return element.inline ?? isInline(element);
+  // };
 
-  editor.isVoid = (element) => {
-    return element.void ?? isVoid(element);
-  };
+  // editor.isVoid = (element) => {
+  //   return element.void ?? isVoid(element);
+  // };
 
-  editor.markableVoid = (element) => {
-    return element.inline ?? markableVoid(element);
-  };
+  // editor.markableVoid = (element) => {
+  //   return element.inline ?? markableVoid(element);
+  // };
 
   // editor.insertData = (data) => {
   //   const text = data.getData('text/plain');

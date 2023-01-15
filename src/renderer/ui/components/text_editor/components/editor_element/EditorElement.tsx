@@ -3,34 +3,77 @@ import {
   RenderElementProps,
   useFocused,
   useSelected,
-  useSlate,
+  useSlateStatic,
 } from 'slate-react';
 import './style/index.scss';
 import { color } from '@assets/styles/color';
-import { elementIsEmpty } from '@components/text_editor/helper';
 import TextButton from '@components/buttons/text_button';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import trashCan from 'toSvg/trash_can.svg?icon';
 import { Transforms } from 'slate';
 import { TablesEditor } from '@components/text_editor/slate-tables';
-import { ComponentProps, useCallback, useEffect, useRef } from 'react';
+import {
+  ComponentProps,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
 import { ImageEditor } from '@components/text_editor/slate-image/ImageEditor';
-const Tag = ({ text }: { text: string }) => {
+import { FormattedText } from '@components/text_editor/slate.types';
+import TagIcon from 'toSvg/tag.svg?icon';
+import NotAButton from '@components/not_a_button';
+
+const Tag = ({ text: [text] }: { text: FormattedText[] }) => {
   const selected = useSelected();
   const focused = useFocused();
-
+  const tree = (
+    val: 'bold' | 'italic' | 'underline' | false | undefined,
+    element: ReactNode,
+  ) =>
+    val == 'bold' ? (
+      <b>{element}</b>
+    ) : val == 'italic' ? (
+      <i>{element}</i>
+    ) : val == 'underline' ? (
+      <u>{element}</u>
+    ) : (
+      element
+    );
   return (
-    <TextButton
-      text={text}
-      backgroundColor={color.warm_orange}
-      borderColor={
-        selected ? color.coldBlack : focused ? color.hot_red : undefined
-      }
-      padding={2}
-      radius={4}
-      fontWeight={400}
-      fontColor={color.white}
-    />
+    <NotAButton
+      css={{
+        border: '3px solid ' + color.warm_orange,
+      }}
+      padding={5}
+      radius={5}
+    >
+      {tree(
+        text.underline && 'underline',
+        tree(
+          text.italic && 'italic',
+          tree(
+            text.bold && 'bold',
+            <span
+              css={{
+                background: selected ? color.cold_blue : undefined,
+                alignItems: 'center',
+                display: 'flex',
+                gap: 5,
+                color: color.coldBlack,
+                fontSize: text.fontSize + 'pt',
+                '> svg>path': {
+                  fill: color.warm_orange,
+                },
+              }}
+            >
+              <TagIcon fill={color.good_black} />
+              text.text
+            </span>,
+          ),
+        ),
+      )}
+    </NotAButton>
   );
 };
 //TODO move to btns
@@ -88,7 +131,7 @@ const DraggableButton = ({
     />
   );
 };
-
+const letterSpacing = 6;
 //TODO split to multiple components and determine type using "is" (like slate-table)
 export default function EditorElement({
   attributes,
@@ -96,27 +139,10 @@ export default function EditorElement({
   element,
 }: RenderElementProps) {
   const selected = useSelected();
-  const editor = useSlate();
-  const ref = useRef<HTMLElement>(document.querySelector('.editable-content'));
+  const editor = useSlateStatic();
 
   const style: Interpolation<Theme> = {
     textAlign: (element as any)?.align,
-    ...(elementIsEmpty(element) &&
-    selected &&
-    element.type !== 'li' &&
-    element.type !== 'nl' &&
-    element.type !== 'tag'
-      ? {
-          position: 'relative',
-          '&:after': {
-            position: 'absolute',
-            top: 0,
-            right: element.align == 'right' ? 0 : undefined,
-            content: '"Write something here..."',
-            color: color.text_gray,
-          },
-        }
-      : {}),
   };
 
   switch (element.type) {
@@ -213,7 +239,7 @@ export default function EditorElement({
       return (
         <>
           <span css={style} {...attributes}>
-            {children} <Tag text={element.tag} />
+            {children} <Tag text={element.children} />
           </span>
         </>
       );
@@ -221,16 +247,23 @@ export default function EditorElement({
       return (
         <span {...attributes} css={{ padding: '0 10px' }}>
           {children}
-          <div
+          <span
             css={{
               display: 'inline-block',
               position: 'relative',
             }}
           >
-            {selected && ref.current && (
-              <div
+            <img
+              width={element.width}
+              height={element.height}
+              src={element.url}
+              css={{ filter: selected ? 'brightness(0.5)' : 'none' }}
+            ></img>
+            {selected && (
+              <span
                 css={{
                   display: 'inline-block',
+                  zIndex: 10,
                 }}
               >
                 <DraggableButton
@@ -316,21 +349,15 @@ export default function EditorElement({
                   css={{ position: 'absolute', bottom: 0, right: -5 }}
                   onDrag={(client) => {
                     ImageEditor.setImageSize(editor, element, {
-                      width: element.width + client.x,
+                      width: element.width + client.y,
                       height: element.height + client.y,
                     });
                   }}
                 />
-              </div>
+              </span>
             )}
-            <img
-              width={element.width}
-              height={element.height}
-              src={element.url}
-              css={{ filter: selected ? 'brightness(0.5)' : 'none' }}
-            ></img>
             {selected && (
-              <div
+              <span
                 css={{
                   display: 'flex',
                   gap: 5,
@@ -361,9 +388,9 @@ export default function EditorElement({
                 <TextButton text="x2" borderColor={color.cold_blue} />
                 <TextButton text="x3" borderColor={color.cold_blue} />
                 <TextButton text="Origin" borderColor={color.cold_blue} />
-              </div>
+              </span>
             )}
-          </div>
+          </span>
         </span>
       );
     case 'react':
@@ -375,7 +402,10 @@ export default function EditorElement({
       );
     default:
       return (
-        <p css={style} {...attributes}>
+        <p
+          css={{ ...style, margin: `0 0 ${letterSpacing}pt 0` }}
+          {...attributes}
+        >
           {children}
         </p>
       );

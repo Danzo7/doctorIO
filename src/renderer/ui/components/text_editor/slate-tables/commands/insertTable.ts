@@ -1,8 +1,8 @@
-import { type Location, Transforms, Editor } from 'slate';
+import { type Location, Transforms, Editor, Element } from 'slate';
 import { ReactEditor } from 'slate-react';
 
 import { TableNode } from '../nodes';
-import { isTextNode } from '@components/text_editor/helper';
+import { getCurrentNodeEntry } from '@components/text_editor/commons/commands/getCurrentNodeEntry';
 
 export function insertTable(
   editor: Editor,
@@ -12,20 +12,23 @@ export function insertTable(
   if (!location) {
     return false;
   }
+  const node = getCurrentNodeEntry(editor)?.[0];
 
   Transforms.insertNodes(editor, [TableNode.createTable(editor, props)], {
     at: location,
   });
   Transforms.move(editor, { unit: 'line', distance: 1 });
+
   if (
-    editor.children.length > 1 &&
-    isTextNode(editor.children[0]) &&
-    editor.children[0].children[0].text === ''
+    !node ||
+    (Element.isElement(node) &&
+      (node.children.length === 0 ||
+        (node.children.length === 1 &&
+          'text' in node.children[0] &&
+          node.children[0].text === '')))
   )
-    Transforms.moveNodes(editor, { at: location, to: [1] });
-  else {
-    Transforms.insertNodes(editor, [{ type: 'p', children: [{ text: '' }] }]);
-  }
+    Transforms.removeNodes(editor, { at: location });
+
   ReactEditor.focus(editor);
 
   return true;

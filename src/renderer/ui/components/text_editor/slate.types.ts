@@ -28,7 +28,6 @@ export type ComponentElement = {
 };
 export type TagElement = {
   type: 'tag';
-  tag: string;
 };
 export type TextElement = {
   type: typeof BLOCK_TYPE[number] | typeof EMPTY_SPACE_TYPE;

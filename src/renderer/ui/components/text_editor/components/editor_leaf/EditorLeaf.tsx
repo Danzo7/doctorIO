@@ -9,7 +9,7 @@ export default function EditorLeaf({
 }: RenderLeafProps) {
   const style: Interpolation<Theme> = {
     span: {
-      fontSize: leaf.fontSize ?? 12,
+      fontSize: (leaf.fontSize ?? 12) + 'pt',
       listStyleType: 'auto',
       fontFamily: "'Roboto', sans-serif",
       color: color.coldBlack,

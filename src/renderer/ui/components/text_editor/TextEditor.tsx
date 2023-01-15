@@ -4,26 +4,26 @@ import {
   withReact,
   RenderLeafProps,
   RenderElementProps,
-  ReactEditor,
 } from 'slate-react';
 import './style/index.scss';
 import { useCallback, useMemo } from 'react';
 import { withHistory } from 'slate-history';
-import { createEditor, Range, Editor, Transforms } from 'slate';
+import { createEditor } from 'slate';
 import { CustomElement } from './slate.types';
 import EditorToolbar from './components/editor_toolbar';
-import Tooltip from '@components/poppers/tooltip';
-import { Overlay_u, modal } from '@stores/overlayStore';
 import EditorLeaf from './components/editor_leaf';
 import EditorElement from './components/editor_element';
-import { withLayout, withMentions } from './helper';
 import { onKeyDown, withTables } from './slate-tables';
 import { withImages } from './slate-image';
+import { cmToPx } from '@helpers/math.helper';
+import { withLayout } from './commons/normilazation/withLayout';
+import { withSuggestion } from './slate-suggestion/withSuggest';
 
 interface TextEditorProps {
   initialValue: CustomElement[];
 }
-
+const paperSize = { width: 21, height: 29.7 };
+const margins = { top: 1.27, bottom: 1.27, left: 1.27, right: 1.27 };
 const CHARACTERS = [
   'patient.fname',
   'patient.lname',
@@ -37,7 +37,12 @@ export default function TextEditor({ initialValue }: TextEditorProps) {
     () =>
       withImages(
         withLayout(
-          withTables(withMentions(withHistory(withReact(createEditor())))),
+          withTables(
+            withSuggestion(withHistory(withReact(createEditor())), {
+              suggestions: CHARACTERS,
+              keyword: '/',
+            }),
+          ),
         ),
       ),
     [],
@@ -54,94 +59,27 @@ export default function TextEditor({ initialValue }: TextEditorProps) {
 
   return (
     <div className="text-editor">
-      <Slate
-        editor={editor}
-        value={initialValue}
-        onChange={() => {
-          const { selection } = editor;
-
-          if (selection && Range.isCollapsed(selection)) {
-            const [start] = Range.edges(selection);
-            const wordBefore = Editor.before(editor, start, { unit: 'word' });
-            const before = wordBefore && Editor.before(editor, wordBefore);
-            const beforeRange = before && Editor.range(editor, before, start);
-            const beforeText =
-              beforeRange && Editor.string(editor, beforeRange);
-            if (!beforeText) return;
-            const beforeMatch = beforeText && beforeText.match(/^@(\w+)$/);
-            const after = Editor.after(editor, start);
-            const afterRange = Editor.range(editor, start, after);
-            const afterText = Editor.string(editor, afterRange);
-            const afterMatch = afterText.match(/^(\s|$)/);
-
-            if (beforeMatch && afterMatch) {
-              const actionList = CHARACTERS.filter((c) =>
-                c.toLowerCase().startsWith(beforeMatch[1].toLowerCase()),
-              )
-                .slice(0, 3)
-                .map((char) => ({
-                  text: char,
-                  onPress: () => {
-                    Transforms.select(editor, beforeRange);
-                    //get element before
-                    const prev = Editor.leaf(editor, beforeRange)[0];
-                    const element: CustomElement = {
-                      type: 'tag',
-                      tag: char,
-                      children: [{ ...prev, text: ' ' }],
-                      inline: true,
-                      void: true,
-                    };
-                    const empty: CustomElement = {
-                      type: 'empty',
-                      children: [{ ...prev, text: ' ' }],
-                      inline: true,
-                    };
-                    Transforms.insertNodes(editor, [element, empty], {
-                      voids: true,
-                    });
-                    Transforms.move(editor);
-                  },
-                }));
-              if (actionList.length === 0) {
-                Overlay_u.close('honobri');
-                return;
-              }
-              const domRange = ReactEditor.toDOMRange(editor, beforeRange);
-              const rect = domRange.getBoundingClientRect();
-
-              modal(
-                <Tooltip actionList={actionList} />,
-                {
-                  position: {
-                    top: rect.top + window.pageYOffset + 24,
-                    left: rect.left + window.pageXOffset + 24,
-                  },
-                  clickThrough: true,
-                  closeOnClickOutside: true,
-                  closeOnBlur: true,
-                  backdropColor: false,
-                  autoFocus: false,
-                },
-                'honobri',
-              ).open({ force: true });
-              return;
-            } else {
-              // Overlay_u.close('honobri');
-            }
-          }
-        }}
-      >
+      <Slate editor={editor} value={initialValue}>
         <EditorToolbar />
         <div className="editable-container">
-          <div className="editable-content">
-            <Editable
-              renderLeaf={renderLeaf}
-              renderElement={renderElement}
-              autoFocus
-              onKeyDown={(e) => onKeyDown(e, editor)}
-            />
-          </div>
+          <Editable
+            css={{
+              width: cmToPx(paperSize.width),
+              height: cmToPx(paperSize.height),
+              padding: `${cmToPx(margins.top)}px ${cmToPx(
+                margins.right,
+              )}px ${cmToPx(margins.bottom)}px ${cmToPx(margins.left)}px`,
+            }}
+            placeholder="Write something..."
+            renderLeaf={renderLeaf}
+            renderElement={renderElement}
+            autoFocus
+            onKeyDown={(e) => {
+              onKeyDown(e, editor);
+              const textEditorElement = document.getElementById('text-editor');
+            }}
+            id="text-editor"
+          />
         </div>
       </Slate>
     </div>
