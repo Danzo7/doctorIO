@@ -7,7 +7,7 @@ import { useConnectionStore } from '@stores/ConnectionStore';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AppLayout from './app_layout';
-import TextEditor from '@components/text_editor';
+import TemplateEditor from '@components/template_edtor/TemplateEdtor';
 
 interface MainLayerProps {}
 export default function MainLayer({}: MainLayerProps) {
@@ -27,13 +27,8 @@ export default function MainLayer({}: MainLayerProps) {
       <Route
         path="templateEditor"
         element={
-          <TextEditor
-            initialValue={[
-              {
-                type: 'p',
-                children: [{ text: 'This is editable ' }],
-              },
-            ]}
+          <TemplateEditor
+            initialValue={[{ type: 'p', children: [{ text: '' }] }]}
           />
         }
       />
