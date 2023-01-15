@@ -1,0 +1,1 @@
+export { deleteCurrentNodeIfEmpty } from './deleteCurrentNodeIfEmpty';

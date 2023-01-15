@@ -1,0 +1,1 @@
+export { withBreaksOnExpandedSelection } from './withBreaksOnExpandedSelection';

@@ -21,13 +21,21 @@ export type CustomEditor = BaseEditor &
 export const EMPTY_SPACE_TYPE = 'empty' as const;
 export const BLOCK_TYPE = ['p', 'bq', 'bl', 'h1', 'h2', 'li', 'nl'] as const;
 export const TEXT_ALIGN_TYPES = ['left', 'center', 'right', 'justify'] as const;
-
+export type ElementCommons = {
+  inline?: boolean;
+  void?: boolean;
+  align?: typeof TEXT_ALIGN_TYPES[number];
+};
 export type ComponentElement = {
   type: 'react';
   node: ReactNode;
 };
 export type TagElement = {
-  type: 'tag';
+  type: 'autofill';
+  behavior: 'attribute' | 'mention';
+};
+export type DynamicContent = {
+  type: 'dynamic';
 };
 export type TextElement = {
   type: typeof BLOCK_TYPE[number] | typeof EMPTY_SPACE_TYPE;
@@ -40,15 +48,13 @@ export type CustomElement =
           | TextElement
           | ComponentElement
           | ImageElement
+          | DynamicContent
         ))
       | TableElement
       | TableRowElement
       | TableCellElement
-    ) & {
-      inline?: boolean;
-      void?: boolean;
-      align?: typeof TEXT_ALIGN_TYPES[number];
-    };
+    ) &
+      ElementCommons;
 export const TEXT_FORMAT_TYPES = [
   'bold',
   'italic',

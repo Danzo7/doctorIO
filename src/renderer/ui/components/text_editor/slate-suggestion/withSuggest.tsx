@@ -51,7 +51,8 @@ export const withSuggestion = (
               //get element before
               const prev = Editor.leaf(editor, beforeRange)[0];
               const element: Element = {
-                type: 'tag',
+                type: 'autofill',
+                behavior: 'attribute',
                 children: [{ ...prev, text: char }],
                 inline: true,
                 void: true,

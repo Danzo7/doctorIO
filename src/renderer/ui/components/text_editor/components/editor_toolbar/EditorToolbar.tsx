@@ -1,14 +1,7 @@
 import { useSlate } from 'slate-react';
-import { Element, Editor, Transforms } from 'slate';
+import { Editor } from 'slate';
 import './style/index.scss';
-import {
-  BLOCK_TYPE,
-  CustomEditor,
-  CustomElement,
-  TABLE_TYPES,
-  TEXT_ALIGN_TYPES,
-  TEXT_FORMAT_TYPES,
-} from '@components/text_editor/slate.types';
+
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import { color } from '@assets/styles/color';
 import BoldIcon from 'toSvg/text_bold.svg?icon';
@@ -25,97 +18,17 @@ import InputWrapper from '@components/inputs/input_wrapper';
 import AutoSizeInput from '@components/inputs/auto_size_input';
 import { TablesEditor } from '@components/text_editor/slate-tables';
 import { ImageEditor } from '@components/text_editor/slate-image/ImageEditor';
+import {
+  getFontSize,
+  isAlignActive,
+  isMarkActive,
+  setFontSize,
+  toggleAlign,
+  toggleMark,
+} from '@components/text_editor/commons/commands';
+import { createImage } from '@helpers/image.helper';
 
 interface EditorToolbarProps {}
-const isBlockActive = (
-  editor: CustomEditor,
-  format: typeof BLOCK_TYPE[number],
-) => {
-  const { selection } = editor;
-  if (!selection) return false;
-
-  const [match] = Array.from(
-    Editor.nodes(editor, {
-      at: Editor.unhangRange(editor, selection),
-      match: (n) =>
-        !Editor.isEditor(n) && Element.isElement(n) && n.type === format,
-    }),
-  );
-
-  return !!match;
-};
-const isAlignActive = (
-  editor: CustomEditor,
-  format: typeof TEXT_ALIGN_TYPES[number],
-) => {
-  const { selection } = editor;
-  if (!selection) return false;
-  const [match] = Array.from(
-    Editor.nodes(editor, {
-      at: Editor.unhangRange(editor, selection),
-      match: (n) =>
-        !Editor.isEditor(n) &&
-        Element.isElement(n) &&
-        ((n as CustomElement).align === format ||
-          (!n.align &&
-            format === 'left' &&
-            !TABLE_TYPES.includes(n.type as any))),
-    }),
-  );
-  return !!match;
-};
-const toggleAlign = (
-  editor: CustomEditor,
-  format: typeof TEXT_ALIGN_TYPES[number],
-) => {
-  const isActive = isAlignActive(editor, format);
-  const newProperties: Partial<Element> = {
-    align: isActive ? undefined : format,
-  };
-  Transforms.setNodes<Element>(editor, newProperties);
-};
-
-const toggleBlock = (
-  editor: CustomEditor,
-  format: typeof BLOCK_TYPE[number],
-) => {
-  const isActive = isBlockActive(editor, format);
-
-  const newProperties: Partial<Element> = {
-    type: isActive ? 'p' : format,
-  };
-  Transforms.setNodes<Element>(editor, newProperties);
-};
-
-const isMarkActive = (
-  editor: CustomEditor,
-  format: typeof TEXT_FORMAT_TYPES[number],
-) => {
-  const marks = Editor.marks(editor);
-  return marks ? marks[format] === true : false;
-};
-const getTextSize = (editor: CustomEditor) => {
-  return Editor.marks(editor)?.fontSize ?? 12;
-};
-const toggleMark = (
-  editor: CustomEditor,
-  format: typeof TEXT_FORMAT_TYPES[number],
-) => {
-  const isActive = isMarkActive(editor, format);
-
-  if (isActive) {
-    Editor.removeMark(editor, format);
-  } else {
-    Editor.addMark(editor, format, true);
-  }
-};
-const changeSize = (editor: CustomEditor, action: 'increase' | 'decrease') => {
-  const current = Editor.marks(editor)?.fontSize ?? 12;
-  if (action === 'decrease' && current >= 8)
-    Editor.addMark(editor, 'fontSize', current - 1);
-  else if (action === 'increase' && current <= 128)
-    Editor.addMark(editor, 'fontSize', current + 1);
-};
 
 export default function EditorToolbar({}: EditorToolbarProps) {
   const editor = useSlate();
@@ -125,7 +38,7 @@ export default function EditorToolbar({}: EditorToolbarProps) {
       <SquareIconButton
         onMouseDown={(event) => {
           event?.preventDefault();
-          changeSize(editor, 'increase');
+          setFontSize(editor, 'increase');
         }}
         unFocusable
         iconColor={color.white}
@@ -134,7 +47,7 @@ export default function EditorToolbar({}: EditorToolbarProps) {
       <InputWrapper height={'auto'} radius={0} padding={2}>
         <AutoSizeInput
           type="number"
-          value={getTextSize(editor)}
+          value={getFontSize(editor)}
           onChange={(e) => {
             if (
               isNaN(Number(e.target.value)) ||
@@ -149,7 +62,7 @@ export default function EditorToolbar({}: EditorToolbarProps) {
       <SquareIconButton
         onMouseDown={(event) => {
           event?.preventDefault();
-          changeSize(editor, 'decrease');
+          setFontSize(editor, 'decrease');
         }}
         unFocusable
         iconColor={color.white}
@@ -228,10 +141,14 @@ export default function EditorToolbar({}: EditorToolbarProps) {
           input.accept = 'image/png, image/jpeg';
 
           input.click();
-          input.onchange = (_) => {
+          input.onchange = async (_) => {
             const files: FileList = input.files as FileList;
+            console.log(files);
             const file = URL.createObjectURL(files[0]);
-            ImageEditor.insertImage(editor, file);
+            const img = await createImage(file);
+            const width = 250;
+            const height = Math.floor((250 * img.height) / img.width);
+            ImageEditor.insertImage(editor, file, { width, height });
           };
         }}
         unFocusable

@@ -1,0 +1,1 @@
+export { withUserFriendlyDeleteBehavior } from './withUserFriendlyDeleteBehavior';

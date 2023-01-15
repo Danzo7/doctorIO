@@ -1,0 +1,16 @@
+@use '~styles/appColors' as *;
+@use '~styles/effects' as *;
+
+.dynamic-element {
+    @include lighter;
+    display: flex;
+    background-color: $hotpurple;
+    border:3px solid $hotpurple;
+    flex: 1;
+    padding: 5px ;
+    border-radius: 5px;
+    user-select: none;
+    gap:5px;
+    align-items: baseline;
+    font-size: 14pt;
+}

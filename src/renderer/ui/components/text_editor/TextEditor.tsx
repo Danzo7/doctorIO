@@ -18,11 +18,13 @@ import { withImages } from './slate-image';
 import { cmToPx } from '@helpers/math.helper';
 import { withLayout } from './commons/normilazation/withLayout';
 import { withSuggestion } from './slate-suggestion/withSuggest';
+import { color } from '@assets/styles/color';
+import { withDynamic } from './dynamic_block/withDynamic';
 
 interface TextEditorProps {
   initialValue: CustomElement[];
 }
-const paperSize = { width: 21, height: 29.7 };
+const paperSize = { width: 14.8, height: 21 };
 const margins = { top: 1.27, bottom: 1.27, left: 1.27, right: 1.27 };
 const CHARACTERS = [
   'patient.fname',
@@ -37,11 +39,13 @@ export default function TextEditor({ initialValue }: TextEditorProps) {
     () =>
       withImages(
         withLayout(
-          withTables(
-            withSuggestion(withHistory(withReact(createEditor())), {
-              suggestions: CHARACTERS,
-              keyword: '/',
-            }),
+          withDynamic(
+            withTables(
+              withSuggestion(withHistory(withReact(createEditor())), {
+                suggestions: CHARACTERS,
+                keyword: '/',
+              }),
+            ),
           ),
         ),
       ),
@@ -66,9 +70,13 @@ export default function TextEditor({ initialValue }: TextEditorProps) {
             css={{
               width: cmToPx(paperSize.width),
               height: cmToPx(paperSize.height),
+              maxHeight: cmToPx(paperSize.height),
               padding: `${cmToPx(margins.top)}px ${cmToPx(
                 margins.right,
               )}px ${cmToPx(margins.bottom)}px ${cmToPx(margins.left)}px`,
+              boxShadow: '0 0 5px 3px ' + color.darker,
+              display: 'flex',
+              flexDirection: 'column',
             }}
             placeholder="Write something..."
             renderLeaf={renderLeaf}
@@ -76,7 +84,6 @@ export default function TextEditor({ initialValue }: TextEditorProps) {
             autoFocus
             onKeyDown={(e) => {
               onKeyDown(e, editor);
-              const textEditorElement = document.getElementById('text-editor');
             }}
             id="text-editor"
           />

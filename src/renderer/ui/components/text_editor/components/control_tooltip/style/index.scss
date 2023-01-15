@@ -1,0 +1,12 @@
+@use "~styles/appColors" as *;
+.control-tooltip {
+    position: absolute;
+    translate: 50%;
+    right: 50%;
+    display: flex;
+    gap: 5px;
+    top: calc(100% + 5px);
+    background-color:$coldblack;
+    border-radius: 7px;
+    padding: 5px 10px;
+}

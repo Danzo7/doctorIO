@@ -4,7 +4,17 @@ import {
 } from '@components/text_editor/slate.types';
 import { Transforms } from 'slate';
 
-export const insertImage = (editor: CustomEditor, url: string) => {
+export const insertImage = (
+  editor: CustomEditor,
+  url: string,
+  {
+    width,
+    height,
+  }: {
+    width: number;
+    height: number;
+  },
+) => {
   const text = { text: ' ' };
   const image: CustomElement = {
     type: 'image',
@@ -12,8 +22,10 @@ export const insertImage = (editor: CustomEditor, url: string) => {
     children: [text],
     inline: true,
     void: true,
-    width: 250,
-    height: 250,
+    width: width,
+    height: height,
+    mHeight: height,
+    mWidth: width,
   };
   Transforms.insertNodes(editor, image);
 };

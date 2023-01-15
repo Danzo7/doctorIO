@@ -1,4 +1,13 @@
 import { insertImage } from './insertImage';
-import { setImageSize } from './setImageSize';
+import {
+  setImageSize,
+  resetOriginalSize,
+  setImageSizeByRatio,
+} from './setImageSize';
 
-export default { setImageSize, insertImage };
+export default {
+  setImageSize,
+  resetOriginalSize,
+  setImageSizeByRatio,
+  insertImage,
+};
