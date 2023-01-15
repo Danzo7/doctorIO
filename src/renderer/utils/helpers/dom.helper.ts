@@ -12,3 +12,5 @@ export const blurWithin = (
     else callback();
   }
 };
+export const isOverflowY = (element: HTMLElement) =>
+  element.scrollHeight != Math.max(element.offsetHeight, element.clientHeight);
