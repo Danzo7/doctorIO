@@ -6,19 +6,18 @@ import EditorLeaf from '@libs/slate_editor/components/editor_leaf';
 import EditorToolbar from '@libs/slate_editor/components/editor_toolbar';
 import { withDynamicContent } from '@libs/slate_editor/dynamic_block/withDynamicContent';
 import { withImages } from '@libs/slate_editor/slate-image';
-import { withSuggestion } from '@libs/slate_editor/slate-suggestion/withSuggest';
 import { onKeyDown, withTables } from '@libs/slate_editor/slate-tables';
 import { useCallback, useMemo } from 'react';
-import { createEditor, Element } from 'slate';
-import { withHistory } from 'slate-history';
+import { Element } from 'slate';
 import './style/index.scss';
 import {
   Editable,
   RenderElementProps,
   RenderLeafProps,
   Slate,
-  withReact,
 } from 'slate-react';
+import { withDynamicAttributes } from '@libs/slate_editor/slate-dynamic-attributes/withDynamicAttributes';
+import { createEditor } from '@libs/slate_editor/createEditor';
 
 interface TemplateEditorProps {
   initialValue: Element[];
@@ -37,9 +36,7 @@ export default function TemplateEditor({ initialValue }: TemplateEditorProps) {
     () =>
       withImages(
         withLayout(
-          withDynamicContent(
-            withTables(withSuggestion(withHistory(withReact(createEditor())))),
-          ),
+          withDynamicContent(withTables(withDynamicAttributes(createEditor()))),
         ),
       ),
     [],
