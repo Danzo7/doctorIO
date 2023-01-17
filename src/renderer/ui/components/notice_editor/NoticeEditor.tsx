@@ -2,10 +2,8 @@ import EditorElement from '@libs/slate_editor/components/editor_element';
 import EditorLeaf from '@libs/slate_editor/components/editor_leaf';
 import { withSuggestion } from '@libs/slate_editor/slate-suggestion/withSuggest';
 import { useMemo, useCallback } from 'react';
-import { Editor, Transforms, createEditor } from 'slate';
-import { withHistory } from 'slate-history';
+import { Editor, Transforms } from 'slate';
 import {
-  withReact,
   RenderLeafProps,
   RenderElementProps,
   Slate,
@@ -17,6 +15,9 @@ import {
   nodeToPlain,
   painToDescendants,
 } from '@libs/slate_editor/serializers/nodeToPlain';
+import { format } from 'date-fns';
+import { SETTINGS } from '@stores/appSettingsStore';
+import { createEditor } from '@libs/slate_editor/createEditor';
 interface NoticeEditorProps {
   onChange?: (value: string) => void;
   mentions?: string[];
@@ -33,17 +34,30 @@ export const withForceWhite = (editor: Editor) => {
   };
   return editor;
 };
+
 export default function NoticeEditor({
   onChange: onChanged,
-  mentions = ['ee'],
+  mentions = [],
   defaultValue,
 }: NoticeEditorProps) {
   const editor = useMemo(
     () =>
       withForceWhite(
-        withSuggestion(withHistory(withReact(createEditor())), {
-          suggestions: mentions,
+        withSuggestion(createEditor(), {
+          suggestions: ['at', 'me', ...mentions],
           keyword: '@',
+          insertOnSelect(selected, prev) {
+            const mappedText: { [key: string]: string } = {
+              at: format(new Date(), SETTINGS.dateFormat),
+              me: 'Dr. John Doe',
+            };
+            return {
+              type: 'autofill',
+              behavior: 'mention',
+              children: [{ ...prev, text: mappedText[selected] ?? selected }],
+              inline: true,
+            };
+          },
         }),
       ),
     [mentions],

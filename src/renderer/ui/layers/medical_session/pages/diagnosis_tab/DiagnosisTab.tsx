@@ -8,12 +8,16 @@ import NoticeEditor from '@components/notice_editor';
 type Data = {
   diagnosis: string;
 };
-export default function DiagnosisTab() {
+interface DiagnosisTabProps {
+  mentions?: string[];
+}
+export default function DiagnosisTab({ mentions }: DiagnosisTabProps) {
   const diagnosis = useDiagnosis();
 
   return (
     <div className="notice-tab">
       <NoticeEditor
+        mentions={mentions}
         defaultValue={diagnosis}
         onChange={(v) => {
           useMedicalSessionStore.getState().setDiagnosis(v);

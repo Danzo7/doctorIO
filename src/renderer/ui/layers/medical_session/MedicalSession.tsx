@@ -97,7 +97,14 @@ export default function MedicalSession({}: MedicalSessionProps) {
               flexGrow={0}
               foldedItems={[
                 { label: 'Prescription', content: <PrescriptionTab /> },
-                { label: 'Notice', content: <DiagnosisTab /> },
+                {
+                  label: 'Notice',
+                  content: (
+                    <DiagnosisTab
+                      mentions={[data.firstName + ' ' + data.lastName]}
+                    />
+                  ),
+                },
               ]}
               items={[]}
             />
