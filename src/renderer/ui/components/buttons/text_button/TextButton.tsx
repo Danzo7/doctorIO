@@ -7,8 +7,6 @@ import {
   SVGProps,
   useState,
   MouseEvent,
-  forwardRef,
-  LegacyRef,
 } from 'react';
 import { OverlayType, Overlay_u } from '@stores/overlayStore';
 import styled from '@emotion/styled';
@@ -84,45 +82,42 @@ interface TextButtonProps
   unFocusable?: boolean;
   fake?: boolean;
 }
-export default forwardRef(function TextButton(
-  {
-    className,
-    text,
-    Icon,
-    fontColor,
-    fontSize = 14,
-    fontWeight = 600,
-    backgroundColor = 'transparent',
-    borderColor = 'transparent',
-    borderWidth = 1,
-    radius = 7,
-    afterBgColor,
-    afterBorderColor,
-    afterFontColor,
-    width,
-    height,
-    children,
-    padding,
-    onPress,
-    activeBgColor = colors.light,
-    type,
-    activeBorderColor,
-    disabled = false,
-    alignment,
-    alignSelf,
-    itemsDirection,
-    onHold,
-    cursor = 'pointer',
-    blank,
-    tip,
-    unFocusable,
-    onMouseDown,
-    onMouseUp,
-    fake,
-    ...others
-  }: TextButtonProps,
-  ref: LegacyRef<HTMLButtonElement>,
-) {
+export default function TextButton({
+  className,
+  text,
+  Icon,
+  fontColor,
+  fontSize = 14,
+  fontWeight = 600,
+  backgroundColor = 'transparent',
+  borderColor = 'transparent',
+  borderWidth = 1,
+  radius = 7,
+  afterBgColor,
+  afterBorderColor,
+  afterFontColor,
+  width,
+  height,
+  children,
+  padding,
+  onPress,
+  activeBgColor = colors.light,
+  type,
+  activeBorderColor,
+  disabled = false,
+  alignment,
+  alignSelf,
+  itemsDirection,
+  onHold,
+  cursor = 'pointer',
+  blank,
+  tip,
+  unFocusable,
+  onMouseDown,
+  onMouseUp,
+  fake,
+  ...others
+}: TextButtonProps) {
   const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
   const [startHold, cancelHold] = useLongPress({
     onEndHold: onHold
@@ -155,7 +150,6 @@ export default forwardRef(function TextButton(
   return (
     <Wrapper
       {...(others as any)}
-      ref={ref}
       type={type}
       className={`text-button${isHold ? ' hold' : ''} ${className || ''}`}
       css={{
@@ -311,4 +305,4 @@ export default forwardRef(function TextButton(
       )}
     </Wrapper>
   );
-});
+}
