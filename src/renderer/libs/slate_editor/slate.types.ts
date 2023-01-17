@@ -11,6 +11,10 @@ import {
 import { ImageElement } from './slate-image/types';
 import { TagElement } from './slate-suggestion/types';
 import { DynamicContentElement } from './dynamic_block/types';
+import { AttributeElement } from './slate-dynamic-attributes/types';
+import { CommonEditor } from './commons/CommonEditor';
+import { AddonEditor } from './createEditor';
+export * from './slate-dynamic-attributes/types';
 export * from './slate-tables/types';
 export * from './slate-image/types';
 export * from './slate-suggestion/types';
@@ -21,7 +25,9 @@ export type TableHeader = 'first_row' | 'first_column';
 export type CustomEditor = BaseEditor &
   ReactEditor &
   HistoryEditor &
-  TableEditor;
+  TableEditor &
+  AddonEditor &
+  typeof CommonEditor;
 export const EMPTY_SPACE_TYPE = 'empty' as const;
 export const BLOCK_TYPE = [
   'p',
@@ -56,6 +62,7 @@ export type CustomElement =
           | ComponentElement
           | ImageElement
           | DynamicContentElement
+          | AttributeElement
         ))
       | TableElement
       | TableRowElement
@@ -71,7 +78,11 @@ export const TEXT_FORMAT_TYPES = [
   'superscript',
   'subscript',
 ] as const;
-
+export const TEXT_DECORATION_TYPES = ['color', 'fontSize'] as const;
+export const TEXT_MARK_TYPES = [
+  ...TEXT_FORMAT_TYPES,
+  ...TEXT_DECORATION_TYPES,
+] as const;
 export type FormattedText = {
   text: string;
   fontSize?: number;

@@ -12,3 +12,4 @@ export { isSelectionValid } from './isSelectionValid';
 export { getFontSize } from './getFontSize';
 export { saveSelection } from './saveSelection';
 export { isNodeEmpty } from './isNodeEmpty';
+export { insertEmpty } from './insertEmpty';

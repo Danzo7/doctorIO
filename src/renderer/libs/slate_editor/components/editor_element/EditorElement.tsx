@@ -6,6 +6,7 @@ import DynamicElement from '../../dynamic_block/components/dynamic_element';
 import ImageBlockElement from '@libs/slate_editor/slate-image/components/image_block_element';
 import TagBlock from '@libs/slate_editor/slate-suggestion/components/tag_block';
 import TableControl from '@libs/slate_editor/slate-tables/components/table_control';
+import AttributeBlock from '@libs/slate_editor/slate-dynamic-attributes/components/attribute_block';
 
 const letterSpacing = 6;
 export default function EditorElement({
@@ -111,6 +112,14 @@ export default function EditorElement({
             </TagBlock>
           </span>
         </>
+      );
+    case 'attribute':
+      return (
+        <span css={style} {...attributes}>
+          <AttributeBlock text={element.children} element={element}>
+            {children}
+          </AttributeBlock>
+        </span>
       );
     case 'image':
       return (

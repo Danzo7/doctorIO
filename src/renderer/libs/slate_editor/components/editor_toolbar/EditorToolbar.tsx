@@ -29,10 +29,32 @@ import {
 } from '@libs/slate_editor/commons/commands';
 import { createImage } from '@helpers/image.helper';
 import TextButton from '@components/buttons/text_button';
+import { modal } from '@stores/overlayStore';
+import InsertAttributesModal from '@containers/modals/insert_attributes_modal';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import { AttributeEditor } from '@libs/slate_editor/slate-dynamic-attributes/AttributeEditor';
 
 interface EditorToolbarProps {}
 
 export default function EditorToolbar({}: EditorToolbarProps) {
+  const DEFAULT_ATTRIBUTES = [
+    {
+      group: { name: 'Clinic', color: color.hot_purple },
+      items: ['Name', 'Address'],
+    },
+    {
+      group: { name: 'Patient', color: color.cold_blue },
+      items: ['First name', 'Last name', 'Age', 'Birth date'],
+    },
+    {
+      group: { name: 'Doctor', color: color.warm_orange },
+      items: ['First name', 'Last name', 'id'],
+    },
+    {
+      group: { name: 'Session', color: color.cold_red },
+      items: ['Date', 'Time'],
+    },
+  ];
   const editor = useSlate();
   return (
     <div className="editor-toolbar">
@@ -174,6 +196,21 @@ export default function EditorToolbar({}: EditorToolbarProps) {
           text="Auto"
           Icon={TagIcon}
           afterBgColor={color.silver_gray}
+          onPress={() => {
+            modal(
+              ({ close }) => (
+                <InsertAttributesModal
+                  close={close}
+                  elements={DEFAULT_ATTRIBUTES}
+                  onChange={(value) => {
+                    AttributeEditor.insertAttribute(editor, value);
+                  }}
+                />
+              ),
+              DEFAULT_MODAL,
+              'Insert Attributes',
+            ).open();
+          }}
         />
       </div>
     </div>

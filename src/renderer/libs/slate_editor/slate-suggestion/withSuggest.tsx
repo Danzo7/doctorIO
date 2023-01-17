@@ -2,10 +2,15 @@ import Tooltip from '@components/poppers/tooltip';
 import { Overlay_u, modal } from '@stores/overlayStore';
 import { Editor, Element, Range, Transforms } from 'slate';
 import { ReactEditor } from 'slate-react';
+import { FormattedText } from '../slate.types';
 
 export const withSuggestion = (
   editor: Editor,
-  props?: { suggestions: string[]; keyword: string },
+  props?: {
+    suggestions: string[];
+    keyword: string;
+    insertOnSelect: (selected: string, prev: FormattedText) => Element;
+  },
 ) => {
   const { isInline, isVoid, markableVoid, onChange } = editor;
   const EDITOR_SUGGEST_TOOLTIP = 'EDITOR_SUGGEST_TOOLTIP';
@@ -21,7 +26,7 @@ export const withSuggestion = (
     return element.inline ?? markableVoid(element);
   };
   if (!props) return editor;
-  const { suggestions, keyword } = props;
+  const { suggestions, keyword, insertOnSelect } = props;
   editor.onChange = () => {
     onChange();
     const { selection } = editor;
@@ -61,7 +66,7 @@ export const withSuggestion = (
               };
 
               Transforms.insertNodes(editor, [
-                element,
+                insertOnSelect(char, prev),
                 {
                   type: 'span',
                   children: [{ ...prev, text: '' }],
