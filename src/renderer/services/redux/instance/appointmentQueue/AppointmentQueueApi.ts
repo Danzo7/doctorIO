@@ -4,6 +4,7 @@ import {
   Drug,
   QueueState,
   BiometricScreening,
+  MedicalCertificate,
 } from '@models/instance.model';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { createQuery } from '@stores/staticQueriesStore';
@@ -226,9 +227,10 @@ const appointmentQueueApi = createApi({
       {
         selectedQueue: number;
         body: {
-          diagnosis?: string;
+          diagnosis?: string; //TODO Remove this
           subject?: string;
           prescription?: Omit<Drug, 'id'>[];
+          certificates?: Omit<MedicalCertificate, 'id'>[];
           payment?: number;
         };
       }
