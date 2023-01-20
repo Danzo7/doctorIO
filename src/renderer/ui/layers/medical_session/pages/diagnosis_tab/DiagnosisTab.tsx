@@ -3,7 +3,7 @@ import {
   useMedicalSessionStore,
 } from '@stores/medicalSessionStore';
 import './style/index.scss';
-import NoticeEditor from '@components/notice_editor';
+import CertificateEditor from '@components/certificates_editor';
 
 type Data = {
   diagnosis: string;
@@ -16,7 +16,7 @@ export default function DiagnosisTab({ mentions }: DiagnosisTabProps) {
 
   return (
     <div className="notice-tab">
-      <NoticeEditor
+      <CertificateEditor
         mentions={mentions}
         defaultValue={diagnosis}
         onChange={(v) => {

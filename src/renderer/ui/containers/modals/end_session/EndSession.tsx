@@ -46,6 +46,15 @@ export default function EndSession({ patientId }: EndSessionProps) {
               await EndNext({
                 selectedQueue,
                 body: {
+                  certificates:
+                    currentSession.certificates.length > 0
+                      ? currentSession.certificates.map(
+                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                          ({ id, ...other }) => other,
+                        )
+                      : undefined,
+
+                  //TODO remove
                   diagnosis:
                     currentSession.diagnosis?.length > 0
                       ? currentSession.diagnosis

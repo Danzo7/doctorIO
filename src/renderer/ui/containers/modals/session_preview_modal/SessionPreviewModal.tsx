@@ -76,11 +76,19 @@ export default function SessionPreviewModal({
                     ),
                   },
                   data.session.diagnosis && {
-                    label: 'Notice',
+                    //TODO remove this
+                    label: 'Certificates',
                     content: (
                       <TimeLineDiagnosis diagnosis={data.session.diagnosis} />
                     ),
                   },
+                  //TODo show this instead
+                  // data.session.certificates && {
+                  //   label: 'Certificates',
+                  //   content: (
+                  //     <TimeLineDiagnosis diagnosis={data.session.diagnosis} />
+                  //   ),
+                  // },
                 ].filter(Boolean) as any
               }
             />
