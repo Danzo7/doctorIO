@@ -1,3 +1,4 @@
+import { CustomElement } from '@libs/slate_editor/slate.types';
 import { Member } from './server.models';
 
 interface BookedAppointment {
@@ -28,6 +29,11 @@ export interface BloodType {
   group: 'A' | 'B' | 'AB' | 'O';
   rh: boolean;
 }
+export interface MedicalCertificate {
+  id: string;
+  title: string;
+  description: CustomElement[];
+}
 interface Patient {
   firstName: string;
   lastName: string;
@@ -47,7 +53,8 @@ interface PatientBrief {
 
 interface Session {
   prescription?: Drug[];
-  diagnosis?: string;
+  diagnosis?: string; //Todo remove this
+  certificates?: MedicalCertificate[];
   //here we can add more types for a session(example a file or scanner)
 }
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -60,7 +67,6 @@ interface Appointment_v2 {
   bookedIn: Date;
   date?: Date;
   session?: Session;
-  diagnosis?: string; //TODO remove this field
   state: {
     phase: 'done' | 'missed' | 'upcoming' | 'opened' | 'canceled' | 'in queue';
     isBooked: boolean;
