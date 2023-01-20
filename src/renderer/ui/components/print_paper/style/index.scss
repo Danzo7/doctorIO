@@ -1,0 +1,6 @@
+@use '~styles/appColors' as *;
+.print-paper {
+    >div{
+        background-color: $white;
+    }
+}

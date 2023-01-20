@@ -18,7 +18,7 @@ import {
 import { format } from 'date-fns';
 import { SETTINGS } from '@stores/appSettingsStore';
 import { createEditor } from '@libs/slate_editor/createEditor';
-interface NoticeEditorProps {
+interface CertificateEditorProps {
   onChange?: (value: string) => void;
   mentions?: string[];
   defaultValue?: string;
@@ -35,11 +35,11 @@ export const withForceWhite = (editor: Editor) => {
   return editor;
 };
 
-export default function NoticeEditor({
+export default function CertificateEditor({
   onChange: onChanged,
   mentions = [],
   defaultValue,
-}: NoticeEditorProps) {
+}: CertificateEditorProps) {
   const editor = useMemo(
     () =>
       withForceWhite(
@@ -72,7 +72,7 @@ export default function NoticeEditor({
   );
 
   return (
-    <div className="notice-editor">
+    <div className="certificate-editor">
       <Slate
         editor={editor}
         value={
@@ -89,7 +89,6 @@ export default function NoticeEditor({
           onChanged?.(nodeToPlain(value));
         }}
       >
-        {/* <EditorToolbar /> */}
         <div className="editable-container">
           <Editable
             className="editor"
