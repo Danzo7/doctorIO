@@ -16,7 +16,7 @@ export default function MedicalSessionSideBar({
     <div className="medical-session-side-bar">
       <div className="medical-session-side-bar-content">
         {biometricScreening && (
-          <PreviewInfo title="Diagnosis" data={biometricScreening} />
+          <PreviewInfo title="Vitals" data={biometricScreening} />
         )}
 
         <MedicalHistory patientId={patientId} />
