@@ -61,12 +61,12 @@ export type CustomElement =
           | TextElement
           | ComponentElement
           | ImageElement
-          | DynamicContentElement
           | AttributeElement
         ))
       | TableElement
       | TableRowElement
       | TableCellElement
+      | DynamicContentElement
     ) &
       ElementCommons;
 export const TEXT_FORMAT_TYPES = [

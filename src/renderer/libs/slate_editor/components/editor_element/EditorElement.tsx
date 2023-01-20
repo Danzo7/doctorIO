@@ -52,7 +52,8 @@ export default function EditorElement({
     case 'td':
       return (
         <td
-          colSpan={1}
+          colSpan={element.colspan}
+          rowSpan={element.rowspan}
           css={{ ...style, position: 'relative' }}
           {...attributes}
           valign="top"
@@ -96,12 +97,31 @@ export default function EditorElement({
     case 'nl':
       return (
         <ol css={{ ...style, listStyleType: 'decimal' }} {...attributes}>
-          {children}
+          {children?.map((child: any, index: number) => (
+            <li
+              css={{
+                listStyleType: 'decimal',
+                color: element.children[index]?.color ?? color.coldBlack,
+              }}
+              key={index}
+            >
+              {child}
+            </li>
+          ))}
         </ol>
       );
     case 'dynamic':
-      return (
-        <DynamicElement {...{ element, attributes }}>{children}</DynamicElement>
+      return element.replace ? (
+        <div
+          css={{ ...style, height: element.height, border: '1px solid black' }}
+          {...attributes}
+        >
+          {children}
+        </div>
+      ) : (
+        <DynamicElement {...{ element, attributes, editor }}>
+          {children}
+        </DynamicElement>
       );
     case 'autofill':
       return (
