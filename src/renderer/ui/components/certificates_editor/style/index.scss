@@ -11,7 +11,7 @@
     position: relative;
     align-items: stretch;
     align-self: stretch;
-    border-radius: 10px;
+
     &:focus-within{
         @include idle;
         border: 1px solid $hotpurple;
