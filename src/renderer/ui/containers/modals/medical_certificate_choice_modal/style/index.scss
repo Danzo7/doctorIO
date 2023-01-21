@@ -1,0 +1,13 @@
+@use '~styles/appColors' as *;
+.medical-certificate-choice-modal {
+
+    .medical-certificate-choice-options {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0px;
+        gap: 15px;
+        align-self: stretch;
+    }
+}
