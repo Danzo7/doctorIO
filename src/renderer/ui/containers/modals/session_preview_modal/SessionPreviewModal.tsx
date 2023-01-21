@@ -4,7 +4,7 @@ import ModalContainer from '@components/modal_container';
 import PrintedLayout from '@components/printed_layout';
 import AppointmentDetailPreview from '@components/appointment_detail_preview';
 import TabComponent from '@components/tab_component';
-import { TimeLineDiagnosis } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
+import { CertificatesView } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
 import { useGetAppointmentDetailQuery } from '@redux/instance/Appointment/AppointmentApi';
 import { modal } from '@stores/overlayStore';
@@ -76,19 +76,13 @@ export default function SessionPreviewModal({
                     ),
                   },
                   data.session.diagnosis && {
-                    //TODO remove this
                     label: 'Certificates',
                     content: (
-                      <TimeLineDiagnosis diagnosis={data.session.diagnosis} />
+                      <CertificatesView
+                        certificates={data.session.certificates}
+                      />
                     ),
                   },
-                  //TODo show this instead
-                  // data.session.certificates && {
-                  //   label: 'Certificates',
-                  //   content: (
-                  //     <TimeLineDiagnosis diagnosis={data.session.diagnosis} />
-                  //   ),
-                  // },
                 ].filter(Boolean) as any
               }
             />
