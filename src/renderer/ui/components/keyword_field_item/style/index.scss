@@ -4,9 +4,17 @@
     flex-direction: row;
     align-items: center;
     padding: 5px 10px;
-    justify-content: space-between;
+
     border: 1px solid $silvergray;
     border-radius: 7px;
+    height: fit-content;
+
+    > span {
+        font-weight: 400;
+        font-size: 15px;
+        color: $textgray;
+        //TODO add text overflow
+    }
 
     > .keywords-info-div {
         display: flex;
@@ -19,6 +27,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        gap: 2px;
     }
 }

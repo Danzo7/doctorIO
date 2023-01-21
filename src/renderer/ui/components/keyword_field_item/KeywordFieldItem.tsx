@@ -1,53 +1,58 @@
-import TextPair from '@components/text_pair/TextPair';
 import './style/index.scss';
-import { color } from '@assets/styles/color';
 import TrashCan from 'toSvg/trash_can.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import Edit from 'toSvg/pencil.svg?icon';
+import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 interface KeywordFieldItemProps {
   onEdit?: () => void;
+  onDelete?: () => void;
+  id: number;
   name: string;
+  mode: 'edit' | 'view';
+  gap?: number;
 }
 export default function KeywordFieldItem({
   name,
   onEdit,
+  onDelete,
+  mode,
+  gap,
+  id,
 }: KeywordFieldItemProps) {
   return (
-    <div className="keyword-field-item">
-      <div className="keywords-info-div">
-        <TextPair
-          flexDirection="row"
-          alignItems="center"
-          first={{
-            text: 'Name:',
-            fontSize: 14,
-            fontWeight: 400,
-            fontColor: color.text_gray,
-          }}
-          second={{
-            text: `/${name}`,
-            fontSize: 15,
-            fontWeight: 500,
-            fontColor: color.white,
-            border: true,
-          }}
-        />
-      </div>
+    <div
+      className="keyword-field-item"
+      css={{ gap: gap, justifyContent: gap ? undefined : 'space-between' }}
+    >
+      <span>{name}</span>
       <div className="keyword-controls">
-        <SquareIconButton
-          // disabled={res.isLoading}
-          Icon={Edit}
-          iconSize={10}
-          tip="Edit"
-          onPress={onEdit}
-        />
-        <SquareIconButton
-          // disabled={res.isLoading}
-          Icon={TrashCan}
-          iconSize={15}
-          tip="Delete field"
-          onPress={() => {}}
-        />
+        {mode == 'edit' ? (
+          <>
+            <SquareIconButton
+              // disabled={res.isLoading}
+              Icon={Edit}
+              iconSize={10}
+              tip="Edit"
+              onPress={onEdit}
+            />
+            <SquareIconButton
+              // disabled={res.isLoading}
+              Icon={TrashCan}
+              iconSize={15}
+              tip="Delete field"
+              onPress={onDelete}
+            />
+          </>
+        ) : (
+          <SquareIconButton
+            Icon={AppointmentHistoryIcon}
+            iconSize={10}
+            tip="View"
+            onPress={() => {
+              //TODO show certificate content
+            }}
+          />
+        )}
       </div>
     </div>
   );
