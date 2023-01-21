@@ -12,6 +12,7 @@ interface ModalContainerProps {
   controls?: ReactNode;
   children?: ReactNode;
   gap?: number;
+  controlsPosition?: 'center' | 'end';
 }
 const Form = (
   props: ClassAttributes<HTMLFormElement> &
@@ -34,6 +35,7 @@ export default function ModalContainer({
   gap = 20,
   isLoading,
   className = '',
+  controlsPosition = 'center',
 }: ModalContainerProps) {
   const Container = onSubmit ? Form : Div;
 
@@ -49,7 +51,17 @@ export default function ModalContainer({
         <>
           <Header title={title} padding={0} />
           <div className="modal-body">{children}</div>
-          {controls && <div className="control">{controls}</div>}
+          {controls && (
+            <div
+              className={
+                controlsPosition == 'center'
+                  ? 'controls-center'
+                  : 'controls-end'
+              }
+            >
+              {controls}
+            </div>
+          )}
         </>
       )}
     </Container>
