@@ -1,0 +1,27 @@
+@use '~styles/appColors' as *;
+.print-selection-modal {
+
+    .print-selection-controls {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .print-selection-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+
+        > .print-certifications-options {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 0px 5px;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+    }
+}
