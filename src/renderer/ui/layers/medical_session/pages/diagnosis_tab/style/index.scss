@@ -1,21 +1,8 @@
 @use '~styles/appColors' as *;
-.notice-tab {
+.certificates-view-tab {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    flex-grow: 1;
-    align-self: stretch;
-    position: relative;
-
-    > .save-btn-wrapper {
-        position: absolute;
-        right: 10px;
-        bottom: 10px;
-    }
-
-    > .span-wrapper {
-        border: 2px solid $bordercolor;
-        border-radius: 7px;
-        padding: 10px;
-    }
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+    max-width: 550px;
 }
