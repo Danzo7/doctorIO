@@ -16,7 +16,6 @@ import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 import { useNavigate } from 'react-router-dom';
 import PatientSmallCard from './components/patient_small_card';
 import MedicalSessionSideBar from './medical_session_side_bar';
-import DiagnosisTab from './pages/diagnosis_tab';
 import PrescriptionTab from './pages/prescription_tab';
 import SessionParameter from './pages/session_parameter';
 import './style/index.scss';
@@ -24,6 +23,7 @@ import { useRef } from 'react';
 import TabComponent from '@components/tab_component';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 import { modal, Overlay_u } from '@stores/overlayStore';
+import CertificatesTab from './pages/cetificates_tab';
 
 interface MedicalSessionProps {}
 
@@ -97,24 +97,11 @@ export default function MedicalSession({}: MedicalSessionProps) {
               flexGrow={0}
               foldedItems={[
                 { label: 'Prescription', content: <PrescriptionTab /> },
-                //TODO remove this
+
                 {
                   label: 'Certificates',
-                  content: (
-                    <DiagnosisTab
-                      mentions={[data.firstName + ' ' + data.lastName]}
-                    />
-                  ),
+                  content: <CertificatesTab />,
                 },
-                //Todo Show this intead
-                // {
-                //   label: 'Notice',
-                //   content: (
-                //     <DiagnosisTab
-                //       mentions={[data.firstName + ' ' + data.lastName]}
-                //     />
-                //   ),
-                // },
               ]}
               items={[]}
             />
