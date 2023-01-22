@@ -24,14 +24,7 @@ export default function MainLayer({}: MainLayerProps) {
   ) : status == 'connected' ? (
     <Routes>
       <Route path="session" element={<MedicalSession />} />
-      <Route
-        path="templateEditor"
-        element={
-          <TemplateEditor
-            initialValue={[{ type: 'p', children: [{ text: '' }] }]}
-          />
-        }
-      />
+      <Route path="templateEditor" element={<TemplateEditor />} />
       <Route path="*" element={<AppLayout />} />
     </Routes>
   ) : (
