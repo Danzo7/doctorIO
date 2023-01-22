@@ -5,17 +5,12 @@
     align-items: stretch;
     flex-grow: 1;
     align-self: stretch;
-    position: relative;
+    gap: 15px;
 
-    > .save-btn-wrapper {
-        position: absolute;
-        right: 10px;
-        bottom: 10px;
-    }
-
-    > .span-wrapper {
-        border: 2px solid $bordercolor;
-        border-radius: 7px;
-        padding: 10px;
+    > .certificates-elements{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 }
