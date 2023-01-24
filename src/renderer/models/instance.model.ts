@@ -1,5 +1,5 @@
-import { CustomElement } from '@libs/slate_editor/slate.types';
 import { Member } from './server.models';
+import { Descendant } from 'slate';
 
 interface BookedAppointment {
   id: number;
@@ -32,7 +32,7 @@ export interface BloodType {
 export interface MedicalCertificate {
   id: string;
   title: string;
-  description: CustomElement[];
+  description: Descendant[];
 }
 interface Patient {
   firstName: string;
@@ -61,7 +61,7 @@ interface Session {
 interface Appointment_v2 {
   assignedBy: Pick<Member, 'id' | 'avatar' | 'name'>;
   member?: Pick<Member, 'id' | 'avatar' | 'name'>;
-  subject: string;
+  subject?: string;
   bookedFor?: Date;
   queue?: { id: number; name: string };
   bookedIn: Date;
