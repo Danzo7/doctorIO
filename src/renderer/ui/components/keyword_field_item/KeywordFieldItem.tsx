@@ -4,20 +4,19 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import Edit from 'toSvg/pencil.svg?icon';
 import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 interface KeywordFieldItemProps {
+  name: string;
+
   onEdit?: () => void;
   onDelete?: () => void;
-  id: number;
-  name: string;
-  mode: 'edit' | 'view';
+  onView?: () => void;
   gap?: number;
 }
 export default function KeywordFieldItem({
   name,
   onEdit,
   onDelete,
-  mode,
+  onView,
   gap,
-  id,
 }: KeywordFieldItemProps) {
   return (
     <div
@@ -26,31 +25,31 @@ export default function KeywordFieldItem({
     >
       <span>{name}</span>
       <div className="keyword-controls">
-        {mode == 'edit' ? (
-          <>
-            <SquareIconButton
-              // disabled={res.isLoading}
-              Icon={Edit}
-              iconSize={10}
-              tip="Edit"
-              onPress={onEdit}
-            />
-            <SquareIconButton
-              // disabled={res.isLoading}
-              Icon={TrashCan}
-              iconSize={15}
-              tip="Delete field"
-              onPress={onDelete}
-            />
-          </>
-        ) : (
+        {onEdit && (
+          <SquareIconButton
+            // disabled={res.isLoading}
+            Icon={Edit}
+            iconSize={10}
+            tip="Edit"
+            onPress={onEdit}
+          />
+        )}
+        {onDelete && (
+          <SquareIconButton
+            // disabled={res.isLoading}
+            Icon={TrashCan}
+            iconSize={15}
+            tip="Delete field"
+            onPress={onDelete}
+          />
+        )}
+
+        {onView && (
           <SquareIconButton
             Icon={AppointmentHistoryIcon}
             iconSize={10}
             tip="View"
-            onPress={() => {
-              //TODO show certificate content
-            }}
+            onPress={onView}
           />
         )}
       </div>
