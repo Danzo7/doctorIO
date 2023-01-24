@@ -4,11 +4,11 @@ import ModalContainer from '@components/modal_container';
 import PrintedLayout from '@components/printed_layout';
 import AppointmentDetailPreview from '@components/appointment_detail_preview';
 import TabComponent from '@components/tab_component';
-import { CertificatesView } from '@layers/medical_session/pages/diagnosis_tab/DiagnosisTab';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
 import { useGetAppointmentDetailQuery } from '@redux/instance/Appointment/AppointmentApi';
 import { modal } from '@stores/overlayStore';
 import './style/index.scss';
+import { CertificatesView } from '@layers/medical_session/pages/cetificates_tab/CertificatesTab';
 
 interface SessionPreviewModalProps {
   id: number;
@@ -75,7 +75,7 @@ export default function SessionPreviewModal({
                       <MedicamentTable drugList={data.session.prescription} />
                     ),
                   },
-                  data.session.diagnosis && {
+                  data.session.certificates && {
                     label: 'Certificates',
                     content: (
                       <CertificatesView

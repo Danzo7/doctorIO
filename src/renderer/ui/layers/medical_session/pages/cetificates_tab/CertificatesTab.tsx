@@ -1,18 +1,21 @@
 import './style/index.scss';
 import Header from '@components/header';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import { useMedicalSessionStore } from '@stores/medicalSessionStore';
+import {
+  useCertificates,
+  useMedicalSessionStore,
+} from '@stores/medicalSessionStore';
 import KeywordFieldItem from '@components/keyword_field_item';
 import VerticalPanel from '@components/vertical_panel';
-import { modal } from '@stores/overlayStore';
+import { modal, Overlay_u } from '@stores/overlayStore';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import MedicalCertificateChoiceModal from '@containers/modals/medical_certificate_choice_modal';
+import CertificateEditorModal from '@containers/modals/certificate_editor_modal';
+import { MedicalCertificate } from '@models/instance.model';
 
-interface CertificatesTabProps {
-  mentions?: string[];
-}
-export default function CertificatesTab({ mentions }: CertificatesTabProps) {
-  const session = useMedicalSessionStore((state) => state.session);
+interface CertificatesTabProps {}
+export default function CertificatesTab({}: CertificatesTabProps) {
+  const certificates = useCertificates();
   return (
     <div className="certificates-tab">
       <Header
@@ -27,25 +30,23 @@ export default function CertificatesTab({ mentions }: CertificatesTabProps) {
         }
       />
       <div className="certificates-elements">
-        {session.certificates.length > 0 ? (
-          session.certificates.map((certificate, index) => (
+        {certificates.length > 0 ? (
+          certificates.map((certificate, index) => (
             <KeywordFieldItem
-              id={Number(certificate.id)}
               name={certificate.title}
-              mode="edit"
               gap={5}
               key={index}
               onEdit={() => {
-                //TODO fix description type
-                // modal(
-                //   <CertificateEditorModal
-                //     defaultValues={{
-                //       title: certificate.title,
-                //       certificate: certificate.description,
-                //     }}
-                //   />,
-                //   DEFAULT_MODAL,
-                // ).open();
+                modal(
+                  <CertificateEditorModal defaultValue={certificate} />,
+                  DEFAULT_MODAL,
+                  'certificateModal',
+                ).open();
+              }}
+              onDelete={() => {
+                useMedicalSessionStore
+                  .getState()
+                  .removeCertificate(certificate.id);
               }}
             />
           ))
@@ -58,13 +59,90 @@ export default function CertificatesTab({ mentions }: CertificatesTabProps) {
             description="Please add a certificate. "
             action={{
               text: 'add certificate',
-              onClick: () => {
-                modal(<MedicalCertificateChoiceModal />, DEFAULT_MODAL).open();
+              onClick: (e) => {
+                Overlay_u.openTooltip(
+                  () => [
+                    {
+                      text: 'Create new one',
+                      onPress: () => {
+                        modal(
+                          () => <CertificateEditorModal />,
+                          {
+                            closeOnClickOutside: true,
+                            closeOnBlur: false,
+                            isDimmed: true,
+                            clickThrough: false,
+                            width: '50%',
+                          },
+                          'certificateModal',
+                        ).open();
+                      },
+                    },
+                    {
+                      text: 'Use a template',
+                      onPress: () => {
+                        modal(
+                          () => <CertificateEditorModal />,
+                          {
+                            closeOnClickOutside: true,
+                            closeOnBlur: false,
+                            isDimmed: true,
+                            clickThrough: false,
+
+                            width: '50%',
+                          },
+                          'certificateModal',
+                        ).open();
+                      },
+                    },
+                  ],
+                  e.currentTarget,
+                  true,
+                );
               },
             }}
           />
         )}
       </div>
+    </div>
+  );
+}
+export function CertificatesView({
+  certificates,
+}: {
+  certificates: MedicalCertificate[];
+}) {
+  return (
+    <div className="certificates-view-tab">
+      {certificates && certificates.length > 0 ? (
+        certificates.map((certificate, index) => (
+          <KeywordFieldItem
+            key={index}
+            name={certificate.title}
+            onView={() =>
+              modal(
+                () => (
+                  <CertificateEditorModal readonly defaultValue={certificate} />
+                ),
+                {
+                  closeOnClickOutside: true,
+                  closeOnBlur: false,
+                  isDimmed: true,
+                  clickThrough: false,
+
+                  width: '50%',
+                },
+                'certificateModal',
+              ).open()
+            }
+          />
+        ))
+      ) : (
+        <VerticalPanel
+          title="No certifications given"
+          description="this patient does not have any certificate. "
+        />
+      )}
     </div>
   );
 }

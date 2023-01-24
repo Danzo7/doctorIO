@@ -88,10 +88,6 @@ export default function MedicalSession({}: MedicalSessionProps) {
                 />
               }
             />
-            {/* <TabMenu items={['prescription', 'notice']}>
-              <PrescriptionTab />
-              <DiagnosisTab />
-            </TabMenu> */}
             <TabComponent
               showVerticalPanel
               flexGrow={0}

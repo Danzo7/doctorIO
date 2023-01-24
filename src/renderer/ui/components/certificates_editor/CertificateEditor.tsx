@@ -2,7 +2,7 @@ import EditorElement from '@libs/slate_editor/components/editor_element';
 import EditorLeaf from '@libs/slate_editor/components/editor_leaf';
 import { withSuggestion } from '@libs/slate_editor/slate-suggestion/withSuggest';
 import { useMemo, useCallback } from 'react';
-import { Editor, Transforms } from 'slate';
+import { Descendant, Editor, Transforms } from 'slate';
 import {
   RenderLeafProps,
   RenderElementProps,
@@ -11,17 +11,16 @@ import {
 } from 'slate-react';
 import './style/index.scss';
 import { color } from '@assets/styles/color';
-import {
-  nodeToPlain,
-  painToDescendants,
-} from '@libs/slate_editor/serializers/nodeToPlain';
 import { format } from 'date-fns';
 import { SETTINGS } from '@stores/appSettingsStore';
 import { createEditor } from '@libs/slate_editor/createEditor';
+import { CommonEditor } from '@libs/slate_editor/commons/CommonEditor';
 interface CertificateEditorProps {
-  onChange?: (value: string) => void;
+  onChange?: (value: Descendant[]) => void;
   mentions?: string[];
-  defaultValue?: string;
+  defaultValue?: Descendant[];
+  error?: string;
+  readonly?: boolean;
 }
 export const withForceWhite = (editor: Editor) => {
   const { normalizeNode } = editor;
@@ -38,7 +37,9 @@ export const withForceWhite = (editor: Editor) => {
 export default function CertificateEditor({
   onChange: onChanged,
   mentions = [],
+  error,
   defaultValue,
+  readonly,
 }: CertificateEditorProps) {
   const editor = useMemo(
     () =>
@@ -72,12 +73,12 @@ export default function CertificateEditor({
   );
 
   return (
-    <div className="certificate-editor">
+    <div className={`certificate-editor ${error ? 'error' : ''}`}>
       <Slate
         editor={editor}
         value={
-          defaultValue
-            ? painToDescendants(defaultValue, { color: color.white })
+          defaultValue && CommonEditor.isValidDesendants(defaultValue)
+            ? defaultValue
             : [
                 {
                   type: 'p',
@@ -86,7 +87,7 @@ export default function CertificateEditor({
               ]
         }
         onChange={(value) => {
-          onChanged?.(nodeToPlain(value));
+          onChanged?.(value);
         }}
       >
         <div className="editable-container">
@@ -96,9 +97,20 @@ export default function CertificateEditor({
             renderLeaf={renderLeaf}
             renderElement={renderElement}
             autoFocus
+            readOnly={readonly}
           />
         </div>
       </Slate>
+      {error && (
+        <div className="error-message">
+          <span>
+            {error ??
+            (defaultValue && !CommonEditor.isValidDesendants(defaultValue))
+              ? 'Youuu'
+              : ''}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

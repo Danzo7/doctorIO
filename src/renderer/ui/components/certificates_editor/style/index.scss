@@ -16,6 +16,9 @@
         @include idle;
         border: 1px solid $hotpurple;
     }
+    &.error{
+        @include bad;
+    }
 
     >.editable-container{
         height: 100%;
@@ -33,5 +36,17 @@
             flex-direction: column;
             flex-grow: 1;
         }
+    }
+    >.error-message{
+        position: absolute;
+        display: flex;
+        align-self: flex-start  ;
+        border-radius: 5px;
+        bottom: 5px;
+        left: 5px;
+        padding: 5px;
+        background-color: $coldred;
+        color: $white;
+        font-size: 14px;
     }
 }
