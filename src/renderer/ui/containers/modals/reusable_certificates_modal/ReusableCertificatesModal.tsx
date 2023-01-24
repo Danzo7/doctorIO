@@ -57,12 +57,7 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
           <div className="fields-edit-content">
             <div className="fields-edit-items">
               {keywordFields.map((field, index) => (
-                <KeywordFieldItem
-                  id={Number(field.id)}
-                  key={index}
-                  name={field.name}
-                  mode="edit"
-                />
+                <KeywordFieldItem key={index} name={field.name} />
               ))}
             </div>
 
