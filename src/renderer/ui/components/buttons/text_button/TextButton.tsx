@@ -22,8 +22,7 @@ export type IconType =
   | FunctionComponent<SVGProps<SVGSVGElement>>
   | IconProps
   | ReactNode;
-interface TextButtonProps
-  extends Partial<Omit<HTMLButtonElement, 'disabled' | 'type' | 'children'>> {
+interface TextButtonProps {
   className?: string;
   text?: string;
   Icon?: IconType;
