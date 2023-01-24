@@ -59,7 +59,6 @@ export const useMedicalSessionStore = create<MedicalSessionStore>()(
         const targetedIndex = state.session.certificates.findIndex(
           ({ id: cId }) => id === cId,
         );
-
         state.session.certificates[targetedIndex] = {
           id: state.session.certificates[targetedIndex].id,
           ...certificate,
@@ -81,10 +80,15 @@ export const useMedicalSessionStore = create<MedicalSessionStore>()(
         state.sessionParameter = { ...state.sessionParameter, ...props };
       }),
     clear: () =>
-      set(() => ({ sessionParameter: {}, session: { prescription: [] } })),
+      set(() => ({
+        sessionParameter: {},
+        session: { diagnosis: '', prescription: [], certificates: [] },
+      })),
   })),
 );
 export const usePrescription = () =>
   useMedicalSessionStore((state) => state.session.prescription);
 export const useDiagnosis = () =>
   useMedicalSessionStore((state) => state.session.diagnosis);
+export const useCertificates = () =>
+  useMedicalSessionStore((state) => state.session.certificates);
