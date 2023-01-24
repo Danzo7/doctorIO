@@ -11,5 +11,7 @@ export { isTextNode } from './isTextNode';
 export { isSelectionValid } from './isSelectionValid';
 export { getFontSize } from './getFontSize';
 export { saveSelection } from './saveSelection';
-export { isNodeEmpty } from './isNodeEmpty';
+export { isNodeEmpty, isElementEmpty } from './isNodeEmpty';
 export { insertEmpty } from './insertEmpty';
+export { isEmpty, isEmptyElements } from './isEmpty';
+export { isValidDesendants } from './isValidDesendants';
