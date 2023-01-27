@@ -3,8 +3,8 @@ import './style/index.scss';
 import { ReactEditor, RenderElementProps } from 'slate-react';
 import BoltIcon from 'toSvg/bolt.svg?icon';
 import LineArrow from 'toSvg/arrow.svg?icon';
-import { pxToCm } from '@helpers/math.helper';
 import { Editor, Transforms } from 'slate';
+import { pxToCm } from '@helpers/math.helper';
 interface DynamicElementProps {
   children: ReactNode;
   editor: Editor;
@@ -22,14 +22,14 @@ export default function DynamicElement({
     const resizeObserver = new ResizeObserver((entries) => {
       Transforms.setNodes(
         editor,
-        { height: entries[0].contentRect.height },
+        { height: entries[0].borderBoxSize[0].blockSize },
         {
           hanging: true,
           at: ReactEditor.findPath(editor, element),
           mode: 'all',
         },
       );
-      return setHeight(entries[0].contentRect.height);
+      return setHeight(entries[0].borderBoxSize[0].blockSize);
     });
     resizeObserver.observe(ref.current);
 
@@ -50,7 +50,7 @@ export default function DynamicElement({
       contentEditable={false}
     >
       <div className="height-ruler">
-        <span>{pxToCm(height) + 'cm'}</span>
+        <span>{pxToCm(height) + 'px'}</span>
         <div className="ruler-line">
           <LineArrow />
           <div className="line" /> <LineArrow />
