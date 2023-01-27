@@ -7,7 +7,6 @@ export const isValidDesendants = (desendants: Descendant[]) => {
   }
   for (const el of traverseElements(desendants as Element[])) {
     if (!('text' in el || 'type' in el)) {
-      console.log(el);
       return false;
     }
   }
