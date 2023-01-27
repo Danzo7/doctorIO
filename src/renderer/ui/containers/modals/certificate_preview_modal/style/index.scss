@@ -1,0 +1,29 @@
+@use '~styles/appColors' as *;
+.certificate-preview-modal {
+
+    .certificate-preview-controls {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+
+    .certificate-preview-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        > .certificate-preview-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            > span {
+                color: $white;
+                font-weight: 500;
+                font-size: 16px;
+            }
+        }
+    }
+}

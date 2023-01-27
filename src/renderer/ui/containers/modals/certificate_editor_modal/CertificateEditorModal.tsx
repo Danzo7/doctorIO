@@ -18,7 +18,6 @@ type Inputs = { title: string };
 interface CertificateEditorModalProps {
   mentions?: string[];
   defaultValue?: MedicalCertificate;
-  readonly?: boolean;
 }
 const schema = z.object({
   title: z.string().min(8).max(100),
@@ -27,7 +26,6 @@ const schema = z.object({
 export default function CertificateEditorModal({
   mentions,
   defaultValue,
-  readonly,
 }: CertificateEditorModalProps) {
   const { control, handleSubmit } = useForm<Inputs>({
     defaultValues: {
@@ -42,39 +40,37 @@ export default function CertificateEditorModal({
     <div className="certificate-editor-modal">
       <ModalContainer
         title="Medical certificate"
-        {...(!readonly
-          ? {
-              onSubmit: handleSubmit((data) => {
-                if (!editorControllerRef.current) {
-                  return;
-                }
-                if (defaultValue)
-                  useMedicalSessionStore
-                    .getState()
-                    .updateCertificate(defaultValue.id, {
-                      title: data.title,
-                      description: editorControllerRef.current,
-                    });
-                else
-                  useMedicalSessionStore.getState().addCertificate({
-                    title: data.title,
-                    description: editorControllerRef.current,
-                  });
-                Overlay_u.close('certificateModal');
-              }),
-              controls: (
-                <div className="certificate-editor-controls">
-                  <TextButton
-                    text="Save"
-                    backgroundColor={color.good_green}
-                    fontSize={14}
-                    blank
-                    type="submit"
-                  />
-                </div>
-              ),
+        {...{
+          onSubmit: handleSubmit((data) => {
+            if (!editorControllerRef.current) {
+              return;
             }
-          : {})}
+            if (defaultValue)
+              useMedicalSessionStore
+                .getState()
+                .updateCertificate(defaultValue.id, {
+                  title: data.title,
+                  description: editorControllerRef.current,
+                });
+            else
+              useMedicalSessionStore.getState().addCertificate({
+                title: data.title,
+                description: editorControllerRef.current,
+              });
+            Overlay_u.close('certificateModal');
+          }),
+          controls: (
+            <div className="certificate-editor-controls">
+              <TextButton
+                text="Save"
+                backgroundColor={color.good_green}
+                fontSize={14}
+                blank
+                type="submit"
+              />
+            </div>
+          ),
+        }}
       >
         <div className="certificate-editor-inputs">
           {
@@ -87,7 +83,6 @@ export default function CertificateEditorModal({
               mentions={mentions}
               defaultValue={defaultValue?.description}
               error={error}
-              readonly={readonly}
               onChange={(value) => {
                 if (CommonEditor.isEmptyElements(value)) {
                   editorControllerRef.current = undefined;
