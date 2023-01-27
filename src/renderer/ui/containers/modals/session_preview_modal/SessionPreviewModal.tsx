@@ -1,66 +1,28 @@
-import { color } from '@assets/styles/color';
-import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
-import PrintedLayout from '@components/printed_layout';
 import AppointmentDetailPreview from '@components/appointment_detail_preview';
 import TabComponent from '@components/tab_component';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
 import { useGetAppointmentDetailQuery } from '@redux/instance/Appointment/AppointmentApi';
-import { modal } from '@stores/overlayStore';
 import './style/index.scss';
 import { CertificatesView } from '@layers/medical_session/pages/cetificates_tab/CertificatesTab';
+import { Patient } from '@models/instance.model';
+import TextButton from '@components/buttons/text_button';
+import { modal } from '@stores/overlayStore';
+import { prescriptionToMedicalCertificate } from '@libs/slate_editor/helper';
+import PrintPaper from '@components/print_paper';
+import { DEFAULT_MODAL } from '@libs/overlay';
 
 interface SessionPreviewModalProps {
   id: number;
-  patientName?: string;
-  patientAge?: number;
+  patient: Patient;
 }
 export default function SessionPreviewModal({
   id,
-  patientAge,
-  patientName,
+  patient,
 }: SessionPreviewModalProps) {
   const { data, isFetching } = useGetAppointmentDetailQuery(id);
   return (
-    <ModalContainer
-      isLoading={isFetching}
-      gap={15}
-      title="Session preview"
-      controls={
-        data &&
-        patientAge != undefined &&
-        patientName &&
-        data.session?.prescription && (
-          <TextButton
-            text="Print..."
-            backgroundColor={color.good_green}
-            padding="5px 10px"
-            fontSize={14}
-            fontWeight={700}
-            borderColor={color.border_color}
-            onPress={() =>
-              modal(
-                () => (
-                  <PrintedLayout
-                    patientName={patientName}
-                    patientAge={patientAge}
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    drugList={data.session!.prescription!}
-                    doctorName={data.member?.name ?? 'Unknown'}
-                  />
-                ),
-                {
-                  closeOnClickOutside: true,
-                  closeOnBlur: true,
-                  isDimmed: true,
-                  clickThrough: false,
-                },
-              ).open()
-            }
-          />
-        )
-      }
-    >
+    <ModalContainer isLoading={isFetching} gap={15} title="Session preview">
       {data && (
         <div className="tab-menu-container">
           <AppointmentDetailPreview {...data} />
@@ -72,17 +34,40 @@ export default function SessionPreviewModal({
                   data.session.prescription && {
                     label: 'Prescription',
                     content: (
-                      <MedicamentTable drugList={data.session.prescription} />
+                      <>
+                        <MedicamentTable drugList={data.session.prescription} />
+                        <TextButton
+                          onPress={() => {
+                            if (data?.session?.prescription)
+                              modal(
+                                <PrintPaper
+                                  content={prescriptionToMedicalCertificate(
+                                    data.session.prescription,
+                                  )}
+                                  patient={patient}
+                                />,
+                                DEFAULT_MODAL,
+                              ).open();
+                          }}
+                        >
+                          Print
+                        </TextButton>
+                        {
+                          //TODO: remove print from here and add it to preview
+                        }
+                      </>
                     ),
                   },
-                  data.session.certificates && {
-                    label: 'Certificates',
-                    content: (
-                      <CertificatesView
-                        certificates={data.session.certificates}
-                      />
-                    ),
-                  },
+                  data.session.certificates &&
+                    data.session.certificates.length && {
+                      label: 'Certificates',
+                      content: (
+                        <CertificatesView
+                          certificates={data.session.certificates}
+                          patient={patient}
+                        />
+                      ),
+                    },
                 ].filter(Boolean) as any
               }
             />
