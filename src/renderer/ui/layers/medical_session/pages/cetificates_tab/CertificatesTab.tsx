@@ -11,7 +11,8 @@ import { modal, Overlay_u } from '@stores/overlayStore';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import MedicalCertificateChoiceModal from '@containers/modals/medical_certificate_choice_modal';
 import CertificateEditorModal from '@containers/modals/certificate_editor_modal';
-import { MedicalCertificate } from '@models/instance.model';
+import { MedicalCertificate, Patient } from '@models/instance.model';
+import CertificatePreviewModal from '@containers/modals/certificate_preview_modal';
 
 interface CertificatesTabProps {}
 export default function CertificatesTab({}: CertificatesTabProps) {
@@ -109,40 +110,37 @@ export default function CertificatesTab({}: CertificatesTabProps) {
 }
 export function CertificatesView({
   certificates,
+  patient,
 }: {
   certificates: MedicalCertificate[];
+  patient: Patient;
 }) {
   return (
     <div className="certificates-view-tab">
-      {certificates && certificates.length > 0 ? (
-        certificates.map((certificate, index) => (
-          <KeywordFieldItem
-            key={index}
-            name={certificate.title}
-            onView={() =>
-              modal(
-                () => (
-                  <CertificateEditorModal readonly defaultValue={certificate} />
-                ),
-                {
-                  closeOnClickOutside: true,
-                  closeOnBlur: false,
-                  isDimmed: true,
-                  clickThrough: false,
-
-                  width: '50%',
-                },
-                'certificateModal',
-              ).open()
-            }
-          />
-        ))
-      ) : (
-        <VerticalPanel
-          title="No certifications given"
-          description="this patient does not have any certificate. "
+      {certificates.map((certificate, index) => (
+        <KeywordFieldItem
+          key={index}
+          name={certificate.title}
+          onView={() =>
+            modal(
+              () => (
+                <CertificatePreviewModal
+                  defaultValue={certificate}
+                  patient={patient}
+                />
+              ),
+              {
+                closeOnClickOutside: true,
+                closeOnBlur: false,
+                isDimmed: true,
+                clickThrough: false,
+                width: '50%',
+              },
+              'certificateModal',
+            ).open()
+          }
         />
-      )}
+      ))}
     </div>
   );
 }
