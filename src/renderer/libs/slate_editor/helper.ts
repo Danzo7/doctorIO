@@ -5,6 +5,7 @@ import {
   FormattedText,
   TABLE_TYPES,
 } from './slate.types';
+import { Drug, MedicalCertificate } from '@models/instance.model';
 
 export const elementIsEmpty = (element: CustomElement) => {
   return (
@@ -26,4 +27,24 @@ export const enforceType = (
       at: childPath,
     });
   }
+};
+export const prescriptionToMedicalCertificate = (
+  prescriptions: Drug[],
+): MedicalCertificate => {
+  return {
+    title: 'Prescription list',
+    id: '-1',
+    description: [
+      {
+        type: 'nl',
+        children: prescriptions.map(
+          ({ name, dosage, qts, duration, description }) => ({
+            text: `${name} ${dosage} CP /JOUR qsp ${qts} JOURS ${
+              duration + ' '
+            }${description}`,
+          }),
+        ),
+      },
+    ],
+  };
 };
