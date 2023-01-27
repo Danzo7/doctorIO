@@ -35,7 +35,7 @@ export default function AttributeBlock({
   return (
     <NotAButton
       css={{
-        border: '2px solid ' + element?.color ?? color.warm_orange,
+        outline: '2px solid ' + element?.color ?? color.warm_orange,
       }}
       padding={2}
       radius={2}
