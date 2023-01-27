@@ -18,11 +18,23 @@ import { cmToPx } from '@helpers/math.helper';
 import EditorElement from '@libs/slate_editor/components/editor_element';
 import { mapElements } from '@libs/slate_editor/commons/core';
 import { useReactToPrint } from 'react-to-print';
-interface PrintPaperProps {}
+import {
+  Appointment,
+  MedicalCertificate,
+  Patient,
+} from '@models/instance.model';
+import { useClinicsStore } from '@stores/clinicsStore';
+import { format, isDate } from 'date-fns';
+import { SETTINGS } from '@stores/appSettingsStore';
+interface PrintPaperProps {
+  content: MedicalCertificate;
+  patient: Patient;
+  prescription?: Appointment;
+}
 const paperSize = { width: 14.8, height: 21 };
 const margins = { top: 1.27, bottom: 1.27, left: 1.27, right: 1.27 };
 
-export default function PrintPaper({}: PrintPaperProps) {
+export default function PrintPaper({ content, patient }: PrintPaperProps) {
   const editor = useMemo(
     () =>
       withImages(
@@ -53,6 +65,8 @@ export default function PrintPaper({}: PrintPaperProps) {
     }`,
     content: () => componentRef.current as HTMLDivElement,
   });
+  const clinicData = useClinicsStore.getState().getSelectedClinic();
+
   return (
     <div
       className="print-paper"
@@ -69,9 +83,26 @@ export default function PrintPaper({}: PrintPaperProps) {
               children: [text],
               reference,
             } = node;
+            let replacementString = 'un';
+            const [table, attr] = reference.split('.');
+            switch (table) {
+              case 'Patient':
+                replacementString =
+                  (patient as any)?.[attr]?.toString() ?? 'un';
+                break;
+              case 'Clinic':
+                replacementString =
+                  (clinicData as any)?.[attr]?.toString() ?? 'un';
+                break;
+              default:
+                break;
+            }
+            replacementString = isDate((patient as any)?.[attr])
+              ? format((patient as any)?.[attr], SETTINGS.dateFormat)
+              : replacementString;
             return {
               type: 'span',
-              children: [{ ...text, text: reference }],
+              children: [{ ...text, text: replacementString }],
               inline: true,
               void: false,
             };
@@ -86,95 +117,13 @@ export default function PrintPaper({}: PrintPaperProps) {
                   type: 'h1',
                   children: [
                     {
-                      text: 'Hello',
+                      text: content.title,
                       underline: true,
                     },
                   ],
                   align: 'center',
                 },
-                {
-                  type: 'nl',
-                  children: [
-                    {
-                      text: "{name} {dosage} CP /JOUR qsp {qts} JOURS {duration + ' '}{description}",
-                    },
-                    {
-                      text: "{name} {dosage} CP /JOUR qsp {qts} JOURS {duration + ' '}{description}",
-                    },
-                    {
-                      text: "{name} {dosage} CP /JOUR qsp {qts} JOURS {duration + ' '}{description}",
-                    },
-                  ],
-                },
-              ],
-            };
-          }
-
-          return node;
-        })}
-      >
-        <Editable
-          readOnly
-          css={{
-            width: cmToPx(paperSize.width),
-            height: cmToPx(paperSize.height),
-            maxHeight: cmToPx(paperSize.height),
-            padding: `${cmToPx(margins.top)}px ${cmToPx(
-              margins.right,
-            )}px ${cmToPx(margins.bottom)}px ${cmToPx(margins.left)}px`,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-          placeholder="Write something..."
-          renderLeaf={renderLeaf}
-          renderElement={renderElement}
-        />
-      </Slate>{' '}
-      <Slate
-        editor={editor}
-        value={mapElements(desendants, (node) => {
-          if (node.type == 'attribute') {
-            const {
-              children: [text],
-              reference,
-            } = node;
-            return {
-              type: 'span',
-              children: [{ ...text, text: reference }],
-              inline: true,
-              void: false,
-            };
-          }
-          if (node.type == 'dynamic') {
-            return {
-              ...node,
-              type: 'dynamic',
-              replace: true,
-              children: [
-                {
-                  type: 'h1',
-                  children: [
-                    {
-                      text: 'Hello',
-                      underline: true,
-                    },
-                  ],
-                  align: 'center',
-                },
-                {
-                  type: 'nl',
-                  children: [
-                    {
-                      text: "{name} {dosage} CP /JOUR qsp {qts} JOURS {duration + ' '}{description}",
-                    },
-                    {
-                      text: "{name} {dosage} CP /JOUR qsp {qts} JOURS {duration + ' '}{description}",
-                    },
-                    {
-                      text: "{name} {dosage} CP /JOUR qsp {qts} JOURS {duration + ' '}{description}",
-                    },
-                  ],
-                },
+                ...content.description,
               ],
             };
           }
