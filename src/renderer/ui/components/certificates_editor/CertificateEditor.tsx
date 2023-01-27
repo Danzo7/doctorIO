@@ -2,7 +2,7 @@ import EditorElement from '@libs/slate_editor/components/editor_element';
 import EditorLeaf from '@libs/slate_editor/components/editor_leaf';
 import { withSuggestion } from '@libs/slate_editor/slate-suggestion/withSuggest';
 import { useMemo, useCallback } from 'react';
-import { Descendant, Editor, Transforms } from 'slate';
+import { Descendant } from 'slate';
 import {
   RenderLeafProps,
   RenderElementProps,
@@ -22,17 +22,6 @@ interface CertificateEditorProps {
   error?: string;
   readonly?: boolean;
 }
-export const withForceWhite = (editor: Editor) => {
-  const { normalizeNode } = editor;
-
-  editor.normalizeNode = ([node, path]) => {
-    if ('text' in node && node.color !== color.white) {
-      Transforms.setNodes(editor, { color: color.white }, { at: path });
-    }
-    normalizeNode([node, path]);
-  };
-  return editor;
-};
 
 export default function CertificateEditor({
   onChange: onChanged,
@@ -43,24 +32,23 @@ export default function CertificateEditor({
 }: CertificateEditorProps) {
   const editor = useMemo(
     () =>
-      withForceWhite(
-        withSuggestion(createEditor(), {
-          suggestions: ['at', 'me', ...mentions],
-          keyword: '@',
-          insertOnSelect(selected, prev) {
-            const mappedText: { [key: string]: string } = {
-              at: format(new Date(), SETTINGS.dateFormat),
-              me: 'Dr. John Doe',
-            };
-            return {
-              type: 'autofill',
-              behavior: 'mention',
-              children: [{ ...prev, text: mappedText[selected] ?? selected }],
-              inline: true,
-            };
-          },
-        }),
-      ),
+      withSuggestion(createEditor(), {
+        suggestions: ['at', 'me', ...mentions],
+        keyword: '@',
+        insertOnSelect(selected, prev) {
+          const mappedText: { [key: string]: string } = {
+            at: format(new Date(), SETTINGS.dateFormat),
+            me: 'Dr. John Doe',
+          };
+          return {
+            type: 'autofill',
+            behavior: 'mention',
+            children: [{ ...prev, text: mappedText[selected] ?? selected }],
+            inline: true,
+          };
+        },
+      }),
+
     [mentions],
   );
   const renderLeaf = useCallback(
@@ -82,7 +70,7 @@ export default function CertificateEditor({
             : [
                 {
                   type: 'p',
-                  children: [{ text: '', color: color.white }],
+                  children: [{ text: '', color: color.coldBlack }],
                 },
               ]
         }
@@ -105,9 +93,9 @@ export default function CertificateEditor({
         <div className="error-message">
           <span>
             {error ??
-            (defaultValue && !CommonEditor.isValidDesendants(defaultValue))
-              ? 'Youuu'
-              : ''}
+              (defaultValue && !CommonEditor.isValidDesendants(defaultValue)
+                ? 'Invalid value'
+                : '')}
           </span>
         </div>
       )}
