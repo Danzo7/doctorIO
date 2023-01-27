@@ -124,13 +124,7 @@ export default function TimelineItem({
             disabled={isLoading || !isSuccess}
             onPress={() => {
               modal(
-                () => (
-                  <SessionPreviewModal
-                    id={id}
-                    patientAge={data?.age}
-                    patientName={data?.firstName + ' ' + data?.lastName}
-                  />
-                ),
+                () => <SessionPreviewModal id={id} patient={data!} />,
                 FIT_MODAL,
               ).open();
             }}
