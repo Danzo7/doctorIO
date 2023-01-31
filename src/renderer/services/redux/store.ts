@@ -15,6 +15,8 @@ import invitationApi from './clinic/invitation/invitationApi';
 import memberApi from './clinic/rbac/member/memberApi';
 import roleApi from './clinic/rbac/role/roleApi';
 import clinicApi from './clinic/clinicApi';
+import cloudApi from './clinic/cloud/cloudApi';
+import templatesApi from './clinic/templates/templatesApi';
 
 const appReducer = combineReducers({
   [clinicApi.reducerPath]: clinicApi.reducer,
@@ -27,6 +29,8 @@ const appReducer = combineReducers({
   [medicalDocumentApi.reducerPath]: medicalDocumentApi.reducer,
   [medicalHistoryApi.reducerPath]: medicalHistoryApi.reducer,
   [appointmentApi.reducerPath]: appointmentApi.reducer,
+  [cloudApi.reducerPath]: clinicApi.reducer,
+  [templatesApi.reducerPath]: templatesApi.reducer,
 });
 
 const rootReducer = (
@@ -58,6 +62,8 @@ export const store = configureStore({
       memberApi.middleware,
       roleApi.middleware,
       clinicApi.middleware,
+      cloudApi.middleware,
+      templatesApi.middleware,
     ),
 });
 export type RootState = ReturnType<typeof store.getState>;
