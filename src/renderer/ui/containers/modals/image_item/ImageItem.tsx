@@ -1,21 +1,37 @@
+import Backdrop from '@components/backdrop';
 import './style/index.scss';
+import addIcon from 'toSvg/add.svg?icon';
+import removeIcon from 'toSvg/trash_can.svg?icon';
+import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 interface ImageItemProps {
   url: string;
-  width?: number;
   height?: number;
-  alt: string;
-  onClick?: () => void;
+  width?: number;
+  alt?: string;
+  onAdd?: () => void;
+  onRemove?: () => void;
 }
 export default function ImageItem({
   url,
-  width = 200,
-  height = 200,
   alt,
-  onClick,
+  height = 200,
+  width,
+  onAdd,
+  onRemove,
 }: ImageItemProps) {
   return (
-    <div className="image-item" onClick={onClick}>
-      <img src={url} width={width} height={height} alt={alt} />
-    </div>
+    <Backdrop
+      node={
+        <>
+          <SquareIconButton Icon={addIcon} onPress={onAdd} />
+          <SquareIconButton Icon={removeIcon} onPress={onRemove} />
+        </>
+      }
+      when={'blur'}
+    >
+      <div className="image-item" css={{ height, width }}>
+        <img src={url} alt={alt} />
+      </div>
+    </Backdrop>
   );
 }

@@ -1,64 +1,23 @@
 import TextButton from '@components/buttons/text_button';
 import './style/index.scss';
-import Header from '@components/header';
 import ImageItem from '../image_item';
 import { color } from '@assets/styles/color';
 import VerticalPanel from '@components/vertical_panel';
+import { getImageFile } from '@helpers/image.helper';
+import {
+  useGetImagesQuery,
+  useUploadImageMutation,
+} from '@redux/clinic/cloud/cloudApi';
+import ModalContainer from '@components/modal_container';
+import { CLOUD_PATH } from '@constants/resources';
+import { useConnectionStore } from '@stores/ConnectionStore';
 
-const itemData: { url: string; alt: string }[] = [
-  {
-    url: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    alt: 'Breakfast',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    alt: 'Burger',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    alt: 'Camera',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    alt: 'Coffee',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    alt: 'Hats',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    alt: 'Honey',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    alt: 'Basketball',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    alt: 'Fern',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    alt: 'Mushrooms',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    alt: 'Tomato basil',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    alt: 'Sea star',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    alt: 'Bike',
-  },
-];
+interface ImageGalleryProps {
+  onSelect?: (url: string) => void;
+}
+export default function ImageGallery({ onSelect }: ImageGalleryProps) {
+  const [uploadImage, respond] = useUploadImageMutation();
 
-interface ImageGalleryProps {}
-export default function ImageGallery({}: ImageGalleryProps) {
-  //TODO add APi functions
   const uploadLocalImage = () => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -66,31 +25,47 @@ export default function ImageGallery({}: ImageGalleryProps) {
     input.click();
     input.onchange = (_) => {
       const files: FileList = input.files as FileList;
-      const file = URL.createObjectURL(files[0]);
-      //TODO add url to api
+      getImageFile(URL.createObjectURL(files[0])).then((blob) => {
+        //todo handle error
+        if (!blob) return;
+        const data = new FormData();
+        data.append('file', blob);
+        uploadImage({ data });
+      });
     };
   };
+  const { data, isLoading, isSuccess } = useGetImagesQuery();
   return (
-    <div className="image-gallery">
-      <Header
-        title="Choose an image"
-        buttonNode={
-          <TextButton
-            text="Add local image"
-            fontSize={14}
-            fontColor={color.white}
-            fontWeight={400}
-            onPress={uploadLocalImage}
-          />
-        }
-      />
-      <div
-        className={itemData.length > 0 ? 'images-container' : 'empty-container'}
-      >
-        {itemData.length > 0 ? (
-          itemData.map(({ alt, url }, index) => (
-            <ImageItem key={index} url={url} alt={alt} />
-          ))
+    <ModalContainer
+      title="Choose an image"
+      isLoading={isLoading}
+      className="image-gallery"
+      controls={
+        <TextButton
+          text="Add local image"
+          fontSize={14}
+          fontColor={color.white}
+          fontWeight={400}
+          onPress={uploadLocalImage}
+          disabled={respond.isLoading}
+        />
+      }
+    >
+      {isSuccess ? (
+        data.length > 0 ? (
+          <div className="images-container">
+            {data.map((id, index) => (
+              <ImageItem
+                key={index}
+                url={useConnectionStore.getState().getUrl() + CLOUD_PATH + id}
+                onAdd={() => {
+                  onSelect?.(
+                    useConnectionStore.getState().getUrl() + CLOUD_PATH + id,
+                  );
+                }}
+              />
+            ))}
+          </div>
         ) : (
           <VerticalPanel
             title="No images were found"
@@ -98,8 +73,10 @@ export default function ImageGallery({}: ImageGalleryProps) {
             action={{ text: 'Add local image', onClick: uploadLocalImage }}
             backgroundColor="none"
           />
-        )}
-      </div>
-    </div>
+        )
+      ) : (
+        <div>error</div>
+      )}
+    </ModalContainer>
   );
 }
