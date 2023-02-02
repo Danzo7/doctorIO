@@ -11,7 +11,7 @@ interface TableControlProps {}
 export default function TableControl({}: TableControlProps) {
   const editor = useSlateStatic();
   return (
-    <ControlTooltip>
+    <ControlTooltip direction="top">
       <SquareIconButton
         borderColor={color.cold_red}
         iconColor={color.cold_red}
