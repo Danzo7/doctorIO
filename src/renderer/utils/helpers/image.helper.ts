@@ -8,7 +8,7 @@ export const createImage = (url: string) =>
     image.setAttribute('crossOrigin', 'anonymous'); // needed to avoid cross-origin issues on CodeSandbox
     image.src = url;
   });
-export async function getImageFile(src: string, pixelCrop: Area) {
+export async function getImageFile(src: string, pixelCrop?: Area) {
   const image = await createImage(src);
 
   const canvas = document.createElement('canvas');
@@ -21,17 +21,18 @@ export async function getImageFile(src: string, pixelCrop: Area) {
   canvas.width = image.width;
   canvas.height = image.height;
   ctx.drawImage(image, 0, 0);
+  if (pixelCrop) {
+    const data = ctx.getImageData(
+      pixelCrop.x,
+      pixelCrop.y,
+      pixelCrop.width,
+      pixelCrop.height,
+    );
 
-  const data = ctx.getImageData(
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
-  );
-
-  canvas.width = pixelCrop.width;
-  canvas.height = pixelCrop.height;
-  ctx.putImageData(data, 0, 0);
+    canvas.width = pixelCrop.width;
+    canvas.height = pixelCrop.height;
+    ctx.putImageData(data, 0, 0);
+  }
   return new Promise<Blob>((resolve, reject) => {
     canvas.toBlob(
       (blob) => {
