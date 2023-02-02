@@ -100,12 +100,7 @@ interface MedicalHistory {
 interface BiometricScreening {
   [key: string]: any;
 }
-interface ImageFile {
-  name: string;
-  path: string;
-  type: string;
-  size: number;
-}
+
 interface PrintingTemplate {
   paperFormat?: 'A4' | 'A5';
   margins?: any;
@@ -131,7 +126,6 @@ export type {
   Drug,
   QueueState,
   Appointment_v2 as Appointment,
-  ImageFile,
   PrintingTemplate,
   CertificateTemplate,
 };

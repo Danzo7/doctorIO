@@ -1,4 +1,3 @@
-import { ImageFile } from '@models/instance.model';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { createQuery } from '@stores/staticQueriesStore';
 
@@ -11,9 +10,9 @@ const cloudApi = createApi({
       query: () => '/images',
       providesTags: ['images'],
     }),
-    uploadImage: builder.mutation<boolean, ImageFile>({
-      query: (body) => {
-        return { url: 'upload', body: { ...body }, method: 'POST' };
+    uploadImage: builder.mutation<boolean, { data: FormData }>({
+      query: ({ data }) => {
+        return { url: 'upload', body: data, method: 'POST' };
       },
       invalidatesTags: ['images'],
     }),
@@ -22,6 +21,7 @@ const cloudApi = createApi({
       query: (id) => {
         return {
           url: `images/${id}`,
+          params: { id },
           method: 'DELETE',
         };
       },
