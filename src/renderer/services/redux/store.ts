@@ -29,7 +29,7 @@ const appReducer = combineReducers({
   [medicalDocumentApi.reducerPath]: medicalDocumentApi.reducer,
   [medicalHistoryApi.reducerPath]: medicalHistoryApi.reducer,
   [appointmentApi.reducerPath]: appointmentApi.reducer,
-  [cloudApi.reducerPath]: clinicApi.reducer,
+  [cloudApi.reducerPath]: cloudApi.reducer,
   [templatesApi.reducerPath]: templatesApi.reducer,
 });
 
