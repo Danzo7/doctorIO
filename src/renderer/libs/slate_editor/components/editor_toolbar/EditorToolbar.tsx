@@ -18,7 +18,6 @@ import TagIcon from 'toSvg/tag.svg?icon';
 import InputWrapper from '@components/inputs/input_wrapper';
 import AutoSizeInput from '@components/inputs/auto_size_input';
 import { TablesEditor } from '@libs/slate_editor/slate-tables';
-import { ImageEditor } from '@libs/slate_editor/slate-image/ImageEditor';
 import {
   getFontSize,
   isAlignActive,
@@ -27,12 +26,14 @@ import {
   toggleAlign,
   toggleMark,
 } from '@libs/slate_editor/commons/commands';
-import { createImage } from '@helpers/image.helper';
 import TextButton from '@components/buttons/text_button';
 import { modal } from '@stores/overlayStore';
 import InsertAttributesModal from '@containers/modals/insert_attributes_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { AttributeEditor } from '@libs/slate_editor/slate-dynamic-attributes/AttributeEditor';
+import ImageGallery from '@containers/modals/image_gallery';
+import { ImageEditor } from '@libs/slate_editor/slate-image/ImageEditor';
+import { createImage } from '@helpers/image.helper';
 
 interface EditorToolbarProps {}
 
@@ -171,21 +172,22 @@ export default function EditorToolbar({}: EditorToolbarProps) {
         <SquareIconButton
           tip="Insert Image"
           iconColor={color.silver_gray}
-          onMouseDown={(event) => {
-            event?.preventDefault();
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/png, image/jpeg';
+          onPress={() => {
+            modal(
+              ({ close }) => (
+                <ImageGallery
+                  onSelect={async (image) => {
+                    const img = await createImage(image);
+                    const width = 250;
+                    const height = Math.floor((250 * img.height) / img.width);
+                    ImageEditor.insertImage(editor, image, { width, height });
 
-            input.click();
-            input.onchange = async (_) => {
-              const files: FileList = input.files as FileList;
-              const file = URL.createObjectURL(files[0]);
-              const img = await createImage(file);
-              const width = 250;
-              const height = Math.floor((250 * img.height) / img.width);
-              ImageEditor.insertImage(editor, file, { width, height });
-            };
+                    close();
+                  }}
+                />
+              ),
+              { ...DEFAULT_MODAL, width: '40%' },
+            ).open();
           }}
           unFocusable
           Icon={AddImage}
