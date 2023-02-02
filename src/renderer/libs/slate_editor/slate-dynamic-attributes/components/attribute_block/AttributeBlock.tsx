@@ -36,8 +36,10 @@ export default function AttributeBlock({
     <NotAButton
       css={{
         outline: '2px solid ' + element?.color ?? color.warm_orange,
+        outlineOffset: 1,
+        overflow: 'visible',
       }}
-      padding={2}
+      padding={0}
       radius={2}
       tip={'refer to: ' + element.reference}
     >
