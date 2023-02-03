@@ -11,8 +11,13 @@ import { modal, Overlay_u } from '@stores/overlayStore';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import MedicalCertificateChoiceModal from '@containers/modals/medical_certificate_choice_modal';
 import CertificateEditorModal from '@containers/modals/certificate_editor_modal';
-import { MedicalCertificate, Patient } from '@models/instance.model';
+import {
+  Appointment,
+  MedicalCertificate,
+  Patient,
+} from '@models/instance.model';
 import CertificatePreviewModal from '@containers/modals/certificate_preview_modal';
+import { Member } from '@models/server.models';
 
 interface CertificatesTabProps {}
 export default function CertificatesTab({}: CertificatesTabProps) {
@@ -111,9 +116,13 @@ export default function CertificatesTab({}: CertificatesTabProps) {
 export function CertificatesView({
   certificates,
   patient,
+  member,
+  appointment,
 }: {
   certificates: MedicalCertificate[];
   patient: Patient;
+  member: Pick<Member, 'id' | 'name'>;
+  appointment: Appointment;
 }) {
   return (
     <div className="certificates-view-tab">
@@ -125,8 +134,10 @@ export function CertificatesView({
             modal(
               () => (
                 <CertificatePreviewModal
+                  appointment={appointment}
                   defaultValue={certificate}
                   patient={patient}
+                  member={member}
                 />
               ),
               {

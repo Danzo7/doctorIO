@@ -13,7 +13,6 @@ import { withTables } from '@libs/slate_editor/slate-tables';
 import { withDynamicAttributes } from '@libs/slate_editor/slate-dynamic-attributes/withDynamicAttributes';
 import { createEditor } from '@libs/slate_editor/createEditor';
 import EditorLeaf from '@libs/slate_editor/components/editor_leaf';
-import { useTemplateStore } from '@stores/templateStore';
 import { cmToPx } from '@helpers/math.helper';
 import EditorElement from '@libs/slate_editor/components/editor_element';
 import { mapElements } from '@libs/slate_editor/commons/core';
@@ -26,15 +25,25 @@ import {
 import { useClinicsStore } from '@stores/clinicsStore';
 import { format, isDate } from 'date-fns';
 import { SETTINGS } from '@stores/appSettingsStore';
+import { useGetPrintTemplateQuery } from '@redux/clinic/templates/templatesApi';
+import { CommonEditor } from '@libs/slate_editor/commons/CommonEditor';
+import LoadingSpinner from '@components/loading_spinner';
+import { Member } from '@models/server.models';
 interface PrintPaperProps {
   content: MedicalCertificate;
   patient: Patient;
-  prescription?: Appointment;
+  member: Pick<Member, 'id' | 'name'>;
+  appointment: Pick<Appointment, 'id' | 'date'>;
 }
 const paperSize = { width: 14.8, height: 21 };
-const margins = { top: 1.27, bottom: 1.27, left: 1.27, right: 1.27 };
+const margins = { top: 1, bottom: 0, left: 1, right: 1 };
 
-export default function PrintPaper({ content, patient }: PrintPaperProps) {
+export default function PrintPaper({
+  content,
+  patient,
+  member,
+  appointment,
+}: PrintPaperProps) {
   const editor = useMemo(
     () =>
       withImages(
@@ -45,8 +54,11 @@ export default function PrintPaper({ content, patient }: PrintPaperProps) {
     [],
   );
 
-  const { desendants } = useTemplateStore.getState();
-
+  const { data, isLoading, isSuccess } = useGetPrintTemplateQuery();
+  const desendants =
+    isSuccess && CommonEditor.isValidDesendants(data.template)
+      ? data.template
+      : CommonEditor.initElement();
   const renderLeaf = useCallback(
     (props: RenderLeafProps) => <EditorLeaf {...props} />,
     [],
@@ -60,14 +72,15 @@ export default function PrintPaper({ content, patient }: PrintPaperProps) {
     pageStyle: `@media print {
       @page {
         size: 14.8cm 21cm;
-        margin: 0;
       }
     }`,
     content: () => componentRef.current as HTMLDivElement,
   });
   const clinicData = useClinicsStore.getState().getSelectedClinic();
 
-  return (
+  return isLoading ? (
+    <LoadingSpinner />
+  ) : (
     <div
       className="print-paper"
       ref={(ref) => {
@@ -83,23 +96,25 @@ export default function PrintPaper({ content, patient }: PrintPaperProps) {
               children: [text],
               reference,
             } = node;
-            let replacementString = 'un';
+            let replacementString = '';
             const [table, attr] = reference.split('.');
             switch (table) {
               case 'Patient':
-                replacementString =
-                  (patient as any)?.[attr]?.toString() ?? 'un';
+                replacementString = (patient as any)?.[attr] ?? '';
                 break;
               case 'Clinic':
-                replacementString =
-                  (clinicData as any)?.[attr]?.toString() ?? 'un';
+                replacementString = (clinicData as any)?.[attr] ?? '';
                 break;
-              default:
+              case 'Doctor':
+                replacementString = (member as any)?.[attr] ?? '';
+                break;
+              case 'Appointment':
+                replacementString = (appointment as any)?.[attr] ?? '';
                 break;
             }
-            replacementString = isDate((patient as any)?.[attr])
-              ? format((patient as any)?.[attr], SETTINGS.dateFormat)
-              : replacementString;
+            replacementString = isDate(replacementString)
+              ? format(replacementString as any, SETTINGS.dateFormat)
+              : replacementString.toString();
             return {
               type: 'span',
               children: [{ ...text, text: replacementString }],

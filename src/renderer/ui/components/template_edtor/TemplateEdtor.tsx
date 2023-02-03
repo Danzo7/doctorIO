@@ -17,15 +17,20 @@ import {
 } from 'slate-react';
 import { withDynamicAttributes } from '@libs/slate_editor/slate-dynamic-attributes/withDynamicAttributes';
 import { createEditor } from '@libs/slate_editor/createEditor';
-import { useTemplateStore } from '@stores/templateStore';
 import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
 import TextButton from '@components/buttons/text_button';
 import usePrompt from '@libs/HistoryBlocker';
 import { Element } from 'slate';
+import {
+  useGetPrintTemplateQuery,
+  useSetPrintTemplateMutation,
+} from '@redux/clinic/templates/templatesApi';
+import LoadingSpinner from '@components/loading_spinner';
+import { CommonEditor } from '@libs/slate_editor/commons/CommonEditor';
 
 const paperSize = { width: 14.8, height: 21 };
-const margins = { top: 1.27, bottom: 1.27, left: 1.27, right: 1.27 };
-
+const margins = { top: 1, bottom: 0, left: 1, right: 1 };
+const letterSpacing = 4;
 interface TemplateEditorProps {}
 export default function TemplateEditor({}: TemplateEditorProps) {
   const editor = useMemo(
@@ -38,7 +43,7 @@ export default function TemplateEditor({}: TemplateEditorProps) {
     [],
   );
 
-  const { desendants } = useTemplateStore.getState();
+  const { data, isLoading, isSuccess } = useGetPrintTemplateQuery();
   const newValue = useRef<Element[]>();
   const oldValue = useRef<Element[]>();
   const [isDirty, setIsDirty] = useState(false);
@@ -51,7 +56,7 @@ export default function TemplateEditor({}: TemplateEditorProps) {
     (props: RenderElementProps) => <EditorElement {...props} />,
     [],
   );
-
+  const [update, res] = useSetPrintTemplateMutation();
   usePrompt(
     'Careful : you have unsaved changes !',
     () => (
@@ -68,12 +73,18 @@ export default function TemplateEditor({}: TemplateEditorProps) {
         <TextButton
           text="Save changes"
           backgroundColor={color.good_green}
+          disabled={res.isLoading}
           onPress={async () => {
             if (newValue.current)
-              useTemplateStore.getState().setDesendants(newValue.current);
-            oldValue.current = newValue.current;
+              update({
+                template: newValue.current,
+              })
+                .unwrap()
+                .then(() => {
+                  oldValue.current = newValue.current;
 
-            setIsDirty(false);
+                  setIsDirty(false);
+                });
           }}
         />
       </SnakeBarActionsControls>
@@ -81,42 +92,52 @@ export default function TemplateEditor({}: TemplateEditorProps) {
     isDirty,
     isDirty,
   );
+  const currentTemplate =
+    isSuccess && CommonEditor.isValidDesendants(data.template)
+      ? data.template
+      : CommonEditor.initElement();
   return (
     <div className="template-editor">
-      <Slate
-        editor={editor}
-        value={desendants}
-        onChange={(value) => {
-          setIsDirty(JSON.stringify(desendants) != JSON.stringify(value));
-          if (isDirty) newValue.current = value as any;
-          if (!oldValue.current) oldValue.current = value as any;
-        }}
-      >
-        <EditorToolbar />
-        <div className="editable-container">
-          <Editable
-            css={{
-              width: cmToPx(paperSize.width),
-              height: cmToPx(paperSize.height),
-              maxHeight: cmToPx(paperSize.height),
-              padding: `${cmToPx(margins.top)}px ${cmToPx(
-                margins.right,
-              )}px ${cmToPx(margins.bottom)}px ${cmToPx(margins.left)}px`,
-              boxShadow: '0 0 5px 3px ' + color.darker,
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-            placeholder="Write something..."
-            renderLeaf={renderLeaf}
-            renderElement={renderElement}
-            autoFocus
-            onKeyDown={(e) => {
-              onKeyDown(e, editor);
-            }}
-            id="text-editor"
-          />
-        </div>
-      </Slate>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <Slate
+          editor={editor}
+          value={currentTemplate}
+          onChange={(value) => {
+            setIsDirty(
+              JSON.stringify(currentTemplate) != JSON.stringify(value),
+            );
+            if (isDirty) newValue.current = value as any;
+            if (!oldValue.current) oldValue.current = value as any;
+          }}
+        >
+          <EditorToolbar />
+          <div className="editable-container">
+            <Editable
+              css={{
+                width: cmToPx(paperSize.width),
+                height: cmToPx(paperSize.height),
+                maxHeight: cmToPx(paperSize.height),
+                padding: `${cmToPx(margins.top)}px ${cmToPx(
+                  margins.right,
+                )}px ${cmToPx(margins.bottom)}px ${cmToPx(margins.left)}px`,
+                boxShadow: '0 0 5px 3px ' + color.darker,
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+              placeholder="Write something..."
+              renderLeaf={renderLeaf}
+              renderElement={renderElement}
+              autoFocus
+              onKeyDown={(e) => {
+                onKeyDown(e, editor);
+              }}
+              id="text-editor"
+            />
+          </div>
+        </Slate>
+      )}
     </div>
   );
 }

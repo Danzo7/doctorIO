@@ -3,19 +3,28 @@ import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import CertificateEditor from '@components/certificates_editor';
-import { MedicalCertificate, Patient } from '@models/instance.model';
+import {
+  Appointment,
+  MedicalCertificate,
+  Patient,
+} from '@models/instance.model';
 import { modal } from '@stores/overlayStore';
 import PrintPaper from '@components/print_paper';
 import { DEFAULT_MODAL } from '@libs/overlay';
+import { Member } from '@models/server.models';
 
 interface CertificatePreviewModalProps {
   defaultValue: MedicalCertificate;
   patient: Patient;
+  member: Pick<Member, 'id' | 'name'>;
+  appointment: Pick<Appointment, 'date' | 'id'>;
 }
 
 export default function CertificatePreviewModal({
   patient,
   defaultValue,
+  member,
+  appointment,
 }: CertificatePreviewModalProps) {
   return (
     <div className="certificate-preview-modal">
@@ -31,7 +40,12 @@ export default function CertificatePreviewModal({
                 blank
                 onPress={() =>
                   modal(
-                    <PrintPaper content={defaultValue} patient={patient} />,
+                    <PrintPaper
+                      appointment={appointment}
+                      content={defaultValue}
+                      patient={patient}
+                      member={member}
+                    />,
                     DEFAULT_MODAL,
                   ).open()
                 }

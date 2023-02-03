@@ -41,6 +41,10 @@ export default function SessionPreviewModal({
                             if (data?.session?.prescription)
                               modal(
                                 <PrintPaper
+                                  appointment={data}
+                                  member={
+                                    data.member ?? { id: 0, name: 'Unknown' }
+                                  }
                                   content={prescriptionToMedicalCertificate(
                                     data.session.prescription,
                                   )}
@@ -63,8 +67,10 @@ export default function SessionPreviewModal({
                       label: 'Certificates',
                       content: (
                         <CertificatesView
+                          appointment={data}
                           certificates={data.session.certificates}
                           patient={patient}
+                          member={data.member ?? { id: 0, name: 'Unknown' }}
                         />
                       ),
                     },
