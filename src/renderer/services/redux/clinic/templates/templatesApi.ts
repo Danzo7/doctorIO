@@ -12,8 +12,12 @@ const templatesApi = createApi({
       providesTags: ['print'],
     }),
     setPrintTemplate: builder.mutation<boolean, PrintingTemplate>({
-      query: (body) => {
-        return { url: 'print', body: { ...body }, method: 'POST' };
+      query: ({ template, ...others }) => {
+        return {
+          url: 'print',
+          body: { ...others, template: JSON.stringify(template) },
+          method: 'POST',
+        };
       },
       invalidatesTags: ['print'],
     }),
