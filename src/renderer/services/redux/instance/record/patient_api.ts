@@ -53,6 +53,7 @@ const patientApi = createApi({
       ) => {
         return {
           ...response,
+          fullName: `${response.firstName} ${response.lastName}`,
           birthDate: parseISO(response.birthDate),
           registerDate: parseISO(response.registerDate),
           nextAppointment: response.nextAppointment
