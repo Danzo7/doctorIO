@@ -18,6 +18,7 @@ export default function MultipleCheckGroup({
   onlyOne,
   mustOne,
 }: MultipleCheckGroupProps) {
+  //FIXME: Find why there is undefined in options
   const defIndex = options.indexOf(field.value);
   const [checkedItems, setCheckedItems] = useState<number[]>(
     (defIndex ? [defIndex] : undefined) ?? selected ?? (mustOne ? [0] : []),
