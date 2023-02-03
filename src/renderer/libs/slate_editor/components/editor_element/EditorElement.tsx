@@ -8,7 +8,7 @@ import TagBlock from '@libs/slate_editor/slate-suggestion/components/tag_block';
 import TableControl from '@libs/slate_editor/slate-tables/components/table_control';
 import AttributeBlock from '@libs/slate_editor/slate-dynamic-attributes/components/attribute_block';
 
-const letterSpacing = 6;
+const letterSpacing = 4;
 export default function EditorElement({
   attributes,
   children,
@@ -112,10 +112,7 @@ export default function EditorElement({
       );
     case 'dynamic':
       return element.replace ? (
-        <div
-          css={{ ...style, height: element.height, border: '1px solid black' }}
-          {...attributes}
-        >
+        <div css={{ ...style, height: element.height }} {...attributes}>
           {children}
         </div>
       ) : (

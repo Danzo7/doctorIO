@@ -34,28 +34,11 @@ import { AttributeEditor } from '@libs/slate_editor/slate-dynamic-attributes/Att
 import ImageGallery from '@containers/modals/image_gallery';
 import { ImageEditor } from '@libs/slate_editor/slate-image/ImageEditor';
 import { createImage } from '@helpers/image.helper';
+import { DEFAULT_AUTO_REF } from '@libs/slate_editor/constants';
 
 interface EditorToolbarProps {}
 
 export default function EditorToolbar({}: EditorToolbarProps) {
-  const DEFAULT_ATTRIBUTES = [
-    {
-      group: { name: 'Clinic', color: color.hot_purple },
-      items: ['Name', 'Address'],
-    },
-    {
-      group: { name: 'Patient', color: color.cold_blue },
-      items: ['First name', 'Last name', 'Age', 'Birth date'],
-    },
-    {
-      group: { name: 'Doctor', color: color.warm_orange },
-      items: ['First name', 'Last name', 'id'],
-    },
-    {
-      group: { name: 'Session', color: color.cold_red },
-      items: ['Date', 'Time'],
-    },
-  ];
   const editor = useSlate();
   return (
     <div className="editor-toolbar">
@@ -203,7 +186,7 @@ export default function EditorToolbar({}: EditorToolbarProps) {
               ({ close }) => (
                 <InsertAttributesModal
                   close={close}
-                  elements={DEFAULT_ATTRIBUTES}
+                  elements={DEFAULT_AUTO_REF}
                   onChange={(value) => {
                     AttributeEditor.insertAttribute(editor, value);
                   }}

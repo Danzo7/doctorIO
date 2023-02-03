@@ -15,3 +15,4 @@ export { isNodeEmpty, isElementEmpty } from './isNodeEmpty';
 export { insertEmpty } from './insertEmpty';
 export { isEmpty, isEmptyElements } from './isEmpty';
 export { isValidDesendants } from './isValidDesendants';
+export { initElement } from './initElement';
