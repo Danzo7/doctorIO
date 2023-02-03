@@ -45,13 +45,9 @@ export default function PaymentQueue({}: PaymentQueueProps) {
               <Arrow css={{ transform: 'rotate(90deg)' }} />
             </TextButton>
             <ScrollView refs={ref} gap={10}>
-              {data.map(({ appointmentId, amount, name }, index) => (
-                <li key={appointmentId + index}>
-                  <PaymentItem
-                    patientFullName={name}
-                    amount={amount}
-                    appointmentId={appointmentId}
-                  />
+              {data.map(({ id, amount, name }, index) => (
+                <li key={id + index}>
+                  <PaymentItem patientFullName={name} amount={amount} id={id} />
                 </li>
               ))}
             </ScrollView>

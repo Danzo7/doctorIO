@@ -75,6 +75,14 @@ interface Appointment_v2 {
     isBooked: boolean;
   };
 }
+export interface Payment {
+  id: number;
+  amount: number;
+  status: 'PENDING' | 'PAID' | 'CANCELED';
+  date: Date;
+  doneDate?: Date;
+  name: string;
+}
 export type AppointmentBrief = Pick<
   Appointment_v2,
   'assignedBy' | 'state' | 'subject' | 'bookedFor' | 'date' | 'id'

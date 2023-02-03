@@ -42,8 +42,11 @@ export default function SessionParameter({}: SessionParameterProps) {
     payment: canPay
       ? {
           value:
-            Number(fields.payment.reduce((a, b) => Number(a) + Number(b), 0)) +
-            Number(fields.customCost), //TODO check if NaN
+            Number(
+              fields.payment
+                .filter(Boolean)
+                .reduce((a, b) => Number(a) + Number(b), 0),
+            ) + Number(fields.customCost), //TODO check if NaN
           isHandPayment: fields.handPayment,
         }
       : undefined,

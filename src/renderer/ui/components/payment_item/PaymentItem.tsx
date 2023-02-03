@@ -8,11 +8,11 @@ import { useConfirmPaymentMutation } from '@redux/instance/Appointment/Appointme
 interface PaymentItemProps {
   patientFullName: string;
   amount: number;
-  appointmentId: number;
+  id: number;
 }
 export default function PaymentItem({
   patientFullName,
-  appointmentId,
+  id: appointmentId,
   amount,
 }: PaymentItemProps) {
   const [ConfirmPayment] = useConfirmPaymentMutation();

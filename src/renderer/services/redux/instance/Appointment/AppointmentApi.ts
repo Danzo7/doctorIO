@@ -5,6 +5,7 @@ import {
   BiometricScreening,
   AppointmentBrief,
   MedicalCertificate,
+  Payment,
 } from '@models/instance.model';
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { createQuery } from '@stores/staticQueriesStore';
@@ -76,10 +77,7 @@ const appointmentApi = createApi({
         bookedIn: parseISO(bookedIn as any as string),
       }),
     }),
-    getPayments: builder.query<
-      { appointmentId: number; name: string; amount: number; date: Date }[],
-      number
-    >({
+    getPayments: builder.query<Payment[], number>({
       query: (selectedQueue) => {
         return {
           url: '/payment',
