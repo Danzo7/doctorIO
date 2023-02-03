@@ -9,7 +9,6 @@ import KeywordFieldItem from '@components/keyword_field_item';
 import VerticalPanel from '@components/vertical_panel';
 import { modal, Overlay_u } from '@stores/overlayStore';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import MedicalCertificateChoiceModal from '@containers/modals/medical_certificate_choice_modal';
 import CertificateEditorModal from '@containers/modals/certificate_editor_modal';
 import {
   Appointment,
@@ -29,8 +28,47 @@ export default function CertificatesTab({}: CertificatesTabProps) {
         buttonNode={
           <DarkLightCornerButton
             text="Add..."
-            onPress={() => {
-              modal(<MedicalCertificateChoiceModal />, DEFAULT_MODAL).open();
+            onPress={(e) => {
+              if (e)
+                Overlay_u.openTooltip(
+                  () => [
+                    {
+                      text: 'Create new one',
+                      onPress: () => {
+                        modal(
+                          () => <CertificateEditorModal />,
+                          {
+                            closeOnClickOutside: true,
+                            closeOnBlur: false,
+                            isDimmed: true,
+                            clickThrough: false,
+                            width: '50%',
+                          },
+                          'certificateModal',
+                        ).open();
+                      },
+                    },
+                    {
+                      text: 'Use a template',
+                      onPress: () => {
+                        modal(
+                          () => <CertificateEditorModal />,
+                          {
+                            closeOnClickOutside: true,
+                            closeOnBlur: false,
+                            isDimmed: true,
+                            clickThrough: false,
+
+                            width: '50%',
+                          },
+                          'certificateModal',
+                        ).open();
+                      },
+                    },
+                  ],
+                  e.currentTarget,
+                  true,
+                );
             }}
           />
         }
