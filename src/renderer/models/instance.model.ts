@@ -1,3 +1,4 @@
+import { CustomElement } from '@libs/slate_editor/slate.types';
 import { Member } from './server.models';
 import { Descendant } from 'slate';
 
@@ -37,6 +38,7 @@ export interface MedicalCertificate {
 interface Patient {
   firstName: string;
   lastName: string;
+  fullName: string;
   birthDate: Date;
   registerDate: Date;
   gender: 'male' | 'female';
@@ -59,6 +61,7 @@ interface Session {
 }
 // eslint-disable-next-line @typescript-eslint/naming-convention
 interface Appointment_v2 {
+  id: number;
   assignedBy: Pick<Member, 'id' | 'avatar' | 'name'>;
   member?: Pick<Member, 'id' | 'avatar' | 'name'>;
   subject?: string;
@@ -74,8 +77,8 @@ interface Appointment_v2 {
 }
 export type AppointmentBrief = Pick<
   Appointment_v2,
-  'assignedBy' | 'state' | 'subject' | 'bookedFor' | 'date'
-> & { id: number };
+  'assignedBy' | 'state' | 'subject' | 'bookedFor' | 'date' | 'id'
+>;
 interface MedicalDocument {
   id: string;
   fileName: string;
@@ -104,13 +107,13 @@ interface BiometricScreening {
 interface PrintingTemplate {
   paperFormat?: 'A4' | 'A5';
   margins?: any;
-  contentHeight: number;
-  template: any[];
+  letterSpacing?: number;
+  template: CustomElement[];
 }
 interface CertificateTemplate {
   id: number;
   title: string;
-  template: any;
+  template: CustomElement[];
 }
 
 export type {
