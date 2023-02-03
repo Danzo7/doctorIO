@@ -240,9 +240,9 @@ const appointmentQueueApi = createApi({
         method: 'PATCH',
         body: {
           ...body,
-          certificates: body.certificates?.map((c) => ({
+          certificates: body.certificates?.map(({ description, ...c }) => ({
             ...c,
-            description: JSON.stringify(c.description),
+            description: JSON.stringify(description),
           })),
         },
         params: { selectedQueue },
