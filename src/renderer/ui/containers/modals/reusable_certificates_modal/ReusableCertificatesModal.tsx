@@ -5,39 +5,20 @@ import { color } from '@assets/styles/color';
 import { Overlay_u, modal } from '@stores/overlayStore';
 import KeywordFieldItem from '@components/keyword_field_item';
 import add from 'toSvg/add.svg?icon';
-import VerticalPanel from '@components/vertical_panel';
 import CertificateEditorModal from '../certificate_editor_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
+import {
+  useDeleteCertificateTemplateMutation,
+  useGetCertificateTemplatesQuery,
+} from '@redux/clinic/templates/templatesApi';
+import LoadingSpinner from '@components/loading_spinner';
+import RefetchPanel from '@components/refetch_panel';
 
-const keywordFields = [
-  {
-    id: 1,
-    name: 'certificate',
-  },
-  {
-    id: 2,
-    name: 'certificate',
-  },
-  {
-    id: 3,
-    name: 'certificate',
-  },
-  {
-    id: 4,
-    name: 'certificate',
-  },
-  {
-    id: 5,
-    name: 'certificate',
-  },
-  {
-    id: 6,
-    name: 'certificate',
-  },
-];
 interface ReusableCertificatesModalProps {}
 export default function ReusableCertificatesModal({}: ReusableCertificatesModalProps) {
-  const isSuccess = true; //TODO add api
+  const { isSuccess, isLoading, data, refetch } =
+    useGetCertificateTemplatesQuery();
+  const [deleteCertificateTemplate] = useDeleteCertificateTemplateMutation();
 
   return (
     <div className="template-keywords-modal">
@@ -53,11 +34,30 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
           />
         }
       >
-        {isSuccess ? (
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : isSuccess ? (
           <div className="fields-edit-content">
             <div className="fields-edit-items">
-              {keywordFields.map((field, index) => (
-                <KeywordFieldItem key={index} name={field.name} />
+              {data.map(({ id, title }, index) => (
+                <KeywordFieldItem
+                  key={id}
+                  name={title}
+                  onEdit={() => {
+                    //TODO description not found in useGetCertificateTemplatesQuery
+                    modal(
+                      <CertificateEditorModal
+                      // defaultValue={{ id, title, description: '' }}
+                      />,
+                      DEFAULT_MODAL,
+                      'certificateModal',
+                    ).open();
+                  }}
+                  onDelete={() => {
+                    deleteCertificateTemplate(id);
+                    //TODO add toast to indicate the operation result
+                  }}
+                />
               ))}
             </div>
 
@@ -76,7 +76,7 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
             />
           </div>
         ) : (
-          <VerticalPanel />
+          <RefetchPanel action={refetch} />
         )}
       </ModalContainer>
     </div>
