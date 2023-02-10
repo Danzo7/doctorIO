@@ -57,13 +57,13 @@ export default function TemplateTab({}: TemplateTabProps) {
           flexDirection="row"
           gap={2}
           title={{
-            text: 'Define autofill text',
+            text: 'Customize reusable certificates',
             fontSize: 15,
             fontWeight: 600,
             fontColor: color.white,
           }}
           description={{
-            text: 'The defined text is used to autofill a notice text....',
+            text: 'The reusable certificates can be used during a session.',
             fontSize: 14,
             fontWeight: 500,
             fontColor: color.text_gray,
