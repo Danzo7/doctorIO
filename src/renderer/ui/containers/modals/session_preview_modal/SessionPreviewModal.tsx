@@ -10,7 +10,8 @@ import TextButton from '@components/buttons/text_button';
 import { modal } from '@stores/overlayStore';
 import { prescriptionToMedicalCertificate } from '@libs/slate_editor/helper';
 import PrintPaper from '@components/print_paper';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { FIT_MODAL } from '@libs/overlay';
+import color from '@assets/styles/color';
 
 interface SessionPreviewModalProps {
   id: number;
@@ -34,9 +35,19 @@ export default function SessionPreviewModal({
                   data.session.prescription && {
                     label: 'Prescription',
                     content: (
-                      <>
+                      <div
+                        css={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 10,
+                        }}
+                      >
                         <MedicamentTable drugList={data.session.prescription} />
                         <TextButton
+                          text="Preview"
+                          backgroundColor={color.cold_blue}
+                          width={'fit-content'}
+                          alignSelf="center"
                           onPress={() => {
                             if (data?.session?.prescription)
                               modal(
@@ -50,18 +61,13 @@ export default function SessionPreviewModal({
                                   )}
                                   patient={patient}
                                 />,
-                                DEFAULT_MODAL,
+                                FIT_MODAL,
                               ).open();
                           }}
-                        >
-                          Print
-                        </TextButton>
-                        {
-                          //TODO: remove print from here and add it to preview
-                        }
-                      </>
+                        ></TextButton>
+                      </div>
                     ),
-                  },
+                  }, //TODO add print certificate
                   data.session.certificates &&
                     data.session.certificates.length && {
                       label: 'Certificates',
