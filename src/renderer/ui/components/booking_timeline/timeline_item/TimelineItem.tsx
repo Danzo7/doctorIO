@@ -123,10 +123,10 @@ export default function TimelineItem({
             tip="View Session"
             disabled={isLoading || !isSuccess}
             onPress={() => {
-              modal(
-                () => <SessionPreviewModal id={id} patient={data!} />,
-                FIT_MODAL,
-              ).open();
+              modal(() => <SessionPreviewModal id={id} patient={data!} />, {
+                ...FIT_MODAL,
+                style: { maxWidth: 600 },
+              }).open();
             }}
           />
         </WideCard>
