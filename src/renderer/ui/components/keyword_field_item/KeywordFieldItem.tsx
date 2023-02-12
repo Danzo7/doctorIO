@@ -5,7 +5,7 @@ import Edit from 'toSvg/pencil.svg?icon';
 import AppointmentHistoryIcon from 'toSvg/appointment_history.svg?icon';
 interface KeywordFieldItemProps {
   name: string;
-
+  textGrow?: true;
   onEdit?: () => void;
   onDelete?: () => void;
   onView?: () => void;
@@ -17,13 +17,20 @@ export default function KeywordFieldItem({
   onDelete,
   onView,
   gap,
+  textGrow,
 }: KeywordFieldItemProps) {
   return (
     <div
       className="keyword-field-item"
       css={{ gap: gap, justifyContent: gap ? undefined : 'space-between' }}
     >
-      <span>{name}</span>
+      <span
+        css={{
+          maxWidth: textGrow ? 400 : 150,
+        }}
+      >
+        {name}
+      </span>
       <div className="keyword-controls">
         {onEdit && (
           <SquareIconButton
