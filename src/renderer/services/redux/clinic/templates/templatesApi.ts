@@ -1,6 +1,7 @@
 import { CertificateTemplate, PrintingTemplate } from '@models/instance.model';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
 import { createQuery } from '@stores/staticQueriesStore';
+import { Descendant } from 'slate';
 
 const templatesApi = createApi({
   reducerPath: 'templatesApi',
@@ -31,8 +32,12 @@ const templatesApi = createApi({
       query: () => 'certificates',
       providesTags: ['certificates'],
     }),
-    getCertificateTemplateById: builder.query<CertificateTemplate, number>({
+    getCertificateTemplateById: builder.query<
+      { id: number; title: string; template: Descendant[] },
+      number
+    >({
       query: (id) => `certificate/${id}`,
+      providesTags: ['certificates'],
     }),
     addCertificateTemplate: builder.mutation<
       boolean,
