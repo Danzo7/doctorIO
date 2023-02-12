@@ -12,6 +12,7 @@ import { prescriptionToMedicalCertificate } from '@libs/slate_editor/helper';
 import PrintPaper from '@components/print_paper';
 import { FIT_MODAL } from '@libs/overlay';
 import color from '@assets/styles/color';
+import BorderSeparator from '@components/border_separator';
 
 interface SessionPreviewModalProps {
   id: number;
@@ -27,6 +28,7 @@ export default function SessionPreviewModal({
       {data && (
         <div className="tab-menu-container">
           <AppointmentDetailPreview {...data} />
+          <BorderSeparator direction="horizontal" color={color.silver_gray} />
           {data.session && (
             <TabComponent
               borderBottom={false}
