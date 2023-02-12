@@ -8,12 +8,17 @@
     border: 1px solid $silvergray;
     border-radius: 7px;
     height: fit-content;
+    overflow: hidden;
 
     > span {
         font-weight: 400;
         font-size: 15px;
         color: $textgray;
-        //TODO add text overflow
+        -webkit-line-clamp: 1;
+        word-break: break-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     > .keywords-info-div {
