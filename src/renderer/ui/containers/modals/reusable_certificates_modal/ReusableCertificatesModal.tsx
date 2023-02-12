@@ -5,7 +5,6 @@ import { color } from '@assets/styles/color';
 import { Overlay_u, modal } from '@stores/overlayStore';
 import KeywordFieldItem from '@components/keyword_field_item';
 import add from 'toSvg/add.svg?icon';
-import CertificateEditorModal from '../certificate_editor_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import {
   useDeleteCertificateTemplateMutation,
@@ -13,6 +12,7 @@ import {
 } from '@redux/clinic/templates/templatesApi';
 import LoadingSpinner from '@components/loading_spinner';
 import RefetchPanel from '@components/refetch_panel';
+import AddNewCertificateModal from '../add_new_certificate_modal';
 
 interface ReusableCertificatesModalProps {}
 export default function ReusableCertificatesModal({}: ReusableCertificatesModalProps) {
@@ -24,6 +24,7 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
     <div className="template-keywords-modal">
       <ModalContainer
         title="Reusable certificates"
+        controlsPosition="end"
         controls={
           <TextButton
             text={'Close'}
@@ -43,11 +44,11 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
                 <KeywordFieldItem
                   key={id}
                   name={title}
+                  textGrow
                   onEdit={() => {
-                    //TODO description not found in useGetCertificateTemplatesQuery
                     modal(
-                      <CertificateEditorModal
-                      // defaultValue={{ id, title, description: '' }}
+                      <AddNewCertificateModal
+                        defaultValue={{ id: id.toString(), title: title }}
                       />,
                       DEFAULT_MODAL,
                       'certificateModal',
@@ -71,7 +72,7 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
               padding={10}
               borderColor={color.silver_gray}
               onPress={() => {
-                modal(<CertificateEditorModal />, DEFAULT_MODAL).open();
+                modal(<AddNewCertificateModal />, DEFAULT_MODAL).open();
               }}
             />
           </div>
