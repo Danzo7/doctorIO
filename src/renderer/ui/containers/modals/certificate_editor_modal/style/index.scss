@@ -1,14 +1,6 @@
 @use '~styles/appColors' as *;
 .certificate-editor-modal {
 
-    .certificate-editor-controls {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        flex-grow: 1;
-        justify-content: flex-end;
-    }
-
     .certificate-editor-inputs {
         display: flex;
         flex-direction: column;

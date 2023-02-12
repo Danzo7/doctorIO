@@ -40,6 +40,16 @@ export default function CertificateEditorModal({
     <div className="certificate-editor-modal">
       <ModalContainer
         title="Medical certificate"
+        controlsPosition="end"
+        controls={
+          <TextButton
+            text="Save"
+            backgroundColor={color.good_green}
+            fontSize={14}
+            blank
+            type="submit"
+          />
+        }
         {...{
           onSubmit: handleSubmit((data) => {
             if (!editorControllerRef.current) {
@@ -59,17 +69,6 @@ export default function CertificateEditorModal({
               });
             Overlay_u.close('certificateModal');
           }),
-          controls: (
-            <div className="certificate-editor-controls">
-              <TextButton
-                text="Save"
-                backgroundColor={color.good_green}
-                fontSize={14}
-                blank
-                type="submit"
-              />
-            </div>
-          ),
         }}
       >
         <div className="certificate-editor-inputs">
