@@ -1,26 +1,39 @@
 @use '~styles/appColors' as *;
 .certificate-preview-modal {
 
-    .certificate-preview-controls {
+    .title-div {
         display: flex;
-        flex-direction: row;
-        gap: 10px;
-        flex-grow: 1;
-        justify-content: flex-end;
+        align-items: stretch;
+        padding:  10px;
+        background: $darkerseccolor;
+        border: 1px solid $bordercolor;
+        border-radius: 7px;
+        overflow: hidden;
+
+        > span {
+            font-weight: 400;
+            font-size: 15px;
+            color: $white;
+            -webkit-line-clamp: 1;
+            word-break: break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
     }
 
-    .certificate-preview-inputs {
+    .certificate-editor-inputs {
         display: flex;
         flex-direction: column;
         gap: 10px;
 
-        > .certificate-preview-wrapper {
+        > .certificate-editor-wrapper {
             display: flex;
             flex-direction: column;
             gap: 10px;
 
             > span {
-                color: $white;
+                color: $textgray;
                 font-weight: 500;
                 font-size: 16px;
             }

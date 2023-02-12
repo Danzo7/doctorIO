@@ -10,8 +10,9 @@ import {
 } from '@models/instance.model';
 import { modal } from '@stores/overlayStore';
 import PrintPaper from '@components/print_paper';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { FIT_MODAL } from '@libs/overlay';
 import { Member } from '@models/server.models';
+import TextPair from '@components/text_pair/TextPair';
 
 interface CertificatePreviewModalProps {
   defaultValue: MedicalCertificate;
@@ -30,32 +31,42 @@ export default function CertificatePreviewModal({
     <div className="certificate-preview-modal">
       <ModalContainer
         title="Medical certificate"
-        {...{
-          controls: (
-            <div className="certificate-preview-controls">
-              <TextButton
-                text="Print"
-                backgroundColor={color.good_green}
-                fontSize={14}
-                blank
-                onPress={() =>
-                  modal(
-                    <PrintPaper
-                      appointment={appointment}
-                      content={defaultValue}
-                      patient={patient}
-                      member={member}
-                    />,
-                    DEFAULT_MODAL,
-                  ).open()
-                }
-              />
-            </div>
-          ),
-        }}
+        controlsPosition="end"
+        controls={
+          <TextButton
+            text="Print"
+            backgroundColor={color.good_green}
+            fontSize={14}
+            blank
+            onPress={() =>
+              modal(
+                <PrintPaper
+                  appointment={appointment}
+                  content={defaultValue}
+                  patient={patient}
+                  member={member}
+                />,
+                FIT_MODAL,
+              ).open()
+            }
+          />
+        }
       >
-        <div className="certificate-preview-inputs">
-          <div>{defaultValue.title}</div>
+        <div className="certificate-editor-inputs ">
+          <TextPair
+            first={{
+              text: 'Title',
+              fontSize: 16,
+              fontWeight: 500,
+              fontColor: color.text_gray,
+            }}
+            second={
+              <div className="title-div">
+                <span>{defaultValue.title}</span>
+              </div>
+            }
+          />
+
           <div className="certificate-editor-wrapper">
             <span>Content</span>
             <CertificateEditor
