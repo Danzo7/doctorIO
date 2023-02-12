@@ -166,6 +166,7 @@ export function CertificatesView({
     <div className="certificates-view-tab">
       {certificates.map((certificate, index) => (
         <KeywordFieldItem
+          gap={10}
           key={index}
           name={certificate.title}
           onView={() =>
