@@ -30,9 +30,9 @@ import { CommonEditor } from '@libs/slate_editor/commons/CommonEditor';
 import LoadingSpinner from '@components/loading_spinner';
 import { Member } from '@models/server.models';
 import ModalContainer from '@components/modal_container';
-import IconicButton from '@components/buttons/iconic_button';
 import color from '@assets/styles/color';
 import Print from 'toSvg/print.svg?icon';
+import TextButton from '@components/buttons/text_button';
 interface PrintPaperProps {
   content: MedicalCertificate;
   patient: Patient;
@@ -87,13 +87,13 @@ export default function PrintPaper({
   ) : (
     <ModalContainer
       title="Preview"
+      controlsPosition="end"
       controls={
-        <IconicButton
+        <TextButton
           Icon={Print}
+          text="Print"
           backgroundColor={color.cold_blue}
           radius={7}
-          iconSize={14}
-          width={30}
           onPress={() => {
             if (componentRef.current != undefined) handlePrint();
           }}
@@ -101,87 +101,100 @@ export default function PrintPaper({
       }
     >
       <div
-        className="print-paper"
-        css={{ maxHeight: 400, overflowY: 'scroll', overflowX: 'hidden' }}
-        ref={(ref) => {
-          if (ref) componentRef.current = ref;
+        css={{
+          maxHeight: 400,
+          overflowY: 'scroll',
+          padding: 50,
+          backgroundColor: color.darkersec_color,
+          borderRadius: 7,
+          paddingTop: 25,
+          border: ` 1px solid ${color.border_color} `,
         }}
       >
-        <Slate
-          editor={editor}
-          value={mapElements(desendants, (node) => {
-            if (node.type == 'attribute') {
-              const {
-                children: [text],
-                reference,
-              } = node;
-              let replacementString = '';
-              const [table, attr] = reference.split('.');
-              switch (table) {
-                case 'Patient':
-                  replacementString = (patient as any)?.[attr] ?? '';
-                  break;
-                case 'Clinic':
-                  replacementString = (clinicData as any)?.[attr] ?? '';
-                  break;
-                case 'Doctor':
-                  replacementString = (member as any)?.[attr] ?? '';
-                  break;
-                case 'Appointment':
-                  replacementString = (appointment as any)?.[attr] ?? '';
-                  break;
-              }
-              replacementString = isDate(replacementString)
-                ? format(replacementString as any, SETTINGS.dateFormat)
-                : replacementString.toString();
-              return {
-                type: 'span',
-                children: [{ ...text, text: replacementString }],
-                inline: true,
-                void: false,
-              };
-            }
-            if (node.type == 'dynamic') {
-              return {
-                ...node,
-                type: 'dynamic',
-                replace: true,
-                children: [
-                  {
-                    type: 'h1',
+        <div css={{ boxShadow: '0 0 5px 3px ' + color.darker }}>
+          <div
+            className="print-paper"
+            ref={(ref) => {
+              if (ref) componentRef.current = ref;
+            }}
+          >
+            <Slate
+              editor={editor}
+              value={mapElements(desendants, (node) => {
+                if (node.type == 'attribute') {
+                  const {
+                    children: [text],
+                    reference,
+                  } = node;
+                  let replacementString = '';
+                  const [table, attr] = reference.split('.');
+                  switch (table) {
+                    case 'Patient':
+                      replacementString = (patient as any)?.[attr] ?? '';
+                      break;
+                    case 'Clinic':
+                      replacementString = (clinicData as any)?.[attr] ?? '';
+                      break;
+                    case 'Doctor':
+                      replacementString = (member as any)?.[attr] ?? '';
+                      break;
+                    case 'Appointment':
+                      replacementString = (appointment as any)?.[attr] ?? '';
+                      break;
+                  }
+                  replacementString = isDate(replacementString)
+                    ? format(replacementString as any, SETTINGS.dateFormat)
+                    : replacementString.toString();
+                  return {
+                    type: 'span',
+                    children: [{ ...text, text: replacementString }],
+                    inline: true,
+                    void: false,
+                  };
+                }
+                if (node.type == 'dynamic') {
+                  return {
+                    ...node,
+                    type: 'dynamic',
+                    replace: true,
                     children: [
                       {
-                        text: content.title,
-                        underline: true,
+                        type: 'h1',
+                        children: [
+                          {
+                            text: content.title,
+                            underline: true,
+                          },
+                        ],
+                        align: 'center',
                       },
+                      ...content.description,
                     ],
-                    align: 'center',
-                  },
-                  ...content.description,
-                ],
-              };
-            }
+                  };
+                }
 
-            return node;
-          })}
-        >
-          <Editable
-            readOnly
-            css={{
-              width: cmToPx(paperSize.width),
-              height: cmToPx(paperSize.height),
-              maxHeight: cmToPx(paperSize.height),
-              padding: `${cmToPx(margins.top)}px ${cmToPx(
-                margins.right,
-              )}px ${cmToPx(margins.bottom)}px ${cmToPx(margins.left)}px`,
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-            placeholder="Write something..."
-            renderLeaf={renderLeaf}
-            renderElement={renderElement}
-          />
-        </Slate>
+                return node;
+              })}
+            >
+              <Editable
+                readOnly
+                css={{
+                  width: cmToPx(paperSize.width),
+                  height: cmToPx(paperSize.height),
+                  maxHeight: cmToPx(paperSize.height),
+                  padding: `${cmToPx(margins.top)}px ${cmToPx(
+                    margins.right,
+                  )}px ${cmToPx(margins.bottom)}px ${cmToPx(margins.left)}px`,
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+                placeholder="Write something..."
+                renderLeaf={renderLeaf}
+                renderElement={renderElement}
+              />
+            </Slate>
+          </div>
+        </div>
       </div>
     </ModalContainer>
   );
