@@ -121,7 +121,7 @@ interface PrintingTemplate {
 interface CertificateTemplate {
   id: number;
   title: string;
-  template: CustomElement[];
+  template: string;
 }
 
 export type {
