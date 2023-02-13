@@ -2,7 +2,8 @@ import Backdrop from '@components/backdrop';
 import './style/index.scss';
 import addIcon from 'toSvg/add.svg?icon';
 import removeIcon from 'toSvg/trash_can.svg?icon';
-import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
+import IconicButton from '@components/buttons/iconic_button';
+import color from '@assets/styles/color';
 interface ImageItemProps {
   url: string;
   height?: number;
@@ -22,10 +23,22 @@ export default function ImageItem({
   return (
     <Backdrop
       node={
-        <>
-          <SquareIconButton Icon={addIcon} onPress={onAdd} />
-          <SquareIconButton Icon={removeIcon} onPress={onRemove} />
-        </>
+        <div css={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
+          <IconicButton
+            Icon={addIcon}
+            onPress={onAdd}
+            iconSize={20}
+            borderColor={color.cold_blue}
+            afterBgColor={color.cold_blue}
+          />
+          <IconicButton
+            Icon={removeIcon}
+            onPress={onRemove}
+            borderColor={color.hot_red}
+            afterBgColor={color.hot_red}
+            iconAfterColor={color.white}
+          />
+        </div>
       }
       when={'blur'}
     >
