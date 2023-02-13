@@ -121,7 +121,7 @@ interface PrintingTemplate {
 interface CertificateTemplate {
   id: number;
   title: string;
-  template: string;
+  template?: Descendant[];
 }
 
 export type {
