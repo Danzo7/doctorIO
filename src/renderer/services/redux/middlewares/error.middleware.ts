@@ -146,31 +146,72 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
         toast('New medical history added successfully', 'Success', 2000);
         break;
       case 'updateClinicOverview':
-        toast('The Clinic information updated successfully', 'Success', 2000);
+        toast(
+          'The Clinic information has been updated successfully',
+          'Success',
+          2000,
+        );
         break;
       case 'createInvitation':
-        toast('Invitation key generated successfully', 'Success', 2000);
+        toast(
+          'Invitation key has been generated successfully',
+          'Success',
+          2000,
+        );
         break;
       case 'assignRole':
-        toast('Role assigned successfully', 'Success', 2000);
+        toast('Role has been assigned successfully', 'Success', 2000);
         break;
       case 'revokeRole':
-        toast('Role revoked successfully', 'Success', 2000);
+        toast('Role has been revoked successfully', 'Success', 2000);
         break;
       case 'UpdateRole':
-        toast('Role updated successfully', 'Success', 2000);
+        toast('Role has been updated successfully', 'Success', 2000);
         break;
       case 'updateMember':
-        toast('Member information updated successfully', 'Success', 2000);
+        toast(
+          'Member information has been updated successfully',
+          'Success',
+          2000,
+        );
         break;
       case 'setAvatar':
-        toast('Member avatar updated successfully', 'Success', 2000);
+        toast('Member avatar has been updated successfully', 'Success', 2000);
         break;
       case 'updatePatientDetail':
-        toast('Patient information updated successfully', 'Success', 2000);
+        toast(
+          'Patient information has been updated successfully',
+          'Success',
+          2000,
+        );
         break;
       case 'updateMemberSecret':
-        toast('The secret key updated successfully', 'Success', 2000);
+        toast('The secret key has been updated successfully', 'Success', 2000);
+        break;
+
+      case 'addCertificateTemplate':
+        toast(
+          'New certificate template has been added successfully',
+          'Success',
+          2000,
+        );
+        break;
+      case 'deleteCertificateTemplate':
+        toast(
+          'Certificate template has been deleted successfully',
+          'Success',
+          2000,
+        );
+        break;
+      case 'updateCertificateTemplate':
+        toast(
+          'Certificate template has been updated successfully',
+          'Success',
+          2000,
+        );
+        break;
+      case 'setPrintTemplate':
+        toast('Print template has been updated successfully', 'Success', 2000);
         break;
 
       case 'findPatientByName':
