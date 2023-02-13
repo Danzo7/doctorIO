@@ -163,7 +163,6 @@ export default function PrintPaper({
                         children: [
                           {
                             text: content.title,
-                            underline: true,
                           },
                         ],
                         align: 'center',
