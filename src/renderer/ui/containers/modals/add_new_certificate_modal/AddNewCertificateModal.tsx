@@ -46,19 +46,18 @@ export default function AddNewCertificateModal({
     resolver: zodResolver(schema),
   });
   const onSubmit: SubmitHandler<Inputs> = ({ title }) => {
-    if (!editorControllerRef.current) {
-      return;
-    }
-    const jsonString = JSON.stringify(editorControllerRef.current);
     if (defaultValue) {
       updateCertificateTemplate({
         id: Number(defaultValue.id),
-        body: { title: title, template: jsonString },
+        body: { title: title, template: editorControllerRef.current },
       });
     } else {
+      if (!editorControllerRef.current) {
+        return;
+      }
       addCertificateTemplate({
         title: title,
-        template: jsonString,
+        template: editorControllerRef.current,
       });
     }
 
