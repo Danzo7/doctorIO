@@ -17,7 +17,7 @@ const templatesApi = createApi({
         return {
           url: 'print',
           body: { ...others, template: JSON.stringify(template) },
-          method: 'POST',
+          method: 'PATCH',
         };
       },
       invalidatesTags: ['print'],
@@ -43,8 +43,15 @@ const templatesApi = createApi({
       boolean,
       Omit<CertificateTemplate, 'id'>
     >({
-      query: (body) => {
-        return { url: 'certificate', body: { ...body }, method: 'POST' };
+      query: ({ title, template }) => {
+        return {
+          url: 'certificate',
+          body: {
+            title: title,
+            template: JSON.stringify(template),
+          },
+          method: 'POST',
+        };
       },
       invalidatesTags: ['certificates'],
     }),
@@ -52,8 +59,15 @@ const templatesApi = createApi({
       boolean,
       { id: number; body: Partial<Omit<CertificateTemplate, 'id'>> }
     >({
-      query: ({ id, body }) => {
-        return { url: `certificate/${id}`, body: { ...body }, method: 'POST' }; //TODO change to PATCH
+      query: ({ id, body: { template, title } }) => {
+        return {
+          url: `certificate/${id}`,
+          body: {
+            title: title,
+            template: template ? JSON.stringify(template) : undefined,
+          },
+          method: 'PATCH',
+        };
       },
       invalidatesTags: ['certificates'],
     }),
