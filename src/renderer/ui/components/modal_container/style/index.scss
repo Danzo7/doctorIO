@@ -6,7 +6,7 @@
     padding: 15px;
     background: $secondarycolor;
     border:1px solid $darkerseccolor;
-
+    overflow: hidden;
     border-radius: 7px;
 
     > .modal-body {
@@ -16,6 +16,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 15px;
+        overflow: hidden;
 
         > div {
             flex-basis: 40%;
