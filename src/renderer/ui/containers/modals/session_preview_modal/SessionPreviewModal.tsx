@@ -11,7 +11,7 @@ import { modal } from '@stores/overlayStore';
 import { prescriptionToMedicalCertificate } from '@libs/slate_editor/helper';
 import PrintPaper from '@components/print_paper';
 import { FIT_MODAL } from '@libs/overlay';
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 
 interface SessionPreviewModalProps {
@@ -69,7 +69,7 @@ export default function SessionPreviewModal({
                         ></TextButton>
                       </div>
                     ),
-                  }, //TODO add print certificate
+                  },
                   data.session.certificates &&
                     data.session.certificates.length && {
                       label: 'Certificates',
