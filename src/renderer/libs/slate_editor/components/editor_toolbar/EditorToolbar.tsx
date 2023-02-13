@@ -169,7 +169,7 @@ export default function EditorToolbar({}: EditorToolbarProps) {
                   }}
                 />
               ),
-              { ...DEFAULT_MODAL, width: '40%' },
+              { ...DEFAULT_MODAL, width: '90%', height: '90%' },
             ).open();
           }}
           unFocusable
