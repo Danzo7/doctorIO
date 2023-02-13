@@ -5,6 +5,7 @@ import { color } from '@assets/styles/color';
 import VerticalPanel from '@components/vertical_panel';
 import { getImageFile } from '@helpers/image.helper';
 import {
+  useDeleteImageMutation,
   useGetImagesQuery,
   useUploadImageMutation,
 } from '@redux/clinic/cloud/cloudApi';
@@ -17,6 +18,7 @@ interface ImageGalleryProps {
 }
 export default function ImageGallery({ onSelect }: ImageGalleryProps) {
   const [uploadImage, respond] = useUploadImageMutation();
+  const [deleteImage, result] = useDeleteImageMutation();
 
   const uploadLocalImage = () => {
     const input = document.createElement('input');
@@ -40,12 +42,14 @@ export default function ImageGallery({ onSelect }: ImageGalleryProps) {
       title="Choose an image"
       isLoading={isLoading}
       className="image-gallery"
+      css={{ flexGrow: 1 }}
       controls={
         <TextButton
           text="Add local image"
           fontSize={14}
           fontColor={color.white}
           fontWeight={400}
+          backgroundColor={color.cold_blue}
           onPress={uploadLocalImage}
           disabled={respond.isLoading}
         />
@@ -54,13 +58,20 @@ export default function ImageGallery({ onSelect }: ImageGalleryProps) {
       {isSuccess ? (
         data.length > 0 ? (
           <div className="images-container">
-            {data.map((id, index) => (
+            {data.map(({ id, fileName }, index) => (
               <ImageItem
                 key={index}
-                url={useConnectionStore.getState().getUrl() + CLOUD_PATH + id}
+                url={
+                  useConnectionStore.getState().getUrl() + CLOUD_PATH + fileName
+                }
+                onRemove={() => {
+                  deleteImage(id);
+                }}
                 onAdd={() => {
                   onSelect?.(
-                    useConnectionStore.getState().getUrl() + CLOUD_PATH + id,
+                    useConnectionStore.getState().getUrl() +
+                      CLOUD_PATH +
+                      fileName,
                   );
                 }}
               />
