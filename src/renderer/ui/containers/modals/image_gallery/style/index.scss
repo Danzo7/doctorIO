@@ -1,7 +1,7 @@
 @use '~styles/appColors' as *;
 .image-gallery {
     .images-container {
-        height: 50vh;
+        height: 100%;
         overflow-y: auto;
         display: flex;
         flex-wrap: wrap;
