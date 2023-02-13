@@ -6,7 +6,13 @@ const cloudApi = createApi({
   baseQuery: createQuery('clinic/cloud').query,
   tagTypes: ['images'],
   endpoints: (builder) => ({
-    getImages: builder.query<string[], void>({
+    getImages: builder.query<
+      {
+        fileName: string;
+        id: number;
+      }[],
+      void
+    >({
       query: () => '/images',
       providesTags: ['images'],
     }),
