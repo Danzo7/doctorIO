@@ -1,0 +1,10 @@
+@use '~styles/appColors' as *;
+.certificates-view-tab {
+    display: flex;
+    flex-direction: row;
+
+    flex-grow: 1;
+    align-self: stretch;
+    gap: 10px;
+    flex-wrap: wrap;
+}
