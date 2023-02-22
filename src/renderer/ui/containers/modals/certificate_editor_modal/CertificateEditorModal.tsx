@@ -37,65 +37,72 @@ export default function CertificateEditorModal({
   const editorControllerRef = useRef<Descendant[]>();
 
   return (
-    <div className="certificate-editor-modal">
-      <ModalContainer
-        title="Medical certificate"
-        controlsPosition="end"
-        controls={
-          <TextButton
-            text="Save"
-            backgroundColor={color.good_green}
-            fontSize={14}
-            blank
-            type="submit"
-          />
-        }
-        {...{
-          onSubmit: handleSubmit((data) => {
-            if (!editorControllerRef.current) {
-              return;
-            }
-            if (defaultValue)
-              useMedicalSessionStore
-                .getState()
-                .updateCertificate(defaultValue.id, {
-                  title: data.title,
-                  description: editorControllerRef.current,
-                });
-            else
-              useMedicalSessionStore.getState().addCertificate({
+    <ModalContainer
+      className="certificate-editor-modal"
+      css={{ flexGrow: 1 }}
+      title="Medical certificate"
+      controlsPosition="end"
+      controls={
+        <TextButton
+          text="Save"
+          backgroundColor={color.good_green}
+          fontSize={14}
+          blank
+          type="submit"
+        />
+      }
+      {...{
+        onSubmit: handleSubmit((data) => {
+          if (!editorControllerRef.current) {
+            return;
+          }
+          if (defaultValue)
+            useMedicalSessionStore
+              .getState()
+              .updateCertificate(defaultValue.id, {
                 title: data.title,
                 description: editorControllerRef.current,
               });
-            Overlay_u.close('certificateModal');
-          }),
-        }}
-      >
-        <div className="certificate-editor-inputs">
-          {
-            //todo add non editable title
-            <Input label="Title" control={control} name="title" type={'text'} />
-          }
-          <div className="certificate-editor-wrapper">
-            <span>Content</span>
-            <CertificateEditor
-              mentions={mentions}
-              defaultValue={defaultValue?.description}
-              error={error}
-              onChange={(value) => {
-                if (CommonEditor.isEmptyElements(value)) {
-                  editorControllerRef.current = undefined;
-                  if (!error) setError('Content is required');
-                } else {
-                  editorControllerRef.current = value;
+          else
+            useMedicalSessionStore.getState().addCertificate({
+              title: data.title,
+              description: editorControllerRef.current,
+            });
+          Overlay_u.close('certificateModal');
+        }),
+      }}
+    >
+      <div className="certificate-editor-inputs">
+        {
+          //todo add non editable title
 
-                  setError(undefined);
-                }
-              }}
-            />
-          </div>
+          <Input
+            grow={false}
+            label="Title"
+            control={control}
+            name="title"
+            type={'text'}
+          />
+        }
+        <div className="certificate-editor-wrapper">
+          <span>Content</span>
+          <CertificateEditor
+            mentions={mentions}
+            defaultValue={defaultValue?.description}
+            error={error}
+            onChange={(value) => {
+              if (CommonEditor.isEmptyElements(value)) {
+                editorControllerRef.current = undefined;
+                if (!error) setError('Content is required');
+              } else {
+                editorControllerRef.current = value;
+
+                setError(undefined);
+              }
+            }}
+          />
         </div>
-      </ModalContainer>
-    </div>
+      </div>
+    </ModalContainer>
   );
 }
