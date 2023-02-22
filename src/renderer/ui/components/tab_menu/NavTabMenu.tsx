@@ -29,7 +29,11 @@ export default function NavTabMenu({
       >
         <div className="menu-items">
           {items.map((item, index) => (
-            <Badged pre="preview" key={index} skip={!previews?.includes(index)}>
+            <Badged
+              badge="preview"
+              key={index}
+              skip={!previews?.includes(index)}
+            >
               <SmartLink to={(item as RouteDef)?.route ?? item} key={index}>
                 {({ isMatch }) => (
                   <DarkLightCornerButton

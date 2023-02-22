@@ -24,10 +24,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
     <div className="clinic-settings">
       <div className="clinic-settings-header">
         <span>Clinic Settings</span>
-        <DarkLightCornerButton
-          text="view all"
-          onPress={() => navigate('all', { replace: false })}
-        />
+
         <DarkLightCornerButton
           text="disconnect"
           fontColor={colors.hot_red}
@@ -74,7 +71,7 @@ export default function ClinicSettings({}: ClinicSettingsProps) {
           },
           'Security settings',
         ]}
-        previews={[3, 4, 5, 6]}
+        previews={[3, 5, 6, 7]}
       />
       <Routes>
         <Route path="Roles/*" element={<RolesTab />} />

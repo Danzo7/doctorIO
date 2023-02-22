@@ -1,4 +1,5 @@
 import { AppClinics, LocalClinicData } from '@models/local.models';
+import { Clinic } from '@models/server.models';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -12,6 +13,7 @@ interface ClinicsState {
   getSelectedClinic(): LocalClinicData;
   getSelectedIndex(): number | undefined;
   getClinics(): LocalClinicData[];
+  syncCurrentClinic(clinic: Clinic): void;
 }
 export const useClinicsStore = create<ClinicsState>()(
   persist(
@@ -50,6 +52,13 @@ export const useClinicsStore = create<ClinicsState>()(
       },
       getSelectedIndex() {
         return get().clinicData.selected;
+      },
+      syncCurrentClinic(clinic) {
+        set((state) => {
+          const clinicData = new AppClinics(state.clinicData);
+          clinicData.syncCurrent(clinic);
+          return { clinicData };
+        });
       },
     }),
 

@@ -92,7 +92,7 @@ export default function ShortStatsPanel({}: ShortStatsPanelProps) {
       <div className="stats-container">
         {miniStatsList.map(
           ({ text, Icon, value, backgroundColor, percentage }) => (
-            <Badged pre="preview" key={text + value}>
+            <Badged badge="preview" key={text + value}>
               <MiniStats
                 text={text}
                 Icon={Icon}

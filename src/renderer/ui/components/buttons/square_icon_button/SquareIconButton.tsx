@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 import IconicButton from '../iconic_button';
+import { color } from '@assets/styles/color';
 
 function SquareIconButton(
   props: Omit<
@@ -11,7 +12,7 @@ function SquareIconButton(
     <IconicButton
       width={25}
       backgroundColor="transparent"
-      afterBgColor="#ffffff20"
+      afterBgColor={color.light}
       radius={5}
       {...props}
     />

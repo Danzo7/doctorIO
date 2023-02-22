@@ -195,6 +195,7 @@ export default function Input<
           placeholder={placeholder}
           rules={rules}
           field={field}
+          errorMessage={errorMessage ?? fieldState?.error?.message}
           isOptional={(type as NumericInput)?.isOptional}
           ref={ref}
           fieldState={fieldState}
@@ -214,10 +215,11 @@ export default function Input<
           onChanged={onChange}
           placeholder={placeholder}
           radius={radius}
+          errorMessage={errorMessage ?? fieldState?.error?.message}
         />
       ) : (
         <InputWrapper
-          errorMessage={fieldState?.error?.message}
+          errorMessage={errorMessage ?? fieldState?.error?.message}
           leading={leading}
           trailing={trailing}
           fillContainer

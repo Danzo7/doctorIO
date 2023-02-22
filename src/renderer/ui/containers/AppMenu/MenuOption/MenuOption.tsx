@@ -1,7 +1,6 @@
 import './style/index.scss';
 import SmartLink, { ToRoute } from '@libs/smart_link';
 import { Badged } from '@components/badge/Badge';
-import { color } from '@assets/styles/color';
 import { FunctionComponent, SVGProps } from 'react';
 interface MenuOptionProps {
   items: {
@@ -30,7 +29,7 @@ function MenuOption({ items }: MenuOptionProps) {
         ({ name, svg: Svg }, index) =>
           name !== 'logo' &&
           (name == 'messages' ? (
-            <Badged text="preview" color={color.hot_red} key={index}>
+            <Badged badge="preview" key={index}>
               <SmartLink
                 key={name}
                 className={({ isMatch }) =>

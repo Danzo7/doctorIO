@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import './style/index.scss';
 import { color as colors } from '@colors';
+import { IS_PREVIEW } from '@constants/env';
 interface BadgeProps {
   text?: string;
   color?: string;
@@ -15,7 +16,7 @@ export default function Badge({ text, color }: BadgeProps) {
 interface BadgedProps extends BadgeProps {
   children: ReactNode;
   skip?: boolean;
-  pre?: 'preview' | 'new';
+  badge?: 'preview' | 'new';
 }
 
 export function Badged({
@@ -23,12 +24,13 @@ export function Badged({
   color,
   children,
   skip,
-  pre,
+  badge,
 }: Partial<BadgedProps>) {
+  if (badge == 'preview' && !IS_PREVIEW && !skip) return <></>;
   const set =
-    pre == 'preview'
-      ? { text: 'preview', color: colors.hot_red }
-      : pre == 'new'
+    badge == 'preview'
+      ? { text: 'pre', color: colors.hot_red }
+      : badge == 'new'
       ? { text: 'new', color: colors.hot_red }
       : { text, color };
   return skip ? (

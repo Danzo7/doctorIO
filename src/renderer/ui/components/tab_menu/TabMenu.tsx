@@ -49,7 +49,7 @@ export default function TabMenu({
           >
             {items.map((text, index) => (
               <Badged
-                pre="preview"
+                badge="preview"
                 key={index}
                 skip={!previews?.includes(index)}
               >

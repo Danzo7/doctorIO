@@ -368,6 +368,7 @@ export const Overlay_u = {
     ) => ActionProps[] | ReactNode,
     popperTarget: HTMLElement,
     autoClose?: true,
+    options?: OverlayOptions,
   ) =>
     useOverlayStore
       .getState()
@@ -386,6 +387,7 @@ export const Overlay_u = {
               closeOnClickOutside: true,
               closeOnBlur: true,
               popperTarget,
+              ...options,
             },
           };
         },
@@ -393,7 +395,39 @@ export const Overlay_u = {
         { type: OverlayType.TOOLTIP },
       )
       .open(),
+  tooltip: (
+    target: (
+      props: Pick<ControlReturnVoids, 'close' | 'hide' | 'open'>,
+    ) => ActionProps[] | ReactNode,
+    popperTarget: HTMLElement,
+    options?: OverlayOptions,
+    id?: string,
+    autoClose?: true,
+  ) =>
+    useOverlayStore.getState().init(
+      ({ close, open, hide }) => {
+        const node = target({ close, open, hide });
+        return {
+          node: !Array.isArray(node)
+            ? node
+            : Tooltip({
+                actionList: node,
+                closeOnSelect: autoClose && close,
+              }),
+          props: {
+            clickThrough: true,
+            closeOnClickOutside: true,
+            closeOnBlur: true,
+            popperTarget,
+            ...options,
+          },
+        };
+      },
+      id,
+      { type: OverlayType.TOOLTIP },
+    ),
 };
 export const useToast = () => useOverlayStore((state) => state.toasts);
 export const toast = Overlay_u.toast;
 export const modal = Overlay_u.modal;
+export const tooltip = Overlay_u.tooltip;

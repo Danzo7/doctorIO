@@ -14,6 +14,8 @@ export default function EyePassword({ onPress, value }: EyePasswordProps) {
       onPress={onPress}
       iconSize={17}
       blank
+      type="button"
+      unFocusable
     />
   );
 }

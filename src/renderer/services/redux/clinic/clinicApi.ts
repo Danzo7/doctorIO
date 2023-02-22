@@ -1,6 +1,7 @@
 import { VitalField } from '@models/local.models';
 import { Clinic } from '@models/server.models';
 import { createApi } from '@reduxjs/toolkit/dist/query/react';
+import { useClinicsStore } from '@stores/clinicsStore';
 import { createQuery } from '@stores/staticQueriesStore';
 import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 
@@ -12,6 +13,11 @@ const clinicApi = createApi({
     getClinic: builder.query<Clinic, void>({
       query: () => '',
       providesTags: ['clinic'],
+      onQueryStarted: (arg, { queryFulfilled }) => {
+        queryFulfilled.then((data) => {
+          useClinicsStore.getState().syncCurrentClinic(data.data);
+        });
+      },
     }),
     updateClinicOverview: builder.mutation<
       boolean,
@@ -21,6 +27,7 @@ const clinicApi = createApi({
         return { url: '', body: { ...body }, method: 'PATCH' };
       },
       invalidatesTags: ['clinic'],
+
       // onQueryStarted: (arg, { dispatch, queryFulfilled }) => {
       // const {data}=await queryFulfilled;
       // useClinicsStore.getState().//TODO: Set selected clinic info from data

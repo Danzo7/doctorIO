@@ -5,39 +5,21 @@ import InputWrapper from '../input_wrapper';
 import { ControllerProps } from '../input';
 interface PasswordInputProps
   extends ControllerProps,
-    Pick<
-      ComponentProps<typeof InputWrapper>,
-      'disabled' | 'background' | 'radius' | 'touchFirst' | 'leading'
-    > {
+    Omit<ComponentProps<typeof InputWrapper>, 'trailing' | 'children'> {
   placeholder?: string;
 }
 export default forwardRef(function PasswordInput(
-  {
-    field,
-    fieldState,
-    onChanged,
-    placeholder,
-    disabled,
-    background,
-    leading,
-    radius,
-    touchFirst,
-  }: PasswordInputProps,
+  { field, onChanged, placeholder, disabled, ...rest }: PasswordInputProps,
   ref: any,
 ) {
   const [show, setShow] = useState(false);
   const { onChange, ...others } = field;
-
   return (
     <InputWrapper
-      errorMessage={fieldState?.error?.message}
-      leading={leading}
       trailing={<EyePassword value={show} onPress={() => setShow(!show)} />}
       fillContainer
       disabled={disabled}
-      background={background}
-      radius={radius}
-      touchFirst={touchFirst}
+      {...rest}
     >
       <input
         placeholder={placeholder}

@@ -80,6 +80,7 @@ interface TextButtonProps {
   tip?: string;
   unFocusable?: boolean;
   fake?: boolean;
+  outline?: boolean;
 }
 export default function TextButton({
   className,
@@ -114,6 +115,7 @@ export default function TextButton({
   unFocusable,
   onMouseDown,
   onMouseUp,
+  outline,
   fake,
   ...others
 }: TextButtonProps) {
@@ -153,7 +155,13 @@ export default function TextButton({
       className={`text-button${isHold ? ' hold' : ''} ${className || ''}`}
       css={{
         backgroundColor: !disabled ? backgroundColor : colors.light,
-        border: `${borderColor} ${borderWidth}px solid`,
+        ...(!outline
+          ? {
+              border: `${borderColor} ${borderWidth}px solid`,
+            }
+          : {
+              outline: `${borderColor} ${borderWidth}px solid`,
+            }),
         justifyContent: alignment,
         flexDirection: itemsDirection,
         alignSelf: alignSelf,
@@ -183,17 +191,35 @@ export default function TextButton({
               ? `inset 1000px 1000px 1px ${activeBgColor}`
               : undefined,
 
-          border:
-            !disabled && activeBorderColor
-              ? `${activeBorderColor} 1px solid`
-              : undefined,
+          ...(!outline
+            ? {
+                border:
+                  !disabled && activeBorderColor
+                    ? `${activeBorderColor} 1px solid`
+                    : undefined,
+              }
+            : {
+                outline:
+                  !disabled && activeBorderColor
+                    ? `${activeBorderColor} 1px solid`
+                    : undefined,
+              }),
         },
         '&:hover': {
           backgroundColor: !disabled ? afterBgColor : undefined,
-          border:
-            !disabled && afterBorderColor
-              ? `${afterBorderColor} 1px solid`
-              : undefined,
+          ...(!outline
+            ? {
+                border:
+                  !disabled && afterBorderColor
+                    ? `${afterBorderColor} 1px solid`
+                    : undefined,
+              }
+            : {
+                outline:
+                  !disabled && afterBorderColor
+                    ? `${afterBorderColor} 1px solid`
+                    : undefined,
+              }),
           '>svg>path': {
             stroke:
               (Icon as IconProps)?.iconType === 'stroke'
@@ -223,6 +249,10 @@ export default function TextButton({
         if (!onHold) onPress?.(e);
       }}
       onMouseDown={(e) => {
+        if (!blank) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         startHold?.();
         onMouseDown?.(e);
       }}
