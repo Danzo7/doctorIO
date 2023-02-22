@@ -50,7 +50,7 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
                       <AddNewCertificateModal
                         defaultValue={{ id: id.toString(), title: title }}
                       />,
-                      DEFAULT_MODAL,
+                      { ...DEFAULT_MODAL, width: '90%', height: '90%' },
                       'certificateModal',
                     ).open();
                   }}
@@ -72,7 +72,11 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
               padding={10}
               borderColor={color.silver_gray}
               onPress={() => {
-                modal(<AddNewCertificateModal />, DEFAULT_MODAL).open();
+                modal(<AddNewCertificateModal />, {
+                  ...DEFAULT_MODAL,
+                  width: '90%',
+                  height: '90%',
+                }).open();
               }}
             />
           </div>
