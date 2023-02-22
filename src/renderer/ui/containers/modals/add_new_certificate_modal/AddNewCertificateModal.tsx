@@ -64,48 +64,51 @@ export default function AddNewCertificateModal({
     Overlay_u.close();
   };
   return (
-    <div className="add-new-certificate-modal">
-      <ModalContainer
-        isLoading={defaultValue == undefined ? undefined : isLoading}
-        title="Medical certificate"
-        onSubmit={handleSubmit(onSubmit)}
-        controlsPosition="end"
-        controls={
-          <TextButton
-            text={defaultValue ? 'Update' : 'Save'}
-            backgroundColor={color.good_green}
-            fontSize={14}
-            blank
-            type="submit"
-          />
-        }
-      >
-        <div className="certificate-editor-inputs">
-          <Input label="Title" control={control} name="title" type={'text'} />
+    <ModalContainer
+      className="add-new-certificate-modal"
+      isLoading={defaultValue == undefined ? undefined : isLoading}
+      title="Medical certificate"
+      onSubmit={handleSubmit(onSubmit)}
+      controlsPosition="end"
+      controls={
+        <TextButton
+          text={defaultValue ? 'Update' : 'Save'}
+          backgroundColor={color.good_green}
+          fontSize={14}
+          blank
+          type="submit"
+        />
+      }
+    >
+      <div className="certificate-editor-inputs">
+        <Input
+          grow={false}
+          label="Title"
+          control={control}
+          name="title"
+          type={'text'}
+        />
 
-          <div className="certificate-editor-wrapper">
-            <span>Content</span>
-            <CertificateEditor
-              defaultValue={
-                defaultValue != undefined && isSuccess
-                  ? data.template
-                  : undefined
+        <div className="certificate-editor-wrapper">
+          <span>Content</span>
+          <CertificateEditor
+            defaultValue={
+              defaultValue != undefined && isSuccess ? data.template : undefined
+            }
+            error={error}
+            onChange={(value) => {
+              if (CommonEditor.isEmptyElements(value)) {
+                editorControllerRef.current = undefined;
+                if (!error) setError('Content is required');
+              } else {
+                editorControllerRef.current = value;
+
+                setError(undefined);
               }
-              error={error}
-              onChange={(value) => {
-                if (CommonEditor.isEmptyElements(value)) {
-                  editorControllerRef.current = undefined;
-                  if (!error) setError('Content is required');
-                } else {
-                  editorControllerRef.current = value;
-
-                  setError(undefined);
-                }
-              }}
-            />
-          </div>
+            }}
+          />
         </div>
-      </ModalContainer>
-    </div>
+      </div>
+    </ModalContainer>
   );
 }
