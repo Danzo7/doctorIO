@@ -28,54 +28,54 @@ export default function CertificatePreviewModal({
   appointment,
 }: CertificatePreviewModalProps) {
   return (
-    <div className="certificate-preview-modal">
-      <ModalContainer
-        title="Medical certificate"
-        controlsPosition="end"
-        controls={
-          <TextButton
-            text="Print"
-            backgroundColor={color.good_green}
-            fontSize={14}
-            blank
-            onPress={() =>
-              modal(
-                <PrintPaper
-                  appointment={appointment}
-                  content={defaultValue}
-                  patient={patient}
-                  member={member}
-                />,
-                FIT_MODAL,
-              ).open()
-            }
-          />
-        }
-      >
-        <div className="certificate-editor-inputs ">
-          <TextPair
-            first={{
-              text: 'Title',
-              fontSize: 16,
-              fontWeight: 500,
-              fontColor: color.text_gray,
-            }}
-            second={
-              <div className="title-div">
-                <span>{defaultValue.title}</span>
-              </div>
-            }
-          />
+    <ModalContainer
+      title="Medical certificate"
+      className="certificate-preview-modal"
+      controlsPosition="end"
+      css={{ flexGrow: 1 }}
+      controls={
+        <TextButton
+          text="Prepare to print"
+          backgroundColor={color.good_green}
+          fontSize={14}
+          blank
+          onPress={() =>
+            modal(
+              <PrintPaper
+                appointment={appointment}
+                content={defaultValue}
+                patient={patient}
+                member={member}
+              />,
+              FIT_MODAL,
+            ).open()
+          }
+        />
+      }
+    >
+      <div className="certificate-editor-inputs ">
+        <TextPair
+          first={{
+            text: 'Title',
+            fontSize: 16,
+            fontWeight: 500,
+            fontColor: color.text_gray,
+          }}
+          second={
+            <div className="title-div">
+              <span>{defaultValue.title}</span>
+            </div>
+          }
+        />
 
-          <div className="certificate-editor-wrapper">
-            <span>Content</span>
-            <CertificateEditor
-              defaultValue={defaultValue.description}
-              readonly={true}
-            />
-          </div>
+        <div className="certificate-editor-wrapper">
+          <span>Content</span>
+          <CertificateEditor
+            defaultValue={defaultValue.description}
+            readonly={true}
+          />
         </div>
-      </ModalContainer>
-    </div>
+      </div>
+    </ModalContainer>
   );
 }
