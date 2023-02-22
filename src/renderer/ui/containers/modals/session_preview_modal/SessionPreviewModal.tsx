@@ -4,7 +4,6 @@ import TabComponent from '@components/tab_component';
 import MedicamentTable from '@layers/medical_session/pages/prescription_tab/medicament_table';
 import { useGetAppointmentDetailQuery } from '@redux/instance/Appointment/AppointmentApi';
 import './style/index.scss';
-import { CertificatesView } from '@layers/medical_session/pages/cetificates_tab/CertificatesTab';
 import { Patient } from '@models/instance.model';
 import TextButton from '@components/buttons/text_button';
 import { modal } from '@stores/overlayStore';
@@ -13,6 +12,7 @@ import PrintPaper from '@components/print_paper';
 import { FIT_MODAL } from '@libs/overlay';
 import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
+import CertificatesView from '@components/certificates_view';
 
 interface SessionPreviewModalProps {
   id: number;
