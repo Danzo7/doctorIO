@@ -143,7 +143,11 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
         toast('The appointment is canceled successfully', 'Success', 2000);
         break;
       case 'addMedicalHistory':
-        toast('New medical history added successfully', 'Success', 2000);
+        toast(
+          'New medical history has been added successfully',
+          'Success',
+          2000,
+        );
         break;
       case 'updateClinicOverview':
         toast(
@@ -212,6 +216,13 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
         break;
       case 'setPrintTemplate':
         toast('Print template has been updated successfully', 'Success', 2000);
+        break;
+      case 'uploadImage':
+        toast(
+          'The selected image has been uploaded successfully',
+          'Success',
+          2000,
+        );
         break;
 
       case 'findPatientByName':
