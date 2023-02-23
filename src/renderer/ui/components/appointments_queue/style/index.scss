@@ -28,6 +28,19 @@
 
         >.wrapper{
             overflow: hidden;
+
+            .vertical-panel-control {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+                > span {
+                    color:$textgray;
+                    font-weight: 400;
+                    font-size: 12px;
+                }
+            }
+
             .queue-list{
                 display: flex;
                 flex-direction: row;
