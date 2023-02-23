@@ -15,6 +15,7 @@ interface VerticalPanelProps {
   alignSelf?: 'center' | 'stretch' | 'start' | 'end';
   height?: number | string;
   flexGrow?: true;
+  bottomControls?: ReactNode;
 }
 export default function VerticalPanel({
   Icon,
@@ -27,6 +28,7 @@ export default function VerticalPanel({
   alignSelf,
   height,
   flexGrow,
+  bottomControls,
 }: VerticalPanelProps) {
   return (
     <div
@@ -38,6 +40,7 @@ export default function VerticalPanel({
           backgroundColor == 'none' ? undefined : `0 0 5px 2px ${color.darker}`,
         alignSelf: alignSelf,
         height,
+        maxHeight: height,
         flexGrow: flexGrow ? 1 : 0,
       }}
     >
@@ -51,6 +54,7 @@ export default function VerticalPanel({
           </span>
         </div>
       )}
+      {bottomControls}
       {IconBtn && <div className="top-left-btn">{IconBtn}</div>}
     </div>
   );
