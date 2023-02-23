@@ -1,9 +1,9 @@
 import color from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import { Overlay } from '@libs/overlay';
 import { useDeleteDocumentMutation } from '@redux/instance/record/medical_document_api';
 import AlertModal from '../dialog_modal';
 import './style/index.scss';
+import { Overlay_u } from '@stores/overlayStore';
 interface DeleteDocumentModalProps {
   fileName: string;
   id: string;
@@ -27,7 +27,7 @@ export default function DeleteDocumentModal({
             afterBgColor={color.light}
             disabled={isLoading}
             onPress={() => {
-              Overlay.close();
+              Overlay_u.close();
             }}
           />
           <TextButton
