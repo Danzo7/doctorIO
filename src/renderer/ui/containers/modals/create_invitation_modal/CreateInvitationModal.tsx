@@ -9,7 +9,6 @@ import SmallRoleList from '@components/members_preview/small_role_list';
 import MemberMiniCard from '@components/member_mini_card';
 import ModalContainer from '@components/modal_container';
 import { findByName } from '@helpers/search.helper';
-import { Overlay } from '@libs/overlay';
 import { RoleBrief } from '@models/server.models';
 import { useCreateInvitationMutation } from '@redux/clinic/invitation/invitationApi';
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
@@ -17,6 +16,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import search from 'toSvg/search.svg?icon';
 import './style/index.scss';
+import { Overlay_u } from '@stores/overlayStore';
 
 interface Inputs {
   searchField: string;
@@ -109,7 +109,7 @@ export default function CreateInvitationModal({
               alignSelf="center"
               padding={5}
               onPress={() => {
-                Overlay.close();
+                Overlay_u.close();
               }}
             />
           )}
