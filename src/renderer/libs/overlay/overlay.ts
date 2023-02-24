@@ -1,8 +1,10 @@
 import Tooltip, { ActionProps } from '@components/poppers/tooltip';
-import { OverlayItem } from '@libs/overlay/OverlayContainer';
 import React, { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { OverlayOptions } from '.';
+import { OverlayItem, OverlayOptions } from '.';
+/**
+ * @deprecated This hook is deprecated, use `Overlay_u` instead
+ */
 export class Overlay {
   static entryElement: HTMLDivElement;
 
