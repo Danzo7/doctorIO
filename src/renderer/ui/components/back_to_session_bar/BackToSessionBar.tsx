@@ -1,45 +1,26 @@
-import { ModalPortal } from '@libs/overlay/OverlayContainer';
 import SnakeBar from '@containers/modals/snake_bar';
 import SnakeBarActionsControls from '@containers/modals/snake_bar/snake_bar_actions_controls';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import useNavigation from '@libs/hooks/useNavigation';
-import Arrow from 'toSvg/arrow_line.svg';
-import { useState } from 'react';
+import { SETTINGS } from '@stores/appSettingsStore';
+import { Portal } from '@libs/overlay';
 
 interface BackToSessionBarProps {}
 export default function BackToSessionBar({}: BackToSessionBarProps) {
   const { navigate } = useNavigation();
-  const [position, setPosition] = useState<'bottom' | 'top'>('bottom');
 
   return (
-    <ModalPortal
+    <Portal
       clickThrough
-      position={{
-        bottom: position == 'bottom' ? '2%' : undefined,
-        top: position == 'top' ? '2%' : undefined,
-      }}
+      position={
+        SETTINGS.promptPosition == 'bottom' ? { bottom: '2vh' } : { top: '2vh' }
+      }
       width={'40%'}
+      autoFocus={false}
     >
       <SnakeBar description="Session is still in progress" type="warning">
         <SnakeBarActionsControls>
-          <TextButton
-            text="Drag"
-            Icon={
-              <Arrow
-                css={{ rotate: position == 'bottom' ? '-90deg' : '90deg' }}
-              />
-            }
-            backgroundColor={color.cold_blue}
-            onPress={() => {
-              if (position == 'bottom') {
-                setPosition('top');
-              } else {
-                setPosition('bottom');
-              }
-            }}
-            itemsDirection="row-reverse"
-          />
           <TextButton
             text="Go back to session"
             backgroundColor={color.good_green}
@@ -49,6 +30,6 @@ export default function BackToSessionBar({}: BackToSessionBarProps) {
           />
         </SnakeBarActionsControls>
       </SnakeBar>
-    </ModalPortal>
+    </Portal>
   );
 }
