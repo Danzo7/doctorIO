@@ -1,5 +1,5 @@
 import './style/index.scss';
-import colors, { color } from '@colors';
+import colors from '@colors';
 import useLongPress from '@libs/hooks/useLongPress';
 import {
   FunctionComponent,
@@ -8,7 +8,7 @@ import {
   useState,
   MouseEvent,
 } from 'react';
-import { OverlayType, Overlay_u } from '@stores/overlayStore';
+import { Overlay_u } from '@stores/overlayStore';
 import styled from '@emotion/styled';
 
 type IconProps = {
@@ -273,43 +273,52 @@ export default function TextButton({
       }
       disabled={disabled}
       onMouseEnter={(e) => {
-        if (tip)
-          Overlay_u.init(
-            {
-              node: (
-                <div
-                  className="text-button-tooltip"
-                  css={{
-                    padding: 5,
-                    background: color.good_black,
-                    marginBottom: 5,
-                    marginTop: 5,
-                    borderRadius: 5,
-                    pointerEvents: 'none',
-                  }}
-                >
-                  {tip}
-                </div>
-              ),
-              props: {
-                popperTarget: {
-                  target: e.currentTarget,
-                  options: { placement: 'top' },
-                },
-                clickThrough: true,
-                closeOnClickOutside: true,
-                closeOnBlur: true,
-                backdropColor: false,
-                clickable: false,
-                autoFocus: false,
-              },
+        if (tip && e?.currentTarget)
+          Overlay_u.alt({
+            alt: tip,
+            id: 'helper',
+            popperTarget: {
+              target: e.currentTarget,
+              options: { placement: 'top' },
             },
-            'helper',
-            { type: OverlayType.HELPTIP },
-          ).open();
+          });
+
+        // Overlay_u.init(
+        //   {
+        //     node: (
+        //       <div
+        //         className="text-button-tooltip"
+        //         css={{
+        //           padding: 5,
+        //           background: color.good_black,
+        //           marginBottom: 5,
+        //           marginTop: 5,
+        //           borderRadius: 5,
+        //           pointerEvents: 'none',
+        //         }}
+        //       >
+        //         {tip}
+        //       </div>
+        //     ),
+        //     props: {
+        //       popperTarget: {
+        //         target: e.currentTarget,
+        //         options: { placement: 'top' },
+        //       },
+        //       clickThrough: true,
+        //       closeOnClickOutside: true,
+        //       closeOnBlur: true,
+        //       backdropColor: false,
+        //       clickable: false,
+        //       autoFocus: false,
+        //     },
+        //   },
+        //   'helper',
+        //   { type: OverlayType.HELPTIP },
+        // ).open();
       }}
       onMouseLeave={() => {
-        if (tip) Overlay_u.close('helper');
+        Overlay_u.clearAlt();
       }}
       aria-label={tip}
       tabIndex={unFocusable ? -1 : 0}
