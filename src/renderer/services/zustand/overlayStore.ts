@@ -2,13 +2,13 @@ import AlertToast from '@components/alert_toast';
 import Tooltip, { ActionProps } from '@components/poppers/tooltip';
 import { Logger } from '@libs/Logger';
 import { OverlayItem, OverlayOptions } from '@libs/overlay';
+import { PopperTargetType } from '@libs/overlay/types';
 import { nanoid } from '@reduxjs/toolkit';
 import { ComponentProps, ReactNode } from 'react';
 import create from 'zustand';
 export enum OverlayType {
   MODAL = 1,
   TOOLTIP,
-  HELPTIP,
 }
 type Item = {
   node?: ReactNode;
@@ -30,14 +30,21 @@ type Target =
       node: ReactNode;
       props?: OverlayOptions;
     });
+
+type Alter = {
+  alt: string;
+  id: string;
+  popperTarget: HTMLElement | PopperTargetType;
+};
 interface OverlayState {
   items: Item[];
-  openOverlayId: { modalId?: string; tooltipId?: string; helpTipId?: string };
-
-  _forceRerender: boolean;
+  alt?: Alter;
   toasts: (ComponentProps<typeof AlertToast> & {
     id: string;
   })[];
+
+  openOverlayId: { modalId?: string; tooltipId?: string };
+  _forceRerender: boolean;
   init: (
     target?: Target,
     id?: string,
@@ -60,12 +67,17 @@ interface OverlayState {
     id?: string,
   ) => void;
   closeToast: (id: string) => void;
+  setAlt: (alt: Alter) => void;
+  clearAlt: () => void;
+  portalElement?: HTMLElement;
+  setPortalElement: (element: HTMLElement) => void;
 }
 
 const useOverlayStore = create<OverlayState>((set, get) => ({
   items: [],
-  openOverlayId: {},
   toasts: [],
+  openOverlayId: {},
+
   _forceRerender: false,
   getNode: (id: string) => {
     const item = get().items.find((i) => i.id === id);
@@ -156,8 +168,7 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
               openOverlay.modalId = item.id;
             else if (item.overlayType == OverlayType.TOOLTIP)
               openOverlay.tooltipId = item.id;
-            else if (item.overlayType == OverlayType.HELPTIP)
-              openOverlay.helpTipId = item.id;
+
             return {
               openOverlayId: openOverlay,
               _forceRerender: data?.force
@@ -180,17 +191,14 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
   },
 
   close: (id) => {
-    Logger.log(
-      'closeOverlay',
-      'Closing' + (id ? id : 'the last overlay'),
-      get().items.length - 1,
-    );
+    Logger.log('closeOverlay', 'Closing ' + (id ? id : 'the last overlay'));
     if (get().items.length === 0) {
       Logger.warn('closeOverlay', 'There are no items to close');
       if (get().openOverlayId) set(() => ({ openOverlayId: {} }));
       return;
     }
     const index = id ? get().getIndex(id) : undefined;
+
     if (id && index == undefined)
       Logger.warn('closeOverlay', 'No item found with id "' + id + '"');
     else {
@@ -209,11 +217,7 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
           item.id == openOverlayId.tooltipId
         )
           openOverlayId.tooltipId = undefined;
-        else if (
-          item.overlayType == OverlayType.HELPTIP &&
-          item.id == openOverlayId.helpTipId
-        )
-          openOverlayId.helpTipId = undefined;
+
         return {
           items: items.filter((i) => i.id != item.id),
           openOverlayId,
@@ -247,11 +251,6 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
             item.id == openOverlayId.tooltipId
           )
             openOverlayId.tooltipId = undefined;
-          else if (
-            item.overlayType == OverlayType.HELPTIP &&
-            item.id == openOverlayId.helpTipId
-          )
-            openOverlayId.helpTipId = undefined;
 
           return {
             openOverlayId,
@@ -268,16 +267,14 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
     const index = get().getIndex(id);
     if (
       index != undefined &&
-      (get().openOverlayId.modalId == id ||
-        get().openOverlayId.tooltipId == id ||
-        get().openOverlayId.helpTipId == id)
+      (get().openOverlayId.modalId == id || get().openOverlayId.tooltipId == id)
     )
       return true;
     else return false;
   },
   clear: () => {
     Logger.log('clearOverlay', get().items.length);
-    set(() => ({ items: [], openOverlayId: {} }));
+    set(() => ({ items: [], openOverlayId: {}, toasts: [], alt: undefined }));
   },
   closeToast: (id) => {
     Logger.log('closeToast', get().toasts.length - 1);
@@ -312,6 +309,16 @@ const useOverlayStore = create<OverlayState>((set, get) => ({
       };
     });
   },
+  setAlt(alt) {
+    set(() => ({ alt }));
+  },
+  clearAlt() {
+    set(() => ({ alt: undefined }));
+  },
+
+  setPortalElement: (element) => {
+    set(() => ({ portalElement: element }));
+  },
 }));
 export const useIsOpenModal = () =>
   useOverlayStore(
@@ -328,11 +335,11 @@ export const useOpenTooltipId = () =>
     (state) => ({ openId: state.openOverlayId?.tooltipId }),
     (oldState, newState) => oldState.openId == newState.openId,
   ).openId;
-export const useOpenHelptipId = () =>
-  useOverlayStore(
-    (state) => ({ openId: state.openOverlayId?.helpTipId }),
-    (oldState, newState) => oldState.openId == newState.openId,
-  ).openId;
+// export const useOpenHelptipId = () =>
+//   useOverlayStore(
+//     (state) => ({ openId: state.openOverlayId?.helpTipId }),
+//     (oldState, newState) => oldState.openId == newState.openId,
+//   ).openId;
 export const getOverlayNode = (id: string) =>
   useOverlayStore.getState().getNode(id);
 export const Overlay_u = {
@@ -426,8 +433,19 @@ export const Overlay_u = {
       id,
       { type: OverlayType.TOOLTIP },
     ),
+  getPortalEntry: () => useOverlayStore.getState().portalElement,
+  setPortalElement: (element: HTMLElement) =>
+    useOverlayStore.getState().setPortalElement(element),
+  alt: (alt: Alter) => useOverlayStore.getState().setAlt(alt),
+  clearAlt: () => useOverlayStore.getState().clearAlt(),
 };
 export const useToast = () => useOverlayStore((state) => state.toasts);
 export const toast = Overlay_u.toast;
 export const modal = Overlay_u.modal;
 export const tooltip = Overlay_u.tooltip;
+export const useIsNotEmpty = () =>
+  useOverlayStore(
+    (state) => state.items.length > 0,
+    (oldState, newState) => oldState == newState,
+  );
+export const useAlt = () => useOverlayStore((state) => state.alt);

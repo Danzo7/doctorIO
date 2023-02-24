@@ -1,18 +1,9 @@
-import {
-  OverlayContainer,
-  OverlayItem,
-  PortalContainer,
-} from './OverlayContainer';
-import type { OverlayOptions } from './OverlayContainer';
-import { Overlay } from './overlay';
+import { OverlayItem } from './OverlayItem';
 import { color } from '@assets/styles/color';
-export {
-  OverlayContainer,
-  OverlayItem,
-  Overlay,
-  OverlayOptions,
-  PortalContainer,
-};
+import type { OverlayOptions } from './types';
+import { Portal } from './Portal';
+
+export { OverlayItem, OverlayOptions, Portal };
 export const DEFAULT_MODAL: OverlayOptions = {
   width: '30%',
   closeOnClickOutside: true,

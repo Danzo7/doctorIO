@@ -1,45 +1,21 @@
 import { Overlay } from './overlay';
-import back from 'toSvg/x_mark.svg?icon';
 
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import './style/index.scss';
-import SquareIconButton from '@components/buttons/square_icon_button';
-import { css, CSSObject } from '@emotion/react';
-import { createPopper, Modifier, OptionsGeneric } from '@popperjs/core';
-import { useRouteChange } from '@libs/HistoryBlocker';
-import { ActionProps } from '@components/poppers/tooltip';
-import { createPortal } from 'react-dom';
 import {
   getOverlayNode,
   Overlay_u,
+  useAlt,
   useIsOpenModal,
-  useOpenHelptipId,
   useOpenTooltipId,
 } from '@stores/overlayStore';
 import ToastContainer from '@libs/toast_container';
-interface OverlayContainerProps {}
-export const OverlayContext = createContext<{
-  open?: (target: ReactNode, props: OverlayOptions) => void;
-  close?: () => void;
-  openTooltip?: (
-    actionList: ActionProps[],
-    popperTarget: HTMLElement,
-    autoClose: true | undefined,
-  ) => void;
-}>({
-  open: Overlay?.open,
-  close: Overlay?.close,
-  openTooltip: Overlay?.openTooltip,
-});
-
-export function OverlayContainer({}: OverlayContainerProps) {
+import { Portal } from './Portal';
+import { useRouteChange } from '@libs/routeChange';
+/**
+ * @Deprecated This component is unstable and will be removed in the future
+ */
+export function OverlayContainer_u() {
   const [render, setrender] = useState<React.ReactPortal[]>([]);
   const update = useCallback(
     (state?: (portals: React.ReactPortal[]) => React.ReactPortal[]) => {
@@ -50,7 +26,7 @@ export function OverlayContainer({}: OverlayContainerProps) {
   );
   const overlayRef = useRef(null);
 
-  useRouteChange(() => Overlay.close());
+  // useRouteChange(() => Overlay.close());
 
   const removePortal = useCallback((portal?: React.ReactPortal) => {
     if (portal) {
@@ -73,7 +49,7 @@ export function OverlayContainer({}: OverlayContainerProps) {
     </div>
   );
 }
-export function TooltipContainer() {
+function TooltipContainer() {
   const id = useOpenTooltipId();
   return (
     <>
@@ -86,14 +62,36 @@ export function TooltipContainer() {
   );
 }
 
-export function HelptipContainer() {
-  const hId = useOpenHelptipId();
+function AltContainer() {
+  const alt = useAlt();
+
   return (
     <>
-      {hId && (
-        <div className="overlay-container" css={{ zIndex: 30 }}>
-          <div>{getOverlayNode(hId)}</div>
-        </div>
+      {alt && (
+        <Portal
+          popperTarget={alt.popperTarget}
+          clickThrough
+          closeOnClickOutside
+          closeOnBlur
+          backdropColor={false}
+          clickable={false}
+          autoFocus={false}
+          overall
+        >
+          <div
+            css={{
+              padding: 5,
+              background: 'black',
+              marginBottom: 5,
+              marginTop: 5,
+              borderRadius: 5,
+              pointerEvents: 'none',
+            }}
+            className={'alt-content-' + alt.id}
+          >
+            {alt.alt}
+          </div>
+        </Portal>
       )}
     </>
   );
@@ -110,200 +108,31 @@ function ModalContainer() {
     </>
   );
 }
-export function OverlayContainer_Unstable({}: OverlayContainerProps) {
-  useRouteChange(() => Overlay_u.clear());
-
-  return (
-    <>
-      <HelptipContainer />
-      <ModalContainer />
-      <ToastContainer />
-      <TooltipContainer />
-    </>
-  );
-}
-
-type Position = {
-  top?: number | string;
-  bottom?: number | string;
-  left?: number | string;
-  right?: number | string;
-};
-type PopperTargetType = {
-  target: HTMLElement;
-  options: Partial<OptionsGeneric<Partial<Modifier<any, any>>>>;
-};
-export interface OverlayOptions {
-  isDimmed?: boolean;
-  clickThrough?: boolean;
-  backdropColor?: string | false;
-  closeOnClickOutside?: boolean;
-  position?: Position;
-  closeOnBlur?: boolean;
-  onClose?: () => void;
-  width?: number | string;
-  height?: number | string;
-  style?: CSSObject;
-  popperTarget?: HTMLElement | PopperTargetType;
-  closeMethod?: () => void;
-  defaultCloseFallback?: boolean;
-  //draggable?: boolean;
-  closeBtn?:
-    | 'inner'
-    | 'outer'
-    | 'above'
-    | {
-        placement: 'inner' | 'outer' | 'above';
-        component: ReactNode;
-      };
-  transition?:
-    | 'zoom'
-    | 'appear-right'
-    | 'appear-left'
-    | 'appear-top'
-    | 'appear-bottom'
-    | 'none';
-  autoFocus?: boolean;
-  clickable?: boolean;
-  closable?: boolean;
-}
-type OverlayItemProps = OverlayOptions & {
-  children?: ReactNode;
-};
-
-export function OverlayItem({
-  children,
-  isDimmed = false,
-  clickThrough = false,
-  backdropColor,
-  width,
-  height,
-  closeBtn,
-  popperTarget,
-  closeOnClickOutside,
-  closeOnBlur,
-  autoFocus = true,
-  closeMethod,
-  position,
-  transition = 'zoom',
-  onClose,
-  defaultCloseFallback = true,
-  style,
-  clickable = true,
-  closable = true,
-}: OverlayItemProps) {
-  const closeOverlay = () => {
-    if (!closable) return;
-    if (onClose) onClose();
-    // if (closeMethod) closeMethod();
-    else if (defaultCloseFallback) Overlay.close();
-  };
-  return (
-    <>
-      {backdropColor !== false && (
-        <div
-          className="backdrop"
-          css={css({
-            backgroundColor: isDimmed
-              ? backdropColor ?? '#000000d9'
-              : undefined,
-            pointerEvents: clickThrough ? 'none' : 'all',
-          })}
-          onClick={
-            closable && closeOnClickOutside
-              ? (e) => {
-                  closeOverlay();
-                  e.stopPropagation();
-                }
-              : undefined
-          }
-        ></div>
-      )}
-      <div
-        className="layer"
-        css={{
-          ...style,
-          width: width,
-          height: height,
-          position: position && 'absolute',
-          top: position?.top,
-          bottom: position?.bottom,
-          left: position?.left,
-          right: position?.right,
-          animation:
-            transition != 'none'
-              ? `${transition} .1s forwards ease-out`
-              : undefined,
-          pointerEvents: clickable ? 'all' : 'none',
-        }}
-        {...(autoFocus ? { tabIndex: -1 } : {})}
-        onBlur={
-          closable && closeOnBlur
-            ? (event) => {
-                if (!event.currentTarget.contains(event.relatedTarget)) {
-                  closeOverlay();
-                }
-              }
-            : undefined
-        }
-        ref={(e) => {
-          e?.focus();
-          if (e != null) {
-            if (popperTarget)
-              createPopper(
-                (popperTarget as PopperTargetType).target ?? popperTarget,
-                e,
-                (popperTarget as PopperTargetType).options ?? {
-                  placement: 'auto-end',
-                },
-              );
-          }
-        }}
-      >
-        {closable && closeBtn && (
-          <div
-            className={`close-btn ${
-              typeof closeBtn == 'string' ? closeBtn : closeBtn.placement
-            }`}
-          >
-            {typeof closeBtn == 'string' ? (
-              <SquareIconButton
-                onPress={() => closeOverlay()}
-                Icon={back}
-                tip="Close"
-              />
-            ) : (
-              closeBtn.placement
-            )}
-          </div>
-        )}
-        {children}
-      </div>
-    </>
-  );
-}
-export function PortalContainer({}: OverlayContainerProps) {
+function PortalContainer() {
   return (
     <div
       className="overlay-container"
       ref={(e) => {
-        Overlay.portalEntry = e as HTMLDivElement;
+        if (e) Overlay_u.setPortalElement(e);
       }}
     />
   );
 }
-export function ModalPortal({
-  children,
-  ...options
-}: OverlayOptions & { onClose?: () => void } & {
-  children: ReactNode;
-}): React.ReactPortal {
-  return createPortal(
-    <div>
-      <OverlayItem defaultCloseFallback={false} {...options}>
-        {children}
-      </OverlayItem>
-    </div>,
-    Overlay.portalEntry,
+export function OverlayContainer() {
+  useRouteChange({
+    onChange: () => {
+      Overlay_u.clear();
+    },
+    key: 'overlay',
+  });
+
+  return (
+    <>
+      <AltContainer />
+      <ModalContainer />
+      <ToastContainer />
+      <TooltipContainer />
+      <PortalContainer />
+    </>
   );
 }
