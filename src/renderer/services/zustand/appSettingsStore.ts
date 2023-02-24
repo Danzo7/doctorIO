@@ -17,6 +17,7 @@ interface AppSettingsState extends AppSettings {
   setLanguage(language: typeof LANG[number]): void;
   set: (state: Partial<AppSettingsState>) => void;
   setTheme(theme: typeof THEME[number]): void;
+  setPromptPosition(position: 'top' | 'bottom'): void;
 }
 export const useAppSettingsStore = create<AppSettingsState>()(
   persist(
@@ -27,6 +28,7 @@ export const useAppSettingsStore = create<AppSettingsState>()(
       dateFormat: 'dd MMM yyyy',
       timeFormat: 'h:mm aa',
       dayFormat: 'EEEE, dd MMM',
+      promptPosition: 'bottom',
       setDateFormat(dateFormat) {
         set({ dateFormat });
       },
@@ -49,6 +51,9 @@ export const useAppSettingsStore = create<AppSettingsState>()(
       resetWelcomeDismissedIn() {
         set({ welcomeDismissedIn: new Date().toISOString() });
       },
+      setPromptPosition(position) {
+        set({ promptPosition: position });
+      },
     }),
 
     {
@@ -62,6 +67,7 @@ export let SETTINGS = {
   dayFormat: useAppSettingsStore.getState().dayFormat,
   language: useAppSettingsStore.getState().language,
   theme: useAppSettingsStore.getState().theme,
+  promptPosition: useAppSettingsStore.getState().promptPosition,
 };
 useAppSettingsStore.subscribe((state) => {
   SETTINGS = state;
