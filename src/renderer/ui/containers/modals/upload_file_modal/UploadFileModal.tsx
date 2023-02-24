@@ -3,8 +3,8 @@ import IconicButton from '@components/buttons/iconic_button';
 import TextButton from '@components/buttons/text_button';
 import Input from '@components/inputs/input';
 import ModalContainer from '@components/modal_container';
-import { Overlay } from '@libs/overlay';
 import { useUploadFileMutation } from '@redux/instance/record/medical_document_api';
+import { Overlay_u } from '@stores/overlayStore';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import Upload from 'toSvg/link.svg?icon';
@@ -34,7 +34,7 @@ export default function UploadFileModal({ patientId }: UploadFileModalProps) {
     uploadFile({ patientId, data: fd }).then((result) => {
       if ('data' in result) {
         reset();
-        Overlay.close();
+        Overlay_u.close();
       } else {
         const castedErr = (result.error as any)?.data as ServerError;
         if (castedErr?.errorCode == 1201)
