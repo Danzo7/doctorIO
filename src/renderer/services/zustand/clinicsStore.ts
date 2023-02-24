@@ -56,7 +56,7 @@ export const useClinicsStore = create<ClinicsState>()(
       syncCurrentClinic(clinic) {
         set((state) => {
           const clinicData = new AppClinics(state.clinicData);
-          clinicData.syncCurrent(clinic);
+          // clinicData.syncCurrent(clinic);
           return { clinicData };
         });
       },
