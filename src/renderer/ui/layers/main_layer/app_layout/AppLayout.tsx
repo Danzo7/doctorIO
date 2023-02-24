@@ -5,7 +5,7 @@ import LoadingSpinner from '@components/loading_spinner';
 import AppContent from '@containers/AppContent';
 import AppMenu from '@containers/AppMenu';
 import AppSidebar from '@containers/AppSidebar';
-import { ModalPortal } from '@libs/overlay/OverlayContainer';
+import { Portal } from '@libs/overlay';
 import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
 import {
   useGetQueueStateQuery,
@@ -44,8 +44,8 @@ export default function AppLayout({}: AppLayoutProps) {
       {state == 'IN_PROGRESS' && <BackToSessionBar />}
     </>
   ) : (
-    <ModalPortal isDimmed width={'30%'}>
+    <Portal isDimmed width={'30%'} overall>
       <ErrorPanel />
-    </ModalPortal>
+    </Portal>
   );
 }

@@ -2,12 +2,12 @@ import LoadingSpinner from '@components/loading_spinner';
 
 import { NetworkError } from '@containers/modals/warning_modal';
 import MedicalSession from '@layers/medical_session';
-import { ModalPortal } from '@libs/overlay/OverlayContainer';
 import { useConnectionStore } from '@stores/ConnectionStore';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AppLayout from './app_layout';
 import TemplateEditor from '@components/template_edtor/TemplateEdtor';
+import { Portal } from '@libs/overlay';
 
 interface MainLayerProps {}
 export default function MainLayer({}: MainLayerProps) {
@@ -28,8 +28,8 @@ export default function MainLayer({}: MainLayerProps) {
       <Route path="*" element={<AppLayout />} />
     </Routes>
   ) : (
-    <ModalPortal style={{ minWidth: '30%' }} isDimmed>
+    <Portal style={{ minWidth: '30%' }} isDimmed overall>
       <NetworkError />
-    </ModalPortal>
+    </Portal>
   );
 }

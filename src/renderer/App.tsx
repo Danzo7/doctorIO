@@ -1,8 +1,7 @@
 import './App.scss';
-import { OverlayContainer, PortalContainer } from '@libs/overlay';
 
 import StartupLayer from '@layers/startup_layer';
-import { OverlayContainer_Unstable } from '@libs/overlay/OverlayContainer';
+import { OverlayContainer } from '@libs/overlay/OverlayContainer';
 import { useAppSettingsStore } from '@stores/appSettingsStore';
 
 interface AppProps {}
@@ -20,8 +19,6 @@ function App({}: AppProps) {
         <StartupLayer />
       </div>
       <OverlayContainer />
-      <OverlayContainer_Unstable />
-      <PortalContainer />
     </>
   );
 }
