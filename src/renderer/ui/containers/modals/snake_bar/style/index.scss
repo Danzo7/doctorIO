@@ -1,6 +1,7 @@
 @use '~styles/appColors' as *;
 @use '~styles/effects' as *;
 .snake-bar {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -16,5 +17,9 @@
     }
     &.error{
         @include shaking($hotred);
+    }
+    >.position-control{
+        position: absolute;
+        left: 0;
     }
 }
