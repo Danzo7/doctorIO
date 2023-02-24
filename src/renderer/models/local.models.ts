@@ -5,6 +5,7 @@ import {
   THEME,
   TIME_FORMAT,
 } from '@constants/app_settings';
+import { Clinic } from './server.models';
 export type VitalField = { name: string; unit: string; deleted?: boolean };
 
 interface AppSettings {
@@ -14,6 +15,7 @@ interface AppSettings {
   timeFormat: typeof TIME_FORMAT[number];
   dayFormat: typeof DAY_FORMAT[number];
   welcomeDismissedIn: string;
+  promptPosition: 'top' | 'bottom';
 }
 interface AppData {
   user: AppUser;
@@ -66,6 +68,12 @@ export class AppClinics {
   set add(clinic: LocalClinicData) {
     this.clinics.push(clinic);
     this.selected = this.clinics.length - 1;
+  }
+
+  syncCurrent(clinic: Clinic) {
+    if (this.clinic) {
+      this.clinic.name = clinic.name;
+    }
   }
 }
 interface LocalClinicData {
