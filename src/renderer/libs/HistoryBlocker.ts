@@ -1,11 +1,12 @@
 import SnakeBar from '@containers/modals/snake_bar';
 import { History, Transition } from 'history';
-import { ReactNode, useCallback, useContext, useEffect } from 'react';
+import { ReactNode, useCallback, useContext, useEffect, useRef } from 'react';
 import {
   UNSAFE_NavigationContext as NavigationContext,
   Navigator as IncorrectType,
 } from 'react-router-dom';
-import { useOverlay } from './overlay/useOverlay';
+import { SETTINGS } from '@stores/appSettingsStore';
+import { Overlay_u, modal } from '@stores/overlayStore';
 type TransitionD = Transition & { dismiss: () => void };
 type Navigator = IncorrectType & Pick<History, 'block' | 'listen'>;
 export function useBlocker(blocker: (tx: TransitionD) => void, when = true) {
@@ -33,15 +34,7 @@ export function useBlocker(blocker: (tx: TransitionD) => void, when = true) {
     return unblock;
   }, [navigator, blocker, when]);
 }
-export function useRouteChange(change: () => void) {
-  const { navigator } = useContext(NavigationContext) as unknown as {
-    navigator: Navigator;
-  };
 
-  navigator.listen(() => {
-    change();
-  });
-}
 export default function usePrompt(
   message: string,
   actionList: ({
@@ -56,12 +49,56 @@ export default function usePrompt(
   when = true,
   forceShow = false,
 ) {
-  const { open, useOpen, close } = useOverlay();
-  const blocker = useCallback(
-    (tx: TransitionD) => {
-      open(
+  const isOpen = useRef(false);
+  const close = useCallback(() => {
+    if (isOpen.current) {
+      Overlay_u.close('prompt');
+      isOpen.current = false;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (forceShow && when) {
+      isOpen.current = true;
+      modal(
         SnakeBar({
           description: message,
+          type: 'info',
+          children: actionList({
+            closeOverlay: close,
+            dismiss: () => {},
+            retry: () => {},
+          }),
+        }),
+        {
+          closeOnClickOutside: true,
+          clickThrough: true,
+          position:
+            SETTINGS.promptPosition == 'bottom'
+              ? { bottom: '2vh' }
+              : { top: '2vh' },
+          transition:
+            SETTINGS.promptPosition == 'top' ? 'appear-top' : 'appear-bottom',
+          autoFocus: false,
+        },
+        'prompt',
+      ).open({ force: true });
+    }
+
+    return () => {
+      close();
+    };
+  }, [actionList, close, forceShow, message, when]);
+
+  if (!forceShow && !when) close();
+  const blocker = useCallback(
+    (tx: TransitionD) => {
+      isOpen.current = true;
+
+      modal(
+        SnakeBar({
+          description: message,
+          type: 'error',
           children: actionList({
             closeOverlay: close,
             dismiss: tx.dismiss,
@@ -71,33 +108,19 @@ export default function usePrompt(
         {
           closeOnClickOutside: true,
           clickThrough: true,
-          position: { bottom: '2vh' },
-          transition: 'appear-bottom',
+          position:
+            SETTINGS.promptPosition == 'bottom'
+              ? { bottom: '2vh' }
+              : { top: '2vh' },
+          transition:
+            SETTINGS.promptPosition == 'top' ? 'appear-top' : 'appear-bottom',
+          autoFocus: false,
         },
-      );
+        'prompt',
+      ).open({ force: true });
     },
-    [open, message, actionList, close],
+    [message, actionList, close],
   );
-  useOpen(
-    SnakeBar({
-      description: message,
-      type: 'info',
-      children: actionList({
-        closeOverlay: close,
-        dismiss: () => {},
-        retry: () => {},
-      }),
-    }),
-    {
-      closeOnClickOutside: true,
-      clickThrough: true,
-      position: { bottom: '2vh' },
-      transition: 'appear-bottom',
-      autoFocus: false,
-    },
-    forceShow && when,
-  );
-  if (!when && !forceShow) close();
 
   useBlocker(blocker, when);
 }
