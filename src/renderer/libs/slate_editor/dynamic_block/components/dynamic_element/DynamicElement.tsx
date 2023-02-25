@@ -50,7 +50,7 @@ export default function DynamicElement({
       contentEditable={false}
     >
       <div className="height-ruler">
-        <span>{pxToCm(height) + 'px'}</span>
+        <span>{pxToCm(height) + 'cm'}</span>
         <div className="ruler-line">
           <LineArrow />
           <div className="line" /> <LineArrow />
