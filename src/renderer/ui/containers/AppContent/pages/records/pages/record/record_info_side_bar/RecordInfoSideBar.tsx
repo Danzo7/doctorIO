@@ -1,11 +1,12 @@
 import DocumentPreviewPanel from '@components/document_preview_panel';
 import MedicalHistory from '@components/medical_history';
-import { PatientInfoCard } from '@components/patient_card';
+
 import { Patient } from '@models/instance.model';
 import './style/index.scss';
 import { modal } from '@stores/overlayStore';
 import AddPatientModal from '@containers/modals/add_patient_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
+import PatientInfoCard from '@components/patient_card';
 interface RecordInfoSideBarProps {
   data: Patient;
   patientId: number;

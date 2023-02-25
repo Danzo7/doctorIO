@@ -9,9 +9,7 @@ import { format } from 'date-fns';
 import KeyValueItem from './key_value_item';
 import './style/index.scss';
 import Edit from 'toSvg/pencil.svg?icon';
-interface PatientSpecificProps {
-  data: { [key: string]: any };
-}
+
 interface PatientInfoProps {
   patientFullName: string;
   patientId: string;
@@ -23,41 +21,8 @@ interface PatientInfoProps {
   nextAppointmentDate?: Date;
   onEdit: () => void;
 }
-export function PatientSpecificsCard({ data }: PatientSpecificProps) {
-  //TODO remove dead code
-  return (
-    <div className="patient-card ">
-      <div className="key-value-items">
-        {Object.entries(data).map(([key, value]) =>
-          key === 'bloodType' ? (
-            <TextPair
-              gap={2}
-              width={'30%'}
-              first={{
-                text: key,
-                fontSize: 12,
-                fontWeight: 600,
-                fontColor: color.silver_gray,
-              }}
-              second={{
-                text: (value as BloodType).rh
-                  ? '+'
-                  : '-' + (value as BloodType).group,
-                fontSize: 15,
-                fontWeight: 700,
-                fontColor: color.cold_blue,
-              }}
-              key={key}
-            />
-          ) : (
-            <KeyValueItem primaryText={key} secondaryText={value} key={key} />
-          ),
-        )}
-      </div>
-    </div>
-  );
-}
-export function PatientInfoCard({
+
+export default function PatientInfoCard({
   patientFullName,
   patientId,
   bloodType,
