@@ -54,7 +54,7 @@ function TooltipContainer() {
   return (
     <>
       {id && (
-        <div className="overlay-container" css={{ zIndex: 2 }}>
+        <div className="overlay-container">
           <div>{getOverlayNode(id)}</div>
         </div>
       )}

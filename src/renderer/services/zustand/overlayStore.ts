@@ -6,6 +6,7 @@ import { PopperTargetType } from '@libs/overlay/types';
 import { nanoid } from '@reduxjs/toolkit';
 import { ComponentProps, ReactNode } from 'react';
 import create from 'zustand';
+//FIx tooltip open multiple
 export enum OverlayType {
   MODAL = 1,
   TOOLTIP,
