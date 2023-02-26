@@ -47,8 +47,8 @@ export default function RecordInfoSideBar({
       />
 
       <div className="scroll-div">
-        <DocumentPreviewPanel patientId={Number(patientId)} />
-        <MedicalHistory patientId={Number(patientId)} />
+        <DocumentPreviewPanel patientId={patientId} />
+        <MedicalHistory patientId={patientId} />
       </div>
     </div>
   );
