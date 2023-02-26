@@ -54,6 +54,7 @@ export default function NetworkError() {
       {(status === 'connecting' || status == 'unreachable') && (
         <VerticalPanel
           title="Connecting"
+          backgroundColor={color.secondary_color}
           description={
             status == 'connecting'
               ? 'Trying to connect. Hang tight!'

@@ -23,7 +23,7 @@ export default function VerticalPanel({
   description,
   action,
   IconBtn,
-  backgroundColor = color.secondary_color,
+  backgroundColor,
   padding = 20,
   alignSelf,
   height,
@@ -36,8 +36,7 @@ export default function VerticalPanel({
       css={{
         background: backgroundColor,
         padding: padding,
-        boxShadow:
-          backgroundColor == 'none' ? undefined : `0 0 5px 2px ${color.darker}`,
+        boxShadow: backgroundColor ? `0 0 5px 2px ${color.darker}` : undefined,
         alignSelf: alignSelf,
         height,
         maxHeight: height,

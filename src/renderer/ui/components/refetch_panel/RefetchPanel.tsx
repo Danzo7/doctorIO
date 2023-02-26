@@ -6,7 +6,6 @@ interface RefetchPanelProps {
 export default function RefetchPanel({ action }: RefetchPanelProps) {
   return (
     <VerticalPanel
-      backgroundColor="none"
       title="Oops"
       description="Something went wrong."
       action={{

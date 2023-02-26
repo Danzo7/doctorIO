@@ -17,6 +17,7 @@ export default function ConnectingModal({ status }: ConnectingModalProps) {
   return (
     <VerticalPanel
       title="Connecting"
+      backgroundColor={color.secondary_color}
       description={
         status == 'connecting'
           ? 'Trying to connect. Hang tight!'

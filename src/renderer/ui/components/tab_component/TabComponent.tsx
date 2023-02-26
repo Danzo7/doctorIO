@@ -95,7 +95,6 @@ export default function TabComponent({
       ) : (
         showVerticalPanel && (
           <VerticalPanel
-            backgroundColor="none"
             description="No options added. "
             action={{
               text: 'add option',

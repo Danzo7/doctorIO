@@ -88,7 +88,6 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
                   },
                 }}
                 Icon={<WaitingRoom width="70%" height="70%" />}
-                backgroundColor={'none'}
                 padding={'15px 0 0 0'}
               />
             ) : (

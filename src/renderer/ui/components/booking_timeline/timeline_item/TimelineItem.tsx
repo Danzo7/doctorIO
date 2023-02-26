@@ -44,7 +44,6 @@ export default function TimelineItem({
         className="dot"
         css={{
           backgroundColor: selectedColor,
-          boxShadow: `0 0px 1px ${selectedColor} inset, 0 0 3px`,
         }}
       />
       <div className="event">

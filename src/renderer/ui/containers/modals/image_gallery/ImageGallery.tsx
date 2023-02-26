@@ -82,7 +82,6 @@ export default function ImageGallery({ onSelect }: ImageGalleryProps) {
             title="No images were found"
             description="Please start add image locally. "
             action={{ text: 'Add local image', onClick: uploadLocalImage }}
-            backgroundColor="none"
           />
         )
       ) : (

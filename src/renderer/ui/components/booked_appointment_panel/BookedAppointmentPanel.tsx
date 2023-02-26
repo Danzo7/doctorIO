@@ -39,7 +39,6 @@ export default function BookedAppointmentPanel({}) {
           title="No booked appointments"
           description="Start by booking an appointment. "
           Icon={<Schedule width="60%" height="60%" />}
-          backgroundColor={'none'}
           padding={0}
           alignSelf="center"
           action={{

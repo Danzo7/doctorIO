@@ -65,7 +65,6 @@ export default function PaymentQueue({}: PaymentQueueProps) {
           <VerticalPanel
             title="No pending payments"
             Icon={<Coins width="20%" height="20%" />}
-            backgroundColor={'none'}
             padding={0}
           />
         )}

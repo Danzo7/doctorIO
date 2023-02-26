@@ -128,7 +128,6 @@ export default function AddMedicalTestModal({
                 <VerticalPanel
                   title=" No vitals selected"
                   description="Please add a field first"
-                  backgroundColor="none"
                   padding={0}
                   alignSelf="center"
                 />

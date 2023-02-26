@@ -56,7 +56,6 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
             title="No medical history available"
             description="Start by add a medical history. "
             Icon={<NoHistory width="40%" height="40%" />}
-            backgroundColor={'none'}
             padding={0}
             action={{
               text: 'add medical history',

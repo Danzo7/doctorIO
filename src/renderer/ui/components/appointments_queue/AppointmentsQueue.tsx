@@ -112,7 +112,6 @@ export default function AppointmentsQueue() {
                     },
                   }}
                   Icon={<WaitingRoom width="60%" height="60%" />}
-                  backgroundColor={'none'}
                   padding={'15px 0 0 15px'}
                 />
               ) : (
@@ -138,7 +137,6 @@ export default function AppointmentsQueue() {
                           </div>
                         ) : undefined
                       }
-                      backgroundColor="none"
                       height={217}
                       padding={'15px 0 0 15px'}
                       Icon={<Door height="60%" />}

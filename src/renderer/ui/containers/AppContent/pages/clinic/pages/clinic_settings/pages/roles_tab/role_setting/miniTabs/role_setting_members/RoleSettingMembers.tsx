@@ -29,7 +29,6 @@ export default function RoleSettingMembers(props: RoleBrief) {
         ) : (
           <VerticalPanel
             description="No members were found. "
-            backgroundColor="none"
             action={{
               text: 'Add members to this role.',
               onClick: () => {

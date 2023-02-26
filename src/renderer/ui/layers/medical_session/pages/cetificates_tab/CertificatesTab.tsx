@@ -90,7 +90,6 @@ export default function CertificatesTab({}: CertificatesTabProps) {
         ) : (
           <VerticalPanel
             title="No certifications added"
-            backgroundColor="none"
             alignSelf="stretch"
             flexGrow
             description="Please add a certificate. "

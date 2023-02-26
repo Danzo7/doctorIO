@@ -2,7 +2,7 @@ import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import TextButton from '@components/buttons/text_button';
-import RandomSvgFaces from 'toSvg/randomSvgFaces.svg?icon';
+import Done from 'toSvg/done.svg?icon';
 import Header from '@components/header';
 import LoadingSpinner from '@components/loading_spinner';
 import PrintedLayout from '@components/printed_layout';
@@ -164,15 +164,16 @@ export default function MedicalSession({}: MedicalSessionProps) {
   ) : (
     <div className="no-queue-item" css={{ alignSelf: 'center' }}>
       <VerticalPanel
-        title="No appointment is selected"
-        description="You need to select an appointment from the queue. "
-        Icon={<RandomSvgFaces width={100} height={100} />}
+        title="Everything is done"
+        description="No appointment is in progress at the moment. "
+        Icon={<Done width={100} height={100} />}
         action={{
           text: 'Back home',
           onClick: () => {
             navigate('/');
           },
         }}
+        backgroundColor={color.secondary_color}
       />
     </div>
   );
