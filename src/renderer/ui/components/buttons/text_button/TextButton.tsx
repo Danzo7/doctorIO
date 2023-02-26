@@ -240,7 +240,7 @@ export default function TextButton({
         },
       }}
       onClick={(e) => {
-        if (tip) Overlay_u.close('helper');
+        if (tip) Overlay_u.clearAlt();
 
         if (!blank) {
           e.preventDefault();
