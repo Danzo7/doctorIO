@@ -22,6 +22,7 @@ import PermissionList from './miniTabs/permission_list';
 import RoleSettingGeneral from './miniTabs/role_setting_general';
 import RoleSettingMembers from './miniTabs/role_setting_members';
 import './style/index.scss';
+import VerticalPanel from '@components/vertical_panel';
 
 interface RoleSettingProps {}
 export default function RoleSetting({}: RoleSettingProps) {
@@ -30,7 +31,8 @@ export default function RoleSetting({}: RoleSettingProps) {
 
   const isDirty = useIsDirty();
   const setSettings = useSetSettings();
-  const [trigger, { data, isLoading, isSuccess }] = useLazyGetRoleByIdQuery();
+  const [trigger, { data, isLoading, isFetching, isSuccess, isError }] =
+    useLazyGetRoleByIdQuery();
   const {
     data: dataL,
     isLoading: isLoadingL,
@@ -107,8 +109,7 @@ export default function RoleSetting({}: RoleSettingProps) {
     isDirty,
     isDirty,
   );
-  if (roleIdParam == undefined)
-    return <div className="role-setting"> choose a role </div>;
+  if (roleIdParam == undefined) return <VerticalPanel title="Select a role" />;
   return (
     <div
       className="role-setting"
@@ -120,7 +121,7 @@ export default function RoleSetting({}: RoleSettingProps) {
           : {}
       }
     >
-      {isLoading ? (
+      {isFetching || isLoading ? (
         <LoadingSpinner />
       ) : isSuccess && data ? (
         <TabMenu items={['General', 'Permissions', 'Members']}>
@@ -138,11 +139,13 @@ export default function RoleSetting({}: RoleSettingProps) {
           />
         </TabMenu>
       ) : (
-        <RefetchPanel
-          action={() => {
-            trigger(Number(roleIdParam) as any);
-          }}
-        />
+        isError && (
+          <RefetchPanel
+            action={() => {
+              trigger(Number(roleIdParam) as any);
+            }}
+          />
+        )
       )}
     </div>
   );
