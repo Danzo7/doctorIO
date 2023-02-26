@@ -32,7 +32,11 @@ export default function DocumentPreviewPanel({
       overflow="visible"
       title="Documents"
       buttonNode={
-        <DarkLightCornerButton text="Upload" onPress={openUploadFileModal} />
+        <DarkLightCornerButton
+          text="Upload"
+          onPress={openUploadFileModal}
+          blend
+        />
       }
     >
       {isLoading || isFetching ? (
@@ -54,7 +58,6 @@ export default function DocumentPreviewPanel({
             title="No Documents available"
             description="Start by upload a document. "
             Icon={<NoFile width="40%" height="40%" />}
-            backgroundColor={'none'}
             padding={0}
             action={{
               text: 'Upload document',
