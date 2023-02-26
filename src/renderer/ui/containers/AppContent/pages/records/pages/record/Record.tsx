@@ -145,21 +145,25 @@ export default function Record({}: RecordProps) {
                 />
               </div>
 
-              <BookingTimeline
-                appointments={res.data ?? []}
-                patientId={Number(patientId)}
-                onPress={() => {
-                  modal(
-                    () => (
-                      <BookAppointmentModal
-                        id={Number(patientId)}
-                        patientName={data.firstName + ' ' + data.lastName}
-                      />
-                    ),
-                    DEFAULT_MODAL,
-                  ).open();
-                }}
-              />
+              {res.isFetching ? (
+                <LoadingSpinner />
+              ) : (
+                <BookingTimeline
+                  appointments={res.data ?? []}
+                  patientId={Number(patientId)}
+                  onPress={() => {
+                    modal(
+                      () => (
+                        <BookAppointmentModal
+                          id={Number(patientId)}
+                          patientName={data.firstName + ' ' + data.lastName}
+                        />
+                      ),
+                      DEFAULT_MODAL,
+                    ).open();
+                  }}
+                />
+              )}
             </div>
           </>
         ) : isFetching ? (
