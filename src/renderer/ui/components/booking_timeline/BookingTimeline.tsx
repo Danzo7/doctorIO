@@ -1,10 +1,10 @@
 import { color } from '@assets/styles/color';
-import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
 import PreviewList from '@components/preview_list';
 import { AppointmentBrief } from '@models/instance.model';
 import './style/index.scss';
 import TimelineItem from './timeline_item';
 import VerticalPanel from '@components/vertical_panel';
+import MultiOptionSwitcher from '@components/buttons/multi_option_switcher';
 
 interface BookingTimelineProps {
   patientId: number;
@@ -23,7 +23,7 @@ export default function BookingTimeline({
         css={{
           borderLeft:
             appointments.length > 0
-              ? `5px solid ${color.cold_blue}`
+              ? `2px solid ${color.cold_blue}`
               : undefined,
           height: '100%',
           position: 'absolute',
@@ -36,7 +36,11 @@ export default function BookingTimeline({
       <PreviewList
         title="Appointment"
         buttonNode={
-          <DarkLightCornerButton text="Book appointment" onPress={onPress} />
+          <>
+            <MultiOptionSwitcher //TODO add an actual input
+              textList={['All', 'Upcoming', 'Done', 'Canceled']}
+            />
+          </>
         }
         gap={10}
         noBorder

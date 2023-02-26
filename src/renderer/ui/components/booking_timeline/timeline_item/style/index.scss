@@ -3,17 +3,18 @@
 .timeline-item {
     display: flex;
     align-items: center;
-    gap:10px;
-
+    position: relative;
     >.dot{
         z-index: 1;
         height:10px;
         width: 10px;
-
+        position: absolute;
         border-radius: 100%;
     }
     >.event{
+        z-index: 1;
         display: flex;
+        padding-left: 5px;
         flex-direction: column;
     }
 }
