@@ -1,7 +1,8 @@
 import { color } from '@assets/styles/color';
 import Header from '@components/header';
-import { ReactNode } from 'react';
+import { ReactNode, useRef } from 'react';
 import './style/index.scss';
+import ViewportList from 'react-viewport-list';
 interface PreviewListProps {
   title: string;
   buttonNode?: ReactNode;
@@ -24,6 +25,9 @@ export default function PreviewList({
   width,
   flexGrow,
 }: PreviewListProps) {
+  const containerRef = useRef(null);
+  const listRef = useRef(null);
+  const items = Array.isArray(children) ? children : [children];
   return (
     <div
       className="preview-list"
@@ -38,8 +42,14 @@ export default function PreviewList({
       }}
     >
       <Header title={title} buttonNode={buttonNode} />
-      <div className="preview-list-wrapper" css={{ gap: gap }}>
-        {children}
+      <div
+        className="preview-list-wrapper"
+        css={{ gap: gap }}
+        ref={containerRef}
+      >
+        <ViewportList ref={listRef} viewportRef={containerRef} items={items}>
+          {(item) => item}
+        </ViewportList>
       </div>
     </div>
   );
