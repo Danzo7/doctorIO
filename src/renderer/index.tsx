@@ -4,7 +4,6 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import App from './App';
 import './index.scss';
 import { Provider } from 'react-redux';
-import Taskbar from '@components/taskbar';
 import store from '@store';
 import { ErrorBoundary } from '@layers/error_layer';
 
@@ -14,7 +13,6 @@ const Routing = FROM_ELECTRON ? HashRouter : BrowserRouter;
 root.render(
   <StrictMode>
     <ErrorBoundary>
-      {IS_DESKTOP && <Taskbar />}
       <Provider store={store}>
         <Routing>
           <App />
