@@ -40,6 +40,8 @@ export default function VerticalPanel({
         alignSelf: alignSelf,
         height,
         maxHeight: height,
+        minHeight: height,
+
         flexGrow: flexGrow ? 1 : 0,
       }}
     >
