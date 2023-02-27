@@ -1,6 +1,6 @@
 import AlertToast from '@components/alert_toast';
-import { useToast } from '@stores/overlayStore';
 import './style/index.scss';
+import { useToast } from '@libs/overlay/stores/toasts';
 interface ToastContainerProps {}
 export default function ToastContainer({}: ToastContainerProps) {
   const toasts = useToast();
