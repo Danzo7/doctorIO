@@ -21,7 +21,7 @@ export default function NotesPanel({ date, note }: NotesPanelProps) {
       <Header
         title="Notes"
         buttonNode={
-          <DarkLightCornerButton text="All notes" blend onPress={() => {}} />
+          <DarkLightCornerButton text="All notes" onPress={() => {}} />
         }
       />
 
