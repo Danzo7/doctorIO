@@ -6,8 +6,8 @@ import SquareIconButton from '@components/buttons/square_icon_button';
 import { css } from '@emotion/react';
 import { createPopper } from '@popperjs/core';
 
-import { Overlay_u } from '@stores/overlayStore';
 import { OverlayOptions, PopperTargetType } from './types';
+import { modal, tooltip } from './stores';
 
 type OverlayItemProps = OverlayOptions & {
   children?: ReactNode;
@@ -36,7 +36,9 @@ export function OverlayItem({
   const closeOverlay = () => {
     if (!closable) return;
     if (onClose) onClose();
-    else if (defaultCloseFallback) Overlay_u.close();
+    else if (defaultCloseFallback)
+      if (popperTarget) tooltip.close();
+      else modal.close();
   };
   return (
     <>
@@ -93,8 +95,32 @@ export function OverlayItem({
               createPopper(
                 (popperTarget as PopperTargetType).target ?? popperTarget,
                 e,
-                (popperTarget as PopperTargetType).options ?? {
-                  placement: 'auto-end',
+                {
+                  modifiers: [
+                    {
+                      name: 'preventOverflow',
+                      options: {
+                        padding: 30,
+                        altAxis: true,
+                      },
+                    },
+                    {
+                      name: 'offset',
+                      options: {
+                        offset: [0, 5],
+                      },
+                    },
+                    {
+                      name: 'flip',
+                      options: {
+                        altBoundary: true,
+                        fallbackPlacements: ['bottom'],
+                      },
+                    },
+                  ],
+                  ...((popperTarget as PopperTargetType).options ?? {
+                    placement: 'auto-end',
+                  }),
                 },
               );
           }

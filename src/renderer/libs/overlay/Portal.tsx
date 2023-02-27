@@ -1,7 +1,8 @@
-import { Overlay_u, useIsNotEmpty } from '@stores/overlayStore';
 import { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { OverlayItem, OverlayOptions } from '.';
+import { usePortalElement } from './stores/portal';
+import { useIsModalEmpty } from './stores/modal';
 
 export function Portal({
   children,
@@ -11,9 +12,9 @@ export function Portal({
   children: ReactNode;
   overall?: boolean;
 }) {
-  const entry = Overlay_u.getPortalEntry();
-  const notEmpty = useIsNotEmpty();
-  if (!entry || (notEmpty && !overall)) return <></>;
+  const entry = usePortalElement();
+  const isEmpty = useIsModalEmpty();
+  if (!entry || (!isEmpty && !overall)) return <></>;
   else
     return createPortal(
       <div>

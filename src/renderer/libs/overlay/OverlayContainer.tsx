@@ -1,61 +1,22 @@
-import { Overlay } from './overlay';
-
-import { useCallback, useEffect, useRef, useState } from 'react';
 import './style/index.scss';
-import {
-  getOverlayNode,
-  Overlay_u,
-  useAlt,
-  useIsOpenModal,
-  useOpenTooltipId,
-} from '@stores/overlayStore';
-import ToastContainer from '@libs/toast_container';
+
 import { Portal } from './Portal';
 import { useRouteChange } from '@libs/routeChange';
-/**
- * @Deprecated This component is unstable and will be removed in the future
- */
-export function OverlayContainer_u() {
-  const [render, setrender] = useState<React.ReactPortal[]>([]);
-  const update = useCallback(
-    (state?: (portals: React.ReactPortal[]) => React.ReactPortal[]) => {
-      if (state) setrender((old) => state(old));
-      else setrender([]);
-    },
-    [],
-  );
-  const overlayRef = useRef(null);
+import tooltip, { useTooltipItems } from './stores/tooltips';
+import { useAlt } from './stores/alt';
+import modal, { useModalNode } from './stores/modal';
+import portal from './stores/portal';
+import ToastContainer from './toast_container';
 
-  // useRouteChange(() => Overlay.close());
-
-  const removePortal = useCallback((portal?: React.ReactPortal) => {
-    if (portal) {
-      //Temporary fix with "setTimeout" for dirty state when removing a portal while updating with usePrompt while updating a component
-      setTimeout(
-        () => setrender((old) => old.filter((item) => item !== portal)),
-        0,
-      );
-    }
-  }, []);
-  useEffect(() => {
-    if (overlayRef.current) Overlay.setRenderer(overlayRef.current);
-    Overlay.update = update;
-    Overlay.removePortal = removePortal;
-  }, [update, removePortal]);
-
-  return (
-    <div className="overlay-container" ref={overlayRef}>
-      {render}
-    </div>
-  );
-}
 function TooltipContainer() {
-  const id = useOpenTooltipId();
+  const items = useTooltipItems();
   return (
     <>
-      {id && (
+      {items.length > 0 && (
         <div className="overlay-container">
-          <div>{getOverlayNode(id)}</div>
+          {items.map((item) => (
+            <div key={item.id}>{item.node}</div>
+          ))}
         </div>
       )}
     </>
@@ -82,8 +43,6 @@ function AltContainer() {
             css={{
               padding: 5,
               background: 'black',
-              marginBottom: 5,
-              marginTop: 5,
               borderRadius: 5,
               pointerEvents: 'none',
             }}
@@ -97,12 +56,12 @@ function AltContainer() {
   );
 }
 function ModalContainer() {
-  const id = useIsOpenModal();
+  const node = useModalNode();
   return (
     <>
-      {id && (
+      {node && (
         <div className="overlay-container">
-          <div>{getOverlayNode(id)}</div>
+          <div>{node}</div>
         </div>
       )}
     </>
@@ -113,7 +72,7 @@ function PortalContainer() {
     <div
       className="overlay-container"
       ref={(e) => {
-        if (e) Overlay_u.setPortalElement(e);
+        if (e) portal(e);
       }}
     />
   );
@@ -121,7 +80,8 @@ function PortalContainer() {
 export function OverlayContainer() {
   useRouteChange({
     onChange: () => {
-      Overlay_u.clear();
+      modal.clear();
+      tooltip.clear();
     },
     key: 'overlay',
   });
