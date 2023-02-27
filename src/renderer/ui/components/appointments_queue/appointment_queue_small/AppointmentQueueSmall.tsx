@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars */
 import QueueItem from '@components/appointments_queue/components/queue_item';
 import { useState } from 'react';
 import ScrollView from '@components/scroll_view';
@@ -54,110 +55,108 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       const appointments = getQueueAppointmentsQuery.data;
 
       return (
-        <Backdrop when={getQueueAppointmentsQuery.isFetching}>
-          <PreviewList
-            title="Queue list"
-            overflow="visible"
-            buttonNode={
-              <QueueControls
-                {...{
-                  state:
-                    appointments.length == 0 && state != 'PAUSED'
-                      ? 'EMPTY'
-                      : state,
-                  isOwner,
-                }}
-              />
+        <PreviewList
+          isFetching={getQueueAppointmentsQuery.isFetching}
+          title="Queue list"
+          overflow="visible"
+          buttonNode={
+            <QueueControls
+              {...{
+                state:
+                  appointments.length == 0 && state != 'PAUSED'
+                    ? 'EMPTY'
+                    : state,
+                isOwner,
+              }}
+            />
+          }
+        >
+          <Backdrop
+            when={state == 'PAUSED'}
+            node={
+              <>
+                <span css={{ fontSize: 14 }}>
+                  Queue is paused
+                  {!isOwner && (
+                    <>
+                      {' by'} <span css={{ fontWeight: 600 }}>The owner</span>
+                    </>
+                  )}
+                </span>
+                {isOwner && (
+                  <TextButton
+                    text="Resume"
+                    backgroundColor={color.good_green}
+                    onPress={() => {
+                      ResumeQueue(selectedQueue);
+                    }}
+                  />
+                )}
+              </>
             }
           >
-            {appointments.length == 0 && state != 'PAUSED' ? (
-              <VerticalPanel
-                title="Queue is empty"
-                description="Start by adding a patient to the queue. "
-                height={217}
-                action={{
-                  text: 'Add queue item',
-                  onClick: () => {
-                    modal(() => <QueueAddSearchModal />, {
-                      closeOnClickOutside: true,
-                      isDimmed: true,
-                      clickThrough: false,
-                      closeBtn: 'inner',
-                      width: '30%',
-                    }).open();
-                  },
-                }}
-                Icon={<WaitingRoom width="70%" height="70%" />}
-                padding={'15px 0 0 0'}
-              />
-            ) : (
-              <Backdrop
-                when={state == 'PAUSED'}
-                node={
-                  <>
-                    <span css={{ fontSize: 14 }}>
-                      Queue is paused
-                      {!isOwner && (
-                        <>
-                          {' by'}{' '}
-                          <span css={{ fontWeight: 600 }}>The owner</span>
-                        </>
-                      )}
-                    </span>
-                    {isOwner && (
-                      <TextButton
-                        text="Resume"
-                        backgroundColor={color.good_green}
-                        onPress={() => {
-                          ResumeQueue(selectedQueue);
+            <ScrollView refs={ref} gap={10}>
+              {appointments &&
+                (appointments.length > 0 ? (
+                  appointments.map(
+                    (
+                      {
+                        date,
+                        patientId,
+                        patientName,
+                        test,
+                        position,
+                        appointmentId,
+                      },
+                      index,
+                    ) => (
+                      <div
+                        key={patientId.toString() + index}
+                        onClick={() => {
+                          if (selected == index) setSelected(-1);
+                          else {
+                            if (selected > appointments.length - 1) return;
+                            gotoFrom(index, selected);
+                            setSelected(index);
+                          }
                         }}
-                      />
-                    )}
-                  </>
-                }
-              >
-                <ScrollView refs={ref} gap={10}>
-                  {appointments &&
-                    appointments.map(
-                      (
-                        {
-                          date,
-                          patientId,
-                          patientName,
-                          test,
-                          position,
-                          appointmentId,
-                        },
-                        index,
-                      ) => (
-                        <div
-                          key={patientId.toString() + index}
-                          onClick={() => {
-                            if (selected == index) setSelected(-1);
-                            else {
-                              if (selected > appointments.length - 1) return;
-                              gotoFrom(index, selected);
-                              setSelected(index);
-                            }
-                          }}
-                        >
-                          <QueueItem
-                            id={patientId}
-                            name={patientName}
-                            number={position}
-                            timeAgo={date}
-                            biometricScreening={test}
-                            opened={selected == index}
-                            appointmentId={appointmentId}
-                          />
-                        </div>
-                      ),
-                    )}
-                </ScrollView>
-              </Backdrop>
-            )}
-          </PreviewList>
-        </Backdrop>
+                      >
+                        <QueueItem
+                          id={patientId}
+                          name={patientName}
+                          number={position}
+                          timeAgo={date}
+                          biometricScreening={test}
+                          opened={selected == index}
+                          appointmentId={appointmentId}
+                        />
+                      </div>
+                    ),
+                  )
+                ) : (
+                  <VerticalPanel
+                    title="Queue is empty"
+                    description="Start by adding a patient to the queue. "
+                    height={200}
+                    action={{
+                      text: 'Add queue item',
+                      onClick: () => {
+                        modal(() => <QueueAddSearchModal />, {
+                          closeOnClickOutside: true,
+                          isDimmed: true,
+                          clickThrough: false,
+                          closeBtn: 'inner',
+                          width: '30%',
+                        }).open();
+                      },
+                    }}
+                    Icon={<WaitingRoom width="70%" height="70%" />}
+                    padding={'15px 0 0 0'}
+                  />
+                ))}
+            </ScrollView>
+          </Backdrop>
+        </PreviewList>
       );
     })()
   ) : (

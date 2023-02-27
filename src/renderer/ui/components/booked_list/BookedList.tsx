@@ -12,11 +12,15 @@ import { useSelectedQueue } from '@stores/queueSelectionStore';
 
 export default function BookedList({}) {
   const selectedQueue = useSelectedQueue();
-  const { data, isSuccess, isLoading, refetch } =
+  const { data, isSuccess, isLoading, isFetching, refetch } =
     useGetBookedAppointmentQuery(selectedQueue);
 
   return (
-    <PreviewList title="Booked appointment">
+    <PreviewList
+      title="Booked appointment"
+      isLoading={isLoading}
+      isFetching={isFetching}
+    >
       {isLoading ? (
         <LoadingSpinner />
       ) : isSuccess ? (
@@ -27,7 +31,6 @@ export default function BookedList({}) {
             title="No booked appointments"
             description="Start by booking an appointment. "
             Icon={<Schedule width={'60%'} height="60%" />}
-            backgroundColor={'none'}
             padding={'15px 0px 0 0px'}
             action={{
               text: 'Book appointment',

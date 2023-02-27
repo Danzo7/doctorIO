@@ -1,5 +1,4 @@
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import LoadingSpinner from '@components/loading_spinner';
 import PreviewList from '@components/preview_list';
 import PreviewWithControls from '@components/preview_with_controls';
 import RefetchPanel from '@components/refetch_panel';
@@ -15,8 +14,15 @@ interface MedicalHistoryProps {
   patientId: number;
 }
 export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
-  const { isLoading, isSuccess, data, refetch } =
-    useGetMedicalHistoryQuery(patientId);
+  const {
+    isLoading,
+    isSuccess,
+    data,
+    refetch,
+    isError,
+    isUninitialized,
+    isFetching,
+  } = useGetMedicalHistoryQuery(patientId);
   const openAddMedicalHistoryModal = () => {
     modal(() => <AddMedicalHistoryModal patientId={patientId} />, {
       closeOnClickOutside: true,
@@ -32,6 +38,8 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
       maxHeight={300}
       title="Medical history"
       overflow="visible"
+      isLoading={isLoading || isUninitialized}
+      isFetching={isFetching}
       buttonNode={
         <DarkLightCornerButton
           text="Add"
@@ -40,9 +48,7 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
         />
       }
     >
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : isSuccess ? (
+      {isSuccess ? (
         data.length > 0 ? (
           data.map((med, index) => (
             <PreviewWithControls
@@ -64,7 +70,7 @@ export default function MedicalHistory({ patientId }: MedicalHistoryProps) {
           />
         )
       ) : (
-        <RefetchPanel action={refetch} />
+        isError && <RefetchPanel action={refetch} />
       )}
     </PreviewList>
   );

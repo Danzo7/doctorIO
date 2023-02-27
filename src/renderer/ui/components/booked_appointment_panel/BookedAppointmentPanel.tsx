@@ -12,8 +12,15 @@ import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 
 export default function BookedAppointmentPanel({}) {
   const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
-  const { data, isSuccess, refetch } =
-    useGetBookedAppointmentQuery(selectedQueue);
+  const {
+    data,
+    isSuccess,
+    isLoading,
+    isFetching,
+    refetch,
+    isError,
+    isUninitialized,
+  } = useGetBookedAppointmentQuery(selectedQueue);
 
   return (
     <PreviewList
@@ -28,28 +35,32 @@ export default function BookedAppointmentPanel({}) {
           }}
         />
       }
+      isLoading={isLoading || isUninitialized}
+      isFetching={isFetching}
       noBorder
     >
-      {isSuccess && data.length > 0 ? (
-        data.map((props, index) => (
-          <BookedAppointmentItem {...props} key={index} />
-        ))
-      ) : isSuccess ? (
-        <VerticalPanel
-          title="No booked appointments"
-          description="Start by booking an appointment. "
-          Icon={<Schedule width="60%" height="60%" />}
-          padding={0}
-          alignSelf="center"
-          action={{
-            text: 'Book appointment',
-            onClick() {
-              modal(<AddSearchToBooked />, DEFAULT_MODAL).open();
-            },
-          }}
-        />
+      {isSuccess ? (
+        data.length > 0 ? (
+          data.map((props, index) => (
+            <BookedAppointmentItem {...props} key={index} />
+          ))
+        ) : (
+          <VerticalPanel
+            title="No booked appointments"
+            description="Start by booking an appointment. "
+            Icon={<Schedule width="60%" height="60%" />}
+            padding={0}
+            alignSelf="center"
+            action={{
+              text: 'Book appointment',
+              onClick() {
+                modal(<AddSearchToBooked />, DEFAULT_MODAL).open();
+              },
+            }}
+          />
+        )
       ) : (
-        <RefetchPanel action={refetch} />
+        isError && <RefetchPanel action={refetch} />
       )}
     </PreviewList>
   );

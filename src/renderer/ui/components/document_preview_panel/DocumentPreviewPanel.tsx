@@ -14,8 +14,15 @@ interface DocumentPreviewPanelProps {
 export default function DocumentPreviewPanel({
   patientId,
 }: DocumentPreviewPanelProps) {
-  const { isSuccess, isLoading, data, isFetching, refetch } =
-    useGetMedicalDocumentsQuery(patientId);
+  const {
+    isSuccess,
+    isLoading,
+    data,
+    isFetching,
+    refetch,
+    isError,
+    isUninitialized,
+  } = useGetMedicalDocumentsQuery(patientId);
   const openUploadFileModal = () => {
     modal(() => <UploadFileModal patientId={patientId} />, {
       closeOnClickOutside: true,
@@ -31,6 +38,8 @@ export default function DocumentPreviewPanel({
       flexGrow
       overflow="visible"
       title="Documents"
+      isLoading={isLoading || isUninitialized}
+      isFetching={isFetching}
       buttonNode={
         <DarkLightCornerButton
           text="Upload"
@@ -66,7 +75,7 @@ export default function DocumentPreviewPanel({
           />
         )
       ) : (
-        <RefetchPanel action={refetch} />
+        isError && <RefetchPanel action={refetch} />
       )}
     </PreviewList>
   );
