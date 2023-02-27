@@ -3,7 +3,8 @@ import MedicalHistory from '@components/medical_history';
 
 import { Patient } from '@models/instance.model';
 import './style/index.scss';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import AddPatientModal from '@containers/modals/add_patient_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import PatientInfoCard from '@components/patient_card';

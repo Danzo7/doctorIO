@@ -14,7 +14,7 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import AlertModal from '../dialog_modal';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
 
 interface NextPatientProps {
   invitedPatient?: { patientName: string; arrivalTime: Date; position: number };
@@ -96,7 +96,7 @@ export default function NextPatient({ invitedPatient }: NextPatientProps) {
           text="Close"
           backgroundColor={color.cold_blue}
           onPress={() => {
-            Overlay_u.close();
+            modal.close();
           }}
         />
       }

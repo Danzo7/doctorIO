@@ -12,7 +12,7 @@ import LoadingSpinner from '@components/loading_spinner';
 import CopyField from '@components/copy_field';
 import { useUserStore } from '@stores/userStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
 interface Inputs {
   key: string;
 }
@@ -80,7 +80,7 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
             alignSelf="center"
             padding={5}
             onPress={() => {
-              Overlay_u.close();
+              modal.close();
             }}
           />
         )

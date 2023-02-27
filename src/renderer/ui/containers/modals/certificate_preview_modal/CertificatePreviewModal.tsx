@@ -8,7 +8,8 @@ import {
   MedicalCertificate,
   Patient,
 } from '@models/instance.model';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import PrintPaper from '@components/print_paper';
 import { FIT_MODAL } from '@libs/overlay';
 import { Member } from '@models/server.models';

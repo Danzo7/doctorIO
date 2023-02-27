@@ -6,9 +6,9 @@ import TextPair from '@components/text_pair/TextPair';
 import { SETTINGS } from '@stores/appSettingsStore';
 
 import CropPictureModal from '@containers/modals/crop_picture_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal, toast } from '@libs/overlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
-import { modal, toast } from '@stores/overlayStore';
+
 import { format } from 'date-fns';
 import Edit from 'toSvg/pencil.svg?icon';
 import './style/index.scss';

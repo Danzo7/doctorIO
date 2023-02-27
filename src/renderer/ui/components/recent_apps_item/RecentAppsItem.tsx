@@ -2,11 +2,10 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@colors';
 import PresentationItem from '@components/presentation_item';
 import { PatientBrief } from '@models/instance.model';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 import { useAddQueueAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAssignAppointmentToQueueMutation } from '@redux/instance/Appointment/AppointmentApi';
-import { modal, Overlay_u } from '@stores/overlayStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 
 interface RecentAppsItemProps {
@@ -38,7 +37,7 @@ export default function RecentAppsItem({
                       id: appointmentId,
                       test: data,
                     }).then((res: any) => {
-                      if (res?.data) Overlay_u.clear();
+                      if (res?.data) modal.clear(); //TODO specify modal
                     });
                   else
                     addAppointment({
@@ -48,7 +47,7 @@ export default function RecentAppsItem({
                         vitals: data,
                       },
                     }).then((res: any) => {
-                      if (res?.data) Overlay_u.clear();
+                      if (res?.data) modal.clear();
                     });
                 }}
               />
@@ -67,7 +66,7 @@ export default function RecentAppsItem({
               selectedQueue: selectedQueue,
               id: appointmentId,
             }).then((res: any) => {
-              if (res?.data) Overlay_u.clear();
+              if (res?.data) modal.clear();
             });
           else
             addAppointment({
@@ -76,7 +75,7 @@ export default function RecentAppsItem({
                 patientId: id,
               },
             }).then((res: any) => {
-              if (res?.data) Overlay_u.clear();
+              if (res?.data) modal.clear();
             });
         }}
       />

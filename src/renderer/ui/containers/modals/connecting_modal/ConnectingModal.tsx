@@ -3,7 +3,8 @@ import LoadingSpinner from '@components/loading_spinner';
 import VerticalPanel from '@components/vertical_panel';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useConnectionStore } from '@stores/ConnectionStore';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import LogOut from 'toSvg/logOut.svg?icon';
 import AlertModal from '../dialog_modal';
 import TextButton from '@components/buttons/text_button';

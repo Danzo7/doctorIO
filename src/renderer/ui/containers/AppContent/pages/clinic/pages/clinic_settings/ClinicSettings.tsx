@@ -13,7 +13,8 @@ import TextButton from '@components/buttons/text_button';
 import { FIT_MODAL } from '@libs/overlay';
 import { useDisconnectMemberMutation } from '@redux/local/auth/authApi';
 import AlertModal from '@containers/modals/dialog_modal';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import TemplateTab from './pages/template_tab';
 interface ClinicSettingsProps {}
 export default function ClinicSettings({}: ClinicSettingsProps) {

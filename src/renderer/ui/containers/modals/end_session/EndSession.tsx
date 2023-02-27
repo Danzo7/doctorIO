@@ -7,7 +7,7 @@ import { useBookAppointmentMutation } from '@redux/instance/Appointment/Appointm
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 import AlertModal from '../dialog_modal';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
 interface EndSessionProps {
   patientId: number;
 }
@@ -32,7 +32,7 @@ export default function EndSession({ patientId }: EndSessionProps) {
             fontWeight={700}
             padding=" 5px 15px"
             onPress={() => {
-              Overlay_u.close();
+              modal.close();
             }}
           />
           <TextButton

@@ -2,10 +2,9 @@ import ModalContainer from '@components/modal_container';
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
-import { Overlay_u, modal } from '@stores/overlayStore';
 import KeywordFieldItem from '@components/keyword_field_item';
 import add from 'toSvg/add.svg?icon';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import {
   useDeleteCertificateTemplateMutation,
   useGetCertificateTemplatesQuery,
@@ -31,7 +30,7 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
             backgroundColor={color.light}
             radius={7}
             fontSize={14}
-            onPress={() => Overlay_u.close()}
+            onPress={() => modal.close()}
           />
         }
       >
@@ -40,7 +39,7 @@ export default function ReusableCertificatesModal({}: ReusableCertificatesModalP
         ) : isSuccess ? (
           <div className="fields-edit-content">
             <div className="fields-edit-items">
-              {data.map(({ id, title }, index) => (
+              {data.map(({ id, title }) => (
                 <KeywordFieldItem
                   key={id}
                   name={title}

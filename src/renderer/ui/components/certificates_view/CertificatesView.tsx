@@ -1,8 +1,8 @@
 import './style/index.scss';
 
 import KeywordFieldItem from '@components/keyword_field_item';
-import { modal } from '@stores/overlayStore';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { modal, DEFAULT_MODAL } from '@libs/overlay';
+
 import {
   Appointment,
   MedicalCertificate,

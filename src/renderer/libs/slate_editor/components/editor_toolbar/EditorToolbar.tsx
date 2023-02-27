@@ -27,9 +27,10 @@ import {
   toggleMark,
 } from '@libs/slate_editor/commons/commands';
 import TextButton from '@components/buttons/text_button';
-import { modal } from '@stores/overlayStore';
+import { modal, DEFAULT_MODAL } from '@libs/overlay';
+
 import InsertAttributesModal from '@containers/modals/insert_attributes_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+
 import { AttributeEditor } from '@libs/slate_editor/slate-dynamic-attributes/AttributeEditor';
 import ImageGallery from '@containers/modals/image_gallery';
 import { ImageEditor } from '@libs/slate_editor/slate-image/ImageEditor';

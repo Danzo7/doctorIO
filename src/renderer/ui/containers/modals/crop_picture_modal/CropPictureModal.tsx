@@ -7,8 +7,8 @@ import Slider from '@components/inputs/slider';
 import { useCallback, useState } from 'react';
 import { Area, Point } from 'react-easy-crop/types';
 import { useSetAvatarMutation } from '@redux/clinic/rbac/member/memberApi';
-import { Overlay_u } from '@stores/overlayStore';
 import { getImageFile } from '@helpers/image.helper';
+import { modal } from '@libs/overlay';
 
 interface CropPictureModalProps {
   src: string;
@@ -50,7 +50,7 @@ export default function CropPictureModal({ src }: CropPictureModalProps) {
         data.append('file', blob);
         setAvatar({ data })
           .unwrap()
-          .then(() => Overlay_u.close('avatarCropper'));
+          .then(() => modal.close('avatarCropper'));
       })
       .catch((err) => {
         setError(err.message);

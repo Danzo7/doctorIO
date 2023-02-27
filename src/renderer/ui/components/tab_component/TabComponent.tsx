@@ -1,10 +1,10 @@
 import { color } from '@assets/styles/color';
 import DarkAddButton from '@components/buttons/dark_add_button';
 import DarkLightCornerButton from '@components/buttons/dark_light_corner_button';
-import { Overlay_u } from '@stores/overlayStore';
 import { MouseEvent, ReactNode, useRef, useState } from 'react';
 import './style/index.scss';
 import VerticalPanel from '@components/vertical_panel';
+import { tooltip } from '@libs/overlay';
 
 interface TabType {
   label: string;
@@ -39,7 +39,7 @@ export default function TabComponent({
   const foldRef = useRef(foldedItems);
   const switchFoldToTab = (e?: MouseEvent<HTMLButtonElement>) => {
     if (e)
-      Overlay_u.openTooltip(
+      tooltip(
         () =>
           foldRef?.current?.map((item) => ({
             text: item.label,
@@ -54,8 +54,8 @@ export default function TabComponent({
             },
           })),
         e.currentTarget,
-        true,
-      );
+        { autoClose: true },
+      ).open();
   };
 
   return (

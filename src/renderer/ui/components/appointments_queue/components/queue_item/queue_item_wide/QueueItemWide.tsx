@@ -19,8 +19,8 @@ import {
 import AddMedicalTestModal from '@containers/modals/add_medical_test_modal';
 import TimeAgo from '@components/time_ago';
 import { BiometricScreening } from '@models/instance.model';
-import { modal, Overlay_u } from '@stores/overlayStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
+import { modal, tooltip } from '@libs/overlay';
 interface QueueItemWideProps {
   id: number;
   name: string;
@@ -62,7 +62,7 @@ function QueueItemWide({
             Icon={threeDots}
             onPress={(e) => {
               if (e)
-                Overlay_u.openTooltip(
+                tooltip(
                   () => [
                     ...(isSuccess && isOwner
                       ? [
@@ -86,8 +86,8 @@ function QueueItemWide({
                     },
                   ],
                   e.currentTarget,
-                  true,
-                );
+                  { autoClose: true },
+                ).open();
             }}
           />
         </div>

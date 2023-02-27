@@ -8,9 +8,10 @@ import { SETTINGS } from '@stores/appSettingsStore';
 import { format } from 'date-fns';
 import './style/index.scss';
 import Edit from 'toSvg/pencil.svg?icon';
-import { modal } from '@stores/overlayStore';
+import { modal, DEFAULT_MODAL } from '@libs/overlay';
+
 import EditNoteModal from '@containers/modals/edit_note_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+
 interface NotesPanelProps {
   date: Date;
   note: string;

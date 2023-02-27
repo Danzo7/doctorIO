@@ -7,8 +7,8 @@ import { io, Socket } from 'socket.io-client';
 import create from 'zustand';
 import { useAuthStore } from './authStore';
 import { useClinicsStore } from './clinicsStore';
-import { modal, Overlay_u } from './overlayStore';
 import { useQueueSelectionStore } from './queueSelectionStore';
+import { modal } from '@libs/overlay';
 
 interface SocketState {
   socket?: Socket;
@@ -113,7 +113,7 @@ export const useConnectionStore = create<SocketState>()((set, get) => ({
                 'queueNotification',
               ).open({ force: true });
             else if (data.state == 'IN_PROGRESS')
-              Overlay_u.close('queueNotification');
+              modal.close('queueNotification');
           },
         );
 

@@ -5,7 +5,7 @@ import threeDots from 'toSvg/threedots.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import SmallRoleList from '@components/members_preview/small_role_list';
 import MemberBigCard from '@containers/modals/member_big_card';
-import { FIT_MODAL } from '@libs/overlay';
+import { FIT_MODAL, modal, tooltip } from '@libs/overlay';
 import { MemberBrief } from '@models/server.models';
 import { format } from 'date-fns';
 import { SETTINGS } from '@stores/appSettingsStore';
@@ -14,7 +14,6 @@ import {
   useAssignRoleMutation,
   useRevokeRoleMutation,
 } from '@redux/clinic/rbac/role/roleApi';
-import { modal, Overlay_u } from '@stores/overlayStore';
 
 export default function MemberItem({
   avatar,
@@ -63,7 +62,7 @@ export default function MemberItem({
           tip="More"
           onPress={(e) => {
             if (e)
-              Overlay_u.openTooltip(
+              tooltip(
                 () => [
                   {
                     text: 'show profile',
@@ -73,8 +72,8 @@ export default function MemberItem({
                   },
                 ],
                 e.currentTarget,
-                true,
-              );
+                { autoClose: true },
+              ).open();
           }}
         />
       </div>

@@ -20,7 +20,8 @@ import PreviewList from '@components/preview_list';
 import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import RefetchPanel from '@components/refetch_panel';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 import AppointmentQueueSmallShimmer from '@components/shimmers/appointment_queue_small_shimmer';
 

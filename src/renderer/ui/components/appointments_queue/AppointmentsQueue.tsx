@@ -22,7 +22,8 @@ import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import LinkedRole from '@components/linked_role';
 import VerticalPanel from '@components/vertical_panel';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import RefetchPanel from '@components/refetch_panel';
 import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 import AppointmentsQueueShimmer from '@components/shimmers/appointments_queue_shimmer';

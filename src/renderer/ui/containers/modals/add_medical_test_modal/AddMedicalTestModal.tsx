@@ -12,7 +12,8 @@ import { useGetFieldsQuery } from '@redux/clinic/clinicApi';
 import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 import EditVitalsFieldsModal from '../edit_vitals_fields_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import { sentenceCase } from '@shipengine/capitalization';
 interface AddMedicalTestModalProps {
   onSubmit: SubmitHandler<BiometricScreening>;

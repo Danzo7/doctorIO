@@ -2,12 +2,11 @@ import DarkLightCornerButton from '@components/buttons/dark_light_corner_button'
 import Header from '@components/header';
 import SimpleInfoContainer from '@components/simple_info_container';
 import AddDrugModal from '@containers/modals/add_drug_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import {
   useMedicalSessionStore,
   usePrescription,
 } from '@stores/medicalSessionStore';
-import { modal } from '@stores/overlayStore';
 import MedicamentTable from './medicament_table';
 import './style/index.scss';
 

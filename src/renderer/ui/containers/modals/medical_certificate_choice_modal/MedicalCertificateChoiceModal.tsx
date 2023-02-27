@@ -1,10 +1,9 @@
 import ModalContainer from '@components/modal_container';
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
-import { Overlay_u, modal } from '@stores/overlayStore';
 import { color } from '@assets/styles/color';
 import CertificateEditorModal from '../certificate_editor_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 interface MedicalCertificateChoiceModalProps {}
 export default function MedicalCertificateChoiceModal({}: MedicalCertificateChoiceModalProps) {
   return (
@@ -20,7 +19,7 @@ export default function MedicalCertificateChoiceModal({}: MedicalCertificateChoi
             fontWeight={700}
             padding=" 5px 15px"
             onPress={() => {
-              Overlay_u.close();
+              modal.close();
             }}
           />
         }

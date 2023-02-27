@@ -1,8 +1,7 @@
-import Tooltip from '@components/poppers/tooltip';
-import { Overlay_u, modal } from '@stores/overlayStore';
-import { Editor, Element, Range, Transforms } from 'slate';
+import { Editor, Element, Node, Range, Transforms } from 'slate';
 import { ReactEditor } from 'slate-react';
 import { FormattedText } from '../slate.types';
+import { tooltip } from '@libs/overlay';
 
 export const withSuggestion = (
   editor: Editor,
@@ -57,13 +56,6 @@ export const withSuggestion = (
               Transforms.select(editor, beforeRange);
               //get element before
               const prev = Editor.leaf(editor, beforeRange)[0];
-              const element: Element = {
-                type: 'autofill',
-                behavior: 'attribute',
-                children: [{ ...prev, text: char }],
-                inline: true,
-                void: true,
-              };
 
               Transforms.insertNodes(editor, [
                 insertOnSelect(char, prev),
@@ -77,24 +69,22 @@ export const withSuggestion = (
             },
           }));
         if (actionList.length === 0) {
-          Overlay_u.close(EDITOR_SUGGEST_TOOLTIP);
+          tooltip.close(EDITOR_SUGGEST_TOOLTIP);
           return;
         }
-        const domRange = ReactEditor.toDOMRange(editor, beforeRange);
-        const rect = domRange.getBoundingClientRect();
+        const element = beforeRange
+          ? ReactEditor.toDOMNode(editor, Node.get(editor, start.path))
+          : undefined;
+        if (!element) return tooltip.close(EDITOR_SUGGEST_TOOLTIP);
         Transforms.move(editor, { unit: 'word', distance: 1 });
         ReactEditor.focus(editor);
 
-        modal(
-          <Tooltip
-            actionList={actionList}
-            closeOnSelect={() => Overlay_u.close(EDITOR_SUGGEST_TOOLTIP)}
-          />,
+        tooltip(
+          () => actionList,
+
+          element,
           {
-            position: {
-              top: rect.top + window.pageYOffset + 24,
-              left: rect.left + window.pageXOffset + 24,
-            },
+            autoClose: true,
             clickThrough: true,
             closeOnClickOutside: true,
             closeOnBlur: true,
@@ -103,9 +93,8 @@ export const withSuggestion = (
           },
           EDITOR_SUGGEST_TOOLTIP,
         ).open({ force: true });
-        return;
       } else {
-        // Overlay_u.close(EDITOR_SUGEST_TOOLTIP);14.8 x 21
+        return tooltip.close(EDITOR_SUGGEST_TOOLTIP);
       }
     }
   };

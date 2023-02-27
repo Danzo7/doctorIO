@@ -7,7 +7,8 @@ import { SETTINGS } from '@stores/appSettingsStore';
 
 import AddMedicalHistoryModal from '@containers/modals/add_medical_history_modal';
 import { useGetMedicalHistoryQuery } from '@redux/instance/record/medical_history_api';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import { format } from 'date-fns';
 import NoHistory from 'toSvg/no_history.svg?icon';
 interface MedicalHistoryProps {

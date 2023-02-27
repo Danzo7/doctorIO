@@ -6,10 +6,11 @@ import { useGetAppointmentDetailQuery } from '@redux/instance/Appointment/Appoin
 import './style/index.scss';
 import { Patient } from '@models/instance.model';
 import TextButton from '@components/buttons/text_button';
-import { modal } from '@stores/overlayStore';
+import { modal, FIT_MODAL } from '@libs/overlay';
+
 import { prescriptionToMedicalCertificate } from '@libs/slate_editor/helper';
 import PrintPaper from '@components/print_paper';
-import { FIT_MODAL } from '@libs/overlay';
+
 import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import CertificatesView from '@components/certificates_view';

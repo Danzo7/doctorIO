@@ -7,9 +7,9 @@ import { Appointment } from '@models/instance.model';
 import { format } from 'date-fns';
 import './style/index.scss';
 import SmallUserStatus from '@components/small_user_status';
-import { modal } from '@stores/overlayStore';
+import { modal, DEFAULT_MODAL } from '@libs/overlay';
+
 import MemberBigCard from '@containers/modals/member_big_card';
-import { DEFAULT_MODAL } from '@libs/overlay';
 
 export default function AppointmentDetailPreview({
   assignedBy,

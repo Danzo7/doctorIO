@@ -7,8 +7,7 @@ import {
 } from '@stores/medicalSessionStore';
 import KeywordFieldItem from '@components/keyword_field_item';
 import VerticalPanel from '@components/vertical_panel';
-import { modal, Overlay_u } from '@stores/overlayStore';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal, tooltip } from '@libs/overlay';
 import CertificateEditorModal from '@containers/modals/certificate_editor_modal';
 
 interface CertificatesTabProps {}
@@ -23,7 +22,7 @@ export default function CertificatesTab({}: CertificatesTabProps) {
             text="Add..."
             onPress={(e) => {
               if (e)
-                Overlay_u.openTooltip(
+                tooltip(
                   () => [
                     {
                       text: 'Create new one',
@@ -60,8 +59,8 @@ export default function CertificatesTab({}: CertificatesTabProps) {
                     },
                   ],
                   e.currentTarget,
-                  true,
-                );
+                  { autoClose: true },
+                ).open();
             }}
           />
         }
@@ -96,7 +95,7 @@ export default function CertificatesTab({}: CertificatesTabProps) {
             action={{
               text: 'add certificate',
               onClick: (e) => {
-                Overlay_u.openTooltip(
+                tooltip(
                   () => [
                     {
                       text: 'Create new one',
@@ -127,8 +126,8 @@ export default function CertificatesTab({}: CertificatesTabProps) {
                     },
                   ],
                   e.currentTarget,
-                  true,
-                );
+                  { autoClose: true },
+                ).open();
               },
             }}
           />

@@ -7,9 +7,9 @@ import TextPair from '@components/text_pair/TextPair';
 import { SETTINGS } from '@stores/appSettingsStore';
 
 import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import { BookedAppointment } from '@models/instance.model';
-import { modal } from '@stores/overlayStore';
+
 import XMark from 'toSvg/x_mark.svg?icon';
 
 import { format } from 'date-fns';

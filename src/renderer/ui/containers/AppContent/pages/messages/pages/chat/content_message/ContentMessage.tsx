@@ -1,7 +1,8 @@
 import CircleAvatar from '@components/avatars/circle_avatar';
 import MemberCard from '@components/member_card';
 import { Message } from '@models/local.models';
-import { modal } from '@stores/overlayStore';
+import { modal, tooltip } from '@libs/overlay';
+
 import { formatRelative } from 'date-fns';
 import './style/index.scss';
 interface ContentMessageProps {
@@ -32,21 +33,22 @@ function ContentMessage({
           alt={name + memberId}
           width={40}
           onClick={(e) => {
-            modal(
-              () => (
-                <MemberCard
-                  id={id}
-                  name={name}
-                  avatar={avatar}
-                  status={status}
-                />
-              ),
-              {
-                popperTarget: e.currentTarget,
-                clickThrough: true,
-                closeOnBlur: true,
-              },
-            ).open();
+            if (e)
+              tooltip(
+                () => (
+                  <MemberCard
+                    id={id}
+                    name={name}
+                    avatar={avatar}
+                    status={status}
+                  />
+                ),
+                e.currentTarget,
+                {
+                  clickThrough: true,
+                  closeOnBlur: true,
+                },
+              ).open();
           }}
         />
       </div>

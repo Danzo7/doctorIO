@@ -22,7 +22,7 @@ import './style/index.scss';
 import { useRef } from 'react';
 import TabComponent from '@components/tab_component';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
-import { modal, Overlay_u } from '@stores/overlayStore';
+import { modal, tooltip } from '@libs/overlay';
 import CertificatesTab from './pages/cetificates_tab';
 
 interface MedicalSessionProps {}
@@ -108,7 +108,7 @@ export default function MedicalSession({}: MedicalSessionProps) {
                 text="Print..."
                 onPress={(e) => {
                   if (e)
-                    Overlay_u.openTooltip(
+                    tooltip(
                       () => [
                         {
                           text: 'Notice',
@@ -146,8 +146,8 @@ export default function MedicalSession({}: MedicalSessionProps) {
                         },
                       ],
                       e.currentTarget,
-                      true,
-                    );
+                      { autoClose: true },
+                    ).open();
                 }}
               />
               <TextButton

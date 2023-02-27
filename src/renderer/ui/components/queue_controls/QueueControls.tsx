@@ -9,7 +9,7 @@ import NextPatient from '@containers/modals/next_patient';
 import TextButton from '@components/buttons/text_button';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import playIcon from 'toSvg/play.svg?icon';
-import { FIT_MODAL } from '@libs/overlay';
+import { FIT_MODAL, modal } from '@libs/overlay';
 import {
   usePauseQueueMutation,
   useResetQueueMutation,
@@ -17,7 +17,7 @@ import {
 } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { QueueState } from '@models/instance.model';
 import AlertModal from '@containers/modals/dialog_modal';
-import { modal } from '@stores/overlayStore';
+
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 
 interface QueueControlsProps {

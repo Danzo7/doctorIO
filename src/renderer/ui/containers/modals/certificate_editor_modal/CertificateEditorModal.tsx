@@ -12,7 +12,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CommonEditor } from '@libs/slate_editor/commons/CommonEditor';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
 
 type Inputs = { title: string };
 interface CertificateEditorModalProps {
@@ -68,7 +68,7 @@ export default function CertificateEditorModal({
               title: data.title,
               description: editorControllerRef.current,
             });
-          Overlay_u.close('certificateModal');
+          modal.close('certificateModal');
         }),
       }}
     >

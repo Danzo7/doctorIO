@@ -12,7 +12,8 @@ import { useFindPatientByNameMutation } from '@redux/instance/record/patient_api
 import LoadingSpinner from '@components/loading_spinner';
 import { useRef } from 'react';
 import { PatientBrief } from '@models/instance.model';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 
 interface SearchInput {
   searchField: string;

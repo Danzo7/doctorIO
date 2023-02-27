@@ -9,8 +9,8 @@ import Input from '@components/inputs/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { SETTINGS } from '@stores/appSettingsStore';
 
-import { Overlay_u } from '@stores/overlayStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
+import { modal } from '@libs/overlay';
 
 type Inputs = {
   subject: string;
@@ -38,7 +38,7 @@ export default function BookAppointmentModal({
       body: { date: date, subject: subject },
     });
 
-    Overlay_u.clear();
+    modal.clear();
   };
 
   return (

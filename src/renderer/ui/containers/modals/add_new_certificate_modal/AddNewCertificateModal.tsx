@@ -15,8 +15,8 @@ import {
   useUpdateCertificateTemplateMutation,
 } from '@redux/clinic/templates/templatesApi';
 import { Descendant } from 'slate';
-import { Overlay_u } from '@stores/overlayStore';
 import { MedicalCertificate } from '@models/instance.model';
+import { modal } from '@libs/overlay';
 
 const schema = z.object({
   title: z.string().min(8).max(100),
@@ -61,7 +61,7 @@ export default function AddNewCertificateModal({
       });
     }
 
-    Overlay_u.close();
+    modal.close();
   };
   return (
     <ModalContainer

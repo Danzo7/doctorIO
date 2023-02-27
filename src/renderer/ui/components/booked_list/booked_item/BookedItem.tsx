@@ -6,14 +6,13 @@ import SquareIconButton from '@components/buttons/square_icon_button/SquareIconB
 import AddSelectedToQueueModal from '@containers/modals/add_selected_to_queue_modal';
 import { formatDistance } from 'date-fns';
 import { BookedAppointment } from '@models/instance.model';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal, tooltip } from '@libs/overlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import TextPair from '@components/text_pair/TextPair';
 import { color } from '@assets/styles/color';
 import { useCancelAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import { useDeleteAppointmentMutation } from '@redux/instance/appointmentQueue/AppointmentQueueApi';
 import { useAbility } from '@stores/abilityStore';
-import { modal, Overlay_u } from '@stores/overlayStore';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
 
 function BookedItem({
@@ -65,7 +64,7 @@ function BookedItem({
         tip="More"
         onPress={(e) => {
           if (e)
-            Overlay_u.openTooltip(
+            tooltip(
               () =>
                 [
                   state == 'PANDING' && {
@@ -104,8 +103,8 @@ function BookedItem({
                   },
                 ].filter(Boolean) as any,
               e.currentTarget,
-              true,
-            );
+              { autoClose: true },
+            ).open();
         }}
       />
     </div>

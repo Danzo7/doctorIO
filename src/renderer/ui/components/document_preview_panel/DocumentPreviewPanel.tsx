@@ -5,7 +5,7 @@ import RefetchPanel from '@components/refetch_panel';
 import VerticalPanel from '@components/vertical_panel';
 import UploadFileModal from '@containers/modals/upload_file_modal';
 import { useGetMedicalDocumentsQuery } from '@redux/instance/record/medical_document_api';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
 import DocumentPreviewItem from './document_preview_item';
 import NoFile from 'toSvg/no_files.svg?icon';
 interface DocumentPreviewPanelProps {

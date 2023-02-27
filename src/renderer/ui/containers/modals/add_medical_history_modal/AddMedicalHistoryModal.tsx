@@ -6,10 +6,10 @@ import { SETTINGS } from '@stores/appSettingsStore';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAddMedicalHistoryMutation } from '@redux/instance/record/medical_history_api';
-import { Overlay_u } from '@stores/overlayStore';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import './style/index.scss';
+import { modal } from '@libs/overlay';
 
 interface AddMedicalHistoryModalProps {
   patientId: number;
@@ -45,7 +45,7 @@ export default function AddMedicalHistoryModal({
       patientId: patientId,
       body: { date: selectedDate, description: description },
     }).then(() => {
-      Overlay_u.close();
+      modal.close();
     });
   };
 

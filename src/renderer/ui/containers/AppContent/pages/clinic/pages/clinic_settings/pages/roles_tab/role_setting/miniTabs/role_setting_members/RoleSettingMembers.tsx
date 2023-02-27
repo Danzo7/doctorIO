@@ -6,7 +6,8 @@ import CreateInvitationModal from '@containers/modals/create_invitation_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { RoleBrief } from '@models/server.models';
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 
 import './style/index.scss';
 

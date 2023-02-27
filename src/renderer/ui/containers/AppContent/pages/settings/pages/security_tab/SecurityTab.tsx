@@ -4,7 +4,8 @@ import SettingOption from '@components/setting_option';
 import ChangeSecretModal from '@containers/modals/change_secret_modal';
 import PasswordFormModal from '@containers/modals/password_form_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import { useState } from 'react';
 import './style/index.scss';
 interface SecurityTabProps {}

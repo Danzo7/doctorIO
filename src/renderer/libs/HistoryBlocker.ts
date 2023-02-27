@@ -6,7 +6,7 @@ import {
   Navigator as IncorrectType,
 } from 'react-router-dom';
 import { SETTINGS } from '@stores/appSettingsStore';
-import { Overlay_u, modal } from '@stores/overlayStore';
+import { modal } from './overlay';
 type TransitionD = Transition & { dismiss: () => void };
 type Navigator = IncorrectType & Pick<History, 'block' | 'listen'>;
 export function useBlocker(blocker: (tx: TransitionD) => void, when = true) {
@@ -52,7 +52,7 @@ export default function usePrompt(
   const isOpen = useRef(false);
   const close = useCallback(() => {
     if (isOpen.current) {
-      Overlay_u.close('prompt');
+      modal.close('prompt');
       isOpen.current = false;
     }
   }, []);

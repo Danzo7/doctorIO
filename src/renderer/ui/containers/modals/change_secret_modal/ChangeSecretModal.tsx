@@ -4,11 +4,11 @@ import Input, { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useUpdateMemberSecretMutation } from '@redux/clinic/rbac/member/memberApi';
-import { Overlay_u } from '@stores/overlayStore';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import './style/index.scss';
+import { modal } from '@libs/overlay';
 
 const schema = z.object({
   oldSecretKey: z.string().min(1, 'Old Secret Key is required'),
@@ -41,7 +41,7 @@ export default function ChangeSecretModal({}: ChangeSecretModalProps) {
         newSecret: newSecretKey,
       }).then((result) => {
         if ('data' in result) {
-          Overlay_u.close();
+          modal.close();
         } else {
           const castedErr = (result.error as any)?.data as ServerError;
           if (castedErr?.errorCode == 1000)

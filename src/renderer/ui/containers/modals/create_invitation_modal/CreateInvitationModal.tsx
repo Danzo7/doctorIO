@@ -16,7 +16,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import search from 'toSvg/search.svg?icon';
 import './style/index.scss';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
 
 interface Inputs {
   searchField: string;
@@ -109,7 +109,7 @@ export default function CreateInvitationModal({
               alignSelf="center"
               padding={5}
               onPress={() => {
-                Overlay_u.close();
+                modal.close();
               }}
             />
           )}

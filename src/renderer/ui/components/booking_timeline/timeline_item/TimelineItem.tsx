@@ -9,9 +9,8 @@ import { format } from 'date-fns';
 import { SETTINGS } from '@stores/appSettingsStore';
 import { AppointmentBrief } from '@models/instance.model';
 import { useGetPatientDetailQuery } from '@redux/instance/record/patient_api';
-import { modal } from '@stores/overlayStore';
+import { modal, DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import NotAButton from '@components/not_a_button';
-import { DEFAULT_MODAL, FIT_MODAL } from '@libs/overlay';
 import SmallUserStatus from '@components/small_user_status';
 import MemberBigCard from '@containers/modals/member_big_card';
 

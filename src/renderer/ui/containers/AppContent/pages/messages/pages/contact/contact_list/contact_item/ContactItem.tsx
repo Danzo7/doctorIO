@@ -6,7 +6,8 @@ import useNavigation from '@libs/hooks/useNavigation';
 import AlertModal from '@containers/modals/dialog_modal';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 interface ContactItemProps {
   status: boolean;
   avatar?: string;

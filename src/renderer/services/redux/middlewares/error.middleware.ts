@@ -1,7 +1,7 @@
 import { isRejectedWithValue, isFulfilled } from '@reduxjs/toolkit';
 import type { Middleware } from '@reduxjs/toolkit';
 import { Logger } from '@libs/Logger';
-import { toast } from '@stores/overlayStore';
+import { toast } from '@libs/overlay';
 
 /**
  * Log a warning and show a toast!

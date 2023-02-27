@@ -6,7 +6,8 @@ import JoinNewClinicModal from '@containers/modals/join_new_clinic_modal';
 import useNavigation from '@libs/hooks/useNavigation';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useClinicsStore } from '@stores/clinicsStore';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import './style/index.scss';
 
 export default function Clinics() {

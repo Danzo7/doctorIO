@@ -9,8 +9,7 @@ import useNavigation from '@libs/hooks/useNavigation';
 import { useClinicsStore } from '@stores/clinicsStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
 import { useState } from 'react';
-import { Overlay_u, modal } from '@stores/overlayStore';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import UpdateIpModal from '../update_ip_modal';
 interface Inputs {
   key: string;
@@ -54,7 +53,7 @@ export default function ConnectMemberModal({
           clinics.setSelectedClinic(selectedIndex);
           useConnectionStore.getState().connect();
           navigate('/');
-          Overlay_u.close();
+          modal.close();
         }
       } else {
         if ('data' in result.error) {

@@ -1,9 +1,10 @@
 import MemberItem from '@components/member_item';
 import './style/index.scss';
 import VerticalPanel from '@components/vertical_panel';
-import { modal } from '@stores/overlayStore';
+import { modal, DEFAULT_MODAL } from '@libs/overlay';
+
 import CreateInvitationModal from '@containers/modals/create_invitation_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
 import LoadingSpinner from '@components/loading_spinner';
 import RefetchPanel from '@components/refetch_panel';

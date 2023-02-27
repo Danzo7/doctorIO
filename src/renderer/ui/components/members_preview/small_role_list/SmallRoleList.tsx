@@ -5,10 +5,10 @@ import AddRoleTooltip from '@components/poppers/add_role_tooltip';
 import { RoleBrief } from '@models/server.models';
 import { useGetMyPermissionQuery } from '@redux/clinic/rbac/member/memberApi';
 import { useAbility } from '@stores/abilityStore';
-import { Overlay_u } from '@stores/overlayStore';
 
 import SmallRolePreview from '../small_role_preview';
 import './style/index.scss';
+import { tooltip } from '@libs/overlay';
 interface SmallRoleListProps {
   roleList: RoleBrief[];
   onAdd?: (role: RoleBrief) => void;
@@ -53,7 +53,7 @@ export default function SmallRoleList({
           <DarkAddButton
             onPress={(e) => {
               if (e)
-                Overlay_u.openTooltip(
+                tooltip(
                   ({ close }) => (
                     <AddRoleTooltip
                       skipRoles={roleList}
@@ -65,7 +65,7 @@ export default function SmallRoleList({
                     />
                   ),
                   e.currentTarget,
-                );
+                ).open();
             }}
           />
         </Can>

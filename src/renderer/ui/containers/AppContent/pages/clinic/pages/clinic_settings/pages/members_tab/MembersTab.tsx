@@ -5,7 +5,8 @@ import RefetchPanel from '@components/refetch_panel';
 import CreateInvitationModal from '@containers/modals/create_invitation_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import { useGetBriefRolesQuery } from '@redux/clinic/rbac/role/roleApi';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 
 import RoleMembers from './role_members';
 import './style/index.scss';

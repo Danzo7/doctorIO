@@ -8,8 +8,8 @@ import {
   useState,
   MouseEvent,
 } from 'react';
-import { Overlay_u } from '@stores/overlayStore';
 import styled from '@emotion/styled';
+import { alt } from '@libs/overlay';
 
 type IconProps = {
   svg: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
@@ -240,7 +240,7 @@ export default function TextButton({
         },
       }}
       onClick={(e) => {
-        if (tip) Overlay_u.clearAlt();
+        if (tip) alt.clear();
 
         if (!blank) {
           e.preventDefault();
@@ -274,51 +274,19 @@ export default function TextButton({
       disabled={disabled}
       onMouseEnter={(e) => {
         if (tip && e?.currentTarget)
-          Overlay_u.alt({
+          alt({
             alt: tip,
             id: 'helper',
             popperTarget: {
               target: e.currentTarget,
-              options: { placement: 'top' },
+              options: {
+                placement: 'top',
+              },
             },
           });
-
-        // Overlay_u.init(
-        //   {
-        //     node: (
-        //       <div
-        //         className="text-button-tooltip"
-        //         css={{
-        //           padding: 5,
-        //           background: color.good_black,
-        //           marginBottom: 5,
-        //           marginTop: 5,
-        //           borderRadius: 5,
-        //           pointerEvents: 'none',
-        //         }}
-        //       >
-        //         {tip}
-        //       </div>
-        //     ),
-        //     props: {
-        //       popperTarget: {
-        //         target: e.currentTarget,
-        //         options: { placement: 'top' },
-        //       },
-        //       clickThrough: true,
-        //       closeOnClickOutside: true,
-        //       closeOnBlur: true,
-        //       backdropColor: false,
-        //       clickable: false,
-        //       autoFocus: false,
-        //     },
-        //   },
-        //   'helper',
-        //   { type: OverlayType.HELPTIP },
-        // ).open();
       }}
       onMouseLeave={() => {
-        Overlay_u.clearAlt();
+        alt.clear();
       }}
       aria-label={tip}
       tabIndex={unFocusable ? -1 : 0}

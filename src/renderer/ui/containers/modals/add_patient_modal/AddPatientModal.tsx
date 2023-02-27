@@ -4,12 +4,11 @@ import Input from '@components/inputs/input';
 import { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import {
   useAddPatientMutation,
   useUpdatePatientDetailMutation,
 } from '@redux/instance/record/patient_api';
-import { Overlay_u, modal } from '@stores/overlayStore';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import AddSelectedToQueueModal from '../add_selected_to_queue_modal';
@@ -57,7 +56,7 @@ export default function AddPatientModal({
           bloodType: { group: bloodGroup, rh: rh },
         },
       }).then(() => {
-        Overlay_u.close();
+        modal.close();
       });
     } else
       addPatient({
@@ -69,8 +68,8 @@ export default function AddPatientModal({
       })
         .unwrap()
         .then((patient) => {
-          Overlay_u.close();
-          Overlay_u.close('queueAddSearchModal');
+          modal.close();
+          modal.close('queueAddSearchModal');
 
           modal(
             () => (

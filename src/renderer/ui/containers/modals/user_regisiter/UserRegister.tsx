@@ -3,8 +3,8 @@ import TextButton from '@components/buttons/text_button';
 import Input, { Inputix } from '@components/inputs/input/Input';
 import ModalContainer from '@components/modal_container';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { modal } from '@libs/overlay';
 import { useUpdateMemberMutation } from '@redux/clinic/rbac/member/memberApi';
-import { Overlay_u } from '@stores/overlayStore';
 import { useUserStore } from '@stores/userStore';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -59,7 +59,7 @@ export default function UserRegister({ defaultValues }: UserRegisterProps) {
       {},
     );
     if (defaultValues) await updateMember(modifiedData);
-    Overlay_u.close();
+    modal.close(); //todo specify modal
   };
   return (
     <ModalContainer

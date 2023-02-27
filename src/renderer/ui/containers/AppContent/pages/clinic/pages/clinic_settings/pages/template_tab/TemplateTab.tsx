@@ -5,7 +5,8 @@ import { useForm } from 'react-hook-form';
 import SettingOption from '@components/setting_option';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import TemplateKeywordsModal from '@containers/modals/reusable_certificates_modal';
 import { DEFAULT_MODAL } from '@libs/overlay';
 import HelpPanel from '@components/help_panel';

@@ -6,9 +6,9 @@ import './style/index.scss';
 import QueueAddSearchModal from '@containers/modals/queue_add_search_modal';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import LoadingSpinner from '@components/loading_spinner';
-import { FIT_MODAL } from '@libs/overlay';
+import { FIT_MODAL, modal } from '@libs/overlay';
 import MemberBigCard from '@containers/modals/member_big_card';
-import { modal } from '@stores/overlayStore';
+
 interface SearchProfileProps {}
 export default function SearchProfile({}: SearchProfileProps) {
   const { data, isSuccess, isLoading } = useGetMyMemberDetailQuery();

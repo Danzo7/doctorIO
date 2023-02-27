@@ -5,11 +5,9 @@ import LoadingSpinner from '@components/loading_spinner';
 import VerticalPanel from '@components/vertical_panel';
 import Schedule from 'toSvg/schedule.svg?icon';
 import AddSearchToBooked from '@containers/modals/add_search_to_booked';
-import { DEFAULT_MODAL } from '@libs/overlay';
-import { modal } from '@stores/overlayStore';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import RefetchPanel from '@components/refetch_panel';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
-
 export default function BookedList({}) {
   const selectedQueue = useSelectedQueue();
   const { data, isSuccess, isLoading, isFetching, refetch } =

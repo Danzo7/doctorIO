@@ -20,7 +20,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useGetPatientAppointmentsQuery } from '@redux/instance/Appointment/AppointmentApi';
 import TextButton from '@components/buttons/text_button';
 import ErrorPanel from '@components/error_panel';
-import { modal } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
+
 import VitalsPanel from '@components/vitals_panel';
 import NotesPanel from '@components/notes_panel';
 import RecordInfoSideBar from './record_info_side_bar';

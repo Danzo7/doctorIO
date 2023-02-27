@@ -7,12 +7,11 @@ import MemberBigCard from '@containers/modals/member_big_card';
 import useNavigation from '@libs/hooks/useNavigation';
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
-import { FIT_MODAL } from '@libs/overlay';
+import { FIT_MODAL, modal } from '@libs/overlay';
 import { IS_PREVIEW } from '@constants/env';
 import { MemberBrief } from '@models/server.models';
 import Can from '@ability/index';
 import AlertModal from '@containers/modals/dialog_modal';
-import { modal } from '@stores/overlayStore';
 
 interface MemberActionControlsProps {
   dmId?: number;

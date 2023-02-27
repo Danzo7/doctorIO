@@ -10,7 +10,7 @@ import AddVitalFieldItem from '@components/add_vital_field_item';
 import { useGetFieldsQuery } from '@redux/clinic/clinicApi';
 import VerticalPanel from '@components/vertical_panel';
 import VitalFieldItem from '@components/vital_field_item';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
 
 interface EditVitalsFieldsModalProps {}
 export default function EditVitalsFieldsModal({}: EditVitalsFieldsModalProps) {
@@ -29,7 +29,7 @@ export default function EditVitalsFieldsModal({}: EditVitalsFieldsModalProps) {
             backgroundColor={color.light}
             radius={7}
             fontSize={14}
-            onPress={() => Overlay_u.close()}
+            onPress={() => modal.close()}
           />
         }
       >

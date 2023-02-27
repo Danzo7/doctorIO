@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
-import { Overlay_u } from '@stores/overlayStore';
+import { modal } from '@libs/overlay';
 interface PrintSelectionModalProps {}
 export default function PrintSelectionModal({}: PrintSelectionModalProps) {
   const { control } = useForm();
@@ -23,7 +23,7 @@ export default function PrintSelectionModal({}: PrintSelectionModalProps) {
               fontWeight={700}
               padding=" 5px 15px"
               onPress={() => {
-                Overlay_u.close();
+                modal.close();
               }}
             />
             <TextButton
