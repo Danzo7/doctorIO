@@ -5,6 +5,9 @@ import './style/index.scss';
 import TimelineItem from './timeline_item';
 import VerticalPanel from '@components/vertical_panel';
 import MultiOptionSwitcher from '@components/buttons/multi_option_switcher';
+import IconicButton from '@components/buttons/iconic_button';
+import AddIcon from 'toSvg/add.svg?icon';
+import { useState } from 'react';
 
 interface BookingTimelineProps {
   patientId: number;
@@ -17,6 +20,22 @@ export default function BookingTimeline({
   patientId,
   onPress,
 }: BookingTimelineProps) {
+  //FEATURE handle filter of the appointments in backend for pagination
+  const [selectedState, setSelectedState] = useState(0);
+  const appointmentsFiltered = appointments.filter((app) => {
+    switch (selectedState) {
+      case 0:
+        return app.state.phase === 'upcoming';
+      case 1:
+        return app.state.phase === 'done';
+      case 2:
+        return app.state.phase === 'canceled';
+      case 3:
+        return true;
+      default:
+        return true;
+    }
+  });
   return (
     <div className="booking-timeline">
       <div
@@ -36,17 +55,28 @@ export default function BookingTimeline({
       <PreviewList
         title="Appointment"
         buttonNode={
-          <>
-            <MultiOptionSwitcher //TODO add an actual input
-              textList={['All', 'Upcoming', 'Done', 'Canceled']}
+          <div css={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <IconicButton
+              tip="Book appointment"
+              Icon={AddIcon}
+              backgroundColor={color.cold_blue}
+              width={25}
+              radius={5}
+              iconSize={11}
+              onPress={onPress}
             />
-          </>
+            <MultiOptionSwitcher //TODO add an actual input
+              textList={['Upcoming', 'Done', 'Canceled', 'All']}
+              defaultSelected={selectedState}
+              onChange={setSelectedState}
+            />
+          </div>
         }
         gap={10}
         noBorder
       >
-        {appointments.length > 0 ? (
-          appointments.map((app, index) => (
+        {appointmentsFiltered.length > 0 ? (
+          appointmentsFiltered.map((app, index) => (
             <TimelineItem key={index} {...app} patientId={patientId} />
           ))
         ) : (
