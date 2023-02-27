@@ -17,7 +17,6 @@
         overflow: hidden;
         flex-grow: 1;
 
-
         > .record-content{
             display: flex;
             flex-direction: column;
@@ -29,7 +28,7 @@
             > .top-right-div {
                 display: flex;
                 flex-direction: row;
-                align-items: stretch;
+                align-items: flex-start;
             }
         }
     }

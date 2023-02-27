@@ -24,7 +24,6 @@ import { modal } from '@stores/overlayStore';
 import VitalsPanel from '@components/vitals_panel';
 import NotesPanel from '@components/notes_panel';
 import RecordInfoSideBar from './record_info_side_bar';
-import VerticalPanel from '@components/vertical_panel';
 
 const schema = z.object({
   searchField: z.preprocess(
@@ -127,22 +126,8 @@ export default function Record({}: RecordProps) {
 
             <div className="record-content">
               <div className="top-right-div">
-                {data.test ? (
-                  <VitalsPanel data={data.test} />
-                ) : (
-                  //TODO add the ability to add vitals from here
-                  //TODO add the correct svg
-                  <VerticalPanel
-                    title="No Biometric screening"
-                    backgroundColor="none"
-                    alignSelf="stretch"
-                    flexGrow
-                  />
-                )}
-                <NotesPanel
-                  date={new Date()}
-                  note="Just a notdggggggggggggggggggggggggggggggggge"
-                />
+                {data.test && <VitalsPanel data={data.test} />}
+                <NotesPanel date={new Date()} note="Just a note" />
               </div>
 
               {res.isFetching ? (
