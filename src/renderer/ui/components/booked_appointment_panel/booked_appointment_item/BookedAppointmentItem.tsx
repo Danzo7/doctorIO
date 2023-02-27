@@ -16,13 +16,15 @@ import { format } from 'date-fns';
 import './style/index.scss';
 import { useCancelAppointmentMutation } from '@redux/instance/Appointment/AppointmentApi';
 import AlertModal from '@containers/modals/dialog_modal';
+import SmallUserStatus from '@components/small_user_status';
+import MemberBigCard from '@containers/modals/member_big_card';
 
 export default function BookedAppointmentItem({
   patientName,
   bookedFor,
   id,
-  bookedBy,
   patientId,
+  member,
   state,
 }: BookedAppointment) {
   const [CancelAppointment] = useCancelAppointmentMutation();
@@ -43,14 +45,23 @@ export default function BookedAppointmentItem({
         reversed
       />
       <BorderSeparator direction="vertical" />
-      {bookedBy && (
+      {
         <TextPair
           gap={2}
+          first={
+            <SmallUserStatus
+              alt={member.name}
+              name={member.name}
+              imgSrc={member.avatar}
+              onClick={() => {
+                modal(<MemberBigCard id={member.id} />, DEFAULT_MODAL).open();
+              }}
+            />
+          }
           second="Booked by"
-          first={{ text: bookedBy.memberName, fontSize: 14 }}
           reversed
         />
-      )}
+      }
       <BorderSeparator direction="vertical" />
       {state == 'PANDING' ? (
         <>

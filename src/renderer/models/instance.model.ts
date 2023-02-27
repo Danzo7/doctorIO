@@ -7,7 +7,7 @@ interface BookedAppointment {
   bookedFor: Date;
   patientId: number;
   patientName: string;
-  bookedBy: { memberId: number; memberName: string };
+  member: Pick<Member, 'id' | 'avatar' | 'name'>;
   state: 'IN_QUEUE' | 'PANDING';
 }
 type AppointmentQueue = {

@@ -12,7 +12,7 @@ export const FirstStory = Template;
 FirstStory.args = {
   state: 'IN_QUEUE',
   bookedFor: new Date(),
-  bookedBy: { memberId: 1, memberName: 'Harnan Mohamed' },
+  member: { id: 1, name: 'Harnan Mohamed' },
   patientId: 5,
   patientName: 'John cruze',
 };
