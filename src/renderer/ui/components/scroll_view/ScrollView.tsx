@@ -20,7 +20,9 @@ export const ScrollView = ({ children, refs, gap }: ScrollViewProps) => {
       }}
     >
       {children}
-      <div css={{ paddingLeft: 90 }}></div>
+      {Array.isArray(children) && children.length > 1 && (
+        <div css={{ paddingLeft: 90 }}></div>
+      )}
     </div>
   );
 };
