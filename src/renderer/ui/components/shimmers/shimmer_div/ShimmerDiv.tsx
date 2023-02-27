@@ -4,15 +4,15 @@ import './style/index.scss';
 interface ShimmerDivProps {
   backgroundColor?: string;
   borderRadius?: number | string;
-  width: string | number;
-  height: string | number;
+  width?: string | number;
+  height?: string | number;
   padding?: string | number;
 }
 export default function ShimmerDiv({
   backgroundColor = color.light,
   borderRadius = 7,
-  width,
-  height,
+  width = '100%',
+  height = '100%',
   padding,
 }: ShimmerDivProps) {
   return (
