@@ -69,6 +69,9 @@ export default function AddPatientModal({
       })
         .unwrap()
         .then((patient) => {
+          Overlay_u.close();
+          Overlay_u.close('queueAddSearchModal');
+
           modal(
             () => (
               <AddSelectedToQueueModal id={patient.id} name={patient.name} />
