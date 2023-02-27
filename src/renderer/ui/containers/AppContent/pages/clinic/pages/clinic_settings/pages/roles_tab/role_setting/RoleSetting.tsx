@@ -124,7 +124,7 @@ export default function RoleSetting({}: RoleSettingProps) {
       {isFetching || isLoading ? (
         <LoadingSpinner />
       ) : isSuccess && data ? (
-        <TabMenu items={['General', 'Permissions', 'Members']}>
+        <TabMenu items={['General', 'Permissions', 'Members', 'Queue']}>
           <RoleSettingGeneral
             slaveRole={data?.slaveRole}
             id={Number(roleIdParam)}
