@@ -20,7 +20,9 @@ export default function AppLayout({}: AppLayoutProps) {
   const { isLoading, isSuccess } = useGetMyPermissionQuery();
   const selectedQueue = useSelectedQueue();
   const isQueueOwnerQuery = useGetIsQueueOwnerQuery(selectedQueue, {
-    skip: !isSuccess,
+    skip:
+      !(abilities.can('have', 'queue') || abilities.can('manage', 'queue')) ||
+      !isSuccess,
   });
   const queueStateQuery = useGetQueueStateQuery(selectedQueue, {
     skip:
