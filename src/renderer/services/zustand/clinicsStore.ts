@@ -9,16 +9,28 @@ interface ClinicsState {
   setSelectedClinic(index?: number): void;
   addNewClinic(name: string, serverLocation: string, memberId: number): void;
   setCurrentLocation(ip: string): void;
+  setLocation(index: number, ip: string): void;
   hasSelectedClinic(): boolean;
   getSelectedClinic(): LocalClinicData;
   getSelectedIndex(): number | undefined;
   getClinics(): LocalClinicData[];
+  getClinic(index: number): LocalClinicData;
   syncCurrentClinic(clinic: Clinic): void;
 }
 export const useClinicsStore = create<ClinicsState>()(
   persist(
     (set, get) => ({
       clinicData: new AppClinics(),
+      getClinic(index: number) {
+        return get().clinicData.getClinic(index);
+      },
+      setLocation(index, ip) {
+        set((state) => {
+          const clinicData = new AppClinics(state.clinicData);
+          clinicData.setLocation(index, ip);
+          return { clinicData };
+        });
+      },
       setCurrentLocation: (ip: string) => {
         set((state) => {
           const clinicData = new AppClinics(state.clinicData);

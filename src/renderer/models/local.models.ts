@@ -61,6 +61,12 @@ export class AppClinics {
     else throw new Error('out of bound');
   }
 
+  setLocation(index: number, ip: string) {
+    if (index >= 0 && index < this.clinics.length) {
+      this.clinics[index].serverLocation = ip;
+    } else throw new Error('out of bound');
+  }
+
   setCurrentLocation(ip: string) {
     if (this.clinic) this.clinic.serverLocation = ip;
   }
@@ -68,6 +74,12 @@ export class AppClinics {
   set add(clinic: LocalClinicData) {
     this.clinics.push(clinic);
     this.selected = this.clinics.length - 1;
+  }
+
+  getClinic(index: number) {
+    if (index >= 0 && index < this.clinics.length) {
+      return this.clinics[index];
+    } else throw new Error('out of bound');
   }
 
   syncCurrent(clinic: Clinic) {
