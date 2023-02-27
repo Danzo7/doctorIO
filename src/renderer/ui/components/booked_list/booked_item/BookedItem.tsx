@@ -19,7 +19,6 @@ import { useSelectedQueue } from '@stores/queueSelectionStore';
 function BookedItem({
   patientName,
   id,
-  bookedBy,
   bookedFor,
   state,
   patientId,
