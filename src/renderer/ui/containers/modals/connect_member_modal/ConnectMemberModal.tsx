@@ -9,7 +9,9 @@ import useNavigation from '@libs/hooks/useNavigation';
 import { useClinicsStore } from '@stores/clinicsStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
 import { useState } from 'react';
-import { Overlay_u } from '@stores/overlayStore';
+import { Overlay_u, modal } from '@stores/overlayStore';
+import { DEFAULT_MODAL } from '@libs/overlay';
+import UpdateIpModal from '../update_ip_modal';
 interface Inputs {
   key: string;
 }
@@ -28,7 +30,10 @@ export default function ConnectMemberModal({
   const serverError = res.isError
     ? ((res.error as any)?.data?.message as ServerError)
     : undefined;
-  const [internalError, setError] = useState('');
+  const [internalError, setError] = useState<{
+    message: string;
+    errorCode: number;
+  }>();
   const { control, handleSubmit } = useForm<{
     key: string;
   }>({
@@ -54,10 +59,15 @@ export default function ConnectMemberModal({
       } else {
         if ('data' in result.error) {
           const castedErr = result.error.data as ServerError;
-          if (castedErr?.errorCode == 1000) setError('Secret key is incorrect');
+          if (castedErr?.errorCode == 1000)
+            setError({ message: 'Secret key is incorrect', errorCode: 1000 });
           else if (castedErr?.errorCode == 4001)
-            setError('Server is not responding');
-        } else setError('something went wrong. please try again later');
+            setError({ message: 'Server is not responding', errorCode: 4001 });
+        } else
+          setError({
+            message: 'something went wrong. please try again later',
+            errorCode: -1,
+          });
       }
     });
   };
@@ -83,6 +93,26 @@ export default function ConnectMemberModal({
               onPress={onCancel}
             />
           )}
+          {internalError?.errorCode == 4001 && (
+            <TextButton
+              text="Change IP address"
+              backgroundColor={color.light}
+              blank
+              onPress={() => {
+                modal(
+                  ({ close }) => (
+                    <UpdateIpModal
+                      onCancel={close}
+                      selectedIndex={selectedIndex}
+                      onConfirm={close}
+                    />
+                  ),
+                  DEFAULT_MODAL,
+                  'updateIpModal',
+                ).open();
+              }}
+            />
+          )}
         </>
       }
     >
@@ -94,10 +124,10 @@ export default function ConnectMemberModal({
         type="password"
         hint="please enter your secret key"
         onChange={() => {
-          if (internalError.length > 0) setError('');
+          if (internalError?.message) setError(undefined);
         }}
         errorMessage={
-          internalError.length > 0 ? internalError : serverError?.message
+          internalError ? internalError.message : serverError?.message
         }
       />
     </ModalContainer>

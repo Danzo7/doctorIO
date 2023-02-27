@@ -10,6 +10,8 @@ import { color } from '@assets/styles/color';
 import { zodResolver } from '@hookform/resolvers/zod';
 interface UpdateIpModalProps {
   onCancel?: () => void;
+  onConfirm?: () => void;
+  selectedIndex?: number;
 }
 const schema = z.object({
   ip: z
@@ -19,7 +21,11 @@ const schema = z.object({
       'Please enter a valid IP address',
     ),
 });
-export default function UpdateIpModal({ onCancel }: UpdateIpModalProps) {
+export default function UpdateIpModal({
+  onCancel,
+  selectedIndex,
+  onConfirm,
+}: UpdateIpModalProps) {
   const clinicStore = useClinicsStore.getState();
   const { control, handleSubmit } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -32,8 +38,13 @@ export default function UpdateIpModal({ onCancel }: UpdateIpModalProps) {
           <TextButton
             backgroundColor={color.cold_blue}
             onPress={handleSubmit((data) => {
-              clinicStore.setCurrentLocation(data.ip + ':3000');
-              useConnectionStore.getState().reconnect();
+              if (selectedIndex !== undefined) {
+                clinicStore.setLocation(selectedIndex, data.ip + ':3000');
+                onConfirm?.();
+              } else {
+                clinicStore.setCurrentLocation(data.ip + ':3000');
+                useConnectionStore.getState().reconnect();
+              }
             })}
             text="Update"
             width={'100%'}
@@ -48,16 +59,22 @@ export default function UpdateIpModal({ onCancel }: UpdateIpModalProps) {
         </>
       }
     >
-      {clinicStore.hasSelectedClinic() ? (
+      {clinicStore.hasSelectedClinic() || selectedIndex ? (
         <Input
           control={control}
           hint="The server IP address of can be retrieved from a connected devices"
           name="ip"
           label="IP address"
           type="text"
-          defaultValue={clinicStore
-            .getSelectedClinic()
-            .serverLocation.replace(':3000', '')}
+          defaultValue={
+            selectedIndex
+              ? clinicStore
+                  .getClinic(selectedIndex)
+                  .serverLocation.replace(':3000', '')
+              : clinicStore
+                  .getSelectedClinic()
+                  .serverLocation.replace(':3000', '')
+          }
         />
       ) : (
         <ErrorPanel />
