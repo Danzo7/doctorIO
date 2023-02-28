@@ -3,8 +3,7 @@ import TextButton from '@components/buttons/text_button';
 import SettingOption from '@components/setting_option';
 import ChangeSecretModal from '@containers/modals/change_secret_modal';
 import PasswordFormModal from '@containers/modals/password_form_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
-import { modal } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 
 import { useState } from 'react';
 import './style/index.scss';

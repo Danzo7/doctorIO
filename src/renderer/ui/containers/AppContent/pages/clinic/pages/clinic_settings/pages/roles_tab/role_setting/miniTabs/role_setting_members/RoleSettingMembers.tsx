@@ -3,10 +3,9 @@ import MembersTable from '@components/members_table';
 import RefetchPanel from '@components/refetch_panel';
 import VerticalPanel from '@components/vertical_panel';
 import CreateInvitationModal from '@containers/modals/create_invitation_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import { RoleBrief } from '@models/server.models';
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
-import { modal } from '@libs/overlay';
 
 import './style/index.scss';
 

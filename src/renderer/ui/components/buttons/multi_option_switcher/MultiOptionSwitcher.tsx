@@ -1,4 +1,4 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import { Fragment, MouseEvent, useState } from 'react';
 import './style/index.scss';
 interface MultiOptionSwitcherProps {

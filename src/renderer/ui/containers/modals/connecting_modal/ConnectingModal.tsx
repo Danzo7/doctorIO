@@ -1,9 +1,8 @@
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
 import LoadingSpinner from '@components/loading_spinner';
 import VerticalPanel from '@components/vertical_panel';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import { useConnectionStore } from '@stores/ConnectionStore';
-import { modal } from '@libs/overlay';
 
 import LogOut from 'toSvg/logOut.svg?icon';
 import AlertModal from '../dialog_modal';

@@ -1,12 +1,11 @@
 import UserProfileStatus from '@components/user_profile_status';
 import './style/index.scss';
 import MemberActionControls from '@components/member_action_controls';
-import { FIT_MODAL } from '@libs/overlay';
+import { FIT_MODAL, modal } from '@libs/overlay';
 import useNavigation from '@libs/hooks/useNavigation';
 import AlertModal from '@containers/modals/dialog_modal';
 import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
-import { modal } from '@libs/overlay';
 
 interface ContactItemProps {
   status: boolean;

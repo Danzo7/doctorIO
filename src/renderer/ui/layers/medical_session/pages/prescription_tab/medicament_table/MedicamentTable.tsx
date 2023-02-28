@@ -11,10 +11,9 @@ import {
 } from '@tanstack/react-table';
 import './style/index.scss';
 import AddDrugModal from '@containers/modals/add_drug_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import { Drug } from '@models/instance.model';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
-import { modal } from '@libs/overlay';
 
 interface MedicamentTableProps {
   editable?: true;

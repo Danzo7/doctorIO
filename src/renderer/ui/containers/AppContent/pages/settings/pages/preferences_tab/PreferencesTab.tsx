@@ -1,4 +1,4 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import BorderSeparator from '@components/border_separator';
 import TextButton from '@components/buttons/text_button';
 import CheckboxTile from '@components/checkbox_tile';

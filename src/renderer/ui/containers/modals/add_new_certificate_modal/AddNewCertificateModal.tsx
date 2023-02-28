@@ -1,7 +1,7 @@
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import Input from '@components/inputs/input';
 import { useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

@@ -7,12 +7,11 @@ import TextButton from '@components/buttons/text_button';
 import { color } from '@assets/styles/color';
 import ModalContainer from '@components/modal_container';
 import BookAppointmentModal from '../book_appointment_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import { useFindPatientByNameMutation } from '@redux/instance/record/patient_api';
 import LoadingSpinner from '@components/loading_spinner';
 import { useRef } from 'react';
 import { PatientBrief } from '@models/instance.model';
-import { modal } from '@libs/overlay';
 
 interface SearchInput {
   searchField: string;

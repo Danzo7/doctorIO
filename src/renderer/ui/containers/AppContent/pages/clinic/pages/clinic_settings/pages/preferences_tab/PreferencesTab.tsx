@@ -4,9 +4,8 @@ import CheckboxTile from '@components/checkbox_tile';
 import { preferences } from '@constants/permissions';
 import { Fragment } from 'react';
 import './style/index.scss';
-import { modal } from '@libs/overlay';
+import { modal, DEFAULT_MODAL } from '@libs/overlay';
 
-import { DEFAULT_MODAL } from '@libs/overlay';
 import EditVitalsFieldsModal from '@containers/modals/edit_vitals_fields_modal';
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';

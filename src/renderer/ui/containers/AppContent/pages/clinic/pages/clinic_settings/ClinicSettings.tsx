@@ -10,10 +10,9 @@ import TimingAndSchedule from './pages/timing_and_schedule';
 import PreferencesTab from './pages/preferences_tab';
 import AuditLogTab from './pages/audit_log_tab';
 import TextButton from '@components/buttons/text_button';
-import { FIT_MODAL } from '@libs/overlay';
+import { FIT_MODAL, modal } from '@libs/overlay';
 import { useDisconnectMemberMutation } from '@redux/local/auth/authApi';
 import AlertModal from '@containers/modals/dialog_modal';
-import { modal } from '@libs/overlay';
 
 import TemplateTab from './pages/template_tab';
 interface ClinicSettingsProps {}

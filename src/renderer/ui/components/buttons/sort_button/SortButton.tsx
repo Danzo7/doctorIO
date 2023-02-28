@@ -1,4 +1,4 @@
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import TextButton from '../text_button';
 import Arrow from 'toSvg/arrow.svg?icon';
 import './style/index.scss';

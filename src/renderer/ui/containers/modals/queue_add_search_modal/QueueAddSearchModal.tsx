@@ -7,14 +7,13 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import AddPatientModal from '../add_patient_modal';
 import ModalContainer from '@components/modal_container';
-import { DEFAULT_MODAL } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 import { useLazyFindPatientByName2Query } from '@redux/instance/record/patient_api';
 import { PatientBrief } from '@models/instance.model';
 import { useRef } from 'react';
 import LoadingSpinner from '@components/loading_spinner';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { modal } from '@libs/overlay';
 
 const schema = z.object({
   searchField: z.preprocess(

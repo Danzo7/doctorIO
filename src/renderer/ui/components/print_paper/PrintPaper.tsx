@@ -30,7 +30,7 @@ import { CommonEditor } from '@libs/slate_editor/commons/CommonEditor';
 import LoadingSpinner from '@components/loading_spinner';
 import { Member } from '@models/server.models';
 import ModalContainer from '@components/modal_container';
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 import Print from 'toSvg/print.svg?icon';
 import TextButton from '@components/buttons/text_button';
 interface PrintPaperProps {

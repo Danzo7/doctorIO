@@ -3,7 +3,7 @@ import MiniStats from '@components/mini_stats';
 import './style/index.scss';
 import exclamation from 'toSvg/exclamation.svg?icon';
 import colors from '@colors';
-import { FIT_MODAL } from '@libs/overlay';
+import { FIT_MODAL, modal } from '@libs/overlay';
 import { useGetMyMemberDetailQuery } from '@redux/clinic/rbac/member/memberApi';
 import MemberBigCard from '@containers/modals/member_big_card';
 import LoadingSpinner from '@components/loading_spinner';
@@ -13,7 +13,6 @@ import Header from '@components/header';
 import { useAbility } from '@stores/abilityStore';
 import { Badged } from '@components/badge/Badge';
 import { useSelectedQueue } from '@stores/queueSelectionStore';
-import { modal } from '@libs/overlay';
 
 import { FunctionComponent, SVGProps } from 'react';
 interface ShortStatsPanelProps {}

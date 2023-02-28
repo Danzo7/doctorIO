@@ -1,6 +1,6 @@
 import './style/index.scss';
 import ImageIcon from 'toSvg/image.svg?icon';
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 interface SliderProps {
   onChange?: (value: number) => void;
   max?: number;

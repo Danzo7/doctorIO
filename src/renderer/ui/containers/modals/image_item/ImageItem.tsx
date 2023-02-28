@@ -3,7 +3,7 @@ import './style/index.scss';
 import addIcon from 'toSvg/add.svg?icon';
 import removeIcon from 'toSvg/trash_can.svg?icon';
 import IconicButton from '@components/buttons/iconic_button';
-import color from '@assets/styles/color';
+import { color } from '@assets/styles/color';
 interface ImageItemProps {
   url: string;
   height?: number;
