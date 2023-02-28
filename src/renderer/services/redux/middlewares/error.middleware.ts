@@ -87,140 +87,140 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
     Logger.info('Middleware', 'action', action);
     switch (action.meta.arg.endpointName) {
       case 'uploadFile':
-        toast('File uploaded successfully', 'Success', 2000);
+        toast('File uploaded successfully', 'success', 2000);
         break;
 
       case 'deleteDocument':
-        toast('File deleted successfully', 'Success', 2000);
+        toast('File deleted successfully', 'success', 2000);
         break;
       case 'connectMember':
-        toast('Connected', 'Success', 2000);
+        toast('Connected', 'success', 2000);
         break;
       case 'addQueueAppointment':
       case 'AssignAppointmentToQueue':
-        toast('Patient added to the queue successfully', 'Success', 2000);
+        toast('Patient added to the queue successfully', 'success', 2000);
         break;
       case 'updateTest':
-        toast('Biometric screening added successfully', 'Success', 2000);
+        toast('Biometric screening added successfully', 'success', 2000);
         break;
       case 'confirmPayment':
-        toast('Payment handed successfully', 'Success', 2000);
+        toast('Payment handed successfully', 'success', 2000);
         break;
 
       case 'addPatient':
-        toast('New patient added successfully', 'Success', 2000);
+        toast('New patient added successfully', 'success', 2000);
         break;
 
       case 'resumeQueue':
-        toast('Queue is resumed successfully', 'Success', 2000);
+        toast('Queue is resumed successfully', 'success', 2000);
         break;
 
       case 'pauseQueue':
-        toast('Queue is paused successfully', 'Success', 2000);
+        toast('Queue is paused successfully', 'success', 2000);
         break;
       case 'notifyQueue':
-        toast('Queue is notified successfully', 'Success', 2000);
+        toast('Queue is notified successfully', 'success', 2000);
         break;
       case 'resetQueue':
-        toast('Reset queue count', 'Success', 2000);
+        toast('Reset queue count', 'success', 2000);
         break;
 
       case 'progressQueueState':
-        toast('New session started', 'Success', 2000);
+        toast('New session started', 'success', 2000);
         break;
       case 'endNext':
-        toast('Session ended', 'Success', 2000);
+        toast('Session ended', 'success', 2000);
         break;
 
       case 'bookAppointment':
-        toast('New appointment is booked successfully', 'Success', 2000);
+        toast('New appointment is booked successfully', 'success', 2000);
         break;
 
       case 'deleteAppointment':
-        toast('The appointment is removed successfully', 'Success', 2000);
+        toast('The appointment is removed successfully', 'success', 2000);
         break;
       case 'cancelAppointment':
-        toast('The appointment is canceled successfully', 'Success', 2000);
+        toast('The appointment is canceled successfully', 'success', 2000);
         break;
       case 'addMedicalHistory':
         toast(
           'New medical history has been added successfully',
-          'Success',
+          'success',
           2000,
         );
         break;
       case 'updateClinicOverview':
         toast(
           'The Clinic information has been updated successfully',
-          'Success',
+          'success',
           2000,
         );
         break;
       case 'createInvitation':
         toast(
           'Invitation key has been generated successfully',
-          'Success',
+          'success',
           2000,
         );
         break;
       case 'assignRole':
-        toast('Role has been assigned successfully', 'Success', 2000);
+        toast('Role has been assigned successfully', 'success', 2000);
         break;
       case 'revokeRole':
-        toast('Role has been revoked successfully', 'Success', 2000);
+        toast('Role has been revoked successfully', 'success', 2000);
         break;
       case 'UpdateRole':
-        toast('Role has been updated successfully', 'Success', 2000);
+        toast('Role has been updated successfully', 'success', 2000);
         break;
       case 'updateMember':
         toast(
           'Member information has been updated successfully',
-          'Success',
+          'success',
           2000,
         );
         break;
       case 'setAvatar':
-        toast('Member avatar has been updated successfully', 'Success', 2000);
+        toast('Member avatar has been updated successfully', 'success', 2000);
         break;
       case 'updatePatientDetail':
         toast(
           'Patient information has been updated successfully',
-          'Success',
+          'success',
           2000,
         );
         break;
       case 'updateMemberSecret':
-        toast('The secret key has been updated successfully', 'Success', 2000);
+        toast('The secret key has been updated successfully', 'success', 2000);
         break;
 
       case 'addCertificateTemplate':
         toast(
           'New certificate template has been added successfully',
-          'Success',
+          'success',
           2000,
         );
         break;
       case 'deleteCertificateTemplate':
         toast(
           'Certificate template has been deleted successfully',
-          'Success',
+          'success',
           2000,
         );
         break;
       case 'updateCertificateTemplate':
         toast(
           'Certificate template has been updated successfully',
-          'Success',
+          'success',
           2000,
         );
         break;
       case 'setPrintTemplate':
-        toast('Print template has been updated successfully', 'Success', 2000);
+        toast('Print template has been updated successfully', 'success', 2000);
         break;
       case 'uploadImage':
         toast(
           'The selected image has been uploaded successfully',
-          'Success',
+          'success',
           2000,
         );
         break;
@@ -228,7 +228,7 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
       case 'findPatientByName':
         break;
       default:
-        toast(action.meta.arg.endpointName, 'Success', 2000);
+        toast(action.meta.arg.endpointName, 'success', 2000);
         break;
     }
   }

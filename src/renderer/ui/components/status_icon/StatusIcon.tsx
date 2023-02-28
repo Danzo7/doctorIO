@@ -5,7 +5,7 @@ import GoodMark from 'toSvg/good_mark.svg?icon';
 import Exclamation from 'toSvg/exclamation2.svg?icon';
 
 interface StatusIconProps {
-  status: 'Success' | 'warning' | 'error';
+  status: 'success' | 'warning' | 'error';
   size?: number;
   borderRadius?: number;
 }
@@ -24,14 +24,14 @@ export default function StatusIcon({
         minHeight: size,
         borderRadius: borderRadius ?? '100%',
         backgroundColor:
-          status == 'Success'
+          status == 'success'
             ? color.good_green
             : status == 'warning'
             ? color.warm_orange
             : color.hot_red,
       }}
     >
-      {status == 'Success' ? (
+      {status == 'success' ? (
         <GoodMark width={size / 2} height={size / 2} />
       ) : status == 'warning' ? (
         <Exclamation width={size / 2} height={size / 2} />

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import './style/index.scss';
 
 interface AlertToastProps {
-  status: 'Success' | 'warning' | 'error';
+  status: 'success' | 'warning' | 'error';
   text: string;
   timeout?: number;
   close?: () => void;
@@ -55,7 +55,7 @@ export default function AlertToast({
           (timer != null ? `,slideOut .5s ease-out ${timeout}ms forwards` : ''),
 
         border: `1px solid  ${
-          status == 'Success'
+          status == 'success'
             ? color.good_green
             : status == 'warning'
             ? color.warm_orange
