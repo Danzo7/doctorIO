@@ -3,15 +3,15 @@ import TextPair from '@components/text_pair/TextPair';
 import { ReactNode } from 'react';
 import './style/index.scss';
 interface AlertModalProps {
-  status: 'Success' | 'warning' | 'error';
+  status: 'success' | 'warning' | 'error';
   title: string;
-  description: string;
+  description?: string;
   controls?: ReactNode;
 }
 export default function AlertModal({
   status,
   title,
-  description,
+  description = '',
   controls,
 }: AlertModalProps) {
   return (
