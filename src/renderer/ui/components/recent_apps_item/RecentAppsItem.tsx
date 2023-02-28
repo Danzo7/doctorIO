@@ -53,7 +53,7 @@ export default function RecentAppsItem({
               />
             ),
             DEFAULT_MODAL,
-          ).open();
+          ).open({ previousBehavior: 'keepAndHide' });
         }}
       />
       <TextButton
