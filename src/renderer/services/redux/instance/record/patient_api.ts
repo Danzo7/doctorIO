@@ -6,7 +6,7 @@ import { parseISO } from 'date-fns';
 const patientApi = createApi({
   reducerPath: 'patientApi',
   baseQuery: createQuery('record/patient').query,
-  tagTypes: ['patient', 'MedicalHistory', 'MedicalDocument'],
+  tagTypes: ['patient'],
   endpoints: (builder) => ({
     //Patient
     //GET
