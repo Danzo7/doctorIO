@@ -12,7 +12,7 @@ interface OverlayState {
   clear: () => void;
   toast: (
     message: string,
-    status: 'error' | 'Success' | 'warning',
+    status: 'error' | 'success' | 'warning',
     timeout?: number,
     id?: string,
   ) => void;
@@ -65,7 +65,7 @@ const tooltipStore = create<OverlayState>((set, get) => ({
 export const useToast = () => tooltipStore((state) => state.toasts);
 const toast = (
   text: string,
-  status: 'error' | 'Success' | 'warning',
+  status: 'error' | 'success' | 'warning',
   timeout?: number,
   id?: string,
 ) => tooltipStore.getState().toast(text, status, timeout, id);

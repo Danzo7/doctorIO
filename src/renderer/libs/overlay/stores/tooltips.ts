@@ -34,7 +34,7 @@ interface TooltipOverlayState {
   open: (
     id?: string,
     options?: OpenOptions,
-  ) => Pick<ControlReturnVoids, 'close' | 'id'>;
+  ) => ReturnType<ControlReturnVoids['open']>;
   close: (id?: string) => void;
   getNode: (id: string) => ReactNode | undefined;
   getIndex: (id: string) => number | undefined;
@@ -56,11 +56,11 @@ const useTooltipStore = create<TooltipOverlayState>((set, get) => ({
     return index >= 0 ? index : undefined;
   },
   init: (target, idd) => {
-    Logger.log('InitOverlay', 'Total items: ' + get().items.length);
+    Logger.log('InitTooltip', 'Total items: ' + get().items.length);
     let id: string;
     if (idd && get().getIndex(idd) !== undefined && !target) {
       id = idd;
-      Logger.log('InitOverlay', 'Item already exists');
+      Logger.log('InitTooltip', 'Item already exists');
     } else {
       id = idd ?? nanoid();
       const plainTarget =
@@ -75,8 +75,9 @@ const useTooltipStore = create<TooltipOverlayState>((set, get) => ({
         node: plainTarget
           ? OverlayItem({
               children: plainTarget.node,
+              closeMethod: () => get().close(id),
+              type: 'tooltip',
               ...plainTarget.props,
-              onClose: () => get().close(id),
             })
           : undefined,
         id,
@@ -85,8 +86,8 @@ const useTooltipStore = create<TooltipOverlayState>((set, get) => ({
       set((state) => {
         if (state.items.length > 16) {
           Logger.warn(
-            'initOverlay',
-            'Overlay limit reached. an item will be removed',
+            'initTooltip',
+            'Tooltip limit reached. an item will be removed',
           );
           return { items: [...state.items.slice(1), item] };
         }
@@ -105,18 +106,18 @@ const useTooltipStore = create<TooltipOverlayState>((set, get) => ({
   open: (id, data) => {
     const currentState = get();
     if (currentState.items.length === 0)
-      Logger.warn('openOverlay', "No items in overlay, can't open");
+      Logger.warn('openTooltip', "No items in Tooltip, can't open");
     else {
       Logger.log(
-        'OpenOverlay',
-        'Open overlay with id: "' +
+        'OpenTooltip',
+        'OpenTooltip  with id: "' +
           id +
           '", Total items: ' +
           currentState.items.length,
       );
       const index = id ? currentState.getIndex(id) : undefined;
       if (index == undefined && id)
-        Logger.warn('openOverlay', 'No item with id: "' + id + '"');
+        Logger.warn('openTooltip', 'No item with id: "' + id + '"');
       else {
         const item = index
           ? currentState.items[index]
@@ -138,8 +139,8 @@ const useTooltipStore = create<TooltipOverlayState>((set, get) => ({
           };
         } else
           Logger.warn(
-            'openOverlay',
-            `Overlay "${id}" has not been initialized`,
+            'openTooltip',
+            `Tooltip "${id}" has not been initialized`,
           );
       }
     }
@@ -150,9 +151,9 @@ const useTooltipStore = create<TooltipOverlayState>((set, get) => ({
   },
 
   close: () => {
-    Logger.log('closeOverlay', 'Closing ' + 'the last overlay');
+    Logger.log('closeTooltip', 'Closing ' + 'the last Tooltip');
     if (get().items.length === 0) {
-      Logger.warn('closeOverlay', 'There are no items to close');
+      Logger.warn('closeTooltip', 'There are no items to close');
       return;
     }
 
@@ -169,7 +170,7 @@ const useTooltipStore = create<TooltipOverlayState>((set, get) => ({
     else return false;
   },
   clear: () => {
-    Logger.log('clearOverlay', get().items.length);
+    Logger.log('clearTooltip', get().items.length);
     set(() => ({
       items: [],
     }));
@@ -179,15 +180,17 @@ const useTooltipStore = create<TooltipOverlayState>((set, get) => ({
 export const useTooltipItems = () => useTooltipStore((state) => state.items);
 
 const tooltip = (
-  target: (
-    props: Pick<ControlReturnVoids, 'close' | 'open' | 'id'>,
-  ) => ActionProps[] | ReactNode,
+  target:
+    | ActionProps[]
+    | ReactNode
+    | ((props: ControlReturnVoids) => ActionProps[] | ReactNode),
   popperTarget: HTMLElement,
   options?: OverlayOptions & { autoClose?: true },
   id?: string,
 ) =>
   useTooltipStore.getState().init(({ close, open, id: iid }) => {
-    const node = target({ close, open, id: iid });
+    const node =
+      typeof target == 'function' ? target({ close, open, id: iid }) : target;
     const autoClose = options?.autoClose;
     return {
       node: !Array.isArray(node)
