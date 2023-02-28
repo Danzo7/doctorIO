@@ -63,41 +63,13 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
           width={25}
           radius={5}
           iconSize={14}
+          confirm={{
+            title: 'Are you sure you want to reset the queue count ? ',
+            description:
+              'By applying the reset, the queue count will start from zero. ',
+          }}
           onPress={() => {
-            modal(
-              ({ close }) => (
-                <AlertModal
-                  title="Are you sure you want to reset the queue count ? "
-                  description="By applying the reset, the queue count will start from zero. "
-                  status="warning"
-                  controls={
-                    <>
-                      <TextButton
-                        text="Cancel"
-                        backgroundColor={color.cold_blue}
-                        onPress={() => {
-                          close();
-                        }}
-                      />
-                      <TextButton
-                        text="Confirm"
-                        backgroundColor={color.hot_red}
-                        onPress={() => {
-                          resetQueue(selectedQueue);
-                          close();
-                        }}
-                      />
-                    </>
-                  }
-                ></AlertModal>
-              ),
-
-              {
-                closeOnClickOutside: true,
-                isDimmed: true,
-                clickThrough: false,
-              },
-            ).open();
+            resetQueue(selectedQueue);
           }}
         />
       )}
