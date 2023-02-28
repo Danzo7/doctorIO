@@ -36,7 +36,6 @@ export const withSuggestion = (
       const before = wordBefore && Editor.before(editor, wordBefore);
       const beforeRange = before && Editor.range(editor, before, start);
       const beforeText = beforeRange && Editor.string(editor, beforeRange);
-      if (!beforeText) return;
       const beforeMatch =
         beforeText && beforeText.match(new RegExp(`^${keyword}(\\w+)$`));
       const after = Editor.after(editor, start);
@@ -70,7 +69,7 @@ export const withSuggestion = (
           }));
         if (actionList.length === 0) {
           tooltip.close(EDITOR_SUGGEST_TOOLTIP);
-          return;
+          return tooltip.close(EDITOR_SUGGEST_TOOLTIP);
         }
         const element = beforeRange
           ? ReactEditor.toDOMNode(editor, Node.get(editor, start.path))
@@ -94,7 +93,7 @@ export const withSuggestion = (
           EDITOR_SUGGEST_TOOLTIP,
         ).open({ force: true });
       } else {
-        return tooltip.close(EDITOR_SUGGEST_TOOLTIP);
+        return tooltip.close(EDITOR_SUGGEST_TOOLTIP); //TODO fix close multiples
       }
     }
   };
