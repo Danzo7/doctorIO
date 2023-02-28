@@ -38,19 +38,21 @@ export default function BookingTimeline({
   });
   return (
     <div className="booking-timeline">
-      <div
-        css={{
-          borderLeft:
-            appointments.length > 0
-              ? `2px solid ${color.cold_blue}`
-              : undefined,
-          height: '100%',
-          position: 'absolute',
-          left: 2.5,
-          zIndex: 0,
-          top: 48,
-        }}
-      />
+      {appointmentsFiltered.length > 0 && (
+        <div
+          css={{
+            borderLeft:
+              appointments.length > 0
+                ? `2px solid ${color.silver_gray}`
+                : undefined,
+            height: '100%',
+            position: 'absolute',
+            left: 1.5,
+            zIndex: 0,
+            top: 48,
+          }}
+        />
+      )}
 
       <PreviewList
         title="Appointment"
@@ -80,7 +82,17 @@ export default function BookingTimeline({
             <TimelineItem key={index} {...app} patientId={patientId} />
           ))
         ) : (
-          <VerticalPanel title="No appointments" backgroundColor="none" /> //TODO add the correct icon to the vertical panel
+          <VerticalPanel
+            title={`There is no ${
+              selectedState === 0
+                ? 'upcoming'
+                : selectedState === 1
+                ? 'done'
+                : selectedState === 2
+                ? 'canceled'
+                : ''
+            } appointments`}
+          />
         )}
       </PreviewList>
     </div>
