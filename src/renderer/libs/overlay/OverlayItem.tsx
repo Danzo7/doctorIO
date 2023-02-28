@@ -30,14 +30,17 @@ export function OverlayItem({
   onClose,
   defaultCloseFallback = true,
   style,
+  closeMethod,
   clickable = true,
   closable = true,
+  type = 'modal',
 }: OverlayItemProps) {
   const closeOverlay = () => {
+    onClose?.();
     if (!closable) return;
-    if (onClose) onClose();
+    if (closeMethod) closeMethod();
     else if (defaultCloseFallback)
-      if (popperTarget) tooltip.close();
+      if (type == 'tooltip') tooltip.close();
       else modal.close();
   };
   return (

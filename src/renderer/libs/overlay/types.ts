@@ -43,4 +43,5 @@ export interface OverlayOptions {
   autoFocus?: boolean;
   clickable?: boolean;
   closable?: boolean;
+  type?: 'modal' | 'tooltip';
 }
