@@ -52,7 +52,7 @@ export default function usePrompt(
   const isOpen = useRef(false);
   const close = useCallback(() => {
     if (isOpen.current) {
-      modal.close('prompt');
+      modal.closeAsync('prompt');
       isOpen.current = false;
     }
   }, []);
