@@ -1,4 +1,3 @@
-import CertificateEditor from '@components/certificates_editor';
 import './style/index.scss';
 import TextButton from '@components/buttons/text_button';
 import ModalContainer from '@components/modal_container';
@@ -17,6 +16,7 @@ import {
 import { Descendant } from 'slate';
 import { MedicalCertificate } from '@models/instance.model';
 import { modal } from '@libs/overlay';
+import { CertificateModelsEditor } from '@components/certificates_editor/CertificateEditor';
 
 const schema = z.object({
   title: z.string().min(8).max(100),
@@ -91,7 +91,7 @@ export default function AddNewCertificateModal({
 
         <div className="certificate-editor-wrapper">
           <span>Content</span>
-          <CertificateEditor
+          <CertificateModelsEditor
             defaultValue={
               defaultValue != undefined && isSuccess ? data.template : undefined
             }
