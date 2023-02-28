@@ -8,7 +8,6 @@ import { RoleBrief } from '@models/server.models';
 import { useGetMembersQuery } from '@redux/clinic/rbac/member/memberApi';
 import { modal } from '@libs/overlay';
 
-
 import './style/index.scss';
 
 export default function RoleSettingMembers(props: RoleBrief) {

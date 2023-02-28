@@ -14,7 +14,6 @@ import { useRef } from 'react';
 import { PatientBrief } from '@models/instance.model';
 import { modal } from '@libs/overlay';
 
-
 interface SearchInput {
   searchField: string;
 }

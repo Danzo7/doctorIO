@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof CertificatesView>> = (args) => (
   <CertificatesView {...args} />
 );
-export const FirstStory = Template
+export const FirstStory = Template;
 FirstStory.args = {};

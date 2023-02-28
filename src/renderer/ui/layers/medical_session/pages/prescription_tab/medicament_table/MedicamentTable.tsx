@@ -16,7 +16,6 @@ import { Drug } from '@models/instance.model';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 import { modal } from '@libs/overlay';
 
-
 interface MedicamentTableProps {
   editable?: true;
   drugList: Drug[];

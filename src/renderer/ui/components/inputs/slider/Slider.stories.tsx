@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof Slider>> = (args) => (
   <Slider {...args} />
 );
-export const FirstStory = Template
+export const FirstStory = Template;
 FirstStory.args = {};

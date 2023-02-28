@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof Shimmer>> = (args) => (
   <Shimmer {...args} />
 );
-export const FirstStory = Template
+export const FirstStory = Template;
 FirstStory.args = {};

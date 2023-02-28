@@ -1,7 +1,4 @@
-import {
-  TABLE_TYPES,
-  TEXT_ALIGN_TYPES,
-} from '@libs/slate_editor/slate.types';
+import { TABLE_TYPES, TEXT_ALIGN_TYPES } from '@libs/slate_editor/slate.types';
 import { Editor, Element } from 'slate';
 
 export const isAlignActive = (

@@ -8,5 +8,5 @@ export default {
 const Template: Story<ComponentProps<typeof PasswordInput>> = (args) => (
   <PasswordInput {...args} />
 );
-export const FirstStory = Template
+export const FirstStory = Template;
 FirstStory.args = {};

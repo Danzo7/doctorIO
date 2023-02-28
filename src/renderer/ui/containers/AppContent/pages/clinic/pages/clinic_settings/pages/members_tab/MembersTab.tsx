@@ -7,7 +7,6 @@ import { DEFAULT_MODAL } from '@libs/overlay';
 import { useGetBriefRolesQuery } from '@redux/clinic/rbac/role/roleApi';
 import { modal } from '@libs/overlay';
 
-
 import RoleMembers from './role_members';
 import './style/index.scss';
 
