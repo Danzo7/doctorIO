@@ -10,6 +10,7 @@ import {
 } from 'react';
 import styled from '@emotion/styled';
 import { alt } from '@libs/overlay';
+import { Confirm } from '@libs/dialog';
 
 type IconProps = {
   svg: FunctionComponent<SVGProps<SVGSVGElement>> | ReactNode;
@@ -81,6 +82,10 @@ interface TextButtonProps {
   unFocusable?: boolean;
   fake?: boolean;
   outline?: boolean;
+  confirm?: {
+    title: string;
+    description?: string;
+  };
 }
 export default function TextButton({
   className,
@@ -117,6 +122,7 @@ export default function TextButton({
   onMouseUp,
   outline,
   fake,
+  confirm,
   ...others
 }: TextButtonProps) {
   const [isHold, setHold] = useState(false); //if onHold==undefined will never be triggered
@@ -239,14 +245,23 @@ export default function TextButton({
           },
         },
       }}
-      onClick={(e) => {
+      onClick={async (e) => {
         if (tip) alt.clear();
 
         if (!blank) {
           e.preventDefault();
           e.stopPropagation();
         }
-        if (!onHold) onPress?.(e);
+        if (!onHold) {
+          if (confirm) {
+            const ok = await Confirm(confirm.title, {
+              description: confirm.description,
+            });
+            if (ok) onPress?.(e);
+          } else {
+            onPress?.(e);
+          }
+        }
       }}
       onMouseDown={(e) => {
         if (!blank) {
