@@ -11,16 +11,22 @@ type ItemType = {
 };
 
 type ControlReturnVoids = {
+  id?: string;
   open: (data?: {
     closePrevious?: boolean;
     force?: boolean;
-  }) => Pick<ControlReturnVoids, 'close' | 'hide'>;
-  hide: () => Pick<ControlReturnVoids, 'close' | 'open'>;
+  }) => Pick<ControlReturnVoids, 'close' | 'hide' | 'id'>;
+  hide: () => Pick<ControlReturnVoids, 'close' | 'open' | 'id'>;
   close: () => void;
+  asyncOpen: (
+    data: Parameters<ControlReturnVoids['open']>[0] & { time?: number },
+  ) => Promise<Pick<ControlReturnVoids, 'asyncClose' | 'id'>>;
+  asyncClose: (data: { time?: number }) => Promise<void>;
 };
+
 type ModalTarget =
   | { node: ReactNode; props?: OverlayOptions }
-  | ((props: Pick<ControlReturnVoids, 'close' | 'hide' | 'open'>) => {
+  | ((props: ControlReturnVoids) => {
       node: ReactNode;
       props?: OverlayOptions;
     });
@@ -29,20 +35,25 @@ interface ModalState {
   items: ItemType[];
   openedId?: string;
   _forceRerender: boolean;
-  init: (
-    target?: ModalTarget,
-    id?: string,
-  ) => Pick<ControlReturnVoids, 'close' | 'hide' | 'open'> & { id: string };
+  init: (target?: ModalTarget, id?: string) => ControlReturnVoids;
   open: (
     id?: string,
-    data?: { closePrevious?: boolean; force?: boolean },
-  ) => Pick<ControlReturnVoids, 'close' | 'hide'>;
-  hide: (id?: string) => Pick<ControlReturnVoids, 'close' | 'open'>;
+    data?: Parameters<ControlReturnVoids['open']>[0],
+  ) => ReturnType<ControlReturnVoids['open']>;
+  hide: (id?: string) => ReturnType<ControlReturnVoids['hide']>;
   close: (id?: string) => void;
   getNode: (id: string) => ReactNode | undefined;
   getIndex: (id: string) => number | undefined;
   isOpen: (id: string) => boolean;
   clear: () => void;
+  asyncOpen: (
+    id?: string,
+    data?: Parameters<ControlReturnVoids['asyncOpen']>[0],
+  ) => ReturnType<ControlReturnVoids['asyncOpen']>;
+  asyncClose: (
+    id?: string,
+    data?: Parameters<ControlReturnVoids['asyncClose']>[0],
+  ) => ReturnType<ControlReturnVoids['asyncClose']>;
 }
 
 const useModalStore = create<ModalState>((set, get) => ({
@@ -63,11 +74,11 @@ const useModalStore = create<ModalState>((set, get) => ({
   init: (target, idd) => {
     const currentState = get();
 
-    Logger.log('InitOverlay', 'Total items: ' + currentState.items.length);
+    Logger.log('InitModal', 'Total items: ' + currentState.items.length);
     let id: string;
     if (idd && currentState.getIndex(idd) !== undefined && !target) {
       id = idd;
-      Logger.log('InitOverlay', 'Item already exists');
+      Logger.log('InitModal', 'Item already exists');
     } else {
       id = idd ?? nanoid();
       const plainTarget =
@@ -76,14 +87,19 @@ const useModalStore = create<ModalState>((set, get) => ({
               close: () => currentState.close(id),
               hide: () => currentState.hide(id),
               open: (data) => currentState.open(id, data),
+              asyncOpen: async (data) => currentState.asyncOpen(id, data),
+              asyncClose: async (data) => currentState.asyncClose(id, data),
+
+              id: id,
             })
           : target;
       const item: ItemType = {
         node: plainTarget
           ? OverlayItem({
               children: plainTarget.node,
+              closeMethod: () => currentState.close(id),
+              type: 'modal',
               ...plainTarget.props,
-              onClose: () => currentState.close(id),
             })
           : undefined,
         id,
@@ -91,10 +107,7 @@ const useModalStore = create<ModalState>((set, get) => ({
 
       set((state) => {
         if (state.items.length > 16) {
-          Logger.warn(
-            'initOverlay',
-            'Overlay limit reached. an item will be removed',
-          );
+          Logger.warn('initModal', 'Limit reached. an item will be removed');
           return { items: [...state.items.slice(1), item] };
         }
         const oldItem = state.getIndex(id);
@@ -107,24 +120,27 @@ const useModalStore = create<ModalState>((set, get) => ({
       close: () => currentState.close(id),
       open: (data) => currentState.open(id, data),
       hide: () => currentState.hide(id),
+      asyncOpen: async (data) => currentState.asyncOpen(id, data),
+      asyncClose: async (data) => currentState.asyncClose(id, data),
+
       id,
     };
   },
   open: (id, data) => {
     const currentState = get();
     if (currentState.items.length === 0)
-      Logger.warn('openOverlay', "No items in overlay, can't open");
+      Logger.warn('openModal', "No items in modal, can't open");
     else {
       Logger.log(
-        'OpenOverlay',
-        'Open overlay with id: "' +
+        'OpenModal',
+        'Open modal with id: "' +
           id +
           '", Total items: ' +
           currentState.items.length,
       );
       const index = id ? currentState.getIndex(id) : undefined;
       if (index == undefined && id)
-        Logger.warn('openOverlay', 'No item with id: "' + id + '"');
+        Logger.warn('openModal', 'No item with id: "' + id + '"');
       else {
         const item = index
           ? currentState.items[index]
@@ -142,33 +158,32 @@ const useModalStore = create<ModalState>((set, get) => ({
           return {
             close: () => currentState.close(item.id),
             hide: () => currentState.hide(item.id),
+            id: item.id,
           };
         } else
-          Logger.warn(
-            'openOverlay',
-            `Overlay "${id}" has not been initialized`,
-          );
+          Logger.warn('openModal', `Modal "${id}" has not been initialized`);
       }
     }
     return {
       close: () => currentState.close(id),
       hide: () => currentState.hide(id),
+      id,
     };
   },
 
   close: (id) => {
     const currentState = get();
 
-    Logger.log('closeOverlay', 'Closing ' + (id ? id : 'the last overlay'));
+    Logger.log('closeModal', 'Closing ' + (id ? id : 'the last Modal'));
     if (currentState.items.length === 0) {
-      Logger.warn('closeOverlay', 'There are no items to close');
+      Logger.warn('closeModal', 'There are no items to close');
       if (currentState.openedId) set(() => ({ openedId: undefined }));
       return;
     }
     const index = id ? currentState.getIndex(id) : undefined;
 
     if (id && index == undefined)
-      Logger.warn('closeOverlay', 'No item found with id "' + id + '"');
+      Logger.warn('closeModal', 'No item found with id "' + id + '"');
     else {
       set((state) => {
         const items = state.items;
@@ -184,9 +199,9 @@ const useModalStore = create<ModalState>((set, get) => ({
   hide: (id) => {
     const currentState = get();
 
-    Logger.log('hideOverlay', currentState.items.length);
+    Logger.log('hideModal', currentState.items.length);
     if (currentState.items.length === 0)
-      Logger.warn('hideOverlay', 'There are no items to hide');
+      Logger.warn('hideModal', 'There are no items to hide');
     else {
       const index = id ? currentState.getIndex(id) : undefined;
       if (id && index == undefined) {
@@ -202,12 +217,14 @@ const useModalStore = create<ModalState>((set, get) => ({
         return {
           close: () => currentState.close(item.id),
           open: () => currentState.open(item.id),
+          id: item.id,
         };
       }
     }
     return {
       close: () => currentState.close(id),
       open: () => currentState.open(id),
+      id,
     };
   },
   isOpen: (id) => {
@@ -220,11 +237,31 @@ const useModalStore = create<ModalState>((set, get) => ({
   clear: () => {
     const currentState = get();
 
-    Logger.log('clearOverlay :', currentState.items.length);
+    Logger.log('clearModal', 'Clearing ' + currentState.items.length);
     set(() => ({
       items: [],
       openedId: undefined,
     }));
+  },
+  asyncOpen: async (id, data) => {
+    const res = await new Promise<ReturnType<ControlReturnVoids['open']>>(
+      (resolve) => {
+        setTimeout(() => {
+          resolve(get().open(id, data));
+        }, data?.time ?? 0);
+      },
+    );
+    return {
+      id: res.id,
+      asyncClose: async (d) => get().asyncClose(id, d),
+    };
+  },
+  asyncClose: (id, data) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(get().close(id));
+      }, data?.time ?? 0);
+    });
   },
 }));
 export const useIsOpenModal = () =>
@@ -243,11 +280,7 @@ export const useModalNode = () =>
     state.openedId ? state.getNode(state.openedId) : undefined,
   );
 const modal = (
-  node:
-    | ReactNode
-    | ((
-        props: Pick<ControlReturnVoids, 'open' | 'hide' | 'close'>,
-      ) => ReactNode),
+  node: ReactNode | ((props: ControlReturnVoids) => ReactNode),
   props?: OverlayOptions,
   id?: string,
 ) =>
@@ -259,6 +292,8 @@ const modal = (
     id,
   );
 modal.close = (id?: string) => useModalStore.getState().close(id);
+modal.closeAsync = (id?: string, time?: number) =>
+  useModalStore.getState().asyncClose(id, { time });
 modal.hide = (id?: string) => useModalStore.getState().hide(id);
 modal.clear = () => useModalStore.getState().clear();
 export default modal;
