@@ -6,7 +6,7 @@ import { BiometricScreening } from '@models/instance.model';
 import { ComponentProps } from 'react';
 import './style/index.scss';
 import LoadingSpinner from '@components/loading_spinner';
-import { useGetFieldsQuery } from '@redux/clinic/clinicApi';
+import { useGetFieldsQuery } from '@redux/clinic/vitalFields/vitalFieldsApi';
 import { sentenceCase } from '@shipengine/capitalization';
 interface VitalsPanelProps {
   data: BiometricScreening;

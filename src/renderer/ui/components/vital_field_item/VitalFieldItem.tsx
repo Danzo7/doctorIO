@@ -4,7 +4,7 @@ import TextPair from '@components/text_pair/TextPair';
 import { color } from '@assets/styles/color';
 import TrashCan from 'toSvg/trash_can.svg?icon';
 import SquareIconButton from '@components/buttons/square_icon_button/SquareIconButton';
-import { useDeleteFieldMutation } from '@redux/clinic/clinicApi';
+import { useDeleteFieldMutation } from '@redux/clinic/vitalFields/vitalFieldsApi';
 import { sentenceCase } from '@shipengine/capitalization';
 interface VitalFieldItemProps {
   onChangeDisplay: () => void;

@@ -3,7 +3,7 @@ import VitalItem from '@components/vital_item';
 import { BiometricScreening } from '@models/instance.model';
 import { ComponentProps } from 'react';
 import './style/index.scss';
-import { useGetFieldsQuery } from '@redux/clinic/clinicApi';
+import { useGetFieldsQuery } from '@redux/clinic/vitalFields/vitalFieldsApi';
 import { sentenceCase } from '@shipengine/capitalization';
 
 interface DiagnosisPreviewProps {

@@ -8,11 +8,10 @@ import { BiometricScreening } from '@models/instance.model';
 import FieldIcon from 'toSvg/fields.svg?icon';
 import VerticalPanel from '@components/vertical_panel';
 import './style/index.scss';
-import { useGetFieldsQuery } from '@redux/clinic/clinicApi';
+import { useGetFieldsQuery } from '@redux/clinic/vitalFields/vitalFieldsApi';
 import { useVitalFieldsStore } from '@stores/vitalFieldsStore';
 import EditVitalsFieldsModal from '../edit_vitals_fields_modal';
-import { DEFAULT_MODAL } from '@libs/overlay';
-import { modal } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
 
 import { sentenceCase } from '@shipengine/capitalization';
 interface AddMedicalTestModalProps {

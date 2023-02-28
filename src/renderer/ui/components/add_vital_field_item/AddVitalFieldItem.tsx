@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import IconicButton from '@components/buttons/iconic_button';
 import Mark from 'toSvg/good_mark.svg?icon';
-import { useCreateFieldMutation } from '@redux/clinic/clinicApi';
+import { useCreateFieldMutation } from '@redux/clinic/vitalFields/vitalFieldsApi';
 import { camelCase } from '@shipengine/capitalization';
 
 const schema = z.object({

@@ -7,10 +7,10 @@ import add from 'toSvg/add.svg?icon';
 import Cancel from 'toSvg/x_mark.svg?icon';
 import { useState } from 'react';
 import AddVitalFieldItem from '@components/add_vital_field_item';
-import { useGetFieldsQuery } from '@redux/clinic/clinicApi';
 import VerticalPanel from '@components/vertical_panel';
 import VitalFieldItem from '@components/vital_field_item';
 import { modal } from '@libs/overlay';
+import { useGetFieldsQuery } from '@redux/clinic/vitalFields/vitalFieldsApi';
 
 interface EditVitalsFieldsModalProps {}
 export default function EditVitalsFieldsModal({}: EditVitalsFieldsModalProps) {
