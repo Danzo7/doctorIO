@@ -7,7 +7,7 @@ import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
 import { modal, DEFAULT_MODAL } from '@libs/overlay';
 
-import TemplateKeywordsModal from '@containers/modals/reusable_certificates_modal';
+import ReusableCertificatesModal from '@containers/modals/reusable_certificates_modal';
 
 import HelpPanel from '@components/help_panel';
 import useNavigation from '@libs/hooks/useNavigation';
@@ -80,7 +80,7 @@ export default function TemplateTab({}: TemplateTabProps) {
               borderColor={color.border_color}
               afterBgColor={color.darkersec_color}
               onPress={() => {
-                modal(<TemplateKeywordsModal />, {
+                modal(<ReusableCertificatesModal />, {
                   ...DEFAULT_MODAL,
                   width: '35%',
                 }).open();
