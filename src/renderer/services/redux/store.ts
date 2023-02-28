@@ -17,6 +17,7 @@ import roleApi from './clinic/rbac/role/roleApi';
 import clinicApi from './clinic/clinicApi';
 import cloudApi from './clinic/cloud/cloudApi';
 import templatesApi from './clinic/templates/templatesApi';
+import vitalFieldsApi from './clinic/vitalFields/vitalFieldsApi';
 
 const appReducer = combineReducers({
   [clinicApi.reducerPath]: clinicApi.reducer,
@@ -31,6 +32,7 @@ const appReducer = combineReducers({
   [appointmentApi.reducerPath]: appointmentApi.reducer,
   [cloudApi.reducerPath]: cloudApi.reducer,
   [templatesApi.reducerPath]: templatesApi.reducer,
+  [vitalFieldsApi.reducerPath]: vitalFieldsApi.reducer,
 });
 
 const rootReducer = (
@@ -64,6 +66,7 @@ export const store = configureStore({
       clinicApi.middleware,
       cloudApi.middleware,
       templatesApi.middleware,
+      vitalFieldsApi.middleware,
     ),
 });
 export type RootState = ReturnType<typeof store.getState>;
