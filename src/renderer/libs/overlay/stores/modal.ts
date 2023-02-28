@@ -8,12 +8,13 @@ type ItemType = {
   node?: ReactNode;
   id: string;
   previousId?: string;
+  hidden?: boolean;
 };
 
 type ControlReturnVoids = {
   id?: string;
   open: (data?: {
-    closePrevious?: boolean;
+    previousBehavior?: 'close' | 'keep' | 'keepAndHide';
     force?: boolean;
   }) => Pick<ControlReturnVoids, 'close' | 'hide' | 'id'>;
   hide: () => Pick<ControlReturnVoids, 'close' | 'open' | 'id'>;
@@ -33,7 +34,7 @@ type ModalTarget =
 
 interface ModalState {
   items: ItemType[];
-  openedId?: string;
+  openedId: string[];
   _forceRerender: boolean;
   init: (target?: ModalTarget, id?: string) => ControlReturnVoids;
   open: (
@@ -42,7 +43,7 @@ interface ModalState {
   ) => ReturnType<ControlReturnVoids['open']>;
   hide: (id?: string) => ReturnType<ControlReturnVoids['hide']>;
   close: (id?: string) => void;
-  getNode: (id: string) => ReactNode | undefined;
+  getItem: (id: string) => ItemType | undefined;
   getIndex: (id: string) => number | undefined;
   isOpen: (id: string) => boolean;
   clear: () => void;
@@ -59,11 +60,11 @@ interface ModalState {
 const useModalStore = create<ModalState>((set, get) => ({
   items: [],
   _forceRerender: false,
-  getNode: (id: string) => {
+  openedId: [],
+  getItem: (id: string) => {
     const currentState = get();
-
     const item = currentState.items.find((i) => i.id === id);
-    return item?.node;
+    return item;
   },
   getIndex: (id: string) => {
     const currentState = get();
@@ -145,12 +146,22 @@ const useModalStore = create<ModalState>((set, get) => ({
         const item = index
           ? currentState.items[index]
           : currentState.items[currentState.items.length - 1];
-        item.previousId = !data?.closePrevious
-          ? currentState.openedId
-          : undefined;
+        const prevId =
+          currentState.openedId?.[currentState.openedId.length - 1];
+        item.previousId = !data?.previousBehavior ? prevId : undefined;
+        if (prevId && data?.previousBehavior == 'keepAndHide') {
+          const prevItem = currentState.getItem(prevId);
+          if (prevItem) prevItem.hidden = true;
+        }
+        if (prevId && data?.previousBehavior == 'close')
+          currentState.close(prevId);
         if (item.node != undefined) {
           set((state) => ({
-            openedId: item.id,
+            openedId:
+              data?.previousBehavior == 'keep' ||
+              data?.previousBehavior == 'keepAndHide'
+                ? [...currentState.openedId, item.id]
+                : [item.id],
             _forceRerender: data?.force
               ? !state._forceRerender
               : state._forceRerender,
@@ -177,7 +188,7 @@ const useModalStore = create<ModalState>((set, get) => ({
     Logger.log('closeModal', 'Closing ' + (id ? id : 'the last Modal'));
     if (currentState.items.length === 0) {
       Logger.warn('closeModal', 'There are no items to close');
-      if (currentState.openedId) set(() => ({ openedId: undefined }));
+      if (currentState.openedId.length > 0) set(() => ({ openedId: [] }));
       return;
     }
     const index = id ? currentState.getIndex(id) : undefined;
@@ -188,10 +199,17 @@ const useModalStore = create<ModalState>((set, get) => ({
       set((state) => {
         const items = state.items;
         const item = items[index ?? items.length - 1];
-
+        const openedId = [
+          ...state.openedId.filter((i) => i != item.id),
+          item.previousId,
+        ].filter(Boolean) as string[];
+        delete state.getItem(openedId[openedId.length - 1])?.hidden;
         return {
           items: items.filter((i) => i.id != item.id),
-          openedId: item.previousId,
+          openedId: [
+            ...state.openedId.filter((i) => i != item.id),
+            item.previousId,
+          ].filter(Boolean) as string[],
         };
       });
     }
@@ -211,8 +229,11 @@ const useModalStore = create<ModalState>((set, get) => ({
           ? currentState.items[index]
           : currentState.items[currentState.items.length - 1];
 
-        set(() => ({
-          openedId: item.previousId,
+        set((state) => ({
+          openedId: [
+            ...state.openedId.filter((i) => i != item.id),
+            item.previousId,
+          ].filter(Boolean) as string[],
         }));
         return {
           close: () => currentState.close(item.id),
@@ -231,7 +252,7 @@ const useModalStore = create<ModalState>((set, get) => ({
     const currentState = get();
 
     const index = currentState.getIndex(id);
-    if (index != undefined && currentState.openedId == id) return true;
+    if (index != undefined && currentState.openedId.includes(id)) return true;
     else return false;
   },
   clear: () => {
@@ -240,7 +261,7 @@ const useModalStore = create<ModalState>((set, get) => ({
     Logger.log('clearModal', 'Clearing ' + currentState.items.length);
     set(() => ({
       items: [],
-      openedId: undefined,
+      openedId: [],
     }));
   },
   asyncOpen: async (id, data) => {
@@ -277,7 +298,11 @@ export const useIsOpenModal = () =>
 
 export const useModalNode = () =>
   useModalStore((state) =>
-    state.openedId ? state.getNode(state.openedId) : undefined,
+    state.openedId
+      ? (state.openedId
+          .map((id) => state.getItem(id))
+          .filter(Boolean) as ItemType[])
+      : undefined,
   );
 const modal = (
   node: ReactNode | ((props: ControlReturnVoids) => ReactNode),

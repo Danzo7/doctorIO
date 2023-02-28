@@ -56,14 +56,18 @@ function AltContainer() {
   );
 }
 function ModalContainer() {
-  const node = useModalNode();
+  const nodes = useModalNode();
   return (
     <>
-      {node && (
-        <div className="overlay-container">
+      {nodes?.map(({ node, id, hidden: hide }) => (
+        <div
+          css={hide ? { display: 'none' } : undefined}
+          className="overlay-container"
+          key={id}
+        >
           <div>{node}</div>
         </div>
-      )}
+      ))}
     </>
   );
 }
