@@ -14,6 +14,7 @@ import AlertModal from '@containers/modals/dialog_modal';
 import TextButton from '@components/buttons/text_button';
 import DeleteDocumentModal from '@containers/modals/delete_document_modal';
 import PdfViewerModal from '@containers/modals/pdf_viewer_modal';
+import ImageViewer from '@components/image_viewer';
 
 export default function DocumentPreviewItem({
   fileName,
@@ -85,7 +86,12 @@ export default function DocumentPreviewItem({
                   ...FIT_MODAL,
                   height: '85%',
                 }).open();
-              else {
+              else if (fileType.startsWith('image/')) {
+                modal(<ImageViewer file={res} fileName={fileName} />, {
+                  ...FIT_MODAL,
+                  height: '85%',
+                }).open();
+              } else {
                 const url = window.URL.createObjectURL(res);
                 const a = document.createElement('a');
                 a.href = url;
