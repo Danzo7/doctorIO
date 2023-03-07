@@ -1,3 +1,20 @@
 @use '~styles/appColors' as *;
 .pdf-viewer-modal {
+
+    .pdf-viewer-modal-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+    }
+
+    .pdf-viewer-modal-content {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+        flex-grow: 1;
+        overflow: hidden;
+        overflow-y: auto;
+        height: 100%;
+    }
 }
