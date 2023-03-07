@@ -13,12 +13,14 @@ import { useDownloadDocumentMutation } from '@redux/instance/record/medical_docu
 import AlertModal from '@containers/modals/dialog_modal';
 import TextButton from '@components/buttons/text_button';
 import DeleteDocumentModal from '@containers/modals/delete_document_modal';
+import PdfViewerModal from '@containers/modals/pdf_viewer_modal';
 
 export default function DocumentPreviewItem({
   fileName,
   id,
   status,
   date,
+  fileType,
 }: MedicalDocument) {
   const statusRef = useRef(status);
   const consumedError = useRef(false);
@@ -54,7 +56,7 @@ export default function DocumentPreviewItem({
         tip="View Document"
         Icon={statusRef.current == 'LOST' ? damaged : AppointmentHistoryIcon}
         iconColor={statusRef.current == 'LOST' ? color.text_gray : undefined}
-        onPress={() => {
+        onPress={async () => {
           consumedError.current = false;
           if (statusRef.current == 'LOST') {
             modal(
@@ -75,7 +77,21 @@ export default function DocumentPreviewItem({
                 ...DEFAULT_MODAL,
               },
             ).open();
-          } else download({ id, name: fileName });
+          } else {
+            const res = await download({ id, name: fileName }).unwrap();
+            if (res != null)
+              if (fileType == 'application/pdqf')
+                modal(<PdfViewerModal file={res} />, FIT_MODAL).open();
+              else {
+                const url = window.URL.createObjectURL(res);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+              }
+          }
         }}
       />
 

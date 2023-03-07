@@ -1,5 +1,5 @@
 import { MedicalDocument } from '@models/instance.model';
-import { createApi, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import { createQuery } from '@stores/staticQueriesStore';
 import { parseISO } from 'date-fns';
 
@@ -28,8 +28,8 @@ const medicalDocumentApi = createApi({
 
       providesTags: ['MedicalDocument'],
     }),
-    downloadDocument: builder.mutation<any, { id: string; name: string }>({
-      queryFn: async ({ id, name }, _, __, baseQuery) => {
+    downloadDocument: builder.mutation<Blob, { id: string; name: string }>({
+      queryFn: async ({ id }, _, __, baseQuery) => {
         const result = await baseQuery({
           mode: 'cors',
           url: `/download`,
@@ -37,22 +37,16 @@ const medicalDocumentApi = createApi({
           responseHandler: async (response) => {
             if (response.ok) {
               const blob = await response.blob();
-              const url = window.URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = name;
-              a.click();
-              a.remove();
-              window.URL.revokeObjectURL(url);
-              return null;
+
+              return blob;
             } else {
               const error = await response.json();
               return error;
             }
           },
         });
-        if (result === null) return { data: null };
-        else return { error: result as FetchBaseQueryError };
+        if ('data' in result) return result as any;
+        else return result as any;
       },
     }),
     //POST
