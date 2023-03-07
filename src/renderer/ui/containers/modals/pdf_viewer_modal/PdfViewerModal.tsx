@@ -26,6 +26,7 @@ export default function PdfViewerModal({
 
   return (
     <ModalContainer
+      title={fileName}
       className="pdf-viewer-modal"
       css={{ flexGrow: 1 }}
       controls={
