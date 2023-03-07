@@ -13,6 +13,7 @@ interface ModalContainerProps {
   children?: ReactNode;
   gap?: number;
   controlsPosition?: 'center' | 'end';
+  titleMaxWidth?: number | string;
 }
 const Form = (
   props: ClassAttributes<HTMLFormElement> &
@@ -36,6 +37,7 @@ export default function ModalContainer({
   isLoading,
   className = '',
   controlsPosition = 'center',
+  titleMaxWidth,
 }: ModalContainerProps) {
   const Container = onSubmit ? Form : Div;
 
@@ -49,7 +51,7 @@ export default function ModalContainer({
         <LoadingSpinner />
       ) : (
         <>
-          <Header title={title} padding={0} />
+          <Header title={title} padding={0} titleMaxWidth={titleMaxWidth} />
           <div className="modal-body">{children}</div>
           {controls && (
             <div
