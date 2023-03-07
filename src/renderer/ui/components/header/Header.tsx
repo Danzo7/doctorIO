@@ -16,6 +16,7 @@ interface HeaderProps {
   titleColor?: string;
   flexGrow?: number;
   padding?: number | string;
+  titleMaxWidth?: number | string;
 }
 export default function Header({
   buttonNode,
@@ -24,6 +25,7 @@ export default function Header({
   flexGrow = 0,
   leftComponent,
   padding = '0 5px 0 5px ',
+  titleMaxWidth = 500,
 }: HeaderProps) {
   return (
     <div
@@ -39,6 +41,7 @@ export default function Header({
             fontSize: typeof title != 'string' ? title.fontSize : 18,
             color: typeof title != 'string' ? title.fontColor : color.white,
             fontWeight: typeof title != 'string' ? title.fontWeight : 600,
+            maxWidth: titleMaxWidth,
           }}
         >
           {typeof title == 'string' ? title : title.text}
