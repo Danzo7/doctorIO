@@ -80,8 +80,11 @@ export default function DocumentPreviewItem({
           } else {
             const res = await download({ id, name: fileName }).unwrap();
             if (res != null)
-              if (fileType == 'application/pdqf')
-                modal(<PdfViewerModal file={res} />, FIT_MODAL).open();
+              if (fileType == 'application/pdf')
+                modal(<PdfViewerModal file={res} fileName={fileName} />, {
+                  ...FIT_MODAL,
+                  height: '85%',
+                }).open();
               else {
                 const url = window.URL.createObjectURL(res);
                 const a = document.createElement('a');
