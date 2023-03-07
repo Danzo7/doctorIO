@@ -1,4 +1,4 @@
-import { color } from '@assets/styles/color';
+import { color } from '@colors';
 import { cmToPx } from '@helpers/math.helper';
 import { withLayout } from '@libs/slate_editor/commons/normilazation/withLayout';
 import EditorElement from '@libs/slate_editor/components/editor_element';
@@ -27,6 +27,7 @@ import {
 } from '@redux/clinic/templates/templatesApi';
 import LoadingSpinner from '@components/loading_spinner';
 import { CommonEditor } from '@libs/slate_editor/commons/CommonEditor';
+import { useNavigate } from 'react-router-dom';
 
 const paperSize = { width: 14.8, height: 21 };
 const margins = { top: 1, bottom: 0, left: 1, right: 1 };
@@ -57,6 +58,7 @@ export default function TemplateEditor({}: TemplateEditorProps) {
     [],
   );
   const [update, res] = useSetPrintTemplateMutation();
+  const navigate = useNavigate();
   usePrompt(
     'Careful : you have unsaved changes !',
     () => (
@@ -82,7 +84,6 @@ export default function TemplateEditor({}: TemplateEditorProps) {
                 .unwrap()
                 .then(() => {
                   oldValue.current = newValue.current;
-
                   setIsDirty(false);
                 });
           }}
@@ -90,7 +91,7 @@ export default function TemplateEditor({}: TemplateEditorProps) {
       </SnakeBarActionsControls>
     ),
     isDirty,
-    isDirty,
+    false,
   );
   const currentTemplate =
     isSuccess && CommonEditor.isValidDesendants(data.template)
@@ -112,7 +113,25 @@ export default function TemplateEditor({}: TemplateEditorProps) {
             if (!oldValue.current) oldValue.current = value as any;
           }}
         >
-          <EditorToolbar />
+          <EditorToolbar
+            onSave={
+              isDirty
+                ? async () => {
+                    if (newValue.current)
+                      await update({
+                        template: newValue.current,
+                      });
+
+                    oldValue.current = newValue.current;
+
+                    setIsDirty(false);
+                  }
+                : undefined
+            }
+            onClose={() => {
+              navigate(-1);
+            }}
+          />
           <div className="editable-container">
             <Editable
               css={{

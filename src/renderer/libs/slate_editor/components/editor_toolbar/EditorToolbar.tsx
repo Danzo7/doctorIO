@@ -39,10 +39,14 @@ import { DEFAULT_AUTO_REF } from '@libs/slate_editor/constants';
 
 interface EditorToolbarProps {
   items?: ('insert' | 'format' | 'align' | 'dynamic' | 'size')[];
+  onSave?: () => void;
+  onClose?: () => void;
 }
 
 export default function EditorToolbar({
   items = ['size', 'format', 'align', 'insert', 'dynamic'],
+  onClose,
+  onSave,
 }: EditorToolbarProps) {
   const editor = useSlate();
   return (
@@ -218,6 +222,24 @@ export default function EditorToolbar({
           case 'dynamic':
             return (
               <div className="end-block">
+                {onSave && (
+                  <TextButton
+                    text="Save unsaved changes"
+                    afterBgColor={color.silver_gray}
+                    onPress={() => {
+                      onSave?.();
+                    }}
+                  />
+                )}
+                {onClose && (
+                  <TextButton
+                    text="Close"
+                    afterBgColor={color.silver_gray}
+                    onPress={() => {
+                      onClose?.();
+                    }}
+                  />
+                )}
                 <TextButton
                   text="Auto"
                   Icon={TagIcon}
