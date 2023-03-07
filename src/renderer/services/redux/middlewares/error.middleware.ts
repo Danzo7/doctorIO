@@ -227,6 +227,8 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
 
       case 'findPatientByName':
         break;
+      case 'downloadDocument':
+        break;
       default:
         toast(action.meta.arg.endpointName, 'success', 2000);
         break;
