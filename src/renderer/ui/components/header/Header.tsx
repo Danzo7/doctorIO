@@ -34,6 +34,7 @@ export default function Header({
 
       {title && (
         <span
+          className="header-title"
           css={{
             fontSize: typeof title != 'string' ? title.fontSize : 18,
             color: typeof title != 'string' ? title.fontColor : color.white,

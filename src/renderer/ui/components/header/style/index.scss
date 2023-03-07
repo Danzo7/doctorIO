@@ -4,4 +4,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-self: stretch;
+
+    > .header-title {
+        display: inline-block;
+        max-width: 500px; /* adjust the width to your desired value */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
