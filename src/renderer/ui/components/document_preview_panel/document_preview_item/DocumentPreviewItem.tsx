@@ -89,7 +89,9 @@ export default function DocumentPreviewItem({
               else if (fileType.startsWith('image/')) {
                 modal(<ImageViewer file={res} fileName={fileName} />, {
                   ...FIT_MODAL,
-                  height: '85%',
+                  style: {
+                    // maxHeight: '85%',
+                  },
                 }).open();
               } else {
                 const url = window.URL.createObjectURL(res);
