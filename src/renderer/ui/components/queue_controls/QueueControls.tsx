@@ -133,40 +133,13 @@ export default function QueueControls({ state, isOwner }: QueueControlsProps) {
               width={25}
               radius={7}
               iconSize={10}
+              confirm={{
+                title: 'Are you sure you want to pause?',
+                description:
+                  'By pausing the queue no more patient will be accepted',
+              }}
               onPress={() => {
-                modal(
-                  ({ close }) => (
-                    <AlertModal
-                      title="Are you sure you want to pause?"
-                      description="By pausing the queue no more patient will be accepted"
-                      status="warning"
-                      controls={
-                        <>
-                          <TextButton
-                            text="Cancel"
-                            backgroundColor={color.cold_blue}
-                            onPress={() => {
-                              close();
-                            }}
-                          />
-                          <TextButton
-                            text="Confirm"
-                            backgroundColor={color.hot_red}
-                            onPress={() => {
-                              PauseQueue(selectedQueue);
-                              close();
-                            }}
-                          />
-                        </>
-                      }
-                    ></AlertModal>
-                  ),
-                  {
-                    closeOnClickOutside: true,
-                    isDimmed: true,
-                    clickThrough: false,
-                  },
-                ).open();
+                PauseQueue(selectedQueue);
               }}
             />
           </>
