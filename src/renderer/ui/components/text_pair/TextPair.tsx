@@ -5,6 +5,7 @@ type TextType = {
   fontSize: number;
   fontColor?: string;
   fontWeight?: string | number;
+  maxWidth?: number | string;
 };
 interface TextPairProps {
   first: string | TextType | ReactNode;
@@ -60,6 +61,7 @@ export default function TextPair({
             fontSize: typeof first != 'string' ? first?.fontSize : 17,
             fontWeight: typeof first != 'string' ? first?.fontWeight : 400,
             color: typeof first != 'string' ? first?.fontColor : color.white,
+            maxWidth: typeof first != 'string' ? first?.maxWidth : undefined,
             whiteSpace: 'nowrap',
             textOverflow: 'ellipsis',
             overflow: 'hidden',
@@ -76,6 +78,7 @@ export default function TextPair({
           css={{
             fontSize: typeof second != 'string' ? second?.fontSize : 12,
             fontWeight: typeof second != 'string' ? second?.fontWeight : 400,
+            maxWidth: typeof second != 'string' ? second?.maxWidth : undefined,
             color:
               typeof second != 'string'
                 ? second?.fontColor ?? color.text_gray
