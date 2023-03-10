@@ -88,7 +88,7 @@ export default function CertificateEditorModal({
                 title: data.title,
                 description: editorControllerRef.current,
               });
-            }
+            } else return;
           }
 
           modal.close('certificateModal');
