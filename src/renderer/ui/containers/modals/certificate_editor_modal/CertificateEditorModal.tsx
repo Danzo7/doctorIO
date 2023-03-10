@@ -13,11 +13,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CommonEditor } from '@libs/slate_editor/commons/CommonEditor';
 import { useMedicalSessionStore } from '@stores/medicalSessionStore';
 import { modal } from '@libs/overlay';
+import { useGetCertificateTemplateByIdQuery } from '@redux/clinic/templates/templatesApi';
 
 type Inputs = { title: string };
 interface CertificateEditorModalProps {
   mentions?: string[];
-  defaultValue?: MedicalCertificate;
+  defaultValue?: Partial<MedicalCertificate>;
+  updateValue?: MedicalCertificate;
 }
 const schema = z.object({
   title: z.string().min(8).max(100),
@@ -26,19 +28,32 @@ const schema = z.object({
 export default function CertificateEditorModal({
   mentions,
   defaultValue,
+  updateValue,
 }: CertificateEditorModalProps) {
+  const [error, setError] = useState<string | undefined>(undefined);
+  const editorControllerRef = useRef<Descendant[]>();
+  const {
+    isLoading,
+    isSuccess,
+    data: templateData,
+  } = useGetCertificateTemplateByIdQuery(Number(defaultValue?.id), {
+    skip: !defaultValue,
+  });
   const { control, handleSubmit } = useForm<Inputs>({
     defaultValues: {
-      title: defaultValue?.title ?? '',
+      title: defaultValue
+        ? defaultValue.title
+        : updateValue
+        ? updateValue.title
+        : '',
     },
     resolver: zodResolver(schema),
   });
-  const [error, setError] = useState<string | undefined>(undefined);
-  const editorControllerRef = useRef<Descendant[]>();
 
   return (
     <ModalContainer
       className="certificate-editor-modal"
+      isLoading={isLoading}
       css={{ flexGrow: 1 }}
       title="Medical certificate"
       controlsPosition="end"
@@ -53,21 +68,29 @@ export default function CertificateEditorModal({
       }
       {...{
         onSubmit: handleSubmit((data) => {
-          if (!editorControllerRef.current) {
-            return;
-          }
-          if (defaultValue)
+          if (updateValue)
             useMedicalSessionStore
               .getState()
-              .updateCertificate(defaultValue.id, {
+              .updateCertificate(updateValue.id, {
+                title: data.title,
+                description: editorControllerRef.current
+                  ? editorControllerRef.current
+                  : updateValue.description,
+              });
+          else {
+            if (isSuccess && !editorControllerRef.current) {
+              useMedicalSessionStore.getState().addCertificate({
+                title: data.title,
+                description: templateData?.template,
+              });
+            } else if (editorControllerRef.current) {
+              useMedicalSessionStore.getState().addCertificate({
                 title: data.title,
                 description: editorControllerRef.current,
               });
-          else
-            useMedicalSessionStore.getState().addCertificate({
-              title: data.title,
-              description: editorControllerRef.current,
-            });
+            }
+          }
+
           modal.close('certificateModal');
         }),
       }}
@@ -88,7 +111,9 @@ export default function CertificateEditorModal({
           <span>Content</span>
           <CertificateEditor
             mentions={mentions}
-            defaultValue={defaultValue?.description}
+            defaultValue={
+              defaultValue ? templateData?.template : updateValue?.description
+            }
             error={error}
             onChange={(value) => {
               if (CommonEditor.isEmptyElements(value)) {
