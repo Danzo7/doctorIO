@@ -32,7 +32,7 @@
     display: flex;
     z-index: 10;
     visibility: hidden;
-    background-color: $secondarycolor;
+    background-color: $darkerseccolor;
     flex-direction: column;
     align-items: stretch;
     padding:10px;
@@ -49,7 +49,7 @@
       color: $white;
       cursor: pointer;
       &:hover {
-        background-color: $lighterbackground;
+        background-color: $darker;
       }
     }
   }
