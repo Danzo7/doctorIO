@@ -21,6 +21,7 @@
     "startApp": "set platform=electron&& set mode=development&& electron-forge start",
     "package": "set platform=electron&& set mode=production&& electron-forge package",
     "make": "set platform=electron&& set mode=production&& electron-forge make",
+    "make32": "set platform=electron&& set mode=production&& electron-forge make --arch=ia32",
     "publish": "electron-forge publish",
     "eslint": "eslint --ext .ts,.tsx src/",
     "eslint-fix": "eslint --fix  --ext .ts,.tsx src/",
