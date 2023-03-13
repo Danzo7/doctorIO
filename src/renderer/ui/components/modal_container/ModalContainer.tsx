@@ -14,6 +14,7 @@ interface ModalContainerProps {
   gap?: number;
   controlsPosition?: 'center' | 'end';
   titleMaxWidth?: number | string;
+  overflowHidden?: boolean;
 }
 const Form = (
   props: ClassAttributes<HTMLFormElement> &
@@ -38,6 +39,7 @@ export default function ModalContainer({
   className = '',
   controlsPosition = 'center',
   titleMaxWidth,
+  overflowHidden,
 }: ModalContainerProps) {
   const Container = onSubmit ? Form : Div;
 
@@ -52,7 +54,12 @@ export default function ModalContainer({
       ) : (
         <>
           <Header title={title} padding={0} titleMaxWidth={titleMaxWidth} />
-          <div className="modal-body">{children}</div>
+          <div
+            className="modal-body"
+            css={overflowHidden ? { overflow: 'hidden' } : undefined}
+          >
+            {children}
+          </div>
           {controls && (
             <div
               className={
