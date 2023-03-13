@@ -9,10 +9,10 @@ import { parseInviteKey } from '@helpers/crypto/parse';
 import { useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import LoadingSpinner from '@components/loading_spinner';
-import CopyField from '@components/copy_field';
 import { useUserStore } from '@stores/userStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
-import { modal } from '@libs/overlay';
+import { DEFAULT_MODAL, modal } from '@libs/overlay';
+import CopyField from '@components/copy_field';
 interface Inputs {
   key: string;
 }
@@ -42,18 +42,47 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
     }
     if (location) {
       useConnectionStore.getState().pseudoConnect(location);
-      register({
+      const res = await register({
         invKey: key,
         body: {
           name: user.firstName + ' ' + user.lastName,
           age: user.age ?? 0,
           gender: user.gender ?? 'male',
           userId: nanoid(),
-          address: 'address',
-          //     phone: userinfo.phone,
+          address: user.address,
+          phone: user.phone,
           publicKey: user.publicKey,
         },
-      });
+      }).unwrap();
+      if (res)
+        modal(
+          <ModalContainer
+            title="Secret key"
+            controls={
+              <TextButton
+                text="Continue"
+                backgroundColor={color.cold_blue}
+                fontSize={13}
+                fontWeight={700}
+                alignSelf="center"
+                padding={5}
+                onPress={() => {
+                  window.location.reload();
+                }}
+              />
+            }
+          >
+            <CopyField
+              text={res.secretKey}
+              hint="Please backup your secret key, you will need it to login to your account."
+            />
+          </ModalContainer>,
+          {
+            ...DEFAULT_MODAL,
+            closable: false,
+            backdropColor: color.background,
+          },
+        ).open();
     }
   };
   return (
@@ -88,8 +117,6 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
     >
       {isLoading ? (
         <LoadingSpinner />
-      ) : isSuccess && data ? (
-        <CopyField text={data.secretKey} />
       ) : (
         <Input
           name="key"
