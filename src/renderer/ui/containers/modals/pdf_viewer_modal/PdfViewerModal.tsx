@@ -26,6 +26,7 @@ export default function PdfViewerModal({
 
   return (
     <ModalContainer
+      overflowHidden
       title={fileName}
       className="pdf-viewer-modal"
       css={{ flexGrow: 1 }}
@@ -78,6 +79,7 @@ export default function PdfViewerModal({
           }}
         >
           <Page
+            css={{ boxShadow: '0 0 5px 3px ' + color.darker }}
             error={<div>Error</div>}
             onLoadError={() => {}}
             pageNumber={pageNumber}
