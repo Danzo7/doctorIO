@@ -41,6 +41,7 @@ export default function AppointmentsQueue() {
   });
   const isQueueOwnerQuery = useGetIsQueueOwnerQuery(selectedQueue, {
     skip: !queueStateQuery.isSuccess,
+    refetchOnMountOrArgChange: true,
   });
   const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(
     selectedQueue,

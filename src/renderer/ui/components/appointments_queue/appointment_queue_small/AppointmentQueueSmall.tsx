@@ -35,6 +35,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
   });
   const isQueueOwnerQuery = useGetIsQueueOwnerQuery(selectedQueue, {
     skip: !queueStateQuery.isSuccess,
+    refetchOnMountOrArgChange: true,
   });
   const getQueueAppointmentsQuery = useGetQueueAppointmentsQuery(
     selectedQueue,
@@ -58,6 +59,7 @@ export default function AppointmentQueueSmall({}: AppointmentQueueSmallProps) {
       return (
         <PreviewList
           isFetching={getQueueAppointmentsQuery.isFetching}
+          isLoading={getQueueAppointmentsQuery.isLoading}
           title="Queue list"
           overflow="visible"
           buttonNode={
