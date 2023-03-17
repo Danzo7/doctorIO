@@ -1,0 +1,49 @@
+@use '~styles/appColors' as *;
+.member-statistic-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    min-width: 500px;
+
+    > .members-stats-header {
+        display: grid;
+        grid-template-columns: 1fr 2fr ;
+        padding: 10px 20px;
+        flex-grow: 1;
+        align-self: stretch;
+
+        > .members-stats-header-title {
+            min-width: 240px;
+
+            > span {
+                color: $white;
+                font-weight: 600;
+                font-size: 18px;
+            }
+        }
+
+        > .menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 5px;
+            align-items: center;
+            align-self: flex-end;
+
+            > span {
+                color: $textgray;
+                font-weight: 500;
+                font-size: 12px;
+                text-align: center;
+            }
+        }
+    }
+    > .members-stats-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        max-height: 275px;
+        overflow-y: auto;
+    }
+}
