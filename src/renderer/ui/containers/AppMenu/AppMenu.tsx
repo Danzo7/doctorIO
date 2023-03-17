@@ -13,7 +13,7 @@ function AppMenu({}: AppMenuProps) {
     (ability.can('have', 'queue') || ability.can('manage', 'queue')) &&
       getItem('queue'),
     ability.can('have', 'messages') && getItem('messages'),
-    //  isAllowed('ability.canViewClinicInsight', permissions) && getItem('stats'),
+    getItem('stats'),
     ability.can('view', 'records') && getItem('records'),
     //    isAllowed('ability.canManageDataCollection', permissions) && getItem('database'),
     getItem('clinic'),

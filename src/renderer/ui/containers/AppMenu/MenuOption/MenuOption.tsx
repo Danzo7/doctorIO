@@ -17,7 +17,7 @@ function MenuOption({ items }: MenuOptionProps) {
       include: ['messages/@public'],
     },
     queue: 'queue',
-    stats: 'stats',
+    stats: 'statistics',
     records: 'records',
     database: 'database',
     clinic: 'clinic',
