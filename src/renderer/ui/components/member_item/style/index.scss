@@ -19,6 +19,19 @@
     align-items: center;
     gap: 20px;
 
+    > .date-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 80px;
+
+      > span {
+        font-weight: 600;
+        font-size: 14px;
+        color: $textgray;
+      }
+    }
+
     > .member-Info {
       display: flex;
       flex-direction: row;
@@ -48,19 +61,6 @@
             font-size: 15px;
           }
         }
-      }
-    }
-
-    > .date-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-width: 80px;
-
-      > span {
-        font-weight: 600;
-        font-size: 14px;
-        color: $textgray;
       }
     }
   }

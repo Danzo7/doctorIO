@@ -14,7 +14,7 @@ import {
   useAssignRoleMutation,
   useRevokeRoleMutation,
 } from '@redux/clinic/rbac/role/roleApi';
-
+//TODO render IsOwner svg if the user is owner
 export default function MemberItem({
   avatar,
   name,
