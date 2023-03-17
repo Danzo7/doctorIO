@@ -1,0 +1,65 @@
+@use '~styles/appColors' as *;
+@use '~styles/effects' as *;
+
+.member-statistic-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr ;
+    padding: 10px 20px;
+    background: $darkerseccolor;
+    border-radius: 17px;
+
+    &:hover {
+        @include darken;
+    }
+    > .right-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 5px;
+        align-items: center;
+
+        > span {
+            color: $white;
+            font-weight: 500;
+            font-size: 15px;
+            text-align: center;
+        }
+    }
+    > .left-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+
+        > .member-Info {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+
+            > .id-container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2px;
+
+                > span {
+                    color: $white;
+                    font-weight: 600;
+                    font-size: 15px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    word-break: break-all;
+                    width: 150px;
+
+                    + span {
+                        color: $coldblue;
+                        font-weight: 400;
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}
