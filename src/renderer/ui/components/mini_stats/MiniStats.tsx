@@ -19,6 +19,7 @@ function MiniStats({
   state,
   backgroundColor,
 }: MiniStatsProps) {
+  //UI reformat the css
   return (
     <div
       className={`mini-stats${state ? ' ' + state : ''}`}
