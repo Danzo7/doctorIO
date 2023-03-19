@@ -9,6 +9,7 @@ interface BookedAppointment {
   patientName: string;
   member: Pick<Member, 'id' | 'avatar' | 'name'>;
   state: 'IN_QUEUE' | 'PANDING';
+  subject?: string;
 }
 type AppointmentQueue = {
   isOwner: boolean;

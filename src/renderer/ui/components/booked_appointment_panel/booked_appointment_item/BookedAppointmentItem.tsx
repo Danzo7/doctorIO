@@ -25,6 +25,7 @@ export default function BookedAppointmentItem({
   id,
   patientId,
   member,
+  subject,
   state,
 }: BookedAppointment) {
   const [CancelAppointment] = useCancelAppointmentMutation();
@@ -44,6 +45,18 @@ export default function BookedAppointmentItem({
         first={{ text: format(bookedFor, SETTINGS.dayFormat), fontSize: 14 }}
         reversed
       />
+      {subject && (
+        <>
+          <BorderSeparator direction="vertical" />
+
+          <TextPair
+            gap={2}
+            first={{ text: subject, fontSize: 14 }}
+            second="Subject"
+            reversed
+          />
+        </>
+      )}
       <BorderSeparator direction="vertical" />
       {
         <TextPair
