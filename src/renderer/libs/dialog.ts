@@ -29,7 +29,7 @@ export const Confirm = (
             close();
           },
         }),
-      { ...FIT_MODAL, onClose: () => resolve(false) },
+      { ...FIT_MODAL, onClose: () => resolve(false), closeBtn: undefined },
     ).open();
   });
 };
