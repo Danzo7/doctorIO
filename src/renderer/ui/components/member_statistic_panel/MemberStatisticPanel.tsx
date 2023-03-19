@@ -1,9 +1,62 @@
 import MemberStatisticItem from '@components/member_statistic_item';
 import test from 'toPng/test.png';
 import './style/index.scss';
+
+const memberStatistic = [
+  {
+    name: 'Aymen Daouadji',
+    avatar: test,
+    status: true,
+    score: 100,
+    numOfAppointments: 10,
+    finishedSessions: 10,
+    numOfPat: 10,
+    revenue: 100,
+  },
+  {
+    name: 'John Doe',
+    avatar: test,
+    status: false,
+    score: 100,
+    numOfAppointments: 10,
+    finishedSessions: 10,
+    numOfPat: 10,
+    revenue: 100,
+  },
+  {
+    name: 'John Doe',
+    avatar: test,
+    status: true,
+    score: 100,
+    numOfAppointments: 10,
+    finishedSessions: 10,
+    numOfPat: 10,
+    revenue: 100,
+  },
+  {
+    name: 'John Doe',
+    avatar: test,
+    status: false,
+    score: 100,
+    numOfAppointments: 10,
+    finishedSessions: 10,
+    numOfPat: 10,
+    revenue: 100,
+  },
+  {
+    name: 'John Doe',
+    avatar: test,
+    status: true,
+    score: 100,
+    numOfAppointments: 10,
+    finishedSessions: 10,
+    numOfPat: 10,
+    revenue: 100,
+  },
+];
 interface MemberStatisticPanelProps {}
 export default function MemberStatisticPanel({}: MemberStatisticPanelProps) {
-  //TODO add children prop or list
+  //API call to get member statistic
   return (
     <div className="member-statistic-panel">
       <div className="members-stats-header">
@@ -19,41 +72,9 @@ export default function MemberStatisticPanel({}: MemberStatisticPanelProps) {
         </div>
       </div>
       <div className="members-stats-panel">
-        <MemberStatisticItem
-          score={500}
-          name="Aymen Daouadji"
-          status={true}
-          rank={2}
-          avatar={test}
-        />
-        <MemberStatisticItem
-          score={500}
-          name="Aymen Daouadji"
-          status={true}
-          rank={2}
-          avatar={test}
-        />
-        <MemberStatisticItem
-          score={500}
-          name="Aymen Daouadji"
-          status={true}
-          rank={2}
-          avatar={test}
-        />
-        <MemberStatisticItem
-          score={500}
-          name="Aymen Daouadji"
-          status={true}
-          rank={2}
-          avatar={test}
-        />
-        <MemberStatisticItem
-          score={500}
-          name="Aymen Daouadji"
-          status={true}
-          rank={2}
-          avatar={test}
-        />
+        {memberStatistic.map((item, index) => (
+          <MemberStatisticItem key={index} {...item} rank={index + 1} />
+        ))}
       </div>
     </div>
   );
