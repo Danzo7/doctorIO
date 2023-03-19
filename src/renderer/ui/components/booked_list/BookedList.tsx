@@ -11,7 +11,7 @@ import { useSelectedQueue } from '@stores/queueSelectionStore';
 export default function BookedList({}) {
   const selectedQueue = useSelectedQueue();
   const { data, isSuccess, isLoading, isFetching, refetch } =
-    useGetBookedAppointmentQuery(selectedQueue);
+    useGetBookedAppointmentQuery({ selectedQueue });
 
   return (
     <PreviewList
