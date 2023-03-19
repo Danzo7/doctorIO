@@ -9,9 +9,13 @@ import Schedule from 'toSvg/schedule.svg?icon';
 
 import RefetchPanel from '@components/refetch_panel';
 import { useQueueSelectionStore } from '@stores/queueSelectionStore';
+import DateSwitcher from '@components/date_switcher';
+import { useState } from 'react';
 
 export default function BookedAppointmentPanel({}) {
   const selectedQueue = useQueueSelectionStore.getState().selectedQueue;
+  const [date, setDate] = useState(new Date());
+
   const {
     data,
     isSuccess,
@@ -20,45 +24,49 @@ export default function BookedAppointmentPanel({}) {
     refetch,
     isError,
     isUninitialized,
-  } = useGetBookedAppointmentQuery(selectedQueue);
-
+  } = useGetBookedAppointmentQuery({ selectedQueue, date });
   return (
     <PreviewList
       flexGrow
       maxHeight={275}
       title="Booked Appointment"
       buttonNode={
-        <DarkLightCornerButton
-          text="Add"
-          onPress={() => {
-            modal(<AddSearchToBooked />, DEFAULT_MODAL).open();
-          }}
-        />
+        <>
+          <DateSwitcher date={date} alignSelf="center" onChange={setDate} />
+          <DarkLightCornerButton
+            text="Add"
+            onPress={() => {
+              modal(<AddSearchToBooked />, DEFAULT_MODAL).open();
+            }}
+          />
+        </>
       }
       isLoading={isLoading || isUninitialized}
       isFetching={isFetching}
       noBorder
     >
       {isSuccess ? (
-        data.length > 0 ? (
-          data.map((props, index) => (
-            <BookedAppointmentItem {...props} key={index} />
-          ))
-        ) : (
-          <VerticalPanel
-            title="No booked appointments"
-            description="Start by booking an appointment. "
-            Icon={<Schedule width="60%" height="60%" />}
-            padding={0}
-            alignSelf="center"
-            action={{
-              text: 'Book appointment',
-              onClick() {
-                modal(<AddSearchToBooked />, DEFAULT_MODAL).open();
-              },
-            }}
-          />
-        )
+        <>
+          {data.length > 0 ? (
+            data.map((props, index) => (
+              <BookedAppointmentItem {...props} key={index} />
+            ))
+          ) : (
+            <VerticalPanel
+              title="No booked appointments"
+              description="Start by booking an appointment. "
+              Icon={<Schedule width="60%" height="60%" />}
+              padding={0}
+              alignSelf="center"
+              action={{
+                text: 'Book appointment',
+                onClick() {
+                  modal(<AddSearchToBooked />, DEFAULT_MODAL).open();
+                },
+              }}
+            />
+          )}
+        </>
       ) : (
         isError && <RefetchPanel action={refetch} />
       )}

@@ -28,6 +28,9 @@ export default function Datepicker({
         <div className="datepicker">{children}</div>
       )}
       weekDayClassName={() => 'day-name'}
+      popperContainer={({ children }) => (
+        <div css={{ zIndex: 100 }}>{children}</div>
+      )}
       dayClassName={() => 'days'}
       renderCustomHeader={({
         monthDate,

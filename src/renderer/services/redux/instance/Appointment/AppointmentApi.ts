@@ -19,11 +19,14 @@ const appointmentApi = createApi({
   refetchOnFocus: true,
   endpoints: (builder) => ({
     //GET
-    getBookedAppointment: builder.query<BookedAppointment[], number>({
-      query: (selectedQueue) => {
+    getBookedAppointment: builder.query<
+      BookedAppointment[],
+      { selectedQueue?: number; date?: Date }
+    >({
+      query: (data) => {
         return {
           url: `/book`,
-          params: { selectedQueue },
+          params: data,
         };
       },
 
