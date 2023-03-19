@@ -19,13 +19,17 @@ function MiniStats({
   state,
   backgroundColor,
 }: MiniStatsProps) {
-  //UI reformat the css
   return (
     <div
       className={`mini-stats${state ? ' ' + state : ''}`}
       css={{ backgroundColor: backgroundColor }}
     >
-      <span css={css({ visibility: percentage >= 0 ? undefined : 'hidden' })}>
+      <span
+        css={css({
+          visibility: percentage >= 0 ? undefined : 'hidden',
+          alignSelf: 'flex-end',
+        })}
+      >
         {percentage}%
       </span>
       <Icon width={35} height={35}></Icon>

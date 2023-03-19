@@ -2,33 +2,35 @@
 .mini-stats {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 15px 10px;
   border: 1px solid $bordercolor;
   border-radius: 15px;
-  width: 130px;
-  height: 170px;
+  max-width: 130px;
+  min-width: 130px;
   gap:10px;
-  color: $white;
+
   &.warn {
     background-color: $hotred;
   }
   > span {
-    font-style: normal;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-weight: 600;
     font-size: 9px;
-    width: 100%;
     text-align: right;
     color: $goodgreen;
+    max-width: 120px;
 
     ~ span {
-      font-size: 20px;
+      font-size: 16px;
       text-align: center;
       color: $white;
 
       + span {
-        font-size: 24px;
+        font-size: 20px;
       }
     }
   }
