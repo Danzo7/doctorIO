@@ -1,14 +1,13 @@
 import { color } from '@assets/styles/color';
 import TextButton from '@components/buttons/text_button';
-import { SETTINGS } from '@stores/appSettingsStore';
 
-import { format } from 'date-fns';
 import Arrow from 'toSvg/arrow.svg?icon';
 import './style/index.scss';
+import { useForm } from 'react-hook-form';
+import Input from '@components/inputs/input';
+import { addDays } from 'date-fns';
 interface DateSwitcherProps {
   date: Date;
-  onLeftPress?: () => void;
-  onRightPress?: () => void;
   alignSelf?:
     | 'center'
     | 'baseline'
@@ -17,34 +16,37 @@ interface DateSwitcherProps {
     | 'flex-start'
     | 'start'
     | 'stretch';
+  onChange?: (date: Date) => void;
 }
 export default function DateSwitcher({
   date,
-  onLeftPress,
-  onRightPress,
   alignSelf,
+  onChange,
 }: DateSwitcherProps) {
+  const { control, setValue, getValues, watch } = useForm({
+    defaultValues: {
+      date: date,
+    },
+  });
+  watch('date');
+  onChange?.(getValues('date'));
   return (
     <div className="date-switcher" css={{ alignSelf: alignSelf }}>
       <TextButton
         borderColor={color.border_color}
         padding="10px"
         afterBgColor={color.darkersec_color}
-        onPress={onLeftPress}
-      >
-        <Arrow css={{ transform: 'rotate(90deg)' }} />
-      </TextButton>
-      <div className="date-div">
-        <span>{format(date, SETTINGS.dateFormat)}</span>
-      </div>
+        onPress={() => setValue('date', addDays(getValues('date'), -1))}
+        Icon={<Arrow css={{ transform: 'rotate(90deg)' }} />}
+      />
+      <Input type={'date'} control={control} name="date" background="none" />
       <TextButton
         borderColor={color.border_color}
         padding="10px"
         afterBgColor={color.darkersec_color}
-        onPress={onRightPress}
-      >
-        <Arrow css={{ transform: 'rotate(-90deg)' }} />
-      </TextButton>
+        onPress={() => setValue('date', addDays(getValues('date'), 1))}
+        Icon={<Arrow css={{ transform: 'rotate(-90deg)' }} />}
+      />
     </div>
   );
 }
