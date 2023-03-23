@@ -34,7 +34,7 @@ import { color } from '@assets/styles/color';
 import Print from 'toSvg/print.svg?icon';
 import TextButton from '@components/buttons/text_button';
 interface PrintPaperProps {
-  content: MedicalCertificate;
+  contents: MedicalCertificate[];
   patient: Patient;
   member: Pick<Member, 'id' | 'name'>;
   appointment: Pick<Appointment, 'id' | 'date'>;
@@ -43,7 +43,7 @@ const paperSize = { width: 14.8, height: 21 };
 const margins = { top: 1, bottom: 0, left: 1, right: 1 };
 
 export default function PrintPaper({
-  content,
+  contents,
   patient,
   member,
   appointment,
@@ -81,7 +81,6 @@ export default function PrintPaper({
     content: () => componentRef.current as HTMLDivElement,
   });
   const clinicData = useClinicsStore.getState().getSelectedClinic();
-
   return isLoading ? (
     <LoadingSpinner />
   ) : (
@@ -118,80 +117,83 @@ export default function PrintPaper({
               if (ref) componentRef.current = ref;
             }}
           >
-            <Slate
-              editor={editor}
-              value={mapElements(desendants, (node) => {
-                if (node.type == 'attribute') {
-                  const {
-                    children: [text],
-                    reference,
-                  } = node;
-                  let replacementString = '';
-                  const [table, attr] = reference.split('.');
-                  switch (table) {
-                    case 'Patient':
-                      replacementString = (patient as any)?.[attr] ?? '';
-                      break;
-                    case 'Clinic':
-                      replacementString = (clinicData as any)?.[attr] ?? '';
-                      break;
-                    case 'Doctor':
-                      replacementString = (member as any)?.[attr] ?? '';
-                      break;
-                    case 'Appointment':
-                      replacementString = (appointment as any)?.[attr] ?? '';
-                      break;
+            {contents.map((content, index) => (
+              <Slate
+                key={index}
+                editor={editor}
+                value={mapElements(desendants, (node) => {
+                  if (node.type == 'attribute') {
+                    const {
+                      children: [text],
+                      reference,
+                    } = node;
+                    let replacementString = '';
+                    const [table, attr] = reference.split('.');
+                    switch (table) {
+                      case 'Patient':
+                        replacementString = (patient as any)?.[attr] ?? '';
+                        break;
+                      case 'Clinic':
+                        replacementString = (clinicData as any)?.[attr] ?? '';
+                        break;
+                      case 'Doctor':
+                        replacementString = (member as any)?.[attr] ?? '';
+                        break;
+                      case 'Appointment':
+                        replacementString = (appointment as any)?.[attr] ?? '';
+                        break;
+                    }
+                    replacementString = isDate(replacementString)
+                      ? format(replacementString as any, SETTINGS.dateFormat)
+                      : replacementString.toString();
+                    return {
+                      type: 'span',
+                      children: [{ ...text, text: replacementString }],
+                      inline: true,
+                      void: false,
+                    };
                   }
-                  replacementString = isDate(replacementString)
-                    ? format(replacementString as any, SETTINGS.dateFormat)
-                    : replacementString.toString();
-                  return {
-                    type: 'span',
-                    children: [{ ...text, text: replacementString }],
-                    inline: true,
-                    void: false,
-                  };
-                }
-                if (node.type == 'dynamic') {
-                  return {
-                    ...node,
-                    type: 'dynamic',
-                    replace: true,
-                    children: [
-                      {
-                        type: 'h1',
-                        children: [
-                          {
-                            text: content.title,
-                          },
-                        ],
-                        align: 'center',
-                      },
-                      ...content.description,
-                    ],
-                  };
-                }
+                  if (node.type == 'dynamic') {
+                    return {
+                      ...node,
+                      type: 'dynamic',
+                      replace: true,
+                      children: [
+                        {
+                          type: 'h1',
+                          children: [
+                            {
+                              text: content.title,
+                            },
+                          ],
+                          align: 'center',
+                        },
+                        ...content.description,
+                      ],
+                    };
+                  }
 
-                return node;
-              })}
-            >
-              <Editable
-                readOnly
-                css={{
-                  width: cmToPx(paperSize.width),
-                  height: cmToPx(paperSize.height),
-                  maxHeight: cmToPx(paperSize.height),
-                  padding: `${cmToPx(margins.top)}px ${cmToPx(
-                    margins.right,
-                  )}px ${cmToPx(margins.bottom)}px ${cmToPx(margins.left)}px`,
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-                placeholder="Write something..."
-                renderLeaf={renderLeaf}
-                renderElement={renderElement}
-              />
-            </Slate>
+                  return node;
+                })}
+              >
+                <Editable
+                  readOnly
+                  css={{
+                    width: cmToPx(paperSize.width),
+                    height: cmToPx(paperSize.height),
+                    maxHeight: cmToPx(paperSize.height),
+                    padding: `${cmToPx(margins.top)}px ${cmToPx(
+                      margins.right,
+                    )}px ${cmToPx(margins.bottom)}px ${cmToPx(margins.left)}px`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                  placeholder="Write something..."
+                  renderLeaf={renderLeaf}
+                  renderElement={renderElement}
+                />
+              </Slate>
+            ))}
           </div>
         </div>
       </div>
