@@ -1,6 +1,7 @@
 import { Editor, Transforms } from 'slate';
 import { ImageElement } from '../types';
-import { ImageEditor } from '../ImageEditor';
+import { isImageElement } from './isImageElement';
+import { isEqual } from './isEqual';
 
 export const setImageSize = (
   editor: Editor,
@@ -24,8 +25,7 @@ export const setImageSize = (
     editor,
     { mWidth: width, mHeight: height },
     {
-      match: (n) =>
-        ImageEditor.isImageElement(n) && ImageEditor.isEqual(n, element),
+      match: (n) => isImageElement(n) && isEqual(n, element),
     },
   );
 };
@@ -41,8 +41,7 @@ export const setImageSizeByRatio = (
       mHeight: element.height * ratio,
     },
     {
-      match: (n) =>
-        ImageEditor.isImageElement(n) && ImageEditor.isEqual(n, element),
+      match: (n) => isImageElement(n) && isEqual(n, element),
     },
   );
 };
@@ -51,8 +50,7 @@ export const resetOriginalSize = (editor: Editor, element: ImageElement) => {
     editor,
     { mWidth: element.width, mHeight: element.height },
     {
-      match: (n) =>
-        ImageEditor.isImageElement(n) && ImageEditor.isEqual(n, element),
+      match: (n) => isImageElement(n) && isEqual(n, element),
     },
   );
 };

@@ -1,4 +1,6 @@
 import { insertImage } from './insertImage';
+import { isEqual } from './isEqual';
+import { isImageElement } from './isImageElement';
 import {
   setImageSize,
   resetOriginalSize,
@@ -10,4 +12,6 @@ export default {
   resetOriginalSize,
   setImageSizeByRatio,
   insertImage,
+  isEqual,
+  isImageElement,
 };
