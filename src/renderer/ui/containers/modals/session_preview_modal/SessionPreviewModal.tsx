@@ -59,9 +59,11 @@ export default function SessionPreviewModal({
                                   member={
                                     data.member ?? { id: 0, name: 'Unknown' }
                                   }
-                                  content={prescriptionToMedicalCertificate(
-                                    data.session.prescription,
-                                  )}
+                                  contents={[
+                                    prescriptionToMedicalCertificate(
+                                      data.session.prescription,
+                                    ),
+                                  ]}
                                   patient={patient}
                                 />,
                                 FIT_MODAL,

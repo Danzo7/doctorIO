@@ -43,7 +43,7 @@ export default function CertificatePreviewModal({
             modal(
               <PrintPaper
                 appointment={appointment}
-                content={defaultValue}
+                contents={[defaultValue]}
                 patient={patient}
                 member={member}
               />,
