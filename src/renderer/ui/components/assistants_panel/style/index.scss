@@ -1,0 +1,20 @@
+@use '~styles/appColors' as *;
+.assistants-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 20px;
+    flex-grow: 1;
+
+    > .members-list-container {
+        will-change: transform;
+        overflow-y: scroll;
+        padding-right: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 5px;
+    }
+}
