@@ -4,23 +4,11 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  padding: 0px;
   gap: 20px;
   flex-grow: 1;
-  > .header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 
-    > span {
-      color: $white;
-      font-weight: 600;
-      font-size: 23px;
-    }
-  }
   > .members-list-container {
     will-change: transform;
-
     overflow-y: scroll;
     padding-right: 10px;
     display: flex;
