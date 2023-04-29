@@ -19,10 +19,9 @@
         gap:10px;
     }
     > .queues-footer {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
         align-self: stretch;
         border-top: 1px solid $bordercolor;
         padding-top: 15px;
