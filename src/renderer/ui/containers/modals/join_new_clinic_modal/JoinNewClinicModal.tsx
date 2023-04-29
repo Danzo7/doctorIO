@@ -11,8 +11,8 @@ import { nanoid } from '@reduxjs/toolkit';
 import LoadingSpinner from '@components/loading_spinner';
 import { useUserStore } from '@stores/userStore';
 import { useConnectionStore } from '@stores/ConnectionStore';
-import { DEFAULT_MODAL, modal } from '@libs/overlay';
-import CopyField from '@components/copy_field';
+import { FIT_MODAL, modal } from '@libs/overlay';
+import CopySecretKeyModal from '../copy_secret_key_modal';
 interface Inputs {
   key: string;
 }
@@ -55,34 +55,11 @@ export default function JoinNewClinicModal({}: JoinNewClinicModalProps) {
         },
       }).unwrap();
       if (res)
-        modal(
-          <ModalContainer
-            title="Secret key"
-            controls={
-              <TextButton
-                text="Continue"
-                backgroundColor={color.cold_blue}
-                fontSize={13}
-                fontWeight={700}
-                alignSelf="center"
-                padding={5}
-                onPress={() => {
-                  window.location.reload();
-                }}
-              />
-            }
-          >
-            <CopyField
-              text={res.secretKey}
-              hint="Please backup your secret key, you will need it to login to your account."
-            />
-          </ModalContainer>,
-          {
-            ...DEFAULT_MODAL,
-            closable: false,
-            backdropColor: color.background,
-          },
-        ).open();
+        modal(<CopySecretKeyModal secretKey={res.secretKey} />, {
+          ...FIT_MODAL,
+          closable: false,
+          backdropColor: color.background,
+        }).open();
     }
   };
   return (
