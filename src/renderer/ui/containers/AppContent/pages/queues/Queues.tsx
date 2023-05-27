@@ -7,6 +7,7 @@ import { useAbility } from '@stores/abilityStore';
 import { useQueueSelectionStore } from '@stores/queueSelectionStore';
 import './style/index.scss';
 import AssistantsPanel from '@components/assistants_panel';
+import BorderSeparator from '@components/border_separator';
 
 interface QueuesProps {}
 export default function Queues({}: QueuesProps) {
@@ -30,6 +31,7 @@ export default function Queues({}: QueuesProps) {
       </div>
       <div className="queues-footer">
         <BookedAppointmentPanel />
+        <BorderSeparator direction="vertical" />
         <AssistantsPanel />
         {/* <SmallClinicStatus /> */}
       </div>
