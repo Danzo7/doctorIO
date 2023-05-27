@@ -1,9 +1,7 @@
-import Header from '@components/header';
 import './style/index.scss';
 import { useRef } from 'react';
-import ViewportList from 'react-viewport-list';
+import PreviewList from '@components/preview_list';
 import AssistantItem from '@components/assistant_item';
-import { MemberBrief } from '@models/server.models';
 
 interface AssistantsPanelProps {}
 export default function AssistantsPanel({}: AssistantsPanelProps) {
@@ -20,15 +18,15 @@ export default function AssistantsPanel({}: AssistantsPanelProps) {
   const listRef = useRef(null);
   //FETCH fetch assistants based on id of my roles
   return (
-    <div className="assistants-panel">
-      <Header title="Assistants" />
-      <div className="members-list-container" ref={ref}>
-        <ViewportList ref={listRef} viewportRef={ref}>
-          {(member: MemberBrief, index) => (
-            <AssistantItem id={1} name="John Doe" status={true} />
-          )}
-        </ViewportList>
-      </div>
-    </div>
+    <PreviewList title="Assistants" noBorder maxHeight={300}>
+      <AssistantItem id={1} name="John Doe" status={true} />
+      <AssistantItem id={1} name="John Doe" status={true} />
+      <AssistantItem id={1} name="John Doe" status={true} />
+      <AssistantItem id={1} name="John Doe" status={true} />
+      <AssistantItem id={1} name="John Doe" status={true} />
+      <AssistantItem id={1} name="John Doe" status={true} />
+      <AssistantItem id={1} name="John Doe" status={true} />
+      <AssistantItem id={1} name="John Doe" status={true} />
+    </PreviewList>
   );
 }
