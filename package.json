@@ -62,7 +62,7 @@
     "react-easy-crop": "^4.6.3",
     "react-hook-form": "^7.41.1",
     "react-inlinesvg": "^3.0.1",
-    "react-pdf": "^6.2.2",
+    "react-pdf": "^9.0.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "6.3.0",
     "react-to-print": "^2.14.10",
