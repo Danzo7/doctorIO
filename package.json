@@ -72,7 +72,7 @@
     "slate-history": "^0.86.0",
     "slate-hyperscript": "^0.77.0",
     "slate-react": "^0.88.0",
-    "socket.io-client": "^4.5.4",
+    "socket.io-client": "^4.8.0",
     "zod": "^3.20.2",
     "zustand": "^4.1.5"
   },
