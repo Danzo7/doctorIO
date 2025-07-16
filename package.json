@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@casl/ability": "^6.3.3",
-    "@dicebear/avatars": "^4.10.7",
+    "@dicebear/avatars": "^4.10.8",
     "@dicebear/avatars-initials-sprites": "^4.10.7",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
